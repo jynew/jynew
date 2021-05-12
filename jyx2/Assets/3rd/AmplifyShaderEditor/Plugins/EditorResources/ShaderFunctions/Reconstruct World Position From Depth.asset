@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Reconstruct World Position From Depth
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=15203\n438;603;1035;415;3036.757;604.2825;1.528726;False;False\nNode;AmplifyShaderEditor.CameraToWorldMatrix;48;-673.0508,-514.7968;Float;False;0;1;FLOAT4x4;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;46;-929.051,-434.7967;Float;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.DynamicAppendNode;49;-609.0508,-434.7967;Float;False;FLOAT4;4;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;1;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.StaticSwitch;38;-2240,-272;Float;False;Property;_Keyword0;Keyword
+    0;3;0;Fetch;True;0;0;False;0;0;0;0;False;UNITY_REVERSED_Z;Toggle;2;Key0;Key1;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SamplerNode;36;-2704,-288;Float;True;Global;_CameraDepthTexture;_CameraDepthTexture;0;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.DynamicAppendNode;39;-1969.052,-386.7965;Float;False;FLOAT3;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;1;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.ScaleAndOffsetNode;40;-1793.051,-386.7965;Float;False;3;0;FLOAT3;0,0,0;False;1;FLOAT;2;False;2;FLOAT;-1;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.OneMinusNode;37;-2400,-192;Float;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.DynamicAppendNode;42;-1537.051,-386.7965;Float;False;FLOAT4;4;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;1;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;43;-1329.051,-418.7966;Float;False;2;2;0;FLOAT4x4;0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.ComponentMaskNode;44;-1169.051,-482.7967;Float;False;True;True;True;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;47;-753.0508,-434.7967;Float;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;1,1,-1;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;50;-449.0509,-482.7967;Float;False;2;2;0;FLOAT4x4;0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.ComponentMaskNode;45;-1169.051,-370.7965;Float;False;False;False;False;True;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.CameraProjectionNode;41;-1665.051,-482.7967;Float;False;unity_CameraInvProjection;0;1;FLOAT4x4;0\nNode;AmplifyShaderEditor.ScreenPosInputsNode;35;-2944,-416;Float;False;0;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.ScreenPosInputsNode;58;-2423.737,-524.7888;Float;False;1;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.FunctionOutput;0;-256,-480;Float;False;True;XYZW;0;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nWireConnection;46;0;44;0\nWireConnection;46;1;45;0\nWireConnection;49;0;47;0\nWireConnection;38;1;36;1\nWireConnection;38;0;37;0\nWireConnection;36;1;35;0\nWireConnection;39;0;35;1\nWireConnection;39;1;35;2\nWireConnection;39;2;38;0\nWireConnection;40;0;39;0\nWireConnection;37;0;36;1\nWireConnection;42;0;40;0\nWireConnection;43;0;41;0\nWireConnection;43;1;42;0\nWireConnection;44;0;43;0\nWireConnection;47;0;46;0\nWireConnection;50;0;48;0\nWireConnection;50;1;49;0\nWireConnection;45;0;43;0\nWireConnection;0;0;50;0\nASEEND*/\n//CHKSM=D1AAFA9878995D55FAD9F624BA3F3AF1D7818200"
+  m_functionName: 
+  m_description: Reconstructs world position from the depth of the scene. If depth
+    is unconnected a default screen depth will be calculated. For best results, zwrite
+    should be OFF and ztest should be ALWAYS.
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_nodeCategory: 9
+  m_customNodeCategory: 
+  m_previewPosition: 0

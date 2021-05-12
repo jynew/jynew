@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Half Lambert Term
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=13705\n487;595;979;423;884.665;200.5353;1.013844;True;False\nNode;AmplifyShaderEditor.FunctionInput;3;-640,-32;Float;False;World
+    Normal;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3\nNode;AmplifyShaderEditor.ScaleAndOffsetNode;6;-208,0;Float;False;3;0;FLOAT;0.0;False;1;FLOAT;1.0;False;2;FLOAT;0.0;False;1;FLOAT\nNode;AmplifyShaderEditor.WorldSpaceLightDirHlpNode;8;-672,64;Float;False;1;0;FLOAT;0.0;False;4;FLOAT3;FLOAT;FLOAT;FLOAT\nNode;AmplifyShaderEditor.RangedFloatNode;7;-416,96;Float;False;Constant;_RemapValue;Remap
+    Value;0;0;0.5;0;0;0;1;FLOAT\nNode;AmplifyShaderEditor.DotProductOpNode;5;-416,0;Float;False;2;0;FLOAT3;0,0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT\nNode;AmplifyShaderEditor.WorldNormalVector;2;-864,-32;Float;False;1;0;FLOAT3;0,0,0;False;4;FLOAT3;FLOAT;FLOAT;FLOAT\nNode;AmplifyShaderEditor.FunctionOutput;0;16,0;Float;False;True;Out;0;1;0;FLOAT;0.0;False;0\nWireConnection;3;0;2;0\nWireConnection;6;0;5;0\nWireConnection;6;1;7;0\nWireConnection;6;2;7;0\nWireConnection;5;0;3;0\nWireConnection;5;1;8;0\nWireConnection;0;0;6;0\nASEEND*/\n//CHKSM=D225A64D2A31472128B6D003C45B4417097300C7"
+  m_functionName: 
+  m_description: Generates a linear gradient from black to white that represents the
+    surface facing term to a light. Useful for cloth shading, skin or toon ramps.
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_nodeCategory: 11
+  m_customNodeCategory: Lighting Models

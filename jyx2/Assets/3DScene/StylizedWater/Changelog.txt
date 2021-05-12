@@ -1,0 +1,236 @@
+v2.0.2
+Fixed:
+- Normal map not generating correctly in 2018.1+ when using Linear color space
+
+v2.0.1
+Added:
+- Advanced tab now has the option to set the global water level for Vegetation Studio
+
+Fixed:
+- Falloff parameter not having any effect when intersection style was set to "None"
+
+v2.0.0
+
+Added:
+- 3 new demo/example scenes: Island, lake and pond.
+- 4 water VFX assets
+- New Mobile uber shader (up to ~37% faster)
+- Orthographic camera support
+- Lighting modes (Unlit/Basic/Advanced)
+- Vertex painting support for intersection and opacity
+- Support for Single-Pass Stereo rendering
+- Reflection blurring
+- Tiling deduction toggle (Desktop only)
+- Color gradient feature (Desktop only)
+- Additional waves layer toggle, for improved wave animations
+- Surface highlight and Intersection distortion parameters
+- Custom heightmap option
+
+Changed:
+- Inspector UX improvements, sections now function as an accordion
+- Tiling is now separated for each feature (Normals/Waves/Intersection/Foam)
+- "Surface highlights" is now called "Foam" for clarity
+- Depth and Intersection maximum value ranges have been increased
+- Desktop shader no longer uses tessellation, for wider compatibility
+- Compressed textures option now automatically bakes textures when value is changed
+- Increased UV size of included meshes to be more in line with World-space tiling
+- Wave direction now also allows negative values
+- "Custom" toggles for intersection and waves is now a dropdown menu option
+
+Removed:
+- Old demo scene and related assets
+- Deprecated desktop shaders
+- Mobile Advanced and Mobile Basic shaders
+
+v1.50
+Replaced Substance functionality, textures are now generated on the GPU.
+Customization options have been retained, so the changes are purely internal.
+
+Added:
+- Reflection Fresnel parameter
+- Toggle for hiding the material inspector
+
+Fixed:
+- Normal Strength and Glossiness correlation
+
+Removed:
+- Random seed functionality
+
+v1.40
+Changed:
+- Minimum supported Unity version is now 5.4
+- Beta shader is now incorperated into the package by default
+- Surface highlights can now also be darkened (useful for lava)
+
+Fixed:
+- (Beta) Incorrect behaviour when Normal Strength is set to 0
+- Desktop shader not compiling on macOS
+
+Removed:
+- (Beta) Default ASE shader inspector, as it throws a warning when ASE is not installed
+
+v1.31
+Fixed:
+- Streaking in refraction when camera is close to the water surface (desktop only)
+
+v1.30
+Beta shader:
+- Fixed flickering in reflection when using Occlusion Culling
+- Surface highlights will now appear to be affected by the waves
+- Improved intersection texture animation
+
+Fixed:
+- Precision issues on mobile
+- Broken normal maps in Unity 5.6 on mobile platforms (editor only issue)
+
+Added:
+- Help toggles, per options section, which show a description of the parameters
+- Shader variant dropdown menu
+- "Wide waves" wave animation
+- Toggle to hide the wireframe on versions older than Unity 5.5
+
+Changed:
+- Rewritten inspector to make use of serialization
+- Substance outputs are now baked to texture files, per material instance
+- Material inspector is hidden when the StylizedWater component is used
+- Normal Strength and Wave Size are now a shader function
+- Improved "Billowed" heightmap
+- Improved wave animation in Mobile Advanced shader
+
+v1.29
+Beta shader:
+- Recompiled using latest version of ASE
+- Fixed colors blowing up with HDR cameras
+- Added a layer mask to the inspector for realtime reflections
+- Reflection is now less intense at certain viewing angles
+
+v1.28
+Beta shader:
+- Corrected transparency
+- Added shallow water color parameter (replaces Depth functionality)
+- "Depth" tab and "Depth darkness" parameter have been removed from the inspector
+- Intensified the Rim color by default, which can be toned down by the color's alpha channel
+
+v1.27
+This version includes a separate unity package which contains a Beta shader. It's targeted at desktop, mobile shaders will follow suit later.
+The minimum support version is Unity 5.4
+
+It features:
+- Recreated in Amplify Shader Editor entirely
+- Realtime reflections
+- Skybox lighting
+- Reflection Probe support
+- Mask surface highlight by heightmap (wave foam)
+- Wave direction configuration
+- Improved texture crosspanning
+- Improved glossiness
+- Unlit mode
+
+Fixed:
+- Corrected behaviour for Substance instances when reloading a scene
+
+Changed:
+- Set prefabs on "Water" layer (default built-in layer)
+
+v1.26
+Added:
+- Option to use intersection texture for Surface highlights (desktop only)
+- Heightmap-based wave animation, you can pick between a Smooth, Sharp and Billowed style. Great for large bodies of water! (desktop only)
+- Wave tint feature, brighten or darken the surface based on the heightmap (desktop only)
+
+Changed:
+- Cleaned up Shader Forge node tree
+- Increased default Anisotropic Filtering value for normal and shader map
+- Surface highlights masks out the normal map to simulate thickness (desktop only)
+- Surface highlights are now also affected by overall Transparency, to ensure correct color values (desktop only)
+- Glossiness value can now be set higher, in case your normal map is faint and and you want to keep reflection details
+
+Fixed:
+- Missing Transparency parameter in inspector when using the Mobile Basic shader
+- Undo functionality not working correctly when the inspector does not have focus
+- Fallback shader on Mobile set to Unlit/Transparent, instead of referring to Legacy Shaders
+
+v1.25
+Added:
+- Cells + Cloudy wave types
+- Perlin intersection style
+
+Changed:
+- Minor script improvements
+
+v1.24
+Changed:
+- Fixed depth banding artifact on some mobile GPU's.
+
+v1.23
+Added:
+- Intersection distance parameter
+- Prefabs
+- Square and Circle water mesh, high-poly and low-poly variant
+- Transparency parameter for Mobile Basic shader
+
+Changed:
+- Set Substance to generate all outputs by default, to avoid empty textures
+
+Removed:
+- Disabled shadow-casting in shader, as this is unwanted behaviour anyway
+
+v1.22
+Changed:
+- Set Substance to 'Uncompressed' by default for Mobile
+- Improved normal map blending
+- Restored light reflection to its former glory
+
+v1.21
+Added:
+- Shaders can now be modified using ShaderForge.
+- Unity 5.5 support
+- Demo scene with 30 free stylized models
+- Option to randomize seed in inspector
+
+Changed:
+- Improved support for Substance material instances
+- Changing materials shows/hides the new parameters automatically
+- Wave vertex offset now follows the mesh's normal direction, rather than offsetting in the world Y-axis (useful for curved surfaces)
+- Switched from glossiness to roughness type, for better results under low/no light conditions
+- Inspector GUI improvements
+- Substance will generate both texture maps regardless of "Generate all outputs" option
+
+v1.2
+Added:
+- Custom inspector component for ease of use
+- Fresnel color (alpha controls opacity)
+- New mobile shader variant "Basic"
+- Documentation now contains a parameter glossary
+
+Changed:
+- Previous mobile shader is now called "Mobile Advanced"
+- Updated demo scene
+- Set Substance to 'Uncompressed' for Desktop
+- Mobile shader has been tweaked for performance
+
+v1.15
+Added:
+- Fresnel control
+- Multi-light support
+- Rim color alpha now controls intersection amount
+- Support for Unity 5.3.0 and up.
+
+Changed:
+- Fresnel color is now derived from Ambient Light rather than Directional Light
+- UV/WorldSpace tiling values are more logical
+- Reflection intensity is now bound to the glossiness parameter
+- Depth control is more physically correct
+
+v1.1
+Added:
+- Surface highlights.
+
+Removed:
+- Heightmap, since it was not used.
+
+Changed:
+- Name of depth buffer script to avoid conflicts.
+
+v1.0
+Initial release

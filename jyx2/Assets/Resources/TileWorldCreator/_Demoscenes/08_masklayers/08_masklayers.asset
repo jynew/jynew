@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8083e81fb0f966d4cbc511ab5c072834, type: 3}
+  m_Name: 08_masklayers
+  m_EditorClassIdentifier: 
+  ui:
+    showGeneralSettings: 0
+    showPresetSettings: 1
+    showEdit: 0
+    autoBuild: 1
+    brushSize: 2
+    cellColor: {r: 0.47058824, g: 1, b: 0.47058824, a: 0.5882353}
+    floorCellColor: {r: 0, g: 0.7058824, b: 1, a: 0.5882353}
+    gridColor: {r: 1, g: 1, b: 1, a: 0.7058824}
+    brushColor: {r: 0.8862745, g: 0.16078432, b: 0.1254902, a: 0.5882353}
+    maskColor: {r: 1, g: 1, b: 1, a: 0.5882353}
+    showGridAlways: 0
+    showGrid: 1
+    showAllMaps: 0
+    mapIndex: 0
+    availablePresets: []
+  global:
+    worldName: TWC_World
+    mapOrientation: 0
+    invert: 0
+    buildGroundTiles: 1
+    layerCount: 1
+    layerInset: 1
+    buildOverlappingTiles: 1
+    layerPresetIndex: 00000000
+    width: 20
+    height: 20
+    globalScale: 1
+    scaleTiles: 1
+    automaticClustersize: 1
+    clusterSize: 5
+    createMultiMaterialMesh: 1
+    addMeshCollider: 1
+    optimizeSteps: 4
+    randomSeed: -1
+    selectedAlgorithm: 0
+    startPosition: {x: 0, y: 0, z: 0}
+    endPosition: {x: 0, y: 0, z: 0}
+  presets: []
+  worldMap: []
+  bspDungeonAlgorithm:
+    minBSPLeafWidth: 10
+    minBSPLeafHeight: 10
+    corridorWidth: 2
+  cellularAlgorithm:
+    deathLimit: 4
+    birthLimit: 4
+    numberOfSteps: 5
+    chanceToStartAlive: 0.45
+    floodUnjoined: 1
+    floodHoles: 1
+    minCellCount: 5
+  mazeAlgorithm:
+    linear: 0
+    useRandomStartPos: 0
+    startPos: {x: 2, y: 2}
+  simpleDungeonAlgorithm:
+    createCircleRooms: 0
+    minCircleRoomRadius: 2
+    maxCircleRoomRadius: 4
+    roomCount: 4
+    allowRoomIntersections: 0
+    minRoomSizeWidth: 2
+    minRoomSizeHeight: 2
+    maxRoomSizeWidth: 4
+    maxRoomSizeHeight: 4
+    minCorridorWidth: 2

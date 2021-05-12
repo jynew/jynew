@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Create Orthogonal Vector
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=15104\n465;615;1039;403;1446.756;132.3935;1.734783;True;False\nNode;AmplifyShaderEditor.CrossProductOpNode;28;-512,192;Float;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;26;-896,208;Float;False;Vector
+    2;3;1;False;1;0;FLOAT3;0,1,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.CrossProductOpNode;30;-96,128;Float;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.NormalizeNode;29;-336,192;Float;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.NormalizeNode;27;-720,0;Float;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;25;-896,0;Float;False;Vector
+    1;3;0;False;1;0;FLOAT3;1,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.NormalizeNode;31;-720,208;Float;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;0;128,0;Float;False;True;Vector
+    1;0;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;2;128,256;Float;False;False;Vector
+    3;2;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;1;128,128;Float;False;False;Vector
+    2;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;28;0;27;0\nWireConnection;28;1;31;0\nWireConnection;30;0;29;0\nWireConnection;30;1;27;0\nWireConnection;29;0;28;0\nWireConnection;27;0;25;0\nWireConnection;31;0;26;0\nWireConnection;0;0;27;0\nWireConnection;2;0;29;0\nWireConnection;1;0;30;0\nASEEND*/\n//CHKSM=18CFF9C2BBF194BC2C63D4F07354C52613D46DD0"
+  m_functionName: 
+  m_description: Providing two vectors creates a third one which is orthogonal to
+    the first two. It uses the first vector as the main guiding vector changing the
+    second accordingly. All results are normalized.
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_nodeCategory: 16
+  m_customNodeCategory: 
+  m_previewPosition: 1

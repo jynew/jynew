@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Bidirectional Parallax Mapping
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=13705\n487;610;979;408;2081.306;97.63176;1.710001;True;False\nNode;AmplifyShaderEditor.TextureCoordinatesNode;22;-1295.124,60.47374;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;FLOAT;FLOAT;FLOAT;FLOAT\nNode;AmplifyShaderEditor.FunctionInput;9;-1152.312,532.149;Float;False;Parallax
+    Scale;1;2;False;1;0;FLOAT;0.0;False;1;FLOAT\nNode;AmplifyShaderEditor.CustomExpressionNode;27;-800,0;Float;False;UVs
+    += plane * scale * refp * ite@$for(int i = 0@ i < ite@ i++)${$\tUVs += (tex2D(tex,
+    UVs).g - 1) * plane * scale@$}$return UVs@;2;False;6;True;tex;SAMPLER2D;0.0;In;True;UVs;FLOAT2;0,0;In;True;plane;FLOAT2;0,0;In;True;ite;INT;0;In;True;refp;FLOAT;0.0;In;True;scale;FLOAT;0.0;In;IterativeParallax;6;0;SAMPLER2D;0.0;False;1;FLOAT2;0,0;False;2;FLOAT2;0,0;False;3;INT;0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;1;FLOAT2\nNode;AmplifyShaderEditor.SimpleDivideOpNode;4;-1166.738,231.9931;Float;False;2;0;FLOAT2;0,0;False;1;FLOAT;0.0,0;False;1;FLOAT2\nNode;AmplifyShaderEditor.FunctionInput;25;-1169.823,366.4736;Float;False;Iterations;0;3;False;1;0;INT;1;False;1;INT\nNode;AmplifyShaderEditor.DynamicAppendNode;2;-1371.897,195.5105;Float;False;FLOAT2;4;0;FLOAT2;0,0;False;1;FLOAT;0.0;False;2;FLOAT;0.0;False;3;FLOAT;0.0;False;1;FLOAT2\nNode;AmplifyShaderEditor.ViewDirInputsCoordNode;1;-1618.191,180.3121;Float;False;Tangent;0;4;FLOAT3;FLOAT;FLOAT;FLOAT\nNode;AmplifyShaderEditor.FunctionInput;10;-1193.709,445.5891;Float;False;Reference
+    Plane;1;1;False;1;0;FLOAT;0.0;False;1;FLOAT\nNode;AmplifyShaderEditor.FunctionInput;11;-1488,0;Float;False;Heightmap
+    Tex;9;0;False;1;0;SAMPLER2D;0.0;False;1;SAMPLER2D\nNode;AmplifyShaderEditor.FunctionOutput;0;-512,0;Float;False;True;Out;0;1;0;FLOAT2;0,0;False;0\nWireConnection;22;2;11;0\nWireConnection;27;0;11;0\nWireConnection;27;1;22;0\nWireConnection;27;2;4;0\nWireConnection;27;3;25;0\nWireConnection;27;4;10;0\nWireConnection;27;5;9;0\nWireConnection;4;0;2;0\nWireConnection;4;1;1;3\nWireConnection;2;0;1;0\nWireConnection;0;0;27;0\nASEEND*/\n//CHKSM=2048ACCD3EDF74303C30AF727B4CFB3C868B5231"
+  m_functionName: 
+  m_description: Creates a parallax mapping effect with user defined iterations and
+    reference plane.
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_nodeCategory: 15
+  m_customNodeCategory: 

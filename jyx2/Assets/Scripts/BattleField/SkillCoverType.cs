@@ -1,0 +1,77 @@
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Jyx2
+{
+    public enum SkillCoverType
+    {
+        /// <summary>
+        /// 点攻击
+        /// CoverSize>1为目标点区域施展（面攻击）
+        /// </summary>
+        POINT = 0,
+
+        /// <summary>
+        /// 直线攻击
+        /// CastSize参数无效
+        /// </summary>
+        LINE = 1,
+
+        /// <summary>
+        /// 面攻击
+        /// </summary>
+        FACE = 2,
+
+        /// <summary>
+        /// 扇形攻击
+        /// </summary>
+        FAN = 3,
+
+        /// <summary>
+        /// 身前一条线
+        /// </summary>
+        FRONT = 4,
+
+        /// <summary>
+        /// 身前十字
+        /// </summary>
+        FRONTCROSS = 5,
+
+        /// <summary>
+        /// 八方放射
+        /// </summary>
+        FANGSHE = 6,
+
+        /// <summary>
+        /// 锥形
+        /// </summary>
+        ZHUIXING = 7,
+
+        /// <summary>
+        /// 星型
+        /// </summary>
+        STAR = 8,
+
+        /// <summary>
+        /// 无效
+        /// </summary>
+        INVALID = -1,
+    }
+
+    public enum MoveDirection
+    {
+        UP_RIGHT = 0,
+        RIGHT = 1,
+        DOWN_RIGHT = 2,
+        DOWN_LEFT = 3,
+        LEFT = 4,
+        UP_LEFT = 5,
+        UP = 6,
+        DOWN = 7,
+        ERROR = -1
+    }
+}

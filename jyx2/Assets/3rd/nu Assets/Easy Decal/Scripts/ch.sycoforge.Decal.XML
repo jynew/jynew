@@ -1,0 +1,1356 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ch.sycoforge.Decal</name>
+    </assembly>
+    <members>
+        <member name="T:ch.sycoforge.Decal.CombinedDecalsGroup">
+            <summary>
+            Holds references to the original decal objects.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.CubeCast">
+            <summary>
+            Class for simple cubic raycasting.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.DecalAnimation">
+            <summary>
+            Class providing decal texture animation functionality.
+            Version 0.3
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalAnimation.RenderFrame">
+            <summary>
+            Renders the animation at the given frame.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalAnimation.IsFinished">
+            <summary>
+            Gets a value indicating wheter the animation is finish
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalAnimation.Reset">
+            <summary>
+            Resets the animation.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalBufferGroup.GetTargets(UnityEngine.Camera)">
+            <summary>
+            Returns the render targets for the specified camera.
+            </summary>
+            <param name="camera"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalBase.OnChangedTechnique">
+            <summary>
+            Gets called after the projection technique has been changed. 
+            This method is synchronized with the main update loop.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalBase.OnChangedDeferredFlags">
+            <summary>
+            Gets called after the deferred flags has been changed. 
+            This method is synchronized with the main update loop.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalBase.OnChangedOrientation">
+            <summary>
+            Gets called after the orientation has been changed. 
+            This method is synchronized with the main update loop.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalBase.OnChangedBakeStatus">
+            <summary>
+            Gets called after the bake status has been changed. 
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalBase.Bounds">
+            <summary>
+            The decal's bound in world space.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:ch.sycoforge.Decal.DecalBase.OnOrientationChanged">
+            <summary>
+            Gets called when the decal's orientation changed (Rotation, Translation, Scale).
+            <remarks>This event only gets called when the decal is not baked.</remarks>
+            </summary>
+        </member>
+        <member name="E:ch.sycoforge.Decal.DecalBase.OnTechniqueChanged">
+            <summary>
+            Gets called when the decal's projection technique changed. <see cref="T:ch.sycoforge.Decal.ProjectionTechnique"/>
+            </summary>
+            <remarks>This event is syncronized with the main update loop.</remarks>
+        </member>
+        <member name="E:ch.sycoforge.Decal.DecalBase.OnDeferredFlagsChanged">
+            <summary>
+            Gets called when the decal's deferred flags changed. <see cref="T:ch.sycoforge.Decal.DeferredFlags"/>
+            </summary>
+            <remarks>This event is syncronized with the main update loop.</remarks>
+        </member>
+        <member name="E:ch.sycoforge.Decal.DecalBase.OnBakeStatusChanged">
+            <summary>
+            Gets called when the decal's bake status changed.
+            </summary>
+            <remarks>This event is syncronized with the main update loop.</remarks>
+        </member>
+        <member name="E:ch.sycoforge.Decal.DecalBase.OnDestroyed">
+            <summary>
+            Gets called after the decal object has been destroyed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.Baked">
+            <summary>
+            Gets or sets a value indicating whether the decal geometry has been baked.
+            When set to <c>true</c> there are no geometry updates.
+            The geometry is baked and stays as it is.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.BakeOnAwake">
+            <summary>
+            Gets or sets a value indicating whether the decal geometry should be baked after awaking.
+            When set to <c>true</c> there are no geometry updates.
+            The geometry is baked and stays as it is.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.FlipNormals">
+            <summary>
+            When set to <c>true</c> there are no algorithmic updates
+            in the editor. The geometry is baked and stays as it is.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.BackfaceCulling">
+            <summary>
+            Gets or set a value indicating whether faces that point 
+            in opposite projection direction should be culled or not.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.WorldToLocalMatrix">
+            <summary>
+            Gets the world to local matrix.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.LocalToWorldMatrix">
+            <summary>
+            Gets the local to world matrix.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.Distance">
+            <summary>
+            Gets or set a value defining the distance of the decal from its parent/s.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.AngleConstraint">
+            <summary>
+            Maximum angle allowed before the face gets culled.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.Technique">
+            <summary>
+            The projection technique used to project the decal.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.DeferredFlags">
+            <summary>
+            The flags specifying the buffers to write to before the lightning pass.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.SkinnedDecalRenderer">
+            <summary>
+            The skinned mesh renderer or null when not in a skinned projection mode.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.DecalBase.Projector">
+            <summary>
+            The currently assigned projector.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.AtlasRegion.Name">
+            <summary>
+            Name of the region.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.AtlasRegion.Region">
+            <summary>
+            UV rectangle defining the actual atlas region. Origin (0/0) is located in the top-left corner.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.AtlasRegion.AspectRatio">
+            <summary>
+            Aspect ration of the region.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.ProjectionTechnique">
+            <summary>
+            Defines the technique used to project the decal.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.ProjectionTechnique.Plane">
+            <summary>
+            Project a plane. [Mesh based]
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.ProjectionTechnique.Box">
+            <summary>
+            Project within a bounding box. [Mesh based]
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.ProjectionTechnique.SSD">
+            <summary>
+            Projects the decal in screen space.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.ProjectionTechnique.Deferred">
+            <summary>
+            Projects the decal in screen space using deferred rendering path.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.ProjectionTechnique.SkinnedBox">
+            <summary>
+            Project within a bounding box to skinned meshes. [Mesh based]
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.DeferredFlags">
+            <summary>
+            Flags describing what get rendered to the buffers before lightning pass.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.OpacityMode">
+            <summary>
+            Defines the mode used to store/control the opacity.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.LookupMode">
+            <summary>
+            Defines the mode of the recursive lookup.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.LookupMode.Up">
+            <summary>
+            Recursively search only in parents.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.LookupMode.Down">
+            <summary>
+            Recursively search only in children.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.LookupMode.Both">
+            <summary>
+            Recursively search in parents and children.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.FadingMode">
+            <summary>
+            Defines the fading mode of decal.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.FadingMode.Out">
+            <summary>
+            Gradually fades out the decal (defined by curve).
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.FadingMode.In">
+            <summary>
+            Gradually fades in the decal (defined by curve).
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.FadingMode.ImmediateHide">
+            <summary>
+            Immediately hides the decal.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.FadingMode.ImmediateShow">
+            <summary>
+            Immediately shows the decal.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.ProjectionMode">
+            <summary>
+            Defines the mode of the decal projection.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.ProjectionMode.SurfaceNormal">
+            <summary>
+            Project along the receivers surface normal.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.ProjectionMode.ProjectionNormal">
+            <summary>
+            Project along the projection ray.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.MeshChannelMode">
+            <summary>
+            Defines the mode of a specified geometry channel.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.MeshChannelMode.Ignore">
+            <summary>
+            Ignore this channel.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.MeshChannelMode.Source">
+            <summary>
+            Try using the source's channel.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.MeshChannelMode.Calculate">
+            <summary>
+            Try caculating the channel.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.SourceMode">
+            <summary>
+            Defines the source mode of the decal.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.SourceMode.Material">
+            <summary>
+            Use a single material as source.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.SourceMode.Atlas">
+            <summary>
+            Use an atlas as source
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.AspectMode">
+            <summary>
+            Defines the mode used for the auto aspect correction.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.AspectMode.None">
+            <summary>
+            Don't correct the aspect ratio at all.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.AspectMode.Width">
+            <summary>
+            Preserve the width while correcting.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.AspectMode.Height">
+            <summary>
+            Preserve the height while correcting.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.EasyDecal">
+            <summary>
+            Class providing advanced decal projection functionality.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.EasyDecal.MaxQuality">
+            <summary>
+            The maximum quality allowed when using the <c>RayProjector</c>.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.EasyDecal.OnFadeOutStarted_">
+            <summary>
+            Gets called when the decal has started to fade out.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.EasyDecal.OnProjectionFinished_">
+            <summary>
+            Gets called after the decal was projected and before the mesh gets assigned to the <c>MeshFilter</c>.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.EasyDecal.ProxyCollection">
+            <summary>
+            Holds the all static colliders for this runtime instance.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.EasyDecal.HideMesh">
+            <summary>
+            Defines a flag whether the generated mesh should be hidden in the editor hierarchy.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.EasyDecal.Instantiation">
+            <summary>
+            Assign an instantiation method to override the default creation method. 
+            When instantiating a decal in the scene root, the parent argument is null.
+            E.g. when using an external pooling system.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Reset">
+            <summary>
+            Resets the decal object to its initial Awake() state.
+            This method should be called when the decal object gets recycled.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Reset(System.Boolean)">
+            <summary>
+            Resets the decal object to its initial Awake() state.
+            This method should be called when the decal object gets recycled.
+            </summary>
+            <param name="unbake">Should the decal be unbaked?</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Reset(System.Boolean,System.Boolean)">
+            <summary>
+            Resets the decal object to its initial Awake() state.
+            This method should be called when the decal object gets recycled.
+            </summary>
+            <param name="unbake">Should the decal be unbaked?</param>
+            <param name="recreate">Should the decal's geometry be recreated?</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.StartFade">
+            <summary>
+            Starts the fading process.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.CancelFade">
+            <summary>
+            Cancels the fading process.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.SelectRandom">
+            <summary>
+            Selects a random atlas index.
+            <see cref="F:ch.sycoforge.Decal.SourceMode.Atlas"/>
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.CorrectAspect">
+            <summary>
+            Corrects the decal's aspect according the <c>AspectCorrectionMode</c> property.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.StartFadeOut">
+            <summary>
+            Internally used by the invoke method.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.StartFade(ch.sycoforge.Decal.FadingMode)">
+            <summary>
+            Starts fading the decal in or out.
+            </summary>
+            <param name="mode">The fading mode used.</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.CreateDecalGameObject">
+            <summary>
+            Creates a game object wrapping the projection plane mesh.
+            </summary>
+            <returns>The wrapping game object.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.AddDynamicMesh(ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh)">
+            <summary>
+            Gets called by the projector after all cutting/projection work has been done.
+            </summary>
+            <param name="dynamicMesh"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.PostProcessMesh(ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh)">
+            <summary>
+            Applies all instance specific properties to the mesh.
+            </summary>
+            <param name="mesh"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.PostProcessMesh(UnityEngine.Mesh)">
+            <summary>
+            Applies all instance specific properties to the mesh.
+            </summary>
+            <param name="mesh"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.TransformUV(ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh)">
+            <summary>
+            TransformGeometry the UVs from normalized UV space to atlas UV space.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.ResetPlanes">
+            <summary>
+            Resets all projection planes.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.UpdateDecal">
+            <summary>
+            Updates the decal geometry.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.LateUnbake">
+            <summary>
+            Unbakes the decal in the next frame.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.LateBake">
+            <summary>
+            Bakes the decal in the next frame.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.LateBake(System.UInt32)">
+            <summary>
+            Bakes the decal in a specified amount of frames.
+            </summary>
+            <param name="frames">Frame offset used to postpone the baking process by the specified amount of frames. Value has to be greater than zero (0).</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Clone(ch.sycoforge.Decal.EasyDecal)">
+            <summary>
+            Clones 
+            </summary>
+            <param name="decal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.SetStaticProxyCollection(ch.sycoforge.Decal.StaticProxyCollection)">
+            <summary>
+            Sets the game objects that are possible decal receivers. 
+            Set to <c>null</c> when a linear scene search should be perfomed instead.
+            </summary>
+            <param name="proxyCollection">The game objects that are possible decal receivers.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.ProjectAt(UnityEngine.GameObject,UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Instantiates the prefab at the hit point of the specified ray.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="receiver">The decal parent (parent).</param>
+            <param name="position">The decal's position.</param>
+            <param name="forward">The sender's forward orientation.</param>
+            <param name="up">The sender's up orientation.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.ProjectAt(UnityEngine.GameObject,UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Quaternion)">
+            <summary>
+            Instantiates the prefab at the specified position and rotation as child of parent.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="receiver">The decal parent (parent).</param>
+            <param name="position">The decal's position.</param>
+            <param name="rotation">The decal's rotation.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.ProjectAt(UnityEngine.GameObject,UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Instantiates the prefab at the specified position and specified normal direction as child of parent.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="receiver">The decal parent (parent).</param>
+            <param name="position">The decal's position.</param>
+            <param name="normal">The parent's surface normal.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.ProjectAt(UnityEngine.GameObject,UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Vector3,System.Single)">
+            <summary>
+            Instantiates the prefab at the specified position facing in the specified normal direction and rotation as child of parent.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="receiver">The decal parent (parent).</param>
+            <param name="position">The decal's position.</param>
+            <param name="normal">The parent's surface normal.</param>
+            <param name="rotation">The rotation along the receivers normal axis.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.ProjectAt(UnityEngine.GameObject,UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Vector3,System.Single,UnityEngine.Vector3)">
+            <summary>
+            Instantiates the prefab at the specified position facing in the specified normal direction and rotation as child of parent.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="receiver">The decal parent (parent).</param>
+            <param name="position">The decal's position.</param>
+            <param name="normal">The parent's surface normal.</param>
+            <param name="rotation">The rotation along the receivers normal axis.</param>
+            <param name="scale">The scale of the decal.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Project(UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Quaternion)">
+            <summary>
+            Instantiates the prefab at the specified position and rotation as child of parent.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="position">The decal's position.</param>
+            <param name="rotation">The decal's rotation.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Project(UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Instantiates the prefab at the specified position facing in the specified normal direction.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="position">The decal's position.</param>
+            <param name="normal">The parent's surface normal.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Project(UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Vector3,System.Single)">
+            <summary>
+            Instantiates the prefab at the specified position facing in the specified normal direction and rotation.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="position">The decal's position.</param>
+            <param name="normal">The parent's surface normal.</param>
+            <param name="rotation">The rotation along the receivers normal axis.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.Project(UnityEngine.GameObject,UnityEngine.Vector3,UnityEngine.Ray)">
+            <summary>
+            Instantiates the prefab at the specified position facing in the specified ray direction.
+            </summary>
+            <param name="decalPrefab">The decal prefab.</param>
+            <param name="position">The decal's position.</param>
+            <param name="ray">The sender's ray.</param>
+            <returns>The decal object or <c>null</c> if the projection criteria was not fulfilled.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecal.SearchChildren(UnityEngine.Transform)">
+            <summary>
+            Searches children decals.
+            </summary>
+            <param name="parent">The parent cachedTransform</param>
+            <returns>The children found on this cachedTransform</returns>
+        </member>
+        <member name="E:ch.sycoforge.Decal.EasyDecal.OnFadedOut">
+            <summary>
+            Gets called when the decal has completely faded out.
+            </summary>
+        </member>
+        <member name="E:ch.sycoforge.Decal.EasyDecal.OnFadedIn">
+            <summary>
+            Gets called when the decal has completely faded out.
+            </summary>
+        </member>
+        <member name="E:ch.sycoforge.Decal.EasyDecal.OnFadeOutStarted">
+            <summary>
+            Gets called when the decal has started to fade out.
+            </summary>
+        </member>
+        <member name="E:ch.sycoforge.Decal.EasyDecal.OnProjectionFinished">
+            <summary>
+            Gets called after the decal was projected and before the mesh gets assigned to the <c>MeshFilter</c>.
+            </summary>
+        </member>
+        <member name="E:ch.sycoforge.Decal.EasyDecal.OnAtlasIndexChanged">
+            <summary>
+            Gets called after the atlas index has been changed.
+            </summary>
+        </member>
+        <member name="E:ch.sycoforge.Decal.EasyDecal.OnSourceChanged">
+            <summary>
+            Gets called after the source mode has been changed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.SkinningQuality">
+            <summary>
+            Gets or sets the skinning quality.
+            </summary>
+            <remarks>Only used when the projection technique is set to SkinnedBox</remarks>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.SharedMesh">
+            <summary>
+            Gets the shared mesh for this decal instance.
+            </summary>
+            <remarks>Please note that this property is <c>null</c> when no projection cycle has been processed.</remarks>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.IsVisible">
+            <summary>
+            Gets a value indicating whether the decal is visible or not.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.Quality">
+            <summary>
+            The quality of the projected mesh.
+            Note: be carefull with high quality settings, because of the quadratic performance impact.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.MultiMeshEnabled">
+            <summary>
+            Determines wheter it's allowed to project the decal to combined meshes.
+            For dynamic object this should be set to <c>true</c>.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.CullInvisibles">
+            <summary>
+            Determines wheter it's allowed to project the decal to invisible meshes.
+            A mesh is invisible when either no <c>MeshRenderer</c> is attached or it's disabled.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.CullUnreachable">
+            <summary>
+            Determines wheter it's allowed to project the decal to to unreachable geometry.
+            Note: with this option enabled performance may be lower.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.Receiver">
+            <summary>
+            Gets the parent of the decal.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.CalculateTangents">
+            <summary>
+            Gets or sets a value indicating wheter mesh tangents should be calculated.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.TangentChannelMode">
+            <summary>
+            Gets or set the mode for the tangent channel.
+            See <see cref="T:ch.sycoforge.Decal.MeshChannelMode"/>
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.CalculateNormals">
+            <summary>
+            Gets or sets a value indicating wheter mesh normals should be calculated.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.NormalChannelMode">
+            <summary>
+            Gets or set the mode for the normal channel.
+            See <see cref="T:ch.sycoforge.Decal.MeshChannelMode"/>
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.ShowDir">
+            <summary>
+            Gets or sets a value indicating wheter the projection direction should be displayed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.ShowVertices">
+            <summary>
+            Gets or sets a value indicating wheter the vertices of the projected polygons should be displayed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.ShowNormals">
+            <summary>
+            Gets or sets a value indicating wheter the normals should be displayed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.MaxDistance">
+            <summary>
+            Gets or set a value defining the maximal distance between a vertex and the objects pivot.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.ProjectionDistance">
+            <summary>
+            Gets or set a value defining the distance of the projection rays from the parent's surface.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.SmoothNormals">
+            <summary>
+            Gets or set a value defining whether the mesh's surface normals should be smoothed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.NormalSmoothFactor">
+            <summary>
+            Gets or set a value defining the mesh's surface normals.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.NormalSmoothThreshold">
+            <summary>
+            Gets or set a threshold value describing from when the mesh's surface normals get smooth.
+            0.0 means all normals get smooth, 
+            0.5 means all normals with a an angle greater than 45 deggree (to the projection direction) get smoothed
+            1.0 no means normals get smoothed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.DontDestroy">
+            <summary>
+            Gets or set a value defining whether the decal should be destroyed after fading out.
+            Enable this option when using the decal with pooling system.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.FadeOut">
+            <summary>
+            Gets or set a value defining whether the decal should be faded out after some time.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.OpacityMode">
+            <summary>
+            Gets or set a value defining the mode used for the opacity. It's set to <c>OpacityMode.Geometry</c> per default.
+            <see cref="T:ch.sycoforge.Decal.OpacityMode"/>
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.Lifetime">
+            <summary>
+            Gets or set a value defining the decal's lifetime in seconds.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.RemainingLifetime">
+            <summary>
+            Gets a value defining the decal's remaining lifetime.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.CurrentFadeoutTime">
+            <summary>
+            Gets a value holding the time in seconds until the decal will be completely faded out.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.FadeoutTime">
+            <summary>
+            Gets or set a value defining the decal's fadeout time. The fade out starts when the lifetime elapsed.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.FadeoutCurve">
+            <summary>
+            Gets or set a curve describing the decal's fadeout process.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.InverseProjectionDirection">
+            <summary>
+            Holds the inverse projection direction.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.SurfaceRotation">
+            <summary>
+            The decal's surface rotation.
+            Note: This property is only set in the editor.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.DecalMaterial">
+            <summary>
+            Gets or set a material for rendering the decal.
+            Note: This is a shared material.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.Atlas">
+            <summary>
+            Gets or set an atlas used for rendering the decal.
+            Note: The underlying material gets shared between instances.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.AtlasRegionIndex">
+            <summary>
+            Gets or sets the active region index of the atlas.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.MeshContainer">
+            <summary>
+            The game object created by the dynamic geometry system.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.Mode">
+            <summary>
+            The projection mode of the decal.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.Source">
+            <summary>
+            The source mode of the decal.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.AspectCorrectionMode">
+            <summary>
+            The mode used by the auto apsect correction.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.RecursiveMode">
+            <summary>
+            The lookup mode used for finding possible projection targets.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.Alpha">
+            <summary>
+            The overall transparency of the decal [0..1]. 
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.IsFadingOut">
+            <summary>
+            Is the decal currently fading out?
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.IsFading">
+            <summary>
+            Is the decal currently fading in or out?
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.OnlyColliders">
+            <summary>
+            Gets or sets a value indicating whether the decal can only 
+            be projected to meshes with a collider component attched.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.RecursiveLookup">
+            <summary>
+            Enables or disables recursive mesh lookup on the parent.
+            When enabled the projector searches for meshes in the game object hierarchy.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.RandomIndexEnabled">
+            <summary>
+            Enables or disables the random atlas index selection on instantiation.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.RecursiveLookupSteps">
+            <summary>
+            Sets the steps used for the recursive mesh lookup in the game object hierarchy.
+            Do not set this value too high as it could impact your performance.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.MeshProcessors">
+            <summary>
+            List of <c>IMeshProcessor</c>s that get processed after projection, but before uv transformation, normal and tangent calculation.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.EasyDecal.UseLightProbes">
+            <summary>
+            Enable light probes for the decals.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.DecalSet">
+            <summary>
+            Provides functionality for storing decals.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalSet.Add(ch.sycoforge.Decal.EasyDecal)">
+            <summary>
+            Adds an new decal instance to the manager's scope.
+            </summary>
+            <param name="decal">The decal to add.</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.DecalSet.Remove(ch.sycoforge.Decal.EasyDecal)">
+            <summary>
+            Removes the specified decal instance from the manager's scope.
+            </summary>
+            <param name="decal">The decal to remove.</param>
+        </member>
+        <member name="T:ch.sycoforge.Decal.EasyDecalManager">
+            <summary>
+            Provides functionalities for managing decals.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecalManager.GetDecalBufferGroups">
+            <summary>
+            Gets all registered deferred decals buffer groups in the current scene. <see cref="T:ch.sycoforge.Decal.DecalBufferGroup"/> 
+            </summary>
+            <returns>Returns the matched decals.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecalManager.GetDeferredDecals(ch.sycoforge.Decal.DeferredFlags)">
+            <summary>
+            Gets all registered deferred decals in scene matching the specified flags. 
+            </summary>
+            <param name="flags">the filter flag.</param>
+            <returns>Returns the matched decals.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecalManager.GetDeferredDecals">
+            <summary>
+            Gets all registered deferred decals in scene. 
+            </summary>
+            <returns>Returns all registered deferred decals in scene. </returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecalManager.Add(ch.sycoforge.Decal.EasyDecal)">
+            <summary>
+            Adds an new decal instance to the manager's scope.
+            </summary>
+            <param name="decal">The decal to add.</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecalManager.Remove(ch.sycoforge.Decal.EasyDecal)">
+            <summary>
+            Removes the specified decal instance from the manager's scope.
+            </summary>
+            <param name="decal">The decal to remove.</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EasyDecalManager.EditorUpdate">
+            <summary>
+            Updates the data set for the editor.
+            <remarks>Don't call this method manually.</remarks>
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.EnumHelper.GetAllEnums``1">
+            <summary>
+            Returns a list of all flag permutations of the specified enum.
+            </summary>
+            <typeparam name="T">The [Flags] enum.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:ch.sycoforge.Decal.MeshCast">
+            <summary>
+            Class for mesh raycasting.
+            </summary>
+        </member>
+        <member name="T:ch.sycoforge.Decal.MeshUtil">
+            <summary>
+            Mesh utillities for traversing vertices and triangles.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.MeshUtil.AdjacentIndices(System.Collections.Generic.IList{UnityEngine.Vector3},System.Collections.Generic.IList{System.Int32},System.Int32)">
+            <summary>
+            Finds all adjacents vertex indices for the specified vertex.
+            </summary>
+            <param name="vertices">The vertices</param>
+            <param name="triangles">The triangles</param>
+            <param name="index">The index specifying the vertex.</param>
+            <returns>The indices of the adjacents.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.MeshUtil.CalculateTangents(System.Collections.Generic.IList{UnityEngine.Vector3},System.Collections.Generic.IList{UnityEngine.Vector3},System.Collections.Generic.IList{UnityEngine.Vector2},System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Calculates the tangents of the mesh.
+            </summary>
+            <param name="vertices">The vertices</param>
+            <param name="normals">The normals</param>
+            <param name="uv">The uvs</param>
+            <param name="triangles">The triangles</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.MeshUtil.FaceFactor(UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Returns the amount the specified normal vector faces the inversed projection direction.
+            In the range of [0..1].
+            Where 1 means 100% facing and 0 0% facing (opposite direction).
+            </summary>
+            <param name="normal"></param>
+            <param name="inverseProjectionDir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.MeshUtil.TangentsMultithreaded(UnityEngine.Mesh)">
+            <summary>
+            Calculates the tangents of the mesh.
+            </summary>
+            <param name="mesh">The mesh to calculate the tangents for.</param>
+        </member>
+        <member name="T:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh">
+            <summary>
+            Defines a dynamic mesh.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.IMesh.Normals">
+            <summary>
+            Gets the mesh's normals.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.IMesh.Tangents">
+            <summary>
+            Gets the mesh's tangents.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.IMesh.VertexColors">
+            <summary>
+            Gets the  mesh's vertex colors.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.IMesh.TriangleIndices">
+            <summary>
+            Gets the mesh's triangles.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.IMesh.UV">
+            <summary>
+            Gets the mesh's uvs.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.IMesh.UV2">
+            <summary>
+            Gets the mesh's uv2s.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.IMesh.Vertices">
+            <summary>
+            Gets the mesh's vertices.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.uv">
+            <summary>
+            The mesh's texture coordinates uvs.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.uv2">
+            <summary>
+            The mesh's texture coordinates uv2s.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.vertices">
+            <summary>
+            The mesh's vertices.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.normals">
+            <summary>
+            The mesh's normals.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.tangents">
+            <summary>
+            The mesh's tangents.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.vertexColors">
+            <summary>
+            The mesh's vertex colors.
+            </summary>        
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.triangleIndices">
+            <summary>
+            The mesh's triangles.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Clear">
+            <summary>
+            Clears the mesh data.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Add(UnityEngine.Mesh,UnityEngine.Matrix4x4)">
+            <summary>
+            Add the specified mesh to the dynamic mesh structure.
+            </summary>
+            <param name="mesh">
+            The mesh.
+            </param>
+            <param name="localToWorld">
+            The local to world transformation matrix.
+            </param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Add(UnityEngine.Terrain,UnityEngine.Matrix4x4)">
+            <summary>
+            Add the specified terrain to the dynamic mesh.
+            </summary>
+            <param name="terrain">
+            The terrain object.
+            </param>
+            <param name="localToWorld">
+            The local to world matrix.
+            </param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.OnProcessVertexIndex(System.Int32,System.Boolean)">
+            <summary>
+            Gets called after every vertex processing iteration.
+            </summary>
+            <param name="index">The index of the process vertex.</param>
+            <param name="valid">Is the processed vertex valid or will it be culled from the resulting mesh?</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Add(ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh,UnityEngine.Matrix4x4,UnityEngine.Matrix4x4)">
+            <summary>
+            Adds a <c>DynamicMesh</c> instance to the current instance.
+            </summary>
+            <param name="dynamicMesh">An other <c>DynamicMesh</c> instance to add.</param>
+            <param name="sourceLocalToWorld">Local to world matrix of the source mesh.</param>
+            <param name="targetWorldToLocal">World to local matrix of the source mesh.</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.ConvertToMesh(UnityEngine.Mesh,System.Boolean)">
+            <summary>
+            Converts the current instance to an Unity Mesh.
+            When the specified target mesh is <c>null</c> a new instance gets created.
+            </summary>
+            <param name="target">A mesh target or <c>null</c> to create a new instance.</param>
+            <param name="forceRecreation">When set to <c>true</c> the whole mesh gets recreated.</param>
+            <returns>The converted mesh.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.RemoveTriangleAt(System.Int32)">
+            <summary>
+            Removes the triangle at the specified index.
+            </summary>
+            <param name="index">
+            The index of the triangle to remove.
+            </param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.RemoveTrianglesAt(System.Int32,System.Int32)">
+            <summary>
+            Removes a specified amount of triangles starting at the specified index.
+            </summary>
+            <param name="startIndex">
+            Index to start removing from.
+            </param>
+            <param name="count">
+            The amount of triangles to remove.
+            </param>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Vertices">
+            <summary>
+            Gets the mesh's vertices.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Normals">
+            <summary>
+            Gets the mesh's normals.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Tangents">
+            <summary>
+            Gets the mesh's tangents.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.VertexColors">
+            <summary>
+            Gets the  mesh's vertex colors.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.TriangleIndices">
+            <summary>
+            Gets the mesh's triangles.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.UV">
+            <summary>
+            Gets the mesh's uvs.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.UV2">
+            <summary>
+            Gets the mesh's uv2s.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh.Mode">
+            <summary>
+            Gets a value indicating whether the mesh has a fixed size.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.bones">
+            <summary>
+            The skinned mesh's bones.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.bindPoses">
+            <summary>
+            The skinned mesh's bind poses.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.bonesWeights">
+            <summary>
+            The skinned mesh's bone weights.
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.originalBonesWeights">
+            <summary>
+            The skinned mesh's bone weights.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.Add(UnityEngine.Mesh,UnityEngine.Transform[],UnityEngine.Matrix4x4)">
+            <summary>
+            Add the specified mesh to the dynamic mesh structure.
+            </summary>
+            <param name="mesh">
+            The mesh to add.
+            </param>
+            <param name="bones">
+            The bones to add.
+            </param>
+            <param name="localToWorld">
+            The local to world transformation matrix (Source Mesh).
+            </param>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.Bones">
+            <summary>
+            The skinned mesh's bones.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.BindPoses">
+            <summary>
+            The skinned mesh's bind poses.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.DynamicSkinnedMesh.BonesWeights">
+            <summary>
+            The skinned mesh's bone weights.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.MeshCutter`1.ch#sycoforge#Decal#Projectors#Geometry#IMeshCutter#CutMesh(ch.sycoforge.Decal.Projectors.Geometry.DynamicMesh)">
+            <summary>
+            Cuts the specified mesh along the tranform box of the parent projector and reculculate the uv coordinates.
+            </summary>
+            <param name="dynamicMesh">The dynamic mesh to cut.</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.MeshCutter`1.RemoveIndices(ch.sycoforge.Decal.Projectors.Geometry.IndexTrashBin)">
+            <summary>
+            Removes the indices.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Projector.Update">
+            <summary>
+            Updates the projector.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Projector.UpdateVertexColor">
+            <summary>
+            Updates the vertex color channel according the parent's alpha property.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Projector.Parent">
+            <summary>
+            The parent of by this projector instance.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Projector.Mesh">
+            <summary>
+            The <c>DynamicMesh</c> instance used by this projector instance.
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Projector.IsVisible">
+            <summary>
+            Gets a value indicating whether the decal is visible or not by the main camera (Camera.main).
+            </summary>
+        </member>
+        <member name="F:ch.sycoforge.Decal.Projectors.Geometry.RecreationMode.Never">
+            <summary>
+            The geometry is fixed and gets never changed except at the first initialization.
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.IndexTrashBin.ClampIndex(System.Int32)">
+            <summary>
+            Clamps the specified index into a valid range.
+            </summary>
+            <param name="index">The index to clamp.</param>
+            <returns>The clamped index.</returns>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.#ctor(UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+              <para>Creates a plane.</para>
+            </summary>
+            <param name="inNormal"></param>
+            <param name="inPoint"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.#ctor(UnityEngine.Vector3,System.Single)">
+            <summary>
+              <para>Creates a plane.</para>
+            </summary>
+            <param name="inNormal"></param>
+            <param name="d"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.#ctor(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+              <para>Creates a plane.</para>
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="c"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.GetDistanceToPoint(UnityEngine.Vector3)">
+            <summary>
+              <para>Returns a signed distance from plane to point.</para>
+            </summary>
+            <param name="inPt"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.GetSide(UnityEngine.Vector3)">
+            <summary>
+              <para>Is a point on the positive side of the plane?</para>
+            </summary>
+            <param name="inPt"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.SameSide(UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+              <para>Are two points on the same side of the plane?</para>
+            </summary>
+            <param name="inPt0"></param>
+            <param name="inPt1"></param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.Set3Points(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+              <para>Sets a plane using three points that lie within it.  The points go around clockwise as you look down on the top surface of the plane.</para>
+            </summary>
+            <param name="a">First point in clockwise order.</param>
+            <param name="b">Second point in clockwise order.</param>
+            <param name="c">Third point in clockwise order.</param>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.SetNormalAndPosition(UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+              <para>Sets a plane using a point that lies within it along with a normal to orient it.</para>
+            </summary>
+            <param name="inNormal">The plane's normal vector.</param>
+            <param name="inPoint">A point that lies on the plane.</param>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.Distance">
+            <summary>
+              <para>Distance from the origin (3d space) to the plane.</para>
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.Normal">
+            <summary>
+              <para>normal vector of the plane.</para>
+            </summary>
+        </member>
+        <member name="P:ch.sycoforge.Decal.Projectors.Geometry.MathPlane.Origin">
+            <summary>
+            The origin of the plane (origin is always on the plane).
+            </summary>
+        </member>
+        <member name="M:ch.sycoforge.Decal.Projectors.RayProjector.CreateProjectionGrid">
+            <summary>
+            Creates a new projection grid.
+            </summary>
+        </member>
+        <member name="E:ch.sycoforge.Decal.DecalTextureAtlas.OnAtlasChanged">
+            <summary>
+            Editor only. Gets called when the decal atlas was changaed.
+            </summary>
+        </member>
+    </members>
+</doc>

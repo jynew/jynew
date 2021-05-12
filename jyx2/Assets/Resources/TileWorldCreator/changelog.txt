@@ -1,0 +1,206 @@
+2.0.3
+-----
+- BUGFIX: Fixed bug where editor settings won't get saved
+- BUGFIX: Fixed some links
+
+2.0.2
+-----
+-BUGFIX: ArgumentOutOfRange exception fixed when using object scatter and the grid height and length doesn't share the same value
+-BUGFIX: Fixed runtime demoscene wrong object placements
+-BUGFIX: Fixed on scene gui bug in Unity 5.6.0b3
+
+2.0.1
+-----
+- BUGFIX: when trying to scatter more then one position based object
+- BUGFIX: where tiles on a corner of a map got the wrong rotation
+- BUGFIX: where a custom seed resulted in two different map generations with the BSP algorithm
+- removed a debug.log message
+- better fallback on "best guess" position based object scattering.
+
+
+2.0
+-----
+
+- Please backup your project before importing TileWorldCreator V.2.0
+
+- NEW: dungeon tileset with hand painted textures
+- NEW: 4 Different map algorithms: BSP dungeon, Cellular, Maze, Simple dungeon
+- NEW: It is now possible to implement your own map algorithms
+- NEW: XZ and XY map orientation
+- NEW: Settings and presets stored in a sepparate asset file. (configuration file)
+- NEW: Asset files can be loaded during runtime
+- NEW: Automatic cluster size option. Calculates the best size according to the tile vertex count.
+- NEW: Added new EventSystem (OnMapBuildComplete, BuildProgress...)
+- NEW: Completely new and rewritten TileWorldObjectScatter tool!
+- NEW: Objects can now be painted
+- NEW: New and better "best guess" position placement algorithm
+- NEW: Procedural based object placement
+- NEW: Position based object placement (great for player start / end position)
+- NEW: API WorldPositionToMap();
+- NEW: API GetCurrentSeed();
+- NEW: New and updated Demoscenes
+
+- Overall lots of improvements, better API, code cleanup and bug fixes
+
+Improvements: Paint speed improvements
+Improvements: Code clean up
+Improvements: Reworked Documentation
+
+
+- Breaking changes:
+-------------------
+This is a major new version with lots of changes and therefore there are some inevitable
+breakking changes.
+
+- TileWorldCreator settings deprecated due to new scriptable object asset files.
+Runtime settings assignments does work different now. Checkout the runtime demo.
+
+- iMask new return method
+- FillLayerFloor renamed to FillLayerGround
+-renamed Generate to GenerateAndBuild for less confusing
+
+
+
+1.2.2
+-----
+
+- NEW: Added new multi material mesh merge option. Single clusters can now be merged into a one single multi material mesh.
+- NEW: It is now possible to name the generated TWC_World group gameobject. Makes it simpler when using multiple TileWorldCreator instances in one scene.
+- NEW: Multi tile drag and drop prefab assignment functionality added to the preset.
+- NEW: Multi gameobject drag and drop assignment in TileWorldObjectScatterer.
+
+- Modification: The grid does now take the y offset of a preset into account.
+- Modification: Renamed floor and block offset settings in the presets to terrain and water.
+- Modification: Renamed preset tiles to meet the new  multi tile assignment alphabetical ordering in the preset. 
+
+- Bugfix: Fixed a rare array exception bug when reseting all settings.
+- Bugfix: Fixed a rare array exception bug when changing the number of layers in the settings.
+- Bugfix: Runtime Editor takes now the position of the TileWorldCreator prefab into account.
+- Bugfix: When generating a map at runtime the scaling of the world object was set to 0,0,0
+
+- Update: Better build performance when using multiple layers.
+
+
+1.2.1h1
+-----
+
+- Hotfix: Add Y offset rotation on tiles works again.
+
+- TileWorldCreator
+------------------
+
+- NEW: Floodholes option. Flood holes inside of an island/cavern.
+- NEW: Brush size can be changed
+- NEW: Added API methods AddTiles + RemoveTiles.
+- NEW: API Documentation added.
+- Change: Renamed floodfill to flood unjoined.
+- Change: small code changes and added new comments.
+
+
+- TileWorld object scatterer
+----------------------------
+
+- Bugfix: Start/End position works correctly when prefab is moved.
+- Bugfix: Child objects position is now correct when prefab is moved.
+- Bugfix: the scattered objects are now placed correctly when the global scale is > 1.
+	
+
+1.2h1
+-----
+
+- Hotfix: the type or namespace name `UnityEditor' could not be found in ReturnInstallPath.cs
+
+1.2.0
+-----
+
+- TileWorldCreator
+------------------
+- NEW: Mask Layer feature. With option to create your own mask behaviours.
+- NEW: Added 4 default mask behaviours (BorderMask, InnerMask, CircleMask, RandomMask)
+- NEW: TileWorldCruncher Script. Attach to any gameobject and it will add or subtract tiles from your map in a certain rate from its current position
+- NEW: Added Ramp tile to preset_01
+- NEW: New Demoscene showcasing the mask feature
+- NEW: option to undock settings, presets and edit map panel to a sepparate window
+- NEW: duplicate layer feature
+- NEW: copy/paste map to layer feature
+- NEW: Optimization pass is a default process now and was removed as an option from the inspector. It just does not make much sense to build a map without optimization.
+- NEW: Global scale slider added to the settings tab. Grid/Map can be scaled while preserving editability.
+
+- Bugfix: when layer inset is set to 0 instead of creating an empty filled layer it will now duplicate the layer underneath. 
+- Bugfix: Build overlapping tiles does now take all layers into account
+- Bugfix: Build button works always now 
+- Bugfix: Generating a new map does no more reset the current selected layer
+- Bugfix: Map generation isn't bound to the worldspace center anymore. The position of the prefab can now be changed, scaling the map occurs with the new global scale slider in the settings
+
+- Update: Runtime Editor updated to work with mask layers
+- Update: Save map updated to support mask layers
+- Update: Improved optimization pass to support partial map optimization.
+- Update: Documentation
+
+- Change: Texture import settings
+
+- TileWorld object scatterer
+------------------------------------
+- NEW: random objects can now be duplicated in the inspector
+- NEW: better algorithm to check if objects are inside of a terrain cell
+- NEW: for each object a layer where it sould be placed can now be selected
+
+- Update: updated to the global scale of TileWorldCreator
+
+
+1.1.0
+-----
+
+- NEW: Paint maps at runtime now with basic editor features like: New Map, Random Map, Save/Load map. 
+	Drag the TileWorldCreatorRTE prefab directly into your scene and paint maps at runtime.
+- NEW: Improved build speed.
+- NEW: SciFi tileset also available in the Unity 4 package.
+- NEW: Runtime editor demoscene
+- Bug fix / improvement: Map generation improved, resulting in much better maps without the "not enclosed cell bug".
+
+
+
+1.0.3
+-----
+
+- NEW: unity 5 PBR sci-fi tile presets (including 4 base tiles + 3 wall tiles + 1 barrel)
+each tile consists of 4 2k textures (Albedo, MetallicSmoothness, NormalMap + 1 legacy BumpedSpecular Map)
+- NEW: SciFi Demoscene
+- NEW: CameraOrbitNavigation Script
+
+- BUG fix: UnityEditor build error fix (platform dependent compilation)
+- BUG fix: Maps can now be build even if not all tile slots are occupied in a preset.
+
+
+1.0.2h1
+------
+- editor freeze hotfix
+
+1.0.2
+-----
+- New Feature: Build overlapping tiles
+	set to false will allow you to use layers for mixing presets
+	the tiles from an underlying layer will not be builded.
+- new Demoscene added showing the new feature
+- new preset added
+- bug fix: there was a bug when setting layers in the settings tab but not in
+	the edit tab
+- presets can now be duplicated
+- description text fixed: settings tab regarding the cluster size
+- updated runtime demoscene
+
+
+
+1.0.1
+-----
+- Optimized generation for larger maps greater than 200x200 tiles.
+- bug fix: changed .Directory.ToString() to .DirectoryName in TileWorldCreatorAbout.cs
+- updated demoscene
+- added camera script
+- updated camera script for better navigation on larger maps
+
+
+
+1.0
+-----
+- initial release

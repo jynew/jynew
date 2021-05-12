@@ -1,0 +1,58 @@
+Creating terrains with Amplify Shader Editor is really quick and easy. We will give you a brief explanation on how you can start creating terrain shaders with ASE in no time.
+
+A standard unity terrain is a regular surface shader using properties with a specific naming.
+Besides these properties, a small configuration is necessary.
+[Create Shader]
+As with any other ASE shaders, right-click on the Project view, select Create > Amplify Shader > Surface Shader and name it as you like. We advise you to have 'First-Pass' included on the shader name since it performs what is called a first pass over the terrain.
+
+[Queue Index]
+Set the Queue Index to -100 on the Output Node Properties General tab.
+
+[Render Type]
+By default a created shader already comes with the Opaque shader type selected, which is required by the terrain, but please go to the Blend Mode tab and check that Opaque is the selected option.
+
+[Specify Base Shader]
+A Base shader must be specified. This shader will be responsible to render the terrain when over a certain distance specified at the Base Map Distance on the terrain settings. Beyond this distance, a lower resolution composite image will be used with this shader for efficiency reasons.
+ 
+We already have a base shader created and ready to be used, so you only need to:
+- Go to your Dependencies Tab on the Output Node Properties
+- Click on the Add Button to add a new entry
+- Write BaseMapShader into the Name textfield
+- Write ASESampleShaders/SimpleTerrainBase on the Value textfield
+
+Feel free to open the ASESampleShaders/SimpleTerrainBase shader located at AmplifyShaderEditor > Examples > Official > SimpleTerrain > SimpleTerrainBase.shader and check what is being done. Please note that property naming in the base shader is very strict and property names must be maintained.
+
+[Specify Splat Count]
+ASE only supports up to four splats (single-pass) for now, this needs to be specified into the shader through a custom tag.
+In order to do that:
+- Go to Custom SubShader Tags tab on the Output Node Properties
+- Click on the Add Button to add a new entry
+- Write SplatCount into the Name textfield
+- Write 4 into the Value textfield
+
+Future versions will introduce multi-pass support for more complex effects.
+
+[Create Properties]
+This is the meat of how the terrain shader will behave.
+We already have a shader function, Four Splats First Pass Terrain, which replicates Unity standard terrain and should be used as starting point on creating your own shader.
+
+[[Diffuse]]
+Each splat can be accessed via their properties, having yet again strict naming to be maintained.
+The splat diffuse colors are accessed through the sampler variables _Splat0 through _Splat3, so in your shader you must create four Texture Sampler nodes with the names Splat 0 through Splat 3 as the _ is automatically placed and the empty spaces are also automatically removed from the created variable name.
+
+[[Normal]]
+The same goes to normal maps, they are accessed through the sampler variables _Normal0 through _Normal3 so, like with diffuse, in your shader you must create four Texture Sampler nodes with the names Normal 0 through Normal 3. One detail to take into account is that Unpack Normal Map should be turned off for each one of the nodes and an Unpack Scale Normal node should be applied after their values are combined.
+
+[[Smoothness + Metallic]]
+Smoothness and Metallic values must also have specific variable names, _Smoothness0 through _Smoothness3 and _Metallic0 through _Metallic3 respectively.
+
+These variables however are Float properties, so to access them you need to create Float nodes, set them to Properties with the names Smoothness 0 through Smoothness 3 and Metallic 0 through Metallic 3 respectively.
+
+To maintain consistency with the Unity terrain shader, you should add the Gamma attribute to the Metallic property nodes.
+
+[[Combining Maps]]
+The weight of each layer is given by yet another sampler variable. The _Control sampler variable contains, in each of its channels, the contribution each layer/splat have on the final result.
+To get access to it, simply create a Texture Sampler node in your shader with its name being Control.
+This Control texture is dynamically created when you paint your terrain with the Terrain tools and can be inspected by selecting the terrain asset on the Project view.
+
+Again, we invite you to check the Four Splats First Pass Terrain shader function located at AmplifyShaderEditor > Plugins > EditorResources > ShaderFunctions > Four Splats First Pass Terrain for a more in-depth view on how the Control texture is used.

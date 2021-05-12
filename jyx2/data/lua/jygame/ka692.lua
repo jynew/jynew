@@ -1,0 +1,2 @@
+AskSoftStar();
+do return end;

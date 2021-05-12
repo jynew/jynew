@@ -1,0 +1,5746 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e4eb3f876e014488c6c35acdbe9cfb, type: 3}
+  m_Name: taohuawuFast Water Material - Default
+  m_EditorClassIdentifier: 
+  Support128Shader: {fileID: 2100000, guid: e5483aa3d127d984cbe58f65d558af99, type: 2}
+  DepthRenderShader_SP: {fileID: 4800000, guid: c5653c30cc1d49148a4ddba88cfbfcbc,
+    type: 3}
+  DepthRenderShader: {fileID: 4800000, guid: 88f9fc32b02747744bbcaaadc318a8bc, type: 3}
+  RefractionRenderShader: {fileID: 4800000, guid: e581de0c0c0e75e488ceea9679a5905c,
+    type: 3}
+  _BufferResolution: 0
+  _material: {fileID: 21348457008812412}
+  _shader: {fileID: 48404981435633178}
+  BakedRefractionCameraOffset: 0
+  PlanarReflectionClipPlaneOffset: 1
+  PlanarReflectionSkipEveryFrame: 0
+  _keywords:
+  - TILEMASKTYPE_TILE
+  - GRAD_G
+  - SKIP_FOAM_COAST_ALPHA_FAKE
+  - REFR_MASK_A
+  - RRSIMPLEBLEND
+  - MAINTEXLERPBLEND
+  - SKIP_FOAM
+  - SKIP_SURFACE_FOAMS
+  - SKIP_MAINTEXTURE
+  - USE_OUTPUT_SHADOWS
+  - REFLECTION_MASK_A
+  - DETILE_LQ
+  - SKIP_SHORE_BORDERS
+  - SKIP_REFLECTION_BLUR_ZDEPENDS
+  - USE_SURFACE_GRADS
+  - REFLECTION_BLUR_1
+  - REFRACTION_BLUR_1
+  - SHORE_WAVES
+  - WAVES_MAP_NORMAL
+  - FIX_OVEREXPO
+  - LIGHTING_BLEND_SIMPLE
+  - GRAD_4
+  - SHORE_UNWRAP_STRETCH_DOT
+  - RIM_INVERSE
+  - REFLECTION_BLUR
+  - WAW3D_NORMAL_CALCULATION
+  - FIX_HL
+  - MAIN_TEX_LowDistortion_1
+  - SKIP_3DVERTEX_HEIGHT_COLORIZE
+  - SHORE_USE_WAVES_GRADIENT_1
+  - VERTEX_ANIMATION_BORDER_FADE
+  - SHORE_SHADDOW_1
+  - SIN_OFFSET
+  - SKIP_MAINTEX_VHEIGHT
+  - USE_SIM_RADIUS
+  - USE_REFRACTION_BLEND_FRESNEL
+  - USE_DEPTH_FOG
+  - MM_SUB
+  - lerped_post_SUB_2
+  - ULTRA_FAST_MODE
+  - USE_REFR_LOW_DISTOR
+  - USE_REFR_DISTOR
+  - FOAM_ALPHA_FLAT
+  - FORCE_OPAQUE
+  - SMOOTH_BLEND_ANIMATION
+  - USE_FAST_FRESNEL
+  - USE_lerped_post
+  - SKIP_BLEND_ANIMATION
+  - UF_AMOUNTMASK
+  - POST_TEXTURE_TINT
+  - _ShoreWaves_G
+  - _ShoreWaves_SECOND_TEXTURE
+  - USE_BLENDANIMATED_MAINTEX
+  - POST_OWN_TEXTURE
+  - USE_OUTPUT_BLEND_3
+  - SHORE_USE_LOW_DISTORTION_1
+  - BAKED_DEPTH_ONAWAKE
+  - HAS_WAVES_DETILE
+  - SKIP_AMBIENT_COLOR
+  - USE_VERTEX_H_DISTORT
+  - MAINTEX_HAS_MOVE
+  - UFAST_SHORE_1
+  - SKIP_REFRACTION_CALC_DEPTH_FACTOR
+  - SKIP_UNWRAP_TEXTURE
+  - SKIP_FLAT_SPECULAR_CLAMP
+  - USE_FAKE_LIGHTING
+  - SKIP_LIGHTING
+  - COLORIZE_REFLECTION
+  - APPLY_REFR_TO_SPECULAR
+  - SKIP_FLAT_SPECULAR
+  - REFLECTION_PROBE_AND_INTENSITY
+  - REFRACTION_BAKED_ONAWAKE
+  NowCompile: 0
+  Optimized: 0
+--- !u!21 &21348457008812412
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: taohuawuFast Water Material - Default
+  m_Shader: {fileID: 48404981435633178}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BackedData:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BackedData2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BakedData:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BakedData_temp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Bump:
+        m_Texture: {fileID: 2800000, guid: 1dda2425263cf6e478b283e7fe791fe5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 19d12a5ecd5c44f46b6904cf14766b07, type: 3}
+        m_Scale: {x: 5, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _CAUSTIC_MAP:
+        m_Texture: {fileID: 2800000, guid: a06cc5528736a6a46ac578372ea5a32a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 8900000, guid: 0398a2ea793d8be4e99a112c951ee76b, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Foam:
+        m_Texture: {fileID: 2800000, guid: 58ba544606cc4ce4baf4d4731acd7bdc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamBump:
+        m_Texture: {fileID: 2800000, guid: 736ab423580078745b903cd67ffbb612, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamGradient:
+        m_Texture: {fileID: 2800000, guid: 2d3494a5b9772174299d399c1ad34b76, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamTexture:
+        m_Texture: {fileID: 2800000, guid: 58972766c18409e4cbbc22cf68076ed8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamTexture_SW:
+        m_Texture: {fileID: 2800000, guid: 543618cc32a4cfd4198b0de324a0f7ed, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Fresnel:
+        m_Texture: {fileID: 2800000, guid: c78e7808718909b4ca60ef124d376fe9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FresnelGradient:
+        m_Texture: {fileID: 2800000, guid: e429aea0a54db13469fff04c820bafc7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GradTexture:
+        m_Texture: {fileID: 2800000, guid: 232218295adc32d4eb84641c2985f95a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LastFrame:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LastFrame2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Lut2D:
+        m_Texture: {fileID: 2800000, guid: a0171937ef1ada944808a38f5d6e9653, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MM_Texture:
+        m_Texture: {fileID: 2800000, guid: 58972766c18409e4cbbc22cf68076ed8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 543618cc32a4cfd4198b0de324a0f7ed, type: 3}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: 4f075b1f47cd8cc40b7c5191cb43869c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseHQ:
+        m_Texture: {fileID: 2800000, guid: 4e353a3c87dc5244e9d012db8687bcd9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseLQ:
+        m_Texture: {fileID: 2800000, guid: 4e353a3c87dc5244e9d012db8687bcd9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RefTex:
+        m_Texture: {fileID: 2800000, guid: c7464cd68062fbe44be2b6d2c6e25ce7, type: 3}
+        m_Scale: {x: 8, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Reflection:
+        m_Texture: {fileID: 2800000, guid: a9b2a588415e52d42a395a48916f3704, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectionProbe:
+        m_Texture: {fileID: 8900000, guid: 0398a2ea793d8be4e99a112c951ee76b, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectionTex:
+        m_Texture: {fileID: 2800000, guid: a06cc5528736a6a46ac578372ea5a32a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectionTex_temp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectionUserCUBE:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectiveColor:
+        m_Texture: {fileID: 2800000, guid: c78e7808718909b4ca60ef124d376fe9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Refraction:
+        m_Texture: {fileID: 2800000, guid: 008f875651f3b334a92d0d573bb07456, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RefractionTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RefractionTex_temp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RimGradient:
+        m_Texture: {fileID: 2800000, guid: d6a0298089dd7d949a84fc45670ed1fa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShoreWavesGrad:
+        m_Texture: {fileID: 2800000, guid: 26ee44330ff32a44db6ac00fef08ddc9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: 58ba544606cc4ce4baf4d4731acd7bdc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UF_NMASK_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Utility:
+        m_Texture: {fileID: 2800000, guid: 67512c13548e35b43b4460e6d6ddb149, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - sampler_ReflectionProbe:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - ADDITIONAL_FOAM_DISTORTION_AMOUNT: 1
+    - BUMPUV: 1
+    - DOWNSAMPLING_SAMPLE_SIZE: 0.33
+    - FLAT_HQ_OFFSET: 1000
+    - FRES_BLUR_AMOUNT: 3
+    - FRES_BLUR_OFF: 0.3
+    - LOW_ReflectionTex_distortion: 0.1
+    - MAINTEX_VHEIGHT_Amount: 1.18
+    - MAINTEX_VHEIGHT_Offset: 0.99
+    - MAIN_TEX_ADDDISTORTION_THAN_MOVE_Amount: 1000
+    - MAIN_TEX_Amount: 0.97
+    - MAIN_TEX_BA_Speed: 1.95
+    - MAIN_TEX_Bright: 0.58
+    - MAIN_TEX_CA_Speed: 8
+    - MAIN_TEX_Contrast: 0
+    - MAIN_TEX_Distortion: 0.09
+    - MAIN_TEX_FoamGradDirection_1: -0.31999996
+    - MAIN_TEX_FoamGradDirection_2: 0.01
+    - MAIN_TEX_FoamGradTileYYY_1: 0
+    - MAIN_TEX_FoamGradTile_1: 2.2879999
+    - MAIN_TEX_FoamGradTile_2: 0.1
+    - MAIN_TEX_FoamGradWavesSpeed_1: 0.345
+    - MAIN_TEX_FoamGradWavesSpeed_2: 0.1
+    - MAIN_TEX_LQDistortion: 0
+    - MAIN_TEX_LowDistortion_1: 1
+    - MAIN_TEX_LowDistortion_2: 1
+    - MAIN_TEX_MixOffset: 0.058999997
+    - MAIN_TEX_Multy: 1
+    - MainTexSpeed: 1
+    - PARALLAX_ON: 1
+    - POSTRIZE_Colors: 8.6
+    - RIM: 1
+    - RIM_Minus: 0.21
+    - RIM_Plis: 32
+    - RIM_Plus: 0.53
+    - SHORE_USE_ADDITIONALCONTUR_POW_Amount_1: 10
+    - SHORE_USE_ADDITIONALCONTUR_POW_Amount_2: 10
+    - SIMPLE_VHEIGHT_FADING_AFFECT: 0.37
+    - VERTEX_H_DISTORT: 0.007
+    - _3DWavesHeight: 0.16299999
+    - _3DWavesSpeed: -0.0946
+    - _3DWavesSpeedY: 0.306
+    - _3DWavesTileZ: 1
+    - _3DWavesTileZAm: 1
+    - _3DWavesWind: 0.56
+    - _3DWavesYFoamAmount: 0.72400004
+    - _3Dwaves_BORDER_FACE: -0.0924
+    - _3dwanam: 64
+    - _3dwanamnt: 105.8
+    - _AMOUNTMASK_Amount: 0.547
+    - _AMOUNTMASK_Tile: 0.119
+    - _AMOUNTMASK_max: 1
+    - _AMOUNTMASK_min: 0.66
+    - _APPLY_REFR_TO_SPECULAR_DISSOLVE: 0.381
+    - _APPLY_REFR_TO_SPECULAR_DISSOLVE_FAST: 0.88
+    - _AverageOffset: 0.81
+    - _BAKED_DEPTH_EXTERNAL_TEXTURE_Amount: 1
+    - _BakedData_size: 1024
+    - _BakedData_temp_size: 256
+    - _BlendAnimSpeed: 0.94
+    - _BumpAmount: 1.82
+    - _BumpMapTile1: 1.2
+    - _BumpMapTile2: 4
+    - _BumpMixAmount: 0.9157
+    - _BumpScale: 1
+    - _BumpZFade: 0.52
+    - _BumpZOffset: 20.66
+    - _CAUSTIC_FOG_Amount: 1.51
+    - _CAUSTIC_FOG_Pow: 10.56
+    - _CAUSTIC_PROC_BlackOffset: 1
+    - _CAUSTIC_PROC_Contrast: 1
+    - _CAUSTIC_PROC_GlareSpeed: 1
+    - _CAUSTIC_Speed: 1.838
+    - _CAUSTIC_Tiling: 1
+    - _CLASNOISE_PW: 0.46999997
+    - _CN_AMOUNT: 16.9
+    - _CN_DISTANCE: 137
+    - _CN_SPEED: 3.41
+    - _CN_TEXEL: 0.0048
+    - _C_BLUR_R: 0.05
+    - _C_BLUR_S: 0.05
+    - _CameraFarClipPlane: 655400.7
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DetileAmount: 0.10599999
+    - _DetileFriq: 2.37
+    - _DstBlend: 0
+    - _FadingFactor: 0.5
+    - _FarClipPlane: 222285.03
+    - _FastFresnelAmount: 0.24
+    - _FastFresnelPow: 10
+    - _FixHLClamp: 0.76
+    - _FixMulty: 0.9
+    - _FlatFriqX: 0.37
+    - _FlatFriqY: 0.34
+    - _FlatSpecularAmount: 5.931
+    - _FlatSpecularClamp: 0.47
+    - _FlatSpecularShininess: 72.3
+    - _FoamAlpha2Amount: 0.76
+    - _FoamAmount: 9.06
+    - _FoamAmount_SW: 3.9
+    - _FoamBlendOffset: 0
+    - _FoamDirection: 0.84999996
+    - _FoamDirection_SW: 0.05
+    - _FoamDistortion: 0.78
+    - _FoamDistortionFade: 1
+    - _FoamDistortionFade_SW: 0
+    - _FoamDistortionTexture: 1.17
+    - _FoamDistortion_SW: 1.2
+    - _FoamFactor: 1.15
+    - _FoamLShoreWavesTileX_SW: 1.25
+    - _FoamLShoreWavesTileY_SW: 1
+    - _FoamLength: 11.24
+    - _FoamLength_SW: 0.25
+    - _FoamMaskOffset_SW: 0.6
+    - _FoamOffset: 0
+    - _FoamOffsetSpeed: 0.12
+    - _FoamScale: 0.01
+    - _FoamSize: 0.19
+    - _FoamStrength: 1
+    - _FoamTextureTiling: 5.8
+    - _FoamTextureTiling_SW: 1
+    - _FoamTiling: 0.01
+    - _FoamWavesSpeed: 0.1
+    - _FoamWavesSpeed_SW: 1.2
+    - _Frac01Time: 0
+    - _Frac01Time_MAIN_TEX_BA_Speed: 0
+    - _Frac01Time_d8_mBlendAnimSpeed: 0
+    - _Frac01Time_m16_mMAIN_TEX_FoamGradWavesSpeed_1: 0
+    - _Frac2PITime: 0
+    - _FracTime: 0
+    - _FracTimeFull: 0
+    - _FracTimeW: 0
+    - _FracTimeX: 0
+    - _FracWTime_m4_m3DWavesSpeed_dPI2: 0
+    - _FrameRate: 1
+    - _FresnelAmount: 4
+    - _FresnelFade: 0.7
+    - _FresnelPow: 1.58
+    - _GlareAmount: 0.17
+    - _GlareContrast: 1.735
+    - _GlareFriq: 0.2
+    - _GlareSpeed: 0.42
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _LOW_DISTOR_Amount: 1
+    - _LOW_DISTOR_MAINTEX_Speed: 8
+    - _LOW_DISTOR_MAINTEX_Tile: 44.29
+    - _LOW_DISTOR_Speed: 8
+    - _LOW_DISTOR_Tile: 20
+    - _LightAmount: 0.5
+    - _LightNormalsFactor: 1.42
+    - _Light_FlatSpecTopDir: 0.686
+    - _LutAmount: 1
+    - _MAINTEXMASK_Amount: 0.96000004
+    - _MAINTEXMASK_Blend: 0.48
+    - _MAINTEXMASK_Tile: 0.033
+    - _MAINTEXMASK_max: 0.34
+    - _MAINTEXMASK_min: 0.2
+    - _MM_MultyOffset: 0.3
+    - _MOR_Base: 1
+    - _MOR_Offset: 1
+    - _MOR_Tile: 82.87
+    - _MTDistortion: 0
+    - _MainTexAngle: 0
+    - _Metallic: 0
+    - _Mode: 0
+    - _MultyOctaveNormals: 5
+    - _MultyOctavesSpeedOffset: 1.05
+    - _MultyOctavesTileOffset: 5
+    - _MyFarClipPlane: 1000
+    - _MyNearClipPlane: 0
+    - _NE1_GlareAmount: 5.47
+    - _NE1_GlareBlackOffset: -0.033
+    - _NE1_GlareContrast: 0.3
+    - _NE1_GlareFriq: 0.18
+    - _NE1_GlareSpeed: 0.94
+    - _NE2_GlareAmount: 15.1
+    - _NE2_GlareBlackOffset: -0.191
+    - _NE2_GlareContrast: 0.26
+    - _NE2_GlareFriq: 4
+    - _NE2_GlareSpeed: 6.28
+    - _NHQ_GlareAmount: 27.57
+    - _NHQ_GlareBlackOffset: -0.12
+    - _NHQ_GlareContrast: 0.02
+    - _NHQ_GlareFriq: 1.04
+    - _NHQ_GlareNormalsEffect: 0.13
+    - _NHQ_GlareSpeed: 0.61
+    - _NHQ_GlareSpeedXY: -0.19
+    - _NHQ_GlareSpeedZ: 0.8
+    - _NearClipPlane: 1.1114252
+    - _NoiseContrast: 0.72
+    - _NoiseFriq: 1.46
+    - _NoiseSpeed: 0.8
+    - _ObjecAngle: 0
+    - _OcclusionStrength: 1
+    - _OutGradBlend: 0.59
+    - _OutGradZ: 14.36
+    - _OutShadowsAmount: 0.6
+    - _PRCHQ_amount: 2.12
+    - _PRCHQ_speed: 1
+    - _PRCHQ_speedTex: 0.24
+    - _PRCHQ_speedWaves: -0.45
+    - _PRCHQ_tile: 0.68
+    - _PRCHQ_tileTex: 0.36
+    - _PRCHQ_tileWaves: 0.16
+    - _Parallax: 0.02
+    - _Parralax: 2.1
+    - _REFR_MASK_Amount: 3
+    - _REFR_MASK_Tile: 0.1
+    - _REFR_MASK_max: 1
+    - _REFR_MASK_min: 0.66
+    - _RIM_BLEND: 0
+    - _ReflDistort: 0.7
+    - _ReflectionAmount: 1.46
+    - _ReflectionBlendAmount: 0.71
+    - _ReflectionBlurRadius: 0.42
+    - _ReflectionBlurZOffset: -2.41
+    - _ReflectionDesaturate: 0.5
+    - _ReflectionDistortion: 0
+    - _ReflectionDistortion2D: 20
+    - _ReflectionLOD: 1.57
+    - _ReflectionMask_Amount: 3.7310002
+    - _ReflectionMask_Offset: -0.6
+    - _ReflectionMask_Tiling: 0.02
+    - _ReflectionMask_UpClamp: 1.03
+    - _ReflectionTex_size: 1024
+    - _ReflectionTex_temp_size: 64
+    - _ReflectionYOffset: -0.12
+    - _RefrAmount: 1.42
+    - _RefrBled_Fres_Amount: 1
+    - _RefrBled_Fres_Pow: 1
+    - _RefrBlur: 1.8
+    - _RefrDeepAmount: 0.33
+    - _RefrDeepFactor: 220.00002
+    - _RefrDistort: 0.33
+    - _RefrDistortion: 1.1
+    - _RefrDistortionZ: 0
+    - _RefrLowDist: 0.1
+    - _RefrRecover: 0
+    - _RefrTextureFog: 0.35
+    - _RefrTopAmount: 2.05
+    - _RefrZFallOff: 19.17
+    - _RefrZOffset: 0.51
+    - _RefractionBLendAmount: 1
+    - _RefractionBakeLayers: 0
+    - _RefractionBlendFade: 1
+    - _RefractionBlendOffset: 0.5
+    - _RefractionBlurZOffset: -0.19
+    - _RefractionDesaturate: 0.5
+    - _RefractionTex_size: 1024
+    - _RefractionTex_temp_size: 1024
+    - _RimAmount: 0.26
+    - _RimPower: 3.74
+    - _SFW_Amount: 12.1
+    - _SFW_Distort: 15.3
+    - _SFW_NrmAmount: 1
+    - _SURFACE_FOG_Amount: 1
+    - _SURFACE_FOG_Speed: 1
+    - _SURFACE_FOG_Tiling: 1
+    - _ShadorAmount: 0.5
+    - _ShadowFade: 0.8
+    - _Shininess: 0.373
+    - _ShoreDistance: 15.5
+    - _ShoreDistortionTexture: 1
+    - _ShoreStrength: 2.38
+    - _ShoreWavesQual: 1
+    - _ShoreWavesRadius: 0.42
+    - _Size: -0.57
+    - _SmoothnessTextureChannel: 0
+    - _SpecAmount: 4.4
+    - _SpecPower: 0.77
+    - _SpecularAmount: 11.4
+    - _SpecularGlowAmount: 0.4
+    - _SpecularHighlights: 1
+    - _SpecularShininess: 44.9
+    - _Specularity: 2.15
+    - _SrcBlend: 1
+    - _SurfaceFoamAmount: 10
+    - _SurfaceFoamContrast: 200
+    - _TILINGMASK_Amount: 3
+    - _TILINGMASK_Tile: 0.1
+    - _TILINGMASK_factor: 5
+    - _TILINGMASK_max: 1
+    - _TILINGMASK_min: 0.66
+    - _TexRefrDistortFix: 0.4737
+    - _Translucency: 2.79
+    - _Transparency: 1
+    - _TransparencyLuminosity: 1
+    - _TransparencyPow: 0.75
+    - _TransparencySimple: 1
+    - _UFSHORE_ADDITIONAL_Length_1: 0.7
+    - _UFSHORE_ADDITIONAL_Length_2: 1
+    - _UFSHORE_ADD_Amount_1: 1.65
+    - _UFSHORE_ADD_Amount_2: 1
+    - _UFSHORE_ADD_Distortion_1: 0.71
+    - _UFSHORE_ADD_Distortion_2: 1
+    - _UFSHORE_ADD_LowDistortion_1: 0.2
+    - _UFSHORE_ADD_LowDistortion_2: 0.1
+    - _UFSHORE_ADD_Tile_1: 0.81499994
+    - _UFSHORE_ADD_Tile_2: 0.1
+    - _UFSHORE_AlphaAmount_1: 0.3
+    - _UFSHORE_AlphaAmount_2: 0.25
+    - _UFSHORE_AlphaMax_1: 0.83
+    - _UFSHORE_AlphaMax_2: 1
+    - _UFSHORE_Amount_1: 1.93
+    - _UFSHORE_Amount_2: 5
+    - _UFSHORE_Distortion_1: 58.1
+    - _UFSHORE_Distortion_2: 0.8
+    - _UFSHORE_FoamLength_1: 10
+    - _UFSHORE_FoamLength_2: 10
+    - _UFSHORE_Length_1: 0.26
+    - _UFSHORE_Length_2: 10
+    - _UFSHORE_LowDistortion_1: 0.96
+    - _UFSHORE_LowDistortion_2: 1
+    - _UFSHORE_ShadowV1_1: 0.24
+    - _UFSHORE_ShadowV1_2: 1
+    - _UFSHORE_ShadowV2_1: 0.09
+    - _UFSHORE_ShadowV2_2: 1
+    - _UFSHORE_Speed1: 1
+    - _UFSHORE_Speed2: 1
+    - _UFSHORE_Speed_1: 1
+    - _UFSHORE_Speed_2: 1
+    - _UFSHORE_Tile_1: 0.00001
+    - _UFSHORE_Tile_2: 0.00001
+    - _UFSHORE_UNWRAP_LowDistortion_1: 0
+    - _UFSHORE_UNWRAP_Transparency: 0
+    - _UF_NMASK_Brightnes: 0.66
+    - _UF_NMASK_Contrast: 0.6
+    - _UF_NMASK_Tile: 0.1
+    - _UVSec: 0
+    - _VERTEX_ANIM_DETILEAMOUNT: 1.14
+    - _VERTEX_ANIM_DETILEFRIQ: 5
+    - _VERTEX_ANIM_DETILESPEED: 0.0019
+    - _VERTEX_ANIM_DETILEYOFFSET: 0
+    - _VERT_Amount: 1
+    - _VertexToUv: 1
+    - _W1_GlareAmount: 2.95
+    - _W1_GlareBlackOffset: 0
+    - _W1_GlareContrast: 0.14
+    - _W1_GlareFriq: 1.87
+    - _W1_GlareSpeed: 1.48
+    - _W2_GlareAmount: 5.96
+    - _W2_GlareBlackOffset: -1
+    - _W2_GlareContrast: 0.57
+    - _W2_GlareFriq: 1.22
+    - _W2_GlareSpeed: 2.15
+    - _WaterLod1Alpha: 0.23
+    - _WaterfrontFade: 2.32
+    - _WaterfrontFade_SW: 1
+    - _WaveGradMidOffset: 0.61
+    - _WaveGradTopOffset: 0.28
+    - _WaveHeight: 5.7
+    - _WaveScale: 1.05
+    - _WaveSpeed: 0.51
+    - _WaveTile1: 24.7
+    - _WaveTile2: 10
+    - _WaveWind: 0.313
+    - _WavesDirAngle: -0
+    - _ZDepthBakeLayers: -1
+    - _ZDistanceCalcOffset: 0.41
+    - _ZWrite: 1
+    - _Z_BLACK_OFFSET: 1
+    - _Z_BLACK_OFFSET_V: 0.47
+    - __MainTexTile: 4.24
+    - _sinAmount: 0.2
+    - _sinFriq: 17.81
+    - baked_ReflectionTex_distortion: 0.37
+    - lerped_post_offset: 9
+    - lerped_post_offset_falloff: 18.37
+    m_Colors:
+    - MAIN_TEX_CA_Speed: {r: 0.022, g: 0.042, b: 1, a: 1}
+    - MAIN_TEX_Move: {r: -0, g: 0.022, b: 0, a: 0}
+    - MAIN_TEX_Tile: {r: 9.8, g: 6.43, b: 1, a: 1}
+    - WaveSpeed: {r: 19, g: 9, b: -16, a: -7}
+    - _3DWavesSpV2: {r: 0.1, g: 0.1, b: 0.1, a: 0.1}
+    - _3DWavesSpeed: {r: 0.1, g: 0.1, b: 0.1, a: 0.1}
+    - _3DWavesTile: {r: 83.7, g: 192.1, b: -1, a: -1}
+    - _AMOUNTMASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _AnimMove: {r: 0, g: -0.134, b: 0, a: 0}
+    - _BlendColor: {r: 0.7210943, g: 0.75861317, b: 0.77599996, a: 1}
+    - _CAUSTIC_Offset: {r: -0.98, g: -4.52, b: 0.071, a: 0}
+    - _CAUSTIC_PROC_Tiling: {r: 1, g: 1, b: 1, a: 1}
+    - _CAUSTIC_Tiling: {r: 9.7, g: 3.79, b: 30.7, a: 32}
+    - _CN_TILING: {r: 8.04, g: 7.9, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FakeUnderwaterColor: {r: 0.22462685, g: 0.301, b: 0.22462685, a: 1}
+    - _FoamColor: {r: 0.69098043, g: 0.7430317, b: 0.78431374, a: 1}
+    - _FoamColor_SW: {r: 1, g: 1, b: 1, a: 1}
+    - _FoamDistortion: {r: 1, g: 1, b: 1, a: 1}
+    - _FracMAIN_TEX_TileTime_mMAIN_TEX_Move: {r: 0, g: 0, b: 0, a: 0}
+    - _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_pMAIN_TEX_CA_Speed: {r: 0, g: 0, b: 0,
+        a: 0}
+    - _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_sMAIN_TEX_CA_Speed: {r: 0, g: 0, b: 0,
+        a: 0}
+    - _FracWTime_m4_m3DWavesSpeed_dPI2: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_UFSHORE_Tile_1Time_d10: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_UFSHORE_Tile_2Time_d10: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_UVS_DIR: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_WaterTextureTilingTime_m_AnimMove: {r: 0, g: 0, b: 0, a: 0}
+    - _GAmplitude: {r: 0.3, g: 0.35, b: 0.25, a: 0.25}
+    - _GDirectionAB: {r: 0.3, g: 0.85, b: 0.85, a: 0.25}
+    - _GDirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
+    - _GFrequency: {r: 1.3, g: 1.35, b: 1.25, a: 1.25}
+    - _GSpeed: {r: 1.2, g: 1.375, b: 1.1, a: 1.5}
+    - _GSteepness: {r: 1, g: 1, b: 1, a: 1}
+    - _HorizonColor: {r: 0.172, g: 0.463, b: 0.435, a: 1}
+    - _LightColor0: {r: 0.71300006, g: 0.71300006, b: 0.71300006, a: 1}
+    - _LightColor0Fake: {r: 1, g: 1, b: 1, a: 1}
+    - _LightDir: {r: -0.44572583, g: -0.4250529, b: 0.78781885, a: 0}
+    - _LightPos: {r: 2199, g: 1009, b: 3274, a: 0}
+    - _Lut2D_params: {r: 0.0009765625, g: 0.03125, b: 31, a: 0}
+    - _MAINTEXMASK_offset: {r: 0.189, g: 0, b: 0, a: 0}
+    - _MM_Color: {r: 0.154, g: 0.154, b: 0.154, a: 1}
+    - _MM_Tile: {r: 0.0116, g: 0.0128999995, b: 1, a: 1}
+    - _MM_offset: {r: 2.226, g: 0.186, b: 0, a: 0}
+    - _MainColor: {r: 0.928, g: 0.79567647, b: 0.65795195, a: 1}
+    - _MainTexColor: {r: 0.73860806, g: 0.8113208, b: 0.7961018, a: 1.3}
+    - _MainTexTile: {r: 0.71, g: 1.24, b: 0, a: 0.12}
+    - _MultyOctavesTileOffset: {r: 1.63, g: 1.63, b: 1, a: 1}
+    - _NE1_WavesDirection: {r: -0.07912082, g: 0, b: -0.99686503, a: 0}
+    - _ObjectScale: {r: 1, g: 1, b: 1, a: 1}
+    - _REFR_MASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _RefColor: {r: 0.18400002, g: 0.554464, b: 1, a: 1}
+    - _ReflectColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0.5}
+    - _ReflectionBakeLayers: {r: 255, g: 255, b: 255, a: 255}
+    - _ReflectionJustColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ReflectionLOD: {r: 0.64, g: 0.12, b: 0.17, a: 0.45}
+    - _ReflectionMask_TexOffsetF: {r: -0.017, g: 0.0187, b: 0, a: 0}
+    - _ReflectionMask_offset: {r: 0.363, g: 0.4104, b: 0, a: 0}
+    - _RefrColor: {r: 0.34, g: 0.85, b: 0.92, a: 1}
+    - _RefrTopZColor: {r: 0.135597, g: 0.18049254, b: 0.231, a: 1}
+    - _RefrZColor: {r: 0.2015842, g: 0.24703614, b: 0.2830189, a: 1}
+    - _RefractionBakeLayers: {r: 205, g: 251, b: 255, a: 255}
+    - _ReplaceColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+    - _RimColor: {r: 0.29641598, g: 0.34979352, b: 0.472, a: 0.372}
+    - _SFW_Dir: {r: -0.53896147, g: 0, b: -0.84233046, a: 0}
+    - _SFW_Dir1: {r: 0.030791529, g: 0, b: 0.99952585, a: 0}
+    - _SFW_Speed: {r: -0.0642, g: -0.00198, b: 1, a: 1}
+    - _SFW_Tile: {r: 0.24, g: 1.34, b: 0.99, a: 2.18}
+    - _SUrfaceFoamVector: {r: 0.1206533, g: 0.9853353, b: 0.1206533, a: 0}
+    - _SunColor: {r: 1, g: 1, b: 0.901, a: 1}
+    - _SunDir: {r: 0.3, g: -0.6, b: -1, a: 0}
+    - _SurfaceColor: {r: 0.66400003, g: 0.9384, b: 1, a: 1}
+    - _TILINGMASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _UFSHORE_ADD_Color_1: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_ADD_Color_2: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_Color_1: {r: 0.33254716, g: 0.41568395, b: 0.4433962, a: 1}
+    - _UFSHORE_Color_2: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_FoamColor_1: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_FoamColor_2: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_Tile_1: {r: 1.78, g: 1.84, b: 1, a: 1}
+    - _UFSHORE_Tile_2: {r: 1, g: 1, b: 1, a: 1}
+    - _UF_NMASK_offset: {r: 0.036199998, g: 0, b: 0, a: 0}
+    - _VERTEX_ANIM_DETILEYOFFSET: {r: 0.09, g: 6.23, b: 0, a: 0}
+    - _VERTEX_ANIM_DETILE_YOFFSET: {r: 0.17, g: 10, b: 0, a: 0}
+    - _VERT_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _VERT_Tile: {r: 1, g: 1, b: 1, a: 1}
+    - _VertexSize: {r: 0, g: 0, b: 1, a: 1}
+    - _WaterColor: {r: 0.357, g: 0.8821166, b: 1, a: 1}
+    - _WaterScale: {r: 2.09, g: 1.29, b: 1, a: 0}
+    - _WaterTextureTiling: {r: 5.74, g: 5.51, b: 0.14199999, a: 0.216}
+    - _WaveGrad0: {r: 0.5647059, g: 0.5020236, b: 0.41844708, a: 1}
+    - _WaveGrad1: {r: 0.13376999, g: 0.21121447, b: 0.294, a: 1}
+    - _WaveGrad2: {r: 1, g: 1, b: 1, a: 1}
+    - _ZDepthBakeLayers: {r: 253, g: 255, b: 255, a: 255}
+    - __MainTexTile: {r: 0.71, g: 1.24, b: 0, a: 0.12}
+    - lerped_post_color1: {r: 0.343, g: 0.2771097, b: 0.11044598, a: 1}
+    - lerped_post_color2: {r: 0.147, g: 0.147, b: 0.147, a: 1}
+--- !u!48 &48404981435633178
+Shader:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ParsedForm:
+    m_PropInfo:
+      m_Props:
+      - m_Name: _FrameRate
+        m_Description: _FrameRate
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FracTimeFull
+        m_Description: _FracTimeFull
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac2PITime
+        m_Description: _Frac2PITime
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac01Time
+        m_Description: _Frac01Time
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac01Time_d8_mBlendAnimSpeed
+        m_Description: _Frac01Time_d8_mBlendAnimSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac01Time_MAIN_TEX_BA_Speed
+        m_Description: _Frac01Time_MAIN_TEX_BA_Speed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FracWTime_m4_m3DWavesSpeed_dPI2
+        m_Description: _FracWTime_m4_m3DWavesSpeed_dPI2
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac01Time_m16_mMAIN_TEX_FoamGradWavesSpeed_1
+        m_Description: _Frac01Time_m16_mMAIN_TEX_FoamGradWavesSpeed_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac_UFSHORE_Tile_1Time_d10
+        m_Description: _Frac_UFSHORE_Tile_1Time_d10
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac_UFSHORE_Tile_2Time_d10
+        m_Description: _Frac_UFSHORE_Tile_2Time_d10
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac_UFSHORE_Tile_2Time_d10
+        m_Description: _Frac_UFSHORE_Tile_2Time_d10
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac_WaterTextureTilingTime_m_AnimMove
+        m_Description: _Frac_WaterTextureTilingTime_m_AnimMove
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Frac_UVS_DIR
+        m_Description: _Frac_UVS_DIR
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FracMAIN_TEX_TileTime_mMAIN_TEX_Move
+        m_Description: _FracMAIN_TEX_TileTime_mMAIN_TEX_Move
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_pMAIN_TEX_CA_Speed
+        m_Description: _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_pMAIN_TEX_CA_Speed
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_sMAIN_TEX_CA_Speed
+        m_Description: _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_sMAIN_TEX_CA_Speed
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MM_Tile
+        m_Description: _MM_Tile
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MM_offset
+        m_Description: _MM_offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MM_Color
+        m_Description: _MM_Color
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionJustColor
+        m_Description: _ReflectionJustColor
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_Bright
+        m_Description: MAIN_TEX_Bright
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: lerped_post_offset
+        m_Description: lerped_post_offset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: lerped_post_offset_falloff
+        m_Description: lerped_post_offset_falloff
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: lerped_post_color1
+        m_Description: lerped_post_color1
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: lerped_post_color2
+        m_Description: lerped_post_color2
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MainTex
+        m_Description: Additional Color Texture(RGB) Mask for reflection(A)
+        m_Attributes:
+        - Header(Texture)
+        m_Type: 4
+        m_Flags: 4
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: black
+          m_TexDim: 2
+      - m_Name: _MainTexAngle
+        m_Description: _MainTexAngle
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MainTexTile
+        m_Description: _MainTexTile
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MainTexColor
+        m_Description: Tint Color (RGB) Amount Texture (A)
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _OutGradBlend
+        m_Description: _OutGradBlend
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _OutShadowsAmount
+        m_Description: _OutShadowsAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 20
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _OutGradZ
+        m_Description: _OutGradZ
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_UNWRAP_Transparency
+        m_Description: _UFSHORE_UNWRAP_Transparency
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _AnimMove
+        m_Description: _AnimMove
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VERTEX_ANIM_DETILESPEED
+        m_Description: _VERTEX_ANIM_DETILESPEED
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VERTEX_ANIM_DETILEAMOUNT
+        m_Description: _VERTEX_ANIM_DETILEAMOUNT
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Z_BLACK_OFFSET_V
+        m_Description: _Z_BLACK_OFFSET_V
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAINTEX_VHEIGHT_Amount
+        m_Description: MAINTEX_VHEIGHT_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAINTEX_VHEIGHT_Offset
+        m_Description: MAINTEX_VHEIGHT_Offset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamBlendOffset
+        m_Description: _FoamBlendOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TransparencyPow
+        m_Description: _TransparencyPow
+        m_Attributes:
+        - Header(Commons)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TransparencyLuminosity
+        m_Description: _TransparencyLuminosity
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TransparencySimple
+        m_Description: _TransparencySimple
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaterTextureTiling
+        m_Description: _Tiling [x,y]; Speed[z];
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: -1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BumpAmount
+        m_Description: _BumpAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BumpMap
+        m_Description: '_BumpMap '
+        m_Attributes: []
+        m_Type: 4
+        m_Flags: 4
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: bump
+          m_TexDim: 2
+      - m_Name: _MM_Texture
+        m_Description: '_MM_Texture '
+        m_Attributes: []
+        m_Type: 4
+        m_Flags: 4
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: bump
+          m_TexDim: 2
+      - m_Name: _MM_MultyOffset
+        m_Description: _MM_MultyOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LightAmount
+        m_Description: _LightAmount
+        m_Attributes:
+        - Header(Specular)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SpecularAmount
+        m_Description: _SpecularAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SpecularShininess
+        m_Description: _SpecularShininess
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 48
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FlatSpecularAmount
+        m_Description: _FlatSpecularAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FlatSpecularShininess
+        m_Description: _FlatSpecularShininess
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 48
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FlatSpecularClamp
+        m_Description: _FlatSpecularClamp
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FlatFriqX
+        m_Description: _FlatFriqX
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FlatFriqY
+        m_Description: _FlatFriqY
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LightColor0Fake
+        m_Description: _LightColor0Fake
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BlendColor
+        m_Description: _BlendColor
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamAmount
+        m_Description: _FoamAmount
+        m_Attributes:
+        - Header(Foam)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamLength
+        m_Description: _FoamLength
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamColor
+        m_Description: _FoamColor
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamDistortion
+        m_Description: _FoamDistortion
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamDistortionFade
+        m_Description: _FoamDistortionFade
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamDirection
+        m_Description: _FoamDirection
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.05
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FixMulty
+        m_Description: _FixMulty
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamAlpha2Amount
+        m_Description: _FoamAlpha2Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BlendAnimSpeed
+        m_Description: _BlendAnimSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaterfrontFade
+        m_Description: _WaterfrontFade
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ShadorAmount
+        m_Description: _ShadorAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: VERTEX_H_DISTORT
+        m_Description: VERTEX_H_DISTORT
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VERT_Amount
+        m_Description: _VERT_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VERT_Tile
+        m_Description: _VERT_Tile
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VERT_Color
+        m_Description: _VERT_Color
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RIM_BLEND
+        m_Description: _RIM_BLEND
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamTextureTiling
+        m_Description: _FoamTextureTiling
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamWavesSpeed
+        m_Description: _FoamWavesSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.15
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamOffsetSpeed
+        m_Description: _FoamOffsetSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamOffset
+        m_Description: _FoamOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MultyOctavesSpeedOffset
+        m_Description: _MultyOctavesSpeedOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.89
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MultyOctavesTileOffset
+        m_Description: _MultyOctavesTileOffset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1.63
+        m_DefValue[1]: 1.63
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FadingFactor
+        m_Description: _FadingFactor
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: FLAT_HQ_OFFSET
+        m_Description: FLAT_HQ_OFFSET
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 50
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesTile
+        m_Description: _3DWavesTile
+        m_Attributes:
+        - Header(3D Waves)
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: -1
+        m_DefValue[3]: -1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesSpeed
+        m_Description: _3DWavesSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesSpeedY
+        m_Description: _3DWavesSpeedY
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesHeight
+        m_Description: _3DWavesHeight
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesWind
+        m_Description: _3DWavesWind
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesYFoamAmount
+        m_Description: _3DWavesYFoamAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.02
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesTileZ
+        m_Description: _3DWavesTileZ
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3DWavesTileZAm
+        m_Description: _3DWavesTileZAm
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: ADDITIONAL_FOAM_DISTORTION_AMOUNT
+        m_Description: ADDITIONAL_FOAM_DISTORTION_AMOUNT
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SURFACE_FOG_Amount
+        m_Description: _SURFACE_FOG_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SURFACE_FOG_Speed
+        m_Description: _SURFACE_FOG_Speed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SURFACE_FOG_Tiling
+        m_Description: _SURFACE_FOG_Tiling
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Light_FlatSpecTopDir
+        m_Description: _Light_FlatSpecTopDir
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_Multy
+        m_Description: MAIN_TEX_Multy
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrLowDist
+        m_Description: _RefrLowDist
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VertexToUv
+        m_Description: _VertexToUv
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WavesDirAngle
+        m_Description: _WavesDirAngle
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VertexSize
+        m_Description: _VertexSize
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ZDistanceCalcOffset
+        m_Description: _ZDistanceCalcOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.25
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NHQ_GlareAmount
+        m_Description: _NHQ_GlareAmount
+        m_Attributes:
+        - Header(NOISES)
+        - Header(HQ)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NHQ_GlareFriq
+        m_Description: _NHQ_GlareFriq
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 30
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NHQ_GlareSpeedXY
+        m_Description: _NHQ_GlareSpeedXY
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NHQ_GlareSpeedZ
+        m_Description: _NHQ_GlareSpeedZ
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NHQ_GlareContrast
+        m_Description: _NHQ_GlareContrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NHQ_GlareBlackOffset
+        m_Description: _NHQ_GlareBlackOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NHQ_GlareNormalsEffect
+        m_Description: _NHQ_GlareNormalsEffect
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NE1_GlareAmount
+        m_Description: _NE1_GlareAmount
+        m_Attributes:
+        - Header(LQ)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NE1_GlareFriq
+        m_Description: _NE1_GlareFriq
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NE1_GlareSpeed
+        m_Description: _NE1_GlareSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NE1_GlareContrast
+        m_Description: _NE1_GlareContrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NE1_GlareBlackOffset
+        m_Description: _NE1_GlareBlackOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _NE1_WavesDirection
+        m_Description: _NE1_WavesDirection
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0.25
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W1_GlareAmount
+        m_Description: _W1_GlareAmount
+        m_Attributes:
+        - Header(WAWES1)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W1_GlareFriq
+        m_Description: _W1_GlareFriq
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W1_GlareSpeed
+        m_Description: _W1_GlareSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W1_GlareContrast
+        m_Description: _W1_GlareContrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W1_GlareBlackOffset
+        m_Description: _W1_GlareBlackOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W2_GlareAmount
+        m_Description: _W2_GlareAmount
+        m_Attributes:
+        - Header(WAWES2)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W2_GlareFriq
+        m_Description: _W2_GlareFriq
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W2_GlareSpeed
+        m_Description: _W2_GlareSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W2_GlareContrast
+        m_Description: _W2_GlareContrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _W2_GlareBlackOffset
+        m_Description: _W2_GlareBlackOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_LQDistortion
+        m_Description: MAIN_TEX_LQDistortion
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_ADDDISTORTION_THAN_MOVE_Amount
+        m_Description: MAIN_TEX_ADDDISTORTION_THAN_MOVE_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 100
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _PRCHQ_amount
+        m_Description: _PRCHQ_amount
+        m_Attributes:
+        - Header(PRC HQ)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _PRCHQ_tileTex
+        m_Description: _PRCHQ_tileTex
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _PRCHQ_tileWaves
+        m_Description: _PRCHQ_tileWaves
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _PRCHQ_speedTex
+        m_Description: _PRCHQ_speedTex
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _PRCHQ_speedWaves
+        m_Description: _PRCHQ_speedWaves
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_Amount
+        m_Description: MAIN_TEX_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_Contrast
+        m_Description: MAIN_TEX_Contrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_BA_Speed
+        m_Description: MAIN_TEX_BA_Speed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_CA_Speed
+        m_Description: MAIN_TEX_CA_Speed
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0.1
+        m_DefValue[2]: 0.1
+        m_DefValue[3]: 0.1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_Tile
+        m_Description: MAIN_TEX_Tile
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_Move
+        m_Description: MAIN_TEX_Move
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: SIMPLE_VHEIGHT_FADING_AFFECT
+        m_Description: SIMPLE_VHEIGHT_FADING_AFFECT
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_Distortion
+        m_Description: MAIN_TEX_Distortion
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionBlendAmount
+        m_Description: _ReflectionBlendAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _Utility
+        m_Description: _Utility
+        m_Attributes:
+        - Header(fresnelFac)
+        m_Type: 4
+        m_Flags: 4
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: white
+          m_TexDim: 2
+      - m_Name: _FresnelPow
+        m_Description: _FresnelPow
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1.58
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FresnelFade
+        m_Description: _FresnelFade
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.7
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FresnelAmount
+        m_Description: _FresnelAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 4
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrDistortionZ
+        m_Description: _RefrDistortionZ
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: FRES_BLUR_OFF
+        m_Description: FRES_BLUR_OFF
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: FRES_BLUR_AMOUNT
+        m_Description: FRES_BLUR_AMOUNT
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BumpMixAmount
+        m_Description: _BumpMixAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FastFresnelPow
+        m_Description: _FastFresnelPow
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VERTEX_ANIM_DETILE_YOFFSET
+        m_Description: _VERTEX_ANIM_DETILE_YOFFSET
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: -10
+        m_DefValue[1]: 10
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionAmount
+        m_Description: _ReflectionAmount
+        m_Attributes:
+        - Header(Reflection)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectColor
+        m_Description: _ReflectColor
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: baked_ReflectionTex_distortion
+        m_Description: baked_ReflectionTex_distortion
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 15
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: LOW_ReflectionTex_distortion
+        m_Description: LOW_ReflectionTex_distortion
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionYOffset
+        m_Description: _ReflectionYOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: -0.15
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionLOD
+        m_Description: _ReflectionLOD
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionMask_Amount
+        m_Description: _ReflectionMask_Amount
+        m_Attributes:
+        - Header(ReflRefrMask)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionMask_Offset
+        m_Description: _ReflectionMask_Offset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.66
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionMask_UpClamp
+        m_Description: _ReflectionMask_UpClamp
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionMask_Tiling
+        m_Description: _ReflectionMask_Tiling
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionBlurRadius
+        m_Description: _ReflectionBlurRadius
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionBlurZOffset
+        m_Description: _ReflectionBlurZOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionBlurZOffset
+        m_Description: _RefractionBlurZOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionMask_TexOffsetF
+        m_Description: _ReflectionMask_TexOffsetF
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ObjectScale
+        m_Description: _ObjectScale
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _AverageOffset
+        m_Description: _AverageOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _REFR_MASK_Tile
+        m_Description: _REFR_MASK_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _REFR_MASK_Amount
+        m_Description: _REFR_MASK_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _REFR_MASK_min
+        m_Description: _REFR_MASK_min
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.66
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _REFR_MASK_max
+        m_Description: _REFR_MASK_max
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UF_NMASK_Texture
+        m_Description: _UF_NMASK_Texture
+        m_Attributes: []
+        m_Type: 4
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: white
+          m_TexDim: 2
+      - m_Name: _UF_NMASK_Tile
+        m_Description: _UF_NMASK_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UF_NMASK_offset
+        m_Description: _UF_NMASK_offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UF_NMASK_Contrast
+        m_Description: _UF_NMASK_Contrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UF_NMASK_Brightnes
+        m_Description: _UF_NMASK_Brightnes
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _AMOUNTMASK_Tile
+        m_Description: _AMOUNTMASK_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _AMOUNTMASK_Amount
+        m_Description: _AMOUNTMASK_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _AMOUNTMASK_min
+        m_Description: _AMOUNTMASK_min
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.66
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _AMOUNTMASK_max
+        m_Description: _AMOUNTMASK_max
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TILINGMASK_Tile
+        m_Description: _TILINGMASK_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TILINGMASK_Amount
+        m_Description: _TILINGMASK_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TILINGMASK_min
+        m_Description: _TILINGMASK_min
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.66
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TILINGMASK_max
+        m_Description: _TILINGMASK_max
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MAINTEXMASK_Tile
+        m_Description: _MAINTEXMASK_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MAINTEXMASK_Amount
+        m_Description: _MAINTEXMASK_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 3
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MAINTEXMASK_min
+        m_Description: _MAINTEXMASK_min
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.66
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MAINTEXMASK_max
+        m_Description: _MAINTEXMASK_max
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MAINTEXMASK_Blend
+        m_Description: _MAINTEXMASK_Blend
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3Dwaves_BORDER_FACE
+        m_Description: _3Dwaves_BORDER_FACE
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FixHLClamp
+        m_Description: _FixHLClamp
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FastFresnelAmount
+        m_Description: _FastFresnelAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrDeepAmount
+        m_Description: _RefrDeepAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrTopAmount
+        m_Description: _RefrTopAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TexRefrDistortFix
+        m_Description: _TexRefrDistortFix
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SpecularGlowAmount
+        m_Description: _SpecularGlowAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionBLendAmount
+        m_Description: _RefractionBLendAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TILINGMASK_factor
+        m_Description: _TILINGMASK_factor
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _AMOUNTMASK_offset
+        m_Description: _AMOUNTMASK_offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _TILINGMASK_offset
+        m_Description: _TILINGMASK_offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MAINTEXMASK_offset
+        m_Description: _MAINTEXMASK_offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionMask_offset
+        m_Description: _ReflectionMask_offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _REFR_MASK_offset
+        m_Description: _REFR_MASK_offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReplaceColor
+        m_Description: _ReplaceColor
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0.5
+        m_DefValue[2]: 0.5
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrDistortion
+        m_Description: _RefrDistortion
+        m_Attributes:
+        - Header(Refraction)
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 100
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrAmount
+        m_Description: _RefrAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrZColor
+        m_Description: _RefrZColor
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 0.29
+        m_DefValue[1]: 0.53
+        m_DefValue[2]: 0.608
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrTopZColor
+        m_Description: _RefrTopZColor
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 0.89
+        m_DefValue[1]: 0.95
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrTextureFog
+        m_Description: _RefrTextureFog
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrZOffset
+        m_Description: _RefrZOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1.8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrZFallOff
+        m_Description: _RefrZFallOff
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrBlur
+        m_Description: _RefrBlur
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.25
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrRecover
+        m_Description: _RefrRecover
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrDeepFactor
+        m_Description: _RefrDeepFactor
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 64
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _3dwanamnt
+        m_Description: _3dwanamnt
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LightDir
+        m_Description: _LightDir
+        m_Attributes:
+        - Header(Other)
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: -0.5
+        m_DefValue[1]: 0.46
+        m_DefValue[2]: 0.88
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ObjecAngle
+        m_Description: _ObjecAngle
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionTex_size
+        m_Description: _ReflectionTex_size
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 256
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionTex_temp_size
+        m_Description: _ReflectionTex_temp_size
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 128
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionTex_size
+        m_Description: _RefractionTex_size
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 512
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionTex_temp
+        m_Description: _RefractionTex_temp
+        m_Attributes: []
+        m_Type: 4
+        m_Flags: 4
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: black
+          m_TexDim: 2
+      - m_Name: _RefractionTex_temp_size
+        m_Description: _RefractionTex_temp_size
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 512
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BakedData_size
+        m_Description: _BakedData_size
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 256
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BakedData_temp
+        m_Description: '_BakedData_temp '
+        m_Attributes: []
+        m_Type: 4
+        m_Flags: 4
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: black
+          m_TexDim: 2
+      - m_Name: _BakedData_temp_size
+        m_Description: _BakedData_temp_size
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 256
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MTDistortion
+        m_Description: _MTDistortion
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: RIM_Minus
+        m_Description: RIM_Minus
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.4
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: RIM_Plus
+        m_Description: RIM_Plis
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 50
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: POSTRIZE_Colors
+        m_Description: POSTRIZE_Colors
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 12
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MyNearClipPlane
+        m_Description: _MyNearClipPlane
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MyFarClipPlane
+        m_Description: _MyFarClipPlane
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1000
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MultyOctaveNormals
+        m_Description: _MultyOctaveNormals
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SurfaceFoamAmount
+        m_Description: _SurfaceFoamAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SurfaceFoamContrast
+        m_Description: _SurfaceFoamContrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 200
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SUrfaceFoamVector
+        m_Description: _SUrfaceFoamVector
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0.120653294
+        m_DefValue[1]: 0.98533523
+        m_DefValue[2]: 0.120653294
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionBakeLayers
+        m_Description: _ReflectionBakeLayers
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 255
+        m_DefValue[1]: 255
+        m_DefValue[2]: 255
+        m_DefValue[3]: 255
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionBakeLayers
+        m_Description: _RefractionBakeLayers
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 255
+        m_DefValue[1]: 255
+        m_DefValue[2]: 255
+        m_DefValue[3]: 255
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ZDepthBakeLayers
+        m_Description: _ZDepthBakeLayers
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 255
+        m_DefValue[1]: 255
+        m_DefValue[2]: 255
+        m_DefValue[3]: 255
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _DetileAmount
+        m_Description: _DetileAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.15
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _DetileFriq
+        m_Description: _DetileFriq
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _VERTEX_ANIM_DETILEFRIQ
+        m_Description: _VERTEX_ANIM_DETILEFRIQ
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MainTexSpeed
+        m_Description: MainTexSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ReflectionDesaturate
+        m_Description: _ReflectionDesaturate
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionDesaturate
+        m_Description: _RefractionDesaturate
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _sinFriq
+        m_Description: _sinFriq
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 7.28
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _sinAmount
+        m_Description: _sinAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _APPLY_REFR_TO_SPECULAR_DISSOLVE
+        m_Description: _APPLY_REFR_TO_SPECULAR_DISSOLVE
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _APPLY_REFR_TO_SPECULAR_DISSOLVE_FAST
+        m_Description: _APPLY_REFR_TO_SPECULAR_DISSOLVE_FAST
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Amount_1
+        m_Description: _UFSHORE_Amount_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Amount_2
+        m_Description: _UFSHORE_Amount_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Length_1
+        m_Description: _UFSHORE_Length_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Length_2
+        m_Description: _UFSHORE_Length_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Color_1
+        m_Description: _UFSHORE_Color_1
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Color_2
+        m_Description: _UFSHORE_Color_2
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Distortion_1
+        m_Description: _UFSHORE_Distortion_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Distortion_2
+        m_Description: _UFSHORE_Distortion_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Tile_1
+        m_Description: _UFSHORE_Tile_1
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Tile_2
+        m_Description: _UFSHORE_Tile_2
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Speed_1
+        m_Description: _UFSHORE_Speed_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_Speed_2
+        m_Description: _UFSHORE_Speed_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_LowDistortion_1
+        m_Description: _UFSHORE_LowDistortion_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_LowDistortion_2
+        m_Description: _UFSHORE_LowDistortion_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_AlphaAmount_1
+        m_Description: _UFSHORE_AlphaAmount_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.25
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_AlphaAmount_2
+        m_Description: _UFSHORE_AlphaAmount_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.25
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_AlphaMax_1
+        m_Description: _UFSHORE_AlphaMax_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_AlphaMax_2
+        m_Description: _UFSHORE_AlphaMax_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ShadowV1_1
+        m_Description: _UFSHORE_ShadowV1_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ShadowV2_1
+        m_Description: _UFSHORE_ShadowV2_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ShadowV1_2
+        m_Description: _UFSHORE_ShadowV1_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ShadowV2_2
+        m_Description: _UFSHORE_ShadowV2_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_FoamGradWavesSpeed_1
+        m_Description: MAIN_TEX_FoamGradWavesSpeed_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_FoamGradWavesSpeed_2
+        m_Description: MAIN_TEX_FoamGradWavesSpeed_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_FoamGradDirection_1
+        m_Description: MAIN_TEX_FoamGradDirection_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.01
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_FoamGradDirection_2
+        m_Description: MAIN_TEX_FoamGradDirection_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.01
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_FoamGradTile_1
+        m_Description: MAIN_TEX_FoamGradTile_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_FoamGradTileYYY_1
+        m_Description: MAIN_TEX_FoamGradTileYYY_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_FoamGradTile_2
+        m_Description: MAIN_TEX_FoamGradTile_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADDITIONAL_Length_1
+        m_Description: _UFSHORE_ADDITIONAL_Length_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADDITIONAL_Length_2
+        m_Description: _UFSHORE_ADDITIONAL_Length_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Amount_1
+        m_Description: _UFSHORE_ADD_Amount_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Amount_2
+        m_Description: _UFSHORE_ADD_Amount_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Tile_1
+        m_Description: _UFSHORE_ADD_Tile_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Tile_2
+        m_Description: _UFSHORE_ADD_Tile_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Distortion_1
+        m_Description: _UFSHORE_ADD_Distortion_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Distortion_2
+        m_Description: _UFSHORE_ADD_Distortion_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_LowDistortion_1
+        m_Description: _UFSHORE_ADD_LowDistortion_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_LowDistortion_2
+        m_Description: _UFSHORE_ADD_LowDistortion_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Color_1
+        m_Description: _UFSHORE_ADD_Color_1
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_ADD_Color_2
+        m_Description: _UFSHORE_ADD_Color_2
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: SHORE_USE_ADDITIONALCONTUR_POW_Amount_1
+        m_Description: SHORE_USE_ADDITIONALCONTUR_POW_Amount_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: SHORE_USE_ADDITIONALCONTUR_POW_Amount_2
+        m_Description: SHORE_USE_ADDITIONALCONTUR_POW_Amount_2
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _UFSHORE_UNWRAP_LowDistortion_1
+        m_Description: _UFSHORE_UNWRAP_LowDistortion_1
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LOW_DISTOR_Tile
+        m_Description: _LOW_DISTOR_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 20
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LOW_DISTOR_Speed
+        m_Description: _LOW_DISTOR_Speed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LOW_DISTOR_Amount
+        m_Description: _LOW_DISTOR_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LOW_DISTOR_MAINTEX_Tile
+        m_Description: _LOW_DISTOR_MAINTEX_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 20
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LOW_DISTOR_MAINTEX_Speed
+        m_Description: _LOW_DISTOR_MAINTEX_Speed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: MAIN_TEX_MixOffset
+        m_Description: MAIN_TEX_MixOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamAmount_SW
+        m_Description: _FoamAmount_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamLength_SW
+        m_Description: _FoamLength_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 10
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamColor_SW
+        m_Description: _FoamColor_SW
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamDistortion_SW
+        m_Description: _FoamDistortion_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamDistortionFade_SW
+        m_Description: _FoamDistortionFade_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.8
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamDirection_SW
+        m_Description: _FoamDirection_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.05
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaterfrontFade_SW
+        m_Description: _WaterfrontFade_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LightNormalsFactor
+        m_Description: _LightNormalsFactor
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamTextureTiling_SW
+        m_Description: _FoamTextureTiling_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamWavesSpeed_SW
+        m_Description: _FoamWavesSpeed_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.15
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ShoreWavesRadius
+        m_Description: _ShoreWavesRadius
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ShoreWavesQual
+        m_Description: _ShoreWavesQual
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamLShoreWavesTileY_SW
+        m_Description: _FoamLShoreWavesTileY_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamLShoreWavesTileX_SW
+        m_Description: _FoamLShoreWavesTileX_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamMaskOffset_SW
+        m_Description: _FoamMaskOffset_SW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BumpZOffset
+        m_Description: _BumpZOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _BumpZFade
+        m_Description: _BumpZFade
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionBlendOffset
+        m_Description: _RefractionBlendOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefractionBlendFade
+        m_Description: _RefractionBlendFade
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrBled_Fres_Amount
+        m_Description: _RefrBled_Fres_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _RefrBled_Fres_Pow
+        m_Description: _RefrBled_Fres_Pow
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _LutAmount
+        m_Description: _LutAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _GAmplitude
+        m_Description: Wave Amplitude
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0.3
+        m_DefValue[1]: 0.35
+        m_DefValue[2]: 0.25
+        m_DefValue[3]: 0.25
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _GFrequency
+        m_Description: Wave Frequency
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1.3
+        m_DefValue[1]: 1.35
+        m_DefValue[2]: 1.25
+        m_DefValue[3]: 1.25
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _GSteepness
+        m_Description: Wave Steepness
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _GSpeed
+        m_Description: Wave Speed
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1.2
+        m_DefValue[1]: 1.375
+        m_DefValue[2]: 1.1
+        m_DefValue[3]: 1.5
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _GDirectionAB
+        m_Description: Wave Direction
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0.3
+        m_DefValue[1]: 0.85
+        m_DefValue[2]: 0.85
+        m_DefValue[3]: 0.25
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _GDirectionCD
+        m_Description: Wave Direction
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0.1
+        m_DefValue[1]: 0.9
+        m_DefValue[2]: 0.5
+        m_DefValue[3]: 0.5
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FoamDistortionTexture
+        m_Description: _FoamDistortionTexture
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _ShoreDistortionTexture
+        m_Description: _ShoreDistortionTexture
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MOR_Offset
+        m_Description: _MOR_Offset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MOR_Base
+        m_Description: _MOR_Base
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _C_BLUR_R
+        m_Description: _C_BLUR_R
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.05
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _C_BLUR_S
+        m_Description: _C_BLUR_S
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.05
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _MOR_Tile
+        m_Description: _MOR_Tile
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 82
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FracTimeX
+        m_Description: _FracTimeX
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _FracTimeW
+        m_Description: _FracTimeW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaveGrad0
+        m_Description: _WaveGrad0
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaveGrad1
+        m_Description: _WaveGrad1
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaveGrad2
+        m_Description: _WaveGrad2
+        m_Attributes: []
+        m_Type: 0
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaveGradMidOffset
+        m_Description: _WaveGradMidOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _WaveGradTopOffset
+        m_Description: _WaveGradTopOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SFW_Tile
+        m_Description: _SFW_Tile
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SFW_Speed
+        m_Description: _SFW_Speed
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SFW_Amount
+        m_Description: _SFW_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SFW_NrmAmount
+        m_Description: _SFW_NrmAmount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SFW_Dir
+        m_Description: _SFW_Dir
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SFW_Dir1
+        m_Description: _SFW_Dir1
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 0.9
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0.1
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _SFW_Distort
+        m_Description: _SFW_Distort
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_FOG_Amount
+        m_Description: _CAUSTIC_FOG_Amount
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_FOG_Pow
+        m_Description: _CAUSTIC_FOG_Pow
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 4
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_Speed
+        m_Description: _CAUSTIC_Speed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_Tiling
+        m_Description: _CAUSTIC_Tiling
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_Offset
+        m_Description: _CAUSTIC_Offset
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 2
+        m_DefValue[2]: 1
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_PROC_Tiling
+        m_Description: _CAUSTIC_PROC_Tiling
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 1
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_PROC_GlareSpeed
+        m_Description: _CAUSTIC_PROC_GlareSpeed
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_PROC_Contrast
+        m_Description: _CAUSTIC_PROC_Contrast
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CAUSTIC_PROC_BlackOffset
+        m_Description: _CAUSTIC_PROC_BlackOffset
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 1
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: DOWNSAMPLING_SAMPLE_SIZE
+        m_Description: DOWNSAMPLING_SAMPLE_SIZE
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.33
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CN_DISTANCE
+        m_Description: _CN_DISTANCE
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 200
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CN_TEXEL
+        m_Description: _CN_TEXEL
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.01
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CLASNOISE_PW
+        m_Description: _CLASNOISE_PW
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 0.35
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CN_AMOUNT
+        m_Description: _CN_AMOUNT
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CN_SPEED
+        m_Description: _CN_SPEED
+        m_Attributes: []
+        m_Type: 2
+        m_Flags: 0
+        m_DefValue[0]: 2
+        m_DefValue[1]: 0
+        m_DefValue[2]: 0
+        m_DefValue[3]: 0
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+      - m_Name: _CN_TILING
+        m_Description: _CN_TILING
+        m_Attributes: []
+        m_Type: 1
+        m_Flags: 0
+        m_DefValue[0]: 5
+        m_DefValue[1]: 5
+        m_DefValue[2]: 1
+        m_DefValue[3]: 1
+        m_DefTexture:
+          m_DefaultName: 
+          m_TexDim: 1
+    m_SubShaders:
+    - m_Passes:
+      - m_NameIndices: {}
+        m_Type: 0
+        m_State:
+          serializedVersion: 2
+          m_Name: 
+          rtBlend0:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtBlend1:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtBlend2:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtBlend3:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtBlend4:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtBlend5:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtBlend6:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtBlend7:
+            srcBlend:
+              val: 1
+              name: <noninit>
+            destBlend:
+              val: 0
+              name: <noninit>
+            srcBlendAlpha:
+              val: 1
+              name: <noninit>
+            destBlendAlpha:
+              val: 0
+              name: <noninit>
+            blendOp:
+              val: 0
+              name: <noninit>
+            blendOpAlpha:
+              val: 0
+              name: <noninit>
+            colMask:
+              val: 15
+              name: <noninit>
+          rtSeparateBlend: 0
+          zClip:
+            val: 1
+            name: <noninit>
+          zTest:
+            val: 4
+            name: <noninit>
+          zWrite:
+            val: 1
+            name: <noninit>
+          culling:
+            val: 0
+            name: <noninit>
+          offsetFactor:
+            val: 0
+            name: <noninit>
+          offsetUnits:
+            val: 0
+            name: <noninit>
+          alphaToMask:
+            val: 0
+            name: <noninit>
+          stencilOp:
+            pass:
+              val: 0
+              name: <noninit>
+            fail:
+              val: 0
+              name: <noninit>
+            zFail:
+              val: 0
+              name: <noninit>
+            comp:
+              val: 8
+              name: <noninit>
+          stencilOpFront:
+            pass:
+              val: 0
+              name: <noninit>
+            fail:
+              val: 0
+              name: <noninit>
+            zFail:
+              val: 0
+              name: <noninit>
+            comp:
+              val: 8
+              name: <noninit>
+          stencilOpBack:
+            pass:
+              val: 0
+              name: <noninit>
+            fail:
+              val: 0
+              name: <noninit>
+            zFail:
+              val: 0
+              name: <noninit>
+            comp:
+              val: 8
+              name: <noninit>
+          stencilReadMask:
+            val: 255
+            name: <noninit>
+          stencilWriteMask:
+            val: 255
+            name: <noninit>
+          stencilRef:
+            val: 0
+            name: <noninit>
+          fogStart:
+            val: 0
+            name: unity_FogStart
+          fogEnd:
+            val: 0
+            name: unity_FogEnd
+          fogDensity:
+            val: 0
+            name: unity_FogDensity
+          fogColor:
+            x:
+              val: 0
+              name: <noninit>
+            y:
+              val: 0
+              name: <noninit>
+            z:
+              val: 0
+              name: <noninit>
+            w:
+              val: 0
+              name: <noninit>
+            name: unity_FogColor
+          fogMode: -1
+          gpuProgramID: 2874
+          m_Tags:
+            tags:
+              IGNOREPROJECTOR: False
+              RenderType: Opaque
+          m_LOD: 0
+          lighting: 0
+        m_ProgramMask: 6
+        progVertex:
+          m_SubPrograms: []
+        progFragment:
+          m_SubPrograms: []
+        progGeometry:
+          m_SubPrograms: []
+        progHull:
+          m_SubPrograms: []
+        progDomain:
+          m_SubPrograms: []
+        m_HasInstancingVariant: 0
+        m_HasProceduralInstancingVariant: 0
+        m_UseName: 
+        m_Name: 
+        m_TextureName: 
+        m_Tags:
+          tags: {}
+      m_Tags:
+        tags:
+          IGNOREPROJECTOR: False
+          RenderType: Opaque
+      m_LOD: 0
+    m_Name: EM-X/Fast Water Model 2.0 Compiled/taohuawuFast Water Material - Default
+    m_CustomEditorName: 
+    m_FallbackName: 
+    m_Dependencies: []
+    m_DisableNoSubshadersMessage: 0
+  platforms: 
+  offsets: 
+  compressedLengths: 
+  decompressedLengths: 
+  compressedBlob: 
+  m_Dependencies: []
+  m_NonModifiableTextures: {}
+  m_ShaderIsBaked: 0
+  m_DefaultTextures: {}
+  m_CompileInfo:
+    m_Snippets:
+      2874:
+        serializedVersion: 2
+        m_Code: "#line 1582 \"\"\n#ifdef DUMMY_PREPROCESSOR_TO_WORK_AROUND_HLSL_COMPILER_LINE_HANDLING\n#endif\n\n#include
+          \"HLSLSupport.cginc\"\n#define UNITY_INSTANCED_LOD_FADE\n#define UNITY_INSTANCED_SH\n#define
+          UNITY_INSTANCED_LIGHTMAPSTS\n#include \"UnityShaderVariables.cginc\"\n#include
+          \"UnityShaderUtilities.cginc\"\n#line 1582 \"\"\n#ifdef DUMMY_PREPROCESSOR_TO_WORK_AROUND_HLSL_COMPILER_LINE_HANDLING\n#endif\n/*
+          UNITY: Original start of shader */\r\n\r\n            #pragma vertex vert\r\n
+          \           #pragma fragment frag\r\n            #pragma multi_compile_fog\r\n
+          \           #define USING_FOG (defined(FOG_LINEAR) || defined(FOG_EXP) ||
+          defined(FOG_EXP2))\r\n            \r\n#pragma target 2.0\r\n#define TILEMASKTYPE_TILE
+          1;\n#define GRAD_G 1;\n#define SKIP_FOAM_COAST_ALPHA_FAKE 1;\n#define REFR_MASK_A
+          1;\n#define RRSIMPLEBLEND 1;\n#define MAINTEXLERPBLEND 1;\n#define SKIP_FOAM
+          1;\n#define SKIP_SURFACE_FOAMS 1;\n#define SKIP_MAINTEXTURE 1;\n#define
+          USE_OUTPUT_SHADOWS 1;\n#define REFLECTION_MASK_A 1;\n#define DETILE_LQ 1;\n#define
+          SKIP_SHORE_BORDERS 1;\n#define SKIP_REFLECTION_BLUR_ZDEPENDS 1;\n#define
+          USE_SURFACE_GRADS 1;\n#define REFLECTION_BLUR_1 1;\n#define REFRACTION_BLUR_1
+          1;\n#define SHORE_WAVES 1;\n#define WAVES_MAP_NORMAL 1;\n#define FIX_OVEREXPO
+          1;\n#define LIGHTING_BLEND_SIMPLE 1;\n#define GRAD_4 1;\n#define SHORE_UNWRAP_STRETCH_DOT
+          1;\n#define RIM_INVERSE 1;\n#define REFLECTION_BLUR 1;\n#define WAW3D_NORMAL_CALCULATION
+          1;\n#define FIX_HL 1;\n#define MAIN_TEX_LowDistortion_1 1;\n#define SKIP_3DVERTEX_HEIGHT_COLORIZE
+          1;\n#define SHORE_USE_WAVES_GRADIENT_1 1;\n#define VERTEX_ANIMATION_BORDER_FADE
+          1;\n#define SHORE_SHADDOW_1 1;\n#define SIN_OFFSET 1;\n#define SKIP_MAINTEX_VHEIGHT
+          1;\n#define USE_SIM_RADIUS 1;\n#define USE_REFRACTION_BLEND_FRESNEL 1;\n#define
+          USE_DEPTH_FOG 1;\n#define MM_SUB 1;\n#define lerped_post_SUB_2 1;\n#define
+          ULTRA_FAST_MODE 1;\n#define USE_REFR_LOW_DISTOR 1;\n#define USE_REFR_DISTOR
+          1;\n#define FOAM_ALPHA_FLAT 1;\n#define FORCE_OPAQUE 1;\n#define SMOOTH_BLEND_ANIMATION
+          1;\n#define USE_FAST_FRESNEL 1;\n#define USE_lerped_post 1;\n#define SKIP_BLEND_ANIMATION
+          1;\n#define UF_AMOUNTMASK 1;\n#define POST_TEXTURE_TINT 1;\n#define _ShoreWaves_G
+          1;\n#define _ShoreWaves_SECOND_TEXTURE 1;\n#define USE_BLENDANIMATED_MAINTEX
+          1;\n#define POST_OWN_TEXTURE 1;\n#define USE_OUTPUT_BLEND_3 1;\n#define
+          SHORE_USE_LOW_DISTORTION_1 1;\n#define BAKED_DEPTH_ONAWAKE 1;\n#define HAS_WAVES_DETILE
+          1;\n#define SKIP_AMBIENT_COLOR 1;\n#define USE_VERTEX_H_DISTORT 1;\n#define
+          MAINTEX_HAS_MOVE 1;\n#define UFAST_SHORE_1 1;\n#define SKIP_REFRACTION_CALC_DEPTH_FACTOR
+          1;\n#define SKIP_UNWRAP_TEXTURE 1;\n#define SKIP_FLAT_SPECULAR_CLAMP 1;\n#define
+          USE_FAKE_LIGHTING 1;\n#define SKIP_LIGHTING 1;\n#define COLORIZE_REFLECTION
+          1;\n#define APPLY_REFR_TO_SPECULAR 1;\n#define SKIP_FLAT_SPECULAR 1;\n#define
+          REFLECTION_PROBE_AND_INTENSITY 1;\n#define REFRACTION_BAKED_ONAWAKE 1;\n\r\n#pragma
+          fragmentoption ARB_precision_hint_fastest\r\n            #pragma multi_compile
+          ORTO_CAMERA_ON _\r\n            #pragma multi_compile WATER_DOWNSAMPLING
+          WATER_DOWNSAMPLING_HARD _\r\n           \r\n\n\n\n\n\n#define MYFLOAT float\n#define
+          MYFLOAT2 float2\n#define MYFLOAT3 float3\n#define MYFLOAT4 float4\n\n\n\n\n#if
+          defined(MINIMUM_MODE) || defined(ULTRA_FAST_MODE)\n#define MYFIXED fixed\n#define
+          MYFIXED2 fixed2\n#define MYFIXED3 fixed3\n#define MYFIXED4 fixed4\n#else\n#endif\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n#if
+          !defined(ULTRA_FAST_MODE) && !defined(MINIMUM_MODE)\n#endif\n#if  defined(REFLECTION_2D)
+          || defined(REFLECTION_PLANAR)||defined(REFLECTION_PROBE_AND_INTENSITY)||defined(REFLECTION_PROBE_AND_INTENSITY)||defined(REFLECTION_PROBE)||
+          defined(REFLECTION_USER) || defined(REFLECTION_JUST_COLOR)\n#define HAS_REFLECTION
+          = 1\n#endif\n\n\n\n\nuniform MYFIXED _ObjecAngle;\n#if !defined(ULTRA_FAST_MODE)
+          \ && !defined(MINIMUM_MODE)\n#endif\nMYFIXED _Frac2PITime;\nMYFIXED _Frac01Time;\nMYFIXED
+          _Frac01Time_d8_mBlendAnimSpeed;\nMYFIXED _Frac01Time_MAIN_TEX_BA_Speed;\nfloat2
+          _FracWTime_m4_m3DWavesSpeed_dPI2;\nMYFIXED2 _Frac_UFSHORE_Tile_1Time_d10_m_UFSHORE_Speed1;\nMYFIXED2
+          _Frac_UFSHORE_Tile_2Time_d10_m_UFSHORE_Speed2;\nMYFIXED _Frac01Time_m16_mMAIN_TEX_FoamGradWavesSpeed_1;\n\n\nfloat2
+          _Frac_WaterTextureTilingTime_m_AnimMove;\nfloat4 _Frac_UVS_DIR;\n\nfloat2
+          _FracMAIN_TEX_TileTime_mMAIN_TEX_Move;\nfloat2 _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_pMAIN_TEX_CA_Speed;\nfloat2
+          _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_sMAIN_TEX_CA_Speed;\n\n\n\nuniform
+          MYFIXED _LOW_DISTOR_Tile;\nuniform MYFIXED _LOW_DISTOR_Speed;\nuniform MYFIXED
+          _LOW_DISTOR_Amount;\n\n#ifdef WATER_DOWNSAMPLING\nuniform MYFIXED DOWNSAMPLING_SAMPLE_SIZE;\nfloat
+          _FrameRate;\nsampler2D _FrameBuffer;\n#endif\n#ifdef WATER_DOWNSAMPLING_HARD\nuniform
+          MYFIXED DOWNSAMPLING_SAMPLE_SIZE;\nfloat _FrameRate;\nsampler2D _FrameBuffer;\n#endif\n\n\n\nuniform
+          MYFIXED _BumpMixAmount;\nuniform MYFIXED _Z_BLACK_OFFSET_V;\n\n\n#if !defined(USING_FOG)
+          && !defined(SKIP_FOG)\n#define SKIP_FOG = 1\n#endif\n\n\n\n\n#if defined(REFRACTION_BAKED_FROM_TEXTURE)
+          || defined(REFRACTION_BAKED_ONAWAKE) || defined(REFRACTION_BAKED_VIA_SCRIPT)\n#define
+          HAS_BAKED_REFRACTION = 1\n#endif\n\n\n#if defined(SURFACE_FOG)\n#endif\n\n\n#if
+          defined(REFRACTION_GRABPASS) || defined(HAS_BAKED_REFRACTION) || defined(REFRACTION_ONLYZCOLOR)\n#if
+          !defined(DEPTH_NONE)\n#define HAS_REFRACTION = 1\n#endif\n#define REQUEST_DEPTH
+          = 1\n#endif\n\n#if (defined(REFRACTION_Z_BLEND) || defined(REFRACTION_Z_BLEND_AND_FRESNEL))&&
+          !defined(DEPTH_NONE)\n#endif\n\n#if defined(RRFRESNEL) || defined(HAS_REFRACTION_Z_BLEND_AND_RRFRESNEL)\n#endif\n\n#if
+          !defined(DEPTH_NONE)\nuniform MYFIXED _RefrDistortionZ;\n#endif\n\n\n\n\n#if
+          defined(USE_OUTPUT_GRADIENT) &&( defined(USE_OUTPUT_BLEND_1) || !defined(USE_OUTPUT_BLEND_3))\n#endif\n\n#if
+          !defined(SKIP_3DVERTEX_ANIMATION) && (defined(VERTEX_ANIMATION_BORDER_FADE)
+          )\n\n#if !defined(REQUEST_DEPTH)\n#endif\n#endif\n#if !defined(SKIP_3DVERTEX_ANIMATION)\n#if
+          defined(USE_SIMPLE_VHEIGHT_FADING)\n#endif\n#endif\n\n\n\n\n\n\n#if defined(DEPTH_NONE)\n#elif
+          defined(BAKED_DEPTH_ONAWAKE) || defined(BAKED_DEPTH_VIASCRIPT) || defined(BAKED_DEPTH_EXTERNAL_TEXTURE)\n#define
+          HAS_BAKED_DEPTH = 1\n#else\n#endif\n\n\n\n\n\n\n#if !defined(SKIP_FOAM)\n#endif\n#if
+          defined(DEPTH_NONE)\n#endif\n\n\n\nuniform MYFIXED _AverageOffset;\n\n\n\n\n#if
+          defined(REFLECTION_NONE) && !defined(SKIP_REFLECTION_MASK)\n#endif\n\n\n#if
+          defined(HAS_CAMERA_DEPTH) || defined(HAS_BAKED_DEPTH)|| defined(NEED_SHORE_WAVES_UNPACK)
+          || defined(SHORE_WAVES) && !defined(DEPTH_NONE) || defined(USE_CAUSTIC)
+          || defined(SURFACE_FOG)\n#define USE_WPOS = 1\n\n\n#endif\n\n\n#include
+          \"UnityCG.cginc\"\n#if !defined(SKIP_LIGHTING) || !defined(SKIP_SPECULAR)
+          || !defined(SKIP_FLAT_SPECULAR)\n#if !defined(USE_FAKE_LIGHTING)\n#endif\n#endif\n\n\n\n#if
+          defined(USE_SHADOWS) && !defined(SHADER_API_GLES) && !defined(MINIMUM_MODE)\n#endif\n\n#if
+          defined(HAS_USE_SHADOWS)\n#endif\n\n\n#if !defined(SKIP_FOAM_FINE_REFRACTIOND_DOSTORT)
+          && !defined(SKIP_FOAM)\n#endif\n\n\n#if defined(HAS_BAKED_REFRACTION)\nuniform
+          MYFIXED _RefractionBakeLayers;\n#endif\n#if defined(HAS_BAKED_DEPTH)\nuniform
+          MYFIXED _ZDepthBakeLayers;\n#endif\n\n\n\n\n#if defined(HAS_REFRACTION)
+          && defined(REFR_MASK)\n#endif\n\n\n\n\n\n#if defined(UF_AMOUNTMASK) && !defined(_UF_NMASK_USE_MAINTEX)
+          || !defined(SKIP_UNWRAP_TEXTURE) && defined(_ShoreWaves_SECOND_TEXTURE)
+          || defined(POST_TEXTURE_TINT) && defined(POST_OWN_TEXTURE) || defined(POST_TEXTURE_TINT)
+          && defined(POST_SECOND_TEXTURE)\nsampler2D _UF_NMASK_Texture;\n#define HAS_SECOND_TEXTURE
+          = 1\n#endif\n\n#if defined(SHORE_WAVES) && defined(ADVANCE_PC) || defined(UFAST_SHORE_1)
+          && !defined(_ShoreWaves_SECOND_TEXTURE) && !defined(_ShoreWaves_USE_MAINTEX)
+          && !defined(ADVANCE_PC)\n#endif\n\n\n\n#if defined(MINIMUM_MODE) || defined(ULTRA_FAST_MODE)\n\n\n\n\n\n\n#if
+          defined(UF_AMOUNTMASK)\nuniform half _UF_NMASK_Tile;\nuniform MYFIXED2 _UF_NMASK_offset;\nuniform
+          MYFIXED _UF_NMASK_Contrast;\nuniform MYFIXED _UF_NMASK_Brightnes;\n#endif\n#else\n#endif\n\n\n#if
+          defined(SIN_OFFSET)\nuniform MYFIXED _sinFriq;\nuniform MYFIXED _sinAmount;\n#endif\n\n\n#if
+          !defined(SKIP_LIGHTING) || !defined(SKIP_SPECULAR) || !defined(SKIP_FLAT_SPECULAR)\nuniform
+          MYFIXED _LightNormalsFactor;\n#if defined(USE_FAKE_LIGHTING)\nuniform MYFIXED3
+          _LightColor0Fake;\n#endif\n#if defined(LIGHTING_BLEND_COLOR)\n#endif\n#endif\n\n#if
+          defined(HAS_BAKED_REFRACTION)\n#if defined(REFRACTION_BAKED_FROM_TEXTURE)\n#else\nuniform
+          sampler2D _RefractionTex_temp;\n#endif\n#endif\n\n#if !defined(SKIP_REFRACTION_CALC_DEPTH_FACTOR)
+          || !defined(SKIP_Z_CALC_DEPTH_FACTOR)\nuniform MYFIXED _RefrDeepFactor;\n#endif\n\n#if
+          defined(HAS_CAMERA_DEPTH)\n#endif\n\n#if defined(USE_OUTPUT_GRADIENT)\n#endif\n\nuniform
+          MYFIXED4 _MainTexColor;\n\n#if defined(TRANSPARENT_LUMINOSITY)\n#endif\n#if
+          defined(TRANSPARENT_POW)\n#endif\n#if defined(TRANSPARENT_SIMPLE)\n#endif\n\n#if
+          defined(MULTI_OCTAVES)\n#endif\n\n\nuniform MYFIXED2 _AnimMove;\nuniform
+          MYFIXED _MainTexAngle;\nuniform sampler2D _MainTex;\nuniform MYFIXED4 _MainTex_ST;\n#if
+          !defined(SKIP_MAINTEXTURE) || defined(USE_NOISED_GLARE_PROCEDURALHQ) ||
+          !defined(SKIP_REFLECTION_MASK) || defined(HAS_REFR_MASK)\n\n#endif\n#if
+          !defined(SKIP_MAINTEXTURE)\n#endif\n\nuniform MYFIXED4 _WaterTextureTiling;\n\nuniform
+          sampler2D _Utility;\n\nuniform MYFIXED _BumpAmount;\n\nuniform sampler2D
+          _BumpMap;\n\n\n#if defined(BAKED_DEPTH_EXTERNAL_TEXTURE)\n#else\nuniform
+          sampler2D _BakedData_temp;\n#endif\n\n\n#if !defined(SKIP_NOISED_GLARE_HQ)
+          || defined(USE_NOISED_GLARE_ADDWAWES2) || defined(USE_NOISED_GLARE_ADDWAWES1)
+          || defined(USE_NOISED_GLARE_LQ)  || defined(USE_NOISED_GLARE_PROCEDURALHQ)\n\n\n#endif\n\n\n#if
+          defined(REFRACTION_GRABPASS)\n#endif\n#if defined(HAS_REFRACTION)\nuniform
+          MYFIXED _RefrDistortion;\n\n#if defined(USE_CAUSTIC) && !defined(ULTRA_FAST_MODE)
+          && !defined(MINIMUM_MODE)\n#endif\n\n\n#if defined(WAVES_GERSTNER)\n#endif\n\n\n\n#if
+          defined(HAS_NOISE_TEX)\n#endif\n\n\n\n#if defined(USE_REFR_LOW_DISTOR)\nuniform
+          MYFIXED\t_RefrLowDist;\n#endif\n\nuniform MYFIXED\t_RefrTopAmount;\nuniform
+          MYFIXED\t_RefrDeepAmount;\n#if !defined(ULTRA_FAST_MODE) && !defined(MINIMUM_MODE)\n#endif\n\nuniform
+          MYFIXED\t_TexRefrDistortFix;\n\nuniform MYFIXED3\t_RefrTopZColor;\nuniform
+          MYFIXED3\t_RefrZColor;\nuniform MYFIXED\t_RefrRecover;\nuniform MYFIXED\t_RefrZOffset;\nuniform
+          MYFIXED _RefrZFallOff;\n\n#if defined(REFRACTION_BLUR)\n#endif\n\n#if defined(USE_REFRACTION_BLEND_FRESNEL)
+          && defined(REFLECTION_NONE)\n#endif\nuniform MYFIXED _RefractionBLendAmount;\n\n#endif\n\n#if
+          defined(USE_OUTPUT_GRADIENT)\n#endif\nuniform MYFIXED4 _VertexSize;\n\n#if
+          !defined(SKIP_3DVERTEX_ANIMATION)\n\n#if defined(HAS_WAVES_ROTATION)\n#endif\n\nuniform
+          MYFIXED _VertexToUv;\n\nuniform MYFIXED _3Dwaves_BORDER_FACE;\nuniform MYFIXED2
+          _3DWavesSpeed;\nuniform MYFIXED2 _3DWavesSpeedY;\n\nuniform MYFIXED _3DWavesHeight;\nuniform
+          MYFIXED _3DWavesWind;\nuniform half2 _3DWavesTile;\n#if defined(WAW3D_NORMAL_CALCULATION)\nuniform
+          MYFIXED _3dwanamnt;\n#endif\n\n\n#if  !defined(SKIP_3DVERTEX_ANIMATION)
+          && !defined(SKIP_3DVERTEX_HEIGHT_COLORIZE)\n#endif\n\n\n#if defined(HAS_WAVES_DETILE)\nuniform
+          MYFIXED _VERTEX_ANIM_DETILEAMOUNT;\nuniform MYFIXED _VERTEX_ANIM_DETILESPEED;\nuniform
+          MYFIXED _VERTEX_ANIM_DETILEFRIQ;\nuniform MYFIXED3 _VERTEX_ANIM_DETILE_YOFFSET;\n#endif\n\n#endif\n\n#if
+          defined(USE_LIGHTMAPS)\n#endif\n\n#if defined(USE_OUTPUT_SHADOWS)\nuniform
+          MYFIXED _OutShadowsAmount;\n#endif\n\n\n\n\n\n#if defined(POSTRIZE)\n#endif\n\n#if
+          defined(RIM)\n#endif\n\n\n\n\n\n#if !defined(REFLECTION_NONE)\n#if defined(REFLECTION_USER)\n#endif\n\n#if
+          defined(REFLECTION_2D)\n#endif\n#if defined(REFLECTION_PLANAR)\n#endif\n\n\n\n\nuniform
+          MYFIXED baked_ReflectionTex_distortion;\nuniform MYFIXED _ReflectionAmount;\nuniform
+          MYFIXED _ReflectionBlendAmount;\nuniform MYFIXED LOW_ReflectionTex_distortion;\n\n#if
+          defined(COLORIZE_REFLECTION)\nuniform MYFIXED3 _ReflectColor;\n#endif\n\n\nuniform
+          MYFIXED _ReflectionYOffset;\nuniform MYFIXED _ReflectionLOD;\n#if defined(DESATURATE_REFL)\n#endif\n#if
+          defined(REFLECTION_BLUR) || !defined(REFLECTION_2D) && !defined(REFLECTION_PLANAR)\nuniform
+          MYFIXED  _ReflectionBlurRadius;\nuniform MYFIXED  _ReflectionBlurZOffset;\n#if
+          !defined(SKIP_FRES_BLUR)\nuniform MYFIXED FRES_BLUR_AMOUNT;\nuniform MYFIXED
+          FRES_BLUR_OFF;\n\n#endif\n#endif\n#if defined(REFLECTION_JUST_COLOR)\n#endif\n#endif\n\n\n\n#if
+          !defined(SKIP_FRESNEL_CALCULATION)\nuniform MYFIXED _FresnelFade;\nuniform
+          MYFIXED _FresnelAmount;\nuniform MYFIXED _FresnelPow;\n#endif\n#if !defined(SKIP_FRESNEL_CALCULATION)
+          && defined(USE_FRESNEL_POW)\n#endif\n\n\n#if !defined(SKIP_LIGHTING) ||
+          \ !defined(SKIP_SPECULAR) || !defined(SKIP_FLAT_SPECULAR)\nuniform MYFIXED3
+          _LightDir;\n\n#endif\n#if !defined(SKIP_LIGHTING)\n#endif\n#if !defined(SKIP_SPECULAR)\nuniform
+          MYFIXED _SpecularAmount;\nuniform MYFIXED _SpecularShininess;\nuniform MYFIXED
+          _SpecularGlowAmount;\n#endif\n#if !defined(SKIP_FLAT_SPECULAR)\n#endif\n\n\n\n#if
+          !defined(SKIP_REFLECTION_MASK)\nuniform MYFIXED _ReflectionMask_Amount;\nuniform
+          MYFIXED _ReflectionMask_Offset;\nuniform MYFIXED _ReflectionMask_UpClamp;\nuniform
+          MYFIXED _ReflectionMask_Tiling;\nuniform MYFIXED2 _ReflectionMask_TexOffsetF;\n#endif\n\n\n#if
+          (defined(HAS_FOAM) || defined(SHORE_WAVES)) && !defined(ULTRA_FAST_MODE)
+          && !defined(MINIMUM_MODE)\n#endif\n\n\n\n#if !defined(SKIP_FOAM)\n#endif\n\n#if
+          !defined(SKIP_SURFACE_FOAMS) && defined(ADVANCE_PC)\n#endif\n\n#ifdef ORTO_CAMERA_ON\nuniform
+          MYFIXED _MyNearClipPlane;\nuniform MYFIXED _MyFarClipPlane;\n#endif\n\n\n#if
+          defined(DETILE_HQ) || defined(DETILE_LQ)\nuniform half _DetileAmount;\nuniform
+          half _DetileFriq;\n#endif\n\n#if defined(HAS_REFRACTION) && !defined(REFRACTION_ONLYZCOLOR)\nuniform
+          MYFIXED _RefrTextureFog;\n#endif\n\n\n#if(defined(APPLY_REFR_TO_SPECULAR)
+          || defined(_APPLY_REFR_TO_TEX_DISSOLVE_FAST) )&& defined(HAS_REFRACTION)\nuniform
+          MYFIXED _APPLY_REFR_TO_SPECULAR_DISSOLVE;\nuniform MYFIXED _APPLY_REFR_TO_SPECULAR_DISSOLVE_FAST;\n\n#endif\n\n\n\n\n\n#if
+          defined(SHORE_WAVES)\nuniform MYFIXED _FoamMaskOffset_SW;\nuniform MYFIXED
+          _FoamLength_SW;\nuniform MYFIXED _FoamDistortionFade_SW;\nuniform MYFIXED
+          _WaterfrontFade_SW;\nuniform MYFIXED _FoamDistortion_SW;\nuniform MYFIXED3
+          _FoamColor_SW;\nuniform MYFIXED _FoamWavesSpeed_SW;\nuniform MYFIXED _FoamDirection_SW;\nuniform
+          MYFIXED _FoamAmount_SW;\nuniform half _FoamLShoreWavesTileY_SW;\nuniform
+          half _FoamLShoreWavesTileX_SW;\n\n\n#if defined(NEED_SHORE_WAVES_UNPACK)\n#endif\n#endif\n\n\n#if
+          defined(USE_SURFACE_GRADS)\n\n#endif\n\n#if defined(WAVES_GERSTNER)&& defined(ADVANCE_PC)\n#endif\n\nuniform
+          MYFIXED3 _ObjectScale;\n\n#if defined(Z_AFFECT_BUMP) && !defined(DEPTH_NONE)\n#endif\n\n\n\n#if
+          defined(USE_LUT)\n#endif\n\n\n\n\n#if  defined (ADDITIONAL_FOAM_DISTORTION)
+          && defined(HAS_REFRACTION) &&  !defined(SKIP_FOAM)\n#endif\n\n\n#if defined(ZDEPTH_CALCANGLE)\n#endif\n\n\n\n#if
+          defined(SURFACE_WAVES)&& defined(ADVANCE_PC)\n#endif\n\n\n#if !defined(SKIP_BLEND_ANIMATION)\n#endif\n\n\n#if
+          defined(USE_FAST_FRESNEL)\nuniform MYFIXED _FastFresnelAmount;\nuniform
+          MYFIXED _FastFresnelPow;\n#endif\n\n\n\n#if defined(SKIP_MAIN_TEXTURE)\n#else\n\nuniform
+          MYFIXED MAIN_TEX_Bright;\nuniform half2 MAIN_TEX_Tile;\nuniform MYFIXED2
+          MAIN_TEX_CA_Speed;\nuniform MYFIXED2 MAIN_TEX_Move;\nuniform MYFIXED MAIN_TEX_BA_Speed;\nuniform
+          MYFIXED MAIN_TEX_Amount;\nuniform MYFIXED MAIN_TEX_Contrast;\nuniform MYFIXED
+          MAIN_TEX_Distortion;\nuniform MYFIXED MAIN_TEX_LQDistortion;\n\nuniform
+          MYFIXED MAIN_TEX_ADDDISTORTION_THAN_MOVE_Amount;\n\n#if !defined(SKIP_MAINTEX_VHEIGHT)\n#endif\n\n\n#if
+          defined(USE_BLENDANIMATED_MAINTEX)\nuniform MYFIXED _LOW_DISTOR_MAINTEX_Tile;\nuniform
+          MYFIXED _LOW_DISTOR_MAINTEX_Speed;\nuniform MYFIXED MAIN_TEX_MixOffset;\nuniform
+          MYFIXED MAIN_TEX_Multy;\n\n#endif\n\n#endif\n\n#if defined(POST_TEXTURE_TINT)\nuniform
+          MYFIXED3 _MM_Color;\nuniform MYFIXED2 _MM_offset;\nuniform MYFIXED2 _MM_Tile;\nuniform
+          MYFIXED _MM_MultyOffset;\n\n#if defined(POST_OWN_TEXTURE)\nuniform sampler2D
+          _MM_Texture;\n#endif\n#endif\n\n\n\nuniform MYFIXED3 _ReplaceColor;\n\n\n\n#if
+          defined(UFAST_SHORE_1)\n\n#if defined(USE_VERTEX_H_DISTORT)\nuniform MYFIXED
+          VERTEX_H_DISTORT;\n#endif\n\n\n#if defined(SHORE_USE_WAVES_GRADIENT_1)\nuniform
+          MYFIXED MAIN_TEX_FoamGradWavesSpeed_1;\nuniform MYFIXED MAIN_TEX_FoamGradDirection_1;\nuniform
+          MYFIXED MAIN_TEX_FoamGradTile_1;\nuniform MYFIXED MAIN_TEX_FoamGradTileYYY_1;\n#endif\n#if
+          defined(SHORE_USE_ADDITIONALCONTUR_1)\n#endif\n#if defined(SHORE_USE_LOW_DISTORTION_1)\nuniform
+          MYFIXED _UFSHORE_LowDistortion_1;\n#endif\nuniform MYFIXED SHORE_USE_ADDITIONALCONTUR_POW_Amount_1;\nuniform
+          MYFIXED _UFSHORE_UNWRAP_LowDistortion_1;\nuniform MYFIXED _UFSHORE_UNWRAP_Transparency;\n\nuniform
+          MYFIXED _UFSHORE_Amount_1;\nuniform MYFIXED _UFSHORE_Length_1;\nuniform
+          MYFIXED3 _UFSHORE_Color_1;\nuniform MYFIXED _UFSHORE_Distortion_1;\nuniform
+          half2 _UFSHORE_Tile_1;\nuniform MYFIXED _UFSHORE_AlphaAmount_1;\nuniform
+          MYFIXED _UFSHORE_AlphaMax_1;\nuniform float _UFSHORE_Speed_1;\n#if defined(SHORE_SHADDOW_1)\nuniform
+          MYFIXED _UFSHORE_ShadowV1_1;\nuniform MYFIXED _UFSHORE_ShadowV2_1;\n#endif\n#endif\n\n#if
+          defined(USE_lerped_post)\nuniform MYFIXED3 lerped_post_color1;\nuniform
+          MYFIXED3 lerped_post_color2;\nuniform MYFIXED lerped_post_offset;\nuniform
+          MYFIXED lerped_post_offset_falloff;\n#endif\n\n\n\n\n\n\r\n#include \"Assets/EModules/Fast
+          Water Model 2.0/Scripts/Shaders/EModules Water Model Ultra Fast Mode v1.cginc\"\r\n\r\n\t\t\t\t"
+        m_AssetPath: 
+        m_PlatformMask: 4294967295
+        m_HardwareTierVariantsMask: 0
+        m_StartLine: 1584
+        m_TypesMask: 3
+        m_IncludesHash:
+          serializedVersion: 2
+          Hash: 9400d802e180f232e5756b6719fa0250
+        m_CodeHash:
+          serializedVersion: 2
+          Hash: de9f30582ffcbc96d4cc50bd91d9c51c
+        m_FromOther: 0
+        m_Language: 0
+        m_VariantsUser0:
+        - - ORTO_CAMERA_ON
+          - _
+        - - WATER_DOWNSAMPLING
+          - WATER_DOWNSAMPLING_HARD
+          - _
+        - - __
+          - FOG_LINEAR
+          - FOG_EXP
+          - FOG_EXP2
+        m_VariantsUser1:
+        - - ORTO_CAMERA_ON
+          - _
+        - - WATER_DOWNSAMPLING
+          - WATER_DOWNSAMPLING_HARD
+          - _
+        - - __
+          - FOG_LINEAR
+          - FOG_EXP
+          - FOG_EXP2
+        m_VariantsUser2: []
+        m_VariantsUser3: []
+        m_VariantsUser4: []
+        m_VariantsUser5: []
+        m_VariantsBuiltin0: []
+        m_VariantsBuiltin1: []
+        m_VariantsBuiltin2: []
+        m_VariantsBuiltin3: []
+        m_VariantsBuiltin4: []
+        m_VariantsBuiltin5: []
+        m_BaseRequirements: 1
+        m_KeywordTargetInfo:
+        - keywordName: SHADOWS_SOFT
+          requirements: 227
+        - keywordName: DIRLIGHTMAP_COMBINED
+          requirements: 227
+        - keywordName: DIRLIGHTMAP_SEPARATE
+          requirements: 227
+        - keywordName: DYNAMICLIGHTMAP_ON
+          requirements: 227
+        - keywordName: SHADOWS_SCREEN
+          requirements: 227
+        - keywordName: INSTANCING_ON
+          requirements: 2048
+        - keywordName: PROCEDURAL_INSTANCING_ON
+          requirements: 16384
+        - keywordName: STEREO_MULTIVIEW_ON
+          requirements: 3819
+        - keywordName: STEREO_INSTANCING_ON
+          requirements: 3819
+        m_NonStrippedUserKeywords: FOG_EXP FOG_EXP2 FOG_LINEAR ORTO_CAMERA_ON WATER_DOWNSAMPLING
+          WATER_DOWNSAMPLING_HARD
+        m_BuiltinKeywords: 
+    m_MeshComponentsFromSnippets: 15
+    m_HasSurfaceShaders: 0
+    m_HasFixedFunctionShaders: 0

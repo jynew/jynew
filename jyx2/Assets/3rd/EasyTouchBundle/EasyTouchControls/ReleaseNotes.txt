@@ -1,0 +1,173 @@
+**********************************************
+				EASY TOUCH CONTROLS
+				
+Copyright © 2015 The Hedgehog Team
+http://www.thehedgehogteam.com/Forum/
+
+		the.hedgehog.team@gmail.com
+
+**********************************************
+
+EasyTouch Controls 2.0.9
+========================
+* Fixe warning : Unable to find style 'As TextArea' in skin 'DarkSkin' Layout when EasyTouch gameobject is selected in Unity 2017.1.0f3
+* Remove CG alloc from Virtual Control
+
+EasyTouch Controls 2.0.8
+========================
+* fixed bug : Dead zone is correctly applied with curve
+
+EasyTouch Controls 2.0.7
+========================
+* fixed bug : Joystick thumb joystick remained visible sometimes in dynamic mode.
+
+EasyTouch Controls 2.0.6
+========================
+* Fixed bug: Changes in inspectors was not taken into account in some cases
+
+EasyTouch Controls 2.0.5
+========================
+* Fixed warning in Unity 5.3.X
+* Fixed bug : When control are set to use FixedUpdate 
+
+EasyTouch Controls 2.0.4
+========================
+* fixed bug : A Null Reference Exception occured when one of thier option inertia,stabilization or clamp rotation was enabled,  and gameobject wasn't available for direct action.
+
+
+EasyTouch Controls 2.0.3
+========================
+* Add auto link on tag for camera target
+* fixed warning in Unity 5.3.X
+
+EasyTouch Controls 2.0.2
+========================
+* Add the possibility to setup yourself the radius of a joystick
+
+EasyTouch Controls 2.0.1
+========================
+* Fixe dynamic joystick
+
+EasyTouch Controls 2.0.0
+========================
+- News
+*******
+Look at Youtube channel : https://www.youtube.com/playlist?list=PL_xsQKiLfGUYpZt7uDepdadHo7GBGbozH
+
+
+* Turn and Move direct action  is now available.It allows you to create a quick third person as Angry Bot demo
+* Jump direct action is now available.
+* Camera follow features
+* Auto link on tag : you can use direct mode  without making reference to a physical gameobject in the Inspector.The joystick take the reference gameobject possessing a specific tag.
+* Dead zone : You can now chose a curve to manage the deads zones of axes.
+* New methods are exposed in input manager (ETCInput)
+* New examples
+* New prefab for quick prototype.
+* new aspect of the Inspector
+
+EasyTouchControls 1.2.6
+=======================
+
+- News
+*******
+* You can choose to unregister or not a control at disabling time.
+* StandAloneInputModule  composant is automatically add to the  EventSystem gameobject.
+
+- Bug fixed
+************
+* Change UNITY_IPHONE by UNITY_IOS 
+* Second dynamic joystick no longer show when the touch come from another area in the editor mode
+* InputManager is automatically add in static (in the hierachy when you create a control)
+
+
+EasyTouchControls 1.2.5
+=======================
+- Bug fixed
+************
+* Virtual controls apply correctly their state (visible & activated) defined in inspector at startup.
+
+EasyTouchControls 1.2.4
+=======================
+- News
+******
+* Virtual controls register & unregister  dice their activation / deactivation.
+
+
+EasyTouchControls 1.2.3
+=======================
+- Bug fixed
+************
+* The controls are corretly reset (value & position) after their deactivation
+* The Controls  no longer return their value after their deactivation
+* The controls respond correctly to SetActive on their gameobject
+
+- News
+******
+* VituralControlInput is renamed InputManager
+* You can now add InputManager  from GameObject menu.
+
+
+EasyTouchControls 1.2.2
+=======================
+- Bug fixed
+************
+- Buttons no longer stays pressed,after a first use
+
+EasyTouchControls 1.2.1
+=======================
+- Bug fixed
+************
+TouchPAD, DPAD, Button only take into account the first touch.
+
+EasyTouchControls 1.2.0
+=======================
+- News for joystick
+*******************
+- No offset thumg : When this option is activated, the joystick thumb is positioned directly under the first touch.
+- No return of the thumb : When this option is activated, the joystick thumb isn't return to the center when the player relase the touch.
+
+These two options are available in the joystick inspector in Position & Size part.
+
+EasyTouchContols 1.1.1
+======================
+- Bug fixed
+************
+- VirtualControlInput gameobject no longer stay alive after you stop playmode after to have desactivated a control
+
+EasyTouchContols 1.1.0
+======================
+- News
+******
+- You can  bind keys on control axes, to simulate the behaviour on Unity Editor or on standalone
+- New static function to reset axis ETCInput.ResetAxis(String axisName)
+
+- Bug fixed
+************
+- Visible property works correctly for DPAD
+
+
+
+
+EasyTouchContols 1.0.5
+======================
+- Fixed Dynamic joystick since 4.6.3 & 5.X
+
+EasyTouchContols 1.0.4
+======================
+- Fixed button issues since 4.6.3
+
+EasyTouchContols 1.0.3
+======================
+- Fixed dynamic joystick with user defined area.
+
+EasyTouchContols 1.0.2
+======================
+- The controls are properly unregister from the dictionary to their destruction.
+
+EasyTouchContols 1.0.1
+======================
+- Dynamic joysticks no longer appears above a selectable UI element Ui and no staying  sticky
+- Dynamic joysticks are placed at the forefront of canvas.
+- You can authorized a dynamic joystick above touchpad.
+- The button value is correctly reset to 0 after his release on over the time mode.
+

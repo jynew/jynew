@@ -1,0 +1,99 @@
+**********************************************
+				EASY TOUCH 5
+				
+Copyright © 2016 The Hedgehog Team
+http://www.thehedgehogteam.com/Forum/
+
+		the.hedgehog.team@gmail.com
+
+**********************************************
+EasyTouch 5.0.12
+===============
+* Fixe warning : Unable to find style 'As TextArea' in skin 'DarkSkin' Layout when EasyTouch gameobject is selected in Unity 2017.1.0f3
+
+EasyTouch 5.0.11
+===============
+* Fixe PlayMaker addon
+
+EasyTouch 5.0.10
+===============
+* Fixe Quick Gesture since 5.0.9
+
+EasyTouch 5.0.9
+===============
+* The current gesture is equal to Null when nothing happening, to prevent CG collect
+
+EasyTouch 5.0.8
+===============
+* Fixe warning on Unity 5.4.X
+
+EasyTouch 5.0.7
+===============
+* Fixe error on Unity 5.4.X
+
+EasyTouch 5.0.6
+===============
+* Quick gesture use System GUID instead Unity GUID to prevent error in constructor since Unity 5.4 
+* This QuickSwipe event unsubscribe
+
+EasyTouch 5.0.5
+===============
+* Fixe bug : Mouse & touch are correctly managed at the same time on WIN_RT
+
+EasyTouch 5.0.4
+===============
+* Fixe multi-touch on some specific platform (some platform as Window 10 don't  support multi-touch on Editor, but only in build)
+
+EasyTouch 5.0.3
+===============
+* Fixed bug: Changes in inspectors was not taken into account in some cases
+
+EasyTouch 5.0.2
+===============
+- Fixed bug in QuickSwipe. "On Swipe Action" was triggerde  everytime  without take into account the direction, if triggering was set to "End"
+
+EasyTouch 5.0.1
+===============
+- Fixed bug in multi-cameras management
+
+EasyTouch 5.0.0
+===============
+- Add namespace HedgehogTeam.EasyTouch;
+- Add Quick Gesture components
+- Add new syntaxe to use EasyTouch in Update method
+- EasyTouch class is now a singleton
+- Playmaker support
+- You can choose to always send swipe event during a drag
+- GetPickedCurrentObject & GetUiElemnt take an optional parmater for twofinger gesutre;
+- Gesture class exposes altitudeAngle, azimuthAngle, maximumPossiblePressure, pressure, radius, radiusVariance, touchType from Touch class
+
+EasyTouch 4.1.1
+===============
+- Unity remote is activated automatically if needed ( the option is still available in the Inspector)
+- UNITY_IPHONE platform defines is replaced by UNITY_IOS
+- Lightmap data are removed.
+
+EasyTouch 4.1.0 
+===============
+-Add support of UI Element on EasyTouchTrigger component
+-Better inspector for EasyTouchTrigger
+
+EasyTouch 4.0.4 
+===============
+- Fixed twist angle, it was always positive, whatever the direction of rotaiton
+
+EasyTouch 4.0.3 
+===============
+- fixe twist gesture, in some cases the value of "TwistAngle" was false (due to rounding of the function Vector2DeltaAngle of Unity)
+
+EasyTouch 4.0.2 
+===============
+- fixe spelling error : GetTouchToWordlPoint  to GetTouchToWorldPoint
+
+EasyTouch 4.0.1 
+===============
+- NGUI compatibility mode works as EasyTouch 3.X
+- New parameter allow you to choose the double tap detection mode :
+	By system : Double works as EasyTouch 3.X	
+	By time	  : Double tap is relative to a maximum time, On_Simple isn't firing during a double tap, but a delay is required before to send it.
+

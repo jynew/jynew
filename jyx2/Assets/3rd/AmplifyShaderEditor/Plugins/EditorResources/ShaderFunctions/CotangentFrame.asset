@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: CotangentFrame
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=15103\n344;92;1056;673;1041.108;554.3792;1;True;False\nNode;AmplifyShaderEditor.FunctionInput;2;-613.4943,-271.5543;Float;False;View
+    Dir;3;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;1;-608.4943,-157.5543;Float;False;UV;2;2;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionInput;4;-592.4943,-397.5543;Float;False;World
+    Normal;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.CustomExpressionNode;3;-421.4942,-290.5543;Float;False;float3
+    dp1 = ddx ( position )@$float3 dp2 = ddy ( position )@$float2 duv1 = ddx ( uv
+    )@$float2 duv2 = ddy ( uv )@$float3 dp2perp = cross ( dp2, normal )@$float3 dp1perp
+    = cross ( normal, dp1 )@$float3 tangent = dp2perp * duv1.x + dp1perp * duv2.x@$float3
+    bitangent = dp2perp * duv1.y + dp1perp * duv2.y@$float invmax = rsqrt ( max (
+    dot ( tangent, tangent ), dot ( bitangent, bitangent ) ) )@$tangent *= invmax@$bitangent
+    *= invmax@$return float3x3 (\ttangent.x, bitangent.x, normal.x,$\t\t\t\t\ttangent.y,
+    bitangent.y, normal.y,$\t\t\t\t\ttangent.z, bitangent.z, normal.z )@;5;False;3;True;normal;FLOAT3;0,0,0;In;True;position;FLOAT3;0,0,0;In;True;uv;FLOAT2;0,0;In;CotangentFrame;False;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT2;0,0;False;1;FLOAT3x3;0\nNode;AmplifyShaderEditor.FunctionOutput;5;-204.4942,-327.5543;Float;False;True;TBN;0;False;1;0;FLOAT3x3;0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;False;1;FLOAT3x3;0\nWireConnection;3;0;4;0\nWireConnection;3;1;2;0\nWireConnection;3;2;1;0\nWireConnection;5;0;3;0\nASEEND*/\n//CHKSM=D848432022B91999196CE4B6F7A8557013863A11"
+  m_functionName: 
+  m_description: 'Calculating Cotangent frame without precomputed data
+
+    http://www.thetenthplanet.de/archives/1180'
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_nodeCategory: 3
+  m_customNodeCategory: 
+  m_previewPosition: 0

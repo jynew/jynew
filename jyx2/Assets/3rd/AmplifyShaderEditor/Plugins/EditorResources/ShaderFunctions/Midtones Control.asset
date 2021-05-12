@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Midtones Control
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=14205\n666;208;1066;728;2931.866;781.7222;2.2203;True;False\nNode;AmplifyShaderEditor.RangedFloatNode;3;-1907.899,-289.42;Float;False;Constant;_b;b;5;0;Create;True;0.333;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;5;-1973.299,6.039673;Float;False;Constant;_a;a;5;0;Create;True;0.25;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;20;-1191.009,82.84344;Float;False;Constant;_scale;scale;5;0;Create;True;0.7;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;22;-808.6494,-114.4888;Float;False;4;4;0;FLOAT;0.0;False;1;FLOAT;0.0;False;2;FLOAT;0.0;False;3;FLOAT3;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleAddOpNode;23;-642.6191,-517.399;Float;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT3;0.0,0,0,0;False;1;COLOR;0\nNode;AmplifyShaderEditor.SaturateNode;24;-440.7793,-523.3648;Float;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0\nNode;AmplifyShaderEditor.FunctionInput;26;-1138.585,215.9016;Float;False;Red
+    Shift;1;1;False;1;0;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;27;-1136.361,311.5068;Float;False;Green
+    Shift;1;2;False;1;0;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;28;-1092.291,436.1535;Float;False;Blue
+    Shift;1;3;False;1;0;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SamplerNode;1;-2162.971,-543.0989;Float;True;Property;_TextureSample0;Texture
+    Sample 0;3;0;Create;True;None;cc818fab9e6e24a40b931f8701ae2c12;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0.0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1.0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.FunctionInput;25;-2376.585,-567.5209;Float;False;Input;9;0;False;1;0;SAMPLER2D;0.0;False;1;SAMPLER2D;0\nNode;AmplifyShaderEditor.DynamicAppendNode;17;-898.4647,265.9574;Float;False;FLOAT3;4;0;FLOAT;0.0;False;1;FLOAT;0.0;False;2;FLOAT;0.0;False;3;FLOAT;0.0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.WireNode;21;-1276.049,-548.8137;Float;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0\nNode;AmplifyShaderEditor.NegateNode;7;-1550.52,151.5848;Float;False;1;0;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;8;-1535.909,-477.3485;Float;False;2;0;FLOAT;0.0;False;1;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;4;-1724.909,10.69427;Float;False;Constant;_Float1;Float
+    1;5;0;Create;True;-1;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleAddOpNode;6;-1560.319,-92.27643;Float;False;3;3;0;FLOAT;0.0;False;1;FLOAT;0.0;False;2;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleAddOpNode;15;-1207.399,-318.7663;Float;False;2;2;0;FLOAT;0.0;False;1;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleAddOpNode;16;-1161.829,-75.91486;Float;False;2;2;0;FLOAT;0.0;False;1;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;10;-1380.099,-330.7704;Float;False;2;0;FLOAT;0.0;False;1;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;18;-1061.339,-331.9753;Float;False;1;0;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;19;-1008.659,-73.86804;Float;False;1;0;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;9;-1363.329,-47.31543;Float;False;2;0;FLOAT;0.0;False;1;FLOAT;0.0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;2;-1772.049,-470.1264;Float;False;float
+    fmin = min(min(Color.r, Color.g), Color.b)@$float fmax = max(max(Color.r, Color.g),
+    Color.b)@$return (fmax + fmin) / 2.0@;1;False;1;True;Color;FLOAT3;0,0,0;In;RBGToLuminance;1;0;FLOAT3;0,0,0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;11;-1366.299,-194.0069;Float;False;Constant;_Float3;Float
+    3;5;0;Create;True;0.5;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;-271.7024,-592.2229;Float;False;True;Output;0;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0\nWireConnection;22;0;18;0\nWireConnection;22;1;19;0\nWireConnection;22;2;20;0\nWireConnection;22;3;17;0\nWireConnection;23;0;21;0\nWireConnection;23;1;22;0\nWireConnection;24;0;23;0\nWireConnection;1;0;25;0\nWireConnection;17;0;26;0\nWireConnection;17;1;27;0\nWireConnection;17;2;28;0\nWireConnection;21;0;1;0\nWireConnection;7;0;5;0\nWireConnection;8;0;2;0\nWireConnection;8;1;3;0\nWireConnection;6;0;2;0\nWireConnection;6;1;3;0\nWireConnection;6;2;4;0\nWireConnection;15;0;10;0\nWireConnection;15;1;11;0\nWireConnection;16;0;11;0\nWireConnection;16;1;9;0\nWireConnection;10;0;8;0\nWireConnection;10;1;5;0\nWireConnection;18;0;15;0\nWireConnection;19;0;16;0\nWireConnection;9;0;6;0\nWireConnection;9;1;7;0\nWireConnection;2;0;1;0\nWireConnection;0;0;24;0\nASEEND*/\n//CHKSM=75F383819F22C7DE4B23FB26DA48A8B24E31CDAE"
+  m_functionName: 
+  m_description: Can change midtones but does not preserve luminosity (still under
+    construction )
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_nodeCategory: 3
+  m_customNodeCategory: 
+  m_previewPosition: 0
