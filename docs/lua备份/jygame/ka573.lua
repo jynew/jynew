@@ -1,0 +1,53 @@
+if UseItem(131) == true then goto label0 end;
+    do return end;
+::label0::
+    AddEthics(2);
+    AddItem(131, -1);
+    Talk(51, "哈哈，有了大燕皇帝世系譜表及傳國玉璽，我就可號召大燕後代，實行復國計劃．", "talkname51", 0);
+    Talk(0, "慕容公子此次不會再失信了吧．", "talkname0", 1);
+    Talk(51, "我慕容復何時曾失信過人．", "talkname51", 0);
+    Talk(0, "＜貴人多忘事＞", "talkname0", 1);
+    Talk(51, "”天龍八部”一書的下落是在．．．．．", "talkname51", 0);
+    Talk(0, "在那裡？", "talkname0", 1);
+    Talk(51, "在喬峰的手裡．", "talkname51", 0);
+    Talk(0, "你是說丐幫幫主喬峰．", "talkname0", 1);
+    Talk(51, "正是．", "talkname51", 0);
+    Talk(0, "你該不會是隨便說說的吧．人家稱你們為”南慕容，北喬峰”，你就說書在他那．", "talkname0", 1);
+    Talk(109, "我表哥沒有說謊，此書的確是流落在他的手中．", "talkname109", 0);
+    Talk(0, "王姑娘說的話就可以信了．好，我就上丐幫要書去了．", "talkname0", 1);
+    Talk(51, "不對，不對，閣下應該先上少林才對．", "talkname51", 0);
+    Talk(0, "此話怎講？", "talkname0", 1);
+    Talk(51, "你想想看，你打得過那喬峰嗎？", "talkname51", 0);
+    Talk(0, "打不過也得打，不然怎麼辦？", "talkname0", 1);
+    Talk(51, "我有辦法讓喬峰乖乖的將書交出來．", "talkname51", 0);
+    Talk(0, "他為什麼會乖乖交出來．", "talkname0", 1);
+    Talk(51, "因為我知道他一個極大的秘密，一個足以讓他身敗名裂的秘密．", "talkname51", 0);
+    Talk(0, "那為什麼要先到少林？", "talkname0", 1);
+    Talk(51, "因為得先到少林寺拿一樣東西．", "talkname51", 0);
+    Talk(0, "一樣東西？", "talkname0", 1);
+    Talk(51, "是的，一樣能讓武林天翻地覆的東西．總之，你若和我一同前往，我可以讓你輕易獲得該書．否則，你自己一個人有自信打敗喬峰嗎？", "talkname51", 0);
+    Talk(0, "你為什麼要幫我？", "talkname0", 1);
+    Talk(51, "沒什麼，魚幫水，水幫魚．我慕容氏人丁單薄，勢力微弱，想要重建邦國，談何容易？唯一的機會便是天下大亂，武林動盪不安．而你也可從中得到你要的東西．", "talkname51", 0);
+    Talk(109, "表哥，你不要想復國想到瘋了，弄得天下大亂．", "talkname109", 0);
+    Talk(51, "住嘴！妳以為我這慕容復的”復”字是為何取的，我慕容家族世世代代奔波一生，所為何事？怎樣，你要不要和我合作？", "talkname51", 0);
+    ModifyEvent(-2, 5, -2, -2, 497, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, -2, -2, -2, 494, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 2, -2, -2, 495, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(51, 14, -2, -2, 527, 531, -1, -2, -2, -2, -2, -2, -2);
+    if AskJoin () == true then goto label1 end;
+        Talk(0, "慕容公子的”好”意，在下心領了．在下對自己的武功還有一點自信，我寧願光明正大的與喬大俠打鬥，也不願用卑鄙的方法去得到那本”天龍八部”．", "talkname0", 1);
+        Talk(51, "你再考慮清楚．", "talkname51", 0);
+        do return end;
+::label1::
+        Talk(0, "好，我就和你上少林，揭發喬峰的秘密．", "talkname0", 1);
+        if TeamIsFull() == false then goto label2 end;
+            Talk(51, "你的隊伍已滿，我無法加入．", "talkname51", 0);
+            do return end;
+::label2::
+            DarkScence();
+            jyx2_ReplaceSceneObject("", "NPC/murongfu", "");--慕容复
+            ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+            ModifyEvent(-2, 2, -2, -2, 495, -1, -1, -2, -2, -2, -2, -2, -2);
+            LightScence();
+            Join(51);
+do return end;

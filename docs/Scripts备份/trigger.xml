@@ -1,0 +1,20 @@
+<root>
+  <trigger Key="Hp" Name="影响生命" KeyParam="v:Int" CommonParam="" Rule="{Key}" Desc="{v}生命值" Tag="" />
+  <trigger Key="HpPct" Name="影响生命百分比" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%生命值" Tag="" />
+  <trigger Key="Mp" Name="影响内力" KeyParam="v:Int" CommonParam="" Rule="{Key}" Desc="{v}内力值" Tag="" />
+  <trigger Key="MpPct" Name="影响内力百分比" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%内力值" Tag="" />
+  <trigger Key="Attribute" Name="影响属性" KeyParam="v:Int" CommonParam="attr:Attribute" Rule="{Key}.{attr}" Desc="{v}{attr}" Tag="" />
+  <trigger Key="Dodge" Name="影响闪避率" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%闪避率" Tag="" />
+  <trigger Key="Hit" Name="影响命中率" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%命中率" Tag="" />
+  <trigger Key="Attack" Name="影响基础攻击" KeyParam="v:Int" CommonParam="" Rule="{Key}" Desc="{v}基础攻击" Tag="" />
+  <trigger Key="Defence" Name="影响基础防御" KeyParam="v:Int" CommonParam="" Rule="{Key}" Desc="{v}基础防御" Tag="" />
+  <trigger Key="AttackPct" Name="影响基础攻击百分比" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%基础攻击" Tag="" />
+  <trigger Key="DefencePct" Name="影响基础防御百分比" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%基础防御" Tag="" />
+  <trigger Key="Critical" Name="影响暴击率" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%暴击率" Tag="" />
+  <trigger Key="CriticalDamage" Name="影响暴击伤害" KeyParam="v:Int" CommonParam="" Rule="{Key}" Desc="{v}%暴击伤害" Tag="" />
+  <trigger Key="WeaponType" Name="适配武器类型" KeyParam="" CommonParam="type:string" Rule="{Key}.{type}" Desc="使用{type}系武器时，伤害增加30%" Tag="" />
+  <trigger Key="RealDamage" Name="影响真实伤害" KeyParam="" CommonParam="min:Int,max:Int" Rule="{Key}.{min},{max}" Desc="{min}-{max}真实伤害" Tag="" />
+  <trigger Key="减伤" Name="影响减伤概率效果" KeyParam="" CommonParam="rate:Double,v:Int" Rule="{Key}.{rate},{v}" Desc="{rate}%概率减少{v}伤害" Tag="" />
+  <trigger Key="MF" Name="影响掉宝率" KeyParam="v:Double" CommonParam="" Rule="{Key}" Desc="{v}%掉宝率" Tag="" />
+  <trigger Key="Error" Name="错误的词条" KeyParam="" CommonParam="v:string" Rule="{Key}.{v}" Desc="错误的词条：{v}" Tag="" />
+</root>
