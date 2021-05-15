@@ -92,10 +92,10 @@ namespace Jyx2
         public string AnimationController;
 
         [XmlAttribute]
-        public int PoseCode;
+        public string PoseCode;
 
         [XmlAttribute]
-        public int AttackCode;
+        public string AttackCode;
 
         [XmlAttribute]
         public float AnimaionDelay;

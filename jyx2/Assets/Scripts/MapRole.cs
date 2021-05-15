@@ -12,6 +12,9 @@ using DG.Tweening;
 using Random = UnityEngine.Random;
 using Lean.Pool;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Animancer;
+using UnityEngine.AddressableAssets;
 
 public class MapRole : MonoBehaviour, ISkillCastTarget
 {
@@ -59,8 +62,13 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
     [HideInInspector]
     public bool IsInBattle = false; //是否在战斗中
 
+    [HideInInspector] private string battleIdlePoseCode = ""; //战斗待机动作
+
     private CustomOutlooking _outLooking;
 
+    
+    
+    
     public Animator GetAnimator()
     {
         if (_animator == null && transform.childCount == 0)
@@ -71,6 +79,19 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
             _animator = transform.GetChild(0).GetComponentInChildren<Animator>();
         }
         return _animator;
+    }
+
+    private HybridAnimancerComponent _animancer;
+    public HybridAnimancerComponent GetAnimancer()
+    {
+        if (_animancer == null)
+        {
+            var animator = GetAnimator();
+            _animancer = GameUtil.GetOrAddComponent<HybridAnimancerComponent>(animator.transform);
+            _animancer.Animator = animator;
+            _animancer.Controller = animator.runtimeAnimatorController;
+        }
+        return _animancer;
     }
 
     private Animator _animator;
@@ -254,11 +275,35 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         }
     }
 
-    //进入战斗
+    
+    
+    //战斗待机
     public void Idle()
     {
-        GetAnimator().ResetTrigger("move");
-        GetAnimator().SetTrigger("battle_idle");
+        var animancer = GetAnimancer();
+        
+        //指定动作
+        if (battleIdlePoseCode.StartsWith("@"))
+        {
+            string path = battleIdlePoseCode.TrimStart('@');
+            Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
+            {
+                animancer.Play(r.Result);
+            };
+        }
+        else
+        {
+            animancer.PlayController();
+            
+            //切换当前的战斗动作
+            var animator = GetAnimator();
+            if (animator != null)
+            {
+                animator.SetBool("InBattle", IsInBattle);
+                animator.SetFloat("PosCode", float.Parse(battleIdlePoseCode));
+                animator.SetTrigger("battle_idle");
+            }
+        }
     }
 
     public void Run()
@@ -306,23 +351,23 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
             ChangeWeapon(weaponCode);
         }
 
+        //设置战斗待机动作
+        battleIdlePoseCode = display.PoseCode;
+        
         //载入动作
         var animationController = display.AnimationController;
 
-
-        if (!string.IsNullOrEmpty(animationController))
+        if (string.IsNullOrEmpty(animationController))
         {
-            ChangeAnimationController(animationController,()=> {
-                //切换当前的战斗动作
-                var animator = GetAnimator();
-                if (animator != null)
-                {
-                    animator.SetBool("InBattle", IsInBattle);
-                    animator.SetFloat("PosCode", (float)display.PoseCode);
-                    animator.SetTrigger("battle_idle");
-                }
-            });
+            Debug.LogError($"技能{skill.Name}没有配置动画控制器！");
+            return;
         }
+ 
+        //载入动画控制器
+        ChangeAnimationController(animationController,()=> {
+            Idle();
+        });
+    
     }
 
     string m_currentAnimatorController = "";
@@ -725,13 +770,55 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         });
     }
 
-    public void BeHit()
+    /// <summary>
+    /// 是否是标准骨骼
+    /// </summary>
+    /// <returns></returns>
+    bool IsStandardModelAvata()
     {
         var animator = GetAnimator();
-        if (animator != null)
+        var controller = animator.runtimeAnimatorController;
+        return controller.name == "jyx2humanoidController.controller";
+    }
+    
+    //默认的受击动画
+    private static AnimationClip standardBehitAnim = null;
+    
+    public void BeHit()
+    {
+        //不使用标准骨骼
+        if (!IsStandardModelAvata())
         {
+            var animator = GetAnimator();
             animator.SetTrigger("hit");
+            return;
         }
+        
+        //标准骨骼载入默认受击动画
+        if (standardBehitAnim == null)
+        {
+            string path = "3D/Animation/Jyx2Anims/标准受击.anim";
+            Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
+            {
+                standardBehitAnim = r.Result;
+                PlayStandardBeHit();
+            };
+        }
+        else
+        {
+            PlayStandardBeHit();
+        }
+    }
+
+    private void PlayStandardBeHit()
+    {
+        var animancer = GetAnimancer();
+        var state = animancer.Play(standardBehitAnim, 0.25f);
+        state.Events.OnEnd = () =>
+        {
+            state.Stop();
+            Idle();
+        };
     }
 }
 

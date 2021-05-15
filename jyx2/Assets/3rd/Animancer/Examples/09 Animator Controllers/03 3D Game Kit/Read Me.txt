@@ -1,0 +1,42 @@
+////////////////////////////////////////////////////////////////////////////////
+// Animancer // 3D Game Kit Example //
+////////////////////////////////////////////////////////////////////////////////
+
+This example is based on Unity's 3D Game Kit Lite:
+https://assetstore.unity.com/packages/templates/tutorials/3d-game-kit-lite-135162
+
+In order to use it you must:
+1. Create a new Unity project using Unity 2019.3+.
+    - Older versions of Unity may also work.
+2. Import the 3D Game Kit Lite.
+3. Fix any compiler errors you get from the packages it sets up.
+    - Often you can just open the Window/Package Manager and update anything causing errors.
+    - But you may need to search the errors online to see how other people solve them.
+4. Import Animancer.
+
+The full documentation for this example is located at:
+https://kybernetik.com.au/animancer/docs/examples/animator-controllers/3d-game-kit/
+
+////////////////////////////////////////////////////////////////////////////////
+
+In order to avoid causing errors when the 3D Game Kit Lite is not in your project, the scripts in this example cannot directly reference any of the scripts from the 3D Game Kit Lite.
+
+So to avoid needing identical copies of all those scripts, this example uses UnityEvents where interaction between systems is required even though you would probably not want to set it up like that in a real project.
+
+This mostly applies to scripts that want to play sounds using the RandomAudioPlayer script, so instead of:
+
+[SerializeField]
+private RandomAudioPlayer _SomeSound;
+
+_SomeSound.PlayRandomClip();
+
+These scripts instead use:
+
+[SerializeField]
+private UnityEvent _SomeSound;
+
+_SomeSound.Invoke();
+
+So that the event can be configured to call the correct method in the Inspector without the script actually referencing RandomAudioPlayer.
+
+////////////////////////////////////////////////////////////////////////////////
