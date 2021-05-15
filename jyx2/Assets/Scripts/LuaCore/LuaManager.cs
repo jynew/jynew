@@ -168,8 +168,6 @@ namespace Jyx2
 
             if (__luaMapper == null)
             {
-                //byte[] luadata = BinaryResourceLoader.LoadCEBinary(HSUnityEnv.CELuaPath);
-                //__luaMapper = luadata.Deserialize<Dictionary<string, byte[]>>();
                 using (var input = BinaryResourceLoader.CreateStreamFromCEBinary(HSUnityEnv.CELuaPath))
                     __luaMapper = DirectProtoBufTools.Deserialize<Dictionary<string, byte[]>>(input);
             }

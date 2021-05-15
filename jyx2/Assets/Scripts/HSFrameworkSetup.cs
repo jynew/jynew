@@ -42,15 +42,6 @@ namespace Jyx2
         /// <summary>
         /// 客户端额外需要二进制序列化的类。
         /// </summary>
-        private static readonly List<Type> _ClientExtraTypes = new List<Type>(){
-                //typeof(TalentInstance),
-                //typeof(Trigger),
-                //typeof(BoardCard),
-			    //typeof(BoardBuff),
-			    //typeof(BoardEffect),
-			    //typeof(BoardBuilding),
-                //typeof(AchievementGroup),
-                //typeof(Achievement),
-            };
+        private static readonly List<Type> _ClientExtraTypes = new List<Type>(){};
     }
 }
