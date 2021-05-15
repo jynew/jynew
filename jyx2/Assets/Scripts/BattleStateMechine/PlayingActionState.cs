@@ -60,7 +60,7 @@ public class PlayingActionState : IBattleState
 
         SkillCastHelper castHelper = new SkillCastHelper
         {
-            Source = m_role.View.GetAnimator(),
+            Source = m_role.View,
             CoverBlocks = coverBlocks.ToTransforms(),
             Zhaoshi = m_skill,
             Targets = beHitAnimationList.ToMapRoles(),
