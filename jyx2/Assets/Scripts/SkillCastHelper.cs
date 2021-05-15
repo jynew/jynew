@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Animancer;
 using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using Jyx2.Middleware;
 using HSFrameWork.Common;
 using UniRx;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -15,7 +18,23 @@ namespace Jyx2
 {
     public interface ISkillCastTarget
     {
+        Animator GetAnimator();
+        HybridAnimancerComponent GetAnimancer();
+        GameObject gameObject { get; }
+        
+        /// <summary>
+        /// 待机
+        /// </summary>
+        void Idle();
+        
+        /// <summary>
+        /// 播放受击动作
+        /// </summary>
         void BeHit();
+        
+        /// <summary>
+        /// 播放掉血
+        /// </summary>
         void ShowDamage();
     }
 
@@ -24,7 +43,7 @@ namespace Jyx2
     /// </summary>
     public class SkillCastHelper
     {
-        public Animator Source;
+        public ISkillCastTarget Source;
         public IEnumerable<ISkillCastTarget> Targets;
         public IEnumerable<Transform> CoverBlocks;
         public BattleZhaoshiInstance Zhaoshi;
@@ -47,18 +66,39 @@ namespace Jyx2
             {
                 Debug.LogError($"招式{Zhaoshi.Key}没有配置Display!");
                 if (callback != null) callback();
+                return;
             }
 
             if (Source != null)
             {
                 var skill = Zhaoshi.Data.GetSkill();
-
-                //播放攻击特效
-                Source.SetFloat("AttackCode", (float)Zhaoshi.Data.GetDisplay().AttackCode);
-                CallWithDelay(() =>
+                string attackCode = Zhaoshi.Data.GetDisplay().AttackCode;
+                
+                //播放绝对路径的AnimationClip
+                if (attackCode.StartsWith("@"))
                 {
-                    Source.SetTrigger("attack");
-                }, display.AnimaionDelay);
+                    string path = attackCode.TrimStart('@');
+                    Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
+                    {
+                        var animancer = Source.GetAnimancer();
+                        var state = animancer.Play(r.Result, 0.25f);
+                        state.Events.OnEnd = () =>
+                        {
+                            state.Stop();
+                            Source.Idle();
+                        };
+                    };
+                }
+                //播放AnimationController的攻击动作
+                else
+                {
+                    CallWithDelay(() =>
+                    {
+                        var animator = Source.GetAnimator();
+                        animator.SetFloat("AttackCode", float.Parse(attackCode));
+                        animator.SetTrigger("attack");
+                    }, display.AnimaionDelay);        
+                }
             }
 
 
@@ -102,8 +142,7 @@ namespace Jyx2
                 return;
             }
 
-            Observable.Timer(TimeSpan.FromSeconds(time))
-            .Subscribe(ms =>
+            Observable.Timer(TimeSpan.FromSeconds(time)).Subscribe(ms =>
             {
                 action();
             });
@@ -145,7 +184,7 @@ namespace Jyx2
                 {
                     offset = UnityTools.StringToVector3(display.CastOffset, ',');
                 }
-                CastEffectAndWaitSkill(prefab, duration, Source.transform, offset); //默认预留三秒
+                CastEffectAndWaitSkill(prefab, duration, Source.gameObject.transform, offset); //默认预留三秒
             });
         }
 

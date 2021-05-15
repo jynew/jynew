@@ -104,11 +104,9 @@ public class Jyx2SkillEditor : MonoBehaviour
         var wugong = new WugongInstance(SkillId);
 
         SkillCastHelper helper = new SkillCastHelper();
-        helper.Source = player.GetAnimator();
+        helper.Source = player;
         helper.Targets = enemys;
         
-        
-
         wugong.Level = SkillLevel;
         helper.Zhaoshi = new BattleZhaoshiInstance(wugong);
 

@@ -734,7 +734,7 @@ public class BattleHelper : BaseUI
 
         SkillCastHelper castHelper = new SkillCastHelper
         {
-            Source = role.View.GetAnimator(),
+            Source = role.View,
             CoverBlocks = coverBlocks.ToTransforms(),
             Zhaoshi = zhaoshi,
             Targets = beHitAnimationList.ToMapRoles(),
