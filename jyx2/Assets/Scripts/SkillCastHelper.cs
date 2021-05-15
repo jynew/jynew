@@ -37,14 +37,15 @@ namespace Jyx2
         /// </summary>
         void ShowDamage();
     }
+    
 
     /// <summary>
     /// 技能释放逻辑
     /// </summary>
     public class SkillCastHelper
     {
-        public ISkillCastTarget Source;
-        public IEnumerable<ISkillCastTarget> Targets;
+        public Jyx2AnimationBattleRole Source;
+        public IEnumerable<Jyx2AnimationBattleRole> Targets;
         public IEnumerable<Transform> CoverBlocks;
         public BattleZhaoshiInstance Zhaoshi;
 
@@ -71,82 +72,39 @@ namespace Jyx2
 
             if (Source != null)
             {
-                var skill = Zhaoshi.Data.GetSkill();
-                string attackCode = Zhaoshi.Data.GetDisplay().AttackCode;
-                
-                //播放绝对路径的AnimationClip
-                if (attackCode.StartsWith("@"))
-                {
-                    string path = attackCode.TrimStart('@');
-                    Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
-                    {
-                        var animancer = Source.GetAnimancer();
-                        var state = animancer.Play(r.Result, 0.25f);
-                        state.Events.OnEnd = () =>
-                        {
-                            state.Stop();
-                            Source.Idle();
-                        };
-                    };
-                }
-                //播放AnimationController的攻击动作
-                else
-                {
-                    CallWithDelay(() =>
-                    {
-                        var animator = Source.GetAnimator();
-                        animator.SetFloat("AttackCode", float.Parse(attackCode));
-                        animator.SetTrigger("attack");
-                    }, display.AnimaionDelay);        
-                }
+                Source.CurDisplay = display;
+                GameUtil.CallWithDelay(display.AnimaionDelay, Source.Attack);
             }
 
 
             //普通特效
             if (!string.IsNullOrEmpty(display.CastEft))
             {
-                CallWithDelay(DisplayCastEft, display.CastDelay);
+                GameUtil.CallWithDelay(display.CastDelay, DisplayCastEft);
             }
 
             //格子特效
             if(!string.IsNullOrEmpty(display.BlockEft))
             {
-                CallWithDelay(DisplayBlockEft, display.BlockDelay);
+                GameUtil.CallWithDelay(display.BlockDelay, DisplayBlockEft);
             }
 
             //音效
             if(!string.IsNullOrEmpty(display.AudioEft))
             {
-                CallWithDelay(ExecuteSoundEffect, display.AudioEftDelay);
+                GameUtil.CallWithDelay(display.AudioEftDelay,ExecuteSoundEffect);
             }
             
-
             //播放受击动画和飘字
-            CallWithDelay(() => {
-                ExecuteBeHit();
-            }, display.HitDelay); 
+            GameUtil.CallWithDelay(display.HitDelay, ExecuteBeHit);
 
             //回调
             if(callback != null)
             {
-                CallWithDelay(callback, display.Duration);
+                GameUtil.CallWithDelay(display.Duration, callback);
             }
         }
 
-        //延迟调用
-        private void CallWithDelay(Action action, double time)
-        {
-            if(time == 0)
-            {
-                action();
-                return;
-            }
-
-            Observable.Timer(TimeSpan.FromSeconds(time)).Subscribe(ms =>
-            {
-                action();
-            });
-        }
 
         /// <summary>
         /// 释放特效

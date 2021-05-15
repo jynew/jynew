@@ -82,6 +82,37 @@ namespace Jyx2
     {
         public override string PK { get { return Id; } }
 
+        public string GetAnimationController()
+        {
+            if (string.IsNullOrEmpty(AnimationController))
+                return "Assets/BuildSource/AnimationControllers/jyx2humanoidController.controller";
+            else
+                return AnimationController;
+        }
+        
+        /// <summary>
+        /// 是否是使用标准的AnimationController
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStandardAnimationController()
+        {
+            return string.IsNullOrEmpty(AnimationController);
+        }
+
+        /// <summary>
+        /// 受击动画码
+        /// </summary>
+        /// <returns></returns>
+        public string GetBeHitAnimationCode()
+        {
+            if(string.IsNullOrEmpty(BehitAnim))
+                return "@Assets/BuildSource/Animations/标准受击.anim";
+            else
+            {
+                return BehitAnim;
+            }
+        }
+
         [XmlAttribute]
         public string Id;
 
@@ -92,10 +123,16 @@ namespace Jyx2
         public string AnimationController;
 
         [XmlAttribute]
-        public string PoseCode;
+        public string BehitAnim;
 
         [XmlAttribute]
-        public string AttackCode;
+        public string RunAnim;
+        
+        [XmlAttribute]
+        public string IdleAnim;
+        
+        [XmlAttribute]
+        public string AttackAnim;
 
         [XmlAttribute]
         public float AnimaionDelay;

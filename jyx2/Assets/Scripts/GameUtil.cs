@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 
@@ -107,5 +108,20 @@ public class GameUtil
     static public void LogError(string str) 
     {
         Debug.LogError(str);
+    }
+    
+    
+    static public void CallWithDelay(double time,Action action)
+    {
+        if(time == 0)
+        {
+            action();
+            return;
+        }
+
+        Observable.Timer(TimeSpan.FromSeconds(time)).Subscribe(ms =>
+        {
+            action();
+        });
     }
 }
