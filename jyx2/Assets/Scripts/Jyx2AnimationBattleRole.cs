@@ -39,6 +39,9 @@ namespace Jyx2
         
         public virtual void Idle()
         {
+            if (this == null)
+                return;
+            
             string code = CurDisplay.IdleAnim;
             if (!PlayScriptAnimation(code))
             {
@@ -54,6 +57,9 @@ namespace Jyx2
         
         public virtual void BeHit()
         {
+            if (this == null)
+                return;
+
             string code = CurDisplay.GetBeHitAnimationCode();
             if (!PlayScriptAnimation(code, Idle, 0.25f))
             {
@@ -67,6 +73,9 @@ namespace Jyx2
 
         public virtual void Attack()
         {
+            if (this == null)
+                return;
+
             string code = CurDisplay.AttackAnim;
             if (!PlayScriptAnimation(code, Idle, 0.25f))
             {
@@ -81,6 +90,9 @@ namespace Jyx2
 
         public virtual void Run()
         {
+            if (this == null)
+                return;
+
             string code = CurDisplay.RunAnim; //TODO
             if (!PlayScriptAnimation(code))
             {
@@ -110,7 +122,18 @@ namespace Jyx2
                 //load and play AnimationClip
                 Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
                 {
-                    var state = animancer.Play(r.Result);
+                    var clip = r.Result;
+
+                    //检查动作配置是否正确
+                    if (clip.isLooping && callback != null)
+                    {
+                        Debug.LogError($"动作设置了LOOP但是会有回调！请检查{path}");
+                    }else if (!clip.isLooping && callback == null)
+                    {
+                        Debug.LogError($"动作没设置LOOP但是没有回调！请检查{path}");
+                    }
+                    
+                    var state = animancer.Play(clip);
 
                     
                     //callback if needed

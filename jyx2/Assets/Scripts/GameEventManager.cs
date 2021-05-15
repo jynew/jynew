@@ -70,7 +70,7 @@ public class GameEventManager : MonoBehaviour
 
     public bool OnTriggerEvent(GameEvent evt)
     {
-        if(isEmptyEvent(evt))
+        if (isEmptyEvent(evt))
             return false;
 
         if (evt == curEvent)
@@ -82,7 +82,7 @@ public class GameEventManager : MonoBehaviour
 
 
         //关闭之前的事件
-        if(curEvent !=null && curEvent != evt)
+        if (curEvent != null && curEvent != evt)
         {
             OnExitEvent(curEvent);
         }
@@ -108,21 +108,59 @@ public class GameEventManager : MonoBehaviour
         Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
     }
 
+    //void ShowInteractiveButton(string text)
+    //{
+    //    Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", text, new Action(() =>
+    //    {
+    //        ExecuteLuaEvent(curEvent.m_InteractiveEventId);
+    //    }));
+    //}
 
-    void ShowInteractiveButton(string text)
-    {
-        Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", text, new Action(() => 
-        {
-            ExecuteLuaEvent(curEvent.m_InteractiveEventId);
-        }));
-    }
+    //void ShowUseItemButton()
+    //{
+    //    Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", "使用物品", new Action(() =>
+    //    {
+    //        OnClickedUseItemButton();
+    //    }));
+    //}
 
-    void ShowUseItemButton()
+    /// <summary>
+    /// 显示交互面板
+    /// </summary>
+    void ShowInteractUIPanel(GameEvent evt)
     {
-        Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", "使用物品", new Action(() =>
+        var uiParams = new List<object>();
+        int buttonCount = 0;
+        
+        if (!IsNoEvent(evt.m_InteractiveEventId))
         {
-            OnClickedUseItemButton();
-        }));
+            uiParams.Add(curEvent.m_InteractiveInfo);
+            uiParams.Add(new Action(() =>
+            {
+                ExecuteLuaEvent(curEvent.m_InteractiveEventId);
+            }));
+            buttonCount++;
+        }
+
+        //使用道具
+        if (!IsNoEvent(evt.m_UseItemEventId))
+        {
+            uiParams.Add(curEvent.m_UseItemInfo);
+            uiParams.Add(new Action(() =>
+            {
+                OnClickedUseItemButton();
+            }));
+            buttonCount++;
+        }
+
+        if (buttonCount == 1)
+        {
+            Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", uiParams[0], uiParams[1]);
+        }
+        else if (buttonCount == 2)
+        {
+            Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", uiParams[0], uiParams[1], uiParams[2], uiParams[3]);
+        }
     }
 
     Button GetUseItemButton()
@@ -168,35 +206,23 @@ public class GameEventManager : MonoBehaviour
     bool TryTrigger(GameEvent evt)
     {
         //直接触发
-        if (!IsNoEvent(evt.m_EnterEventId)) 
+        if (!IsNoEvent(evt.m_EnterEventId))
         {
             ExecuteLuaEvent(evt.m_EnterEventId);
             return true;
         }
 
-        bool ret = false;
-        //交互
-        if (!IsNoEvent(evt.m_InteractiveEventId))
-        {
-            if (evt.m_EventTargets != null && evt.m_EventTargets.Length > 0)
-            {
-                ret = true;
-                ShowInteractiveButton(evt.m_InteractiveInfo);
-                UnityTools.HighLightObjects(evt.m_EventTargets, Color.red);
-            }
-        }
+        //既没有交互事件，也不是使用道具事件的情况
+        if (IsNoEvent(evt.m_InteractiveEventId) && IsNoEvent(evt.m_UseItemEventId)) return false;
 
-        //使用道具
-        if (!IsNoEvent(evt.m_UseItemEventId))
-        {
-            if (evt.m_EventTargets != null && evt.m_EventTargets.Length > 0)
-            {
-                ret = true;
-                ShowUseItemButton();
-                UnityTools.HighLightObjects(evt.m_EventTargets, Color.red);
-            }
-        }
-        return ret;
+        if (evt.m_EventTargets == null || evt.m_EventTargets.Length == 0) return false;
+
+        //显示交互面板
+        ShowInteractUIPanel(evt);
+
+        UnityTools.HighLightObjects(evt.m_EventTargets, Color.red);
+
+        return true;
     }
 
 

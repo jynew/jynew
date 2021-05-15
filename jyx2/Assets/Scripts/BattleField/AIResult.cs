@@ -124,7 +124,6 @@ namespace Jyx2
                 if (r2.View != null)
                 {
                     r2.View.SetDamage(rst.damage, r2.Hp);
-                    //if (IsDead()) View.ShowDeath();
                 }
 
                 r1.ExpGot += rst.damage;

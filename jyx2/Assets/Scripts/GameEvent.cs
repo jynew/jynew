@@ -45,6 +45,11 @@ public class GameEvent : MonoBehaviour
     public string m_InteractiveInfo = "交互";
 
     /// <summary>
+    /// 使用物品按钮文字
+    /// </summary>
+    public string m_UseItemInfo = "使用物品";
+
+    /// <summary>
     /// 交互物体的最小距离
     /// </summary>
     const float EVENT_TRIGGER_DISTANCE = 4;
