@@ -62,13 +62,9 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
     [HideInInspector]
     public bool IsInBattle = false; //是否在战斗中
 
-    [HideInInspector] private string battleIdlePoseCode = ""; //战斗待机动作
-
+    private string _battleIdlePoseCode = "0"; //战斗待机动作
     private CustomOutlooking _outLooking;
 
-    
-    
-    
     public Animator GetAnimator()
     {
         if (_animator == null && transform.childCount == 0)
@@ -281,11 +277,16 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
     public void Idle()
     {
         var animancer = GetAnimancer();
+
+        if (string.IsNullOrEmpty(_battleIdlePoseCode))
+        {
+            _battleIdlePoseCode = "0";
+        }
         
         //指定动作
-        if (battleIdlePoseCode.StartsWith("@"))
+        if (_battleIdlePoseCode.StartsWith("@"))
         {
-            string path = battleIdlePoseCode.TrimStart('@');
+            string path = _battleIdlePoseCode.TrimStart('@');
             Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
             {
                 animancer.Play(r.Result);
@@ -300,7 +301,7 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
             if (animator != null)
             {
                 animator.SetBool("InBattle", IsInBattle);
-                animator.SetFloat("PosCode", float.Parse(battleIdlePoseCode));
+                animator.SetFloat("PosCode", float.Parse(_battleIdlePoseCode));
                 animator.SetTrigger("battle_idle");
             }
         }
@@ -352,7 +353,7 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         }
 
         //设置战斗待机动作
-        battleIdlePoseCode = display.PoseCode;
+        _battleIdlePoseCode = display.PoseCode;
         
         //载入动作
         var animationController = display.AnimationController;
