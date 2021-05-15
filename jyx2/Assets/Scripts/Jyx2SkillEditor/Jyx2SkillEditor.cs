@@ -53,6 +53,9 @@ public class Jyx2SkillEditor : MonoBehaviour
     public bool SwitchRoleModel;
 
 
+    [Header("测试奔跑动作")]
+    public bool SwitchMove;
+
 
     // Start is called before the first frame update
     void Start()
@@ -94,6 +97,12 @@ public class Jyx2SkillEditor : MonoBehaviour
 
             SwitchSkillPose();
         });
+    }
+
+    void DoSwitchMove()
+    {
+        Debug.Log("do switch move");
+        player.Run();
     }
 
     void TryDisplaySkill()
@@ -161,6 +170,12 @@ public class Jyx2SkillEditor : MonoBehaviour
             SwitchRoleModel = false;
 
             DoSwitchRoleModel();
+        }
+
+        if (SwitchMove)
+        {
+            SwitchMove = false;
+            DoSwitchMove();
         }
     }
 }
