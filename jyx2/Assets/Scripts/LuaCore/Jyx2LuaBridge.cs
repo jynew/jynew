@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using XLua;
+using UnityEngine.Playables;
 
 namespace Jyx2
 {
@@ -807,7 +808,57 @@ namespace Jyx2
             });
             Wait();
         }
-        
+
+        static public void jyx2_PlayTimeline(string timelineName)
+        {
+            RunInMainThrad(() =>
+            {
+                var timeLineRoot = GameObject.Find("Timeline");
+                var timeLineObj = timeLineRoot.transform.Find(timelineName);
+
+                if (timeLineObj == null)
+                {
+                    Debug.LogError("jyx2_PlayTimeline 找不到Timeline,path=" + timelineName);
+                    Next();
+                    return;
+                }
+
+                timeLineObj.gameObject.SetActive(true);
+                var playableDiretor = timeLineObj.GetComponent<PlayableDirector>();
+                playableDiretor.Play();
+                GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+
+                playableDiretor.stopped += delegate
+                {
+                    Next();
+                };
+                
+            });
+            Wait();
+        }
+
+        static public void jyx2_StopTimeline(string timelineName)
+        {
+            RunInMainThrad(() =>
+            {
+                var timeLineRoot = GameObject.Find("Timeline");
+                var timeLineObj = timeLineRoot.transform.Find(timelineName);
+
+                if (timeLineObj == null)
+                {
+                    Debug.LogError("jyx2_PlayTimeline 找不到Timeline,path=" + timelineName);
+                    Next();
+                    return;
+                }
+
+                timeLineObj.gameObject.SetActive(false);
+                GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
+                Next();
+ 
+            });
+            Wait();
+        }
+
         #endregion
 
 

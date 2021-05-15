@@ -153,6 +153,8 @@ jyx2_ReplaceSceneObject = CS.Jyx2.Jyx2LuaBridge.jyx2_ReplaceSceneObject
 jyx2_CameraFollow = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollow
 jyx2_CameraFollowPlayer = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollowPlayer
 jyx2_WalkFromTo = CS.Jyx2.Jyx2LuaBridge.jyx2_WalkFromTo
+jyx2_PlayTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_PlayTimeline
+jyx2_StopTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_StopTimeline
 
 function main_getLuaFiles()
 	return {}
