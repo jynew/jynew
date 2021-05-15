@@ -809,6 +809,11 @@ namespace Jyx2
             Wait();
         }
 
+        static private void TimeLineNext(PlayableDirector playableDirector)
+        {
+            Next();
+        }
+
         static public void jyx2_PlayTimeline(string timelineName)
         {
             RunInMainThrad(() =>
@@ -825,14 +830,10 @@ namespace Jyx2
 
                 timeLineObj.gameObject.SetActive(true);
                 var playableDiretor = timeLineObj.GetComponent<PlayableDirector>();
+                playableDiretor.stopped += TimeLineNext;
                 playableDiretor.Play();
-                GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
 
-                playableDiretor.stopped += delegate
-                {
-                    Next();
-                };
-                
+                GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
             });
             Wait();
         }
@@ -851,10 +852,12 @@ namespace Jyx2
                     return;
                 }
 
+                var playableDiretor = timeLineObj.GetComponent<PlayableDirector>();
+                playableDiretor.stopped -= TimeLineNext;
                 timeLineObj.gameObject.SetActive(false);
+
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
                 Next();
- 
             });
             Wait();
         }
