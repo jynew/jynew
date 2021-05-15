@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Jyx2;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -123,5 +124,6 @@ public class BigMapZone : MonoBehaviour
             }
         }));
     }
+    
 
 }

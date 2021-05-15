@@ -16,7 +16,7 @@ using System.Runtime.CompilerServices;
 using Animancer;
 using UnityEngine.AddressableAssets;
 
-public class MapRole : MonoBehaviour, ISkillCastTarget
+public class MapRole : Jyx2AnimationBattleRole
 {
 
     //数据实例
@@ -62,14 +62,9 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
     [HideInInspector]
     public bool IsInBattle = false; //是否在战斗中
 
-    [HideInInspector] private string battleIdlePoseCode = ""; //战斗待机动作
-
     private CustomOutlooking _outLooking;
-
     
-    
-    
-    public Animator GetAnimator()
+    public override Animator GetAnimator()
     {
         if (_animator == null && transform.childCount == 0)
             return null;
@@ -80,20 +75,6 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         }
         return _animator;
     }
-
-    private HybridAnimancerComponent _animancer;
-    public HybridAnimancerComponent GetAnimancer()
-    {
-        if (_animancer == null)
-        {
-            var animator = GetAnimator();
-            _animancer = GameUtil.GetOrAddComponent<HybridAnimancerComponent>(animator.transform);
-            _animancer.Animator = animator;
-            _animancer.Controller = animator.runtimeAnimatorController;
-        }
-        return _animancer;
-    }
-
     private Animator _animator;
     public void ForceSetAnimator(Animator a)
     {
@@ -164,7 +145,7 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         //Debug.Log(msg);
     }
 
-    public void ShowDamage()
+    public override void ShowDamage()
     {
         //JYX2逻辑，不存在MISS
         if (_showDamage <= 0)
@@ -275,43 +256,6 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         }
     }
 
-    
-    
-    //战斗待机
-    public void Idle()
-    {
-        var animancer = GetAnimancer();
-        
-        //指定动作
-        if (battleIdlePoseCode.StartsWith("@"))
-        {
-            string path = battleIdlePoseCode.TrimStart('@');
-            Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
-            {
-                animancer.Play(r.Result);
-            };
-        }
-        else
-        {
-            animancer.PlayController();
-            
-            //切换当前的战斗动作
-            var animator = GetAnimator();
-            if (animator != null)
-            {
-                animator.SetBool("InBattle", IsInBattle);
-                animator.SetFloat("PosCode", float.Parse(battleIdlePoseCode));
-                animator.SetTrigger("battle_idle");
-            }
-        }
-    }
-
-    public void Run()
-    {
-        GetAnimator().ResetTrigger("battle_idle");
-        GetAnimator().SetTrigger("move");
-    }
-
     public void SwitchStatus(MapRoleStatus status)
     {
         m_Status = status;
@@ -351,11 +295,10 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
             ChangeWeapon(weaponCode);
         }
 
-        //设置战斗待机动作
-        battleIdlePoseCode = display.PoseCode;
+        this.CurDisplay = display;
         
         //载入动作
-        var animationController = display.AnimationController;
+        var animationController = display.GetAnimationController();
 
         if (string.IsNullOrEmpty(animationController))
         {
@@ -464,16 +407,6 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
     private void Awake()
     {
         _outLooking = GetComponent<CustomOutlooking>();
-
-        //var xiakeObj = _outLooking.OldXiakeSetObj.GetByName(_outLooking.m_OldXiakeName);
-        ////使用原生配置的AnimationController
-        //if (xiakeObj != null && xiakeObj.AvataType == 1)
-        //{
-            
-        //}
-
-        //Debug.LogError(GetAnimator().runtimeAnimatorController.name);
-
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -604,10 +537,6 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         }
 
         var paras = weaponStr.Split('|');
-        //foreach (var p in paras)
-        //{
-        //    Debug.Log(p);
-        //}
 
         int index = 0;
         string prefab = paras[index++];
@@ -770,56 +699,6 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         });
     }
 
-    /// <summary>
-    /// 是否是标准骨骼
-    /// </summary>
-    /// <returns></returns>
-    bool IsStandardModelAvata()
-    {
-        var animator = GetAnimator();
-        var controller = animator.runtimeAnimatorController;
-        return controller.name == "jyx2humanoidController.controller";
-    }
-    
-    //默认的受击动画
-    private static AnimationClip standardBehitAnim = null;
-    
-    public void BeHit()
-    {
-        //不使用标准骨骼
-        if (!IsStandardModelAvata())
-        {
-            var animator = GetAnimator();
-            animator.SetTrigger("hit");
-            return;
-        }
-        
-        //标准骨骼载入默认受击动画
-        if (standardBehitAnim == null)
-        {
-            string path = "3D/Animation/Jyx2Anims/标准受击.anim";
-            Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
-            {
-                standardBehitAnim = r.Result;
-                PlayStandardBeHit();
-            };
-        }
-        else
-        {
-            PlayStandardBeHit();
-        }
-    }
-
-    private void PlayStandardBeHit()
-    {
-        var animancer = GetAnimancer();
-        var state = animancer.Play(standardBehitAnim, 0.25f);
-        state.Events.OnEnd = () =>
-        {
-            state.Stop();
-            Idle();
-        };
-    }
 }
 
 public static class MapRoleTools
