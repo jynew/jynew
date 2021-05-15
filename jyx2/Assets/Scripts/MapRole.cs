@@ -798,7 +798,7 @@ public class MapRole : MonoBehaviour, ISkillCastTarget
         //标准骨骼载入默认受击动画
         if (standardBehitAnim == null)
         {
-            string path = "3D/Animation/Jyx2Anims/标准受击.anim";
+            string path = "Assets/BuildSource/Skills/标准受击.anim";
             Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
             {
                 standardBehitAnim = r.Result;
