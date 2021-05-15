@@ -172,7 +172,6 @@ namespace Jyx2
         /// <summary>
         /// 对象受击
         /// </summary>
-        /// <param name="frame"></param>
         private void ExecuteBeHit()
         {
             //播放对象受击

@@ -202,6 +202,8 @@ namespace Jyx2
         static public void Dead()
         {
             RunInMainThrad(() => {
+                
+                //TODO..
                 MessageBox.Create("GAME OVER", () =>
                 {
                     LevelMaster.Instance.QuitToMainMenu();
@@ -633,6 +635,7 @@ namespace Jyx2
                 {
                     Debug.LogError("DarkScence error，找不到LevelMaster/UI/BlackCover");
                     Next();
+                    return;
                 }
 
                 blackCover.gameObject.SetActive(true);
@@ -663,6 +666,7 @@ namespace Jyx2
                 {
                     Debug.LogError("DarkScence error，找不到LevelMaster/UI/BlackCover");
                     Next();
+                    return;
                 }
 
                 var img = blackCover.GetComponent<Image>();

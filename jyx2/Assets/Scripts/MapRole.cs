@@ -184,7 +184,7 @@ public class MapRole : Jyx2AnimationBattleRole
     {
         if (DataInstance.IsDead())
         {
-            this.gameObject.SetActive(false); //TODO...
+            this.gameObject.SetActive(false); //TODO，播放一个死亡特效
         }
     }
     
