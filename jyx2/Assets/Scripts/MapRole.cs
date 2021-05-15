@@ -176,8 +176,18 @@ public class MapRole : Jyx2AnimationBattleRole
 
         info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2/AttackInfoText.prefab");
         hudRoot.NewText(info);
+
+        CheckDeath();
     }
 
+    void CheckDeath()
+    {
+        if (DataInstance.IsDead())
+        {
+            this.gameObject.SetActive(false); //TODO...
+        }
+    }
+    
     public void ShowBattleText(string mainText,Color textColor) 
     {
         if (StoryEngine.Instance == null) return;
@@ -657,7 +667,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
     public void HitEffect(string effectName, float deltaTime = 0f, bool showDeath = false)
     {
-        if (DataInstance.IsDead() && showDeath)
+        /*if (DataInstance.IsDead() && showDeath)
         {
             ShowDeath();
         }
@@ -669,7 +679,7 @@ public class MapRole : Jyx2AnimationBattleRole
             Jyx2ResourceHelper.LoadPrefab($"Assets/Effects/Prefabs/{effectName}", effect=> {
                 CastSkillFXAndWait(effect, 1f);
             });
-        }
+        }*/
     }
 
     public void HitVoice(string musicName)
