@@ -256,8 +256,8 @@ public class CameraHelper : BaseUI
     {
         var frame = Convert.ToInt32(duration * 60);
         float frameFov = (finalFov - _battleVCam.m_Lens.FieldOfView) / frame;
-        Debug.Log(frame);
-        Debug.Log(frameFov);
+        //Debug.Log(frame);
+        //Debug.Log(frameFov);
         var start = Observable.EveryFixedUpdate()
             .Where(_ => _battleVCam.m_Lens.FieldOfView != finalFov)
             .Subscribe(ms =>
