@@ -809,19 +809,12 @@ namespace Jyx2
             Wait();
         }
 
-        /// <param name="playableDirector"></param>
         static private void TimeLineNext(PlayableDirector playableDirector)
         {
             Next();
         }
 
-        enum TimeLinePlayMode
-        {
-            NextEventOnStart = 0,
-            NextEventOnEnd = 1,
-        }
-
-        static public void jyx2_PlayTimeline(string timelineName, int playMode)
+        static public void jyx2_PlayTimeline(string timelineName)
         {
             RunInMainThrad(() =>
             {
@@ -837,16 +830,7 @@ namespace Jyx2
 
                 timeLineObj.gameObject.SetActive(true);
                 var playableDiretor = timeLineObj.GetComponent<PlayableDirector>();
-
-                if(playMode == (int)TimeLinePlayMode.NextEventOnEnd)
-                {
-                    playableDiretor.stopped += TimeLineNext;
-                }
-                else if (playMode == (int)TimeLinePlayMode.NextEventOnStart)
-                {
-                    Next();
-                }
-                
+                playableDiretor.stopped += TimeLineNext;
                 playableDiretor.Play();
 
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
@@ -874,20 +858,6 @@ namespace Jyx2
 
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
                 Next();
-            });
-            Wait();
-        }
-
-        static public void jyx2_Wait(float duration)
-        {
-            RunInMainThrad(() =>
-            {
-                Sequence seq = DOTween.Sequence();
-                seq.AppendCallback(() =>
-                {
-                    Next();
-                })
-                .SetDelay(duration);
             });
             Wait();
         }

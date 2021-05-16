@@ -1,0 +1,20 @@
+if InTeam(9) == true then goto label0 end;
+    Talk(0, "前輩，別來無恙？", "talkname0", 1);
+    Talk(13, "哼！你又來做什麼．", "talkname13", 0);
+    do return end;
+::label0::
+    jyx2_ReplaceSceneObject("", "NPC/zhangwuji", "1"); 
+    Talk(9, "義父，孩兒無忌不孝，沒能早日前來相接，累義父受盡辛苦．", "talkname9", 1);
+    Talk(13, "你．．．．你說什麼？", "talkname13", 0);
+    Talk(9, "孩兒便是無忌啊．", "talkname9", 1);
+    Talk(13, "你．．．．你說什麼？", "talkname13", 0);
+    Talk(9, "拳學之道在凝神，意在力先方制勝，．．．．．．", "talkname9", 1);
+    Talk(13, "這．．這不是昔日我所授與我那無忌孩兒的口訣嗎？你當真便是我那無忌孩兒？", "talkname13", 0);
+    Talk(9, "義父！義父！", "talkname9", 1);
+    Talk(13, "老天爺開眼！老天爺開眼！無忌孩兒，你這幾年來過得還好嗎？", "talkname13", 0);
+    Talk(9, "孩兒過的很好．今天多虧了這位大哥，我們父子倆才能團聚．義父，你跟我們一起回中土吧．", "talkname9", 1);
+    Talk(13, "你過的很好，義父就很高興了．義父還要待在這思考對付成崑的辦法，你走吧．記著，闖盪江湖千萬要提防小人，就算是自己的師父，義兄都一樣．", "talkname13", 0);
+    ModifyEvent(-2, -2, -2, -2, 64, -2, -2, -2, -2, -2, -2, -2, -2);
+    jyx2_ReplaceSceneObject("", "NPC/zhangwuji", ""); 
+    AddEthics(3);
+do return end;
