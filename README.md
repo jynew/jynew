@@ -27,16 +27,17 @@
 
 欢迎大家贡献代码和资源，遵循以下原则的提交将被通过
 
-* 承诺符合本项目原则和授权协议
-* 代码符合既定风格和规范，能正常编译通过，有自测（TODO：待补充代码规范和自测标准）
+* 承诺符合本项目原则和授权协议，贡献的资源制作默认视为满足[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)
+* 代码符合既定风格和编码规范，能正常编译通过，有自测(目前项目没有单元测试，请自测，逻辑需符合《金庸群侠传》DOS版，或作为后续MOD可扩展功能存在)
 * 资源制作符合当前项目标准，且提交格式和位置正确（TODO：待补充标准）
-* 目前项目没有单元测试，请自测，逻辑需符合《金庸群侠传》DOS版，或作为后续MOD可扩展功能存在
 * 长期参与代码贡献的优质开发者可以被添加直接Write（免PullRequest）权限
 
 ## 授权声明
 
 * 本项目素材一部分为社区自制，一部分为互联网上取得
-* 本项目遵循MIT协议，但如果目录下存在COMMUNITY_LICENSE_FOR_JYX2.md文件则覆盖该目录及其子目录的MIT授权为[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)
+* 本项目遵循MIT协议
+* 如果目录下存在COMMUNITY_LICENSE_FOR_JYX2.md文件则覆盖该目录及其子目录的MIT授权为[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)
+* 如果目录下存在UNAUTH_ASSETS_FOR_JYX2.md放置本文件的目录，表示本项目未取得该素材授权，如果您有异议，可以与我们联系。而在任何其他场景使用的情况下，均与金庸群侠传3D重制版无关，请自行遵循版权规范。
 * 项目中所包含外部插件源代码、资源和链接库等，如希望在其他场景使用，请务必确认符合其本身授权规范
 
 
