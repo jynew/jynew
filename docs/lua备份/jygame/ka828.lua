@@ -1,2 +1,0 @@
-ShowRepute();
-do return end;
