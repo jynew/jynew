@@ -155,6 +155,7 @@ jyx2_CameraFollowPlayer = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollowPlayer
 jyx2_WalkFromTo = CS.Jyx2.Jyx2LuaBridge.jyx2_WalkFromTo
 jyx2_PlayTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_PlayTimeline
 jyx2_StopTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_StopTimeline
+jyx2_Wait = CS.Jyx2.Jyx2LuaBridge.jyx2_Wait
 
 function main_getLuaFiles()
 	return {}
