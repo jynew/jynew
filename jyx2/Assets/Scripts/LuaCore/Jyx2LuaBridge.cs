@@ -15,6 +15,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using XLua;
 using UnityEngine.Playables;
+using Sirenix.Utilities;
+using UnityEngine.Timeline;
 
 namespace Jyx2
 {
@@ -821,7 +823,9 @@ namespace Jyx2
             NextEventOnEnd = 1,
         }
 
-        static public void jyx2_PlayTimeline(string timelineName, int playMode)
+        static Animator clonePlayer;
+
+        static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer)
         {
             RunInMainThrad(() =>
             {
@@ -836,20 +840,55 @@ namespace Jyx2
                 }
 
                 timeLineObj.gameObject.SetActive(true);
-                var playableDiretor = timeLineObj.GetComponent<PlayableDirector>();
+                var playableDirector = timeLineObj.GetComponent<PlayableDirector>();
 
                 if(playMode == (int)TimeLinePlayMode.NextEventOnEnd)
                 {
-                    playableDiretor.stopped += TimeLineNext;
+                    playableDirector.stopped += TimeLineNext;
                 }
                 else if (playMode == (int)TimeLinePlayMode.NextEventOnStart)
                 {
                     Next();
                 }
-                
-                playableDiretor.Play();
 
-                GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+                playableDirector.Play();
+
+                if (isClonePlayer)
+                {
+                    GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+
+                    if(clonePlayer == null)
+                    {
+                        clonePlayer = GameObject.Instantiate(GameRuntimeData.Instance.Player.View.GetAnimator());
+                        clonePlayer.runtimeAnimatorController = null;
+                    }
+
+                    var bindingDic = playableDirector.playableAsset.outputs;
+                    bindingDic.ForEach(delegate (PlayableBinding playableBinding)
+                    {
+                        if (playableBinding.outputTargetType == typeof(Animator))
+                        {
+                            if(playableBinding.sourceObject != null)
+                            {
+                                playableDirector.GetComponent<PlayableDirectorHelper>().BindClonePlayer(clonePlayer);
+                            }
+                            playableDirector.SetGenericBinding(playableBinding.sourceObject, clonePlayer.gameObject);
+                        }
+                    });
+                }
+                else
+                {
+                    var bindingDic = playableDirector.playableAsset.outputs;
+                    bindingDic.ForEach(delegate(PlayableBinding playableBinding)
+                    {
+                        if(playableBinding.outputTargetType == typeof(Animator))
+                        {
+                            playableDirector.SetGenericBinding(playableBinding.sourceObject, GameRuntimeData.Instance.Player.View.GetAnimator().gameObject);
+                        }
+                    });
+                }
+
+                LevelMaster.Instance.SetPlayerCanController(false);
             });
             Wait();
         }
@@ -873,6 +912,13 @@ namespace Jyx2
                 timeLineObj.gameObject.SetActive(false);
 
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
+                if(clonePlayer != null)
+                {
+                    GameObject.Destroy(clonePlayer.gameObject);
+                }
+                clonePlayer = null;
+
+                LevelMaster.Instance.SetPlayerCanController(true);
                 Next();
             });
             Wait();
