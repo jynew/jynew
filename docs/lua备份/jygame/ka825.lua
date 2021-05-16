@@ -1,2 +1,0 @@
-ShowEthics();
-do return end;
