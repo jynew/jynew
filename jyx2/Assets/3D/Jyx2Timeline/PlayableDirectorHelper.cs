@@ -7,58 +7,87 @@ public class PlayableDirectorHelper : MonoBehaviour
 {
     public Animator m_PreviewRole;
 
-    [Header("特殊：金蛇剑")]
-    public GameObject m_JinSheJian;
-    public string m_HandBoneName;
+    [Header("绑定物体到指定节点上")]
+    public GameObject m_BindObject;
+    public string m_BindBoneName;
+    public bool m_IsLocalTransform;
+
+    private readonly List<GameObject> _tempObjs = new List<GameObject>();
 
     private void Start()
     {
-        m_PreviewRole.gameObject.SetActive(false);
+        m_PreviewRole?.gameObject.SetActive(false);
     }
 
-    public void BindClonePlayer(Animator clonePlayer)
+    public void BindPlayer(GameObject player)
     {
-        clonePlayer.transform.position = m_PreviewRole.transform.position;
-        clonePlayer.transform.rotation = m_PreviewRole.transform.rotation;
-        clonePlayer.gameObject.SetActive(true);
-        BindSignals(clonePlayer.gameObject);
+        if(m_PreviewRole != null)
+        {
+            player.transform.position = m_PreviewRole.transform.position;
+            player.transform.rotation = m_PreviewRole.transform.rotation;
+        }
+
+        player.SetActive(true);
+        BindSignals(player);
     }
 
-    private void BindSignals(GameObject clonePlayer)
+    private void BindSignals(GameObject player)
     {
         var signalReceiver = GetComponent<SignalReceiver>();
-        if(m_JinSheJian != null)
+        if (m_BindObject != null)
         {
-            m_JinSheJian.gameObject.SetActive(false);
-            var jinSheJian = Instantiate(m_JinSheJian);
-            jinSheJian.gameObject.SetActive(true);
+            m_BindObject.gameObject.SetActive(false);
+            var bindObject = Instantiate(m_BindObject);
+            _tempObjs.Add(bindObject);
+            bindObject.gameObject.SetActive(true);
 
             var signalReaction = signalReceiver.GetReactionAtIndex(0);
             signalReaction.RemoveAllListeners();
             signalReaction.AddListener(delegate
             {
-                var handBoneTransform = FindTransform(clonePlayer.transform, m_HandBoneName);
-                if(handBoneTransform != null)
+                var bindBoneTransform = FindChild(player.transform, m_BindBoneName);
+                if (bindBoneTransform != null)
                 {
-                  
-                    jinSheJian.transform.SetParent(handBoneTransform);
+                    bindObject.transform.SetParent(bindBoneTransform);
+                    if (m_IsLocalTransform)
+                    {
+                        bindObject.transform.localPosition = m_BindObject.transform.localPosition;
+                        bindObject.transform.localRotation = m_BindObject.transform.localRotation;
+                    }
+                    else
+                    {
+                        bindObject.transform.position = m_BindObject.transform.position;
+                        bindObject.transform.rotation = m_BindObject.transform.rotation;
+                    }
                 }
             });
         }
     }
 
-    private Transform FindTransform(Transform parent, string name)
+    Transform FindChild(Transform parent, string name)
     {
-        Transform rst = null;
-        foreach (Transform tf in parent)
-        {
-            Debug.Log(tf.name);
-            if (tf.name == name)
-            {
-                return tf;
-            }
-            rst = FindTransform(tf, name);
+        Transform tf = parent.Find(name);
+        if (tf != null)
+        {
+            return tf;
         }
-        return rst;
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform target = FindChild(parent.GetChild(i), name);
+            if (target != null)
+            {
+                return target;
+            }
+        }
+        return null;
+    }
+
+    public void ClearTempObjects()
+    {
+        _tempObjs.ForEach(delegate (GameObject go)
+        {
+            GameObject.Destroy(go);
+        });
+        _tempObjs.Clear();
     }
 }

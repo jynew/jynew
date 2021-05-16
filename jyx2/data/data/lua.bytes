@@ -2780,14 +2780,17 @@ do return end;
 /lua/jygame/ka237.luafTalk(35, "这位兄弟有何贵事，是不是想请我喝酒！", "talkname35", 0);
 do return end;
 
-�
-/lua/jygame/ka238.lua�if UseItem(194) == true then goto label0 end;
+�
+/lua/jygame/ka238.lua�if UseItem(194) == true then goto label0 end;
     do return end;
 ::label0::
     AddItem(194, -1);
     PlayAnimation(3, 5722, 5748);
     ModifyEvent(-2, -2, -2, -2, 237, 241, -1, 5722, 5748, 5722, -2, -2, -2);
     ModifyEvent(-2, 2, -2, -2, 239, -1, -1, -2, -2, -2, -2, -2, -2);
+    jyx2_PlayTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒", 0, false, "NPC/linghuchong");
+    jyx2_Wait(0.9);
+    jyx2_StopTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒");
     Talk(35, "这烧刀子真是辛辣有劲，可惜美味不足．", "talkname35", 0);
 do return end;
 
@@ -2813,23 +2816,29 @@ do return end;
 /lua/jygame/ka240.lua�Talk(35, "这坛梨花酒酒味是极好，只可惜少了股芳冽之气，若能以翡翠杯盛之而饮，那更是醇美无比．", "talkname35", 0);
 do return end;
 
-�
-/lua/jygame/ka241.lua�if UseItem(126) == true then goto label0 end;
+�
+/lua/jygame/ka241.lua�if UseItem(126) == true then goto label0 end;
     do return end;
 ::label0::
     AddItem(126, -1);
     PlayAnimation(3, 5722, 5748);
     ModifyEvent(-2, -2, -2, -2, 237, 242, -1, 5722, 5748, 5722, -2, -2, -2);
+    jyx2_PlayTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒", 0, false, "NPC/linghuchong");
+    jyx2_Wait(1);
+    jyx2_StopTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒");
     Talk(35, "嗯！好一坛梨花酒！曾闻白乐天杭州喜望诗云：”红袖织绫夸柿叶，  青旗沽酒趁梨花”．这坛梨花酒酒味是极好，只可惜少了股芳冽之气，若能以翡翠杯盛之而饮，那更是醇美无比．", "talkname35", 0);
 do return end;
 
-�
-/lua/jygame/ka242.lua�if UseItem(127) == true then goto label0 end;
+�
+/lua/jygame/ka242.lua�if UseItem(127) == true then goto label0 end;
     do return end;
 ::label0::
     AddItem(127, -1);
     Talk(35, "好一只翡翠杯！得此美酒佳器，人生更有何憾．我令狐冲先干为敬，谢谢兄弟赠酒之情．", "talkname35", 0);
     PlayAnimation(3, 5722, 5748);
+    jyx2_PlayTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒", 0, false, "NPC/linghuchong");
+    jyx2_Wait(1);
+    jyx2_StopTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒");
     ModifyEvent(-2, -2, -2, -2, 243, -1, -1, 5722, 5748, 5722, -2, -2, -2);
     Talk(0, "＜令狐冲！他就是令狐冲＞我听江湖上议论纷纷说令狐兄已遭华山派逐出师门，不知可有此事？", "talkname0", 1);
     Talk(35, "唉！令狐冲一生仗义直行，从不做违背良心之事，到头来却落至这个结果．这件事的始末也非三言两语可道尽．唉．不谈这个，咱们喝酒吧", "talkname35", 0);
@@ -8306,12 +8315,11 @@ do return end;
 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 do return end;
 
-�
-/lua/jygame/ka567.lua�PlayAnimation(8, 6420, 6448);
-jyx2_PlayTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼", 0, false);
-jyx2_Wait(1);
+�
+/lua/jygame/ka567.lua�PlayAnimation(8, 6420, 6448);
+jyx2_PlayTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼", 0, false);
 Talk(0, "哇！鳄鱼！", "talkname0", 1);
-jyx2_StopTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼");
+jyx2_StopTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼");
 if TryBattle(89) == true then goto label0 end;
     Dead();
     do return end;
@@ -8545,12 +8553,11 @@ z
 /lua/jygame/ka582.luaaTalk(0, "前辈，你以后可以安心的研究棋奕了．", "talkname0", 1);
 do return end;
 
-�
-/lua/jygame/ka583.lua�PlayAnimation(9, 6420, 6448);
-jyx2_PlayTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼", 0, false);
-jyx2_Wait(1);
+�
+/lua/jygame/ka583.lua�PlayAnimation(9, 6420, 6448);
+jyx2_PlayTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼", 0, false);
 Talk(0, "哇！鳄鱼！", "talkname0", 1);
-jyx2_StopTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼");
+jyx2_StopTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼");
 if TryBattle(89) == true then goto label0 end;
     Dead();
     do return end;
@@ -8562,12 +8569,11 @@ if TryBattle(89) == true then goto label0 end;
     AddRepute(1);
 do return end;
 
-�
-/lua/jygame/ka584.lua�PlayAnimation(10, 6420, 6448);
-jyx2_PlayTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼", 0, false);
-jyx2_Wait(1);
+�
+/lua/jygame/ka584.lua�PlayAnimation(10, 6420, 6448);
+jyx2_PlayTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼", 0, false);
 Talk(0, "哇！鳄鱼！", "talkname0", 1);
-jyx2_StopTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼");
+jyx2_StopTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼");
 if TryBattle(89) == true then goto label0 end;
     Dead();
     do return end;
@@ -8579,12 +8585,11 @@ if TryBattle(89) == true then goto label0 end;
     AddRepute(1);
 do return end;
 
-�
-/lua/jygame/ka585.lua�PlayAnimation(11, 6420, 6448);
-jyx2_PlayTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼", 0, false);
-jyx2_Wait(1);
+�
+/lua/jygame/ka585.lua�PlayAnimation(11, 6420, 6448);
+jyx2_PlayTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼", 0, false);
 Talk(0, "哇！鳄鱼！", "talkname0", 1);
-jyx2_StopTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼");
+jyx2_StopTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼");
 if TryBattle(89) == true then goto label0 end;
     Dead();
     do return end;
@@ -8596,12 +8601,11 @@ if TryBattle(89) == true then goto label0 end;
     AddRepute(1);
 do return end;
 
-�
-/lua/jygame/ka586.lua�PlayAnimation(12, 6420, 6448);
-jyx2_PlayTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼", 0, false);
-jyx2_Wait(1);
+�
+/lua/jygame/ka586.lua�PlayAnimation(12, 6420, 6448);
+jyx2_PlayTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼", 0, false);
 Talk(0, "哇！鳄鱼！", "talkname0", 1);
-jyx2_StopTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼");
+jyx2_StopTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼");
 if TryBattle(89) == true then goto label0 end;
     Dead();
     do return end;
@@ -8613,12 +8617,11 @@ if TryBattle(89) == true then goto label0 end;
     AddRepute(1);
 do return end;
 
-�
-/lua/jygame/ka587.lua�PlayAnimation(13, 6420, 6448);
-jyx2_PlayTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼", 0, false);
-jyx2_Wait(1);
+�
+/lua/jygame/ka587.lua�PlayAnimation(13, 6420, 6448);
+jyx2_PlayTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼", 0, false);
 Talk(0, "哇！鳄鱼！", "talkname0", 1);
-jyx2_StopTimeline("[Timeline]ka567_鳄鱼岛_遇到鳄鱼");
+jyx2_StopTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼");
 if TryBattle(89) == true then goto label0 end;
     Dead();
     do return end;
