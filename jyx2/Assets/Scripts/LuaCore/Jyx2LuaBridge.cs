@@ -15,6 +15,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using XLua;
 using UnityEngine.Playables;
+using Sirenix.Utilities;
+using UnityEngine.Timeline;
 
 namespace Jyx2
 {
@@ -809,12 +811,21 @@ namespace Jyx2
             Wait();
         }
 
+        /// <param name="playableDirector"></param>
         static private void TimeLineNext(PlayableDirector playableDirector)
         {
             Next();
         }
 
-        static public void jyx2_PlayTimeline(string timelineName)
+        enum TimeLinePlayMode
+        {
+            NextEventOnStart = 0,
+            NextEventOnEnd = 1,
+        }
+
+        static Animator clonePlayer;
+
+        static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer)
         {
             RunInMainThrad(() =>
             {
@@ -829,11 +840,55 @@ namespace Jyx2
                 }
 
                 timeLineObj.gameObject.SetActive(true);
-                var playableDiretor = timeLineObj.GetComponent<PlayableDirector>();
-                playableDiretor.stopped += TimeLineNext;
-                playableDiretor.Play();
+                var playableDirector = timeLineObj.GetComponent<PlayableDirector>();
 
-                GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+                if(playMode == (int)TimeLinePlayMode.NextEventOnEnd)
+                {
+                    playableDirector.stopped += TimeLineNext;
+                }
+                else if (playMode == (int)TimeLinePlayMode.NextEventOnStart)
+                {
+                    Next();
+                }
+
+                playableDirector.Play();
+
+                if (isClonePlayer)
+                {
+                    GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+
+                    if(clonePlayer == null)
+                    {
+                        clonePlayer = GameObject.Instantiate(GameRuntimeData.Instance.Player.View.GetAnimator());
+                        clonePlayer.runtimeAnimatorController = null;
+                    }
+
+                    var bindingDic = playableDirector.playableAsset.outputs;
+                    bindingDic.ForEach(delegate (PlayableBinding playableBinding)
+                    {
+                        if (playableBinding.outputTargetType == typeof(Animator))
+                        {
+                            if(playableBinding.sourceObject != null)
+                            {
+                                playableDirector.GetComponent<PlayableDirectorHelper>().BindClonePlayer(clonePlayer);
+                            }
+                            playableDirector.SetGenericBinding(playableBinding.sourceObject, clonePlayer.gameObject);
+                        }
+                    });
+                }
+                else
+                {
+                    var bindingDic = playableDirector.playableAsset.outputs;
+                    bindingDic.ForEach(delegate(PlayableBinding playableBinding)
+                    {
+                        if(playableBinding.outputTargetType == typeof(Animator))
+                        {
+                            playableDirector.SetGenericBinding(playableBinding.sourceObject, GameRuntimeData.Instance.Player.View.GetAnimator().gameObject);
+                        }
+                    });
+                }
+
+                LevelMaster.Instance.SetPlayerCanController(false);
             });
             Wait();
         }
@@ -857,7 +912,28 @@ namespace Jyx2
                 timeLineObj.gameObject.SetActive(false);
 
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
+                if(clonePlayer != null)
+                {
+                    GameObject.Destroy(clonePlayer.gameObject);
+                }
+                clonePlayer = null;
+
+                LevelMaster.Instance.SetPlayerCanController(true);
                 Next();
+            });
+            Wait();
+        }
+
+        static public void jyx2_Wait(float duration)
+        {
+            RunInMainThrad(() =>
+            {
+                Sequence seq = DOTween.Sequence();
+                seq.AppendCallback(() =>
+                {
+                    Next();
+                })
+                .SetDelay(duration);
             });
             Wait();
         }
