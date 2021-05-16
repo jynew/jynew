@@ -825,7 +825,7 @@ namespace Jyx2
 
         static Animator clonePlayer;
 
-        static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer)
+        static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
         {
             RunInMainThrad(() =>
             {
@@ -853,44 +853,62 @@ namespace Jyx2
 
                 playableDirector.Play();
 
-                if (isClonePlayer)
+                //没有指定对象，则默认为主角播放
+                if (string.IsNullOrEmpty(tagRole) || tagRole == "PLAYER")
                 {
-                    GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
-
-                    if(clonePlayer == null)
+                    //克隆主角来播放特殊剧情
+                    if (isClonePlayer)
                     {
-                        clonePlayer = GameObject.Instantiate(GameRuntimeData.Instance.Player.View.GetAnimator());
-                        clonePlayer.runtimeAnimatorController = null;
-                    }
-
-                    var bindingDic = playableDirector.playableAsset.outputs;
-                    bindingDic.ForEach(delegate (PlayableBinding playableBinding)
-                    {
-                        if (playableBinding.outputTargetType == typeof(Animator))
+                        if (clonePlayer == null)
                         {
-                            if(playableBinding.sourceObject != null)
-                            {
-                                playableDirector.GetComponent<PlayableDirectorHelper>().BindClonePlayer(clonePlayer);
-                            }
-                            playableDirector.SetGenericBinding(playableBinding.sourceObject, clonePlayer.gameObject);
+                            clonePlayer = GameObject.Instantiate(GameRuntimeData.Instance.Player.View.GetAnimator());
+                            clonePlayer.runtimeAnimatorController = null;
+                            GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
                         }
-                    });
+
+                        DoPlayTimeline(playableDirector, clonePlayer.gameObject);
+                    }
+                    //正常绑定当前主角播放
+                    else
+                    {
+                        var bindingDic = playableDirector.playableAsset.outputs;
+                        bindingDic.ForEach(delegate (PlayableBinding playableBinding)
+                        {
+                            if (playableBinding.outputTargetType == typeof(Animator))
+                            {
+                                playableDirector.SetGenericBinding(playableBinding.sourceObject, GameRuntimeData.Instance.Player.View.GetAnimator().gameObject);
+                            }
+                        });
+                    }
                 }
                 else
                 {
-                    var bindingDic = playableDirector.playableAsset.outputs;
-                    bindingDic.ForEach(delegate(PlayableBinding playableBinding)
-                    {
-                        if(playableBinding.outputTargetType == typeof(Animator))
-                        {
-                            playableDirector.SetGenericBinding(playableBinding.sourceObject, GameRuntimeData.Instance.Player.View.GetAnimator().gameObject);
-                        }
-                    });
+                    string objPath = "Level/" + tagRole;
+                    GameObject obj = GameObject.Find(objPath);
+                    DoPlayTimeline(playableDirector, obj.gameObject);
                 }
-
+                
                 LevelMaster.Instance.SetPlayerCanController(false);
             });
             Wait();
+        }
+
+        static void DoPlayTimeline(PlayableDirector playableDirector, GameObject player)
+        {
+            player.SetActive(false);
+
+            var bindingDic = playableDirector.playableAsset.outputs;
+            bindingDic.ForEach(delegate (PlayableBinding playableBinding)
+            {
+                if (playableBinding.outputTargetType == typeof(Animator))
+                {
+                    if (playableBinding.sourceObject != null)
+                    {
+                        playableDirector.GetComponent<PlayableDirectorHelper>().BindPlayer(player);
+                    }
+                    playableDirector.SetGenericBinding(playableBinding.sourceObject, player);
+                }
+            });
         }
 
         static public void jyx2_StopTimeline(string timelineName)
@@ -918,6 +936,7 @@ namespace Jyx2
                 }
                 clonePlayer = null;
 
+                playableDiretor.GetComponent<PlayableDirectorHelper>().ClearTempObjects();
                 LevelMaster.Instance.SetPlayerCanController(true);
                 Next();
             });
