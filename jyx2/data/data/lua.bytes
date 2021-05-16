@@ -1830,10 +1830,12 @@ if AskBattle() == true then goto label0 end;
         ModifyEvent(-2, 1, -2, -2, -2, -2, 9, -2, -2, -2, -2, -2, -2);
 do return end;
 
-�
-/lua/jygame/ka20.lua�Talk(0, "奇怪，头怎么这么重．．莫非．．．", "talkname0", 1);
+�
+/lua/jygame/ka20.lua�Talk(0, "奇怪，头怎么这么重．．莫非．．．", "talkname0", 0);
 PlayAnimation(-1, 5994, 6012);
+jyx2_PlayTimeline("[Timeline]ka20_阎基居_中悲酥清风");
 DarkScence();
+jyx2_StopTimeline("[Timeline]ka20_阎基居_中悲酥清风");
 ZeroAllMP();
 ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
 ModifyEvent(-2, 1, 1, -2, 21, -1, -1, 5168, 5168, 5168, 0, -2, -2);
@@ -9651,21 +9653,21 @@ jyx2_ReplaceSceneObject("", "NPC/zhangwuji", "1");
 jyx2_ReplaceSceneObject("", "NPC/zhangwuji", ""); 
 do return end;
 
-�
-/lua/jygame/ka640.lua�if JudgeAttack(0, 75, 1000) == true then goto label0 end;
+�
+/lua/jygame/ka640.lua�if JudgeAttack(0, 75, 1000) == true then goto label0 end;
     PlayAnimation(-1, 7864, 7912);
-    jyx2_PlayTimeline("[Timeline]拔金蛇剑_失败");
+    jyx2_PlayTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑_失败");
     Talk(0, "哇塞！我使尽了吃奶的力气还拔不出来，难道要请亚瑟王来才行吗？", "talkname0", 1);
-    jyx2_StopTimeline("[Timeline]拔金蛇剑_失败");
+    jyx2_StopTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑_失败");
     do return end;
 ::label0::
     ModifyEvent(-2, -2, 1, 1, -1, -1, -1, 4736, 4736, 4736, -2, -2, -2);
     PlayAnimation(-1, 7864, 7912);
     PlayAnimation(-1, 7864, 7964);
     jyx2_ReplaceSceneObject("", "Bake/Static/jinshejian", ""); 
-    jyx2_PlayTimeline("[Timeline]拔金蛇剑");
+    jyx2_PlayTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑");
     Talk(0, "终于让我给拔出来了！", "talkname0", 1);
-    jyx2_StopTimeline("[Timeline]拔金蛇剑");
+    jyx2_StopTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑");
     GetItem(110, 1);
 do return end;
 

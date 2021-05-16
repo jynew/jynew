@@ -1,6 +1,8 @@
-Talk(0, "奇怪，头怎么这么重．．莫非．．．", "talkname0", 1);
+Talk(0, "奇怪，头怎么这么重．．莫非．．．", "talkname0", 0);
 PlayAnimation(-1, 5994, 6012);
+jyx2_PlayTimeline("[Timeline]ka20_阎基居_中悲酥清风");
 DarkScence();
+jyx2_StopTimeline("[Timeline]ka20_阎基居_中悲酥清风");
 ZeroAllMP();
 ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
 ModifyEvent(-2, 1, 1, -2, 21, -1, -1, 5168, 5168, 5168, 0, -2, -2);
