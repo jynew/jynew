@@ -1830,10 +1830,10 @@ if AskBattle() == true then goto label0 end;
         ModifyEvent(-2, 1, -2, -2, -2, -2, 9, -2, -2, -2, -2, -2, -2);
 do return end;
 
-�
-/lua/jygame/ka20.lua�Talk(0, "奇怪，头怎么这么重．．莫非．．．", "talkname0", 0);
+�
+/lua/jygame/ka20.lua�Talk(0, "奇怪，头怎么这么重．．莫非．．．", "talkname0", 0);
 PlayAnimation(-1, 5994, 6012);
-jyx2_PlayTimeline("[Timeline]ka20_阎基居_中悲酥清风", 1);
+jyx2_PlayTimeline("[Timeline]ka20_阎基居_中悲酥清风", 1, true);
 DarkScence();
 jyx2_StopTimeline("[Timeline]ka20_阎基居_中悲酥清风");
 ZeroAllMP();
@@ -1841,14 +1841,13 @@ ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
 ModifyEvent(-2, 1, 1, -2, 21, -1, -1, 5168, 5168, 5168, 0, -2, -2);
 jyx2_ReplaceSceneObject("","NPC/yanji","1") --刷出阎基
 
-jyx2_PlayTimeline("[Timeline]ka20_阎基居_苏醒", 0);
+jyx2_PlayTimeline("[Timeline]ka20_阎基居_苏醒", 0, true);
 LightScence();
+jyx2_Wait(1.5);
 jyx2_StopTimeline("[Timeline]ka20_阎基居_苏醒");
 Talk(4, "原本预备对付苗人凤的悲酥清风，居然先让你受用了！", "talkname4", 0);
 PlayAnimation(-1, 6026, 6036);
-
 Talk(0, "你．．你．．", "talkname0", 1);
-
 Talk(4, "江湖上最近盛传有个年轻小毛头到处找”十四天书”，想必就是你吧？找到几本书啦？快交出来．", "talkname4", 0);
 Talk(0, "你真卑鄙．", "talkname0", 1);
 Talk(4, "我阎基做事向来只求结果，不问方法．怎么？还不拿出来，要大爷我亲自动手吗？要知道书对死人是没有意义的．", "talkname4", 0);
@@ -4944,18 +4943,23 @@ do return end;
 /lua/jygame/ka369.luauTalk(42, "请少侠入洞内参研，若少侠想离去，也可自行离去．", "talkname42", 0);
 do return end;
 
-�
-/lua/jygame/ka37.lua�if HaveItem(173) == false then goto label0 end;
+�
+/lua/jygame/ka37.lua�if HaveItem(173) == false then goto label0 end;
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;
 ::label0::
     Talk(0, "什么味道这样香浓，我头好昏，啊！难道这红树丛有毒 ．．．．．．", "talkname0", 1);
+    jyx2_PlayTimeline("[Timeline]ka37_药王山庄_晕倒", 0, false);
+    jyx2_Wait(2);
     PlayAnimation(-1, 5974, 5992);
     DarkScence();
     SetScencePosition2(30, 49);
+    jyx2_StopTimeline("[Timeline]ka37_药王山庄_晕倒");
+    jyx2_PlayTimeline("[Timeline]ka37_药王山庄_苏醒", 0, false);
     LightScence();
     PlayAnimation(-1, 6014, 6024);
     Talk(0, "咦！这是那里？莫非我已昏厥多时？此处非平常之地．", "talkname0", 1);
+    jyx2_StopTimeline("[Timeline]ka37_药王山庄_苏醒");
     ModifyEvent(-2, -2, -2, -2, -2, -2, 38, -2, -2, -2, -2, -2, -2);
 do return end;
 
@@ -5063,20 +5067,25 @@ if TryBattle(64) == true then goto label0 end;
     AddRepute(1);
 do return end;
 
-�
-/lua/jygame/ka38.lua�if HaveItem(173) == false then goto label0 end;
+�
+/lua/jygame/ka38.lua�if HaveItem(173) == false then goto label0 end;
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
     Talk(0, "咦！头比较不晕了，反而有股淡淡的微香，这朵蓝花真是神奇．", "talkname0", 1);
     jyx2_ReplaceSceneObject("", "Bake/Static/Wall/Wall_22_423", "");--kaimen
     do return end;
 ::label0::
     Talk(0, "啊！又闻到这香味了，看来我又得昏倒了．", "talkname0", 1);
+    jyx2_PlayTimeline("[Timeline]ka37_药王山庄_晕倒", 0, false);
+    jyx2_Wait(2);
     PlayAnimation(-1, 5974, 5992);
     DarkScence();
+    jyx2_StopTimeline("[Timeline]ka37_药王山庄_晕倒");
+    jyx2_PlayTimeline("[Timeline]ka37_药王山庄_苏醒", 0, false);
     SetScencePosition2(30, 49);
     LightScence();
     PlayAnimation(-1, 6014, 6024);
     Talk(0, "又昏倒了，看来我得想想办法才是．", "talkname0", 1);
+    jyx2_StopTimeline("[Timeline]ka37_药王山庄_苏醒");
 do return end;
 
 �
@@ -9657,10 +9666,10 @@ jyx2_ReplaceSceneObject("", "NPC/zhangwuji", "1");
 jyx2_ReplaceSceneObject("", "NPC/zhangwuji", ""); 
 do return end;
 
-�
-/lua/jygame/ka640.lua�if JudgeAttack(0, 75, 1000) == true then goto label0 end;
+�
+/lua/jygame/ka640.lua�if JudgeAttack(0, 75, 1000) == true then goto label0 end;
     PlayAnimation(-1, 7864, 7912);
-    jyx2_PlayTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑_失败", 1);
+    jyx2_PlayTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑_失败", 1, true);
     Talk(0, "哇塞！我使尽了吃奶的力气还拔不出来，难道要请亚瑟王来才行吗？", "talkname0", 1);
     jyx2_StopTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑_失败");
     do return end;
@@ -9669,7 +9678,7 @@ do return end;
     PlayAnimation(-1, 7864, 7912);
     PlayAnimation(-1, 7864, 7964);
     jyx2_ReplaceSceneObject("", "Bake/Static/jinshejian", ""); 
-    jyx2_PlayTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑", 1);
+    jyx2_PlayTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑", 1, true);
     Talk(0, "终于让我给拔出来了！", "talkname0", 1);
     jyx2_StopTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑");
     GetItem(110, 1);
@@ -13550,8 +13559,8 @@ if AskJoin () == true then goto label0 end;
         Join(76);
 do return end;
 
-�<
-/lua/main.lua�<--注释后面标记的是对应的指令号
+�<
+/lua/main.lua�<--注释后面标记的是对应的指令号
 
 --0=0|1|0|0|0|
 --NOTHING TO DO
@@ -13708,6 +13717,7 @@ jyx2_CameraFollowPlayer = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollowPlayer
 jyx2_WalkFromTo = CS.Jyx2.Jyx2LuaBridge.jyx2_WalkFromTo
 jyx2_PlayTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_PlayTimeline
 jyx2_StopTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_StopTimeline
+jyx2_Wait = CS.Jyx2.Jyx2LuaBridge.jyx2_Wait
 
 function main_getLuaFiles()
 	return {}
