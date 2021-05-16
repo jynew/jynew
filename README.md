@@ -30,7 +30,7 @@
 * 承诺符合本项目原则和授权协议，贡献的资源制作默认视为满足[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)
 * 代码符合既定风格和编码规范，能正常编译通过，有自测(目前项目没有单元测试，请自测，逻辑需符合《金庸群侠传》DOS版，或作为后续MOD可扩展功能存在)
 * 资源提交符合当前*项目标准(TODO)*
-* 长期参与代码贡献的优质开发者可以被添加直接Write（免PullRequest）权限
+* 长期参与代码贡献的开发者可以被添加直接Write（免PullRequest）权限
 
 ## 授权声明
 
