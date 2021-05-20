@@ -112,6 +112,16 @@ namespace Jyx2
             //DONOTHING
         }
 
+        public virtual void MarkHpBarIsDirty()
+        {
+            //DONOTHING
+        }
+
+        public virtual void UnmarkHpBarIsDirty()
+        {
+            //DONOTHING
+        }
+
         private bool PlayScriptAnimation(string animCode, Action callback = null, float fadeDuration = 0f)
         {
             var animancer = GetAnimancer();

@@ -62,6 +62,8 @@ public class MapRole : Jyx2AnimationBattleRole
     [HideInInspector]
     public bool IsInBattle = false; //是否在战斗中
 
+    public bool HPBarIsDirty { private set; get; } = false;//通知需要刷新Hud血条
+
     private CustomOutlooking _outLooking;
     
     public override Animator GetAnimator()
@@ -178,6 +180,18 @@ public class MapRole : Jyx2AnimationBattleRole
         hudRoot.NewText(info);
 
         CheckDeath();
+    }
+
+    //血条标记为需要刷新
+    public override void MarkHpBarIsDirty()
+    {
+        HPBarIsDirty = true;
+    }
+
+    //取消刷新血条标记
+    public override void UnmarkHpBarIsDirty()
+    {
+        HPBarIsDirty = false;
     }
 
     void CheckDeath()

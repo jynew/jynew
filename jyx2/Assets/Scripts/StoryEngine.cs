@@ -136,7 +136,7 @@ public class StoryEngine : MonoBehaviour
             var model = battleHelper.GetModel();
             foreach(var role in model.Roles)
             {
-                if (role.team != 0) role.Hp = 0;
+                if (role.team != 0) role.SetHPAndRefreshHudBar(0);
                 role.CheckDeath();
             }
 
@@ -151,7 +151,7 @@ public class StoryEngine : MonoBehaviour
             var model = battleHelper.GetModel();
             foreach (var role in model.Roles)
             {
-                if (role.team == 0) role.Hp = 0;
+                if (role.team == 0) role.SetHPAndRefreshHudBar(0);
                 role.CheckDeath();
             }
             HSUtilsEx.CallWithDelay(this, () =>

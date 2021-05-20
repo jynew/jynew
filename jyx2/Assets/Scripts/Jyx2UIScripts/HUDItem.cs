@@ -20,6 +20,7 @@ public class HUDItem : MonoBehaviour
     public void BindRole(RoleInstance role) 
     {
         currentRole = role;
+        UpdateAll();
     }
 
     int preHp = -1;
@@ -28,8 +29,14 @@ public class HUDItem : MonoBehaviour
         if (currentRole == null)
             return;
         UpdatePosition();
-        if (currentRole.Hp == preHp)
+        if (!currentRole.View.HPBarIsDirty || currentRole.Hp == preHp)
             return;
+        currentRole.View.UnmarkHpBarIsDirty();
+        UpdateAll();
+    }
+
+    void UpdateAll()
+    {
         preHp = currentRole.Hp;
         hpSlider.value = (float)currentRole.Hp / currentRole.MaxHp;
         UpdateHpColor();

@@ -1666,6 +1666,9 @@ public class BattleHelper : BaseUI
         role.Hp -= role.Poison / 3;
         if (role.Hp < 1)
             role.Hp = 1;
+
+        role.View?.MarkHpBarIsDirty();
+
         int effectRst = tmp - role.Hp;
         role.View.ShowAttackInfo($"<color=green>毒发-{effectRst}</color>");
     }

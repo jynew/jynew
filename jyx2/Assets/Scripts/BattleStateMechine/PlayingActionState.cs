@@ -51,10 +51,15 @@ public class PlayingActionState : IBattleState
 
             result.Run();
 
+			//当需要播放受攻击动画时，不直接刷新血条，延后到播放受攻击动画时再刷新。其他情况直接刷新血条。
             if (result.IsDamage())
             {
                 //加入到受击动作List
                 beHitAnimationList.Add(rolei);
+            }
+            else
+            {
+                rolei.View.MarkHpBarIsDirty();
             }
         }
 

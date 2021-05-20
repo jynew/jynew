@@ -180,6 +180,8 @@ namespace Jyx2
                 target.BeHit();
                 //平均分配，每次hit显示掉一次血
                 target.ShowDamage();
+
+                target.MarkHpBarIsDirty();
             }
         }
 
