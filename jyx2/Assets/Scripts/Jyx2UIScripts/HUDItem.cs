@@ -6,15 +6,14 @@ using UnityEngine.UI;
 
 public class HUDItem : MonoBehaviour
 {
-    Slider hpSlider;
+    HPBar hpBar;
     RoleInstance currentRole;
     RectTransform rectTrans;
-    Image fillImg;
     public void Init() 
     {
-        hpSlider = transform.Find("HpSlider").GetComponent<Slider>();
+        hpBar = transform.Find("HpBar").GetComponent<HPBar>();
+        hpBar.Init();
         rectTrans = transform as RectTransform;
-        fillImg = hpSlider.transform.Find("Fill").GetComponent<Image>();
     }
 
     public void BindRole(RoleInstance role) 
@@ -38,7 +37,7 @@ public class HUDItem : MonoBehaviour
     void UpdateAll()
     {
         preHp = currentRole.Hp;
-        hpSlider.value = (float)currentRole.Hp / currentRole.MaxHp;
+        hpBar.SetValue((float)currentRole.Hp / currentRole.MaxHp);
         UpdateHpColor();
         if (currentRole.IsDead())
             transform.gameObject.SetActive(false);
@@ -53,13 +52,13 @@ public class HUDItem : MonoBehaviour
 
     void UpdateHpColor()
     {
-        fillImg.sprite = null;
+        //hpBar.fillImage.sprite = null;
         if (currentRole.Poison > 0) 
         {
-            fillImg.color = Color.cyan;
+            hpBar.fillImage.color = Color.cyan;
             return;
         }
-        fillImg.color = currentRole.team == 0 ? Color.green : Color.red;
+        hpBar.fillImage.color = currentRole.team == 0 ? Color.green : Color.red;
     }
 
     private void OnDisable()
