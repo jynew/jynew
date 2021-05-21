@@ -41,15 +41,18 @@ public partial class GameMainMenu : Jyx2_UIBase {
     public void OnNewGameClicked()
     {
         OnNewGame();
-        //savePanelMode = SavePanelMode.New;
-        //RefreshSavePanel();
-        //m_savePanel.SetActive(true);
     }
 
+    // merge to SavePanel.cs
+    // modified by eaphone at 2021/05/21
     public void OnLoadGameClicked()
     {
-        m_panelType = PanelType.LoadGamePage;
-        RefreshSavePanel();
+        Jyx2_UIManager.Instance.ShowUI("SavePanel", new Action<int>((index) =>
+        {
+            if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.Home){
+                OnNewGame();
+            }
+        }));
     }
 
     public void OnQuitGameClicked()
@@ -71,32 +74,12 @@ public partial class GameMainMenu : Jyx2_UIBase {
         this.StartNewRolePanel_RectTransform.gameObject.SetActive(true);
         m_randomProperty.ShowComponent();
     }
-
-    void RefreshSavePanel()
-    {
-        this.SavePanel_RectTransform.gameObject.SetActive(true);
-        var container = this.savePanelContainer_RectTransform;
-        for(int i = 0; i < container.transform.childCount; ++i)
-        {
-            var button = container.transform.GetChild(i).GetComponent<Button>();
-            var summaryText = button.transform.Find("SummaryText").GetComponent<Text>();
-            var summaryInfoKey = GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + i;
-            if (PlayerPrefs.HasKey(summaryInfoKey))
-            {
-                summaryText.text = PlayerPrefs.GetString(summaryInfoKey);
-            }
-            else
-            {
-                summaryText.text = "空存档位";
-            }
-        }
-    }
-
+    
     void OnNewGame()
     {
         int index = 999;
         var runtime = GameRuntimeData.Create(index);
-
+        m_panelType = PanelType.NewGamePage;
         //默认创建主角
         var player = new RoleInstance()
         {
@@ -134,19 +117,6 @@ public partial class GameMainMenu : Jyx2_UIBase {
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
         this.InputNamePanel_RectTransform.gameObject.SetActive(true);
     }
-
-    
-
-    public void OnClickedSaveItem(int index)
-    {
-        if (!StoryEngine.DoLoadGame(index))
-        {
-            OnNewGame();
-        }
-        this.SavePanel_RectTransform.gameObject.SetActive(false);
-    }
-
-
 
     private void RegisterEvent()
     {
