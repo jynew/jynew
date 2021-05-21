@@ -67,8 +67,13 @@ public partial class SavePanel:Jyx2_UIBase
     void OnSaveItemClick(Button btn) 
     {
         Action<int> cb = m_selectCallback;
-        Jyx2_UIManager.Instance.HideUI("SavePanel");
-        cb?.Invoke(int.Parse(btn.name));
+        //handle select no data item excpetion
+        //modify by eaphone at 2021/05/20
+        var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
+        if (txt.text!= "�մ浵λ") {
+            Jyx2_UIManager.Instance.HideUI("SavePanel");
+            cb?.Invoke(int.Parse(btn.name));
+        }
     }
 
     private void OnBackClick()

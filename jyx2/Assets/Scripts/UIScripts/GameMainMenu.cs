@@ -10,13 +10,7 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class GameMainMenu : Jyx2_UIBase {
-
-    enum SavePanelMode
-    {
-        New,
-        Load,
-    }
-    public GameObject m_savePanel;
+    
     public PlayableDirector m_PlayableDirector;
 
     public Transform m_inputName;
@@ -25,21 +19,20 @@ public class GameMainMenu : Jyx2_UIBase {
 
     public RandomPropertyComponent m_randomProperty;
 
-    SavePanelMode savePanelMode;
-
     public void OnNewGameClicked()
     {
         OnNewGame();
-        //savePanelMode = SavePanelMode.New;
-        //RefreshSavePanel();
-        //m_savePanel.SetActive(true);
     }
 
+    // merge to SavePanel
+    // modify by eaphone at 2021/05/20
     public void OnLoadGameClicked()
     {
-        savePanelMode = SavePanelMode.Load;
-        RefreshSavePanel();
-        m_savePanel.SetActive(true);
+        Jyx2_UIManager.Instance.ShowUI("SavePanel", new Action<int>((index) =>
+        {
+            StoryEngine.DoLoadGame(index);
+            Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
+        }));
     }
 
     public void OnQuitGameClicked()
@@ -59,25 +52,7 @@ public class GameMainMenu : Jyx2_UIBase {
         m_randomProperty.gameObject.SetActive(true);
         m_randomProperty.ShowComponent();
     }
-
-    void RefreshSavePanel()
-    {
-        var container = m_savePanel.transform.Find("Panel");
-        for(int i = 0; i < container.transform.childCount; ++i)
-        {
-            var button = container.transform.GetChild(i).GetComponent<Button>();
-            var summaryText = button.transform.Find("SummaryText").GetComponent<Text>();
-            var summaryInfoKey = GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + i;
-            if (PlayerPrefs.HasKey(summaryInfoKey))
-            {
-                summaryText.text = PlayerPrefs.GetString(summaryInfoKey);
-            }
-            else
-            {
-                summaryText.text = "空存档位";
-            }
-        }
-    }
+    
 
     void OnNewGame()
     {
@@ -122,21 +97,6 @@ public class GameMainMenu : Jyx2_UIBase {
         m_inputName.gameObject.SetActive(true);
     }
 
-    
-
-    public void OnClickedSaveItem(int index)
-    {
-        if(savePanelMode == SavePanelMode.New)
-        {
-            OnNewGame();
-        }
-        else if(savePanelMode == SavePanelMode.Load)
-        {
-            StoryEngine.DoLoadGame(index);
-        }
-        m_savePanel.SetActive(false);
-    }
-
 	// Use this for initialization
 	void Start () {
         //HSFrameWork.ConfigTable.Inner.ConfigTableBasic.V2Mode = true;
@@ -152,11 +112,5 @@ public class GameMainMenu : Jyx2_UIBase {
     protected override void OnCreate()
     {
         
-    }
-
-    protected override void OnShowPanel(params object[] allParams)
-    {
-        base.OnShowPanel(allParams);
-        AudioManager.PlayMusic(16);
     }
 }
