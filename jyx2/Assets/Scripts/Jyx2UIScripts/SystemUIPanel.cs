@@ -14,8 +14,8 @@ public partial class SystemUIPanel:Jyx2_UIBase
         BindListener(MainMenuButton_Button, delegate 
         {
             Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
-            List<string> selectionContent = new List<string>() { "ÊÇ", "·ñ" };
-            Jyx2_UIManager.Instance.ShowUI("ChatUIPanel", ChatType.Selection, "Ö÷½Ç", "½«¶ªÊ§Î´±£´æ½ø¶È£¬ÊÇ·ñ¼ÌĞø£¿", selectionContent, new Action<int>((index) =>
+            List<string> selectionContent = new List<string>() { "æ˜¯", "å¦" };
+            Jyx2_UIManager.Instance.ShowUI("ChatUIPanel", ChatType.Selection, "ä¸»è§’", "å°†ä¸¢å¤±æœªä¿å­˜è¿›åº¦ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ", selectionContent, new Action<int>((index) =>
             {
                 if(index == 0)
                 {
@@ -25,7 +25,7 @@ public partial class SystemUIPanel:Jyx2_UIBase
         });
 
 
-        //·µ»ØÓÎÏ·
+        //è¿”å›æ¸¸æˆ
         BindListener(QuitGameButton_Button, () =>
         {
             Jyx2_UIManager.Instance.HideUI("SystemUIPanel");

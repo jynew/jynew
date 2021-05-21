@@ -37,7 +37,9 @@ public class ResourceImporterAndTools : AssetPostprocessor
             impor.meshCompression = ModelImporterMeshCompression.Medium;
             impor.importCameras = false;
             impor.importLights = false;
-            impor.importMaterials = true;
+            // impor.importMaterials = true;
+            //Cal修改
+            impor.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
             impor.materialSearch = ModelImporterMaterialSearch.RecursiveUp;
             impor.materialLocation = ModelImporterMaterialLocation.External;
             impor.materialName = ModelImporterMaterialName.BasedOnTextureName;
@@ -72,7 +74,9 @@ public class ResourceImporterAndTools : AssetPostprocessor
             impor.meshCompression = ModelImporterMeshCompression.Medium;
             impor.importCameras = false;
             impor.importLights = false;
-            impor.importMaterials = false;
+            // impor.importMaterials = false;
+            //Cal修改
+            impor.materialImportMode = ModelImporterMaterialImportMode.None;
             impor.animationType = ModelImporterAnimationType.Human;
             impor.sourceAvatar = avataModel.sourceAvatar;
             ModelImporterClipAnimation[] allAnim = new ModelImporterClipAnimation[impor.defaultClipAnimations.Length];
@@ -105,7 +109,9 @@ public class ResourceImporterAndTools : AssetPostprocessor
             impor.meshCompression = ModelImporterMeshCompression.Medium;
             impor.importCameras = false;
             impor.importLights = false;
-            impor.importMaterials = true;
+            // impor.importMaterials = true;
+            //Cal修改
+            impor.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
             impor.materialSearch = ModelImporterMaterialSearch.RecursiveUp;
             impor.materialLocation = ModelImporterMaterialLocation.External;
             impor.materialName = ModelImporterMaterialName.BasedOnTextureName;
@@ -117,7 +123,9 @@ public class ResourceImporterAndTools : AssetPostprocessor
             impor.meshCompression = ModelImporterMeshCompression.Medium;
             impor.importCameras = false;
             impor.importLights = false;
-            impor.importMaterials = true;
+            // impor.importMaterials = true;
+            //Cal修改
+            impor.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
             impor.materialSearch = ModelImporterMaterialSearch.RecursiveUp;
             impor.materialLocation = ModelImporterMaterialLocation.External;
             impor.materialName = ModelImporterMaterialName.BasedOnTextureName;

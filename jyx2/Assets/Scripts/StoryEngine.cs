@@ -790,10 +790,14 @@ public class StoryEngine : MonoBehaviour
         }
     }
 
-    public static void DoLoadGame(int index)
+    public static bool DoLoadGame(int index)
     {
         //加载存档
         var r = GameRuntimeData.LoadArchive(index);
+        if (r==null)
+        {
+            return false;
+        }
 
         //初始化角色
         foreach (var role in r.Team)
@@ -805,6 +809,7 @@ public class StoryEngine : MonoBehaviour
 
         //加载地图
         LevelLoader.LoadGameMap(r.CurrentMap, loadPara);
+        return true;
     }
 
 }
