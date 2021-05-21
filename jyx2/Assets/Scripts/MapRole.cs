@@ -14,6 +14,7 @@ using Lean.Pool;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Animancer;
+using Jyx2.Middleware;
 using UnityEngine.AddressableAssets;
 
 public class MapRole : Jyx2AnimationBattleRole
@@ -64,7 +65,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
     public bool HPBarIsDirty { private set; get; } = false;//通知需要刷新Hud血条
 
-    private CustomOutlooking _outLooking;
+    // private CustomOutlooking _outLooking;
     
     public override Animator GetAnimator()
     {
@@ -430,7 +431,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
     private void Awake()
     {
-        _outLooking = GetComponent<CustomOutlooking>();
+        // _outLooking = GetComponent<CustomOutlooking>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -595,6 +596,8 @@ public class MapRole : Jyx2AnimationBattleRole
 
     private bool _isRefreshingModel = false;
 
+    private string m_ModelId;
+    private string m_WeaponName;
     public void RefreshModelByModelAvata(string modelAvataCode, Action callback)
     {
         if (_isRefreshingModel)
@@ -612,22 +615,22 @@ public class MapRole : Jyx2AnimationBattleRole
             weaponId = tmp[1];
         }
 
-        if (_outLooking == null)
+        if (modelId == String.Empty)
         {
             _isRefreshingModel = false;
             return;
         }
 
         //跟当前一致，不需要替换
-        if (_outLooking.m_ModelId == modelId)
+        if (m_ModelId == modelId)
         {
             _isRefreshingModel = false;
             return;
         }
 
-        _outLooking.m_ModelId = modelId;
-        _outLooking.m_WeaponName = weaponId;
-        _outLooking.OnChange(() =>
+        m_ModelId = modelId;
+        m_WeaponName = weaponId;
+        OnChange(() =>
         {
             _isRefreshingModel = false;
 
@@ -635,7 +638,73 @@ public class MapRole : Jyx2AnimationBattleRole
         });
 
     }
+    private void OnChange(Action callback = null)
+    {
+        if (Application.isPlaying)
+        {
+            //销毁所有的孩子
+            HSUnityTools.DestroyChildren(transform);
+        }
+        else
+        {
+            int childCount = transform.childCount;
+            for (int i = childCount - 1; i >= 0; --i)
+            {
+                var go = transform.GetChild(i).gameObject;
+                go.SetActive(false);
+                DestroyImmediate(go);
+            }
+            transform.DetachChildren();
 
+            //适应老的代码。。清理残留的合并Mesh
+            var oldMesh = GetComponent<SkinnedMeshRenderer>();
+            if (oldMesh != null)
+            {
+                DestroyImmediate(oldMesh);
+            }
+        }
+
+        string path = "";
+
+        if (m_ModelId.StartsWith("@"))
+        {
+            path = m_ModelId.TrimStart('@');
+        }
+        else
+        {
+            var roleModelSet = RoleModelSet.Get().GetByName(m_ModelId);
+            if (roleModelSet == null)
+            {
+                Debug.LogError("找不到模型:" + m_ModelId);
+                return;
+            }
+            var modelPath = roleModelSet.FilePath;
+            path = modelPath.TrimStart('@') + ".prefab";
+        }
+
+        Jyx2ResourceHelper.SpawnPrefab(path, (res) =>
+        {
+            if(res == null)
+            {
+                Debug.LogError("找不到模型资源：" + path);
+                return;
+            }
+            if (res != null)
+            {
+                res.transform.SetParent(gameObject.transform, false);
+                res.transform.localPosition = Vector3.zero;
+            }
+
+            var animator = GetComponent<Animator>();
+            if(animator != null)
+                animator.enabled = false;
+
+            if(callback != null)
+            {
+                callback();
+            }
+        });
+    }
     #region 角色残影
 
     GhostShadow m_ghostShadow;
