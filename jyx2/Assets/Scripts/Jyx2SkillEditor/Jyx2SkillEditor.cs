@@ -15,48 +15,6 @@ public class Jyx2SkillEditor : MonoBehaviour
     public MapRole player;
 
     public Jyx2SkillEditorEnemy[] enemys;
-
-    /// <summary>
-    /// 技能ID
-    /// </summary>
-    [Header("技能ID")]
-    public int SkillId;
-
-    /// <summary>
-    /// 技能等级
-    /// </summary>
-    [Header("技能等级")]
-    public int SkillLevel;
-
-    /// <summary>
-    /// 播放启动
-    /// </summary>
-    [Header("播放技能")]
-    public bool DisplaySkill;
-
-    /// <summary>
-    /// 切换技能
-    /// </summary>
-    [Header("切换技能")]
-    public bool SwitchSkill;
-
-    
-    /// <summary>
-    /// 角色ID
-    /// </summary>
-    [Header("切换的模型ID")]
-    public int PlayerRoleId = 0;
-    /// <summary>
-    /// 切换角色模型
-    /// </summary>
-    [Header("切换角色模型")]
-    public bool SwitchRoleModel;
-
-
-    [Header("测试奔跑动作")]
-    public bool SwitchMove;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -74,9 +32,9 @@ public class Jyx2SkillEditor : MonoBehaviour
 
 
         player.IsInBattle = true;
-        DoSwitchRoleModel();
         Container.TryResolve<IXLsReloader>()?.Do();
 
+        Jyx2_UIManager.Instance.ShowUI("SkillEditorUIPanel",player,enemys);
     }
 
     private void Watcher_Changed(object sender, FileSystemEventArgs e)
@@ -87,71 +45,11 @@ public class Jyx2SkillEditor : MonoBehaviour
     bool updateExcel = false;
 
 
-    void DoSwitchRoleModel()
-    {
-        var role = new RoleInstance(PlayerRoleId.ToString());
-        player.BindRoleInstance(role, () =>
-        {
-            var animator = player.GetAnimator();
-            animator.runtimeAnimatorController = player.GetComponent<Animator>().runtimeAnimatorController; //force set animator
-
-            SwitchSkillPose();
-        });
-    }
-
-    void DoSwitchMove()
-    {
-        Debug.Log("do switch move");
-        player.Run();
-    }
-
-    void TryDisplaySkill()
-    {
-
-        //播放技能
-        Jyx2Skill skill = ConfigTable.Get<Jyx2Skill>(SkillId.ToString());
-        var wugong = new WugongInstance(SkillId);
-
-        SkillCastHelper helper = new SkillCastHelper();
-        helper.Source = player;
-        helper.Targets = enemys;
-        
-        wugong.Level = SkillLevel;
-        helper.Zhaoshi = new BattleZhaoshiInstance(wugong);
-
-        //直接在每个敌人身上受击
-        List<Transform> blocks = new List<Transform>();
-        foreach(var e in enemys)
-        {
-            blocks.Add(e.transform);
-        }
-        helper.CoverBlocks = blocks; 
-
-        helper.Play();
-
-
-    }
-
-    /// <summary>
-    /// 切换技能待机动作
-    /// </summary>
-    void SwitchSkillPose()
-    {
-        Jyx2Skill skill = ConfigTable.Get<Jyx2Skill>(SkillId.ToString());
-        var wugong = new WugongInstance(SkillId);
-        //切换武器和动作
-
-        player.SwitchSkillTo(wugong);
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if(DisplaySkill)
-        {
-            DisplaySkill = false;
-            TryDisplaySkill();
-        }
+      
 
         if (updateExcel)
         {
@@ -159,23 +57,6 @@ public class Jyx2SkillEditor : MonoBehaviour
             Container.TryResolve<IXLsReloader>()?.Do();
         }
 
-        if(SwitchSkill)
-        {
-            SwitchSkill = false;
-            SwitchSkillPose();
-        }
-
-        if(SwitchRoleModel)
-        {
-            SwitchRoleModel = false;
-
-            DoSwitchRoleModel();
-        }
-
-        if (SwitchMove)
-        {
-            SwitchMove = false;
-            DoSwitchMove();
-        }
+      
     }
 }
