@@ -20,7 +20,7 @@
 
 ## 开发环境和搭建
 
-* 开发工具：[Unity 2020.3.8.f1c1(LTS) (64-bit)](https://unity.cn/releases)
+* 开发工具：[Unity 2020.3.8.f1c1(LTS) (64-bit)](https://unity.cn/releases/lts/2020)
 * 首次加载项目需要运行菜单项 配置表/Gendata
 * 启动场景为0_GameStart.scene
 
