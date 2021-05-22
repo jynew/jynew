@@ -1,7 +1,6 @@
 ﻿using System;
 using Animancer;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Jyx2
 {

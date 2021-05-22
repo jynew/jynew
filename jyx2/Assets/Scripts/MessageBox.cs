@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text;
 using HanSquirrel.ResourceManager;
 using Jyx2;
-using Jyx2;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,6 +1,5 @@
 ﻿using Jyx2;
 using HSFrameWork.Common;
-using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;

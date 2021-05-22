@@ -15,7 +15,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Animancer;
 using Jyx2.Middleware;
-using UnityEngine.AddressableAssets;
 
 public class MapRole : Jyx2AnimationBattleRole
 {
