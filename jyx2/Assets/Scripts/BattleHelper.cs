@@ -16,7 +16,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static Jyx2.BattleFieldModel;
 
 //WeaponType映射表
 /*
@@ -104,9 +103,6 @@ public class BattleHelper : BaseUI
 
     private void Awake()
     {
-        //followCamera = GetComponent<LevelMaster>().m_PlayerFollowCamera;
-        //BindListener(m_AutoBattleButton, delegate (bool isOn) { EnableAutoBattle(isOn); });
-
         m_CurBattleRolePanel.Hide();
     }
 
@@ -114,7 +110,6 @@ public class BattleHelper : BaseUI
     void Start()
     {
         m_BattleActionPanel.gameObject.SetActive(false);
-        //m_AutoBattleButton.gameObject.SetActive(false);
     }
 
     Action<BattleResult> _callback;
@@ -133,22 +128,9 @@ public class BattleHelper : BaseUI
 
         IsInBattle = true;
 
-        //StoryEngine.Instance.middleTopMessageSuggestPanel.Show("战斗开始");
         Jyx2_UIManager.Instance.ShowUI("CommonTipsUIPanel", TipsType.MiddleTop, "战斗开始");
 
-        //m_AutoBattleButton.isOn = false; //默认取消自动战斗
-        //m_AutoBattleButton.gameObject.SetActive(true);
-
         LevelMaster.Instance.UpdateMobileControllerUI();
-
-        /*if (CameraHelper.Instance.m_BattleCamPoint == null)
-        {
-            CameraHelper.Instance.m_BattleCamPoint = new GameObject()
-            {
-                name = "BattlePoint",
-            };
-        }
-        CameraHelper.Instance.m_BattleCamPoint.transform.position = _player.View.transform.position;*/
 
         //初始化战斗model
         BattleModel = new BattleFieldModel
@@ -158,73 +140,33 @@ public class BattleHelper : BaseUI
                 switch (rst)
                 {
                     case BattleResult.Win:
+                    {
+                        string bonusText = calExpGot();
+                        GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>", delegate
                         {
-                            //GetBonus(out string bonusText);
-                            string bonusText = calExpGot();
-                            //StoryEngine.Instance.fullSuggestPanel.Show($"<color=yellow><size=80>战斗胜利！</size></color>\n\n{bonusText}", delegate
-                            //{
-                            //    EndBattle();
-                            //    callback?.Invoke(rst);
-                            //});
-                            GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>", delegate
-                             {
-                                 EndBattle();
-                                 callback?.Invoke(rst);
-                             });
-                            break;
-                        }
+                            EndBattle();
+                            callback?.Invoke(rst);
+                        });
+                        break;
+                    }
                     case BattleResult.Lose:
-                        {
-                            //StoryEngine.Instance.fullSuggestPanel.Show("<color=red><size=80>战斗失败！</size></color>\n\n胜败乃兵家常事，请大侠重新来过。", delegate
-                            //{
-                            //    EndBattle();
-                            //    callback?.Invoke(rst);
-                            //    if (backToBigMap)
-                            //        LevelLoader.LoadGameMap("Level_BigMap");
-                            //});
-                            GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。", "<color=red><size=80>战斗失败！</size></color>", delegate
+                    {
+                        GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。", "<color=red><size=80>战斗失败！</size></color>",
+                            delegate
                             {
                                 EndBattle();
                                 callback?.Invoke(rst);
                                 if (backToBigMap)
                                     LevelLoader.LoadGameMap("Level_BigMap");
                             });
-                            break;
-                        }
+                        break;
+                    }
                 }
             }
         };
 
         //初始化范围逻辑
         rangeLogic = new RangeLogic(BattleboxHelper.Instance.IsBlockExists, BattleModel.BlockHasRole);
-
-
-
-        //if (MapRuntimeData.Instance.ExploreTeam == null)
-        //{
-        //    //没有探索队伍时，只添加主角
-        //    _player.EnterBattle(0);
-        //}
-        //else
-        //{
-        //    //添加探索队伍（包含主角）
-        //    foreach (var teammate in MapRuntimeData.Instance.ExploreTeam)
-        //    {
-        //        teammate.EnterBattle(0);
-        //    }
-        //}
-
-        ////搜索并添加附近的引导（老成）
-        //foreach (var npc in SearchNPC(range, MapRoleBehavior.Guide))
-        //{
-        //    npc.EnterBattle(0);
-        //}
-
-        ////搜索并添加附近的敌人
-        //foreach (var npc in SearchNPC(range, MapRoleBehavior.Enemy))
-        //{
-        //    npc.EnterBattle(1);
-        //}
 
         //状态初始化
         HSUtilsEx.CallWithDelay(this, () =>
@@ -259,7 +201,6 @@ public class BattleHelper : BaseUI
 
     string calExpGot()
     {
-
         List<RoleInstance> alive_teammate = BattleModel.Roles.Where(r => r.team == 0).ToList();
         string rst = "";
         foreach(var role in alive_teammate)

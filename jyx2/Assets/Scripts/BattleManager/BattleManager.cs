@@ -1,45 +1,14 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using DG.Tweening;
-using HanSquirrel.ResourceManager;
 using Jyx2;
 using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
-using HSUI;
-using Jyx2;
-using UniRx;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static Jyx2.BattleFieldModel;
 
-//WeaponType映射表
-/*
- * BigSword 0
- * Bow 1
- * Dagger 2 匕首  -跑动动作用剑的
- * DoubleKnife 3
- * Gudgel 4
- * Gun 5
- * HFH 6（黄飞鸿？)
- * HidWea 7 暗器 -跑动动作用空手
- * Leg 8  -跑动动作用空手的，受击也是
- * Lute 9 琴/琵琶
- * Palm 10
- * Scourge 11 鞭子
- * Shield 12 盾牌
- * Sinknif 13 单刀
- * SinSword 14 长剑
- * Spear 15 长矛
- * 
- * 
- */
-//战斗开始的参数
+
 public class BattleStartParams 
 {
     public Action<BattleResult> callback;//战斗结果
@@ -91,10 +60,10 @@ public class BattleManager:MonoBehaviour
     private static BattleManager _instance;
 
     #region 战场组件
-    private BattleFieldModel BattleModel;
+    private BattleFieldModel m_BattleModel;
     public BattleFieldModel GetModel()
     {
-        return BattleModel;
+        return m_BattleModel;
     }
 
 
@@ -131,9 +100,9 @@ public class BattleManager:MonoBehaviour
         IsInBattle = true;
         m_battleParams = customParams;
         //初始化战斗model
-        BattleModel = new BattleFieldModel();
+        m_BattleModel = new BattleFieldModel();
         //初始化范围逻辑
-        rangeLogic = new RangeLogic(BattleboxHelper.Instance.IsBlockExists, BattleModel.BlockHasRole);
+        rangeLogic = new RangeLogic(BattleboxHelper.Instance.IsBlockExists, m_BattleModel.BlockHasRole);
 
         //状态初始化
         HSUtilsEx.CallWithDelay(this, () =>
@@ -153,7 +122,7 @@ public class BattleManager:MonoBehaviour
                     item.EnterBattle(0);
                 }
             }
-            BattleModel.InitBattleModel();//战场初始化 行动顺序排序这些
+            m_BattleModel.InitBattleModel();//战场初始化 行动顺序排序这些
             BattleStateMechine.Instance.StartStateMechine(OnBattleEnd);//交给战场状态机接管 状态机完成会回调回来
             //提示UI
             Jyx2_UIManager.Instance.ShowUI("CommonTipsUIPanel", TipsType.MiddleTop, "战斗开始");
@@ -203,7 +172,7 @@ public class BattleManager:MonoBehaviour
         Jyx2_UIManager.Instance.HideUI("BattleMainUIPanel");
 
         //临时，需要调整
-        foreach (var role in BattleModel.Roles)
+        foreach (var role in m_BattleModel.Roles)
         {
             //role.LeaveBattle();
             //非KeyRole死亡2秒后尸体消失
@@ -213,7 +182,7 @@ public class BattleManager:MonoBehaviour
             }
         }
         rangeLogic = null;
-        BattleModel.Roles.Clear();
+        m_BattleModel.Roles.Clear();
     }
 
 
@@ -233,7 +202,7 @@ public class BattleManager:MonoBehaviour
             return;
         }
         //加入战场
-        BattleModel.AddBattleRole(role, npcStandBlock.BattlePos, team, (team != 0));
+        m_BattleModel.AddBattleRole(role, npcStandBlock.BattlePos, team, (team != 0));
 
         //待命
         role.View.Idle();
@@ -253,7 +222,7 @@ public class BattleManager:MonoBehaviour
 
     string CalExpGot(Jyx2Battle battleData)
     {
-        List<RoleInstance> alive_teammate = BattleModel.Roles.Where(r => r.team == 0).ToList();
+        List<RoleInstance> alive_teammate = m_BattleModel.Roles.Where(r => r.team == 0).ToList();
         string rst = "";
         foreach(var role in alive_teammate)
         {
@@ -326,7 +295,7 @@ public class BattleManager:MonoBehaviour
         foreach (var data in list)
         {
             //有人占了这一格了
-            if (!ignoreRole && BattleModel.BlockHasRole(data.BattlePos.X, data.BattlePos.Y)) continue;
+            if (!ignoreRole && m_BattleModel.BlockHasRole(data.BattlePos.X, data.BattlePos.Y)) continue;
 
             var dist = (data.WorldPos - pos).sqrMagnitude;
             if (minDist > dist)
@@ -508,7 +477,7 @@ public class BattleManager:MonoBehaviour
         for (int i = 0; i < range.Count; i++)
         {
             BattleBlockVector pos = range[i];
-            RoleInstance rolei = BattleModel.GetAliveRole(pos);
+            RoleInstance rolei = m_BattleModel.GetAliveRole(pos);
             if (rolei == null || rolei.IsDead()) continue;
             //打敌人的招式
             if (skill.IsCastToEnemy() && rolei.team == team) continue;
