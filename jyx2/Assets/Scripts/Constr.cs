@@ -24,6 +24,9 @@ public class ConStr
 
     public const string DES_KEY = "test";
 
+    public const string DefaultSword = "Assets/BuildSource/ModelWeapons/W_Right_SinSword.prefab";
+    public const string DefaultKnife = "Assets/BuildSource/ModelWeapons/W_Right_SinKnif.prefab";
+    public const string DefaultSpear = "Assets/BuildSource/ModelWeapons/W_Right_Gudgel.prefab";
     #region HeadAvata配置
     public const string NamesPath = "Assets/BuildSource/names.txt";
     public const string HEADAVATA_TEMPLATE_XML = "Assets/BuildSource/headavata/avatas.xml";
