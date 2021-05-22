@@ -27,14 +27,18 @@ namespace Jyx2
         [XmlAttribute]
         public string Name;
 
+		// display XiaoxiamiJu with player namespace
+		//modified by eaphone at 2021/05/22
         public string GetShowName()
         {
+			var result=Name;
             if (!string.IsNullOrEmpty(Jyx2MapId))
             {
-                return ConfigTable.Get<Jyx2Map>(Jyx2MapId).Name;
+                result=ConfigTable.Get<Jyx2Map>(Jyx2MapId).Name;
             }
+			if ("小虾米居".Equals(result)) result=GameRuntimeData.Instance.Player.Name+"居";
 
-            return Name;
+            return result;
         }
 
         [XmlAttribute]
