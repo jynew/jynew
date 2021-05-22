@@ -142,14 +142,6 @@ namespace Jyx2
             return MoveDirection.ERROR;
         }
 
-        //右上——右——右下——左下——左——左上
-        //y是奇数
-        //static readonly int[] dx_odd = new int[]  {1, 1, 1,  0,  -1,  0};
-
-        ////y是偶数
-        //static readonly int[] dx_even = new int[] {0, 1, 0,  -1, -1, -1};
-        //static readonly int[] dy = new int[]      {1, 0, -1, -1, 0,   1};
-
         private readonly Func<int, int, bool> Exists;
         private readonly Func<int, int, bool> HasRole;
 
@@ -499,7 +491,7 @@ namespace Jyx2
             castSize = GetCastSize(zhaoshi, source);
 
             var covertype = zhaoshi.GetCoverType();
-            if (covertype == SkillCoverType.LINE || covertype == SkillCoverType.FAN || covertype == SkillCoverType.FRONT)
+            if (covertype == SkillCoverType.LINE )
             {
                 foreach (var loc in GetNearBlocks(x, y))
                 {
@@ -538,61 +530,32 @@ namespace Jyx2
                 case SkillCoverType.POINT:
                     rst.Add(new BattleBlockVector() { X = tx, Y = ty });
                     break;
-                case SkillCoverType.FAN:
-                    {
-                        MoveDirection direction = GetDirection(tx, ty, sx, sy);
-                        if (direction == MoveDirection.ERROR) break;
-                        rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                        if (direction == MoveDirection.UP_LEFT)
-                        {
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT));
-                        }
-                        else if (direction == MoveDirection.UP_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT));
-                        }
-                        else if (direction == MoveDirection.RIGHT)
-                        {
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT));
-                        }
-                        else if (direction == MoveDirection.DOWN_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT));
-                        }
-                        else if (direction == MoveDirection.DOWN_LEFT)
-                        {
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT));
-                        }
-                        else if (direction == MoveDirection.LEFT)
-                        {
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT));
-                        }
-                        break;
-                    }
-                case SkillCoverType.FACE:
-                    rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                    rst.AddRange(GetNearBlocks(tx, ty, coversize));
-                    break;
                 case SkillCoverType.LINE:
+                {
+                    if (coversize == 0) coversize = 1; //修正直线攻击没有攻击覆盖的BUG
+                    int tmpx = sx;
+                    int tmpy = sy;
+                    MoveDirection direction = GetDirection(tx, ty, sx, sy);
+                    if (direction == MoveDirection.ERROR) break;
+                    for (int i = 0; i < coversize; ++i)
                     {
-                        if (coversize == 0) coversize = 1; //修正直线攻击没有攻击覆盖的BUG
-                        int tmpx = sx;
-                        int tmpy = sy;
-                        MoveDirection direction = GetDirection(tx, ty, sx, sy);
-                        if (direction == MoveDirection.ERROR) break;
-                        for (int i = 0; i < coversize; ++i)
+                        BattleBlockVector b = GetNearBlock(tmpx, tmpy, direction);
+                        if (b == null) continue;
+                        rst.Add(b);
+                        tmpx = b.X;
+                        tmpy = b.Y;
+                    }
+                    break;
+                }
+                case SkillCoverType.CROSS:
+                {
+                    rst.Add(new BattleBlockVector() { X = tx, Y = ty });
+                    for (int i = 0; i < 6; ++i)
+                    {
+                        int tmpx = tx;
+                        int tmpy = ty;
+                        MoveDirection direction = (MoveDirection)i;
+                        for (int j = 0; j < coversize; ++j)
                         {
                             BattleBlockVector b = GetNearBlock(tmpx, tmpy, direction);
                             if (b == null) continue;
@@ -600,196 +563,14 @@ namespace Jyx2
                             tmpx = b.X;
                             tmpy = b.Y;
                         }
-                        break;
                     }
-                case SkillCoverType.FRONT:
-                    {
-                        MoveDirection direction = GetDirection(tx, ty, sx, sy);
-                        if (direction == MoveDirection.ERROR) break;
-                        rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                        if (direction == MoveDirection.UP_LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_RIGHT));
-                        }
-                        else if (direction == MoveDirection.UP_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.RIGHT));
-                        }
-                        else if (direction == MoveDirection.RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_RIGHT));
-                        }
-                        else if (direction == MoveDirection.DOWN_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_LEFT));
-                        }
-                        else if (direction == MoveDirection.DOWN_LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.LEFT));
-                        }
-                        else if (direction == MoveDirection.LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_LEFT));
-                        }
-                        break;
-                    }
-                case SkillCoverType.FRONTCROSS:
-                    {
-                        MoveDirection direction = GetDirection(tx, ty, sx, sy);
-                        if (direction == MoveDirection.ERROR) break;
-                        rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                        if (direction == MoveDirection.UP_LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT));
-                        }
-                        else if (direction == MoveDirection.UP_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT));
-                        }
-                        else if (direction == MoveDirection.RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT));
-                        }
-                        else if (direction == MoveDirection.DOWN_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT));
-                        }
-                        else if (direction == MoveDirection.DOWN_LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT));
-                        }
-                        else if (direction == MoveDirection.LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT));
-                        }
-                        break;
-                    }
+                    break;
+                }
+                case SkillCoverType.FACE:
+                    rst.Add(new BattleBlockVector() { X = tx, Y = ty });
+                    rst.AddRange(GetNearBlocks(tx, ty, coversize));
+                    break;
 
-                case SkillCoverType.FANGSHE://放射
-                    {
-                        rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                        var roundblocks = GetNearBlocks(tx, ty, 1);
-                        rst.AddRange(roundblocks);
-                        foreach (var b in roundblocks)
-                        {
-                            MoveDirection direction = GetDirection(b.X, b.Y, sx, sy);
-                            if (direction == MoveDirection.ERROR) continue;
-                            var block = GetNearBlock(b.X, b.Y, direction);
-                            if (block == null) continue;
-                            rst.Add(block);
-                        }
-                        break;
-                    }
-                case SkillCoverType.STAR:
-                    {
-                        rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                        for (int i = 0; i < 6; ++i)
-                        {
-                            int tmpx = tx;
-                            int tmpy = ty;
-                            MoveDirection direction = (MoveDirection)i;
-                            for (int j = 0; j < coversize; ++j)
-                            {
-                                BattleBlockVector b = GetNearBlock(tmpx, tmpy, direction);
-                                if (b == null) continue;
-                                rst.Add(b);
-                                tmpx = b.X;
-                                tmpy = b.Y;
-                            }
-                        }
-                        break;
-                    }
-                case SkillCoverType.ZHUIXING:
-                    {
-                        MoveDirection direction = GetDirection(tx, ty, sx, sy);
-                        if (direction == MoveDirection.ERROR) break;
-                        rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                        if (direction == MoveDirection.UP_LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT, MoveDirection.UP_RIGHT));
-                        }
-                        else if (direction == MoveDirection.UP_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT, MoveDirection.RIGHT));
-                        }
-                        else if (direction == MoveDirection.RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT, MoveDirection.UP_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT, MoveDirection.DOWN_RIGHT));
-                        }
-                        else if (direction == MoveDirection.DOWN_RIGHT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT, MoveDirection.RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT, MoveDirection.DOWN_LEFT));
-                        }
-                        else if (direction == MoveDirection.DOWN_LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT, MoveDirection.DOWN_RIGHT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT, MoveDirection.LEFT));
-                        }
-                        else if (direction == MoveDirection.LEFT)
-                        {
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(sx, sy, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.UP_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT, MoveDirection.DOWN_LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT, MoveDirection.LEFT));
-                            rst.Add(GetNearBlock(tx, ty, MoveDirection.LEFT, MoveDirection.UP_LEFT));
-                        }
-                        break;
-                    }
                 default:
                     throw new ArgumentOutOfRangeException(nameof(covertype), covertype, null);
             }

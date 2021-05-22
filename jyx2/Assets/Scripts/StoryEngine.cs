@@ -9,7 +9,6 @@ using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using UnityEngine.Playables;
 using HSFrameWork.Common;
-using static Jyx2.BattleFieldModel;
 using Jyx2.Setup;
 using System.Linq;
 using UnityEngine.UI;

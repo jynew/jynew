@@ -22,39 +22,14 @@ namespace Jyx2
         LINE = 1,
 
         /// <summary>
+        /// 十字
+        /// </summary>
+        CROSS = 2,
+        
+        /// <summary>
         /// 面攻击
         /// </summary>
-        FACE = 2,
-
-        /// <summary>
-        /// 扇形攻击
-        /// </summary>
-        FAN = 3,
-
-        /// <summary>
-        /// 身前一条线
-        /// </summary>
-        FRONT = 4,
-
-        /// <summary>
-        /// 身前十字
-        /// </summary>
-        FRONTCROSS = 5,
-
-        /// <summary>
-        /// 八方放射
-        /// </summary>
-        FANGSHE = 6,
-
-        /// <summary>
-        /// 锥形
-        /// </summary>
-        ZHUIXING = 7,
-
-        /// <summary>
-        /// 星型
-        /// </summary>
-        STAR = 8,
+        FACE = 3,
 
         /// <summary>
         /// 无效

@@ -551,7 +551,7 @@ public class LevelMaster : MonoBehaviour
                 SetPlayerSpeed(0);
             }
 
-            //BY HW:如果被锁方向，在这解锁
+            //如果被锁方向，在这解锁
             if (m_IsLockingDirection)
             {
                 m_IsLockingDirection = false;
