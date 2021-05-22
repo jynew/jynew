@@ -26,7 +26,7 @@ namespace Jyx2
 
         [XmlAttribute]
         public string Name;
-
+        
 		// display XiaoxiamiJu with player namespace
 		//modified by eaphone at 2021/05/22
         public string GetShowName()
