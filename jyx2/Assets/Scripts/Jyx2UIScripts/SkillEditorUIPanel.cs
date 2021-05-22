@@ -29,6 +29,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         
         dropSkillId_Dropdown.ClearOptions();
         dropSkillLevel_Dropdown.ClearOptions();
+        dropModelId_Dropdown.ClearOptions();
 
         List<string> skills = new List<string>();
         List<string> levels = new List<string>();
