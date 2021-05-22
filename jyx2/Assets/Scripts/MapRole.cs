@@ -441,8 +441,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
         //场景没有LevelMaster
         if (LevelMaster.Instance == null && DataInstance == null) this.CreateRoleInstance(m_RoleKey);
-
-
+        
         //脚步声
         //Observable.EveryFixedUpdate()
         //    .Where(_ => _navMeshAgent != null)
@@ -450,17 +449,12 @@ public class MapRole : Jyx2AnimationBattleRole
         //    {
         //        PlayFootStepSoundEffect(_distFromPlayer);
         //    });
-
-
-
+        
         if (!m_IsWaitingForActive && m_RoleKey != "testman" && m_RoleKey != "主角")
         {
             m_IsWaitingForActive = false;
             RefreshModel();
         }
-
-
-        
     }
 
     //队友寻路
@@ -507,36 +501,32 @@ public class MapRole : Jyx2AnimationBattleRole
     //脚步声播放间隔
     public float m_FootStepTimespan = 0.4f;
     #endregion
-
     
-
     public void RefreshModel(Action callback = null)
     {
         if (DataInstance == null) return;
 
-        if (!string.IsNullOrEmpty(DataInstance.ModelAvata))
-        {
-            RefreshModelByModelAvata(DataInstance.ModelAvata, ()=> {
-
-                var animator = GetAnimator();
-                if (animator != null)
-                {
-                    animator.SetBool("InBattle", IsInBattle);
-                }
-
-                if (IsInBattle)
-                {
-                    //直接用第一个武功的姿势
-                    DataInstance.SwitchAnimationToSkill(DataInstance.Wugongs[0]);
-                }
-                else
-                {
-                    animator.SetTrigger("move");
-                }
-
-                if(callback != null) callback();
-            });
-        }
+        if (string.IsNullOrEmpty(DataInstance.ModelAsset)) return;
+        
+        RefreshModelByModelAvata(DataInstance.ModelAsset, ()=> {
+            var animator = GetAnimator();
+            if (animator != null)
+            {
+                animator.SetBool("InBattle", IsInBattle);
+            }
+            
+            if (IsInBattle)
+            {
+                //直接用第一个武功的姿势
+                DataInstance.SwitchAnimationToSkill(DataInstance.Wugongs[0]);
+            }
+            else
+            {
+                animator.SetTrigger("move");
+            }
+            
+            if(callback != null) callback();
+        });
     }
 
 
@@ -634,8 +624,8 @@ public class MapRole : Jyx2AnimationBattleRole
 
             if (callback != null) callback();
         });
-
     }
+    
     private void OnChange(Action callback = null)
     {
         if (Application.isPlaying)
@@ -662,30 +652,21 @@ public class MapRole : Jyx2AnimationBattleRole
             }
         }
 
-        string path =  m_ModelId.TrimStart('@'); //重构以后，这个@符号已经没意义了
+        var modelAsset = ResourceLoader.LoadAsset<ModelAsset>($"Assets/BuildSource/Jyx2RoleModelAssets/{m_ModelId}.asset");
+        if (modelAsset == null) return;
         
-        Jyx2ResourceHelper.SpawnPrefab(path, (res) =>
+        var modelView = Instantiate(modelAsset.m_View);
+        modelView.transform.SetParent(gameObject.transform, false);
+        modelView.transform.localPosition = Vector3.zero;
+        
+        var animator = GetComponent<Animator>();
+        if(animator != null)
+            animator.enabled = false;
+
+        if(callback != null)
         {
-            if(res == null)
-            {
-                Debug.LogError("找不到模型资源：" + path);
-                return;
-            }
-            if (res != null)
-            {
-                res.transform.SetParent(gameObject.transform, false);
-                res.transform.localPosition = Vector3.zero;
-            }
-
-            var animator = GetComponent<Animator>();
-            if(animator != null)
-                animator.enabled = false;
-
-            if(callback != null)
-            {
-                callback();
-            }
-        });
+            callback();
+        }
     }
     #region 角色残影
 

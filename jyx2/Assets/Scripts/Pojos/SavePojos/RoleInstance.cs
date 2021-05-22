@@ -815,6 +815,12 @@ namespace Jyx2
             set { Save("ModelAvata", value); }
         }
 
+        public string ModelAsset
+        {
+            get { return Get(nameof(ModelAsset), Data.GetModelAsset()); }
+            set { Save(nameof(ModelAsset), value); }
+        }
+
         public string GetBattleAnimator()
         {
             return Data.GetBattleAnimator();
