@@ -205,11 +205,8 @@ namespace Jyx2
             string mapName = "";
             if (!string.IsNullOrEmpty(CurrentMap))
             {
-                var map = ConfigTable.Get<GameMap>(CurrentMap);
-                if(map != null)
-                {
-                    mapName = map.Name;
-                }
+				// modified by eaphone at 2021/05/22
+                mapName=LevelMaster.Instance.GetCurrentGameMap().GetShowName();
             }
 
             return $"{TeamLevel}级,{mapName},队伍:{Team.Count}人";

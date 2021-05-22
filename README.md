@@ -30,6 +30,8 @@
 
 * 承诺符合本项目原则和授权协议，贡献的资源制作默认视为满足[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)
 * 代码符合既定风格和编码规范，能正常编译通过，有自测(目前项目没有单元测试，请自测，逻辑需符合《金庸群侠传》DOS版，或作为后续MOD可扩展功能存在)
+* 每次Pull Request只做一件事，或者实现一类功能（方便追溯）
+* Pull Request请尽量自行解决完与最新版本的冲突
 * 资源提交符合当前*项目标准(TODO)*
 * 长期参与代码贡献的开发者可以被添加直接Write（免PullRequest）权限
 
@@ -56,3 +58,6 @@
 
 [xlua](https://github.com/Tencent/xLua)
 
+## 参考项目
+
+[kyscpp](https://github.com/scarsty/kys-cpp)

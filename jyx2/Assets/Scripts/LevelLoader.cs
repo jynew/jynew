@@ -4,7 +4,6 @@ using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using UnityEngine;
-using static Jyx2.BattleFieldModel;
 
 namespace Jyx2
 {

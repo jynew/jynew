@@ -155,7 +155,7 @@ namespace Jyx2
                         loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
                         CurrentPos = posStr
                     }, "", ()=> {
-                        isWin = (ret == BattleFieldModel.BattleResult.Win);
+                        isWin = (ret == BattleResult.Win);
                         Next();
                     });
                 });
