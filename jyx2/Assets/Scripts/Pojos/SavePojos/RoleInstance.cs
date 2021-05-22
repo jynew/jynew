@@ -821,12 +821,18 @@ namespace Jyx2
             set { Save(nameof(ModelAsset), value); }
         }
 
+        public ModelAsset Model;
+        
         public string GetBattleAnimator()
         {
             return Data.GetBattleAnimator();
         }
 
+        /*过期代码
+        [Obsolete]
         Dictionary<string, string> weaponMountMapping = null;
+        
+        [Obsolete]
         public string GetWeaponMount(string code)
         {
             //首次载入时初始化
@@ -858,6 +864,7 @@ namespace Jyx2
             }
             return null;
         }
+        */
 
         public Jyx2Role Data
         {

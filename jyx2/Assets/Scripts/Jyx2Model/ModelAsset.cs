@@ -36,25 +36,25 @@ namespace Jyx2
         public List<WeaponPart> m_OtherWeapons;
 
         //获取武器模型
-        public WeaponPart GetWeaponPart(int type)
+        public WeaponPart GetWeaponPart(string type)
         {
             switch (type)
             {
-                case 0:
+                case "1":
                 {
                     return m_SwordWeapon;
                 }
-                case 1:
+                case "2":
                 {
                     return m_KnifWeapon;
                 }
-                case 2:
+                case "3":
                 {
                     return m_SpearWeapon;
                 }
                 default:
                 {
-                    return m_OtherWeapons.Find(delegate(WeaponPart part) { return part.m_Id == type; });
+                    return m_OtherWeapons?.Find(delegate(WeaponPart part) { return part.m_Id.ToString() == type; });
                 }
             }
         }
