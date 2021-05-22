@@ -597,7 +597,7 @@ public class MapRole : Jyx2AnimationBattleRole
     private bool _isRefreshingModel = false;
 
     private string m_ModelId;
-    private string m_WeaponName;
+    
     public void RefreshModelByModelAvata(string modelAvataCode, Action callback)
     {
         if (_isRefreshingModel)
@@ -629,7 +629,6 @@ public class MapRole : Jyx2AnimationBattleRole
         }
 
         m_ModelId = modelId;
-        m_WeaponName = weaponId;
         OnChange(() =>
         {
             _isRefreshingModel = false;
@@ -664,24 +663,8 @@ public class MapRole : Jyx2AnimationBattleRole
             }
         }
 
-        string path = "";
-
-        if (m_ModelId.StartsWith("@"))
-        {
-            path = m_ModelId.TrimStart('@');
-        }
-        else
-        {
-            var roleModelSet = RoleModelSet.Get().GetByName(m_ModelId);
-            if (roleModelSet == null)
-            {
-                Debug.LogError("找不到模型:" + m_ModelId);
-                return;
-            }
-            var modelPath = roleModelSet.FilePath;
-            path = modelPath.TrimStart('@') + ".prefab";
-        }
-
+        string path =  m_ModelId.TrimStart('@'); //重构以后，这个@符号已经没意义了
+        
         Jyx2ResourceHelper.SpawnPrefab(path, (res) =>
         {
             if(res == null)
