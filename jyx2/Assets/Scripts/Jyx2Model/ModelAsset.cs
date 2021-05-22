@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GLib;
+using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Sirenix.OdinInspector;
 using UnityEditor;
@@ -15,7 +16,7 @@ namespace Jyx2
     [CreateAssetMenu(fileName = "NewModelAsset", menuName = "Model Asset")]
     public class ModelAsset : ScriptableObject
     {
-        [OnValueChanged("PreviewView")]
+        [OnValueChanged("AtuoBindModelData")]
         [InlineEditor(InlineEditorModes.LargePreview)]
         public GameObject m_View;
         
@@ -25,7 +26,7 @@ namespace Jyx2
         
         [Header("刀")]
         [SerializeReference]
-        public KnifPart m_KnifWeapon;
+        public KnifePart m_KnifeWeapon;
         
         [Header("长柄")]
         [SerializeReference]
@@ -46,7 +47,7 @@ namespace Jyx2
                 }
                 case "2":
                 {
-                    return m_KnifWeapon;
+                    return m_KnifeWeapon;
                 }
                 case "3":
                 {
@@ -59,9 +60,44 @@ namespace Jyx2
             }
         }
 
-        public void PreviewView()
+        /// <summary>
+        /// 自动绑定模型配置
+        /// </summary>
+        public void AtuoBindModelData()
         {
+            if (m_View == null) return;
+            var animator = m_View.GetComponent<Animator>();
             
+            //非人型清空武器配置
+            if (animator == null || animator.avatar == null || !animator.avatar.isHuman)
+            {
+                m_SwordWeapon = null;
+                m_KnifeWeapon = null;
+                m_SpearWeapon = null;
+                return;
+            }
+            
+            //自动绑定武器配置
+            m_SwordWeapon = m_SwordWeapon == null ? new SwordPart() : m_SwordWeapon;
+            m_SwordWeapon.m_PartView = m_SwordWeapon.m_PartView == null ? (GameObject)AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultSword) : m_SwordWeapon.m_PartView;
+            
+            m_KnifeWeapon = m_KnifeWeapon == null ? new KnifePart() : m_KnifeWeapon;
+            m_KnifeWeapon.m_PartView = m_KnifeWeapon.m_PartView == null ? (GameObject)AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultKnife) : m_KnifeWeapon.m_PartView;
+
+            m_SpearWeapon = m_SpearWeapon == null ? new SpearPart() : m_SpearWeapon;
+            m_SpearWeapon.m_PartView = m_SpearWeapon.m_PartView == null ? (GameObject)AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultSpear) : m_SpearWeapon.m_PartView;
+
+            //自动绑定右手骨骼信息
+            foreach (var bone in animator.avatar.humanDescription.human)
+            {
+                if (bone.humanName == "RightHand")
+                {
+                    m_SwordWeapon.m_BindBone = bone.boneName;
+                    m_KnifeWeapon.m_BindBone = bone.boneName;
+                    m_SpearWeapon.m_BindBone = bone.boneName;
+                    break;
+                }
+            }
         }
         
         /*// 配置表转换Asset脚本，模型配置确认没问题则可以删除
@@ -154,9 +190,9 @@ namespace Jyx2
     }
     
     [SerializeField]
-    public class KnifPart : WeaponPart
+    public class KnifePart : WeaponPart
     {
-        public KnifPart()
+        public KnifePart()
         {
             base.m_Id = 2;
         }
