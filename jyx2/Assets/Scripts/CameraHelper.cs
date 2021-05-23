@@ -1,7 +1,6 @@
 ﻿using Cinemachine;
 using HSUI;
 using System;
-using System.Collections;
 using UniRx;
 using UnityEngine;
 
@@ -25,13 +24,16 @@ public class CameraHelper : BaseUI
 
     public float m_RrotateSpeed = 50f;//旋转速度
     public float smoothing = 3;//平滑系数
-    private float zoomDuration = 0.1f;//缩放速度
+    private float zoomSpeed = 3f;//缩放速度
 
     private LevelMaster _levelMaster;
     //private BattleHelper _battleHelper;
     private Transform m_CameraFollow;
 
     bool isBattleFieldLockRole = true;
+
+    //记录玩家上一次两个手指的距离
+    private float lastTouchDistance = 0;
 
     /// <summary>
     /// 设置战场相机锁定当前人物
@@ -83,6 +85,38 @@ public class CameraHelper : BaseUI
                                 _freeLook.m_Heading.m_Bias = (_freeLook.m_Heading.m_Bias + 0.005f * m_RrotateSpeed * nor) % 360;
                         }
                     }
+
+                    if(Input.touchCount == 2)
+                    {
+                        if(Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved)
+                        {
+                            //移动后记录新手指位置
+                            var newPosition1 = Input.GetTouch(0).position;
+                            var newPosition2 = Input.GetTouch(1).position;
+
+                            float currentTouchDistance = Vector3.Distance(newPosition1, newPosition2);
+                            if (lastTouchDistance == 0)
+                                lastTouchDistance = currentTouchDistance;
+
+                            float distance = (currentTouchDistance - lastTouchDistance) * Time.deltaTime/2;
+
+                            Debug.Log(distance);
+
+                            Vector3 tmpPos = _battleVCam.transform.position;
+                            tmpPos += _battleVCam.transform.forward * distance * zoomSpeed;
+                            tmpPos.y = Mathf.Clamp(tmpPos.y, 5, 10);//限制缩放范围
+                            if ((tmpPos.y <= 5 && distance > 0) || (tmpPos.y >= 10 && distance < 0))
+                                //到缩放极限后，防止镜头向其他方向移动
+                                tmpPos = _battleVCam.transform.position;
+                            _battleVCam.transform.position = tmpPos;
+
+                            lastTouchDistance = currentTouchDistance;
+                        }
+                    }
+                    else
+                    {
+                        lastTouchDistance = 0;
+                    }
                 });
         }
 
@@ -131,8 +165,13 @@ public class CameraHelper : BaseUI
                     var scroll = Input.GetAxis("Mouse ScrollWheel");
                     if(scroll != 0)
                     {
-                        float nor = _battleVCam.m_Lens.FieldOfView + scroll;
-                        ChangeBattleCameraFOV(nor, zoomDuration);
+                        Vector3 tmpPos = _battleVCam.transform.position;
+                        tmpPos += _battleVCam.transform.forward * scroll * zoomSpeed;
+                        tmpPos.y = Mathf.Clamp(tmpPos.y, 5, 10);//限制缩放范围
+                        if ((tmpPos.y <= 5 && scroll > 0) || (tmpPos.y >= 10 && scroll < 0))
+                            //到缩放极限后，防止镜头向其他方向移动
+                            tmpPos = _battleVCam.transform.position;
+                        _battleVCam.transform.position = tmpPos;
                     }
                 });
         }
