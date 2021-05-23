@@ -73,6 +73,9 @@ public partial class GameMainMenu : Jyx2_UIBase {
         this.InputNamePanel_RectTransform.gameObject.SetActive(false);
         this.StartNewRolePanel_RectTransform.gameObject.SetActive(true);
         m_randomProperty.ShowComponent();
+		// generate random property at randomP panel first show
+		// added by eaphone at 2021/05/23
+        OnCreateRoleNoClick();
     }
     
     void OnNewGame()
