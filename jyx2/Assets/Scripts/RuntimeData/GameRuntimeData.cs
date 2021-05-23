@@ -163,33 +163,41 @@ namespace Jyx2
 
         public static GameRuntimeData LoadArchive(int fileIndex)
         {
-            string sPath = GetArchiveFilePath(fileIndex);
-            GameRuntimeData tagArchive = null;
-            if (File.Exists(sPath))
+            try
             {
-                using (FileStream fs = File.OpenRead(sPath))
+                string sPath = GetArchiveFilePath(fileIndex);
+                GameRuntimeData tagArchive = null;
+                if (File.Exists(sPath))
                 {
-                    byte[] buffer1 = new byte[sizeof(int)];
-                    fs.Read(buffer1, 0, sizeof(int));
-                    int dataLen = BitConverter.ToInt32(buffer1, 0);
-                    byte[] archiveData = new byte[dataLen];
-                    fs.Read(archiveData, 0, dataLen);
+                    using (FileStream fs = File.OpenRead(sPath))
+                    {
+                        byte[] buffer1 = new byte[sizeof(int)];
+                        fs.Read(buffer1, 0, sizeof(int));
+                        int dataLen = BitConverter.ToInt32(buffer1, 0);
+                        byte[] archiveData = new byte[dataLen];
+                        fs.Read(archiveData, 0, dataLen);
 
-                    TDES tdesTool = new TDES();
-                    tdesTool.Init(ConStr.DES_KEY);
+                        TDES tdesTool = new TDES();
+                        tdesTool.Init(ConStr.DES_KEY);
 
-                    byte[] decryptData = tdesTool.Decrypt(archiveData);
-                    string txtData = System.Text.Encoding.Default.GetString(decryptData, 0, decryptData.Length);
-                    Hashtable hsData = txtData.hashtableFromJson();
-                    tagArchive = Saveable.Facade.LoadRoot<GameRuntimeData>(hsData);
+                        byte[] decryptData = tdesTool.Decrypt(archiveData);
+                        string txtData = System.Text.Encoding.Default.GetString(decryptData, 0, decryptData.Length);
+                        Hashtable hsData = txtData.hashtableFromJson();
+                        tagArchive = Saveable.Facade.LoadRoot<GameRuntimeData>(hsData);
 
-                    fs.Close();
+                        fs.Close();
+                    }
                 }
+                _instance = tagArchive;//记录单例
+                _instance.SaveIndex = fileIndex;
+                _instance.InitAllRole();
+                return tagArchive;
             }
-            _instance = tagArchive;//记录单例
-            _instance.SaveIndex = fileIndex;
-            _instance.InitAllRole();
-            return tagArchive;
+            catch (Exception e)
+            {
+                Debug.Log(e);
+                return null;
+            }
         }
 
         private string GenerateSaveSummaryInfo()
@@ -197,11 +205,8 @@ namespace Jyx2
             string mapName = "";
             if (!string.IsNullOrEmpty(CurrentMap))
             {
-                var map = ConfigTable.Get<GameMap>(CurrentMap);
-                if(map != null)
-                {
-                    mapName = map.Name;
-                }
+				// modified by eaphone at 2021/05/22
+                mapName=LevelMaster.Instance.GetCurrentGameMap().GetShowName();
             }
 
             return $"{TeamLevel}级,{mapName},队伍:{Team.Count}人";

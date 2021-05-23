@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Jyx2;
 using HSFrameWork.Common;
-using Jyx2;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

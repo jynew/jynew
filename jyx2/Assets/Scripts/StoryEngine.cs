@@ -9,7 +9,6 @@ using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using UnityEngine.Playables;
 using HSFrameWork.Common;
-using static Jyx2.BattleFieldModel;
 using Jyx2.Setup;
 using System.Linq;
 using UnityEngine.UI;
@@ -136,7 +135,7 @@ public class StoryEngine : MonoBehaviour
             var model = battleHelper.GetModel();
             foreach(var role in model.Roles)
             {
-                if (role.team != 0) role.Hp = 0;
+                if (role.team != 0) role.SetHPAndRefreshHudBar(0);
                 role.CheckDeath();
             }
 
@@ -151,7 +150,7 @@ public class StoryEngine : MonoBehaviour
             var model = battleHelper.GetModel();
             foreach (var role in model.Roles)
             {
-                if (role.team == 0) role.Hp = 0;
+                if (role.team == 0) role.SetHPAndRefreshHudBar(0);
                 role.CheckDeath();
             }
             HSUtilsEx.CallWithDelay(this, () =>
@@ -790,10 +789,14 @@ public class StoryEngine : MonoBehaviour
         }
     }
 
-    public static void DoLoadGame(int index)
+    public static bool DoLoadGame(int index)
     {
         //加载存档
         var r = GameRuntimeData.LoadArchive(index);
+        if (r==null)
+        {
+            return false;
+        }
 
         //初始化角色
         foreach (var role in r.Team)
@@ -805,6 +808,7 @@ public class StoryEngine : MonoBehaviour
 
         //加载地图
         LevelLoader.LoadGameMap(r.CurrentMap, loadPara);
+        return true;
     }
 
 }

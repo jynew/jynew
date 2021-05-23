@@ -11,7 +11,8 @@ public class RandomPropertyComponent : MonoBehaviour
     public Transform m_propertyRoot;
     public Transform m_proItem;
 
-    private int[] m_proIds = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+    private static readonly int[] m_proIds = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+
     private void Awake()
     {
         for (int i = 0; i < m_proIds.Length; i++)
@@ -23,38 +24,8 @@ public class RandomPropertyComponent : MonoBehaviour
             trans.gameObject.SetActive(true);
         }
     }
-    public void OnNoBtnClick()
-    {
-        RoleInstance role = GameRuntimeData.Instance.Player;
-        for (int i = 1; i <= 12; i++)
-        {
-            string key = i.ToString();
-            if (!GameConst.ProItemDic.ContainsKey(key))
-                continue;
-            PropertyItem item = GameConst.ProItemDic[key];
-            int value = Tools.GetRandomInt(item.DefaulMin, item.DefaulMax);
-            role.GetType().GetProperty(item.PropertyName).SetValue(role, value);
-        }
-        RefreshProperty();
-    }
 
-    public void OnYesBtnClick() 
-    {
-        var loadPara = new LevelMaster.LevelLoadPara();
-        loadPara.loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtTrigger;
-        loadPara.triggerName = "Level/Triggers/0";
-
-        //加载地图
-        var startMap = GameMap.GetGameStartMap();
-        LevelLoader.LoadGameMap(startMap, loadPara, "", () =>
-        {
-            //首次进入游戏音乐
-            AudioManager.PlayMusic(16);
-            Jyx2_UIManager.Instance.HideUI("GameMainMenu");
-        });
-    }
-
-    public void ShowComponent() 
+    public void ShowComponent( )
     {
         m_titleText.text = string.Format("{0}  这样的属性你满意吗?", GameRuntimeData.Instance.Player.Name);
         RefreshProperty();
@@ -75,7 +46,7 @@ public class RandomPropertyComponent : MonoBehaviour
         return col;
     }
 
-    void RefreshProperty() 
+    public void RefreshProperty() 
     {
         RoleInstance role = GameRuntimeData.Instance.Player;
         int count = m_propertyRoot.childCount;

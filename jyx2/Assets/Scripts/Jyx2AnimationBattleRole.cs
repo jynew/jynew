@@ -1,7 +1,6 @@
 ﻿using System;
 using Animancer;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Jyx2
 {
@@ -112,30 +111,40 @@ namespace Jyx2
             //DONOTHING
         }
 
+        public virtual void MarkHpBarIsDirty()
+        {
+            //DONOTHING
+        }
+
+        public virtual void UnmarkHpBarIsDirty()
+        {
+            //DONOTHING
+        }
+
         private bool PlayScriptAnimation(string animCode, Action callback = null, float fadeDuration = 0f)
         {
             var animancer = GetAnimancer();
             
+            //直接指定地址
             if (animCode.StartsWith("@"))
             {
                 string path = animCode.TrimStart('@');
-                //load and play AnimationClip
-                Addressables.LoadAssetAsync<AnimationClip>(path).Completed += r =>
+                
+                Jyx2ResourceHelper.LoadAsset<AnimationClip>(path, (clip) =>
                 {
-                    var clip = r.Result;
-
                     //检查动作配置是否正确
                     if (clip.isLooping && callback != null)
                     {
                         Debug.LogError($"动作设置了LOOP但是会有回调！请检查{path}");
-                    }else if (!clip.isLooping && callback == null)
+                    }
+                    else if (!clip.isLooping && callback == null)
                     {
                         Debug.LogError($"动作没设置LOOP但是没有回调！请检查{path}");
                     }
-                    
+
                     var state = animancer.Play(clip);
 
-                    
+
                     //callback if needed
                     if (callback != null)
                     {
@@ -149,10 +158,10 @@ namespace Jyx2
                             {
                                 state.Stop();
                                 callback();
-                            };    
+                            };
                         }
                     }
-                };
+                });
                 return true;
             }
             else

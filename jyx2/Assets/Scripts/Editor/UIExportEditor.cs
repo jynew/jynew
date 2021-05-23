@@ -92,7 +92,7 @@ public class UIExportEditor : EditorWindow
         return path;
     }
 
-    static List<Component> GetUIComponents(Transform trans) 
+    static List<Component> GetUIComponents(Transform trans,bool includeInactive =false) 
     {
         List<Component> result = new List<Component>();
         List<UIComponentFilter> allFilter = new List<UIComponentFilter>();

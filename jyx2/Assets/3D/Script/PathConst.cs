@@ -2,7 +2,6 @@
 public class PathConst
 {
     public static string WeaponSetPath = "Assets/3D/XML/AllWeapon.xml";
-    public static string RoleModelSetPath = "Assets/3D/XML/AllXiake.xml";
 
     //标准骨骼的prefab
     public static string StandardNanPrePath = "Assets/3D/Prefabs/Nan/nan.prefab";

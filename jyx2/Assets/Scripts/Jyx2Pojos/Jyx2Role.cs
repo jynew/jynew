@@ -142,6 +142,12 @@ namespace Jyx2
             return ConfigTable.Get<Jyx2RoleHeadMapping>(Head).HeadAvata;
         }
 
+        //模型配置
+        public string GetModelAsset()
+        {
+            return ConfigTable.Get<Jyx2RoleHeadMapping>(Head).ModelAsset;
+        }
+        
         //模型
         public string GetModel()
         {
@@ -174,6 +180,10 @@ namespace Jyx2
         [XmlAttribute]
         public string HeadAvata;
 
+        //模型配置
+        [XmlAttribute]
+        public string ModelAsset;
+        
         //模型
         [XmlAttribute]
         public string Model;

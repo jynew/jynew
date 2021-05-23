@@ -105,7 +105,16 @@ public class BigMapZone : MonoBehaviour
             //command 优先级高于mapKey
             if (!string.IsNullOrEmpty(command))
             {
-                StoryEngine.Instance.ExecuteCommand(Command, null);
+				// handle transport from indoor to sub-scene
+				// modify by eaphoneo at 2021/05/23
+				if(command.StartsWith("IndoorTransport"))
+                {
+					var curMap=LevelMaster.Instance.GetCurrentGameMap();
+					mapKey += "&transport#" + curMap.Tags;
+					LevelLoader.LoadGameMap(mapKey);
+				}else{
+					StoryEngine.Instance.ExecuteCommand(Command, null);
+				}
             }
             else if (!string.IsNullOrEmpty(mapKey))
             {

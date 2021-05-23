@@ -4,15 +4,16 @@ using UnityEngine;
 
 namespace Jyx2
 {
+    public enum BattleResult
+    {
+        Win,
+        Lose,
+        InProgress,
+    }
+    
     public class BattleFieldModel
     {
         //战斗结果
-        public enum BattleResult
-        {
-            Win,
-            Lose,
-            InProgress,
-        }
 
         //行动集气
         const float ActionSp = 1000f;
@@ -96,29 +97,9 @@ namespace Jyx2
             return null;
         }
 
-        //下一步
-        //public void NextStep()
-        //{
-        //    Debug.Log("-----------BattleFieldModel.NextStep");
-        //    var result = GetBattleResult();
-        //    if(result != BattleResult.InProgress && BattleHelper.Instance.GetCallback()!= null)
-        //    {
-        //        Debug.Log("-----------BattleFieldModel.NextStep Callback !");
-        //        Callback(result);
-        //        return;
-        //    }
-
-        //    //否则战斗进行中
-        //    var role = GetNextActiveRole();
-        //    role.BattleAction();
-        //}
-
         //战斗是否结束
         public BattleResult GetBattleResult()
         {
-            //for test
-            //return BattleResult.Draw;
-
             Dictionary<int, int> teamCount = new Dictionary<int, int>();
             foreach(var role in Roles)
             {
@@ -141,8 +122,7 @@ namespace Jyx2
             //敌方有角色，失败
             return BattleResult.Lose;
         }
-
-        //BattleScene::resetRolesAct()
+        
         //角色排序
         void SortRole() 
         {

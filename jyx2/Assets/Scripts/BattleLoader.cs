@@ -7,7 +7,6 @@ using Jyx2;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Jyx2.BattleFieldModel;
 
 /// <summary>
 /// 战斗启动器

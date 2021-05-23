@@ -15,6 +15,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using XLua;
 using UnityEngine.Playables;
+using Sirenix.Utilities;
+using UnityEngine.Timeline;
 
 namespace Jyx2
 {
@@ -153,7 +155,7 @@ namespace Jyx2
                         loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
                         CurrentPos = posStr
                     }, "", ()=> {
-                        isWin = (ret == BattleFieldModel.BattleResult.Win);
+                        isWin = (ret == BattleResult.Win);
                         Next();
                     });
                 });
@@ -809,12 +811,21 @@ namespace Jyx2
             Wait();
         }
 
+        /// <param name="playableDirector"></param>
         static private void TimeLineNext(PlayableDirector playableDirector)
         {
             Next();
         }
 
-        static public void jyx2_PlayTimeline(string timelineName)
+        enum TimeLinePlayMode
+        {
+            NextEventOnStart = 0,
+            NextEventOnEnd = 1,
+        }
+
+        static Animator clonePlayer;
+
+        static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
         {
             RunInMainThrad(() =>
             {
@@ -829,13 +840,75 @@ namespace Jyx2
                 }
 
                 timeLineObj.gameObject.SetActive(true);
-                var playableDiretor = timeLineObj.GetComponent<PlayableDirector>();
-                playableDiretor.stopped += TimeLineNext;
-                playableDiretor.Play();
+                var playableDirector = timeLineObj.GetComponent<PlayableDirector>();
 
-                GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+                if(playMode == (int)TimeLinePlayMode.NextEventOnEnd)
+                {
+                    playableDirector.stopped += TimeLineNext;
+                }
+                else if (playMode == (int)TimeLinePlayMode.NextEventOnStart)
+                {
+                    Next();
+                }
+
+                playableDirector.Play();
+
+                //没有指定对象，则默认为主角播放
+                if (string.IsNullOrEmpty(tagRole) || tagRole == "PLAYER")
+                {
+                    //克隆主角来播放特殊剧情
+                    if (isClonePlayer)
+                    {
+                        if (clonePlayer == null)
+                        {
+                            clonePlayer = GameObject.Instantiate(GameRuntimeData.Instance.Player.View.GetAnimator());
+                            clonePlayer.runtimeAnimatorController = null;
+                            GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+                        }
+
+                        DoPlayTimeline(playableDirector, clonePlayer.gameObject);
+                    }
+                    //正常绑定当前主角播放
+                    else
+                    {
+                        var bindingDic = playableDirector.playableAsset.outputs;
+                        bindingDic.ForEach(delegate (PlayableBinding playableBinding)
+                        {
+                            if (playableBinding.outputTargetType == typeof(Animator))
+                            {
+                                playableDirector.SetGenericBinding(playableBinding.sourceObject, GameRuntimeData.Instance.Player.View.GetAnimator().gameObject);
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    string objPath = "Level/" + tagRole;
+                    GameObject obj = GameObject.Find(objPath);
+                    DoPlayTimeline(playableDirector, obj.gameObject);
+                }
+                
+                LevelMaster.Instance.SetPlayerCanController(false);
             });
             Wait();
+        }
+
+        static void DoPlayTimeline(PlayableDirector playableDirector, GameObject player)
+        {
+            player.SetActive(false);
+
+            var bindingDic = playableDirector.playableAsset.outputs;
+            bindingDic.ForEach(delegate (PlayableBinding playableBinding)
+            {
+                if (playableBinding.outputTargetType == typeof(Animator))
+                {
+                    if (playableBinding.sourceObject != null)
+                    {
+                        playableDirector.GetComponent<PlayableDirectorHelper>().BindPlayer(player);
+                    }
+                    playableDirector.SetGenericBinding(playableBinding.sourceObject, player);
+                }
+            });
         }
 
         static public void jyx2_StopTimeline(string timelineName)
@@ -857,7 +930,29 @@ namespace Jyx2
                 timeLineObj.gameObject.SetActive(false);
 
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
+                if(clonePlayer != null)
+                {
+                    GameObject.Destroy(clonePlayer.gameObject);
+                }
+                clonePlayer = null;
+
+                playableDiretor.GetComponent<PlayableDirectorHelper>().ClearTempObjects();
+                LevelMaster.Instance.SetPlayerCanController(true);
                 Next();
+            });
+            Wait();
+        }
+
+        static public void jyx2_Wait(float duration)
+        {
+            RunInMainThrad(() =>
+            {
+                Sequence seq = DOTween.Sequence();
+                seq.AppendCallback(() =>
+                {
+                    Next();
+                })
+                .SetDelay(duration);
             });
             Wait();
         }

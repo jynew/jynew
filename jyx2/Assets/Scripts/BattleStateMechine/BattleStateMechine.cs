@@ -1,11 +1,9 @@
 ﻿using HanSquirrel.ResourceManager;
 using Jyx2;
-using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Jyx2.BattleFieldModel;
 
 //场景管理状态机 同一时间只控制一个角色行为 类似opengl状态机，控制其他角色需要先绑定
 public class BattleStateMechine:MonoBehaviour

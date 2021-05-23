@@ -68,7 +68,8 @@ namespace Jyx2
 
         public void Recover()
         {
-            Hp = MaxHp;
+            SetHPAndRefreshHudBar(MaxHp);
+
             Mp = MaxMp;
             Tili = Jyx2Consts.MaxTili;
         }
@@ -145,7 +146,7 @@ namespace Jyx2
             this.Level++;
             this.Tili = GameConst.MAX_ROLE_TILI;
             this.MaxHp += this.Data.HpInc * 3 + Tools.GetRandomInt(0, 6);
-            this.Hp = this.MaxHp;
+            this.SetHPAndRefreshHudBar(this.MaxHp);
             this.MaxMp = 20 + Tools.GetRandomInt(0, 6);
             this.Mp = this.MaxMp;
 
@@ -648,7 +649,7 @@ namespace Jyx2
                 return;
 
             this.Tili += item.AddTili;
-            this.Hp += item.AddHp;
+            this.SetHPAndRefreshHudBar(this.Hp + item.AddHp);
             this.MaxHp += item.AddMaxHp;
             this.Mp += item.AddMp;
             this.MaxMp += item.AddMaxMp;
@@ -698,7 +699,7 @@ namespace Jyx2
                 return;
 
             this.Tili -= item.AddTili;
-            this.Hp -= item.AddHp;
+            this.SetHPAndRefreshHudBar(this.Hp - item.AddHp);
             this.MaxHp -= item.AddMaxHp;
             this.Mp -= item.AddMp;
             this.MaxMp -= item.AddMaxMp;
@@ -814,12 +815,24 @@ namespace Jyx2
             set { Save("ModelAvata", value); }
         }
 
+        public string ModelAsset
+        {
+            get { return Get(nameof(ModelAsset), Data.GetModelAsset()); }
+            set { Save(nameof(ModelAsset), value); }
+        }
+
+        public ModelAsset Model;
+        
         public string GetBattleAnimator()
         {
             return Data.GetBattleAnimator();
         }
 
+        /*过期代码
+        [Obsolete]
         Dictionary<string, string> weaponMountMapping = null;
+        
+        [Obsolete]
         public string GetWeaponMount(string code)
         {
             //首次载入时初始化
@@ -851,6 +864,7 @@ namespace Jyx2
             }
             return null;
         }
+        */
 
         public Jyx2Role Data
         {
@@ -1053,6 +1067,12 @@ namespace Jyx2
             BattleManager.Instance.AddBattleRole(this, team);
         }
 
+        public void SetHPAndRefreshHudBar(int hp)
+        {
+            Hp = hp;
+            View?.MarkHpBarIsDirty();
+        }
+
         private WugongInstance _currentSkill = null;
 
         public void SwitchAnimationToSkill(WugongInstance skill)
@@ -1185,7 +1205,7 @@ namespace Jyx2
 
         public void Resurrect()
         {
-            Hp = MaxHp;
+            SetHPAndRefreshHudBar(MaxHp);
         }
 
         //是否晕眩
@@ -1236,6 +1256,8 @@ namespace Jyx2
             Tili = Tools.Limit(Tili + 5, 0, Jyx2Consts.MaxTili);
             int tmpHp = Hp;
             Hp = Tools.Limit((int)(Hp + MaxHp * 0.05), 0, MaxHp);
+            View?.MarkHpBarIsDirty();
+
             int tmpMp = Mp;
             Mp = Tools.Limit((int)(Hp + MaxMp * 0.05), 0, MaxMp);
 
