@@ -10,6 +10,7 @@ namespace Sirenix.OdinInspector.Editor.Drawers
 {
     using Sirenix.OdinInspector;
     using Sirenix.OdinInspector.Editor;
+    using Sirenix.OdinInspector.Editor.ValueResolvers;
     using Sirenix.Utilities;
     using Sirenix.Utilities.Editor;
     using System.Reflection;
@@ -21,71 +22,23 @@ namespace Sirenix.OdinInspector.Editor.Drawers
     /// </summary>
     public class Vector2IntMinMaxAttributeDrawer : OdinAttributeDrawer<MinMaxSliderAttribute, Vector2Int>
     {
-        private string errorMessage;
-
-        private InspectorPropertyValueGetter<int> intMinGetter;
-        private InspectorPropertyValueGetter<float> floatMinGetter;
-
-        private InspectorPropertyValueGetter<int> intMaxGetter;
-        private InspectorPropertyValueGetter<float> floatMaxGetter;
-
-        private InspectorPropertyValueGetter<Vector2Int> vector2IntMinMaxGetter;
+        private ValueResolver<float> minGetter;
+        private ValueResolver<float> maxGetter;
+        private ValueResolver<Vector2Int> vector2IntMinMaxGetter;
 
         /// <summary>
         /// Initializes the drawer by resolving any optional references to members for min/max value.
         /// </summary>
         protected override void Initialize()
         {
-            MemberInfo member;
-
             // Min member reference.
-            if (this.Attribute.MinMember != null)
-            {
-                if (MemberFinder.Start(this.Property.ParentType)
-                    .IsNamed(this.Attribute.MinMember)
-                    .HasNoParameters()
-                    .TryGetMember(out member, out this.errorMessage))
-                {
-                    var type = member.GetReturnType();
-                    if (type == typeof(int))
-                    {
-                        this.intMinGetter = new InspectorPropertyValueGetter<int>(this.Property, this.Attribute.MinMember);
-                    }
-                    else if (type == typeof(float))
-                    {
-                        this.floatMinGetter = new InspectorPropertyValueGetter<float>(this.Property, this.Attribute.MinMember);
-                    }
-                }
-            }
-
-            // Max member reference.
-            if (this.Attribute.MaxMember != null)
-            {
-                if (MemberFinder.Start(this.Property.ParentType)
-                    .IsNamed(this.Attribute.MaxMember)
-                    .HasNoParameters()
-                    .TryGetMember(out member, out this.errorMessage))
-                {
-                    var type = member.GetReturnType();
-                    if (type == typeof(int))
-                    {
-                        this.intMaxGetter = new InspectorPropertyValueGetter<int>(this.Property, this.Attribute.MaxMember);
-                    }
-                    else if (type == typeof(float))
-                    {
-                        this.floatMaxGetter = new InspectorPropertyValueGetter<float>(this.Property, this.Attribute.MaxMember);
-                    }
-                }
-            }
+            this.minGetter = ValueResolver.Get<float>(this.Property, this.Attribute.MinValueGetter, this.Attribute.MinValue);
+            this.maxGetter = ValueResolver.Get<float>(this.Property, this.Attribute.MaxValueGetter, this.Attribute.MaxValue);
 
             // Min max member reference.
-            if (this.Attribute.MinMaxMember != null)
+            if (this.Attribute.MinMaxValueGetter != null)
             {
-                this.vector2IntMinMaxGetter = new InspectorPropertyValueGetter<Vector2Int>(this.Property, this.Attribute.MinMaxMember);
-                if (this.errorMessage != null)
-                {
-                    this.errorMessage = this.vector2IntMinMaxGetter.ErrorMessage;
-                }
+                this.vector2IntMinMaxGetter = ValueResolver.Get<Vector2Int>(this.Property, this.Attribute.MinMaxValueGetter);
             }
         }
 
@@ -94,45 +47,18 @@ namespace Sirenix.OdinInspector.Editor.Drawers
         /// </summary>
         protected override void DrawPropertyLayout(GUIContent label)
         {
+            ValueResolver.DrawErrors(this.minGetter, this.maxGetter, this.vector2IntMinMaxGetter);
+
             // Get the range of the slider from the attribute or from member references.
             Vector2 range;
-            if (this.vector2IntMinMaxGetter != null && this.errorMessage == null)
+            if (this.vector2IntMinMaxGetter != null && !this.vector2IntMinMaxGetter.HasError)
             {
                 range = (Vector2)this.vector2IntMinMaxGetter.GetValue();
             }
             else
             {
-                if (this.intMinGetter != null)
-                {
-                    range.x = this.intMinGetter.GetValue();
-                }
-                else if (this.floatMinGetter != null)
-                {
-                    range.x = this.floatMinGetter.GetValue();
-                }
-                else
-                {
-                    range.x = this.Attribute.MinValue;
-                }
-
-                if (this.intMaxGetter != null)
-                {
-                    range.y = this.intMaxGetter.GetValue();
-                }
-                else if (this.floatMaxGetter != null)
-                {
-                    range.y = this.floatMaxGetter.GetValue();
-                }
-                else
-                {
-                    range.y = this.Attribute.MaxValue;
-                }
-            }
-
-            // Display evt. error message.
-            if (this.errorMessage != null)
-            {
-                SirenixEditorGUI.ErrorMessageBox(this.errorMessage);
+                range.x = this.minGetter.GetValue();
+                range.y = this.maxGetter.GetValue();
             }
 
             EditorGUI.BeginChangeCheck();
