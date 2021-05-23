@@ -51,13 +51,20 @@ namespace Jyx2
         [ShowInInspector]
         [LabelText("预览武器类型")]
         private WeaponPartType weaponType = WeaponPartType.Sword;
-
+        
         public enum WeaponPartType
         {
-            [LabelText("剑")] Sword = 1, 
-            [LabelText("刀")] Knife = 2, 
-            [LabelText("长柄")] Spear = 3,
-            [LabelText("其他")] Other = 4,
+            [LabelText("剑")]
+            Sword = 1, 
+            
+            [LabelText("刀")]
+            Knife = 2, 
+            
+            [LabelText("长柄")]
+            Spear = 3,
+            
+            [LabelText("其他")]
+            Other = 4,
         }
 
         [ButtonGroup("操作")]
@@ -82,24 +89,26 @@ namespace Jyx2
             PrefabUtility.UnpackPrefabInstance(viewWithWeapon, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
             
             DestroyImmediate(currentWeapon);
-            if (m_SwordWeapon != null && m_SwordWeapon.m_PartView != null)
+            var weaponPart = GetWeaponPart(weaponType);
+            if (weaponPart != null && weaponPart.m_PartView != null)
             {
-                currentWeapon = (GameObject)PrefabUtility.InstantiatePrefab(m_SwordWeapon.m_PartView, scene);
-                var parent = UnityTools.DeepFindChild(viewWithWeapon.transform, m_SwordWeapon.m_BindBone);
+                currentWeapon = (GameObject)PrefabUtility.InstantiatePrefab(weaponPart.m_PartView, scene);
+                var parent = UnityTools.DeepFindChild(viewWithWeapon.transform, weaponPart.m_BindBone);
                 currentWeapon.transform.SetParent(parent);
-                currentWeapon.transform.localScale = m_SwordWeapon.m_OffsetScale;
-                currentWeapon.transform.localPosition = m_SwordWeapon.m_OffsetPosition;
-                currentWeapon.transform.localRotation = Quaternion.Euler(m_SwordWeapon.m_OffsetRotation);
+                currentWeapon.transform.localScale = weaponPart.m_OffsetScale;
+                currentWeapon.transform.localPosition = weaponPart.m_OffsetPosition;
+                currentWeapon.transform.localRotation = Quaternion.Euler(weaponPart.m_OffsetRotation);
             }
         }
 
         [ButtonGroup("操作")]
-        [Button("从预览中写入武器数据", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        [Button("从场景预览导入武器数据", ButtonSizes.Large, ButtonStyle.CompactBox)]
         private void AutoInputWeaponData()
         {
-            m_SwordWeapon.m_OffsetScale = currentWeapon.transform.localScale;
-            m_SwordWeapon.m_OffsetPosition = currentWeapon.transform.localPosition;
-            m_SwordWeapon.m_OffsetRotation = currentWeapon.transform.localEulerAngles;
+            var weaponPart = GetWeaponPart(weaponType);
+            weaponPart.m_OffsetScale = currentWeapon.transform.localScale;
+            weaponPart.m_OffsetPosition = currentWeapon.transform.localPosition;
+            weaponPart.m_OffsetRotation = currentWeapon.transform.localEulerAngles;
         }
         
         private GameObject currentWeapon = null;
@@ -110,8 +119,23 @@ namespace Jyx2
         [HideLabel]
         [BoxGroup("完整预览", Order = 99)]
         private GameObject viewWithWeapon;
+
+        /// <summary>
+        /// 获取武器模型配置
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public WeaponPart GetWeaponPart(WeaponPartType type)
+        {
+            int index = (int) type;
+            return GetWeaponPart(index.ToString());
+        }
         
-        //获取武器模型
+        /// <summary>
+        /// 获取武器模型配置
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public WeaponPart GetWeaponPart(string type)
         {
             switch (type)
