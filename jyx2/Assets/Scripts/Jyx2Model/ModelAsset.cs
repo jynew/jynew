@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GLib;
+using Hanjiasongshu.ThreeD.XML;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor;
+using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,26 +22,95 @@ namespace Jyx2
     
     public class ModelAsset : ScriptableObject
     {
-        [OnValueChanged("AtuoBindModelData")]
+        [BoxGroup("数据", false)]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
+        [OnValueChanged("AtuoBindModelData")]
         public GameObject m_View;
         
+        [BoxGroup("数据")]
         [Header("剑")]
         [SerializeReference]
         public SwordPart m_SwordWeapon;
         
+        [BoxGroup("数据")]
         [Header("刀")]
         [SerializeReference]
         public KnifePart m_KnifeWeapon;
         
+        [BoxGroup("数据")]
         [Header("长柄")]
         [SerializeReference]
         public SpearPart m_SpearWeapon;
         
+        [BoxGroup("数据")]
         [Header("其他类型")]
         [SerializeReference]
         public List<WeaponPart> m_OtherWeapons;
+        
+        [EnumToggleButtons]
+        [ShowInInspector]
+        [LabelText("预览武器类型")]
+        private WeaponPartType weaponType = WeaponPartType.Sword;
 
+        public enum WeaponPartType
+        {
+            [LabelText("剑")] Sword = 1, 
+            [LabelText("刀")] Knife = 2, 
+            [LabelText("长柄")] Spear = 3,
+            [LabelText("其他")] Other = 4,
+        }
+
+        [ButtonGroup("操作")]
+        [Button("完整预览", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        private void FullPreview()
+        {
+            if (m_View == null) return;
+            
+            var scene = SceneManager.GetActiveScene();
+            // if (!scene.isLoaded) return;
+
+            var gameObjects = scene.GetRootGameObjects();
+            gameObjects.ForEachG(delegate(GameObject o)
+            {
+                if (o.name == m_View.name)
+                {
+                    DestroyImmediate(o);
+                }
+            });
+            
+            viewWithWeapon = (GameObject)PrefabUtility.InstantiatePrefab(m_View, scene);
+            PrefabUtility.UnpackPrefabInstance(viewWithWeapon, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            
+            DestroyImmediate(currentWeapon);
+            if (m_SwordWeapon != null && m_SwordWeapon.m_PartView != null)
+            {
+                currentWeapon = (GameObject)PrefabUtility.InstantiatePrefab(m_SwordWeapon.m_PartView, scene);
+                var parent = UnityTools.DeepFindChild(viewWithWeapon.transform, m_SwordWeapon.m_BindBone);
+                currentWeapon.transform.SetParent(parent);
+                currentWeapon.transform.localScale = m_SwordWeapon.m_OffsetScale;
+                currentWeapon.transform.localPosition = m_SwordWeapon.m_OffsetPosition;
+                currentWeapon.transform.localRotation = Quaternion.Euler(m_SwordWeapon.m_OffsetRotation);
+            }
+        }
+
+        [ButtonGroup("操作")]
+        [Button("从预览中写入武器数据", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        private void AutoInputWeaponData()
+        {
+            m_SwordWeapon.m_OffsetScale = currentWeapon.transform.localScale;
+            m_SwordWeapon.m_OffsetPosition = currentWeapon.transform.localPosition;
+            m_SwordWeapon.m_OffsetRotation = currentWeapon.transform.localEulerAngles;
+        }
+        
+        private GameObject currentWeapon = null;
+
+        [InlineEditor(InlineEditorModes.LargePreview, Expanded = true, PreviewHeight = 600f)]
+        [ShowInInspector]
+        [ReadOnly]
+        [HideLabel]
+        [BoxGroup("完整预览", Order = 99)]
+        private GameObject viewWithWeapon;
+        
         //获取武器模型
         public WeaponPart GetWeaponPart(string type)
         {
