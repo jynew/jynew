@@ -14,10 +14,11 @@ using Debug = UnityEngine.Debug;
 namespace Jyx2
 {
     [CreateAssetMenu(fileName = "NewModelAsset", menuName = "Model Asset")]
+    
     public class ModelAsset : ScriptableObject
     {
         [OnValueChanged("AtuoBindModelData")]
-        [InlineEditor(InlineEditorModes.LargePreview)]
+        [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         public GameObject m_View;
         
         [Header("剑")]
@@ -160,7 +161,7 @@ namespace Jyx2
         public int m_Id;
         public string m_BindBone;
         
-        [InlineEditor(InlineEditorModes.LargePreview)]
+        [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         public GameObject m_PartView;
         
         public Vector3 m_OffsetPosition;
