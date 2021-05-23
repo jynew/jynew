@@ -87,7 +87,11 @@ namespace Jyx2
             });
             
             viewWithWeapon = (GameObject)PrefabUtility.InstantiatePrefab(m_View, scene);
+            viewWithWeapon.transform.SetAsLastSibling();
             PrefabUtility.UnpackPrefabInstance(viewWithWeapon, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            EditorGUIUtility.PingObject(viewWithWeapon);
+            Selection.activeGameObject = viewWithWeapon;
+            SceneView.lastActiveSceneView.LookAt(viewWithWeapon.transform.position);
             
             DestroyImmediate(currentWeapon);
             var weaponPart = GetWeaponPart(weaponType);
