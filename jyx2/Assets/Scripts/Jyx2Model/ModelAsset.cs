@@ -12,6 +12,7 @@ using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
@@ -67,14 +68,14 @@ namespace Jyx2
             Other = 4,
         }
 
+#if UNITY_EDITOR
         [ButtonGroup("操作")]
         [Button("完整预览", ButtonSizes.Large, ButtonStyle.CompactBox)]
         private void FullPreview()
         {
             if (m_View == null) return;
-            
-            var scene = SceneManager.GetActiveScene();
-            // if (!scene.isLoaded) return;
+
+            var scene = EditorSceneManager.OpenScene("Assets/Scripts/Jyx2Model/ModelPreviewScene.unity", OpenSceneMode.Additive);
 
             var gameObjects = scene.GetRootGameObjects();
             gameObjects.ForEachG(delegate(GameObject o)
@@ -119,7 +120,8 @@ namespace Jyx2
         [HideLabel]
         [BoxGroup("完整预览", Order = 99)]
         private GameObject viewWithWeapon;
-
+#endif
+        
         /// <summary>
         /// 获取武器模型配置
         /// </summary>
