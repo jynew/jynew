@@ -24,6 +24,44 @@
 * 首次加载项目需要运行菜单项 配置表/Gendata
 * 启动场景为0_GameStart.scene
 
+## 我如何开始？
+
+可以先从阅读文档，了解项目开始
+
+### 通用篇
+* [1.1准备开始](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)
+* [1.2游戏运行机制](https://github.com/jynew/jynew/wiki/1.2%E6%B8%B8%E6%88%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6)
+* [1.3事件触发器](https://github.com/jynew/jynew/wiki/1.3%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8)
+* [1.4Lua脚本](https://github.com/jynew/jynew/wiki/1.4Lua%E8%84%9A%E6%9C%AC)
+* [1.5搭建游戏世界差异解决办法](https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95)
+
+### 游戏内工具篇
+* 2.1技能编辑器(TODO)
+* 2.2控制台（TODO）
+* 2.3存档生成（TODO）
+* 2.4战斗调试（TODO）
+* [2.5角色模型配置管理器](https://github.com/jynew/jynew/wiki/2.5%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E5%99%A8)
+
+### 程序篇
+* 3.1理解代码结构(TODO)
+* 3.2资源加载管理机制(TODO)
+* 3.3存档数据结构（TODO）
+* 3.4地图流程说明（TODO）
+* 3.5战斗流程说明（TODO）
+
+### 艺术和资产篇
+* 4.1艺术和资产概述（TODO）
+* 4.2人物立绘制作标准（TODO）
+* 4.3人物三维模型和动作制作标准（TODO）
+* 4.4技能特效制作标准（TODO）
+* 4.5三维场景和道具制作标准（TODO）
+* 4.6UI标准（TODO）
+* 4.7音频标准（TODO）
+
+### 项目篇
+* 5.1我们如何制定ROADMAP(TODO)
+* 5.2如何协作和参与开发(TODO)
+
 ## 贡献给项目
 
 欢迎贡献代码和资源素材，遵循以下原则的提交将被通过
