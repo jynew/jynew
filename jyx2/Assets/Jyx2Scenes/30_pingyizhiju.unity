@@ -6762,8 +6762,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531805465}
   m_LocalRotation: {x: 0.0015796289, y: 0.70710504, z: 0.70710504, w: -0.0015796289}
-  m_LocalPosition: {x: -4.24, y: -0.04, z: -18.63}
-  m_LocalScale: {x: 1.5213606, y: 1.19554, z: 1.2379}
+  m_LocalPosition: {x: -5.111, y: -0.04, z: -18.371}
+  m_LocalScale: {x: 1.06, y: 1.19554, z: 1.2379}
   m_Children: []
   m_Father: {fileID: 1531856070}
   m_RootOrder: 5
@@ -6782,10 +6782,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventTargets:
   - {fileID: 875666646}
-  m_InteractiveEventId: 885
+  m_InteractiveEventId: 886
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &531805468
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11380,6 +11381,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &830144971
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13285,9 +13287,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943064569}
-  m_LocalRotation: {x: 0.0020020807, y: -0.01796868, z: -0.018689075, w: 0.99966186}
-  m_LocalPosition: {x: -7.28, y: 1.3, z: -0.66}
-  m_LocalScale: {x: 1.3458999, y: 2.3277009, z: 1.5640005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.47, y: 1.3, z: -2.7}
+  m_LocalScale: {x: 1.3458999, y: 2.3277009, z: 3.02}
   m_Children: []
   m_Father: {fileID: 1531856070}
   m_RootOrder: 1
@@ -13310,6 +13312,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &943064572
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15098,6 +15101,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1122708434
@@ -17343,9 +17347,15 @@ MonoBehaviour:
   m_ShowToolkit: 0
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeTransparentBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeTransparent, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: EdgeDetect_AfterStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1373338660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17535,6 +17545,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1383386400
@@ -20355,8 +20366,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704980249}
   m_LocalRotation: {x: 0.0015796289, y: 0.70710504, z: 0.70710504, w: -0.0015796289}
-  m_LocalPosition: {x: -7.52, y: -0.04, z: -18.37}
-  m_LocalScale: {x: 1.5213606, y: 1.19554, z: 1.2379}
+  m_LocalPosition: {x: -7.271, y: -0.04, z: -18.371}
+  m_LocalScale: {x: 1.06, y: 1.19554, z: 1.2379}
   m_Children: []
   m_Father: {fileID: 1531856070}
   m_RootOrder: 3
@@ -20375,10 +20386,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventTargets:
   - {fileID: 835250271}
-  m_InteractiveEventId: 883
+  m_InteractiveEventId: 884
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1704980252
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21830,8 +21842,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: Xia_HFH
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &1809565864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23122,8 +23132,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918992427}
   m_LocalRotation: {x: 0.0015796289, y: 0.70710504, z: 0.70710504, w: -0.0015796289}
-  m_LocalPosition: {x: -6.01, y: -0.04, z: -18.62}
-  m_LocalScale: {x: 1.5213606, y: 1.19554, z: 1.2379}
+  m_LocalPosition: {x: -6.2, y: -0.04, z: -18.371}
+  m_LocalScale: {x: 1.06, y: 1.19554, z: 1.2379}
   m_Children: []
   m_Father: {fileID: 1531856070}
   m_RootOrder: 4
@@ -23142,10 +23152,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventTargets:
   - {fileID: 137262288}
-  m_InteractiveEventId: 884
+  m_InteractiveEventId: 885
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1918992430
 BoxCollider:
   m_ObjectHideFlags: 0
