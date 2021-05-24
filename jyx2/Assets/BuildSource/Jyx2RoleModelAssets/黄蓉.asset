@@ -15,21 +15,37 @@ MonoBehaviour:
   m_View: {fileID: 7711393718927197123, guid: 6c5e0db599ddbae4a9131a44e36f0342, type: 3}
   m_SwordWeapon:
     id: 0
-  m_KnifWeapon:
+  m_KnifeWeapon:
     id: 1
   m_SpearWeapon:
-    id: 1
+    id: 2
   references:
     version: 1
     00000000:
       type: {class: SwordPart, ns: Jyx2, asm: Assembly-CSharp}
       data:
         m_Id: 1
-        m_BindBone: QuickRigCharacter_RightHand
+        m_BindBone: mixamorig:RightHand
         m_PartView: {fileID: 1225507566611884, guid: e4a8b328034504848b4373bbdaaefd04,
           type: 3}
         m_OffsetPosition: {x: 0.9, y: 4.3, z: 0.8}
         m_OffsetRotation: {x: -32.17, y: -107.225, z: -45.17}
         m_OffsetScale: {x: 100, y: 100, z: 100}
     00000001:
-      type: {class: , ns: , asm: }
+      type: {class: KnifePart, ns: Jyx2, asm: Assembly-CSharp}
+      data:
+        m_Id: 2
+        m_BindBone: mixamorig:RightHand
+        m_PartView: {fileID: 0}
+        m_OffsetPosition: {x: 0, y: 0, z: 0}
+        m_OffsetRotation: {x: 0, y: 0, z: 0}
+        m_OffsetScale: {x: 1, y: 1, z: 1}
+    00000002:
+      type: {class: SpearPart, ns: Jyx2, asm: Assembly-CSharp}
+      data:
+        m_Id: 3
+        m_BindBone: mixamorig:RightHand
+        m_PartView: {fileID: 0}
+        m_OffsetPosition: {x: 0, y: 0, z: 0}
+        m_OffsetRotation: {x: 0, y: 0, z: 0}
+        m_OffsetScale: {x: 1, y: 1, z: 1}

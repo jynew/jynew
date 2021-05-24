@@ -30,7 +30,6 @@ that helps us out a lot!
 Leave a review:     https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041
 
 
-Odin Inspector is published by Devdog and developed by Sirenix.
+Odin Inspector is published and developed by Sirenix.
 
-Devdog:             https://devdog.io
 Sirenix:            Https://sirenix.net
