@@ -104,16 +104,22 @@ namespace Jyx2
                 currentWeapon.transform.localPosition = weaponPart.m_OffsetPosition;
                 currentWeapon.transform.localRotation = Quaternion.Euler(weaponPart.m_OffsetRotation);
             }
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
         }
 
         [ButtonGroup("操作")]
-        [Button("从场景预览导入武器数据", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        [Button("从预览场景导入武器偏移数据", ButtonSizes.Large, ButtonStyle.CompactBox)]
         private void AutoInputWeaponData()
         {
             var weaponPart = GetWeaponPart(weaponType);
             weaponPart.m_OffsetScale = currentWeapon.transform.localScale;
             weaponPart.m_OffsetPosition = currentWeapon.transform.localPosition;
             weaponPart.m_OffsetRotation = currentWeapon.transform.localEulerAngles;
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
         }
         
         private GameObject currentWeapon = null;
@@ -183,14 +189,9 @@ namespace Jyx2
             }
             
             //自动绑定武器配置
-            m_SwordWeapon = m_SwordWeapon == null ? new SwordPart() : m_SwordWeapon;
-            m_SwordWeapon.m_PartView = m_SwordWeapon.m_PartView == null ? (GameObject)AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultSword) : m_SwordWeapon.m_PartView;
-            
-            m_KnifeWeapon = m_KnifeWeapon == null ? new KnifePart() : m_KnifeWeapon;
-            m_KnifeWeapon.m_PartView = m_KnifeWeapon.m_PartView == null ? (GameObject)AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultKnife) : m_KnifeWeapon.m_PartView;
-
-            m_SpearWeapon = m_SpearWeapon == null ? new SpearPart() : m_SpearWeapon;
-            m_SpearWeapon.m_PartView = m_SpearWeapon.m_PartView == null ? (GameObject)AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultSpear) : m_SpearWeapon.m_PartView;
+            if(m_SwordWeapon == null) m_SwordWeapon = new SwordPart();
+            if(m_KnifeWeapon == null) m_KnifeWeapon = new KnifePart();
+            if(m_SpearWeapon == null) m_SpearWeapon = new SpearPart();
 
             //自动绑定右手骨骼信息
             foreach (var bone in animator.avatar.humanDescription.human)
@@ -203,59 +204,20 @@ namespace Jyx2
                     break;
                 }
             }
+            
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+#endif
         }
         
-        /*// 配置表转换Asset脚本，模型配置确认没问题则可以删除
-        // [MenuItem("Exchange/Test")]
-        public static void ExchangeAll()
+#if UNITY_EDITOR
+        private void OnEnable()
         {
-            foreach (Jyx2RoleHeadMapping mapping in ConfigTable.GetAll<Jyx2RoleHeadMapping>())
-            {
-                var exists = File.Exists(Application.dataPath + $"/BuildSource/Jyx2RoleModelAssets/{mapping.ModelAsset}.asset");
-                if (exists) continue;
-
-                var asset = ModelAsset.CreateInstance<ModelAsset>();
-                var model = (GameObject)AssetDatabase.LoadMainAssetAtPath(mapping.Model);
-                asset.m_View = model;
-            
-                if(!string.IsNullOrEmpty(mapping.WeaponMount))
-                {
-                    var paras = mapping.WeaponMount.Split('|');
-                    int index = 0;
-                    string id = paras[index++];
-                    string prefab = paras[index++];
-                    string bindObj = paras[index++];
-                    float scale = float.Parse(paras[index++]);
-                    Vector3 pos = UnityTools.StringToVector3(paras[index++], ',');
-                    Vector3 rot = UnityTools.StringToVector3(paras[index++], ',');
-                    if (id == "1")
-                    {
-                        asset.m_SwordWeapon = new SwordPart()
-                        {
-                            m_PartView = (GameObject)AssetDatabase.LoadMainAssetAtPath(prefab),
-                            m_BindBone = bindObj,
-                            m_OffsetPosition = pos,
-                            m_OffsetRotation = rot,
-                            m_OffsetScale = new Vector3(scale,scale,scale)
-                        };
-                    }
-                    if (id == "2")
-                    {
-                        asset.m_KnifWeapon = new KnifPart()
-                        {
-                            m_PartView = (GameObject)AssetDatabase.LoadMainAssetAtPath(prefab),
-                            m_BindBone = bindObj,
-                            m_OffsetPosition = pos,
-                            m_OffsetRotation = rot,
-                            m_OffsetScale = new Vector3(scale,scale,scale)
-                        };
-                    }
-                }
-                
-                AssetDatabase.CreateAsset(asset, $"Assets/BuildSource/Jyx2RoleModelAssets/{mapping.ModelAsset}.asset");
-            }
+            AtuoBindModelData();
         }
-        */
+#endif
+        
     }
     
     [SerializeField]
@@ -266,6 +228,7 @@ namespace Jyx2
         public string m_BindBone;
         
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
+        [InlineButton("LoadDefaultView", "缺省模型")]
         public GameObject m_PartView;
         
         public Vector3 m_OffsetPosition;
@@ -277,12 +240,29 @@ namespace Jyx2
             m_OffsetScale = Vector3.one;
         }
 
-        // private List<string> _boneList;
-        // private IEnumerable<string> GetListOfSkills()
-        // {
-        //     if()
-        //     return _boneList;
-        // }
+        private void LoadDefaultView()
+        {
+            switch (m_Id)
+            {
+                case 1:
+                {
+                    m_PartView = (GameObject) AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultSword);
+                    break;
+                }
+                case 2:
+                {
+                    m_PartView = (GameObject) AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultKnife);
+                    break;
+                }
+                case 3:
+                {
+                    m_PartView = (GameObject) AssetDatabase.LoadMainAssetAtPath(ConStr.DefaultSpear);
+                    break;
+                }
+            }
+            
+            AssetDatabase.SaveAssets();
+        }
     }
     
     [SerializeField]
