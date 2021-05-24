@@ -8,11 +8,9 @@ using UnityEngine;
 /// </summary>
 public class MapChest : MonoBehaviour
 {
-    [Header("用来标识宝箱的唯一ID，全局唯一")]
-    public string ID = System.Guid.NewGuid().ToString();
+    [Header("用来标识宝箱的唯一ID，全局唯一")] public string ID = System.Guid.NewGuid().ToString();
 
-    [Header("宝箱的打开状态，是直接消失还是变为打开")]
-    public MapChestOpenDisplayType displayType = MapChestOpenDisplayType.Hide;
+    [Header("宝箱的打开状态，是直接消失还是变为打开")] public MapChestOpenDisplayType displayType = MapChestOpenDisplayType.Hide;
 
     public enum MapChestOpenDisplayType
     {
@@ -21,7 +19,12 @@ public class MapChest : MonoBehaviour
     }
 
 
-    GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
+    GameRuntimeData runtime
+    {
+        get { return GameRuntimeData.Instance; }
+    }
+
+    private MapChestInteract m_MapChestInteract;
 
     public string GetRuntimeKey()
     {
@@ -30,31 +33,69 @@ public class MapChest : MonoBehaviour
 
     public void Init()
     {
+        m_MapChestInteract = this.gameObject.GetComponent<MapChestInteract>();
         RefreshOpenStates();
     }
 
     public void MarkAsOpened()
     {
         runtime.SetKeyValues(GetRuntimeKey(), "1");
-        RefreshOpenStates();
+        //播放动画
+        m_MapChestInteract.Open(RefreshOpenStates);
     }
 
+    /// <summary>
+    /// 刷新宝箱状态
+    /// </summary>
     void RefreshOpenStates()
     {
         int state = GetState();
         //没打开
         if (state == 0)
         {
-            GetComponent<MeshRenderer>().enabled = true;
-        }else if(state == 1)
+            ShowClosedChest();
+        }
+        else if (state == 1)
         {
-            if(displayType == MapChestOpenDisplayType.Hide)
+            if (displayType == MapChestOpenDisplayType.Hide)
             {
-                GetComponent<MeshRenderer>().enabled = false;
-            }else if(displayType == MapChestOpenDisplayType.SetOpened)
-            {
-
+                ShowHideChest();
             }
+            else if (displayType == MapChestOpenDisplayType.SetOpened)
+            {
+                ShowOpenedChest();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 打开过的宝箱显示
+    /// </summary>
+    private void ShowOpenedChest()
+    {
+        m_MapChestInteract.SetOpened();
+    }
+
+    /// <summary>
+    /// 打开之后消失的宝箱
+    /// </summary>
+    private void ShowHideChest()
+    {
+        foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
+        {
+            meshRenderer.enabled = false;
+        }
+
+    }
+
+    /// <summary>
+    /// 显示未打开的宝箱
+    /// </summary>
+    private void ShowClosedChest()
+    {
+        foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
+        {
+            meshRenderer.enabled = true;
         }
     }
 
