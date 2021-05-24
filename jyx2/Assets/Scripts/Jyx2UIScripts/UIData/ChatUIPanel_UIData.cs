@@ -8,6 +8,9 @@ public partial class ChatUIPanel
 	private Button MainBg_Button;
 	private RectTransform Content_RectTransform;
 	private Text MainContent_Text;
+	private RectTransform Name_RectTransform;
+	private Text NameTxt_Text;
+	private RectTransform kuang_RectTransform;
 	private RectTransform HeadAvataPre_RectTransform;
 	private Image RoleHeadImage_Image;
 	private RectTransform SelectionPanel_RectTransform;
@@ -19,6 +22,9 @@ public partial class ChatUIPanel
 		MainBg_Button = transform.Find("MainBg").GetComponent<Button>();
 		Content_RectTransform = transform.Find("Content").GetComponent<RectTransform>();
 		MainContent_Text = transform.Find("Content/MainContent").GetComponent<Text>();
+		Name_RectTransform = transform.Find("Name").GetComponent<RectTransform>();
+		NameTxt_Text = transform.Find("Name/NameTxt").GetComponent<Text>();
+		kuang_RectTransform = transform.Find("kuang").GetComponent<RectTransform>();
 		HeadAvataPre_RectTransform = transform.Find("HeadAvataPre").GetComponent<RectTransform>();
 		RoleHeadImage_Image = transform.Find("HeadAvataPre/Mask/RoleHeadImage").GetComponent<Image>();
 		SelectionPanel_RectTransform = transform.Find("SelectionPanel").GetComponent<RectTransform>();
