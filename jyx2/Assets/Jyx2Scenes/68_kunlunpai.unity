@@ -561,8 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: "\u7687\u5BAB\u5927\u5200\u536B\u58EB"
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &10875983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,8 +970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: "\u7687\u5BAB\u5927\u5200\u536B\u58EB"
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &17987004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4517,8 +4513,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: "\u666E\u901A\u5987\u4EBA"
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &113533593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7894,8 +7888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: "\u5750\u7740\u7684\u5927\u6C49"
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &211529983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14019,6 +14011,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bed_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6906867299347604777, guid: 70e318c070567bf4e8c44d2c70b03350,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8324317682383373253, guid: 70e318c070567bf4e8c44d2c70b03350,
         type: 3}
       propertyPath: m_RootOrder
@@ -14364,6 +14361,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &404593034
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25040,6 +25038,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &714575812
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26621,6 +26620,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &751628548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29994,6 +29994,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: 131
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &841866898
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36577,6 +36578,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1008944468
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39643,6 +39645,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1121983875
@@ -41010,6 +41013,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1157868253
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49419,9 +49423,15 @@ MonoBehaviour:
   m_ShowToolkit: 0
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeTransparentBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeTransparent, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: EdgeDetect_AfterStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1373338660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49611,6 +49621,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1374418767
@@ -53738,8 +53749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: "\u7687\u5BAB\u5927\u5200\u536B\u58EB"
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &1475631376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55103,6 +55112,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1507526649
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -55362,6 +55372,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bed_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906867299347604777, guid: 70e318c070567bf4e8c44d2c70b03350,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8324317682383373253, guid: 70e318c070567bf4e8c44d2c70b03350,
         type: 3}
@@ -65946,8 +65961,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: Xia_HFH
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &1809565864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68233,6 +68246,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1878589312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69845,6 +69859,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bed_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906867299347604777, guid: 70e318c070567bf4e8c44d2c70b03350,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8324317682383373253, guid: 70e318c070567bf4e8c44d2c70b03350,
         type: 3}
@@ -72261,8 +72280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: "\u7687\u5BAB\u5927\u5200\u536B\u58EB"
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &1966480275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75036,7 +75053,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 2
+  serializedVersion: 3
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
@@ -75058,7 +75075,7 @@ LightingSettings:
   m_MixedBakeMode: 2
   m_LightmapsBakeMode: 1
   m_FilterMode: 1
-  m_LightmapParameters: {fileID: 0}
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
   m_ExportTrainingData: 0
   m_TrainingDataDestination: TrainingData
   m_RealtimeResolution: 2
@@ -75075,7 +75092,7 @@ LightingSettings:
   m_PVREnvironmentReferencePointCount: 2048
   m_LightProbeSampleCountMultiplier: 4
   m_PVRBounces: 2
-  m_PVRRussianRouletteStartBounce: 2
+  m_PVRMinBounces: 1
   m_PVREnvironmentMIS: 0
   m_PVRFilteringMode: 2
   m_PVRDenoiserTypeDirect: 0
@@ -75331,6 +75348,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &2049018579
 BoxCollider:
   m_ObjectHideFlags: 0
