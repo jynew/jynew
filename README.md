@@ -36,7 +36,7 @@
 * [1.5搭建游戏世界差异解决办法](https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95)
 
 ### 游戏内工具篇
-* 2.1技能编辑器(TODO)
+* [2.1技能编辑器（可预览模型、动作、武器挂点、技能特效等）](https://github.com/jynew/jynew/wiki/2.1%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8)
 * 2.2控制台（TODO）
 * 2.3存档生成（TODO）
 * 2.4战斗调试（TODO）
@@ -48,11 +48,12 @@
 * 3.3存档数据结构（TODO）
 * 3.4地图流程说明（TODO）
 * 3.5战斗流程说明（TODO）
+* 3.6Lua虚拟机（TODO）
 
 ### 艺术和资产篇
 * 4.1艺术和资产概述（TODO）
 * 4.2人物立绘制作标准（TODO）
-* [4.3人物三维模型和动作制作标准](https://github.com/jynew/jynew/wiki/%E4%BA%BA%E7%89%A9%E5%8A%A8%E4%BD%9C%E5%88%B6%E4%BD%9C%E6%A0%87%E5%87%86)
+* [4.3人物三维模型和动作制作标准](https://github.com/jynew/jynew/wiki/4.3%E4%BA%BA%E7%89%A9%E5%8A%A8%E4%BD%9C%E5%88%B6%E4%BD%9C%E6%A0%87%E5%87%86)
 * 4.4技能特效制作标准（TODO）
 * 4.5三维场景和道具制作标准（TODO）
 * 4.6UI标准（TODO）
