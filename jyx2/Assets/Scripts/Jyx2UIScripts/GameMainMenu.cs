@@ -94,29 +94,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
         runtime.Team.Add(player);
         runtime.MapRuntimeData.Clear();
 
-        //m_PlayableDirector.Stop();
-        //Camera.main.transform.position = new Vector3(2f, 1.2f, 0);
-        //Camera.main.transform.rotation = Quaternion.Euler(new Vector3(2f, -45f, 0));
-        //this.gameObject.SetActive(false);
-        //m_HeadAvataPanel.gameObject.SetActive(true);
-        //SceneManager.LoadScene("BuildRole");
-
         //开场地图
         var startMap = GameMap.GetGameStartMap();
-        runtime.CurrentMap = startMap.Key;
-
+        runtime.CurrentMap = startMap.Key + "&transport#0";
         runtime.CurrentPos = "";
 
-        //var loadPara = new LevelMaster.LevelLoadPara();
-        //loadPara.loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtTrigger;
-        //loadPara.triggerName = "Level/Triggers/0";
-
-        ////加载地图
-        //LevelLoader.LoadGameMap(startMap, loadPara, "", () =>
-        //{
-        //    //首次进入游戏音乐
-        //    AudioManager.PlayMusic(16);
-        //});
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
         this.InputNamePanel_RectTransform.gameObject.SetActive(true);
     }

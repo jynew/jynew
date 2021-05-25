@@ -326,16 +326,16 @@ public class LevelMaster : MonoBehaviour
 
     public void SetPlayer(MapRole playerRoleView)
     {
+        _playerView = playerRoleView;
+        _player = playerRoleView.transform;
+        _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
         playerRoleView.BindRoleInstance(runtime.Player, ()=> {
             //由于这里是异步加载模型，所以必须加载完后才初始化出生点，因为初始化出生点里有描述玩家是否在船上，需要调用子节点的renderer
 
             //初始化出生点
             LoadSpawnPosition();
         });
-        _playerView = playerRoleView;
-        _player = playerRoleView.transform;
-        _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
-
+        
         SetPlayerSpeed(0);
         var gameMap = GetCurrentGameMap();
         if (gameMap != null && gameMap.Tags.Contains("WORLDMAP"))
