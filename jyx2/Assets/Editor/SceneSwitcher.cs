@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using HSFrameWork.Common;
+using Jyx2.Setup;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -38,13 +40,10 @@ namespace UnityToolbarExtender.Examples
 
 			if(GUILayout.Button(new GUIContent("P", "Start Play"), ToolbarStyles.commandButtonStyle))
 			{
-				SceneHelper.StartScene("Assets/Jyx2Scenes/0_GameStart.unity");
-                // if (EditorApplication.isPlaying)
-                // {
-                //     EditorApplication.isPlaying = false;
-                //     return;
-                // }
-                // EditorApplication.isPlaying = true;
+#if UNITY_EDITOR
+                Container.TryResolve<IXLsReloader>()?.Do(); //自动重载配置表
+#endif
+                SceneHelper.StartScene("Assets/Jyx2Scenes/0_GameStart.unity");
             }
         }
 	}
