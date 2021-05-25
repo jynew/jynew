@@ -131,32 +131,11 @@ public class StoryEngine : MonoBehaviour
         }
         else if(cmd == "win")
         {
-            BattleHelper battleHelper = FindObjectOfType<BattleHelper>();
-            var model = battleHelper.GetModel();
-            foreach(var role in model.Roles)
-            {
-                if (role.team != 0) role.SetHPAndRefreshHudBar(0);
-                role.CheckDeath();
-            }
-
-            HSUtilsEx.CallWithDelay(this, () => {
-                battleHelper.SwitchStatesTo(BattleHelper.BattleViewStates.WaitingForNextActiveBattleRole);
-            }, 1f);
-            
+            //TODO
         }
         else if(cmd == "lose")
         {
-            BattleHelper battleHelper = FindObjectOfType<BattleHelper>();
-            var model = battleHelper.GetModel();
-            foreach (var role in model.Roles)
-            {
-                if (role.team == 0) role.SetHPAndRefreshHudBar(0);
-                role.CheckDeath();
-            }
-            HSUtilsEx.CallWithDelay(this, () =>
-            {
-                battleHelper.SwitchStatesTo(BattleHelper.BattleViewStates.WaitingForNextActiveBattleRole);
-            }, 1f);
+            //TODO
         }
         else if(cmd == "testlua")
         {
