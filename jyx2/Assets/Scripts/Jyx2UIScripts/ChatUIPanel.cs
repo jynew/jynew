@@ -128,6 +128,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
     public void ChangePosition(int roleId, bool ShowName = true)
     {
         Name_RectTransform.gameObject.SetActive(ShowName);
+        kuang_RectTransform.gameObject.SetActive(ShowName);
         if (ShowName)
         {
             var role = ConfigTable.Get<Jyx2RoleHeadMapping>(roleId);
@@ -140,12 +141,11 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
                 NameTxt_Text.text = role.ModelAsset;
             }
         }
-        
 
 
+        Content_RectTransform.anchoredPosition = roleId == 0 || !ShowName ? Vector3.zero : new Vector3(450, 0, 0);
 
-        Content_RectTransform.anchoredPosition = roleId == 0 ? Vector3.zero : new Vector3(450, 0, 0);
-        Content_RectTransform.sizeDelta = new Vector2(-450, 280);
+        Content_RectTransform.sizeDelta = ShowName ? new Vector2(-450, 280) : new Vector2(0, 280);
 
 
         HeadAvataPre_RectTransform.anchorMax = roleId == 0 ? Vector2.right : Vector2.zero;
