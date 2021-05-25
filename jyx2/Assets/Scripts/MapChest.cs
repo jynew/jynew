@@ -8,9 +8,11 @@ using UnityEngine;
 /// </summary>
 public class MapChest : MonoBehaviour
 {
-    [Header("用来标识宝箱的唯一ID，全局唯一")] public string ID = System.Guid.NewGuid().ToString();
+    [Header("用来标识宝箱的唯一ID，全局唯一")] 
+    public string ID = System.Guid.NewGuid().ToString();
 
-    [Header("宝箱的打开状态，是直接消失还是变为打开")] public MapChestOpenDisplayType displayType = MapChestOpenDisplayType.Hide;
+    [Header("宝箱的打开状态，是直接消失还是变为打开")] 
+    public MapChestOpenDisplayType displayType = MapChestOpenDisplayType.Hide;
 
     public enum MapChestOpenDisplayType
     {
@@ -26,7 +28,7 @@ public class MapChest : MonoBehaviour
 
     private MapChestInteract m_MapChestInteract;
 
-    public string GetRuntimeKey()
+    private string GetRuntimeKey()
     {
         return "chest." + ID;
     }
