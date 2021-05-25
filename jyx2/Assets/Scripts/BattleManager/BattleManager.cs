@@ -7,6 +7,7 @@ using DG.Tweening;
 using Jyx2;
 using HSFrameWork.Common;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class BattleStartParams 
@@ -275,7 +276,26 @@ public class BattleManager:MonoBehaviour
                     rst += $"{role.Name}学会{practiseItem.Name}\n";
                 }
 
-                //TODO：炼制物品kyscpp BattleScene.cpp 1995行
+                //炼制物品
+                if (practiseItem.GenerateItems[0].Id > 0 && role.ExpForMakeItem >= practiseItem.GenerateItemNeedExp &&
+                    role.HaveItemBool(practiseItem.GenerateItemNeedCost))
+                {
+                    List<Jyx2RoleItem> makeItemList = new List<Jyx2RoleItem>();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var generateItem = practiseItem.GenerateItems[i];
+                        if (generateItem.Id >= 0)
+                        {
+                            makeItemList.Add(generateItem);
+                        }
+                    }
+
+                    int index = Random.Range(0, makeItemList.Count);
+                    var item = makeItemList[index];
+                    role.AddItem(item.Id,item.Count);
+                    role.AddItem(practiseItem.GenerateItemNeedCost,-1);
+                    role.ExpForMakeItem = 0;
+                }
             }
         }
         return rst;

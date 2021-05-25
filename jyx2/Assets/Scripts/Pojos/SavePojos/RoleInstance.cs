@@ -517,6 +517,11 @@ namespace Jyx2
         }
         private List<Jyx2RoleItem> _items;
 
+        
+        public bool HaveItemBool(int itemId)
+        {
+            return Items.FindIndex(it => it.Id == itemId) != -1;
+        }
         /// <summary>
         /// 为角色添加物品
         /// </summary>
