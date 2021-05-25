@@ -5,40 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using DG.Tweening;
-using HanSquirrel.ResourceManager;
 using Jyx2;
 using HSFrameWork.Common;
 using HSFrameWork.ConfigTable;
 using HSUI;
-using Jyx2;
-using UniRx;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-//WeaponType映射表
-/*
- * BigSword 0
- * Bow 1
- * Dagger 2 匕首  -跑动动作用剑的
- * DoubleKnife 3
- * Gudgel 4
- * Gun 5
- * HFH 6（黄飞鸿？)
- * HidWea 7 暗器 -跑动动作用空手
- * Leg 8  -跑动动作用空手的，受击也是
- * Lute 9 琴/琵琶
- * Palm 10
- * Scourge 11 鞭子
- * Shield 12 盾牌
- * Sinknif 13 单刀
- * SinSword 14 长剑
- * Spear 15 长矛
- * 
- * 
- */
-
 
 [Obsolete("已经用状态机实现，待删除")]
 public class BattleHelper : BaseUI
