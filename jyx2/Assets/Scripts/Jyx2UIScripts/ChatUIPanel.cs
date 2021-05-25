@@ -106,7 +106,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         //不显示人物
         if (type == 2 || type == 3)
         {
-            ChangePosition(1);
+            ChangePosition(1,false);
             RoleHeadImage_Image.gameObject.SetActive(false);
         }
         else
@@ -125,17 +125,22 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         ShowText();
     }
     //根据角色ID修改左右位置
-    public void ChangePosition(int roleId)
+    public void ChangePosition(int roleId, bool ShowName = true)
     {
-        var role = GameRuntimeData.Instance.GetRole(roleId);
-        if (roleId == 0 && GameRuntimeData.Instance.Player != null)
+        Name_RectTransform.gameObject.SetActive(ShowName);
+        if (ShowName)
         {
-            NameTxt_Text.text = GameRuntimeData.Instance.Player.Name;
+            var role = ConfigTable.Get<Jyx2RoleHeadMapping>(roleId);
+            if (roleId == 0 && GameRuntimeData.Instance.Player != null)
+            {
+                NameTxt_Text.text = GameRuntimeData.Instance.Player.Name;
+            }
+            else
+            {
+                NameTxt_Text.text = role.ModelAsset;
+            }
         }
-        else
-        {
-            NameTxt_Text.text = role.Name;
-        }
+        
 
 
 
