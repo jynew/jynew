@@ -60,15 +60,46 @@ if TryBattle(12) == true then goto label0 end;
     Talk(8, "话都是你在说的，是不是真的，我们怎么知道．", "talkname8", 0);
     Talk(6, "哼！技不如人，说这么多做什么，走吧！", "talkname6", 0);
     Talk(70, "阿弥陀佛，盼少侠以后多所规劝引导，总要使明教改邪归正，少做坏事．我们走吧．", "talkname70", 0);
-    jyx2_ReplaceSceneObject("", "NPC/huashanpai", "");--华山派离开
-    jyx2_ReplaceSceneObject("", "NPC/xuanci", "");--玄慈离开
-    jyx2_ReplaceSceneObject("", "NPC/emeipai", "");--峨嵋派离开
-    jyx2_ReplaceSceneObject("", "NPC/emeipai1", "");
-    jyx2_ReplaceSceneObject("", "NPC/hetaichong", "");--何太冲离开
-    jyx2_ReplaceSceneObject("", "NPC/kunlun1", "");
-    jyx2_ReplaceSceneObject("", "NPC/kunlun2", "");
-    jyx2_ReplaceSceneObject("", "NPC/tangwenliang", ""); --崆峒派离开
-    jyx2_ReplaceSceneObject("", "NPC/kunlunpai", "");
+jyx2_ReplaceSceneObject("", "NPC/huashan", "");--华山派
+jyx2_ReplaceSceneObject("", "NPC/huashan1", "");--华山派
+jyx2_ReplaceSceneObject("", "NPC/huashan2", "");--华山派
+jyx2_ReplaceSceneObject("", "NPC/huashan3", "");--华山派
+jyx2_ReplaceSceneObject("", "NPC/huashan4", "");--华山派
+jyx2_ReplaceSceneObject("", "NPC/huashan5", "");--华山派
+jyx2_ReplaceSceneObject("", "NPC/xuanci", "");--玄慈
+jyx2_ReplaceSceneObject("", "NPC/少林弟子", "");--少林弟子
+jyx2_ReplaceSceneObject("", "NPC/少林弟子 (1)", "");--少林弟子
+ jyx2_ReplaceSceneObject("", "NPC/少林弟子 (2)", "");--少林弟子
+ jyx2_ReplaceSceneObject("", "NPC/少林弟子 (3)", "");--少林弟子
+ jyx2_ReplaceSceneObject("", "NPC/少林弟子 (4)", "");--少林弟子
+ jyx2_ReplaceSceneObject("", "NPC/少林弟子 (5)", "");--少林弟子
+jyx2_ReplaceSceneObject("", "NPC/emeipai", "");--峨嵋派
+jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子", "");
+jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子 (1)", "");
+jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子 (2)", "");
+jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子 (3)", "");
+jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子 (4)", "");
+jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子 (5)", "");
+jyx2_ReplaceSceneObject("", "NPC/hetaichong", "");--何太冲
+jyx2_ReplaceSceneObject("", "NPC/kunlun", "");
+jyx2_ReplaceSceneObject("", "NPC/kunlun1", "");
+jyx2_ReplaceSceneObject("", "NPC/kunlun2", "");
+jyx2_ReplaceSceneObject("", "NPC/kunlun3", "");
+jyx2_ReplaceSceneObject("", "NPC/kunlun4", "");
+jyx2_ReplaceSceneObject("", "NPC/kunlun5", "");
+jyx2_ReplaceSceneObject("", "NPC/tangwenliang", "");--唐文亮 
+jyx2_ReplaceSceneObject("", "NPC/崆峒弟子", "");
+jyx2_ReplaceSceneObject("", "NPC/崆峒弟子 (1)", "");
+jyx2_ReplaceSceneObject("", "NPC/崆峒弟子 (2)", "");
+jyx2_ReplaceSceneObject("", "NPC/崆峒弟子 (3)", "");
+jyx2_ReplaceSceneObject("", "NPC/崆峒弟子 (4)", "");
+jyx2_ReplaceSceneObject("", "NPC/崆峒弟子 (5)", "");
+jyx2_ReplaceSceneObject("", "NPC/武当弟子", "");
+jyx2_ReplaceSceneObject("", "NPC/武当弟子 (1)", "");
+jyx2_ReplaceSceneObject("", "NPC/武当弟子 (2)", "");
+jyx2_ReplaceSceneObject("", "NPC/武当弟子 (3)", "");
+jyx2_ReplaceSceneObject("", "NPC/武当弟子 (4)", "");
+jyx2_ReplaceSceneObject("", "NPC/武当弟子 (5)", "");
     DarkScence();
     ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|贴图消失。场景11-以下都是
     ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
@@ -153,8 +184,7 @@ if TryBattle(12) == true then goto label0 end;
     SetScencePosition2(29, 34);
     LightScence();
     jyx2_ReplaceSceneObject("", "NPC/weiyixiao", "1");--韦一笑出现
-    jyx2_ReplaceSceneObject("", "NPC/yangxiao", "1");--杨逍出现
-    jyx2_ReplaceSceneObject("", "NPC/fanyao", "1");--范遥出现
+
     jyx2_ReplaceSceneObject("", "NPC/yintianzheng", "1"); --殷天正出现
 
     Talk(14, "小子，你还不赖嘛！", "talkname14", 0);

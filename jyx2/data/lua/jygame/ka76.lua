@@ -52,12 +52,12 @@ if TryBattle(9) == true then goto label0 end;
         ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号9
         ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号0
         ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号10
-         jyx2_ReplaceSceneObject("", "NPC/NPC2 (1)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC4 (1)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC3 (1)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC2 (2)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC4 (2)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC3 (2)", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC1", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC5", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC6", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC7", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC8", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC9", "");--明教教徒离开去光明顶
         jyx2_ReplaceSceneObject("", "NPC/chengkun", "");--成昆从地道逃跑
         
         ModifyEvent(-2, 11, 1, 1, 80, -1, -1, 5310, 5310, 5310, -2, -2, -2);--by fanyu|生成人物，启动80号脚本。场景12-编号11
