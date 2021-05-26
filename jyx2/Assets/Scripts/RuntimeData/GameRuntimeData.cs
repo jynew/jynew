@@ -413,6 +413,11 @@ namespace Jyx2
             set { SavePojo("Items", value); }
         }
 
+        public bool HaveItemBool(int itemId)
+        {
+            return Items.ContainsKey(itemId.ToString());
+        }
+
         //JYX2增加物品
         public void AddItem(string id, int count)
         {
