@@ -1,7 +1,7 @@
 if UseItem(134) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(134, -1);
+    AddItemWithoutHint(134, -1);
     AddEthics(4);
     Talk(0, "杨兄，你快将这服下．", "talkname0", 1);
     Talk(58, "这是什么？", "talkname58", 0);
@@ -18,7 +18,7 @@ if UseItem(134) == true then goto label0 end;
     Talk(58, "这次真谢谢少侠的帮忙，让杨某从鬼门关回来．", "talkname58", 0);
     Talk(0, "不知杨兄今后有何打算？", "talkname0", 1);
     Talk(58, "我也不知道，但总是要保持着健康，待十六年后与我妻子相见．对了，我这里有瓶玉蜂浆，就送给兄台好了．", "talkname58", 0);
-    GetItem(124, 1);
+    AddItem(124, 1);
     if AskJoin () == true then goto label1 end;
         Talk(0, "那杨兄就好好休养吧，过些时候我再来看你．", "talkname0", 1);
         do return end;

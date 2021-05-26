@@ -14,10 +14,10 @@ Talk(26, "哈！哈！哈！就凭你．哈．．．！", "talkname26", 0);
 Talk(0, "啊．．．．．", "talkname0", 1);
 PlayAnimation(-1, 5974, 5992);
 DarkScence();
-AddItem(177, -1);
-AddItem(178, -1);
-AddItem(179, -1);
-AddItem(180, -1);
+AddItemWithoutHint(177, -1);
+AddItemWithoutHint(178, -1);
+AddItemWithoutHint(179, -1);
+AddItemWithoutHint(180, -1);
 ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_ReplaceSceneObject("", "NPC/renwoxing", "");--任我行逃走
 LightScence();

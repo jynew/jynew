@@ -1,7 +1,7 @@
 Talk(0, "袁兄，你看我现在符合”仁义”的资格了吗？", "talkname0", 1);
 if JudgeEthics(0, 80, 100) == false then goto label0 end;
     Talk(54, "很好，你在江湖中行走这么久，还能保持在正道上，很好．”碧血剑”一书就拿去吧．", "talkname54", 0);
-    GetItem(156, 1);
+    AddItem(156, 1);
     ModifyEvent(-2, -2, -2, -2, 638, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;
 ::label0::
@@ -18,6 +18,6 @@ if JudgeEthics(0, 80, 100) == false then goto label0 end;
             ModifyEvent(-2, -2, -2, -2, 639, -1, -1, -2, -2, -2, -2, -2, -2);
             LightScence();
             Talk(54, "唉！你又往邪道走近一步，武功这么好，为什么不用在正途上呢？", "talkname54", 0);
-            GetItem(156, 1);
+            AddItem(156, 1);
             AddRepute(2);
 do return end;

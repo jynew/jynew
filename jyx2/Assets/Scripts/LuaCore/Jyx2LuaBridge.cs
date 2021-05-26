@@ -50,8 +50,12 @@ namespace Jyx2
             Wait();
         }
 
-        //获取物品
-        static public void GetItem(int itemId, int count)
+        /// <summary>
+        /// 添加（减少）物品，不显示提示
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="count"></param>
+        static public void AddItemWithoutHint(int itemId, int count)
         {
             RunInMainThrad(() =>
             {
@@ -63,8 +67,6 @@ namespace Jyx2
                 }
 
                 runtime.AddItem(itemId, count);
-
-                storyEngine.DisplayPopInfo("获得物品:" + item.Name + "×" + count);
             });
         }
 
@@ -688,6 +690,11 @@ namespace Jyx2
             return (runtime.GetItemCount(Jyx2Consts.MONEY_ID) >= money);
         }
 
+        /// <summary>
+        /// 添加（减少）物品，并显示提示
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="count">可为负数</param>
         static public void AddItem(int itemId, int count)
         {
             RunInMainThrad(() => {

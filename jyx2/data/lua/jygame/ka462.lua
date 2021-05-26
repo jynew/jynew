@@ -1,7 +1,7 @@
 if UseItem(176) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(176, -1);
+    AddItemWithoutHint(176, -1);
     Talk(0, "老伯，你尝尝看这是不是你说的那道菜．", "talkname0", 1);
     Talk(69, "我看看．．．．嗯．．．．．．一条是羊羔坐臀，一条是小猪耳朵，一条是小牛腰子，还有一条是獐腿肉加兔肉．肉只五种，但猪羊混咬是一般滋味，獐牛同嚼又是一般滋味，总共二十五种变化．嗯，没错，就是这种美味．", "talkname69", 0);
     Talk(0, "老伯果然了不起．", "talkname0", 1);
@@ -23,5 +23,5 @@ if UseItem(176) == true then goto label0 end;
     Talk(69, "小子，学了这掌法，望你用于正途．否则，老叫化我第一个将你除去．", "talkname69", 0);
     Talk(0, "谨遵师父教诲．", "talkname0", 1);
     Talk(69, "什么”师父”，我不是你师父，你烧好菜给我吃，我教你一套掌法，各不相欠．知道吗．没事就走吧，老叫化我不会再教你了．", "talkname69", 0);
-    GetItem(62, 1);
+    AddItem(62, 1);
 do return end;

@@ -15,6 +15,6 @@ if TryBattle(100) == true then goto label0 end;
     LightScence();
     Talk(0, "老秃贼，遇到我算你倒霉．", "talkname0", 1);
     Talk(62, "哼！", "talkname62", 0);
-    GetItem(159, 1);
+    AddItem(159, 1);
     AddRepute(8);
 do return end;

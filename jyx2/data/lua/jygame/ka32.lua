@@ -5,7 +5,7 @@ if UseItem(137) == true then goto label0 end;
     if JudgeEventNum(10, -1) == true then goto label1 end;
         ModifyEvent(-2, 10, -2, -2, 867, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本867 场景24-编号10
 ::label1::
-        AddItem(137, -1);
+        AddItemWithoutHint(137, -1);
         Talk(0, "苗大侠，我这就帮你敷上解药．", "talkname0", 1);
         DarkScence();
         ModifyEvent(-2, -2, -2, -2, 33, -1, -1, 5216, 5216, 5216, -2, -2, -2);--by fanyu 启动脚本33，改变贴图 场景24-编号8

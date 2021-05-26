@@ -1,11 +1,11 @@
 instruct_50(138, 139, 140, 141, 142, 6, 0);
 Talk(75, "想要”玉笛谁家听落梅”，就赶紧将羊羔坐臀，小猪耳朵，小牛腰子，獐腿肉，兔肉这五种材料找来．", "talkname75", 0);
 do return end;
-AddItem(138, -1);
-AddItem(139, -1);
-AddItem(140, -1);
-AddItem(141, -1);
-AddItem(142, -1);
+AddItemWithoutHint(138, -1);
+AddItemWithoutHint(139, -1);
+AddItemWithoutHint(140, -1);
+AddItemWithoutHint(141, -1);
+AddItemWithoutHint(142, -1);
 Talk(75, "好，材料通通都有了，我马上就把”玉笛谁家听落梅”作给你．", "talkname75", 0);
 DarkScence();
 ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
@@ -25,5 +25,5 @@ ModifyEvent(-2, 4, -2, -2, -1, -1, 677, -2, -2, -2, -2, -2, -2);--by fanyu 启�
 LightScence();
 Talk(75, "好了，完成了，这一道”玉笛谁家听落梅”你拿去吧．", "talkname75", 0);
 Talk(0, "谢谢林师父．", "talkname0", 1);
-GetItem(176, 1);
+AddItem(176, 1);
 do return end;

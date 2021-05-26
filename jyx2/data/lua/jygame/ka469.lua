@@ -1,6 +1,6 @@
 if JudgeEthics(0, 90, 100) == false then goto label0 end;
     Talk(55, "你在江湖上的作为，我夫妇俩已有所闻，这书你就拿去吧．", "talkname55", 0);
-    GetItem(148, 1);
+    AddItem(148, 1);
     ModifyEvent(-2, 1, -2, -2, 467, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 2, -2, -2, 468, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;
@@ -25,7 +25,7 @@ if JudgeEthics(0, 90, 100) == false then goto label0 end;
 ::label3::
                 LightScence();
                 Talk(0, "承蒙两位前辈高抬贵手，这书我就拿走了．", "talkname0", 1);
-                GetItem(148, 1);
+                AddItem(148, 1);
                 ModifyEvent(-2, 1, -2, -2, 470, -1, -1, -2, -2, -2, -2, -2, -2);
                 ModifyEvent(-2, 2, -2, -2, 471, -1, -1, -2, -2, -2, -2, -2, -2);
                 AddRepute(20);

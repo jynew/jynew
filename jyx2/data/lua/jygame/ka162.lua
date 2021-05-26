@@ -1,5 +1,5 @@
 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, 2492, 2492, 2492, -2, -2, -2);
-GetItem(6, 5);
+AddItem(6, 5);
 if InTeam(9) == false then goto label0 end;
     do return end;
 ::label0::

@@ -2,7 +2,7 @@ if UseItem(131) == true then goto label0 end;
     do return end;
 ::label0::
     AddEthics(2);
-    AddItem(131, -1);
+    AddItemWithoutHint(131, -1);
     Talk(51, "哈哈，有了大燕皇帝世系谱表及传国玉玺，我就可号召大燕后代，实行复国计划．", "talkname51", 0);
     Talk(0, "慕容公子此次不会再失信了吧．", "talkname0", 1);
     Talk(51, "我慕容复何时曾失信过人．", "talkname51", 0);

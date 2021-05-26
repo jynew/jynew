@@ -10,6 +10,6 @@ if TryBattle(95) == true then goto label0 end;
 ::label0::
     ModifyEvent(-2, -2, -2, -2, 612, -1, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
-    GetItem(150, 1);
+    AddItem(150, 1);
     AddRepute(8);
 do return end;

@@ -20,5 +20,5 @@ jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_022", "");--开门
 SetScenceMap(-2, 1, 28, 30, 1832);
 SetScenceMap(-2, 1, 29, 30, 0);
 SetScenceMap(-2, 1, 30, 30, 1836);
-GetItem(161, 1);
+AddItem(161, 1);
 do return end;
