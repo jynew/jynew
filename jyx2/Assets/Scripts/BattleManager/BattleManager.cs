@@ -276,9 +276,11 @@ public class BattleManager:MonoBehaviour
                     rst += $"{role.Name}学会{practiseItem.Name}\n";
                 }
 
+                var runtime = GameRuntimeData.Instance;
+                
                 //炼制物品
                 if (practiseItem.GenerateItems[0].Id > 0 && role.ExpForMakeItem >= practiseItem.GenerateItemNeedExp &&
-                    role.HaveItemBool(practiseItem.GenerateItemNeedCost))
+                    runtime.HaveItemBool(practiseItem.GenerateItemNeedCost))
                 {
                     List<Jyx2RoleItem> makeItemList = new List<Jyx2RoleItem>();
                     for (int i = 0; i < 5; i++)
@@ -292,8 +294,8 @@ public class BattleManager:MonoBehaviour
 
                     int index = Random.Range(0, makeItemList.Count);
                     var item = makeItemList[index];
-                    role.AddItem(item.Id,item.Count);
-                    role.AddItem(practiseItem.GenerateItemNeedCost,-1);
+                    runtime.AddItem(item.Id,item.Count);
+                    runtime.AddItem(practiseItem.GenerateItemNeedCost,-1);
                     role.ExpForMakeItem = 0;
                 }
             }
