@@ -1,7 +1,7 @@
 if UseItem(174) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(174, -1);
+    AddItemWithoutHint(174, -1);
     Talk(106, "我说大老爷，您这是干什么来着，有什么事尽管吩咐下来，小的一定给您照办．", "talkname106", 0);
     Talk(0, "＜哼！我就知道这招有用＞我不要别的，只要你把知道的都说出来就行了．", "talkname0", 1);
     Talk(106, "我说大老爷！你要我说什么呢？我又不是”南贤北丑”肚子里没啥东西啊！", "talkname106", 0);

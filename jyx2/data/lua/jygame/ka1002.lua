@@ -1,7 +1,7 @@
 if UseItem(145) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(145, -1);
+    AddItemWithoutHint(145, -1);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, 4664, 4664, 4664, -2, -2, -2);
     if Judge14BooksPlaced() == true then goto label1 end;
         do return end;

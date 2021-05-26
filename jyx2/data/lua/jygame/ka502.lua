@@ -11,7 +11,7 @@ if AskRest() == true then goto  label0 end;
         Talk(0, "荒野之地多凶险，龙门地界只怕兵祸临头不远．", "talkname0", 1);
         DarkScence();
         Rest();
-        AddItem(174, -200);
+        AddItemWithoutHint(174, -200);
         SetScencePosition2(14, 14);
         SetRoleFace(3);
         LightScence();

@@ -4,8 +4,8 @@
 --NOTHING TO DO
 --1=1|4|0|0|0|Talk(#1, "talk(#0)", "talkname#1", #2); --对话
 Talk = CS.Jyx2.Jyx2LuaBridge.Talk
---2=2|3|0|0|0|GetItem(#0, #1); --获得物品
-GetItem = CS.Jyx2.Jyx2LuaBridge.GetItem
+--2=2|3|0|0|0|AddItemWithoutHint(#0, #1); --获得物品,不显示提示
+AddItemWithoutHint = CS.Jyx2.Jyx2LuaBridge.AddItemWithoutHint
 --3=3|14|0|0|0|ModifyEvent(#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #a, #b, #c); --修改地图事件
 ModifyEvent = CS.Jyx2.Jyx2LuaBridge.ModifyEvent
 --4=4|4|1|2|3|if UseItem(#0) == bool then goto label#x end;
@@ -64,7 +64,7 @@ JudgeAttack = CS.Jyx2.Jyx2LuaBridge.JudgeAttack
 WalkFromTo = CS.Jyx2.Jyx2LuaBridge.WalkFromTo
 --31=1f|4|1|2|3|if JudgeMoney(#0) == bool then goto label#x end; --判断金钱
 JudgeMoney = CS.Jyx2.Jyx2LuaBridge.JudgeMoney
---32=20|3|0|0|0|AddItem(#0, #1); --添加道具
+--32=20|3|0|0|0|AddItem(#0, #1); --添加道具，显示提示
 AddItem = CS.Jyx2.Jyx2LuaBridge.AddItem
 --33=21|4|0|0|0|LearnMagic2(#0, #1, #2); --学会武功
 LearnMagic2 = CS.Jyx2.Jyx2LuaBridge.LearnMagic2

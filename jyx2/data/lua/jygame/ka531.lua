@@ -2,7 +2,7 @@ if UseItem(183) == true then goto label0 end;
     do return end;
 ::label0::
     AddEthics(-14);
-    AddItem(183, -1);
+    AddItemWithoutHint(183, -1);
     Talk(0, "乔峰，你看这是什么？", "talkname0", 1);
     Talk(50, "是什么？", "talkname50", 0);
     Talk(0, "你看了便知道．", "talkname0", 1);
@@ -20,7 +20,7 @@ if UseItem(183) == true then goto label0 end;
     DarkScence();
     ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，乔峰离开 场景51-14
     LightScence();
-    GetItem(147, 1);
+    AddItem(147, 1);
     Talk(0, "得来真是全不费功夫．", "talkname0", 1);
     Talk(93, "阁下来此，揭发乔峰的真实身份，让我丐帮不致误奉一契丹人为帮主，很是感激．", "talkname93", 0);
     Talk(0, "没什么，这是中原武林的大事，小弟应该做的．", "talkname0", 1);

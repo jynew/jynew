@@ -10,7 +10,7 @@ if AskBattle() == true then goto label0 end;
         do return end;
 ::label1::
         LightScence();
-        GetItem(93, 1);
+        AddItem(93, 1);
         ModifyEvent(-2, 0, -2, -2, 328, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本328，场景26-编号0
         ModifyEvent(-2, 1, -2, -2, 328, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本328，场景26-编号1
         AddRepute(10);

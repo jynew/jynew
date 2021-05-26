@@ -52,8 +52,8 @@ jyx2_ReplaceSceneObject("", "NPC/shipotian4", "1");--石破天出现
     jyx2_ReplaceSceneObject("", "NPC/daozhu1", "1");-- 
     jyx2_ReplaceSceneObject("", "NPC/daozhu21", "");-- 
     jyx2_ReplaceSceneObject("", "NPC/daozhu11", "");-- 
-    GetItem(154, 1);
-    GetItem(60, 1);
+    AddItem(154, 1);
+    AddItem(60, 1);
     DarkScence();
     ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

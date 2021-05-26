@@ -9,7 +9,7 @@ if AskRest() == true then goto  label0 end;
         Talk(0, "在此穷北寒苦绝地，居然能有间客栈真是惠我良多．", "talkname0", 1);
         DarkScence();
         Rest();
-        AddItem(174, -40);
+        AddItemWithoutHint(174, -40);
         SetScencePosition2(38, 18);
         SetRoleFace(3);
         LightScence();

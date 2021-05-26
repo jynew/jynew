@@ -12,7 +12,7 @@ if TryBattle(74) == true then goto label0 end;
 ::label1::
         Talk(68, "看你的本质还不坏，但武功太差了，这样怎么在江湖上混呢？我送你本秘笈，你拿去好好钻研吧．", "talkname68", 0);
         Talk(0, "谢谢道长．", "talkname0", 1);
-        GetItem(70, 1);
+        AddItem(70, 1);
         ModifyEvent(-2, -2, -2, -2, 458, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu|启动458脚本。场景19-编号00
         do return end;
 ::label0::

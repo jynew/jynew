@@ -43,7 +43,7 @@ if InTeam(58) == false then goto label0 end;
     ModifyEvent(18, 5, -2, -2, 443, -1, -1, -2, -2, -2, -2, -2, -2);
     
     LearnMagic2(58, 24, 1);
-    NPCGetItem(58, 61, 1);
+    NPCAddItem(58, 61, 1);
     Leave(58);
     LightScence();
     Talk(0, "”问世间情是何物，直叫人生死相许”他们夫妇俩真是令人羡慕的神仙侠侣．”神仙侠侣”！．．．．．”神雕侠侣”？对了，还有那头老雕，那本书该不会是在他俩身上吧．　　　　看来有空还要再前往古墓找他夫妇俩．", "talkname0", 1);
@@ -84,7 +84,7 @@ if InTeam(58) == false then goto label0 end;
     ModifyEvent(18, 4, -2, -2, 443, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(18, 5, -2, -2, 443, -1, -1, -2, -2, -2, -2, -2, -2);
     LearnMagic2(58, 24, 1);
-    NPCGetItem(58, 61, 1);
+    NPCAddItem(58, 61, 1);
     LightScence();
     Talk(0, "”问世间情是何物，直叫人生死相许”他们夫妇俩真是令人羡慕的神仙侠侣．”神仙侠侣”！．．．．．”神雕侠侣”？对了，还有那头老雕，那本书该不会是在他俩身上吧．　　　　看来有空还要再前往古墓找他夫妇俩．", "talkname0", 1);
 do return end;

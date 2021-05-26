@@ -9,7 +9,7 @@ if AskRest() == true then goto  label0 end;
         Talk(0, "好温暖的感觉，宾至如归也不过于此．", "talkname0", 1);
         DarkScence();
         Rest();
-        AddItem(174, -20);
+        AddItemWithoutHint(174, -20);
         SetScencePosition2(38, 18);
         SetRoleFace(3);
         LightScence();

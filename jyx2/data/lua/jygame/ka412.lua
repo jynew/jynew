@@ -8,6 +8,6 @@ Talk(64, "说难是难到极处，说容易也容易之至．有的人一辈子�
 DarkScence();
 LightScence();
 Talk(64, "功夫是教你了，接下来就看看你有没有这造化了．", "talkname64", 0);
-GetItem(91, 1);
+AddItem(91, 1);
 ModifyEvent(-2, -2, -2, -2, 413, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu|启动脚本413。场景20-编号04
 do return end;

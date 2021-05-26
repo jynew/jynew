@@ -16,6 +16,6 @@ if TryBattle(13) == true then goto label0 end;
     jyx2_ReplaceSceneObject("9", "NPC/成昆", "");
     LightScence();
     Talk(0, "今天真是大快人心，替武林除了一个大害．", "talkname0", 1);
-    GetItem(191, 1);
+    AddItem(191, 1);
     AddRepute(5);
 do return end;

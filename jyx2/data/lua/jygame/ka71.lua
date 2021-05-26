@@ -2,7 +2,7 @@ if UseItem(181) == true then goto label0 end;
     do return end;
 ::label0::
     ModifyEvent(-2, -2, -2, -2, 72, -2, -2, -2, -2, -2, -2, -2, -2);
-    AddItem(181, -1);
+    AddItemWithoutHint(181, -1);
     Talk(9, "这．．．这一撮金毛是．．", "talkname9", 0);
     Talk(0, "你义父是不是长的一头金发？", "talkname0", 1);
     Talk(9, "是啊．义父人称金毛狮王，当然是满头的金发．", "talkname9", 0);

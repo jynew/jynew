@@ -1,7 +1,7 @@
 if UseItem(193) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(193, -1);
+    AddItemWithoutHint(193, -1);
     Talk(82, "这位少侠请进．", "talkname82", 0);
     DarkScence();
     jyx2_ReplaceSceneObject("","GasWalls/Wall1","");

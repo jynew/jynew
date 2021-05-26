@@ -45,6 +45,6 @@ if AskBattle() == true then goto label0 end;
         Talk(0, "谢谢各位前辈．在经过了这么多波折才拿到此书，虽说辛苦，但也从中学到不少东西．世上的好坏人真的很难去界定，名门正派的人，外表有羊皮披挂着，反倒是更容易去为恶．", "talkname0", 1);
         Talk(10, "经过了这些，你的江湖历练又增长了不少．希望你在其它的旅途上也更能顺利．", "talkname10", 0);
         Talk(0, "好了，我还要去忙别的了．有空我会再回来的．", "talkname0", 1);
-        GetItem(155, 1);
+        AddItem(155, 1);
         AddRepute(10);
 do return end;

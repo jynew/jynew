@@ -1,7 +1,7 @@
 if UseItem(143) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(143, -1);
+    AddItemWithoutHint(143, -1);
     Talk(72, "这．．．．这．．这是”武林神杖”！你．．．你成了武林盟主！哈！哈！哈！不愧是我霹雳堂的弟子．你今天来是为了将神杖送给我的是不是？", "talkname72", 0);
     Talk(0, "送你？我可是费了千辛万苦才得到这玩意的．你秀逗啊？", "talkname0", 1);
     Talk(72, "怎么？你不想送我吗？你留着它有什么用．", "talkname72", 0);
@@ -17,6 +17,6 @@ if UseItem(143) == true then goto label0 end;
     Talk(72, "哈！哈！想我孔八拉多么厉害，坐在家中不出门，就能当上这人人梦寐以求的”武林盟主”从此之后，我号令天下，有谁敢不从呢？", "talkname72", 0);
     Talk(0, "喂，你乐完了吧．可以告诉我另一个出口在那了吧．", "talkname0", 1);
     Talk(72, "好，一句话．”就在我们俩的脚底下”．而这把是通往”圣堂”的钥匙．拿去吧．", "talkname72", 0);
-    GetItem(164, 1);
+    AddItem(164, 1);
     ModifyEvent(-2, -2, -2, -2, 687, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
