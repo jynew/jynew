@@ -48,6 +48,11 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             MapName_Text.text = map.GetShowName();
             bool isWolrd = map.Tags.Contains("WORLDMAP");
             MapButton_Button.gameObject.SetActive(!isWolrd);
+			// for change main ui panel background image
+			// added by eaphone at 2021/05/27
+			var rt = Image_Right.GetComponent<RectTransform>();
+　　		rt.sizeDelta = new Vector2(isWolrd?480:640, 100);
+			
         }
     }
 

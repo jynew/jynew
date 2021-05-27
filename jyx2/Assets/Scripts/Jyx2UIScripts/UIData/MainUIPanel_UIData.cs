@@ -14,6 +14,7 @@ public partial class MainUIPanel
 	private Button BagButton_Button;
 	private Button MapButton_Button;
 	private Button SystemButton_Button;
+	private Image Image_Right;
 
 	public void InitTrans()
 	{
@@ -26,6 +27,9 @@ public partial class MainUIPanel
 		BagButton_Button = transform.Find("AnimRoot/BtnRoot/BagButton").GetComponent<Button>();
 		MapButton_Button = transform.Find("AnimRoot/BtnRoot/MapButton").GetComponent<Button>();
 		SystemButton_Button = transform.Find("AnimRoot/BtnRoot/SystemButton").GetComponent<Button>();
-
+		// for change main ui panel background image
+		// added by eaphone at 2021/05/27
+		Image_Right = transform.Find("AnimRoot/Image-right").GetComponent<Image>();
+		
 	}
 }
