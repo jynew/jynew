@@ -12,9 +12,9 @@ using UnityEngine;
 public class SceneObjectFindEditor : Sirenix.OdinInspector.SerializedScriptableObject
 {
     public GameObject prefab;
-    public float X=-1;
-    public float Y=-1;
-    public float Z=-1;
+    public float X = -1;
+    public float Y = -1;
+    public float Z = -1;
 
     [FolderPath] public string scenePath;
 
@@ -35,17 +35,21 @@ public class SceneObjectFindEditor : Sirenix.OdinInspector.SerializedScriptableO
             var arr = level.GetComponentsInChildren<MapChestInteract>();
             if (arr == null) continue;
             bool save = false;
-            foreach (var mapChest in arr)
+            foreach (var mapChestInteract in arr)
             {
-                if (GetPath(prefab) == GetPath(mapChest.gameObject))
+                // if(mapChestInteract.GetComponent<MapChest>())
+                //     continue;
+                // MapChest mapChest = mapChestInteract.gameObject.AddComponent<MapChest>();
+                // mapChest.displayType = MapChest.MapChestOpenDisplayType.SetOpened;
+                if (GetPath(prefab) == GetPath(mapChestInteract.gameObject))
                 {
-                    Debug.Log(mapChest.name);
-                    var trans = mapChest.transform;
-                    var angles =trans.localEulerAngles;
+                    Debug.Log(mapChestInteract.name);
+                    var trans = mapChestInteract.transform;
+                    var angles = trans.localEulerAngles;
                     if (X != -1)
                         angles.x = X;
                     if (Y != -1)
-                        angles.y += Y;
+                        angles.y = Y;
                     if (Z != -1)
                         angles.z = Z;
 
@@ -54,7 +58,8 @@ public class SceneObjectFindEditor : Sirenix.OdinInspector.SerializedScriptableO
                 }
             }
 
-            EditorSceneManager.SaveScene(scene);
+            if (save)
+                EditorSceneManager.SaveScene(scene);
         }
     }
 
