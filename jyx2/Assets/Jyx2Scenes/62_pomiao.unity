@@ -7845,6 +7845,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &206032437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14130,6 +14131,7 @@ MonoBehaviour:
   m_UseItemEventId: 564
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &377247114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27816,6 +27818,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &770483879
 CapsuleCollider:
@@ -29499,8 +29502,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 1, y: 1, z: 1}
-    lastRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastScale: {x: 0, y: 0, z: 0}
+    lastRotation: {x: 0, y: 0, z: 0, w: 0}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -30356,6 +30359,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &839786831
 CapsuleCollider:
@@ -30775,6 +30779,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: 557
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &847314636
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35823,9 +35828,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.3970629, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39705124, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.4115683, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.41155666, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -41497,6 +41502,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1126837024
@@ -48905,6 +48911,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1361130422
 CapsuleCollider:
@@ -49291,9 +49298,15 @@ MonoBehaviour:
   m_ShowToolkit: 0
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeTransparentBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeTransparent, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: EdgeDetect_AfterStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1373338660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49321,7 +49334,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_CustomBlends: {fileID: 11400000, guid: fe390fe830a78d847a5b0c2978fc5cb5, type: 2}
+  m_CustomBlends: {fileID: 0}
   m_CameraCutEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -49483,6 +49496,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1374994407
@@ -53975,6 +53989,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1496212562
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54621,6 +54636,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1510737677
 CapsuleCollider:
@@ -61812,6 +61828,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1724177277
 CapsuleCollider:
@@ -64674,6 +64691,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1809565865
 CapsuleCollider:

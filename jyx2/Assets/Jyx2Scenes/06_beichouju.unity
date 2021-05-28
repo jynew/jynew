@@ -2790,6 +2790,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &330215958
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3572,6 +3573,7 @@ MonoBehaviour:
   m_UseItemEventId: 830
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &446691011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3971,6 +3973,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &489471752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6356,6 +6359,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1674048869}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &767286427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767286426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: a45d8587-20b5-43e3-b061-5f88cd597ec9
+  displayType: 1
 --- !u!1001 &771181278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6788,8 +6805,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 1, y: 1, z: 1}
-    lastRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastScale: {x: 0, y: 0, z: 0}
+    lastRotation: {x: 0, y: 0, z: 0, w: 0}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -8781,6 +8798,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1120320607
@@ -10236,6 +10254,7 @@ MonoBehaviour:
   m_UseItemEventId: 603
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1227919189
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10478,6 +10497,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1510257482}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1264214881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264214880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 3ab52dea-d8a6-4438-b058-7b94ca504266
+  displayType: 1
 --- !u!1 &1270338365
 GameObject:
   m_ObjectHideFlags: 0
@@ -11159,9 +11192,15 @@ MonoBehaviour:
   m_ShowToolkit: 0
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeTransparentBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeTransparent, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: EdgeDetect_AfterStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1373338660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11456,6 +11495,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1375749328
@@ -12664,22 +12704,22 @@ PrefabInstance:
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
@@ -13627,22 +13667,22 @@ PrefabInstance:
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8080418751563578552, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
@@ -15428,6 +15468,7 @@ MonoBehaviour:
   m_UseItemEventId: 16
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1880920339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15695,6 +15736,7 @@ MonoBehaviour:
   m_UseItemEventId: 831
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1908103291
 BoxCollider:
   m_ObjectHideFlags: 0

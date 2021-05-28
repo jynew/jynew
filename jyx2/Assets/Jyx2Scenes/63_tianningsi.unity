@@ -2150,6 +2150,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &63023836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11318,6 +11319,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &270764204
 CapsuleCollider:
@@ -12233,6 +12235,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &295887508
 CapsuleCollider:
@@ -12816,6 +12819,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &305200353
 CapsuleCollider:
@@ -20766,6 +20770,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &546678349
 CapsuleCollider:
@@ -23745,6 +23750,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &605300569
 CapsuleCollider:
@@ -25174,6 +25180,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &637930064
 CapsuleCollider:
@@ -25765,6 +25772,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &661580491
 CapsuleCollider:
@@ -31020,8 +31028,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 1, y: 1, z: 1}
-    lastRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastScale: {x: 0, y: 0, z: 0}
+    lastRotation: {x: 0, y: 0, z: 0, w: 0}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -38151,6 +38159,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1016237479
 CapsuleCollider:
@@ -42691,6 +42700,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1119893534
@@ -44272,22 +44282,22 @@ PrefabInstance:
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: -0.7071067
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
@@ -44322,6 +44332,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1157387753}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1157387755 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6923872431525625808, guid: af337ae385eb0ff4fa3d75586250c988,
+    type: 3}
+  m_PrefabInstance: {fileID: 1157387753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1157387756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157387755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 0e0e757b-4846-460b-91c3-6608b46f2033
+  displayType: 1
 --- !u!1 &1157750947
 GameObject:
   m_ObjectHideFlags: 0
@@ -45053,22 +45083,22 @@ PrefabInstance:
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: -0.7071067
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
@@ -45103,6 +45133,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1176653729}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1176653731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6923872431525625808, guid: af337ae385eb0ff4fa3d75586250c988,
+    type: 3}
+  m_PrefabInstance: {fileID: 1176653729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1176653732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176653731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: bf51ebcf-19a8-48e1-a932-416ff0afb580
+  displayType: 1
 --- !u!1 &1183624632
 GameObject:
   m_ObjectHideFlags: 0
@@ -50162,6 +50212,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1293167371
 CapsuleCollider:
@@ -50222,7 +50273,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 2
+  serializedVersion: 3
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
@@ -50244,7 +50295,7 @@ LightingSettings:
   m_MixedBakeMode: 2
   m_LightmapsBakeMode: 1
   m_FilterMode: 1
-  m_LightmapParameters: {fileID: 0}
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
   m_ExportTrainingData: 0
   m_TrainingDataDestination: TrainingData
   m_RealtimeResolution: 2
@@ -50261,7 +50312,7 @@ LightingSettings:
   m_PVREnvironmentReferencePointCount: 2048
   m_LightProbeSampleCountMultiplier: 4
   m_PVRBounces: 2
-  m_PVRRussianRouletteStartBounce: 2
+  m_PVRMinBounces: 1
   m_PVREnvironmentMIS: 0
   m_PVRFilteringMode: 2
   m_PVRDenoiserTypeDirect: 0
@@ -52962,9 +53013,15 @@ MonoBehaviour:
   m_ShowToolkit: 0
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeTransparentBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeTransparent, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: EdgeDetect_AfterStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1373338660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52992,7 +53049,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_CustomBlends: {fileID: 11400000, guid: fe390fe830a78d847a5b0c2978fc5cb5, type: 2}
+  m_CustomBlends: {fileID: 0}
   m_CameraCutEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -53230,6 +53287,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1377429236
@@ -54659,6 +54717,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1419442657
 CapsuleCollider:
@@ -55358,6 +55417,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1436405835
 CapsuleCollider:
@@ -57196,22 +57256,22 @@ PrefabInstance:
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: -0.7071067
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093329469997743443, guid: af337ae385eb0ff4fa3d75586250c988,
         type: 3}
@@ -57246,6 +57306,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1481493146}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1481493148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6923872431525625808, guid: af337ae385eb0ff4fa3d75586250c988,
+    type: 3}
+  m_PrefabInstance: {fileID: 1481493146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1481493149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481493148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: c48474ec-5fe7-4fb3-a2e4-3e435168c3ff
+  displayType: 1
 --- !u!1001 &1481510822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58694,6 +58774,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1527604385
 CapsuleCollider:
@@ -60731,6 +60812,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1580691670
 CapsuleCollider:
@@ -63442,6 +63524,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1647525558
 CapsuleCollider:
@@ -66061,9 +66144,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.39706284, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39705122, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.41156825, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.41155663, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -66995,6 +67078,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1738948223
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69517,6 +69601,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1792105754
 CapsuleCollider:
@@ -70270,6 +70355,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &1809565865
 CapsuleCollider:
@@ -80275,6 +80361,7 @@ MonoBehaviour:
   m_UseItemEventId: -1
   m_EnterEventId: -1
   m_InteractiveInfo: "\u4EA4\u4E92"
+  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &2045467895
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -80647,6 +80734,7 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
 --- !u!136 &2055676796
 CapsuleCollider:
