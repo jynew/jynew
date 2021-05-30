@@ -122,8 +122,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
 
         //加载地图
         var startMap = GameMap.GetGameStartMap();
-        LevelLoader.LoadGameMap(startMap, loadPara, "", () =>
-        {
+		// transport player to trigger Startup animation at new game startMap
+		// modified by eaphone at 2021/05/30
+        //LevelLoader.LoadGameMap(startMap, loadPara, "", () =>
+        LevelLoader.LoadGameMap(startMap, null, "transport#0", () =>
+		{
             //首次进入游戏音乐
             AudioManager.PlayMusic(16);
             Jyx2_UIManager.Instance.HideUI("GameMainMenu");
