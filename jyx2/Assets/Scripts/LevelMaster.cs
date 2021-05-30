@@ -410,16 +410,27 @@ public class LevelMaster : MonoBehaviour
         }
 
         //退出当前地图
-        if (Input.GetKeyUp(KeyCode.Escape))
+		// fix to transport to enterance
+		// fix press ESC multi times call multi Bigmap Loading
+		// modified by eaphone at 2021/05/30
+        if (Input.GetKeyUp(KeyCode.Escape)&&!isEscPressed)
         {
+			isEscPressed=true;
             if (!GetCurrentGameMap().Tags.Contains("WORLDMAP"))
             {
                 PlayLeaveMusic(GetCurrentGameMap());
                 //退出到大地图
-                LevelLoader.LoadGameMap("0_BigMap");
+				// return to entertrance
+                //LevelLoader.LoadGameMap("0_BigMap");
+				LevelLoader.LoadGameMap("0_BigMap&transport#" + GetCurrentGameMap().BigMapTriggerName);
             }
         }
+		if(GetCurrentGameMap().Tags.Contains("WORLDMAP")){
+			isEscPressed=false;			
+		}
     }
+	// added by eaphone at 2021/05/30
+	public static bool isEscPressed=false;
 
     void PlayerControll()
     {

@@ -103,8 +103,10 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         if (!levelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
         {
             levelMaster.PlayLeaveMusic(levelMaster.GetCurrentGameMap());
-            //ÍË³öµ½´óµØÍ¼
-            LevelLoader.LoadGameMap("0_BigMap");
+            // return to entertrance
+			// modified by eaphone at 2021/05/30
+            //LevelLoader.LoadGameMap("0_BigMap");
+            LevelLoader.LoadGameMap("0_BigMap&transport#" + levelMaster.GetCurrentGameMap().BigMapTriggerName);
         }
     }
 
