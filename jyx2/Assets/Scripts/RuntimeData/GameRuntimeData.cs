@@ -174,7 +174,6 @@ namespace Jyx2
 					string sPath = GetArchiveFilePath(fileIndex);
 					if (File.Exists(sPath))
 					{
-						Debug.LogError("test");
 						using (FileStream fs = File.OpenRead(sPath))
 						{
 							byte[] buffer1 = new byte[sizeof(int)];

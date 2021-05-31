@@ -786,7 +786,11 @@ public class StoryEngine : MonoBehaviour
         var loadPara = new LevelMaster.LevelLoadPara() { loadType = LevelMaster.LevelLoadPara.LevelLoadType.Load };
 
         //加载地图
-        LevelLoader.LoadGameMap(r.CurrentMap, loadPara);
+		// fix load game from Main menu will not transport player to last time indoor position 
+		// modified by eaphone at 2021/06/01
+        LevelLoader.LoadGameMap(ConfigTable.Get<GameMap>(r.CurrentMap), loadPara, "", ()=>{
+			LevelMaster.Instance.TryBindPlayer();
+		});
         return true;
     }
 
