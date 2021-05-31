@@ -106,7 +106,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             // return to entertrance
 			// modified by eaphone at 2021/05/30
             //LevelLoader.LoadGameMap("0_BigMap");
-            LevelLoader.LoadGameMap("0_BigMap&transport#" + levelMaster.GetCurrentGameMap().BigMapTriggerName);
+            levelMaster.QuitToBigMap();
         }
     }
 
