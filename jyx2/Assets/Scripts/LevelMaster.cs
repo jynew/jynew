@@ -359,6 +359,8 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
+	// fix bind player failed error when select player before start battle
+	// modified by eaphone at 2021/05/31
     public void TryBindPlayer()
     {
         if (_player != null)
@@ -372,7 +374,7 @@ public class LevelMaster : MonoBehaviour
             SetPlayer(playerObj);
             //添加队友
             //CreateTeammates(gameMap, playerObj.transform);
-		}else{Debug.LogError("bind player failed");}
+		}
     }
 
     public void SwitchToBattleUI(bool isOn)

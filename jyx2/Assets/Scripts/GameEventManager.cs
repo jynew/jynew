@@ -242,6 +242,9 @@ public class GameEventManager : MonoBehaviour
         var levelMaster = LevelMaster.Instance;
         if (levelMaster != null)
         {
+			// fix drag motion continuous move the player when scene is playing
+			// modified by eaphone at 2021/05/31
+			levelMaster.SetPlayerCanController(false);
             levelMaster.StopPlayerNavigation();
         }
     }
@@ -251,6 +254,13 @@ public class GameEventManager : MonoBehaviour
     {
         curEvent.MarkChest();
         SetCurrentGameEvent(null);
+		// fix drag motion continuous move the player when scene is playing
+		// modified by eaphone at 2021/05/31
+        var levelMaster = LevelMaster.Instance;
+        if (levelMaster != null)
+        {
+			levelMaster.SetPlayerCanController(true);
+		}
         UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
 
         //TryTrigger();
