@@ -245,8 +245,7 @@ public class LevelMaster : MonoBehaviour
     {
         if (runtime == null || _player == null)
             return;
-
-        
+		
         var map = GetCurrentGameMap();
         if (map == null)
             return;
@@ -326,15 +325,17 @@ public class LevelMaster : MonoBehaviour
 
     public void SetPlayer(MapRole playerRoleView)
     {
-        _playerView = playerRoleView;
-        _player = playerRoleView.transform;
-        _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
         playerRoleView.BindRoleInstance(runtime.Player, ()=> {
             //由于这里是异步加载模型，所以必须加载完后才初始化出生点，因为初始化出生点里有描述玩家是否在船上，需要调用子节点的renderer
 
             //初始化出生点
             LoadSpawnPosition();
         });
+		// reverting this change. to fix "reference on null object" error when enter/ exit scene
+		// modified by eaphone at 2021/05/30
+        _playerView = playerRoleView;
+        _player = playerRoleView.transform;
+        _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
         
         SetPlayerSpeed(0);
         var gameMap = GetCurrentGameMap();
@@ -371,7 +372,7 @@ public class LevelMaster : MonoBehaviour
             SetPlayer(playerObj);
             //添加队友
             //CreateTeammates(gameMap, playerObj.transform);
-        }
+		}else{Debug.LogError("bind player failed");}
     }
 
     public void SwitchToBattleUI(bool isOn)
@@ -409,16 +410,27 @@ public class LevelMaster : MonoBehaviour
         }
 
         //退出当前地图
-        if (Input.GetKeyUp(KeyCode.Escape))
+		// fix to transport to enterance
+		// fix press ESC multi times call multi Bigmap Loading
+		// modified by eaphone at 2021/05/30
+        if (Input.GetKeyUp(KeyCode.Escape)&&!isEscPressed)
         {
+			isEscPressed=true;
             if (!GetCurrentGameMap().Tags.Contains("WORLDMAP"))
             {
                 PlayLeaveMusic(GetCurrentGameMap());
                 //退出到大地图
-                LevelLoader.LoadGameMap("0_BigMap");
+				// return to entertrance
+                //LevelLoader.LoadGameMap("0_BigMap");
+				LevelLoader.LoadGameMap("0_BigMap&transport#" + GetCurrentGameMap().BigMapTriggerName);
             }
         }
+		if(GetCurrentGameMap().Tags.Contains("WORLDMAP")){
+			isEscPressed=false;			
+		}
     }
+	// added by eaphone at 2021/05/30
+	public static bool isEscPressed=false;
 
     void PlayerControll()
     {
