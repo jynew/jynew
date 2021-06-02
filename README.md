@@ -26,7 +26,8 @@
 
 ## 我如何开始？
 
-查看视频教程
+1、查看视频教程
+
 * [场景编辑：如何配置一个门？（控制物体显示/隐藏）](https://www.bilibili.com/video/BV1mz4y117j3?p=1)
 * [场景编辑：如何重置一段剧情](https://www.bilibili.com/video/BV1mz4y117j3?p=2)
 * [场景编辑：制作寻路网格，烘焙Navimesh](https://www.bilibili.com/video/BV1mz4y117j3?p=3)
@@ -41,7 +42,7 @@
 * [资产配置：战斗技能编辑和预览](https://www.bilibili.com/video/BV1mz4y117j3?p=12)
 
 
-系统的阅读文档
+2、系统的阅读文档深入了解
 
 ### 通用篇
 * [1.1准备开始](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)
