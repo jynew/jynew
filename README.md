@@ -26,7 +26,23 @@
 
 ## 我如何开始？
 
-可以先从阅读文档，了解项目开始
+1、查看视频教程
+
+* [场景编辑：如何配置一个门？（控制物体显示/隐藏）](https://www.bilibili.com/video/BV1mz4y117j3?p=1)
+* [场景编辑：典型的配置一段剧情的方式](https://www.bilibili.com/video/BV1mz4y117j3?p=2)
+* [场景编辑：制作寻路网格，烘焙Navimesh](https://www.bilibili.com/video/BV1mz4y117j3?p=3)
+* [场景编辑：配置和刷出NPC](https://www.bilibili.com/video/BV1mz4y117j3?p=4)
+* [场景编辑：调整场景中的人物](https://www.bilibili.com/video/BV1mz4y117j3?p=6)  【部分内容已过期】
+* [场景编辑：调整场景中的人物动作](https://www.bilibili.com/video/BV1mz4y117j3?p=13)
+* [战斗编辑：生成格子](https://www.bilibili.com/video/BV1mz4y117j3?p=7)
+* [战斗编辑：配置和测试一场战斗](https://www.bilibili.com/video/BV1mz4y117j3?p=8)
+* [资产配置：导入模型并且调整风格化渲染参数](https://www.bilibili.com/video/BV1mz4y117j3?p=5)
+* [资产配置：导入动作](https://www.bilibili.com/video/BV1mz4y117j3?p=9)
+* [资产配置：战斗动作和技能](https://www.bilibili.com/video/BV1mz4y117j3?p=11)
+* [资产配置：战斗技能编辑和预览](https://www.bilibili.com/video/BV1mz4y117j3?p=12)
+
+
+2、系统的阅读文档深入了解
 
 ### 通用篇
 * [1.1准备开始](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)
