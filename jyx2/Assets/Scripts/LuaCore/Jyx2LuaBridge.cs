@@ -334,7 +334,9 @@ namespace Jyx2
         /// <param name="v">贴图编号（需要除以2）</param>
         static public void SetScenceMap(int sceneId,int layer,int x,int y,int v)
         {
-            //TODO
+            //这个函数已经不需要实现，具体2D和3D版差异解决的方式可以参考
+            //https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95
+            
         }
 
         //增加道德
@@ -345,13 +347,15 @@ namespace Jyx2
 
         static public void ChangeScencePic(int p1,int p2,int p3,int p4)
         {
+            //这个函数已经不需要实现，具体2D和3D版差异解决的方式可以参考
+            //https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95
 
         }
 
-        //播放动画，TODO
+        //播放动画
         static public void PlayAnimation(int p1,int p2,int p3) 
         {
-
+            //这个函数已经不需要实现，使用jyx2_PlayTimeline来解决
         }
 
         static public bool JudgeEthics(int roleId,int low,int high)
@@ -367,7 +371,7 @@ namespace Jyx2
 
         static public void WalkFromTo(int x1,int y1,int x2,int y2)
         {
-            
+            //这个函数已经不需要实现，使用jyx2_WalkFromTo来解决
         }
 
 
@@ -439,10 +443,10 @@ namespace Jyx2
             }
             return false;
         }
-
+        
         static public void Play2Amination(int eventIndex1, int beginPic1, int endPic1, int eventIndex2, int beginPic2, int endPic2)
         {
-
+            //这个函数已经不需要实现，使用jyx2_PlayTimeline来解决
         }
 
         //增加轻功
