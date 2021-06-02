@@ -29,7 +29,7 @@
 1、查看视频教程
 
 * [场景编辑：如何配置一个门？（控制物体显示/隐藏）](https://www.bilibili.com/video/BV1mz4y117j3?p=1)
-* [场景编辑：如何重置一段剧情](https://www.bilibili.com/video/BV1mz4y117j3?p=2)
+* [场景编辑：典型的配置一段剧情的方式](https://www.bilibili.com/video/BV1mz4y117j3?p=2)
 * [场景编辑：制作寻路网格，烘焙Navimesh](https://www.bilibili.com/video/BV1mz4y117j3?p=3)
 * [场景编辑：配置和刷出NPC](https://www.bilibili.com/video/BV1mz4y117j3?p=4)
 * [场景编辑：调整场景中的人物](https://www.bilibili.com/video/BV1mz4y117j3?p=6)  【部分内容已过期】
