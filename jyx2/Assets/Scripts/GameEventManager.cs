@@ -252,7 +252,11 @@ public class GameEventManager : MonoBehaviour
 
     void OnFinishEvent()
     {
-        curEvent.MarkChest();
+		if(curEvent!=null){
+			curEvent.MarkChest();
+		}else{
+			Debug.Log("curEvent is null");
+		}
         SetCurrentGameEvent(null);
 		// fix drag motion continuous move the player when scene is playing
 		// modified by eaphone at 2021/05/31
@@ -261,7 +265,9 @@ public class GameEventManager : MonoBehaviour
         {
 			levelMaster.SetPlayerCanController(true);
 		}
-        UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
+		if(curEvent!=null){
+			UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
+		}
 
         //TryTrigger();
     }
