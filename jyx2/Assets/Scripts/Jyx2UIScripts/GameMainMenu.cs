@@ -130,6 +130,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
             //首次进入游戏音乐
             AudioManager.PlayMusic(16);
             Jyx2_UIManager.Instance.HideUI("GameMainMenu");
+            LevelMaster.Instance.GetPlayer().transform.rotation = Quaternion.Euler(Vector3.zero);
         });
     }
     private void OnCreateRoleNoClick()
