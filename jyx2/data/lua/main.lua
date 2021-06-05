@@ -150,6 +150,7 @@ PlayWave = CS.Jyx2.Jyx2LuaBridge.PlayWave
 
 --扩展函数
 jyx2_ReplaceSceneObject = CS.Jyx2.Jyx2LuaBridge.jyx2_ReplaceSceneObject
+jyx2_MovePlayer = CS.Jyx2.Jyx2LuaBridge.jyx2_MovePlayer
 jyx2_CameraFollow = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollow
 jyx2_CameraFollowPlayer = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollowPlayer
 jyx2_WalkFromTo = CS.Jyx2.Jyx2LuaBridge.jyx2_WalkFromTo
