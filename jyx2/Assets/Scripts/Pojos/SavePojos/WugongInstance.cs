@@ -120,7 +120,7 @@ namespace Jyx2
                     case 1:
                         return SkillCoverType.LINE;
                     case 2:
-                        return SkillCoverType.STAR;
+                        return SkillCoverType.CROSS;
                     case 3:
                         return SkillCoverType.FACE;
                     default:

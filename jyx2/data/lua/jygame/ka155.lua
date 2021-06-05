@@ -21,6 +21,6 @@ if AskBattle() == true then goto label0 end;
 ::label3::
                 Talk(5, "小兄弟资质不错，我这有一些提升轻功的心得，你拿去好好参详吧．", "talkname5", 0);
                 Talk(0, "谢谢前辈．", "talkname0", 1);
-                GetItem(45, 1);
+                AddItem(45, 1);
                 ModifyEvent(-2, -2, -2, -2, 156, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

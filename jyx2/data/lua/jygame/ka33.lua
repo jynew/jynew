@@ -9,8 +9,8 @@ if InTeam(1) == false then goto label0 end;
             Talk(1, "兄弟，我们走吧．仇我已经报了．", "talkname1", 1);
             Talk(0, "对嘛！这才是我的好大哥．", "talkname0", 1);
             Talk(3, "走之前，拿了这把冷月宝刀，这是一把适合你的宝刀．还有，这本书拿去吧，希望能帮小兄弟解决困难．", "talkname3", 0);
-            GetItem(116, 1);
-            GetItem(144, 1);
+            AddItem(116, 1);
+            AddItem(144, 1);
             Talk(0, "呀呼！找到”飞狐外传”了", "talkname0", 1);
             ModifyEvent(-2, -2, -2, -2, 34, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本34 场景24-编号8
             AddEthics(2);

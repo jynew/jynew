@@ -48,6 +48,11 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             MapName_Text.text = map.GetShowName();
             bool isWolrd = map.Tags.Contains("WORLDMAP");
             MapButton_Button.gameObject.SetActive(!isWolrd);
+			// for change main ui panel background image
+			// added by eaphone at 2021/05/27
+			var rt = Image_Right.GetComponent<RectTransform>();
+　　		rt.sizeDelta = new Vector2(isWolrd?480:640, 100);
+			
         }
     }
 
@@ -98,8 +103,18 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         if (!levelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
         {
             levelMaster.PlayLeaveMusic(levelMaster.GetCurrentGameMap());
-            //ÍË³öµ½´óµØÍ¼
-            LevelLoader.LoadGameMap("0_BigMap");
+            // return to entertrance
+			// modified by eaphone at 2021/05/30
+            //LevelLoader.LoadGameMap("0_BigMap");
+			// add transport Wei to other hotel when leave hotel after meet him
+			// added by eaphone at 2021/6/5
+			string[] targetHotel={"01_heluokezhan","03_youjiankezhan","40_yuelaikezhan","60_longmenkezhan","61_gaoshengkezhan"};
+			foreach(var i in targetHotel){
+				if(i == levelMaster.GetCurrentGameMap().Key){
+					BigMapZone.TransportWei();
+				}
+			}
+            levelMaster.QuitToBigMap();
         }
     }
 

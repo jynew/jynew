@@ -5,7 +5,7 @@ if UseItem(174) == true then goto label0 end;
         Talk(106, "兄弟，１００就１００，我们可是不二价的．", "talkname106", 0);
         do return end;
 ::label1::
-        AddItem(174, -100);
+        AddItemWithoutHint(174, -100);
         Talk(106, "好，从这里一直往西南走，大概在澜沧江的源头就可以看到了．座标大约是在．．．．．．（１６８，４２６）附近．祝你玩的愉快．", "talkname106", 0);
         Talk(0, "就这么简单？", "talkname0", 1);
         Talk(106, "招牌上写的清清楚楚，自助旅游，当然是你自己去，难不成还我带你去呀．", "talkname106", 0);

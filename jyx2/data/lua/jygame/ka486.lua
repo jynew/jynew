@@ -11,6 +11,6 @@ if TryBattle(78) == true then goto label0 end;
     ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     LightScence();
     Talk(0, "真是好险，差点就变成了这”癞蛤蟆”的晚餐了．这会换我来顿”三杯田鸡”．", "talkname0", 1);
-    GetItem(38, 1);
+    AddItem(38, 1);
     AddRepute(3);
 do return end;

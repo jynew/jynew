@@ -245,8 +245,7 @@ public class LevelMaster : MonoBehaviour
     {
         if (runtime == null || _player == null)
             return;
-
-        
+		
         var map = GetCurrentGameMap();
         if (map == null)
             return;
@@ -258,7 +257,7 @@ public class LevelMaster : MonoBehaviour
                 if (string.IsNullOrEmpty(runtime.WorldPosition))
                     return;
 
-                Jyx2Player.GetPlayer().LoadWorldInfo();
+                GetPlayer().LoadWorldInfo();
             }
             else
             {
@@ -274,7 +273,7 @@ public class LevelMaster : MonoBehaviour
                 if (string.IsNullOrEmpty(runtime.WorldPosition))
                     return;
 
-                Jyx2Player.GetPlayer().LoadWorldInfo();
+                GetPlayer().LoadWorldInfo();
             }
             else
             {
@@ -326,16 +325,18 @@ public class LevelMaster : MonoBehaviour
 
     public void SetPlayer(MapRole playerRoleView)
     {
+		// reverting this change. to fix "reference on null object" error when enter/ exit scene
+		// modified by eaphone at 2021/05/30
+        _playerView = playerRoleView;
+        _player = playerRoleView.transform;
+        _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
         playerRoleView.BindRoleInstance(runtime.Player, ()=> {
             //由于这里是异步加载模型，所以必须加载完后才初始化出生点，因为初始化出生点里有描述玩家是否在船上，需要调用子节点的renderer
 
             //初始化出生点
             LoadSpawnPosition();
         });
-        _playerView = playerRoleView;
-        _player = playerRoleView.transform;
-        _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
-
+        
         SetPlayerSpeed(0);
         var gameMap = GetCurrentGameMap();
         if (gameMap != null && gameMap.Tags.Contains("WORLDMAP"))
@@ -358,6 +359,8 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
+	// fix bind player failed error when select player before start battle
+	// modified by eaphone at 2021/05/31
     public void TryBindPlayer()
     {
         if (_player != null)
@@ -371,7 +374,7 @@ public class LevelMaster : MonoBehaviour
             SetPlayer(playerObj);
             //添加队友
             //CreateTeammates(gameMap, playerObj.transform);
-        }
+		}
     }
 
     public void SwitchToBattleUI(bool isOn)
@@ -407,18 +410,30 @@ public class LevelMaster : MonoBehaviour
 
             }
         }
-
+		var gameMap = GetCurrentGameMap();
         //退出当前地图
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            if (!GetCurrentGameMap().Tags.Contains("WORLDMAP"))
-            {
-                PlayLeaveMusic(GetCurrentGameMap());
-                //退出到大地图
-                LevelLoader.LoadGameMap("0_BigMap");
-            }
-        }
+		// fix to transport to enterance
+		// fix press ESC multi times call multi Bigmap Loading
+		// modified by eaphone at 2021/05/30
+        if(gameMap!=null)
+		{
+			if (Input.GetKeyUp(KeyCode.Escape)&&!isEscPressed)
+			{
+				isEscPressed=true;
+				if (!gameMap.Tags.Contains("WORLDMAP"))
+				{
+					PlayLeaveMusic(gameMap);
+					//退出到大地图
+					// return to entertrance
+					//LevelLoader.LoadGameMap("0_BigMap");
+					QuitToBigMap();
+				}
+			}
+			if(gameMap.Tags.Contains("WORLDMAP")) isEscPressed=false;			
+		}
     }
+	// added by eaphone at 2021/05/30
+	public static bool isEscPressed=false;
 
     void PlayerControll()
     {
@@ -551,7 +566,7 @@ public class LevelMaster : MonoBehaviour
                 SetPlayerSpeed(0);
             }
 
-            //BY HW:如果被锁方向，在这解锁
+            //如果被锁方向，在这解锁
             if (m_IsLockingDirection)
             {
                 m_IsLockingDirection = false;
@@ -714,6 +729,13 @@ public class LevelMaster : MonoBehaviour
             }
         }
     }
+	
+	// implement change player facing. 0:top-right, 1:down-right, 2:top-left, 3:down-left
+	// modify by eaphone at 2021/6/5
+	public void SetRotation(int ro){
+		int[] roationSet={-90,0,180,90};
+		_player.rotation = Quaternion.Euler(Vector3.up*roationSet[ro]);
+	}
 
     //手动存档
     public void OnManuelSave(int index = -1)
@@ -727,7 +749,7 @@ public class LevelMaster : MonoBehaviour
 
         if (GetCurrentGameMap().Tags.Contains("WORLDMAP"))
         {
-            Jyx2Player.GetPlayer().RecordWorldInfo();
+            GetPlayer().RecordWorldInfo();
         }
         else
         {
@@ -744,14 +766,25 @@ public class LevelMaster : MonoBehaviour
         return _player.position;
     }
 
+	// handle player null exception
+	// modified by eaphone at 2021/05/31
     public Jyx2Player GetPlayer()
     {
-        return _player.GetComponent<Jyx2Player>();
+		var player=_player.GetComponent<Jyx2Player>();
+		if(player == null)
+			{
+				player = _player.gameObject.AddComponent<Jyx2Player>();
+				player.Init();
+			}
+        return player;
     }
 
     public void QuitToBigMap()
     {
-        LevelLoader.LoadGameMap("Level_BigMap");
+		// modified by eaphone at 2021/05/30
+		//LevelLoader.LoadGameMap("0_BigMap");
+        //LevelLoader.LoadGameMap("Level_BigMap");
+		LevelLoader.LoadGameMap("0_BigMap&transport#" + GetCurrentGameMap().BigMapTriggerName);
     }
 
     public void QuitToMainMenu()

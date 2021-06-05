@@ -2,7 +2,7 @@ if UseItem(130) == true then goto label0 end;
     do return end;
 ::label0::
     AddEthics(2);
-    AddItem(130, -1);
+    AddItemWithoutHint(130, -1);
     Talk(0, "慕容公子，你要找的大燕国传国玉玺在这里．", "talkname0", 1);
     Talk(51, "真的找到了！有了它，我大燕复国有望．", "talkname51", 0);
     Talk(0, "那慕容公子可否履行诺言，告知在下”天龙八部”一书的下落．", "talkname0", 1);
@@ -15,5 +15,5 @@ if UseItem(130) == true then goto label0 end;
     Talk(0, "好，我就再信你一次，去帮你找那什么世系谱表．希望到时慕容公子别再失信．", "talkname0", 1);
     Talk(51, "好了，看你这么辛苦，我就先送你一本旷世棋谱，就在我房间箱子里，这是钥匙．", "talkname51", 0);
     ModifyEvent(-2, -2, -2, -2, 572, 573, -1, -2, -2, -2, -2, -2, -2);
-    GetItem(166, 1);
+    AddItem(166, 1);
 do return end;

@@ -1,6 +1,5 @@
 using Jyx2;
 using HSFrameWork.ConfigTable;
-using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -63,8 +62,9 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         //Jyx2_UIManager.Instance.SetMainUIActive(false);
     }
 
-    private void ShowCharacter(string roleHeadPath)
+    private void ShowCharacter(string roleHeadPath,int roleId)
     {
+        ChangePosition(roleId);
         if (string.IsNullOrEmpty((roleHeadPath)))
         {
             RoleHeadImage_Image.gameObject.SetActive(false);
@@ -106,6 +106,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         //不显示人物
         if (type == 2 || type == 3)
         {
+            ChangePosition(1,false);
             RoleHeadImage_Image.gameObject.SetActive(false);
         }
         else
@@ -113,7 +114,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             var headMapping = ConfigTable.Get<Jyx2RoleHeadMapping>(roleId);
             if (headMapping != null && !string.IsNullOrEmpty(headMapping.HeadAvata))
             {
-                ShowCharacter(headMapping.HeadAvata);
+                ShowCharacter(headMapping.HeadAvata, roleId);
                 //RoleHeadImage_Image.gameObject.SetActive(true);
             }
             else
@@ -123,6 +124,47 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         }
         ShowText();
     }
+    //根据角色ID修改左右位置
+    public void ChangePosition(int roleId, bool ShowName = true)
+    {
+        Name_RectTransform.gameObject.SetActive(ShowName);
+        kuang_RectTransform.gameObject.SetActive(ShowName);
+        if (ShowName)
+        {
+            var role = ConfigTable.Get<Jyx2RoleHeadMapping>(roleId);
+            if (roleId == 0 && GameRuntimeData.Instance.Player != null)
+            {
+                NameTxt_Text.text = GameRuntimeData.Instance.Player.Name;
+            }
+            else
+            {
+                NameTxt_Text.text = role.ModelAsset;
+            }
+        }
+
+
+        Content_RectTransform.anchoredPosition = roleId == 0 || !ShowName ? Vector3.zero : new Vector3(450, 0, 0);
+
+        Content_RectTransform.sizeDelta = ShowName ? new Vector2(-450, 280) : new Vector2(0, 280);
+
+
+        HeadAvataPre_RectTransform.anchorMax = roleId == 0 ? Vector2.right : Vector2.zero;
+        HeadAvataPre_RectTransform.anchorMin = roleId == 0 ? Vector2.right : Vector2.zero;
+        HeadAvataPre_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
+        HeadAvataPre_RectTransform.anchoredPosition = Vector3.zero;
+
+        kuang_RectTransform.anchorMax = roleId == 0 ? Vector2.right : Vector2.zero;
+        kuang_RectTransform.anchorMin = roleId == 0 ? Vector2.right : Vector2.zero;
+        kuang_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
+        kuang_RectTransform.anchoredPosition = Vector3.zero;
+
+        Name_RectTransform.anchorMax = roleId == 0 ? Vector2.right : Vector2.zero;
+        Name_RectTransform.anchorMin = roleId == 0 ? Vector2.right : Vector2.zero;
+        Name_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
+        Name_RectTransform.anchoredPosition = new Vector2(roleId == 0 ? -450 : 450 , 280); 
+    }
+
+
 
     public void Show(string roleKey, string msg, Action callback)
     {
@@ -130,6 +172,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         //没有定义Role或者HeadAvata
         if (role == null || string.IsNullOrEmpty(role.HeadAvata))
         {
+            ChangePosition(1);
             _currentText = $"{roleKey}：{msg}";
             HeadAvataPre_RectTransform.gameObject.SetActive(false);
         }
@@ -138,12 +181,14 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             //没有Player
             if (roleKey == "主角" && GameRuntimeData.Instance.Player != null)
             {
-                ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata);
+             
+                ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0);
                 _currentText = $"{GameRuntimeData.Instance.Player.Name}:{msg}";
             }
             else
             {
-                ShowCharacter(role.HeadAvata);
+                ChangePosition(1);
+                ShowCharacter(role.HeadAvata,1);
                 _currentText = $"{role.Name}：{msg}";
             }
         }
@@ -154,27 +199,50 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 
     public void ShowSelection(string roleKey, string msg, List<string> selectionContent, Action<int> callback)
     {
-        Role role = Role.Get(roleKey);
-        //没有定义Role或者HeadAvata
-        if (role == null || string.IsNullOrEmpty(role.HeadAvata))
+
+        //没有Player
+        if (roleKey == "主角" && GameRuntimeData.Instance.Player != null)
         {
-            MainContent_Text.text = $"{roleKey}：{msg}";
-            RoleHeadImage_Image.gameObject.SetActive(false);
+            ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0);
+            MainContent_Text.text = $"{msg}";
         }
         else
         {
-            //没有Player
-            if (roleKey == "主角" && GameRuntimeData.Instance.Player != null)
+            Role role = Role.Get(roleKey);
+            //没有定义Role或者HeadAvata
+            if (role == null || string.IsNullOrEmpty(role.HeadAvata))
             {
-                ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata);
-                MainContent_Text.text = $"{GameRuntimeData.Instance.Player.Name}:{msg}";
+                MainContent_Text.text = $"{roleKey}：{msg}";
+                RoleHeadImage_Image.gameObject.SetActive(false);
             }
             else
             {
-                ShowCharacter(role.HeadAvata);
+                ShowCharacter(role.HeadAvata,1);
                 MainContent_Text.text = $"{role.Name}：{msg}";
             }
         }
+
+        //Role role = Role.Get(roleKey);
+        ////没有定义Role或者HeadAvata
+        //if (role == null || string.IsNullOrEmpty(role.HeadAvata))
+        //{
+        //    MainContent_Text.text = $"{roleKey}：{msg}";
+        //    RoleHeadImage_Image.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    //没有Player
+        //    if (roleKey == "主角" && GameRuntimeData.Instance.Player != null)
+        //    {
+        //        ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata);
+        //        MainContent_Text.text = $"{GameRuntimeData.Instance.Player.Name}:{msg}";
+        //    }
+        //    else
+        //    {
+        //        ShowCharacter(role.HeadAvata);
+        //        MainContent_Text.text = $"{role.Name}：{msg}";
+        //    }
+        //}
         ClearChildren(Container_RectTransform.transform);
         for (int i = 0; i < selectionContent.Count; i++)
         {

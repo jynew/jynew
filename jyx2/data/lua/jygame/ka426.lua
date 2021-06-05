@@ -1,7 +1,7 @@
 if UseItem(184) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(184, -1);
+    AddItemWithoutHint(184, -1);
     Talk(65, "．．．这是锳姑给你的吗？她要你来这做什么？", "talkname65", 0);
     Talk(0, "晚辈想先见到段皇爷．", "talkname0", 1);
     Talk(65, "段皇爷早不在尘世啦，我现下叫作一灯和尚．", "talkname65", 0);

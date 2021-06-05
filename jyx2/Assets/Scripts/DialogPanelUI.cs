@@ -1,12 +1,11 @@
 ﻿using Jyx2;
 using HSFrameWork.ConfigTable;
 using HSUI;
-using Jyx2;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
+
 
 public class DialogPanelUI : BaseUI {
     

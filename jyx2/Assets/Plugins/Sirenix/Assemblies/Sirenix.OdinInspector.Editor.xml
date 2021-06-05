@@ -4,44 +4,152 @@
         <name>Sirenix.OdinInspector.Editor</name>
     </assembly>
     <members>
-        <member name="T:Sirenix.Serialization.AOTGenerationConfig">
+        <member name="T:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver">
             <summary>
-            Contains configuration for generating an assembly that provides increased AOT support in Odin.
+            <para>An ActionResolver resolves a string to an action, given an InspectorProperty instance to use as context. Call <see cref="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.Get(Sirenix.OdinInspector.Editor.InspectorProperty,System.String)"/> to get an instance of an ActionResolver.</para>
+            <para>Action resolvers are a globally extendable system that can be hooked into and modified or changed by creating and registering an <see cref="T:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverCreator"/>.</para>
+            <para>See Odin's tutorials for details and examples of how to use ActionResolvers.</para>
             </summary>
         </member>
-        <member name="P:Sirenix.Serialization.AOTGenerationConfig.AutomateBeforeBuilds">
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.Context">
             <summary>
-            <para>
-            Whether to automatically scan the project and generate an AOT dll, right before builds. This will only affect platforms that are in the <see cref="P:Sirenix.Serialization.AOTGenerationConfig.AutomateForPlatforms"/> list.
-            </para>
-            <para>
-            **This will only work on Unity 5.6 and higher!**
-            </para>
+            The context of this ActionResolver, containing all of its configurations and values it needs to function. For performance and simplicity reasons, this is a single very large struct that is passed around by ref to anything that needs it.
             </summary>
         </member>
-        <member name="P:Sirenix.Serialization.AOTGenerationConfig.DeleteDllAfterBuilds">
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.Action">
             <summary>
-            Whether to automatically delete the generated AOT dll after a build has completed.
+            The delegate that executes the actual action. You should not call this manually, but instead call <see cref="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.DoAction(System.Int32)"/>.
             </summary>
         </member>
-        <member name="P:Sirenix.Serialization.AOTGenerationConfig.AutomateForPlatforms">
+        <member name="P:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.ErrorMessage">
             <summary>
-            A list of platforms to automatically scan the project and generate an AOT dll for, right before builds. This will do nothing unless <see cref="P:Sirenix.Serialization.AOTGenerationConfig.AutomateBeforeBuilds"/> is true.
+            The current error message that the resolver has, or null if there is no error message. This is a shortcut for writing "resolver.Context.ErrorMessage".
             </summary>
         </member>
-        <member name="P:Sirenix.Serialization.AOTGenerationConfig.AOTFolderPath">
+        <member name="P:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.HasError">
             <summary>
-            The path to the AOT folder that the AOT .dll and linker file is created in, relative to the current project folder.
+            Whether there is an error message at the moment. This is a shortcut for writing "resolver.Context.ErrorMessage != null".
             </summary>
         </member>
-        <member name="M:Sirenix.Serialization.AOTGenerationConfig.ScanProject">
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.DrawError">
             <summary>
-            Scans the entire project for types to support AOT serialization for.
+            Draws an error message box if there is an error, and does nothing if there is no error.
             </summary>
         </member>
-        <member name="M:Sirenix.Serialization.AOTGenerationConfig.GenerateDLL">
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.DoAction(System.Int32)">
             <summary>
-            Generates an AOT DLL, using the current configuration of the AOTGenerationConfig instance.
+            Executes the resolved action for a given selection index.
+            </summary>
+            <param name="selectionIndex">The selection index to execute the action on. Defaults to 0.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.DoActionForAllSelectionIndices">
+            <summary>
+            Executes the action for all selection indices.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.Get(Sirenix.OdinInspector.Editor.InspectorProperty,System.String)">
+            <summary>
+            Creates a new action resolver instance for a given string.
+            </summary>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to an action.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.Get(Sirenix.OdinInspector.Editor.InspectorProperty,System.String,Sirenix.OdinInspector.Editor.ActionResolvers.NamedValue[])">
+            <summary>
+            Creates a new action resolver instance for a given string.
+            </summary>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to an action.</param>
+            <param name="namedArgs">The extra named args that this resolver has access to. Passing in a named arg that already exists will silently override the pre-existing named arg.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.GetCombinedErrors(Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver)">
+            <summary>
+            Gets a nicely formatted string that lists all the errors in the given set of action resolvers. The returned value is null if there are no errors.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.GetCombinedErrors(Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver[])">
+            <summary>
+            Gets a nicely formatted string that lists all the errors in the given set of action resolvers. The returned value is null if there are no errors.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.DrawErrors(Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver)">
+            <summary>
+            Draws error boxes for all errors in the given action resolvers, or does nothing if there are no errors. This is equivalent to calling DrawError() on all resolvers passed to this method.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver.DrawErrors(Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver,Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver[])">
+            <summary>
+            Draws error boxes for all errors in the given action resolvers, or does nothing if there are no errors. This is equivalent to calling DrawError() on all resolvers passed to this method.
+            </summary>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext">
+            <summary>
+            This struct contains all of an ActionResolver's configurations and values it needs to function. For performance and simplicity reasons, this is a single very large struct that lives on an ActionResolver instance and is passed around by ref to anything that needs it.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.Property">
+            <summary>
+            The property that *provides* the context for the action resolution. This is the instance that was passed to the resolver when it was created. Note that this is different from <see cref="P:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ContextProperty"/>, which is based on this value, but almost always isn't the same InspectorProperty instance.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ResolvedString">
+            <summary>
+            The string that is resolved to perform an action.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ErrorMessage">
+            <summary>
+            The error message, if a valid action resolution wasn't found, or if creation of the action resolver failed because <see cref="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ResolvedString"/> was invalid, or if the action was executed but threw an exception. (In this last case, <see cref="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ErrorMessageIsDueToException"/> will be true.)
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.NamedValues">
+            <summary>
+            The named values that are available to the action resolver. Use this field only to get and set named values - once the ValueResolver has been created, new named values will have no effect.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.SyncRefParametersWithNamedValues">
+            <summary>
+            Whether the action resolver should sync ref parameters of invoked methods with named values. If this is true, then if a ref or out parameter value is changed during action execution, the named value associated with that parameter will also be changed to the same value.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ErrorMessageIsDueToException">
+            <summary>
+            This will be true if <see cref="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ErrorMessage"/> is not null and the message was caused by an exception thrown by code invoked during execution of the resolved action.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.LogExceptions">
+            <summary>
+            Whether exceptions thrown during action execution should be logged to the console.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ParentType">
+            <summary>
+            The type that is the parent of the action resolution, ie, the type that is the context. This is the same as <see cref="P:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ContextProperty"/>.ValueEntry.TypeOfValue.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ContextProperty">
+            <summary>
+            The property that *is* the context for the action resolution. This is not the instance that was passed to the resolver when it was created, but this value is based on that instance. This is the property that provides the actual context - for example, if <see cref="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.Property"/> is for a member of a type - or for an element in a collection contained by a member - this value will be the parent property for the type that contains that member. Only if <see cref="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.Property"/> is the tree's root property is <see cref="P:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.ContextProperty"/> the same as <see cref="F:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.Property"/>.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.GetParentValue(System.Int32)">
+            <summary>
+            Gets the parent value which provides the context of the resolver.
+            </summary>
+            <param name="selectionIndex">The selection index of the parent value to get.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.SetParentValue(System.Int32,System.Object)">
+            <summary>
+            Sets the parent value which provides the context of the resolver.
+            </summary>
+            <param name="selectionIndex">The selection index of the parent value to set.</param>
+            <param name="value">The value to set.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolverContext.AddDefaultContextValues">
+            <summary>
+            Adds the default named values of "property" and "value" to the context's named values.
+            This method is usually automatically invoked when a resolver is created, so there
+            is no need to invoke it manually.
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.ColorPalette">
@@ -128,6 +236,178 @@
         <member name="P:Sirenix.OdinInspector.Editor.OdinInspectorVersion.Version">
             <summary>
             Gets the current running version of Odin Inspector.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.OdinInspectorVersion.IsEnterprise">
+            <summary>
+            Whether the current version of Odin is an enterprise version.
+            </summary>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.PropertyState">
+            <summary>
+            <para>This is a class for creating, getting and modifying a property's various states. An instance of this class always comes attached to an InspectorProperty.</para>
+            <para>See Odin's tutorials for more information about usage of the state system.</para>
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.PropertyState.LogChanges">
+            <summary>
+            If set to true, all state changes for this property will be logged to the console.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyState.Visible">
+            <summary>
+            Whether the property is visible in the inspector.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyState.VisibleLastLayout">
+            <summary>
+            Whether the Visible state was true or not during the last layout event.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyState.Enabled">
+            <summary>
+            Whether the property is enabled in the inspector.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyState.EnabledLastLayout">
+            <summary>
+            Whether the Enabled state was true or not during the last layout event.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyState.Expanded">
+            <summary>
+            Whether the property is expanded in the inspector.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyState.ExpandedLastLayout">
+            <summary>
+            Whether the Expanded state was true or not during the last layout event.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Create``1(System.String,System.Boolean,``0)">
+            <summary>
+            Creates a custom state with a given name.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key"></param>
+            <param name="persistent"></param>
+            <param name="defaultValue"></param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Exists(System.String)">
+            <summary>
+            Determines whether a state with the given key exists.
+            </summary>
+            <param name="key">The key to check.</param>
+            <returns>True if the state exists, otherwise, false.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Exists(System.String,System.Boolean@)">
+            <summary>
+            Determines whether a state with the given key exists.
+            </summary>
+            <param name="key">The key to check.</param>
+            <param name="isPersistent">If the state exists, this out parameter will be true if the state is persistent.</param>
+            <returns>True if the state exists, otherwise, false.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Exists(System.String,System.Type@)">
+            <summary>
+            Determines whether a state with the given key exists.
+            </summary>
+            <param name="key">The key to check.</param>
+            <param name="valueType">If the state exists, this out parameter will contain the type of value that the state contains.</param>
+            <returns>True if the state exists, otherwise, false.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Exists(System.String,System.Boolean@,System.Type@)">
+            <summary>
+            Determines whether a state with the given key exists.
+            </summary>
+            <param name="key">The key to check.</param>
+            <param name="isPersistent">If the state exists, this out parameter will be true if the state is persistent.</param>
+            <param name="valueType">If the state exists, this out parameter will contain the type of value that the state contains.</param>
+            <returns>True if the state exists, otherwise, false.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Get``1(System.String)">
+            <summary>
+            Gets the value of a given state as an instance of type T.
+            </summary>
+            <typeparam name="T">The type to get the state value as. An <see cref="T:System.InvalidOperationException"/> will be thrown if the state's value type cannot be assigned to T.</typeparam>
+            <param name="key">The key of the state to get. An <see cref="T:System.InvalidOperationException"/> will be thrown if a state with the given key does not exist.</param>
+            <returns>The value of the state.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.GetLastLayout``1(System.String)">
+            <summary>
+            Gets the value that a given state contained last layout as an instance of type T.
+            </summary>
+            <typeparam name="T">The type to get the state value as. An <see cref="T:System.InvalidOperationException"/> will be thrown if the state's value type cannot be assigned to T.</typeparam>
+            <param name="key">The key of the state to get. An <see cref="T:System.InvalidOperationException"/> will be thrown if a state with the given key does not exist.</param>
+            <returns>The value of the state during the last layout event.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Set``1(System.String,``0)">
+            <summary>
+            Sets the value of a given state to a given value.
+            </summary>
+            <typeparam name="T">The type to set the state value as. An <see cref="T:System.InvalidOperationException"/> will be thrown if T cannot be assigned to the state's value type.</typeparam>
+            <param name="key">The key of the state to set the value of. An <see cref="T:System.InvalidOperationException"/> will be thrown if a state with the given key does not exist.</param>
+            <param name="value">The value to set.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.CleanForCachedReuse">
+            <summary>
+            Cleans the property state and prepares it for cached reuse of its containing PropertyTree. This will also reset the state.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyState.Reset">
+            <summary>
+            Resets all states to their default values. Persistent states will be updated to their persistent cached value if one exists.
+            </summary>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.CollectionChangeInfo">
+            <summary>
+            Contains information about a change that is going to occur/has occurred to a collection.
+            </summary>
+            <seealso cref="T:Sirenix.OdinInspector.Editor.CollectionChangeType"/>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.CollectionChangeType">
+            <summary>
+            Specifies the kinds of changes that can occur to collections.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.Unspecified">
+            <summary>
+            Unknown collection change, the change was not specified by the invoking code.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.Add">
+            <summary>
+            The change is adding a value to the collection. Value and SelectionIndex will be set.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.Insert">
+            <summary>
+            The change is inserting a value into the collection. Index, Value and SelectionIndex will be set.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.RemoveValue">
+            <summary>
+            The change is removing a value from the collection. Value and SelectionIndex will be set.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.RemoveIndex">
+            <summary>
+            The change is removing a value at an index from the collection. Index and SelectionIndex will be set.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.Clear">
+            <summary>
+            The change is clearing the collection. SelectionIndex will be set.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.RemoveKey">
+            <summary>
+            The change is removing a key from the collection. Key and SelectionIndex will be set.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.CollectionChangeType.SetKey">
+            <summary>
+            The change is setting the value of a key in the collection. Key, Value and SelectionIndex will be set.
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.PrefabModificationHandler">
@@ -518,6 +798,21 @@
             Gets an aliased version of a member, with the declaring type name included in the member name, so that there are no conflicts with private fields and properties with the same name in different classes in the same inheritance hierarchy.
             </summary>
         </member>
+        <member name="P:Sirenix.OdinInspector.Editor.AttributeStateUpdater`1.Attribute">
+            <summary>
+            Gets the attribute that the OdinAttributeStateUpdater applies to.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.AttributeStateUpdater`2.ValueEntry">
+            <summary>
+            Gets the strongly typed ValueEntry of the OdinAttributeStateUpdater's property.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ValueStateUpdater`1.ValueEntry">
+            <summary>
+            Gets the strongly typed ValueEntry of the OdinValueStateUpdater's property.
+            </summary>
+        </member>
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.AssetSelectorAttributeDrawer.Initialize">
             <summary>
             Initializes this instance.
@@ -531,11 +826,6 @@
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.EnableGUIAttributeDrawer">
             <summary>
             Draws members marked with <see cref="T:Sirenix.OdinInspector.EnableGUIAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.EnableGUIAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property layout.
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.NonSerializedShowInInspectorWarningAttributeDrawer">
@@ -560,6 +850,16 @@
             Draws the warning message and calls the next drawer.
             </summary>
             <param name="label">The label for the property.</param>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.Drawers.OnCollectionChangedAttributeDrawer">
+            <summary>
+            Draws properties marked with <see cref="T:Sirenix.OdinInspector.OnCollectionChangedAttribute"/>.
+            </summary>
+            <seealso cref="T:Sirenix.OdinInspector.OnCollectionChangedAttribute"/>
+            <seealso cref="T:Sirenix.OdinInspector.OnValueChangedAttribute"/>
+            <seealso cref="T:Sirenix.OdinInspector.OnInspectorGUIAttribute"/>
+            <seealso cref="T:Sirenix.OdinInspector.ValidateInputAttribute"/>
+            <seealso cref="T:Sirenix.OdinInspector.InfoBoxAttribute"/>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.PropertySpaceAttributeDrawer">
             <summary>
@@ -632,7 +932,7 @@
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.DefaultMethodDrawer">
             <summary>
-            The default method drawer, that drawers most buttons and also runs OnInspectorGUI attributes.
+            The default method drawer that draws most buttons.
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.DefaultMethodDrawer.Initialize">
@@ -812,16 +1112,6 @@
             Draws the property.
             </summary>
         </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.ShowInInlineEditorsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.ShowInInlineEditorsAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.ShowInInlineEditorsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.TableListAttributeDrawer">
             <summary>
             The TableList attirbute drawer.
@@ -859,66 +1149,6 @@
             </summary>
             <seealso cref="T:Sirenix.OdinInspector.ValidateInputAttribute"/>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.CustomValueDrawerAttributeDrawer`1.CanDrawTypeFilter(System.Type)">
-            <summary>
-            Excludes functionality for lists and instead works on the list elements.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.CustomValueDrawerAttributeDrawer`1.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableInInlineEditorsAttributeDrawer">
-            <summary>
-            Draws all properties marked with the <see cref="T:Sirenix.OdinInspector.DisableInInlineEditorsAttribute"/> attribute.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableInInlineEditorsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableInNonPrefabsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.DisableInNonPrefabsAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableInNonPrefabsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableInPrefabAssetsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.DisableInPrefabAssetsAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableInPrefabAssetsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableInPrefabInstancesAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.DisableInPrefabInstancesAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableInPrefabInstancesAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableInPrefabsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.DisableInPrefabsAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableInPrefabsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.FilePathAttributeDrawer">
             <summary>
             Not yet documented.
@@ -952,59 +1182,6 @@
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.FolderPathAttributeDrawer.PopulateGenericMenu(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEditor.GenericMenu)">
             <summary>
             Adds customs generic menu options.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInInlineEditorsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.HideInInlineEditorsAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInInlineEditorsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInNonPrefabsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.HideInNonPrefabsAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInNonPrefabsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInPrefabAssetsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.HideInPrefabAssetsAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInPrefabAssetsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInPrefabInstancesAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.HideInPrefabInstancesAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInPrefabInstancesAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInPrefabsAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.HideInPrefabsAttribute"/>.
-            </summary>
-            <seealso cref="T:Sirenix.OdinInspector.HideIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInPrefabsAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.InlineButtonAttributeDrawer`1">
@@ -1687,50 +1864,6 @@
             Draws the property.
             </summary>
         </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableIfAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>.
-            </summary>
-            <seealso cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableIfAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableInEditorModeAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>.
-            </summary>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.HideInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.HideInPlayModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableInEditorModeAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.DisableInPlayModeAttributeDrawer">
-            <summary>
-            Draws properties marked with <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>.
-            </summary>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.DisableInPlayModeAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.GUIColorAttributeDrawer">
             <summary>
             Draws properties marked with <see cref="T:Sirenix.OdinInspector.GUIColorAttribute"/>.
@@ -1745,47 +1878,6 @@
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.GUIColorAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInPlayModeAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.HideInPlayModeAttribute"/>
-            </summary>
-            <seealso cref="T:UnityEngine.HideInInspector"/>
-            <seealso cref="T:Sirenix.OdinInspector.ShowIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.HideIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.ReadOnlyAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInPlayModeAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Does not call the next drawer, when the editor is in play mode.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInInspectorAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:UnityEngine.HideInInspector"/>
-            </summary>
-            <seealso cref="T:UnityEngine.HideInInspector"/>
-            <seealso cref="T:Sirenix.OdinInspector.ShowIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.HideIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.ReadOnlyAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInInspectorAttributeDrawer.Initialize">
-            <summary>
-            Initialized the drawer.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInInspectorAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property under certain conditions.
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.InlineEditorAttributeDrawer">
@@ -1827,32 +1919,12 @@
             <seealso cref="T:UnityEngine.DelayedAttribute"/>
             <seealso cref="T:Sirenix.OdinInspector.WrapAttribute"/>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.MinMaxSliderAttributeDrawer.Initialize">
-            <summary>
-            Initializes the drawer.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.MinMaxSliderAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.ShowDrawerChainAttributeDrawer">
             <summary>
             Show drawer chain attribute drawer.
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.ShowDrawerChainAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideIfAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.ShowIfAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideIfAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property.
             </summary>
@@ -2226,11 +2298,6 @@
             Not yet documented.
             </summary>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.TwoDimensionalArrayDrawer`2.DrawPropertyLayout(Sirenix.OdinInspector.Editor.IPropertyValueEntry{`0},UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.TwoDimensionalArrayDrawer`2.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property.
@@ -2349,29 +2416,6 @@
             Draws the property.
             </summary>
         </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.EnableIfAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>.
-            </summary>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.ReadOnlyAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.ShowIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.HideIfAttribute"/>
-            <seealso cref="T:UnityEngine.HideInInspector"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.EnableIfAttributeDrawer.Initialize">
-            <summary>
-            Initializes the drawer.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.EnableIfAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.HeaderAttributeDrawer">
             <summary>
             Draws properties marked with <see cref="T:UnityEngine.HeaderAttribute"/>.
@@ -2385,24 +2429,6 @@
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.HeaderAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideInEditorModeAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.HideInEditorModeAttribute"/>
-            </summary>
-            <seealso cref="T:UnityEngine.HideInInspector"/>
-            <seealso cref="T:Sirenix.OdinInspector.ShowIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.HideIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.ReadOnlyAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.EnableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableIfAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInEditorModeAttribute"/>
-            <seealso cref="T:Sirenix.OdinInspector.DisableInPlayModeAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.HideInEditorModeAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Only calls the next drawer, when the editor is in play mode.
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.HideLabelAttributeDrawer">
@@ -2516,15 +2542,11 @@
             <summary>
             Draws properties marked with <see cref="T:Sirenix.OdinInspector.OnValueChangedAttribute"/>.
             </summary>
+            <seealso cref="T:Sirenix.OdinInspector.OnCollectionChangedAttribute"/>
             <seealso cref="T:Sirenix.OdinInspector.OnValueChangedAttribute"/>
             <seealso cref="T:Sirenix.OdinInspector.OnInspectorGUIAttribute"/>
             <seealso cref="T:Sirenix.OdinInspector.ValidateInputAttribute"/>
             <seealso cref="T:Sirenix.OdinInspector.InfoBoxAttribute"/>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.OnValueChangedAttributeDrawer`1.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.Drawers.ValueDropdownAttributeDrawer">
             <summary>
@@ -2591,16 +2613,6 @@
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.UnityDecoratorAttributeDrawer`3.DrawPropertyLayout(UnityEngine.GUIContent)">
-            <summary>
-            Draws the property.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.Drawers.ShowIfAttributeDrawer">
-            <summary>
-            Draws properties marked with <see cref="T:Sirenix.OdinInspector.ShowIfAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.Drawers.ShowIfAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property.
             </summary>
@@ -2712,6 +2724,11 @@
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.Drawers.PropertyContextMenuDrawer.AddRightClickArea(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.Rect)">
+            <summary>
+            Adds the right click area.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.Drawers.PropertyContextMenuDrawer.AddRightClickArea(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.Rect,System.Int32)">
             <summary>
             Adds the right click area.
             </summary>
@@ -3047,6 +3064,11 @@
             Populates the generic menu for the property.
             </summary>
         </member>
+        <member name="M:Sirenix.OdinInspector.Editor.TabSubGroupAttributeDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
+            <summary>
+            Draws the property.
+            </summary>
+        </member>
         <member name="T:Sirenix.OdinInspector.Editor.Examples.AttributeExampleInfo">
             <summary>
             Descripes an attribute example.
@@ -3070,6 +3092,11 @@
         <member name="F:Sirenix.OdinInspector.Editor.Examples.AttributeExampleInfo.Code">
             <summary>
             Raw code of the example.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.Examples.AttributeExampleInfo.CodeAsComponent">
+            <summary>
+            The example declared as a Unity component.
             </summary>
         </member>
         <member name="F:Sirenix.OdinInspector.Editor.Examples.AttributeExampleInfo.Order">
@@ -3150,7 +3177,7 @@
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.InspectorPropertyValueGetter`1">
             <summary>
-            Helper class to get values from InspectorProperties.
+            Helper class to get values from InspectorProperties. This class is deprecated and fully replaced by <see cref="T:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver" />.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.InspectorPropertyValueGetter`1.ErrorMessage">
@@ -3162,16 +3189,6 @@
             <summary>
             Gets the referenced member information.
             </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.InspectorPropertyValueGetter`1.#ctor(Sirenix.OdinInspector.Editor.InspectorProperty,System.String,System.Boolean,System.Boolean)">
-            <summary>
-            Creates a StringMemberHelper to get a display string.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="memberName">The member name.</param>
-            <param name="allowInstanceMember">If <c>true</c>, then StringMemberHelper will look for instance members.</param>
-            <param name="allowStaticMember">If <c>true</c>, then StringMemberHelper will look for static members.</param>
-            <exception cref="T:System.InvalidOperationException">Require either allowInstanceMember or allowStaticMember to be true.</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.InspectorPropertyValueGetter`1.GetValue">
             <summary>
@@ -3209,6 +3226,11 @@
             The attribute can be applied to Odin drawers, Odin property resolvers and Odin attribute processor types.
             </summary>
         </member>
+        <member name="F:Sirenix.OdinInspector.Editor.TypeSearch.TypeSearchIndex.LOCK">
+            <summary>
+            To safely change anything in the type cache, you must be holding this lock.
+            </summary>
+        </member>
         <member name="T:Sirenix.OdinInspector.Editor.Validation.NoValidationInInspectorAttribute">
             <summary>
             Put this attribute on a validator class to prevent the ValidatorDrawer from running that validator in the inspector.
@@ -3221,6 +3243,286 @@
             <summary>
             Apply this to an assembly to register validators for the validation system.
             This enables locating of all relevant validator types very quickly.
+            </summary>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.ValueResolvers.RegisterDefaultValueResolverCreatorAttribute">
+            <summary>
+            This attribute can be placed on an assembly to register a value resolver creator that should be queried when a value resolver is being created.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.RegisterDefaultValueResolverCreatorAttribute.#ctor(System.Type,System.Double)">
+            <summary>
+            This attribute can be placed on an assembly to register a value resolver creator that should be queried when a value resolver is being created.
+            </summary>
+            <param name="resolverCreatorType">The resolver </param>
+            <param name="order"></param>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver">
+            <summary>
+            <para>A ValueResolver resolves a string to a value of a given type, given an InspectorProperty instance to use as context. Call <see cref="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get``1(Sirenix.OdinInspector.Editor.InspectorProperty,System.String)"/> to get an instance of a ValueResolver.</para>
+            <para>Value resolvers are a globally extendable system that can be hooked into and modified or changed by creating and registering a <see cref="T:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverCreator"/>.</para>
+            <para>See Odin's tutorials for details and examples of how to use ValueResolvers.</para>
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Context">
+            <summary>
+            The context of this ValueResolver, containing all of its configurations and values it needs to function. For performance and simplicity reasons, this is a single very large struct that is passed around by ref to anything that needs it.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.ErrorMessage">
+            <summary>
+            The current error message that the resolver has, or null if there is no error message. This is a shortcut for writing "resolver.Context.ErrorMessage".
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.HasError">
+            <summary>
+            Whether there is an error message at the moment. This is a shortcut for writing "resolver.Context.ErrorMessage != null".
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.ValueType">
+            <summary>
+            The type of value that this resolver instance is supposed to get.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.GetWeakValue(System.Int32)">
+            <summary>
+            Gets a value from the value resolver in a weakly typed manner.
+            </summary>
+            <param name="selectionIndex">The selection index at which to get the value, in the case of multi-selection. Defaults to 0.</param>
+            <returns>The value that was gotten.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.DrawError">
+            <summary>
+            Draws an error message box if there is an error, and does nothing if there is no error.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get(System.Type,Sirenix.OdinInspector.Editor.InspectorProperty,System.String)">
+            <summary>
+            Creates a new value resolver instance in a weakly typed fashion, though the result is the same as using a strongly typed generic overload.
+            This is useful when you don't know at compile time which type you want to resolve.
+            </summary>
+            <param name="resultType">The type of value that the new resolver should resolve.</param>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get(System.Type,Sirenix.OdinInspector.Editor.InspectorProperty,System.String,Sirenix.OdinInspector.Editor.ValueResolvers.NamedValue[])">
+            <summary>
+            Creates a new value resolver instance in a weakly typed fashion, though the result is the same as using a strongly typed generic overload.
+            This is useful when you don't know at compile time which type you want to resolve.
+            </summary>
+            <param name="resultType">The type of value that the new resolver should resolve.</param>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+            <param name="namedArgs">The extra named args that this resolver has access to. Passing in a named arg that already exists will silently override the pre-existing named arg.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get``1(Sirenix.OdinInspector.Editor.InspectorProperty,System.String)">
+            <summary>
+            Creates a new value resolver instance.
+            </summary>
+            <typeparam name="TResult">The type of value that the new resolver should resolve.</typeparam>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get``1(Sirenix.OdinInspector.Editor.InspectorProperty,System.String,Sirenix.OdinInspector.Editor.ValueResolvers.NamedValue[])">
+            <summary>
+            Creates a new value resolver instance.
+            </summary>
+            <typeparam name="TResult">The type of value that the new resolver should resolve.</typeparam>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+            <param name="namedArgs">The extra named args that this resolver has access to. Passing in a named arg that already exists will silently override the pre-existing named arg.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get(System.Type,Sirenix.OdinInspector.Editor.InspectorProperty,System.String,System.Object)">
+            <summary>
+            Creates a new value resolver instance in a weakly typed fashion, though the result is the same as using a strongly typed generic overload.
+            This is useful when you don't know at compile time which type you want to resolve.
+            </summary>
+            <param name="resultType">The type of value that the new resolver should resolve.</param>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+            <param name="fallbackValue">The value that the resolver should return if the string cannot be resolved to anything, or if there is an error in creating a resolver, or if resolution itself throws an exception.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get(System.Type,Sirenix.OdinInspector.Editor.InspectorProperty,System.String,System.Object,Sirenix.OdinInspector.Editor.ValueResolvers.NamedValue[])">
+            <summary>
+            Creates a new value resolver instance in a weakly typed fashion, though the result is the same as using a strongly typed generic overload.
+            This is useful when you don't know at compile time which type you want to resolve.
+            </summary>
+            <param name="resultType">The type of value that the new resolver should resolve.</param>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+            <param name="fallbackValue">The value that the resolver should return if the string cannot be resolved to anything, or if there is an error in creating a resolver, or if resolution itself throws an exception.</param>
+            <param name="namedArgs">The extra named args that this resolver has access to. Passing in a named arg that already exists will silently override the pre-existing named arg.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.GetForString(Sirenix.OdinInspector.Editor.InspectorProperty,System.String)">
+            <summary>
+            <para>Creates a new value resolver instance meant to resolve a string value in particular. This is a shorthand for creating a string resolver that has the resolved string as a fallback value.</para>
+            <para>This special case will get you the behaviour where, if you pass in a string that is not meant to be resolved in a special way, the value resolver will just pass you that string back as the result value.</para>
+            </summary>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.GetForString(Sirenix.OdinInspector.Editor.InspectorProperty,System.String,Sirenix.OdinInspector.Editor.ValueResolvers.NamedValue[])">
+            <summary>
+            <para>Creates a new value resolver instance meant to resolve a string value in particular. This is a shorthand for creating a string resolver that has the resolved string as a fallback value.</para>
+            <para>This special case will get you the behaviour where, if you pass in a string that is not meant to be resolved in a special way, the value resolver will just pass you that string back as the result value.</para>
+            </summary>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+            <param name="namedArgs">The extra named args that this resolver has access to. Passing in a named arg that already exists will silently override the pre-existing named arg.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get``1(Sirenix.OdinInspector.Editor.InspectorProperty,System.String,``0)">
+            <summary>
+            Creates a new value resolver instance.
+            </summary>
+            <typeparam name="TResult">The type of value that the new resolver should resolve.</typeparam>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+            <param name="fallbackValue">The value that the resolver should return if the string cannot be resolved to anything, or if there is an error in creating a resolver, or if resolution itself throws an exception.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get``1(Sirenix.OdinInspector.Editor.InspectorProperty,System.String,``0,Sirenix.OdinInspector.Editor.ValueResolvers.NamedValue[])">
+            <summary>
+            Creates a new value resolver instance.
+            </summary>
+            <typeparam name="TResult">The type of value that the new resolver should resolve.</typeparam>
+            <param name="property">The property that is the context for the resolution to happen in.</param>
+            <param name="resolvedString">The string that should be resolved to a value.</param>
+            <param name="fallbackValue">The value that the resolver should return if the string cannot be resolved to anything, or if there is an error in creating a resolver, or if resolution itself throws an exception.</param>
+            <param name="namedArgs">The extra named args that this resolver has access to. Passing in a named arg that already exists will silently override the pre-existing named arg.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.GetCombinedErrors(Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver)">
+            <summary>
+            Gets a nicely formatted string that lists all the errors in the given set of value resolvers. The returned value is null if there are no errors.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.GetCombinedErrors(Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver[])">
+            <summary>
+            Gets a nicely formatted string that lists all the errors in the given set of value resolvers. The returned value is null if there are no errors.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.DrawErrors(Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver)">
+            <summary>
+            Draws error boxes for all errors in the given value resolvers, or does nothing if there are no errors. This is equivalent to calling DrawError() on all resolvers passed to this method.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.DrawErrors(Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver,Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver[])">
+            <summary>
+            Draws error boxes for all errors in the given value resolvers, or does nothing if there are no errors. This is equivalent to calling DrawError() on all resolvers passed to this method.
+            </summary>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver`1">
+            <summary>
+            <para>A ValueResolver resolves a string to a value of a given type, given an InspectorProperty instance to use as context. Call <see cref="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver.Get``1(Sirenix.OdinInspector.Editor.InspectorProperty,System.String)"/> to get an instance of a ValueResolver.</para>
+            <para>Value resolvers are a globally extendable system that can be hooked into and modified or changed by creating and registering a <see cref="T:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverCreator"/>.</para>
+            <para>See Odin's tutorials for details and examples of how to use ValueResolvers.</para>
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver`1.Func">
+            <summary>
+            The delegate that does the actual value resolution. You should not call this manually, but instead call <see cref="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver`1.GetValue(System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver`1.ValueType">
+            <summary>
+            The type of value that this resolver instance is supposed to get. Always equal to typeof(<see cref="!:TResult"/>).
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver`1.GetValue(System.Int32)">
+            <summary>
+            Gets a value from the value resolver.
+            </summary>
+            <param name="selectionIndex">The selection index at which to get the value, in the case of multi-selection. Defaults to 0.</param>
+            <returns>The value that was gotten.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver`1.GetWeakValue(System.Int32)">
+            <summary>
+            Gets a value from the value resolver in a weakly typed manner.
+            </summary>
+            <param name="selectionIndex">The selection index at which to get the value, in the case of multi-selection. Defaults to 0.</param>
+            <returns>The value that was gotten.</returns>
+        </member>
+        <member name="T:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext">
+            <summary>
+            This struct contains all of a ValueResolver's configurations and values it needs to function. For performance and simplicity reasons, this is a single very large struct that lives on a ValueResolver instance and is passed around by ref to anything that needs it.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ResultType">
+            <summary>
+            The type of value that the resolver is resolving.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.Property">
+            <summary>
+            The property that *provides* the context for the value resolution. This is the instance that was passed to the resolver when it was created. Note that this is different from <see cref="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ContextProperty"/>, which is based on this value, but almost always isn't the same InspectorProperty instance.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ResolvedString">
+            <summary>
+            The string that is resolved to get a value.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ErrorMessage">
+            <summary>
+            The error message, if a valid value resolution wasn't found, or if creation of the value resolver failed because <see cref="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ResolvedString"/> was invalid, or if value resolution was run but threw an exception. (In this last case, <see cref="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ErrorMessageIsDueToException"/> will be true.)
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.NamedValues">
+            <summary>
+            The named values that are available to the value resolver. Use this field only to get and set named values - once the ValueResolver has been created, new named values will have no effect.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.SyncRefParametersWithNamedValues">
+            <summary>
+            Whether the value resolver should sync ref parameters of invoked methods with named values. If this is true, then if a ref or out parameter value is changed during value resolution, the named value associated with that parameter will also be changed to the same value.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.FallbackValue">
+            <summary>
+            This is the fallback value that the value resolver will return if there is an error or failed resolution for any reason.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.HasFallbackValue">
+            <summary>
+            Whether there is a fallback value. This boolean exists because then null is also a valid fallback value. This boolean will always be true if an overload is used that takes a fallback value parameter.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ErrorMessageIsDueToException">
+            <summary>
+            This will be true if <see cref="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ErrorMessage"/> is not null and the message was caused by an exception thrown by code invoked during an actual value resolution.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.LogExceptions">
+            <summary>
+            Whether exceptions thrown during value resolution should be logged to the console.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ParentType">
+            <summary>
+            The type that is the parent of the value resolution, ie, the type that is the context. This is the same as <see cref="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ContextProperty"/>.ValueEntry.TypeOfValue.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ContextProperty">
+            <summary>
+            The property that *is* the context for the value resolution. This is not the instance that was passed to the resolver when it was created, but this value is based on that instance. This is the property that provides the actual context - for example, if <see cref="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.Property"/> is for a member of a type - or for an element in a collection contained by a member - this value will be the parent property for the type that contains that member. Only if <see cref="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.Property"/> is the tree's root property is <see cref="P:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.ContextProperty"/> the same as <see cref="F:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.Property"/>.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.GetParentValue(System.Int32)">
+            <summary>
+            Gets the parent value which provides the context of the resolver.
+            </summary>
+            <param name="selectionIndex">The selection index of the parent value to get.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.SetParentValue(System.Int32,System.Object)">
+            <summary>
+            Sets the parent value which provides the context of the resolver.
+            </summary>
+            <param name="selectionIndex">The selection index of the parent value to set.</param>
+            <param name="value">The value to set.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolverContext.AddDefaultContextValues">
+            <summary>
+            Adds the default named values of "property" and "value" to the context's named values.
+            This method is usually automatically invoked when a resolver is created, so there
+            is no need to invoke it manually.
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.OdinGettingStartedWindow">
@@ -3544,7 +3846,7 @@
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.OdinMenuItem.SmartName">
             <summary>
-            Gets a nice menu item name. If the raw name value is null or a dollar sign, then the name is retrieved from the object itself.
+            Gets a nice menu item name. If the raw name value is null or a dollar sign, then the name is retrieved from the object itself via ToString().
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.OdinMenuItem.Toggled">
@@ -3963,7 +4265,13 @@
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinMenuTree.HandleKeybaordMenuNavigation">
             <summary>
-            Handles the keybaord menu navigation. Call this at the end of your GUI scope, to prevent the menu tree from stealing input events from other text fields.
+            Handles the keyboard menu navigation. Call this at the end of your GUI scope, to prevent the menu tree from stealing input events from other text fields.
+            </summary>
+            <returns>Returns true, if anything was changed via the keyboard.</returns>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.OdinMenuTree.HandleKeyboardMenuNavigation">
+            <summary>
+            Handles the keyboard menu navigation. Call this at the end of your GUI scope, to prevent the menu tree from stealing input events from other text fields.
             </summary>
             <returns>Returns true, if anything was changed via the keyboard.</returns>
         </member>
@@ -4927,6 +5235,11 @@
             Specify whether or not the warning for properties that do not support prefab modifications should be shown in the inspector.
             </summary>
         </member>
+        <member name="P:Sirenix.OdinInspector.Editor.GeneralDrawerConfig.ShowPrefabModifiedValueBar">
+            <summary>
+            Specify whether or not the warning for properties that do not support prefab modifications should be shown in the inspector.
+            </summary>
+        </member>
         <member name="P:Sirenix.OdinInspector.Editor.GeneralDrawerConfig.MaxRecursiveDrawDepth">
             <summary>
             Specifies the maximum depth to which a property can draw itself recursively before the system refuses to draw it any deeper.
@@ -4940,6 +5253,11 @@
         <member name="P:Sirenix.OdinInspector.Editor.GeneralDrawerConfig.ShowButtonResultsByDefault">
             <summary>
             If set to true, buttons will show the result values from invoking them in the inspector by default.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.GeneralDrawerConfig.PrecomputeTypeMatching">
+            <summary>
+            If set to true, type matching for things such as drawers will be precomputed in a separate thread based on a cache from the previously loaded AppDomain that is stored on disk in the Project's Temp folder, resulting in some overall speedups in some cases when doing first-time type matching. Requires a recompile/project reload before it takes any effect.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.GeneralDrawerConfig.GUIFoldoutAnimationDuration">
@@ -5344,7 +5662,7 @@
         <member name="M:Sirenix.OdinInspector.Editor.IPropertyValueCollection.ForceSetValue(System.Int32,System.Object)">
             <summary>
             <para>Force sets the value, ignoring whether it is editable or not.</para>
-            <para>Note that this will fail on list element value entries where <see cref="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ListIsReadOnly"/> is true on the parent value entry.</para>
+            <para>Note that this will fail on list element value entries where <see cref="!:IPropertyValueEntry.ListIsReadOnly"/> is true on the parent value entry.</para>
             </summary>
             <param name="index">The selection index of the value.</param>
             <param name="value">The value to be set.</param>
@@ -5377,7 +5695,7 @@
         <member name="M:Sirenix.OdinInspector.Editor.IPropertyValueCollection`1.ForceSetValue(System.Int32,`0)">
             <summary>
             <para>Force sets the value, ignoring whether it is editable or not.</para>
-            <para>Note that this will fail on list element value entries where <see cref="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ListIsReadOnly"/> is true on the parent value entry.</para>
+            <para>Note that this will fail on list element value entries where <see cref="!:IPropertyValueEntry.ListIsReadOnly"/> is true on the parent value entry.</para>
             </summary>
             <param name="index">The selection index of the value.</param>
             <param name="value">The value to be set.</param>
@@ -5516,7 +5834,7 @@
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueCollectionAlias`2.ForceSetValue(System.Int32,System.Object)">
             <summary>
             <para>Force sets the value, ignoring whether it is editable or not.</para>
-            <para>Note that this will fail on list element value entries where <see cref="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
+            <para>Note that this will fail on list element value entries where <see cref="!:IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
             </summary>
             <param name="index">The selection index of the value.</param>
             <param name="value">The value to be set.</param>
@@ -5551,74 +5869,6 @@
             Not yet documented.
             </summary>
         </member>
-        <member name="T:Sirenix.OdinInspector.Editor.IDictionaryHandler">
-            <summary>
-            <para>An interface that provides various utilities for modifying and querying dictionary values represented by a <see cref="T:Sirenix.OdinInspector.Editor.PropertyValueEntry"/>.</para>
-            <para>It is also responsible for translating and ordering dictionary keys into persistent indices.</para>
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.IDictionaryHandler.SupportsPrefabModifications">
-            <summary>
-            Whether the dictionary represented by this handler supports prefab modifications.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler.GetKey(System.Int32,System.Int32)">
-            <summary>
-            Gets the key value at the given selection and dictionary index.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler.GetKey(System.Object,System.Int32)">
-            <summary>
-            Gets the key value at the given index from the given dictionary.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler.Remove(System.Object)">
-            <summary>
-            Queues a remove modification for a given key. Modifications are applied in Repaint.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler.SetValue(System.Object,System.Object)">
-            <summary>
-            Queues a set value modification for a given key. Modifications are applied in Repaint.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler.ApplyChanges">
-            <summary>
-            Apply all queued changes, and apply prefab modifications if applicable. This method only does something during Repaint.
-            </summary>
-            <returns>true if any changes were made, otherwise false</returns>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler.ForceUpdate">
-            <summary>
-            Force the dictionary handler to update its internal dictionary index mappings.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.IDictionaryHandler`1">
-            <summary>
-            <para>An interface that provides various utilities for modifying and querying dictionary values represented by a <see cref="T:Sirenix.OdinInspector.Editor.PropertyValueEntry"/>.</para>
-            <para>It is also responsible for translating and ordering dictionary keys into persistent indices.</para>
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler`1.GetKey(System.Int32,System.Int32)">
-            <summary>
-            Gets the key value at the given selection and dictionary index.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler`1.GetKey(System.Object,System.Int32)">
-            <summary>
-            Gets the key value at the given index from the given dictionary.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler`1.Remove(`0)">
-            <summary>
-            Queues a remove modification for a given key. Modifications are applied in Repaint.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IDictionaryHandler`1.SetValue(`0,System.Object)">
-            <summary>
-            Queues a set value modification for a given key. Modifications are applied in Repaint.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.IPropertyValueEntry">
             <summary>
             Represents the values of an <see cref="T:Sirenix.OdinInspector.Editor.InspectorProperty"/>, and contains utilities for querying the values' type and getting and setting them.
@@ -5648,26 +5898,6 @@
         <member name="P:Sirenix.OdinInspector.Editor.IPropertyValueEntry.Property">
             <summary>
             The property whose values this value entry represents.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ValueIsWeakList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.IList"/>.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ValueIsStrongList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IList`1"/>.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ValueIsValidDictionary">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IDictionary`2"/> and has a valid key type.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ValueCategory">
-            <summary>
-            The value category of this value entry.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.IPropertyValueEntry.WeakValues">
@@ -5758,21 +5988,6 @@
             <para>Note, both value entries must have the same value type, and must represent values that are .NET value types.</para>
             </summary>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.GetListValueEntryChanger">
-            <summary>
-            Gets a <see cref="T:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger"/> for this value entry, used to apply modifications to value entries representing a list.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.GetDictionaryHandler">
-            <summary>
-            Gets an <see cref="T:Sirenix.OdinInspector.Editor.IDictionaryHandler"/> for this value entry, used to apply modifications and get contextual data from value entries representing a dictionary.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ListIsReadOnly">
-            <summary>
-            Whether any of the list instances that this value entry represents are read only.
-            </summary>
-        </member>
         <member name="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ValueIsPrefabDifferent(System.Object,System.Int32)">
             <summary>
             <para>Determines whether the value at the given selection index is different from the given prefab value, as is relevant for prefab modification checks.</para>
@@ -5836,26 +6051,6 @@
         <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.Property">
             <summary>
             The property whose values this value entry represents.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.ValueIsWeakList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.IList" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.ValueIsStrongList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IList`1" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.ValueIsValidDictionary">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IDictionary`2" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.ValueCategory">
-            <summary>
-            The value category of this value entry.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.WeakValues">
@@ -5937,21 +6132,6 @@
             True if any changes were made, otherwise, false.
             </returns>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.GetListValueEntryChanger">
-            <summary>
-            Gets a <see cref="T:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger" /> for this value entry, used to apply modifications to value entries representing a list.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.GetDictionaryHandler">
-            <summary>
-            Gets an <see cref="T:Sirenix.OdinInspector.Editor.IDictionaryHandler" /> for this value entry, used to apply modifications and get contextual data from value entries representing a dictionary.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.ListIsReadOnly">
-            <summary>
-            Whether any of the list instances that this value entry represents are read only.
-            </summary>
-        </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias.Update">
             <summary>
             Updates the values contained in this value entry to the actual values in the target objects, and updates its state (override, type of value, etc.) accordingly.
@@ -5982,7 +6162,7 @@
             A polymorphic alias for a <see cref="T:Sirenix.OdinInspector.Editor.PropertyValueEntry"/> instance, used to implement strongly typed polymorphism in Odin.
             </summary>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.#ctor(Sirenix.OdinInspector.Editor.PropertyValueEntry{`0})">
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.#ctor(Sirenix.OdinInspector.Editor.PropertyValueEntry)">
             <summary>
             Initializes a new instance of the <see cref="T:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2"/> class.
             </summary>
@@ -6030,26 +6210,6 @@
         <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.Property">
             <summary>
             The property whose values this value entry represents.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.ValueIsWeakList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.IList" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.ValueIsStrongList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IList`1" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.ValueIsValidDictionary">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IDictionary`2" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.ValueCategory">
-            <summary>
-            The value category of this value entry.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.WeakValues">
@@ -6114,11 +6274,6 @@
             <returns>
             True if any changes were made, otherwise, false.
             </returns>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.ListIsReadOnly">
-            <summary>
-            Whether any of the list instances that this value entry represents are read only.
-            </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntryAlias`2.Update">
             <summary>
@@ -6640,7 +6795,7 @@
              [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
              public class MyBoxGroupAttribute : PropertyGroupAttribute
              {
-                 public MyBoxGroupAttribute(string group, int order = 0) : base(group, order)
+                 public MyBoxGroupAttribute(string group, float order = 0) : base(group, order)
                  {
                  }
              }
@@ -6686,51 +6841,6 @@
              <seealso cref="T:Sirenix.OdinInspector.Editor.PropertyTree"/>
              <seealso cref="T:Sirenix.Utilities.Editor.GUIHelper"/>
              <seealso cref="T:Sirenix.Utilities.Editor.SirenixEditorGUI"/>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.OdinGroupDrawer`1.GUICallType">
-            <summary>
-            Drawing properties using GUICallType.GUILayout and overriding DrawPropertyGroupLayout is the default behavior.
-            But you can also draw the property group the "good" old Unity way, by overriding and implementing
-            GetRectHeight and DrawPropertyGroupRect. Just make sure to override GUICallType as well and return GUICallType.Rect
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinGroupDrawer`1.DrawPropertyImplementation(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.GUIContent)">
-            <summary>
-            Draws the actual property. This method is called by this.DrawProperty(...)
-            </summary>
-            <param name="property">The property.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <exception cref="T:System.NotImplementedException">Case GUILayout is neither Rect of GUILayout.</exception>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinGroupDrawer`1.GetRectHeight(Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Return the GUI height of the property. This method is called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyGroupRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyGroupLayout will suffice.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <returns>Returns EditorGUIUtility.singleLineHeight by default.</returns>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinGroupDrawer`1.DrawPropertyGroupRect(UnityEngine.Rect,Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property group in the Rect provided. This method does not support the GUILayout, and is only called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyGroupRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyGroupLayout will suffice.
-            </summary>
-            <param name="position">The position rect.</param>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinGroupDrawer`1.DrawPropertyGroupLayout(Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property group with GUILayout support. This method is called from DrawPropertyImplementation if the GUICallType is set to GUILayout, which is the default.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinGroupDrawer`1.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
@@ -7172,13 +7282,8 @@
              </para>
             
              <para>
-             Remember to provide your custom drawer with an <see cref="T:Sirenix.OdinInspector.Editor.OdinDrawerAttribute"/>
-             in order for it to be located by the <see cref="T:Sirenix.OdinInspector.Editor.DrawerLocator"/>.
-             </para>
-            
-             <para>
              Odin supports the use of GUILayout and takes care of undo for you. It also takes care of multi-selection
-             in many simple cases. Checkout the manual for more information on handling multi-selection.
+             in many simple cases. Check the manual for more information on handling multi-selection.
              </para>
             
              <para>
@@ -7212,9 +7317,9 @@
             
              public sealed class CustomRangeAttributeDrawer : OdinAttributeDrawer&lt;CustomRangeAttribute, float&gt;
              {
-                 protected override void DrawPropertyLayout(IPropertyValueEntry&lt;float&gt; entry, CustomRangeAttribute attribute, GUIContent label)
+                 protected override void DrawPropertyLayout(GUIContent label)
                  {
-                     entry.SmartValue = EditorGUILayout.Slider(label, entry.SmartValue, attribute.Min, attribute.Max);
+                     this.ValueEntry.SmartValue = EditorGUILayout.Slider(label, this.ValueEntry.SmartValue, this.Attribute.Min, this.Attribute.Max);
                  }
              }
             
@@ -7245,10 +7350,10 @@
             
              public sealed class GUITintColorAttributeDrawer : OdinAttributeDrawer&lt;GUITintColorAttribute&gt;
              {
-                 protected override void DrawPropertyLayout(InspectorProperty property, GUITintColorAttribute attribute, GUIContent label)
+                 protected override void DrawPropertyLayout(GUIContent label)
                  {
                     Color prevColor = GUI.color;
-                    GUI.color *= attribute.Color;
+                    GUI.color *= this.Attribute.Color;
                     this.CallNextDrawer(label);
                     GUI.color = prevColor;
                  }
@@ -7279,7 +7384,7 @@
              </para>
             
              <para>
-             Note that Odin's <see cref="T:Sirenix.OdinInspector.Editor.DefaultDrawerChainResolver" /> have full support for generic class constraints,
+             Note that Odin's <see cref="T:Sirenix.OdinInspector.Editor.DefaultDrawerChainResolver" /> has full support for generic class constraints,
              and if that is not enough, you can also add additional type constraints by overriding CanDrawTypeFilter
              </para>
             
@@ -7327,60 +7432,12 @@
             Tells whether or not multiple attributes are allowed.
             </summary>
         </member>
-        <member name="P:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`1.GUICallType">
-            <summary>
-            Drawing properties using GUICallType.GUILayout and overriding DrawPropertyLayout is the default behavior.
-            But you can also draw the property the "good" old Unity way, by overriding and implementing
-            GetRectHeight and DrawPropertyRect. Just make sure to override GUICallType as well and return GUICallType.Rect
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`1.DrawPropertyImplementation(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.GUIContent)">
-            <summary>
-            <para>Draws the actual property.</para>
-            <para>This method is called by base.DrawProperty(...) and calls either DrawPropertyLayout or DrawPropertyRect and GetRectHeight depending on the GUICallType.</para>
-            </summary>
-            <param name="property">The property.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <exception cref="T:System.ArgumentNullException">property.</exception>
-            <exception cref="T:System.ArgumentException">The property at path '" + property.Path + "' does not have an attribute of type " + typeof(TAttribute).GetNiceName() + ".</exception>
-            <exception cref="T:System.NotImplementedException">Case GUILayout is neither Rect of GUILayout.</exception>
-        </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`1.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property with the given label.
             Override this to implement your custom OdinAttributeDrawer.
             </summary>
             <param name="label">Optional label for the property.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`1.DrawPropertyLayout(Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property with GUILayout support. This method is called by DrawPropertyImplementation if the GUICallType is set to GUILayout, which is the default.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`1.DrawPropertyRect(UnityEngine.Rect,Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property in the Rect provided. This method does not support the GUILayout, and is only called by DrawPropertyImplementation if GUICallType is set to Rect which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="position">The position rect.</param>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`1.GetRectHeight(Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Return the GUI height of the property. This method is called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <returns>Returns EditorGUIUtility.singleLineHeight by default.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`1.CanDrawProperty(Sirenix.OdinInspector.Editor.InspectorProperty)">
             <summary>
@@ -7403,18 +7460,12 @@
              </para>
             
              <para>
-             Remember to provide your custom drawer with an <see cref="T:Sirenix.OdinInspector.Editor.OdinDrawerAttribute"/>
-             in order for it to be located by the <see cref="T:Sirenix.OdinInspector.Editor.DrawerLocator"/>.
-             </para>
-            
-             <para>
              Odin supports the use of GUILayout and takes care of undo for you. It also takes care of multi-selection
              in many simple cases. Checkout the manual for more information on handling multi-selection.
              </para>
             
              <para>
              Also note that Odin does not require that your custom attribute inherits from Unity's PropertyAttribute.
-             Furthermore <see cref="T:Sirenix.OdinInspector.Editor.DrawerLocator" /> have full support for generic class constraints.
              </para>
              </summary>
              
@@ -7445,9 +7496,9 @@
             
              public sealed class CustomRangeAttributeDrawer : OdinAttributeDrawer&lt;CustomRangeAttribute, float&gt;
              {
-                 protected override void DrawPropertyLayout(IPropertyValueEntry&lt;float&gt; entry, CustomRangeAttribute attribute, GUIContent label)
+                 protected override void DrawPropertyLayout(GUIContent label)
                  {
-                     entry.SmartValue = EditorGUILayout.Slider(label, entry.SmartValue, attribute.Min, attribute.Max);
+                     this.ValueEntry.SmartValue = EditorGUILayout.Slider(label, this.ValueEntry.SmartValue, this.Attribute.Min, this.Attribute.Max);
                  }
              }
             
@@ -7478,10 +7529,10 @@
             
              public sealed class GUITintColorAttributeDrawer : OdinAttributeDrawer&lt;GUITintColorAttribute&gt;
              {
-                 protected override void DrawPropertyLayout(InspectorProperty property, GUITintColorAttribute attribute, GUIContent label)
+                 protected override void DrawPropertyLayout(GUIContent label)
                  {
                     Color prevColor = GUI.color;
-                    GUI.color *= attribute.Color;
+                    GUI.color *= this.Attribute.Color;
                     this.CallNextDrawer(label);
                     GUI.color = prevColor;
                  }
@@ -7507,12 +7558,12 @@
              </para>
             
              <para>
-             This means that there is no guarantee that your drawer will be called, sins other drawers
+             This means that there is no guarantee that your drawer will be called, since other drawers
              could have a higher priority than yours and choose not to call CallNextDrawer().
              </para>
             
              <para>
-             Note that Odin's <see cref="T:Sirenix.OdinInspector.Editor.DefaultDrawerChainResolver" /> have full support for generic class constraints,
+             Note that Odin's <see cref="T:Sirenix.OdinInspector.Editor.DefaultDrawerChainResolver" /> has full support for generic class constraints,
              and if that is not enough, you can also add additional type constraints by overriding CanDrawTypeFilter
              </para>
             
@@ -7530,7 +7581,7 @@
                      return type != typeof(string);
                  }
             
-                 protected override void DrawPropertyLayout(IPropertyValueEntry&lt;T&gt; entry, MyCustomAttribute attribute, GUIContent label)
+                 protected override void DrawPropertyLayout(GUIContent label)
                  {
                      // Draw property here.
                  }
@@ -7552,43 +7603,8 @@
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.ValueEntry">
             <summary>
-            Gets the attribute that the OdinAttributeDrawer draws for.
+            Gets the strongly typed ValueEntry of the OdinAttributeDrawer's property.
             </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.DrawPropertyLayout(Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property with GUILayout support. This method is called by DrawPropertyImplementation if the GUICallType is set to GUILayout, which is the default.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <exception cref="T:System.ArgumentException">The given property to draw at path '" + property.Path + "' does not have a value of required type " + typeof(IPropertyValueEntry&lt;TValue&gt;).GetNiceName() + ".</exception>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.DrawPropertyRect(UnityEngine.Rect,Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property in the Rect provided. This method does not support the GUILayout, and is only called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="position">The position rect.</param>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <exception cref="T:System.ArgumentException">The given property to draw at path '" + property.Path + "' does not have a value of required type " + typeof(IPropertyValueEntry&lt;TValue&gt;).GetNiceName() + ".</exception>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.GetRectHeight(Sirenix.OdinInspector.Editor.InspectorProperty,`0,UnityEngine.GUIContent)">
-            <summary>
-            Return the GUI height of the property. This method is called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <returns>
-            Returns EditorGUIUtility.singleLineHeight by default.
-            </returns>
-            <exception cref="T:System.ArgumentException">The given property to draw at path '" + property.Path + "' does not have a value of required type " + typeof(IPropertyValueEntry&lt;TValue&gt;).GetNiceName() + ".</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
@@ -7596,36 +7612,6 @@
             Override this to implement your custom OdinAttributeDrawer.
             </summary>
             <param name="label">Optional label for the property.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.DrawPropertyLayout(Sirenix.OdinInspector.Editor.IPropertyValueEntry{`1},`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property with GUILayout support. This method is called from DrawPropertyImplementation if the GUICallType is set to GUILayout, which is the default.
-            </summary>
-            <param name="entry">The entry.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.DrawPropertyRect(UnityEngine.Rect,Sirenix.OdinInspector.Editor.IPropertyValueEntry{`1},`0,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property in the Rect provided. This method does not support the GUILayout, and is only called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="position">The position.</param>
-            <param name="entry">The value entry.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.GetRectHeight(Sirenix.OdinInspector.Editor.IPropertyValueEntry{`1},`0,UnityEngine.GUIContent)">
-            <summary>
-            Return the GUI height of the property. This method is called from DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="entry">The value entry.</param>
-            <param name="attribute">The attribute.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <returns>Returns EditorGUIUtility.singleLineHeight by default.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinAttributeDrawer`2.CanDrawAttributeProperty(Sirenix.OdinInspector.Editor.InspectorProperty)">
             <summary>
@@ -7699,18 +7685,6 @@
             Gets the property this drawer draws for.
             </summary>
         </member>
-        <member name="P:Sirenix.OdinInspector.Editor.OdinDrawer.AutoSetGUIEnabled">
-            <summary>
-            If true, not-editable properties will not have its GUI being disabled as otherwise would be the case.
-            This is useful if you want some GUI to be enabled regardless of whether a property is read-only or not.
-            This value is true when an <see cref="T:Sirenix.OdinInspector.Editor.AllowGUIEnabledForReadonlyAttribute"/> is defined on the drawer class itself.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.OdinDrawer.OdinDrawerAttribute">
-            <summary>
-            Gets the OdinDrawerAttribute defined on the class. This returns null, if no <see cref="T:Sirenix.OdinInspector.Editor.OdinDrawerAttribute"/> is defined.
-            </summary>
-        </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.CanDrawTypeFilter(System.Type)">
             <summary>
             <para>Override this method in order to define custom type constraints to specify whether or not a type should be drawn by the drawer.</para>
@@ -7732,66 +7706,17 @@
             Initializes the drawer instance. Override this to implement your own initialization logic.
             </summary>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.DrawProperty(Sirenix.OdinInspector.Editor.InspectorProperty)">
-            <summary>
-            Draws the property using the default label found in <see cref="T:Sirenix.OdinInspector.Editor.InspectorProperty" />
-            This method also disables the GUI if the property is read-only and <see cref="P:Sirenix.OdinInspector.Editor.OdinDrawer.AutoSetGUIEnabled" /> is false.
-            </summary>
-            <param name="property">The property.</param>
-        </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.DrawProperty(UnityEngine.GUIContent)">
             <summary>
             Draws the property with a custom label.
-            This method also disables the GUI if the property is read-only and <see cref="P:Sirenix.OdinInspector.Editor.OdinDrawer.AutoSetGUIEnabled" /> is false.
             </summary>
             <param name="label">The label. Null is allow if you wish no label should be drawn.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.DrawProperty(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.GUIContent)">
-            <summary>
-            Draws the property with a custom label.
-            This method also disables the GUI if the property is read-only and <see cref="P:Sirenix.OdinInspector.Editor.OdinDrawer.AutoSetGUIEnabled" /> is false.
-            </summary>
-            <param name="property">The property.</param>
-            <param name="label">The label. Null is allow if you wish no label should be drawn.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.DrawPropertyImplementation(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.GUIContent)">
-            <summary>
-            Draws the actual property. This method is called by this.DrawProperty(...)
-            </summary>
-            <param name="property">The property.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property with GUILayout support.
             </summary>
             <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.CallNextDrawer(Sirenix.OdinInspector.Editor.IPropertyValueEntry,UnityEngine.GUIContent)">
-            <summary>
-            <para>Calls the next drawer in the drawer chain.</para>
-            <para>
-            In Odin, multiple drawers are used to draw any given property. This method calls
-            the next drawer in the drawer chain provided by the <see cref="T:Sirenix.OdinInspector.Editor.DrawerLocator" />.
-            The order of the drawer chain is defined using the <see cref="T:Sirenix.OdinInspector.Editor.DrawerPriorityAttribute" />.
-            </para>
-            </summary>
-            <param name="entry">The entry with the property to draw.</param>
-            <param name="label">The label. Null is allow if you wish no label should be drawn.</param>
-            <returns>Returns true, if a next drawer was called, otherwise a warning message is shown in the inspector and false is returned.</returns>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.CallNextDrawer(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.GUIContent)">
-            <summary>
-            <para>Calls the next drawer in the drawer chain.</para>
-            <para>
-            Odin supports multiple drawers being used to draw any given property. This method calls
-            the next drawer in the drawer chain provided by the <see cref="T:Sirenix.OdinInspector.Editor.DrawerLocator" />.
-            The order of the drawer chain is defined using the <see cref="T:Sirenix.OdinInspector.Editor.DrawerPriorityAttribute" />.
-            </para>
-            </summary>
-            <param name="property">The property.</param>
-            <param name="label">The label. Null is allowed if you wish no label to be drawn.</param>
-            <returns>Returns true, if a next drawer was called, otherwise a warning message is shown in the inspector and false is returned.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinDrawer.CallNextDrawer(UnityEngine.GUIContent)">
             <summary>
@@ -7978,59 +7903,16 @@
              <seealso cref="T:Sirenix.Utilities.Editor.GUIHelper"/>
              <seealso cref="T:Sirenix.Utilities.Editor.SirenixEditorGUI"/>
         </member>
-        <member name="P:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.GUICallType">
-            <summary>
-            Drawing properties using GUICallType.GUILayout and overriding DrawPropertyLayout is the default behavior.
-            But you can also draw the property the "good" old Unity way, by overriding and implementing
-            GetRectHeight and DrawPropertyRect. Just make sure to override GUICallType as well and return GUICallType.Rect
-            </summary>
-        </member>
         <member name="P:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.ValueEntry">
             <summary>
             The value entry of the property.
             </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.DrawPropertyImplementation(Sirenix.OdinInspector.Editor.InspectorProperty,UnityEngine.GUIContent)">
-            <summary>
-            Draws the actual property. This method is called by this.DrawProperty(...)
-            </summary>
-            <param name="property">The property.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <exception cref="T:System.ArgumentNullException">property</exception>
-            <exception cref="T:System.ArgumentException">The given property to draw at path '" + property.Path + "' does not have a value of required type " + typeof(IPropertyValueEntry).GetNiceName() + ".</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.DrawPropertyLayout(UnityEngine.GUIContent)">
             <summary>
             Draws the property with GUILayout support.
             </summary>
             <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.DrawPropertyLayout(Sirenix.OdinInspector.Editor.IPropertyValueEntry{`0},UnityEngine.GUIContent)">
-            <summary>
-            Draws the property with GUILayout support. This method is called from DrawPropertyImplementation if the GUICallType is set to GUILayout, which is the default.
-            </summary>
-            <param name="entry">The entry.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.DrawPropertyRect(UnityEngine.Rect,Sirenix.OdinInspector.Editor.IPropertyValueEntry{`0},UnityEngine.GUIContent)">
-            <summary>
-            Draws the property in the Rect provided. This method does not support the GUILayout, and is only called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="position">The position.</param>
-            <param name="entry">The entry.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.GetRectHeight(Sirenix.OdinInspector.Editor.IPropertyValueEntry{`0},UnityEngine.GUIContent)">
-            <summary>
-            Return the GUI height of the property. This method is called by DrawPropertyImplementation if the GUICallType is set to Rect, which is not the default.
-            If the GUICallType is set to Rect, both GetRectHeight and DrawPropertyRect needs to be implemented.
-            If the GUICallType is set to GUILayout, implementing DrawPropertyLayout will suffice.
-            </summary>
-            <param name="entry">The entry.</param>
-            <param name="label">The label. This can be null, so make sure your drawer supports that.</param>
-            <returns>Returns EditorGUIUtility.singleLineHeight by default.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.OdinValueDrawer`1.CanDrawProperty(Sirenix.OdinInspector.Editor.InspectorProperty)">
             <summary>
@@ -8236,7 +8118,7 @@
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyChildren.GetExistingChildren">
             <summary>
-            Gets the property's already created children, in no particular order.
+            Gets the property's already created children. If the child count is less than or equal to 10000, children are returned in order. If the count is larger than 10000, they are returned in no particular order.
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyChildren.GetEnumerator">
@@ -8361,7 +8243,7 @@
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueCollection.ForceSetValue(System.Int32,System.Object)">
             <summary>
             <para>Force sets the value, ignoring whether it is editable or not.</para>
-            <para>Note that this will fail on list element value entries where <see cref="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
+            <para>Note that this will fail on list element value entries where <see cref="!:IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
             </summary>
             <param name="index">The selection index of the value.</param>
             <param name="value">The value to be set.</param>
@@ -8488,7 +8370,7 @@
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueCollection`1.ForceSetValue(System.Int32,System.Object)">
             <summary>
             <para>Force sets the value, ignoring whether it is editable or not.</para>
-            <para>Note that this will fail on list element value entries where <see cref="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
+            <para>Note that this will fail on list element value entries where <see cref="!:IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
             </summary>
             <param name="index">The selection index of the value.</param>
             <param name="value">The value to be set.</param>
@@ -8496,7 +8378,7 @@
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueCollection`1.ForceSetValue(System.Int32,`0)">
             <summary>
             <para>Force sets the value, ignoring whether it is editable or not.</para>
-            <para>Note that this will fail on list element value entries where <see cref="M:Sirenix.OdinInspector.Editor.IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
+            <para>Note that this will fail on list element value entries where <see cref="!:IPropertyValueEntry.ListIsReadOnly" /> is true on the parent value entry.</para>
             </summary>
             <param name="index">The selection index of the value.</param>
             <param name="value">The value to be set.</param>
@@ -8583,169 +8465,78 @@
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(Sirenix.OdinInspector.Editor.OdinDrawer,System.String,System.Func{``0})">
             <summary>
-            <para>Gets a context value local to a drawer type for a given key, using a given delegate to generate a default value if the context doesn't already exist.</para>
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerInstance">An instance of the drawer type linked to the context value to get.</param>
-            <param name="key">The key of the context value to get.</param>
-            <param name="getDefaultValue">A delegate for generating a default value.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``2(System.String,System.Func{``0})">
             <summary>
-            <para>Gets a context value local to a drawer type for a given key, using a given delegate to generate a default value if the context doesn't already exist.</para>
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <typeparam name="TDrawer">The type of the drawer.</typeparam>
-            <param name="key">The key of the context value to get.</param>
-            <param name="getDefaultValue">A delegate for generating a default value.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(System.Type,System.String,System.Func{``0})">
             <summary>
-            <para>Gets a context value local to a drawer type for a given key, using a given delegate to generate a default value if the context doesn't already exist.</para>
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerType">The type of the drawer.</param>
-            <param name="key">The key of the context value to get.</param>
-            <param name="getDefaultValue">A delegate for generating a default value.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(Sirenix.OdinInspector.Editor.OdinDrawer,System.String,``0)">
             <summary>
-            <para>Gets a context value local to a drawer type for a given key, using a given default value if the context doesn't already exist.</para>
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerInstance">An instance of the drawer type linked to the context value to get.</param>
-            <param name="key">The key of the context value to get.</param>
-            <param name="defaultValue">The default value to set if the context value doesn't exist yet.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``2(System.String,``0)">
             <summary>
-            <para>Gets a context value local to a drawer type for a given key, using a given default value if the context doesn't already exist.</para>
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <typeparam name="TDrawer">The type of the drawer.</typeparam>
-            <param name="key">The key of the context value to get.</param>
-            <param name="defaultValue">The default value to set if the context value doesn't exist yet.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(System.Type,System.String,``0)">
             <summary>
-            <para>Gets a context value local to a drawer type for a given key, using a given default value if the context doesn't already exist.</para>
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerType">The type of the drawer.</param>
-            <param name="key">The key of the context value to get.</param>
-            <param name="defaultValue">The default value to set if the context value doesn't exist yet.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(Sirenix.OdinInspector.Editor.OdinDrawer,System.String)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" /> as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerInstance">An instance of the drawer type linked to the context value to get.</param>
-            <param name="key">The key of the context value to get.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(Sirenix.OdinInspector.Editor.OdinDrawer)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" /> as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerInstance">An instance of the drawer type linked to the context value to get.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(Sirenix.OdinInspector.Editor.OdinDrawer,``0)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" /> as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerInstance">An instance of the drawer type linked to the context value to get.</param>
-            <param name="defaultValue">The default value.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance</exception>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``2(System.String)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" /> as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <typeparam name="TDrawer">The type of the drawer.</typeparam>
-            <param name="key">The key of the context value to get.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(System.Type,System.String)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" /> as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <typeparam name="TValue">The type of the value.</typeparam>
-            <param name="drawerType">The type of the drawer.</param>
-            <param name="key">The key of the context value to get.</param>
-            <returns>
-            The found context.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">drawerInstance is null</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(Sirenix.OdinInspector.Editor.OdinDrawer,System.String,``0@)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" />
-            as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <returns>Returns true if a new context was created.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(Sirenix.OdinInspector.Editor.OdinDrawer,System.String,Sirenix.OdinInspector.Editor.PropertyContext{``0}@)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" />
-            as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <returns>Returns true if a new context was created.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``1(System.Type,System.String,Sirenix.OdinInspector.Editor.PropertyContext{``0}@)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" />
-            as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <returns>Returns true if a new context was created.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.Get``2(System.String,Sirenix.OdinInspector.Editor.PropertyContext{``0}@)">
             <summary>
-            Gets a context value local to a drawer type for a given key, and creates a new instance of <see cref="!:T" />
-            as a default value if the context doesn't already exist.
+            Local property contexts are obsolete. Use local drawer fields instead.
             </summary>
-            <returns>Returns true if a new context was created.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyContextContainer.GetPersistent``1(Sirenix.OdinInspector.Editor.OdinDrawer,System.String,``0)">
             <summary>
@@ -9010,9 +8801,19 @@
             Whether this property supports having prefab modifications applied or not.
             </summary>
         </member>
+        <member name="P:Sirenix.OdinInspector.Editor.InspectorProperty.Components">
+            <summary>
+            Gets an immutable list of the components attached to the property.
+            </summary>
+        </member>
         <member name="P:Sirenix.OdinInspector.Editor.InspectorProperty.Attributes">
             <summary>
-            Gets an immutable list of processes attributes for the property.
+            Gets an immutable list of processed attributes for the property.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.InspectorProperty.StateUpdaters">
+            <summary>
+            Gets an array of the state updaters of the property. Don't change the contents of this array!
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.InspectorProperty.BaseValueEntry">
@@ -9081,6 +8882,16 @@
             <para>The full path of this property as used by prefab modifications and the deep reflection system, containing all the necessary information to find this property through reflection only.</para>
             </summary>
         </member>
+        <member name="P:Sirenix.OdinInspector.Editor.InspectorProperty.State">
+            <summary>
+            The PropertyState of the property at the current draw count index.
+            </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.GetComponent``1">
+            <summary>
+            Gets the component of a given type on the property, or null if the property does not have a component of the given type.
+            </summary>
+        </member>
         <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.RecordForUndo(System.String,System.Boolean)">
             <summary>
             Records the property's serialization root for undo to prepare for undoable changes, with a custom string that includes the property path and Unity object name. If a message is specified, it is included in the custom undo string.
@@ -9135,11 +8946,12 @@
             Pop a draw session. This is used by <see cref="P:Sirenix.OdinInspector.Editor.InspectorProperty.DrawCount"/> and <see cref="P:Sirenix.OdinInspector.Editor.InspectorProperty.RecursiveDrawDepth"/>.
             </summary>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.NextProperty(System.Boolean)">
+        <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.NextProperty(System.Boolean,System.Boolean)">
             <summary>
             Gets the next property in the <see cref="T:Sirenix.OdinInspector.Editor.PropertyTree"/>, or null if none is found.
             </summary>
             <param name="includeChildren">Whether to include children or not.</param>
+            <param name="visibleOnly">Whether to only include visible properties.</param>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.FindParent(System.Func{Sirenix.OdinInspector.Editor.InspectorProperty,System.Boolean},System.Boolean)">
             <summary>
@@ -9149,11 +8961,6 @@
         <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.FindChild(System.Func{Sirenix.OdinInspector.Editor.InspectorProperty,System.Boolean},System.Boolean)">
             <summary>
             Finds the first child recursively, that matches a given predicate.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.FindParent(Sirenix.OdinInspector.Editor.PropertyValueCategory,System.Boolean)">
-            <summary>
-            Finds the first parent property with the specified value category.
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.InspectorProperty.Update(System.Boolean)">
@@ -9189,6 +8996,11 @@
         <member name="T:Sirenix.OdinInspector.Editor.PropertyTree.OnPropertyValueChangedDelegate">
             <summary>
             Delegate for on property value changed callback.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.Editor.PropertyTree.ComponentProviders">
+            <summary>
+            The component providers that create components for each property in the tree. If you change this list after the tree has been used, you should call tree.RootProperty.RefreshSetup() to make the changes update properly throughout the tree.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.PropertyTree.UnitySerializedObject">
@@ -9251,6 +9063,11 @@
             Gets or sets the <see cref="T:Sirenix.OdinInspector.Editor.DrawerChainResolver"/> for the PropertyTree.
             </summary>
         </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyTree.StateUpdaterLocator">
+            <summary>
+            Gets or sets the <see cref="T:Sirenix.OdinInspector.Editor.StateUpdaterLocator"/> for the PropertyTree.
+            </summary>
+        </member>
         <member name="E:Sirenix.OdinInspector.Editor.PropertyTree.OnUndoRedoPerformed">
             <summary>
             An event that is invoked whenever an undo or a redo is performed in the inspector.
@@ -9268,6 +9085,11 @@
         <member name="M:Sirenix.OdinInspector.Editor.PropertyTree.#ctor">
             <summary>
             Creates a new <see cref="T:Sirenix.OdinInspector.Editor.PropertyTree" /> for all target values of a <see cref="T:UnityEditor.SerializedObject" />.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyTree.RootProperty">
+            <summary>
+            Gets the root property of the tree.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.PropertyTree.SecretRootProperty">
@@ -9292,12 +9114,12 @@
             </summary>
             <param name="action">The action to be delayed.</param>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyTree.EnumerateTree(System.Boolean)">
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyTree.EnumerateTree(System.Boolean,System.Boolean)">
             <summary>
             Enumerates over the properties of the tree.
             </summary>
             <param name="includeChildren">Whether to include children of the root properties or not. If set to true, every property in the entire tree will be enumerated.</param>
-            <returns></returns>
+            <param name="onlyVisible">Whether to only include visible properties. Properties whose parents are invisible are considered invisible.</param>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyTree.GetPropertyAtPath(System.String)">
             <summary>
@@ -9354,6 +9176,14 @@
             <see cref="M:Sirenix.OdinInspector.Editor.InspectorUtilities.EndDrawPropertyTree(Sirenix.OdinInspector.Editor.PropertyTree)"/>.
             </para>
             </summary>
+        </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyTree.DrawSearch">
+            <summary>
+            <para>Draws a search bar for the property tree, and draws the search results if the search bar is used.</para>
+            <para>If this method returns true, the property tree should generally not be drawn normally afterwards.</para>
+            <para>Note that this method will throw exceptions if the property tree is not set up to be searchable; for that, see <see cref="M:Sirenix.OdinInspector.Editor.PropertyTree.SetSearchable(System.Boolean,Sirenix.OdinInspector.SearchableAttribute)"/>.</para>
+            </summary>
+            <returns>True if the property tree is being searched and is currently drawing its search results, otherwise false.</returns>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyTree.GetUnityPropertyForPath(System.String)">
             <summary>
@@ -9465,10 +9295,22 @@
             <param name="targets">The targets to create a tree for.</param>
             <param name="serializedObject">The serialized object to create a tree for. Note that the target values of the given <see cref="T:UnityEditor.SerializedObject"/> must be the same values given in the targets parameter.</param>
         </member>
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyTree.SetSearchable(System.Boolean,Sirenix.OdinInspector.SearchableAttribute)">
+            <summary>
+            <para>Sets whether the property tree should be searchable or not, and allows the passing in of a custom SearchableAttribute instance to configure the search.</para>
+            </summary>
+            <param name="searchable">Whether the tree should be set to be searchable or not.</param>
+            <param name="config">If the tree is set to be searchable, then if this parameter is not null, it will be used to configure the property tree search. If the parameter is null, the SearchableAttribute on the tree's <see cref="P:Sirenix.OdinInspector.Editor.PropertyTree.RootProperty"/> will be used. If that property has no such attribute, then default search settings will be applied.</param>
+        </member>
         <member name="T:Sirenix.OdinInspector.Editor.PropertyTree`1">
             <summary>
             <para>Represents a set of strongly typed values as a tree of properties that can be drawn in the inspector, and provides an array of utilities for querying the tree of properties.</para>
             <para>This class also handles management of prefab modifications.</para>
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.Editor.PropertyTree`1.RootProperty">
+            <summary>
+            Gets the root property of the tree.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.PropertyTree`1.SecretRootProperty">
@@ -9629,11 +9471,12 @@
             <param name="path">The Odin or Unity path to the property to get.</param>
             <param name="backingField">The backing field of the Unity property.</param>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyTree`1.EnumerateTree(System.Boolean)">
+        <member name="M:Sirenix.OdinInspector.Editor.PropertyTree`1.EnumerateTree(System.Boolean,System.Boolean)">
             <summary>
             Enumerates over the properties of the tree. WARNING: For tree that have large targets with lots of data, this may involve massive amounts of work as the full tree structure is resolved. USE THIS METHOD SPARINGLY AND ONLY WHEN ABSOLUTELY NECESSARY!
             </summary>
             <param name="includeChildren">Whether to include children of the root properties or not. If set to true, every property in the entire tree will be enumerated.</param>
+            /// <param name="onlyVisible">Whether to only include visible properties. Properties whose parents are invisible are considered invisible.</param>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyTree`1.ReplaceAllReferences(System.Object,System.Object)">
             <summary>
@@ -9674,16 +9517,6 @@
             Enumeration describing the different types of properties that exist.
             </summary>
         </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyType.ReferenceType">
-            <summary>
-            OBSOLETE: Use <see cref="F:Sirenix.OdinInspector.Editor.PropertyType.Value"/> instead.
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyType.ValueType">
-            <summary>
-            OBSOLETE: Use <see cref="F:Sirenix.OdinInspector.Editor.PropertyType.Value"/> instead.
-            </summary>
-        </member>
         <member name="F:Sirenix.OdinInspector.Editor.PropertyType.Value">
             <summary>
             Property represents a value.
@@ -9697,33 +9530,6 @@
         <member name="F:Sirenix.OdinInspector.Editor.PropertyType.Group">
             <summary>
             Property represents a named group of properties.
-            </summary>
-        </member>
-        <member name="T:Sirenix.OdinInspector.Editor.PropertyValueCategory">
-            <summary>
-            Enumeration describing the different kinds of value categories a property can be, IE, where does the property get its value from?
-            <para/>
-            NOTE: The PropertyValueCategory enum is obsolete since patch 1.1, as the notion of a value category is no longer robust in the new property system.
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueCategory.Member">
-            <summary>
-            Property represents a member.
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueCategory.StrongListElement">
-            <summary>
-            Property represents an element in a strongly typed list (<see cref="T:System.Collections.Generic.IList`1"/>).
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueCategory.WeakListElement">
-            <summary>
-            Property represents an element in a weakly typed list (<see cref="T:System.Collections.IList"/>).
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueCategory.DictionaryElement">
-            <summary>
-            Property represents a key value pair in a dictionary (<see cref="T:System.Collections.Generic.IDictionary`2"/>).
             </summary>
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.PropertyValueState">
@@ -9840,100 +9646,6 @@
             Sets the actual value of a value entry, for a given selection index.
             </summary>
         </member>
-        <member name="T:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger">
-            <summary>
-            Provides functionality for applying list modifications to value entries representing lists.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.#ctor">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.ValueCount">
-            <summary>
-            The amount of list values that this changer represents. This is always equal to <see cref="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.ValueCount"/>.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.ElementType">
-            <summary>
-            The element type of the lists that this changer represents.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.Entry">
-            <summary>
-            The value entry that this changer is associated with.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.AddListElement(System.Object[],System.String)">
-            <summary>
-            Queue a change to add an element to all lists represented. Changes are applied in Repaint.
-            </summary>
-            <param name="values">The values to add.</param>
-            <param name="changeId">The change identifier. This is used to group changes together when multiple changes are made from different sources.</param>
-            <exception cref="T:System.ArgumentNullException">values is null</exception>
-            <exception cref="T:System.ArgumentException">Wrong number of values given.</exception>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.InsertListElementAt(System.Int32,System.Object[],System.String)">
-            <summary>
-            Queue a change to insert an element into all lists represented. Changes are applied in Repaint.
-            </summary>
-            <param name="index">The index to insert at.</param>
-            <param name="values">The values to add.</param>
-            <param name="changeId">The change identifier. This is used to group changes together when multiple changes are made from different sources.</param>
-            <exception cref="T:System.ArgumentNullException">values is null</exception>
-            <exception cref="T:System.ArgumentException">Wrong number of values given.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.RemoveListElementAt(System.Int32,System.String)">
-            <summary>
-            Queue a change to remove an element from all lists represented. Changes are applied in Repaint.
-            </summary>
-            <param name="index">The index to remove at.</param>
-            <param name="changeId">The change identifier. This is used to group changes together when multiple changes are made from different sources.</param>
-            <exception cref="T:System.ArgumentNullException">values is null</exception>
-            <exception cref="T:System.ArgumentException">Wrong number of values given.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.ClearList(System.String)">
-            <summary>
-            Queue a change to clear all lists represented. Changes are applied in Repaint.
-            </summary>
-            <param name="changeId">The change identifier. This is used to group changes together when multiple changes are made from different sources.</param>
-            <exception cref="T:System.ArgumentNullException">values is null</exception>
-            <exception cref="T:System.ArgumentException">Wrong number of values given.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.ApplyChanges">
-            <summary>
-            Applies all queued changes to the represented lists. This method only does something during Repaint.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.RemoveListElementAtImplementation(System.Int32)">
-            <summary>
-            Implementation of the remove list element change.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.InsertListElementAtImplementation(System.Int32,System.Object[])">
-            <summary>
-            Implementation of the insert list element change.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.AddListElementImplementation(System.Object[])">
-            <summary>
-            Implementation of the add list element change.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.ClearListImplementation">
-            <summary>
-            Implementation of the clear list change.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger.SetAllTreeActualValueReferences(System.Int32,System.Object,System.Object)">
-            <summary>
-            Sets all value references on a given selection index in the property tree to a given new value.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.PropertyValueEntry">
             <summary>
             Represents the values of an <see cref="T:Sirenix.OdinInspector.Editor.InspectorProperty"/>, and contains utilities for querying the values' type and getting and setting them.
@@ -9984,28 +9696,6 @@
         <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.Property">
             <summary>
             The property whose values this value entry represents.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.ValueIsStrongList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IList`1" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.ValueIsWeakList">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.IList" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.ValueIsValidDictionary">
-            <summary>
-            Whether the type of this entry implements <see cref="T:System.Collections.Generic.IDictionary`2" />.
-            </summary>
-        </member>
-        <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.ValueCategory">
-            <summary>
-            The value category of this value entry.
-            <para/>
-            NOTE: This property is obsolete and should no longer be used.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.WeakValues">
@@ -10100,16 +9790,6 @@
             True if any changes were made, otherwise, false.
             </returns>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry.GetListValueEntryChanger">
-            <summary>
-            Gets a <see cref="T:Sirenix.OdinInspector.Editor.PropertyListValueEntryChanger" /> for this value entry, used to apply modifications to value entries representing a list.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry.GetDictionaryHandler">
-            <summary>
-            Gets an <see cref="T:Sirenix.OdinInspector.Editor.IDictionaryHandler" /> for this value entry, used to apply modifications and get contextual data from value entries representing a dictionary.
-            </summary>
-        </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry.GetValueState">
             <summary>
             Determines the value state of this value entry.
@@ -10128,11 +9808,6 @@
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry.Initialize">
             <summary>
             Initializes this value entry.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry.ListIsReadOnly">
-            <summary>
-            Whether any of the list instances that this value entry represents are read only.
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry.CreateAlias(Sirenix.OdinInspector.Editor.PropertyValueEntry,System.Type)">
@@ -10176,29 +9851,9 @@
             Whether <see cref="!:TValue"/> is a value type.
             </summary>
         </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.BaseValueIsWeakList">
-            <summary>
-            Whether <see cref="!:TValue"/> implements <see cref="T:System.Collections.IList"/>.
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.BaseValueIsStrongList">
-            <summary>
-            Whether <see cref="!:TValue"/> implements <see cref="T:System.Collections.Generic.IList`1"/>.
-            </summary>
-        </member>
         <member name="P:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.ValueIsUnityObject">
             <summary>
             Whether <see cref="P:Sirenix.OdinInspector.Editor.PropertyValueEntry.TypeOfValue"/> is derived from <see cref="T:UnityEngine.Object"/>.
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.StrongListCountGetter">
-            <summary>
-            A delegate that gets the count of a strong list instance.
-            </summary>
-        </member>
-        <member name="F:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.StrongListIsReadOnlyGetter">
-            <summary>
-            A delegate that gets the count of a weak list instance.
             </summary>
         </member>
         <member name="F:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.ValueIsMarkedAtomic">
@@ -10272,12 +9927,6 @@
             <summary>
             Sets the actual target tree value.
             </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.ListIsReadOnly">
-            <summary>
-            Whether any of the list instances that this value entry represents are read only.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Cannot call ListIsReadOnly on a property value entry that is not either a weak or a strong list.</exception>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PropertyValueEntry`1.ValueTypeValuesAreEqual(Sirenix.OdinInspector.Editor.IPropertyValueEntry)">
             <summary>
@@ -10411,10 +10060,8 @@
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.StringMemberHelper">
             <summary>
-            Helper class to handle strings for labels and other similar purposes.
-            Allows for a static string, or for refering to string member fields, properties or methods,
-            by name, if the first character is a '$'.
-            Also supports expressions in Odin Pro version.
+            This class has been made fully obsolete, and has been replaced by <see cref="T:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver" />. 
+            It was a helper class to handle strings for labels and other similar purposes.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.StringMemberHelper.ErrorMessage">
@@ -10444,14 +10091,6 @@
             Creates a StringMemberHelper to get a display string.
             </summary>
             <param name="property">Inspector property to get string from.</param>
-            <param name="text">The input string. If the first character is a '$', then StringMemberHelper will look for a member string field, property or method, and will try to parse it as an expression if it starts with '@'.</param>/// <param name="text">The input string. If the first character is a '$', then StringMemberHelper will look for a member string field, property or method.</param>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.StringMemberHelper.#ctor(System.Type,System.Boolean,System.String)">
-            <summary>
-            Creates a StringMemberHelper to get a display string.
-            </summary>
-            <param name="objectType">The type of the parent, to get a member string from.</param>
-            <param name="isStatic">Value indicating if the context should be static.</param>
             <param name="text">The input string. If the first character is a '$', then StringMemberHelper will look for a member string field, property or method, and will try to parse it as an expression if it starts with '@'.</param>/// <param name="text">The input string. If the first character is a '$', then StringMemberHelper will look for a member string field, property or method.</param>
         </member>
         <member name="P:Sirenix.OdinInspector.Editor.StringMemberHelper.IsDynamicString">
@@ -10645,16 +10284,6 @@
             </exception>
             <exception cref="T:System.ArgumentException">Target count must be equal to or higher than 1.</exception>
         </member>
-        <member name="T:Sirenix.OdinInspector.Editor.OdinSceneValidatorWindow">
-            <summary>
-            The Odin Scene Validator window.
-            </summary>
-        </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinSceneValidatorWindow.OpenWindow">
-            <summary>
-            Opens the window.
-            </summary>
-        </member>
         <member name="T:Sirenix.OdinInspector.Editor.GlobalPersistentContext">
             <summary>
             Context that persists across reloading and restarting Unity.
@@ -10734,7 +10363,7 @@
         </member>
         <member name="T:Sirenix.OdinInspector.Editor.PersistentContext">
             <summary>
-            Provides context objects that still persist when Unity reloads or is restartet.
+            Provides context objects that still persist when Unity reloads or is restarted.
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.PersistentContext.Get``2(``0,``1)">
@@ -11145,6 +10774,46 @@
         <member name="T:Sirenix.OdinInspector.Internal.UnityNetworkingUtility">
             <summary>
             Contains references to UnityEngine.Networking types. These types have been removed in Unity 2019+, and thus may be null.
+            </summary>
+        </member>
+        <member name="T:Sirenix.Serialization.AOTGenerationConfig">
+            <summary>
+            Contains configuration for generating an assembly that provides increased AOT support in Odin.
+            </summary>
+        </member>
+        <member name="P:Sirenix.Serialization.AOTGenerationConfig.AutomateBeforeBuilds">
+            <summary>
+            <para>
+            Whether to automatically scan the project and generate an AOT dll, right before builds. This will only affect platforms that are in the <see cref="P:Sirenix.Serialization.AOTGenerationConfig.AutomateForPlatforms"/> list.
+            </para>
+            <para>
+            **This will only work on Unity 5.6 and higher!**
+            </para>
+            </summary>
+        </member>
+        <member name="P:Sirenix.Serialization.AOTGenerationConfig.DeleteDllAfterBuilds">
+            <summary>
+            Whether to automatically delete the generated AOT dll after a build has completed.
+            </summary>
+        </member>
+        <member name="P:Sirenix.Serialization.AOTGenerationConfig.AutomateForPlatforms">
+            <summary>
+            A list of platforms to automatically scan the project and generate an AOT dll for, right before builds. This will do nothing unless <see cref="P:Sirenix.Serialization.AOTGenerationConfig.AutomateBeforeBuilds"/> is true.
+            </summary>
+        </member>
+        <member name="P:Sirenix.Serialization.AOTGenerationConfig.AOTFolderPath">
+            <summary>
+            The path to the AOT folder that the AOT .dll and linker file is created in, relative to the current project folder.
+            </summary>
+        </member>
+        <member name="M:Sirenix.Serialization.AOTGenerationConfig.ScanProject">
+            <summary>
+            Scans the entire project for types to support AOT serialization for.
+            </summary>
+        </member>
+        <member name="M:Sirenix.Serialization.AOTGenerationConfig.GenerateDLL">
+            <summary>
+            Generates an AOT DLL, using the current configuration of the AOTGenerationConfig instance.
             </summary>
         </member>
         <member name="T:Sirenix.Utilities.Editor.SerializationDebuggerWindow">

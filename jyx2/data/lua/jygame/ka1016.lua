@@ -23,7 +23,7 @@ jyx2_ReplaceSceneObject("", "NPC/chushi", "");--厨师离开
 jyx2_ReplaceSceneObject("", "NPC/kongbala", "");--孔巴拉离开
 LightScence();
 Talk(0, "这会真的都没人了，那我可要回家了！", "talkname0", 1);
-GetItem(143, 1);
+AddItem(143, 1);
 ModifyEvent(-2, 6, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

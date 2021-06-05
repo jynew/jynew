@@ -4,7 +4,7 @@ using Animancer;
 using HSFrameWork.ConfigTable;
 using UnityEngine;
 using Jyx2;
-using UnityEngine.AddressableAssets;
+
 
 public class Jyx2SkillEditorEnemy : Jyx2AnimationBattleRole
 {

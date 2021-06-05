@@ -9,7 +9,6 @@ using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using UnityEngine.Playables;
 using HSFrameWork.Common;
-using static Jyx2.BattleFieldModel;
 using Jyx2.Setup;
 using System.Linq;
 using UnityEngine.UI;
@@ -132,32 +131,11 @@ public class StoryEngine : MonoBehaviour
         }
         else if(cmd == "win")
         {
-            BattleHelper battleHelper = FindObjectOfType<BattleHelper>();
-            var model = battleHelper.GetModel();
-            foreach(var role in model.Roles)
-            {
-                if (role.team != 0) role.Hp = 0;
-                role.CheckDeath();
-            }
-
-            HSUtilsEx.CallWithDelay(this, () => {
-                battleHelper.SwitchStatesTo(BattleHelper.BattleViewStates.WaitingForNextActiveBattleRole);
-            }, 1f);
-            
+            //TODO
         }
         else if(cmd == "lose")
         {
-            BattleHelper battleHelper = FindObjectOfType<BattleHelper>();
-            var model = battleHelper.GetModel();
-            foreach (var role in model.Roles)
-            {
-                if (role.team == 0) role.Hp = 0;
-                role.CheckDeath();
-            }
-            HSUtilsEx.CallWithDelay(this, () =>
-            {
-                battleHelper.SwitchStatesTo(BattleHelper.BattleViewStates.WaitingForNextActiveBattleRole);
-            }, 1f);
+            //TODO
         }
         else if(cmd == "testlua")
         {
@@ -790,10 +768,14 @@ public class StoryEngine : MonoBehaviour
         }
     }
 
-    public static void DoLoadGame(int index)
+    public static bool DoLoadGame(int index)
     {
         //加载存档
         var r = GameRuntimeData.LoadArchive(index);
+        if (r==null)
+        {
+            return false;
+        }
 
         //初始化角色
         foreach (var role in r.Team)
@@ -804,7 +786,12 @@ public class StoryEngine : MonoBehaviour
         var loadPara = new LevelMaster.LevelLoadPara() { loadType = LevelMaster.LevelLoadPara.LevelLoadType.Load };
 
         //加载地图
-        LevelLoader.LoadGameMap(r.CurrentMap, loadPara);
+		// fix load game from Main menu will not transport player to last time indoor position 
+		// modified by eaphone at 2021/06/01
+        LevelLoader.LoadGameMap(ConfigTable.Get<GameMap>(r.CurrentMap), loadPara, "", ()=>{
+			LevelMaster.Instance.TryBindPlayer();
+		});
+        return true;
     }
 
 }

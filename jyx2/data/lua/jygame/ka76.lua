@@ -27,7 +27,7 @@ if TryBattle(9) == true then goto label0 end;
     Talk(11, "你是谁？是怎么混进我明教的？", "talkname11", 0);
     Talk(18, "你问我成昆怎么进来的？当然是大摇大摆走进来的．还多亏了这小朋友，替我省下一番功夫．", "talkname18", 0);
     Talk(11, "你是混元霹雳手成昆，谢法王的师父？", "talkname11", 0);
-    Talk(18, "没错，我就是那头笨狮的师父．拜他的鲁莽所赐，你们和六大派结下了这么多梁子．　　　　　　　　　　　今天起明教就将化为灰烬，也了结了我多年来的心愿．", "talkname18", 0);
+    Talk(18, "没错，我就是那头笨狮的师父．拜他的鲁莽所赐，你们和六大派结下了这么多梁子．今天起明教就将化为灰烬，也了结了我多年来的心愿．", "talkname18", 0);
     Talk(0, "要是我猜的没错，这中间的一切都是你苦心安排的．", "talkname0", 1);
     Talk(18, "你这小子倒还蛮聪明的嘛．没错，激起谢逊的愤怒，让他到处乱杀人，留下我的名字好激我现身，到最后再故意让江湖人知道其实是明教谢逊所为，引起江湖各大派与明教间仇杀，这一切都是我精心计划的．", "talkname18", 0);
     Talk(11, "你为何要如此做？", "talkname11", 0);
@@ -52,17 +52,18 @@ if TryBattle(9) == true then goto label0 end;
         ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号9
         ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号0
         ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号10
-         jyx2_ReplaceSceneObject("", "NPC/NPC2 (1)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC4 (1)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC3 (1)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC2 (2)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC4 (2)", "");--明教教徒离开去光明顶
-         jyx2_ReplaceSceneObject("", "NPC/NPC3 (2)", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC1", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC5", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC6", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC7", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC8", "");--明教教徒离开去光明顶
+         jyx2_ReplaceSceneObject("", "NPC/NPC9", "");--明教教徒离开去光明顶
         jyx2_ReplaceSceneObject("", "NPC/chengkun", "");--成昆从地道逃跑
         
         ModifyEvent(-2, 11, 1, 1, 80, -1, -1, 5310, 5310, 5310, -2, -2, -2);--by fanyu|生成人物，启动80号脚本。场景12-编号11
         jyx2_ReplaceSceneObject("", "NPC/chuzi", "1");--厨子出来
         SetScenceMap(-2, 1, 28, 24, 0);--by fanyu|明教地道的门打开。场景12-坐标28,24
+		jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_08", "");--地道打开
         
         LightScence();
         

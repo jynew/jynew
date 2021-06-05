@@ -1,7 +1,7 @@
 Talk(0, "莫非这二人竟是阳顶天夫妇？这里有封信，看看写些什么：", "talkname0", 1);
 Talk(107, "今余神功第四层初成，即悉成昆之事，血气翻涌不克自制，真力将散，行当大归．天也命也，复何如耶？今余命在旦夕，有负衣教主重托，实为本教罪人．盼夫人持余亲笔遗书，召聚众人，令谢逊暂摄副教主之位，处份本教重务．．", "talkname107", 0);
 Talk(0, "原来阳教主是在练功时，因知悉成昆的事后，不慎走火入魔了．而阳教主夫人．．．．这里有把匕首，看来是因愧疚而自杀了．这个羊皮卷，大概就是他当时在练的”神功”吧．", "talkname0", 1);
-GetItem(92, 1);
+AddItem(92, 1);
 ModifyEvent(-2, 0, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(-2, 1, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 SetScenceMap(11, 1, 29, 47, 0);
@@ -13,18 +13,47 @@ jyx2_ReplaceSceneObject("11", "Bake/Static/Others/Door_1", "");--光明顶开门
 jyx2_ReplaceSceneObject("11", "Bake/Static/Others/Door_1_1", "");-- 
 ModifyEvent(11, 0, 0, 0, -1, -1, 81, -1, -1, -1, -2, -2, -2);--by fanyu|启动81号脚本。场景11-编号0
 ModifyEvent(11, 1, 1, 1, -1, -1, -1, 5316, 5316, 5316, -2, -2, -2);--by fanyu|改变贴图，出现人物。场景11-以下都是
-jyx2_ReplaceSceneObject("11", "NPC/huashanpai", "1");--华山派
+jyx2_ReplaceSceneObject("11", "NPC/huashan", "1");--华山派
+jyx2_ReplaceSceneObject("11", "NPC/huashan1", "1");--华山派
+jyx2_ReplaceSceneObject("11", "NPC/huashan2", "1");--华山派
+jyx2_ReplaceSceneObject("11", "NPC/huashan3", "1");--华山派
+jyx2_ReplaceSceneObject("11", "NPC/huashan4", "1");--华山派
+jyx2_ReplaceSceneObject("11", "NPC/huashan5", "1");--华山派
 jyx2_ReplaceSceneObject("11", "NPC/xuanci", "1");--玄慈
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子", "1");--少林弟子
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (1)", "1");--少林弟子
+ jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (2)", "1");--少林弟子
+ jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (3)", "1");--少林弟子
+ jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (4)", "1");--少林弟子
+ jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (5)", "1");--少林弟子
 jyx2_ReplaceSceneObject("11", "NPC/emeipai", "1");--峨嵋派
-jyx2_ReplaceSceneObject("11", "NPC/emaipai1", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (1)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (2)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (3)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (4)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (5)", "1");
 jyx2_ReplaceSceneObject("11", "NPC/hetaichong", "1");--何太冲
+jyx2_ReplaceSceneObject("11", "NPC/kunlun", "1");
 jyx2_ReplaceSceneObject("11", "NPC/kunlun1", "1");
 jyx2_ReplaceSceneObject("11", "NPC/kunlun2", "1");
+jyx2_ReplaceSceneObject("11", "NPC/kunlun3", "1");
+jyx2_ReplaceSceneObject("11", "NPC/kunlun4", "1");
+jyx2_ReplaceSceneObject("11", "NPC/kunlun5", "1");
 jyx2_ReplaceSceneObject("11", "NPC/tangwenliang", "1");--唐文亮 
-jyx2_ReplaceSceneObject("11", "NPC/kunlunpai", "1");
-
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (1)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (2)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (3)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (4)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (5)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (1)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (2)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (3)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (4)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (5)", "1");
 jyx2_ReplaceSceneObject("11", "NPC/weiyixiao_1", "1");--韦一笑出现    
-   
 jyx2_ReplaceSceneObject("11", "NPC/yintianzheng_1", "1"); --殷天正出现
 ModifyEvent(11, 2, 1, 1, -1, -1, -1, 5330, 5330, 5330, -2, -2, -2);
 ModifyEvent(11, 65, 1, 1, -1, -1, -1, 5430, 5430, 5430, -2, -2, -2);

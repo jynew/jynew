@@ -3,7 +3,7 @@ if UseItem(136) == true then goto label0 end;
 ::label0::
     AddEthics(4);
     ModifyEvent(-2, -2, -2, -2, 337, -2, -2, -2, -2, -2, -2, -2, -2);
-    AddItem(136, -1);
+    AddItemWithoutHint(136, -1);
     Talk(0, "小兄弟，快将这酒喝下去！", "talkname0", 1);
     Talk(38, "我不喜欢喝酒．", "talkname38", 0);
     Talk(0, "快喝了他吧！喝下去之后，你就不会忽冷忽热了．", "talkname0", 1);

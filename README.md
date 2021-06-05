@@ -20,9 +20,65 @@
 
 ## 开发环境和搭建
 
-* 开发工具：[Unity 2020.1.17f1c1 (64-bit)](https://unity.cn/releases)
+* 开发工具：[Unity 2020.3.9.f1c1(LTS) (64-bit)](https://unity.cn/releases/lts/2020)
 * 首次加载项目需要运行菜单项 配置表/Gendata
-* 启动场景为0_GameStart.scene
+* 直接点击播放按钮左方的"P"按钮启动游戏（或切换启动场景为0_GameStart.scene）
+
+## 我如何开始？
+
+1、查看视频教程
+
+* [场景编辑：如何配置一个门？（控制物体显示/隐藏）](https://www.bilibili.com/video/BV1mz4y117j3?p=1)
+* [场景编辑：典型的配置一段剧情的方式](https://www.bilibili.com/video/BV1mz4y117j3?p=2)
+* [场景编辑：制作寻路网格，烘焙Navimesh](https://www.bilibili.com/video/BV1mz4y117j3?p=3)
+* [场景编辑：配置和刷出NPC](https://www.bilibili.com/video/BV1mz4y117j3?p=4)
+* [场景编辑：调整场景中的人物](https://www.bilibili.com/video/BV1mz4y117j3?p=6)  【部分内容已过期】
+* [场景编辑：调整场景中的人物动作](https://www.bilibili.com/video/BV1mz4y117j3?p=13)
+* [战斗编辑：生成格子](https://www.bilibili.com/video/BV1mz4y117j3?p=7)
+* [战斗编辑：配置和测试一场战斗](https://www.bilibili.com/video/BV1mz4y117j3?p=8)
+* [资产配置：导入模型并且调整风格化渲染参数](https://www.bilibili.com/video/BV1mz4y117j3?p=5)
+* [资产配置：导入动作](https://www.bilibili.com/video/BV1mz4y117j3?p=9)
+* [资产配置：战斗动作和技能](https://www.bilibili.com/video/BV1mz4y117j3?p=11)
+* [资产配置：战斗技能编辑和预览](https://www.bilibili.com/video/BV1mz4y117j3?p=12)
+
+
+2、系统的阅读文档深入了解
+
+### 通用篇
+* [1.1准备开始](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)
+* [1.2游戏运行机制](https://github.com/jynew/jynew/wiki/1.2%E6%B8%B8%E6%88%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6)
+* [1.3事件触发器](https://github.com/jynew/jynew/wiki/1.3%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8)
+* [1.4Lua脚本](https://github.com/jynew/jynew/wiki/1.4Lua%E8%84%9A%E6%9C%AC)
+* [1.5搭建游戏世界差异解决办法](https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95)
+
+### 游戏内工具篇
+* [2.1技能编辑器（可预览模型、动作、武器挂点、技能特效等）](https://github.com/jynew/jynew/wiki/2.1%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8)
+* [2.2控制台](https://github.com/jynew/jynew/wiki/2.2%E6%8E%A7%E5%88%B6%E5%8F%B0)
+* 2.3存档生成（TODO）
+* 2.4战斗调试（TODO）
+* [2.5角色模型配置管理器](https://github.com/jynew/jynew/wiki/2.5%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E5%99%A8)
+
+### 程序篇
+* 3.1理解代码结构(TODO)
+* 3.2资源加载管理机制(TODO)
+* 3.3配置表加载和读取（TODO）
+* 3.4存档数据结构（TODO）
+* 3.5Lua虚拟机（TODO）
+* 3.6地图流程说明（TODO）
+* 3.7战斗流程说明（TODO）
+
+### 艺术和资产篇
+* 4.1艺术和资产概述（TODO）
+* 4.2人物立绘制作标准（TODO）
+* [4.3人物三维模型和动作制作标准](https://github.com/jynew/jynew/wiki/4.3%E4%BA%BA%E7%89%A9%E5%8A%A8%E4%BD%9C%E5%88%B6%E4%BD%9C%E6%A0%87%E5%87%86)
+* 4.4技能特效制作标准（TODO）
+* 4.5三维场景和道具制作标准（TODO）
+* 4.6UI标准（TODO）
+* 4.7音频标准（TODO）
+
+### 项目篇
+* 5.1我们如何制定ROADMAP(TODO)
+* 5.2如何协作和参与开发(TODO)
 
 ## 贡献给项目
 
@@ -30,6 +86,8 @@
 
 * 承诺符合本项目原则和授权协议，贡献的资源制作默认视为满足[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)
 * 代码符合既定风格和编码规范，能正常编译通过，有自测(目前项目没有单元测试，请自测，逻辑需符合《金庸群侠传》DOS版，或作为后续MOD可扩展功能存在)
+* 每次Pull Request只做一件事，或者实现一类功能（方便追溯）
+* Pull Request请尽量自行解决完与最新版本的冲突
 * 资源提交符合当前*项目标准(TODO)*
 * 长期参与代码贡献的开发者可以被添加直接Write（免PullRequest）权限
 
@@ -56,3 +114,6 @@
 
 [xlua](https://github.com/Tencent/xLua)
 
+## 参考项目
+
+[kyscpp](https://github.com/scarsty/kys-cpp)

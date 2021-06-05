@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Jyx2;
+using HSFrameWork.ConfigTable;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -105,25 +106,64 @@ public class BigMapZone : MonoBehaviour
             //command 优先级高于mapKey
             if (!string.IsNullOrEmpty(command))
             {
-                StoryEngine.Instance.ExecuteCommand(Command, null);
+				// handle transport from indoor to sub-scene
+				// modify by eaphoneo at 2021/05/23
+				if(command.StartsWith("IndoorTransport"))
+                {
+					var curMap=LevelMaster.Instance.GetCurrentGameMap();
+					mapKey += "&transport#" + curMap.Tags;
+					LevelLoader.LoadGameMap(mapKey);
+				}else if(command.StartsWith("TransportWei")){
+					// add transport Wei to other hotel when leave hotel after meet him
+					// added by eaphone at 2021/6/5
+					TransportWei();
+					IndoorToBigMap(mapKey);
+				}else{
+					StoryEngine.Instance.ExecuteCommand(Command, null);
+				}
             }
             else if (!string.IsNullOrEmpty(mapKey))
             {
                 
-                //大地图附加上位置
-                if (mapKey.StartsWith("0_BigMap") && !mapKey.Contains("transport"))
-                {
-                    var currentMap = LevelMaster.Instance.GetCurrentGameMap();
-                    if (!string.IsNullOrEmpty(currentMap.BigMapTriggerName))
-                    {
-                        mapKey += "&transport#" + currentMap.BigMapTriggerName;
-                    }
-                }
-
-                LevelLoader.LoadGameMap(mapKey);
+                IndoorToBigMap(mapKey);
             }
         }));
     }
-    
+	
+    void IndoorToBigMap(string mapKey){
+		if (mapKey.StartsWith("0_BigMap") && !mapKey.Contains("transport"))
+		{
+			var currentMap = LevelMaster.Instance.GetCurrentGameMap();
+			if (!string.IsNullOrEmpty(currentMap.BigMapTriggerName))
+			{
+				mapKey += "&transport#" + currentMap.BigMapTriggerName;
+			}
+		}
 
+		LevelLoader.LoadGameMap(mapKey);
+	}
+
+	// add transport Wei to other hotel when leave hotel after meet him
+	// added by eaphone at 2021/6/5
+	public static void TransportWei(){
+		var weiPath="Dynamic/韦小宝";
+		var triggerPath="Triggers/16";
+		string[] targetHotel={"01_heluokezhan","03_youjiankezhan","40_yuelaikezhan","60_longmenkezhan","61_gaoshengkezhan"};
+		var cur=LevelMaster.Instance.GetCurrentGameMap();
+		var isWeiAtCurMap=GameObject.Find(weiPath);
+		if(isWeiAtCurMap!=null && isWeiAtCurMap.activeSelf){
+			LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
+			level.ReplaceSceneObject(cur.Jyx2MapId.ToString(), weiPath, "0");
+			level.ReplaceSceneObject(cur.Jyx2MapId.ToString(),triggerPath,"0");
+			var ran=new System.Random();
+			var index=ran.Next(0,targetHotel.Length);
+			while(cur.Key==targetHotel[index]){
+				index=ran.Next(0,targetHotel.Length);
+			}
+			var target=ConfigTable.Get<GameMap>(targetHotel[index]);
+			Debug.Log("transport Wei to "+target.GetShowName());
+			level.ReplaceSceneObject(target.Jyx2MapId.ToString(), weiPath, "1");
+			level.ReplaceSceneObject(target.Jyx2MapId.ToString(),triggerPath,"1");
+		}
+	}
 }

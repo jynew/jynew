@@ -1,7 +1,7 @@
 if UseItem(174) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(174, -1);
+    AddItemWithoutHint(174, -1);
     Talk(106, "我说大老爷，您这是干什么来着，有什么事尽管吩咐下来，小的一定给您照办．", "talkname106", 0);
     Talk(0, "＜哼！我就知道这招有用＞我不要别的，只要你把知道的都说出来就行了．", "talkname0", 1);
     Talk(106, "我说大老爷！你要我说什么呢？我又不是”南贤北丑”肚子里没啥东西啊！", "talkname106", 0);
@@ -12,4 +12,7 @@ if UseItem(174) == true then goto label0 end;
     Talk(0, "小二哥呀！还说你肚子里没啥东西，我看你是真人不露相！", "talkname0", 1);
     Talk(106, "那里！那里！这些都是道听途说来的．干我们这一行的没什么，罩子放亮，耳朵张大就对了．不跟你多说了，我要去干活了，否则又会被老板训．", "talkname106", 0);
     ModifyEvent(-2, -2, -2, -2, 667, -1, -1, -2, -2, -2, -2, -2, -2);
+	--eaphone at 2021/6/4
+	jyx2_ReplaceSceneObject("", "Triggers/7", "0"); 
+	jyx2_ReplaceSceneObject("", "Triggers/8", "1"); 
 do return end;

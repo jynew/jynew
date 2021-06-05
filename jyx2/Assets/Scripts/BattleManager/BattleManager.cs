@@ -1,45 +1,15 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using DG.Tweening;
-using HanSquirrel.ResourceManager;
 using Jyx2;
 using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
-using HSUI;
-using Jyx2;
-using UniRx;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static Jyx2.BattleFieldModel;
+using Random = UnityEngine.Random;
 
-//WeaponType映射表
-/*
- * BigSword 0
- * Bow 1
- * Dagger 2 匕首  -跑动动作用剑的
- * DoubleKnife 3
- * Gudgel 4
- * Gun 5
- * HFH 6（黄飞鸿？)
- * HidWea 7 暗器 -跑动动作用空手
- * Leg 8  -跑动动作用空手的，受击也是
- * Lute 9 琴/琵琶
- * Palm 10
- * Scourge 11 鞭子
- * Shield 12 盾牌
- * Sinknif 13 单刀
- * SinSword 14 长剑
- * Spear 15 长矛
- * 
- * 
- */
-//战斗开始的参数
+
 public class BattleStartParams 
 {
     public Action<BattleResult> callback;//战斗结果
@@ -91,10 +61,10 @@ public class BattleManager:MonoBehaviour
     private static BattleManager _instance;
 
     #region 战场组件
-    private BattleFieldModel BattleModel;
+    private BattleFieldModel m_BattleModel;
     public BattleFieldModel GetModel()
     {
-        return BattleModel;
+        return m_BattleModel;
     }
 
 
@@ -131,9 +101,9 @@ public class BattleManager:MonoBehaviour
         IsInBattle = true;
         m_battleParams = customParams;
         //初始化战斗model
-        BattleModel = new BattleFieldModel();
+        m_BattleModel = new BattleFieldModel();
         //初始化范围逻辑
-        rangeLogic = new RangeLogic(BattleboxHelper.Instance.IsBlockExists, BattleModel.BlockHasRole);
+        rangeLogic = new RangeLogic(BattleboxHelper.Instance.IsBlockExists, m_BattleModel.BlockHasRole);
 
         //状态初始化
         HSUtilsEx.CallWithDelay(this, () =>
@@ -153,7 +123,7 @@ public class BattleManager:MonoBehaviour
                     item.EnterBattle(0);
                 }
             }
-            BattleModel.InitBattleModel();//战场初始化 行动顺序排序这些
+            m_BattleModel.InitBattleModel();//战场初始化 行动顺序排序这些
             BattleStateMechine.Instance.StartStateMechine(OnBattleEnd);//交给战场状态机接管 状态机完成会回调回来
             //提示UI
             Jyx2_UIManager.Instance.ShowUI("CommonTipsUIPanel", TipsType.MiddleTop, "战斗开始");
@@ -203,7 +173,7 @@ public class BattleManager:MonoBehaviour
         Jyx2_UIManager.Instance.HideUI("BattleMainUIPanel");
 
         //临时，需要调整
-        foreach (var role in BattleModel.Roles)
+        foreach (var role in m_BattleModel.Roles)
         {
             //role.LeaveBattle();
             //非KeyRole死亡2秒后尸体消失
@@ -213,7 +183,7 @@ public class BattleManager:MonoBehaviour
             }
         }
         rangeLogic = null;
-        BattleModel.Roles.Clear();
+        m_BattleModel.Roles.Clear();
     }
 
 
@@ -233,7 +203,7 @@ public class BattleManager:MonoBehaviour
             return;
         }
         //加入战场
-        BattleModel.AddBattleRole(role, npcStandBlock.BattlePos, team, (team != 0));
+        m_BattleModel.AddBattleRole(role, npcStandBlock.BattlePos, team, (team != 0));
 
         //待命
         role.View.Idle();
@@ -253,7 +223,7 @@ public class BattleManager:MonoBehaviour
 
     string CalExpGot(Jyx2Battle battleData)
     {
-        List<RoleInstance> alive_teammate = BattleModel.Roles.Where(r => r.team == 0).ToList();
+        List<RoleInstance> alive_teammate = m_BattleModel.Roles.Where(r => r.team == 0).ToList();
         string rst = "";
         foreach(var role in alive_teammate)
         {
@@ -306,7 +276,28 @@ public class BattleManager:MonoBehaviour
                     rst += $"{role.Name}学会{practiseItem.Name}\n";
                 }
 
-                //TODO：炼制物品kyscpp BattleScene.cpp 1995行
+                var runtime = GameRuntimeData.Instance;
+                
+                //炼制物品
+                if (practiseItem.GenerateItems[0].Id > 0 && role.ExpForMakeItem >= practiseItem.GenerateItemNeedExp &&
+                    runtime.HaveItemBool(practiseItem.GenerateItemNeedCost))
+                {
+                    List<Jyx2RoleItem> makeItemList = new List<Jyx2RoleItem>();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var generateItem = practiseItem.GenerateItems[i];
+                        if (generateItem.Id >= 0)
+                        {
+                            makeItemList.Add(generateItem);
+                        }
+                    }
+
+                    int index = Random.Range(0, makeItemList.Count);
+                    var item = makeItemList[index];
+                    runtime.AddItem(item.Id,item.Count);
+                    runtime.AddItem(practiseItem.GenerateItemNeedCost,-1);
+                    role.ExpForMakeItem = 0;
+                }
             }
         }
         return rst;
@@ -326,7 +317,7 @@ public class BattleManager:MonoBehaviour
         foreach (var data in list)
         {
             //有人占了这一格了
-            if (!ignoreRole && BattleModel.BlockHasRole(data.BattlePos.X, data.BattlePos.Y)) continue;
+            if (!ignoreRole && m_BattleModel.BlockHasRole(data.BattlePos.X, data.BattlePos.Y)) continue;
 
             var dist = (data.WorldPos - pos).sqrMagnitude;
             if (minDist > dist)
@@ -337,109 +328,7 @@ public class BattleManager:MonoBehaviour
         }
         return rst;
     }
-
-    /// <summary>
-    /// 搜索范围内的NPC
-    /// </summary>
-    /// <param name="range"></param>
-    /// <returns></returns>
-    private List<RoleInstance> SearchNPC(int range = 16, MapRoleBehavior mapRoleBehaviour = MapRoleBehavior.Enemy)
-    {
-        List<RoleInstance> npcList = new List<RoleInstance>();
-
-        foreach (var role in MapRuntimeData.Instance.Roles)
-        {
-            //排除RoleInstance为空
-            if (role == null) continue;
-
-            //排除RoleView为空
-            if (role.View == null) continue;
-
-            //排除隐藏角色
-            if (!role.View.gameObject.activeInHierarchy) continue;
-
-            //排除其他MapRoleBehaviour
-            if (role.View.m_Behavior != mapRoleBehaviour) continue;
-
-            //排除战斗状态角色
-            if (role.IsInBattle()) continue;
-
-            //排除死亡的非关键角色
-            if (!role.View.m_IsKeyRole && role.IsDead()) continue;
-
-            if ((role.View.transform.position - _player.View.transform.position).magnitude < range) //附近所有角色，默认16
-            {
-                npcList.Add(role);
-            }
-        }
-        return npcList;
-    }
-
-    #region 操作相关
-    //BY CG：战斗中，对格子的操作，需要穿透touchpad（用于旋转屏幕的）
-    #endregion
-
-    BattleBlockData GetAIBattleBlock(Vector3 vector)
-    {
-        if (!IsBattleMoving)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(vector);
-
-
-            //待调整为格子才可以移动
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                var block = BattleboxHelper.Instance.GetLocationBattleBlock(hitInfo.point);
-                if (block != null && block.IsActive)
-                {
-                    return block;
-                }
-            }
-        }
-        return null;
-    }
-
-    bool IsBattleMoving = false;
-
-    IEnumerator DoPlayerMove(MapRole player, List<Vector3> path, Action callback)
-    {
-        IsBattleMoving = true;
-        var count = path.Count;
-
-        player.IsPlayingMovingAnimation = false;
-        for (int i = 0; i < count; i++)
-        {
-            var pos = path[i];
-            var temp = new Vector3(pos.x, pos.y, pos.z);
-            yield return DoPlayerMove(player, temp);
-        }
-
-        //yield return new WaitForSeconds(0.2f); //有个切换动作的时间？否则在漂移？
-        //player.m_Animator.SetTrigger("Idle");
-        IsBattleMoving = false;
-        //yield return new WaitForSeconds(0.05f); //有个切换动作的时间？否则在漂移？
-
-        callback?.Invoke();
-    }
-
-    IEnumerator DoPlayerMove(MapRole player, Vector3 target)
-    {
-        var dist = (target - player.transform.position).magnitude;
-        if (dist < 0.1f) //eqaul zero
-            yield break;
-
-        float time = (float)(dist / m_BattleMoveSpeed);
-
-        if (!player.IsPlayingMovingAnimation)
-        {
-            player.Run(); //如果不是这样，则每次移动一格，移动动画会重新开始播放
-            player.IsPlayingMovingAnimation = true;
-        }
-
-        player.transform.LookAt(new Vector3(target.x, player.transform.position.y, target.z)); //转身
-        var tweener = player.transform.DOMove(target, time).SetEase(Ease.Linear).OnComplete(() => { });
-        yield return new WaitForSeconds(time);
-    }
+    
 
     #region 战斗共有方法
     /// <summary>
@@ -508,7 +397,7 @@ public class BattleManager:MonoBehaviour
         for (int i = 0; i < range.Count; i++)
         {
             BattleBlockVector pos = range[i];
-            RoleInstance rolei = BattleModel.GetAliveRole(pos);
+            RoleInstance rolei = m_BattleModel.GetAliveRole(pos);
             if (rolei == null || rolei.IsDead()) continue;
             //打敌人的招式
             if (skill.IsCastToEnemy() && rolei.team == team) continue;

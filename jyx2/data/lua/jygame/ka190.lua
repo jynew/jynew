@@ -8,6 +8,6 @@ if TryBattle(28) == true then goto label0 end;
     ModifyEvent(-2, 21, -2, -2, -1, -1, 222, -2, -2, -2, -2, -2, -2);
     LightScence();
     Talk(20, "回去告诉左冷禅，下月十五在嵩山召开的大会，我莫大一定到场．我倒要看看其它三派的掌门怎么说．", "talkname20", 0);
-    GetItem(69, 1);
+    AddItem(69, 1);
     AddRepute(3);
 do return end;

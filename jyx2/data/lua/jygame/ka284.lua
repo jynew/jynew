@@ -38,7 +38,7 @@ if InTeam(35) == true then goto label0 end;
     LightScence();
     Talk(0, "恭喜令狐兄学会这精妙的剑法．我们这就走吧．", "talkname0", 1);
     jyx2_ReplaceSceneObject("", "NPC/linghuchong", "");--令狐冲
-    GetItem(79, 1);
+    AddItem(79, 1);
     LearnMagic2(35, 61, 0);
     AddAptitude(35, 10);
     AddAttack(35, 5);

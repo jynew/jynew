@@ -18,7 +18,7 @@ if InTeam(51) == true then goto label0 end;
         Talk(70, "不过除了七十二项绝技外，本寺还有许多功夫是给俗家子弟练的功夫，譬如说．．”达摩剑法”就是其中一项．．．", "talkname70", 0);
         Talk(0, "方丈是说，不用剃光头也可以学的武功，那我要．", "talkname0", 1);
         Talk(70, "好，我就送你一本达摩剑谱让你参详，望你学会这剑法后能多做善事，济弱扶倾．另外，在本寺中，如果有你需要的东西，尽管拿，别客气．", "talkname70", 0);
-        GetItem(76, 1);
+        AddItem(76, 1);
         ModifyEvent(-2, -2, -2, -2, 515, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本515 场景28-12
         if JudgeEventNum(17, -1) == true then goto label2 end;
             ModifyEvent(-2, 17, -2, -2, 874, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本874 场景28-17
@@ -61,7 +61,7 @@ if InTeam(51) == true then goto label0 end;
                             Talk(70, "阿弥陀佛，阿弥陀佛！施主得饶人处且饶人．", "talkname70", 0);
                             jyx2_ReplaceSceneObject("", "NPC/murongfu", "");--慕容复
                             ModifyEvent(-2, -2, -2, -2, 512, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本512 场景28
-                            GetItem(183, 1);
+                            AddItem(183, 1);
                             AddEthics(-3);
                             ModifyEvent(-2, 0, -2, -2, -1, -1, 514, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本514 场景28-0
                             ModifyEvent(-2, 1, -2, -2, -1, -1, 514, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本514 场景28-1

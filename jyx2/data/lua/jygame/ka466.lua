@@ -21,7 +21,7 @@ if JudgeEventNum(3, -1) == true then goto label0 end;
         Talk(0, "．．．．", "talkname0", 1);
         if JudgeEthics(0, 90, 100) == false then goto label2 end;
             Talk(55, "你在江湖上的作为，我夫妇俩已有所闻，这书你就拿去吧．", "talkname55", 0);
-            GetItem(148, 1);
+            AddItem(148, 1);
             ModifyEvent(-2, 1, -2, -2, 467, -1, -1, -2, -2, -2, -2, -2, -2);
             ModifyEvent(-2, 2, -2, -2, 468, -1, -1, -2, -2, -2, -2, -2, -2);
             do return end;

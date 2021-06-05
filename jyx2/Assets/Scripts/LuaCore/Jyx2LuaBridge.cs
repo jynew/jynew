@@ -50,8 +50,12 @@ namespace Jyx2
             Wait();
         }
 
-        //获取物品
-        static public void GetItem(int itemId, int count)
+        /// <summary>
+        /// 添加（减少）物品，不显示提示
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="count"></param>
+        static public void AddItemWithoutHint(int itemId, int count)
         {
             RunInMainThrad(() =>
             {
@@ -63,8 +67,6 @@ namespace Jyx2
                 }
 
                 runtime.AddItem(itemId, count);
-
-                storyEngine.DisplayPopInfo("获得物品:" + item.Name + "×" + count);
             });
         }
 
@@ -155,7 +157,7 @@ namespace Jyx2
                         loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
                         CurrentPos = posStr
                     }, "", ()=> {
-                        isWin = (ret == BattleFieldModel.BattleResult.Win);
+                        isWin = (ret == BattleResult.Win);
                         Next();
                     });
                 });
@@ -332,7 +334,9 @@ namespace Jyx2
         /// <param name="v">贴图编号（需要除以2）</param>
         static public void SetScenceMap(int sceneId,int layer,int x,int y,int v)
         {
-            //TODO
+            //这个函数已经不需要实现，具体2D和3D版差异解决的方式可以参考
+            //https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95
+            
         }
 
         //增加道德
@@ -343,13 +347,15 @@ namespace Jyx2
 
         static public void ChangeScencePic(int p1,int p2,int p3,int p4)
         {
+            //这个函数已经不需要实现，具体2D和3D版差异解决的方式可以参考
+            //https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95
 
         }
 
-        //播放动画，TODO
+        //播放动画
         static public void PlayAnimation(int p1,int p2,int p3) 
         {
-
+            //这个函数已经不需要实现，使用jyx2_PlayTimeline来解决
         }
 
         static public bool JudgeEthics(int roleId,int low,int high)
@@ -365,7 +371,7 @@ namespace Jyx2
 
         static public void WalkFromTo(int x1,int y1,int x2,int y2)
         {
-            
+            //这个函数已经不需要实现，使用jyx2_WalkFromTo来解决
         }
 
 
@@ -437,10 +443,10 @@ namespace Jyx2
             }
             return false;
         }
-
+        
         static public void Play2Amination(int eventIndex1, int beginPic1, int endPic1, int eventIndex2, int beginPic2, int endPic2)
         {
-
+            //这个函数已经不需要实现，使用jyx2_PlayTimeline来解决
         }
 
         //增加轻功
@@ -599,9 +605,16 @@ namespace Jyx2
             runtime.SetSceneEntraceCondition(sceneId.ToString(), 1);
         }
 
+		// modify by eaphone at 2021/6/5
         static public void SetRoleFace(int dir)
         {
-
+			RunInMainThrad(() =>
+            {
+                var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
+				levelMaster.SetRotation(dir);
+				Next();
+            });
+			Wait();
         }
 
         static public void NPCGetItem(int roleId,int itemId,int count)
@@ -688,6 +701,11 @@ namespace Jyx2
             return (runtime.GetItemCount(Jyx2Consts.MONEY_ID) >= money);
         }
 
+        /// <summary>
+        /// 添加（减少）物品，并显示提示
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="count">可为负数</param>
         static public void AddItem(int itemId, int count)
         {
             RunInMainThrad(() => {
@@ -759,6 +777,18 @@ namespace Jyx2
             });
             Wait();
         }
+		// add to handle indoor transport player
+		// eahphone at 2021/6/5
+        static public void jyx2_MovePlayer(string path)
+        {
+			RunInMainThrad(() =>
+            {
+                var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
+				levelMaster.Transport("999");
+				Next();
+            });
+			Wait();
+        }
 
         static public void jyx2_CameraFollow(string path)
         {
@@ -819,8 +849,8 @@ namespace Jyx2
 
         enum TimeLinePlayMode
         {
-            NextEventOnStart = 0,
-            NextEventOnEnd = 1,
+            ExecuteNextEventOnPlaying = 0,
+            ExecuteNextEventOnEnd = 1,
         }
 
         static Animator clonePlayer;
@@ -842,11 +872,11 @@ namespace Jyx2
                 timeLineObj.gameObject.SetActive(true);
                 var playableDirector = timeLineObj.GetComponent<PlayableDirector>();
 
-                if(playMode == (int)TimeLinePlayMode.NextEventOnEnd)
+                if(playMode == (int)TimeLinePlayMode.ExecuteNextEventOnEnd)
                 {
                     playableDirector.stopped += TimeLineNext;
                 }
-                else if (playMode == (int)TimeLinePlayMode.NextEventOnStart)
+                else if (playMode == (int)TimeLinePlayMode.ExecuteNextEventOnPlaying)
                 {
                     Next();
                 }
@@ -930,6 +960,8 @@ namespace Jyx2
                 timeLineObj.gameObject.SetActive(false);
 
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
+                GameRuntimeData.Instance.Player.View.GetAnimator().transform.localPosition = Vector3.zero;
+                GameRuntimeData.Instance.Player.View.GetAnimator().transform.localRotation = Quaternion.Euler(Vector3.zero);
                 if(clonePlayer != null)
                 {
                     GameObject.Destroy(clonePlayer.gameObject);

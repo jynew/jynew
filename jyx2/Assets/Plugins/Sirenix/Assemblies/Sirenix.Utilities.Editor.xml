@@ -1286,75 +1286,6 @@
             Right aligned.
             </summary>
         </member>
-        <member name="T:Sirenix.Utilities.Editor.OdinInspectorValidationChecker">
-             <summary>
-             Use this class to collect all error and warning messages drawn by the GUI.
-             </summary>
-             <example>
-             Usage:
-             <code>
-             PropertyTree myPropertyTree;
-            
-             OdinInspectorValidationChecker.BeginValidationCheck();
-             GUIHelper.BeginDrawToNothing();
-             InspectorUtilities.DrawPropertyTree(this.propertyTree, false, x => true); // Aggressively draws all properties even those hidden by attributes, foldouts, tabs etc...
-             GUIHelper.EndDrawToNothing();
-             OdinInspectorValidationChecker.EndValidationCheck();
-            
-             var warningMessages = OdinInspectorValidationChecker.WarningMessages;
-             var errorMessages = OdinInspectorValidationChecker.ErrorMessages;
-            
-             </code>
-             </example>
-             <example>
-             A few GUI methods in SirenixEditorGUI such as ErrorMessageBox() and WarningMessageBox() already
-             registers error and warnings messages when a OdinInspectorValidationChecker session is running.
-             However you can easily register your own warning and error messages as well.
-             <code>
-             if (OdinInspectorValidationChecker.IsRunningValidationCheck)
-             {
-                 OdinInspectorValidationChecker.LogError(message);
-                 OdinInspectorValidationChecker.LogWarning(message);
-             }
-             </code>
-             </example>
-        </member>
-        <member name="F:Sirenix.Utilities.Editor.OdinInspectorValidationChecker.WarningMessages">
-            <summary>
-            The warning messages gathered from the last validation check.
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.Editor.OdinInspectorValidationChecker.ErrorMessages">
-            <summary>
-            The error messages gathered from the last validation check.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.OdinInspectorValidationChecker.BeginValidationCheck">
-            <summary>
-            Begins a validation check.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.OdinInspectorValidationChecker.EndValidationCheck">
-            <summary>
-            Begins a validation check.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.OdinInspectorValidationChecker.IsRunningValidationCheck">
-            <summary>
-            Gets a value indicating whether or not a validation is running.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.OdinInspectorValidationChecker.LogError(System.String)">
-            <summary>
-            Logs an error if a validation check is currently running.
-            </summary>
-            <param name="message">The message.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.OdinInspectorValidationChecker.LogWarning(System.String)">
-            <summary>
-            Logs a warning if a validation check is currently running.
-            </summary>
-        </member>
         <member name="T:Sirenix.Utilities.Editor.DragAndDropManager">
             <summary>
             <para>This class is due to undergo refactoring. Use the new DragAndDropUtilities instead.</para>
@@ -5512,7 +5443,7 @@
             Draws a warning message box.
             </summary>
             <remarks>
-            Also triggers a warning during validation checks done by <see cref="T:Sirenix.Utilities.Editor.OdinInspectorValidationChecker"/>
+            Also triggers a warning during validation checks done by <see cref="!:OdinInspectorValidationChecker"/>
             </remarks>
             <param name="message">The message.</param>
             <param name="wide">If set to <c>true</c> the message box will be wide.</param>
@@ -5552,7 +5483,7 @@
             Draws an error message box.
             </summary>
             <remarks>
-            Also triggers an error during validation checks done by <see cref="T:Sirenix.Utilities.Editor.OdinInspectorValidationChecker"/>
+            Also triggers an error during validation checks done by <see cref="!:OdinInspectorValidationChecker"/>
             </remarks>
             <param name="message">The message.</param>
             <param name="wide">If set to <c>true</c> the message box will be wide.</param>
@@ -7588,11 +7519,6 @@
             <param name="assemblyTypeFlags">The <see cref="T:Sirenix.Utilities.AssemblyTypeFlags"/> filters.</param>
             <returns>Types from the current AppDomain with the specified <see cref="T:Sirenix.Utilities.AssemblyTypeFlags"/> filters.</returns>
         </member>
-        <member name="T:Sirenix.Utilities.MemberFinderExtensions">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
         <member name="M:Sirenix.Utilities.MemberFinderExtensions.FindMember(System.Type)">
             <summary>
             <para>Find members of the given type, while providing good error messages based on the following search filters provided.</para>
@@ -7601,28 +7527,12 @@
         </member>
         <member name="T:Sirenix.Utilities.MemberFinder">
             <summary>
-            <para>
-            The MemberFinder is a utility class often used by Odin drawers to find fields, methods, and
+            MemberFinder is obsolete, and has been replacted by <see cref="!:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver" /> and <see cref="!:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver" />. 
+            Use cases that do not fit those utlities should use manual reflection that is hand-optimized for the best performance in the given case.
+            <para />
+            MemberFinder was a utility class often used by Odin drawers to find fields, methods, and
             properties while providing good user-friendly error messages based on the search criteria.
-            </para>
-            <para>
-            The MemberFinder is initialized by ether using the extensions method type.FindMember() or MemberFinder.Start(type),
-            and must be ended again using ether TryGetMember() or GetMember().
-            </para>
             </summary>
-            <example>
-            <code>
-            // Finds any member (FieldInfo, PropertyInfo or MethodInfo) "memberName" with a return type of string.
-            string errorMessage;
-            MemberInfo myMember = typeof(MyType)
-                                    .FindMember()
-                                    .IsNamed("memberName")
-                                    .HasReturnType(typeof(string))
-                                    .HasNoParameters()
-                                    .GetMember(out errorMessage);
-            If no matching member was found, myMember will be null and errorMessage will contain a proper formatted error message based on the search filters provided.
-            </code>
-            </example>
         </member>
         <member name="M:Sirenix.Utilities.MemberFinder.#ctor">
             <summary>

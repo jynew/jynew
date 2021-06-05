@@ -13,7 +13,7 @@ if AskBattle() == true then goto label0 end;
         LightScence();
         Talk(50, "少侠经这多日来的修练，武功果然不凡，乔某拜服．”天龙八部”你就拿去吧．", "talkname50", 0);
         Talk(0, "那里，乔帮主承让了．", "talkname0", 1);
-        GetItem(147, 1);
+        AddItem(147, 1);
         ModifyEvent(-2, -2, -2, -2, 529, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本529 场景51-14
         ModifyEvent(-2, 20, -2, -2, -1, -1, 530, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本530 场景51-20
         ModifyEvent(-2, 21, -2, -2, -1, -1, 530, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本530 场景51-21

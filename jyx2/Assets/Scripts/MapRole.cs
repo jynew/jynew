@@ -14,7 +14,7 @@ using Lean.Pool;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Animancer;
-using UnityEngine.AddressableAssets;
+using Jyx2.Middleware;
 
 public class MapRole : Jyx2AnimationBattleRole
 {
@@ -62,7 +62,9 @@ public class MapRole : Jyx2AnimationBattleRole
     [HideInInspector]
     public bool IsInBattle = false; //是否在战斗中
 
-    private CustomOutlooking _outLooking;
+    public bool HPBarIsDirty { private set; get; } = false;//通知需要刷新Hud血条
+
+    // private CustomOutlooking _outLooking;
     
     public override Animator GetAnimator()
     {
@@ -178,6 +180,18 @@ public class MapRole : Jyx2AnimationBattleRole
         hudRoot.NewText(info);
 
         CheckDeath();
+    }
+
+    //血条标记为需要刷新
+    public override void MarkHpBarIsDirty()
+    {
+        HPBarIsDirty = true;
+    }
+
+    //取消刷新血条标记
+    public override void UnmarkHpBarIsDirty()
+    {
+        HPBarIsDirty = false;
     }
 
     void CheckDeath()
@@ -327,9 +341,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
     void ChangeWeapon(string weaponCode)
     {
-        var weaponStr = DataInstance.GetWeaponMount(weaponCode);
-
-        DOMountWeapon(weaponStr);
+        DOMountWeapon(weaponCode);
     }
 
     void ChangeAnimationController(string path, Action callback)
@@ -416,7 +428,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
     private void Awake()
     {
-        _outLooking = GetComponent<CustomOutlooking>();
+        // _outLooking = GetComponent<CustomOutlooking>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -427,8 +439,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
         //场景没有LevelMaster
         if (LevelMaster.Instance == null && DataInstance == null) this.CreateRoleInstance(m_RoleKey);
-
-
+        
         //脚步声
         //Observable.EveryFixedUpdate()
         //    .Where(_ => _navMeshAgent != null)
@@ -436,17 +447,12 @@ public class MapRole : Jyx2AnimationBattleRole
         //    {
         //        PlayFootStepSoundEffect(_distFromPlayer);
         //    });
-
-
-
+        
         if (!m_IsWaitingForActive && m_RoleKey != "testman" && m_RoleKey != "主角")
         {
             m_IsWaitingForActive = false;
             RefreshModel();
         }
-
-
-        
     }
 
     //队友寻路
@@ -493,94 +499,79 @@ public class MapRole : Jyx2AnimationBattleRole
     //脚步声播放间隔
     public float m_FootStepTimespan = 0.4f;
     #endregion
-
     
-
     public void RefreshModel(Action callback = null)
     {
         if (DataInstance == null) return;
 
-        if (!string.IsNullOrEmpty(DataInstance.ModelAvata))
-        {
-            RefreshModelByModelAvata(DataInstance.ModelAvata, ()=> {
-
-                var animator = GetAnimator();
-                if (animator != null)
-                {
-                    animator.SetBool("InBattle", IsInBattle);
-                }
-
-                if (IsInBattle)
-                {
-                    //直接用第一个武功的姿势
-                    DataInstance.SwitchAnimationToSkill(DataInstance.Wugongs[0]);
-                }
-                else
-                {
-                    animator.SetTrigger("move");
-                }
-
-                if(callback != null) callback();
-            });
-        }
+        if (string.IsNullOrEmpty(DataInstance.ModelAsset)) return;
+        
+        RefreshModelByModelAvata(DataInstance.ModelAsset, ()=> {
+            var animator = GetAnimator();
+            if (animator != null)
+            {
+                animator.SetBool("InBattle", IsInBattle);
+            }
+            
+            if (IsInBattle)
+            {
+                //直接用第一个武功的姿势
+                DataInstance.SwitchAnimationToSkill(DataInstance.Wugongs[0]);
+            }
+            else
+            {
+                animator.SetTrigger("move");
+            }
+            
+            if(callback != null) callback();
+        });
     }
-
-
-
+    
     GameObject m_CurrentWeapon = null;
-
-
+    
     /// <summary>
     /// 挂载武器
     /// </summary>
     /// <param name="weaponStr"></param>
-    void DOMountWeapon(string weaponStr)
+    void DOMountWeapon(string weaponCode)
     {
-        if (!IsInBattle)
-            return;
-
+        if(!IsInBattle) return;
         UnMountCurrentWeapon();
+        
+        if(string.IsNullOrEmpty(weaponCode)) return;
+        if(modelAsset == null) return;
+        
+        var weapon = modelAsset.GetWeaponPart(weaponCode);
+        if(weapon == null) return;
+        if(weapon.m_PartView == null) return;
 
-        if (string.IsNullOrEmpty(weaponStr))
+        m_CurrentWeapon = Instantiate(weapon.m_PartView);
+        var parent = UnityTools.DeepFindChild(transform, weapon.m_BindBone);
+        if(parent != null)
         {
-            return;
+            m_CurrentWeapon.transform.SetParent(parent.transform);
+            m_CurrentWeapon.transform.localScale = weapon.m_OffsetScale;
+            m_CurrentWeapon.transform.localPosition = weapon.m_OffsetPosition;
+            m_CurrentWeapon.transform.localRotation = Quaternion.Euler(weapon.m_OffsetRotation);
         }
-
-        var paras = weaponStr.Split('|');
-
-        int index = 0;
-        string prefab = paras[index++];
-        string bindObj = paras[index++];
-        float scale = float.Parse(paras[index++]);
-        Vector3 pos = UnityTools.StringToVector3(paras[index++], ',');
-        Vector3 rot = UnityTools.StringToVector3(paras[index++], ',');
-
-        Jyx2ResourceHelper.SpawnPrefab(prefab, weaponObj =>
+        else
         {
-            m_CurrentWeapon = weaponObj;
-            var parent = UnityTools.DeepFindChild(transform, bindObj);
-            if (parent != null)
-            {
-                weaponObj.transform.SetParent(parent.transform);
-                weaponObj.transform.localScale = new Vector3(scale, scale, scale);
-                weaponObj.transform.localPosition = pos;
-                weaponObj.transform.localRotation = Quaternion.Euler(rot);
-            }
-            else
-            {
-                Debug.LogError("武器挂载到了不存在的节点：" + bindObj);
-            }
-        });
+            Debug.LogError("武器挂载到了不存在的节点：" + weapon.m_BindBone);
+        }
     }
 
     void UnMountCurrentWeapon()
     {
-        Jyx2ResourceHelper.ReleaseInstance(m_CurrentWeapon);
-        m_CurrentWeapon = null;
+        if(m_CurrentWeapon == null) return;
+        
+        m_CurrentWeapon.transform.localScale = Vector3.zero;
     }
 
     private bool _isRefreshingModel = false;
 
+    private string modelId;
+    private ModelAsset modelAsset;
+    
     public void RefreshModelByModelAvata(string modelAvataCode, Action callback)
     {
         if (_isRefreshingModel)
@@ -598,30 +589,71 @@ public class MapRole : Jyx2AnimationBattleRole
             weaponId = tmp[1];
         }
 
-        if (_outLooking == null)
+        if (modelId == String.Empty)
         {
             _isRefreshingModel = false;
             return;
         }
 
         //跟当前一致，不需要替换
-        if (_outLooking.m_ModelId == modelId)
+        if (this.modelId == modelId)
         {
             _isRefreshingModel = false;
             return;
         }
 
-        _outLooking.m_ModelId = modelId;
-        _outLooking.m_WeaponName = weaponId;
-        _outLooking.OnChange(() =>
+        this.modelId = modelId;
+        OnChange(() =>
         {
             _isRefreshingModel = false;
 
             if (callback != null) callback();
         });
-
     }
+    
+    private void OnChange(Action callback = null)
+    {
+        if (Application.isPlaying)
+        {
+            //销毁所有的孩子
+            HSUnityTools.DestroyChildren(transform);
+        }
+        else
+        {
+            int childCount = transform.childCount;
+            for (int i = childCount - 1; i >= 0; --i)
+            {
+                var go = transform.GetChild(i).gameObject;
+                go.SetActive(false);
+                DestroyImmediate(go);
+            }
+            transform.DetachChildren();
 
+            //适应老的代码。。清理残留的合并Mesh
+            var oldMesh = GetComponent<SkinnedMeshRenderer>();
+            if (oldMesh != null)
+            {
+                DestroyImmediate(oldMesh);
+            }
+        }
+
+        modelAsset = ResourceLoader.LoadAsset<ModelAsset>($"Assets/BuildSource/Jyx2RoleModelAssets/{modelId}.asset");
+        if (modelAsset == null) return;
+        
+        var modelView = Instantiate(modelAsset.m_View);
+        modelView.transform.SetParent(gameObject.transform, false);
+        modelView.transform.localPosition = Vector3.zero;
+        DataInstance.Model = modelAsset;
+        
+        var animator = GetComponent<Animator>();
+        if(animator != null)
+            animator.enabled = false;
+
+        if(callback != null)
+        {
+            callback();
+        }
+    }
     #region 角色残影
 
     GhostShadow m_ghostShadow;

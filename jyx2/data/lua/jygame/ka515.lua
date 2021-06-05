@@ -27,7 +27,7 @@ if InTeam(51) == true then goto label0 end;
     Talk(70, "阿弥陀佛，阿弥陀佛！施主得饶人处且饶人．", "talkname70", 0);
     jyx2_ReplaceSceneObject("", "NPC/murongfu", "");--慕容复
     ModifyEvent(-2, -2, -2, -2, 512, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本512 场景28
-    GetItem(183, 1);
+    AddItem(183, 1);
     ModifyEvent(-2, 0, -2, -2, -1, -1, 514, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本514 场景28-0
     ModifyEvent(-2, 1, -2, -2, -1, -1, 514, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本514 场景28-1
     ModifyEvent(-2, 2, -2, -2, -1, -1, 514, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本514 场景28-2

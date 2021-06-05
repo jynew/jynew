@@ -37,6 +37,9 @@ public class BuffSettlementState : IBattleState
         currentRole.Hp -= currentRole.Poison / 3;
         if (currentRole.Hp < 1)
             currentRole.Hp = 1;
+
+        currentRole.View?.MarkHpBarIsDirty();
+
         int effectRst = tmp - currentRole.Hp;
         currentRole.View.ShowAttackInfo($"<color=green>毒发-{effectRst}</color>");
         Observable.TimerFrame(Convert.ToInt32(castAnimLenght * 60), FrameCountType.FixedUpdate)

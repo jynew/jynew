@@ -12,5 +12,5 @@ if JudgeAttack(0, 75, 1000) == true then goto label0 end;
     jyx2_PlayTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑", 1, true);
     Talk(0, "终于让我给拔出来了！", "talkname0", 1);
     jyx2_StopTimeline("[Timeline]ka460_金蛇山洞_拔金蛇剑");
-    GetItem(110, 1);
+    AddItem(110, 1);
 do return end;

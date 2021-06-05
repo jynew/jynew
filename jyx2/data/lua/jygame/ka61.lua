@@ -1,7 +1,7 @@
 if UseItem(190) == true then goto label0 end;
     do return end;
 ::label0::
-    AddItem(190, -1);
+    AddItemWithoutHint(190, -1);
     Talk(13, "摸这形状，似乎是我明教的铁焰令？", "talkname13", 0);
     Talk(0, "前辈就是金毛狮王谢逊吧．我找前辈好久了，你们明教的弟兄也正在找你．你再不回去，明教就要四分五裂了．", "talkname0", 1);
     Talk(13, "你说什么！我明教的弟兄怎么了．", "talkname13", 0);

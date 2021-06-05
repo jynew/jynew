@@ -31,7 +31,7 @@ if TryBattle(59) == true then goto label0 end;
     ModifyEvent(-2, 8, -2, -2, 340, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 9, -2, -2, 341, 342, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
-    GetItem(132, 1);
+    AddItem(132, 1);
     AddEthics(1);
     AddRepute(2);
     ChangeMMapMusic(3);
