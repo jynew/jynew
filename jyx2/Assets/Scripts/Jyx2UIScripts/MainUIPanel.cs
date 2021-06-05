@@ -106,6 +106,14 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             // return to entertrance
 			// modified by eaphone at 2021/05/30
             //LevelLoader.LoadGameMap("0_BigMap");
+			// add transport Wei to other hotel when leave hotel after meet him
+			// added by eaphone at 2021/6/5
+			string[] targetHotel={"01_heluokezhan","03_youjiankezhan","40_yuelaikezhan","60_longmenkezhan","61_gaoshengkezhan"};
+			foreach(var i in targetHotel){
+				if(i == levelMaster.GetCurrentGameMap().Key){
+					BigMapZone.TransportWei();
+				}
+			}
             levelMaster.QuitToBigMap();
         }
     }
