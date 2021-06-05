@@ -605,9 +605,16 @@ namespace Jyx2
             runtime.SetSceneEntraceCondition(sceneId.ToString(), 1);
         }
 
+		// modify by eaphone at 2021/6/5
         static public void SetRoleFace(int dir)
         {
-
+			RunInMainThrad(() =>
+            {
+                var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
+				levelMaster.SetRotation(dir);
+				Next();
+            });
+			Wait();
         }
 
         static public void NPCGetItem(int roleId,int itemId,int count)
@@ -769,6 +776,18 @@ namespace Jyx2
                 Next();
             });
             Wait();
+        }
+		// add to handle indoor transport player
+		// eahphone at 2021/6/5
+        static public void jyx2_MovePlayer(string path)
+        {
+			RunInMainThrad(() =>
+            {
+                var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
+				levelMaster.Transport("999");
+				Next();
+            });
+			Wait();
         }
 
         static public void jyx2_CameraFollow(string path)

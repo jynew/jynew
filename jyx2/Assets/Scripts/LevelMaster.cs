@@ -729,6 +729,13 @@ public class LevelMaster : MonoBehaviour
             }
         }
     }
+	
+	// implement change player facing. 0:top-right, 1:down-right, 2:top-left, 3:down-left
+	// modify by eaphone at 2021/6/5
+	public void SetRotation(int ro){
+		int[] roationSet={-90,0,180,90};
+		_player.rotation = Quaternion.Euler(Vector3.up*roationSet[ro]);
+	}
 
     //手动存档
     public void OnManuelSave(int index = -1)
