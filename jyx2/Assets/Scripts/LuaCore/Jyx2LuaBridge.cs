@@ -941,6 +941,8 @@ namespace Jyx2
                 timeLineObj.gameObject.SetActive(false);
 
                 GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
+                GameRuntimeData.Instance.Player.View.GetAnimator().transform.localPosition = Vector3.zero;
+                GameRuntimeData.Instance.Player.View.GetAnimator().transform.localRotation = Quaternion.Euler(Vector3.zero);
                 if(clonePlayer != null)
                 {
                     GameObject.Destroy(clonePlayer.gameObject);
