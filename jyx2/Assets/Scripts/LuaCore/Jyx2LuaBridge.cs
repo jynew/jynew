@@ -830,8 +830,8 @@ namespace Jyx2
 
         enum TimeLinePlayMode
         {
-            NextEventOnStart = 0,
-            NextEventOnEnd = 1,
+            ExecuteNextEventOnPlaying = 0,
+            ExecuteNextEventOnEnd = 1,
         }
 
         static Animator clonePlayer;
@@ -853,11 +853,11 @@ namespace Jyx2
                 timeLineObj.gameObject.SetActive(true);
                 var playableDirector = timeLineObj.GetComponent<PlayableDirector>();
 
-                if(playMode == (int)TimeLinePlayMode.NextEventOnEnd)
+                if(playMode == (int)TimeLinePlayMode.ExecuteNextEventOnEnd)
                 {
                     playableDirector.stopped += TimeLineNext;
                 }
-                else if (playMode == (int)TimeLinePlayMode.NextEventOnStart)
+                else if (playMode == (int)TimeLinePlayMode.ExecuteNextEventOnPlaying)
                 {
                     Next();
                 }
