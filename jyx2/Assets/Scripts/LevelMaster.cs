@@ -518,7 +518,9 @@ public class LevelMaster : MonoBehaviour
                     else //和NPC聊天
                     {
                         var mapRole = hitInfo.transform.GetComponent<MapRole>();
-                        mapRole.DoNpcChat();
+						if(mapRole!=null){
+							mapRole.DoNpcChat();
+						}
                     }
                 }
                 //BY CG: MASK：15:Ground层

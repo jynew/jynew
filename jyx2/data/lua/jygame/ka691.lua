@@ -19,10 +19,11 @@ Talk(114, "非常恭喜你！", "talkname114", 0);
 PlayWave(24);
 PlayAnimation(1, 6820, 6860);
 jyx2_PlayTimeline("[Timeline]ka691_小虾米居_转身", 0, false);
+jyx2_PlayTimeline("[Timeline]ka691_小虾米居_软体娃娃跳起", 0, false, "Bake/Static/Others/Doll_1");
 jyx2_Wait(4);
 Talk(0, "软体娃娃！", "talkname0", 1);
 PlayAnimation(1, 6862, 6888);
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_星星", 0, false, "Bake/Static/Others/Doll_1");
+jyx2_PlayTimeline("[Timeline]ka691_小虾米居_软体娃娃打招呼", 0, false, "Bake/Static/Others/Doll_1");
 Talk(114, "非常恭喜你，你是本产品消费者中最幸运的一位．软体世界经过多年的努力研究后，终于发展出一套完全的ＶＲ游戏．你将亲身的扮演游戏的主人翁，在我们为你设计的游戏世界中冒险．", "talkname114", 0);
 Talk(0, "你说什么？这不是在做梦吧？”真正的ＶＲ游戏”？不会吧？你是说，你们已经可以像电影，漫画中的剧情一般，将游戏设计的这么”真实”？让玩者真的”身”处在游戏世界中，而不是只能操纵键盘，盯着荧幕看而已．", "talkname0", 1);
 Talk(114, "没错．这是”最真实的游戏”！而且你知道吗，你是所有消费者中最幸运的一位．因为基于成本考量，在众多的产品中，你购买的这套，是我们所生产中仅有的一套”ＶＲ”版．", "talkname114", 0);
@@ -50,7 +51,8 @@ jyx2_StopTimeline("[Timeline]ka691_小虾米居_站起");
 jyx2_StopTimeline("[Timeline]ka691_小虾米居_迷惑");
 jyx2_StopTimeline("[Timeline]ka691_小虾米居_四处观察");
 jyx2_StopTimeline("[Timeline]ka691_小虾米居_转身");
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_星星");
+jyx2_StopTimeline("[Timeline]ka691_小虾米居_软体娃娃跳起");
+jyx2_StopTimeline("[Timeline]ka691_小虾米居_软体娃娃打招呼");
 SetRoleFace(0); --修正朝向角度
 LightScence(); --增加过场
 ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

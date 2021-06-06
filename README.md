@@ -10,6 +10,12 @@
 
 > 我们承诺：除了爱好者的自愿捐款以外，不会在任何渠道取得收入，游戏亦不会在任何游戏平台进行发布。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 
+## 开发中画面
+
+![image](https://user-images.githubusercontent.com/7448857/118384457-aa81f700-b638-11eb-972b-810a88040939.png)
+![image](https://user-images.githubusercontent.com/7448857/118384458-b2419b80-b638-11eb-8411-8822289759b4.png)
+![image](https://user-images.githubusercontent.com/7448857/118384459-b53c8c00-b638-11eb-8a83-80228747067f.png)
+![image](https://user-images.githubusercontent.com/7448857/118384466-b968a980-b638-11eb-89b3-11aec9ee8bd2.png)
 
 ## 项目目标
 
@@ -54,8 +60,8 @@
 ### 游戏内工具篇
 * [2.1技能编辑器（可预览模型、动作、武器挂点、技能特效等）](https://github.com/jynew/jynew/wiki/2.1%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8)
 * [2.2控制台](https://github.com/jynew/jynew/wiki/2.2%E6%8E%A7%E5%88%B6%E5%8F%B0)
-* 2.3存档生成（TODO）
-* 2.4战斗调试（TODO）
+* [2.3存档生成](https://github.com/jynew/jynew/wiki/2.3%E5%AD%98%E6%A1%A3%E7%94%9F%E6%88%90)
+* [2.4战斗调试](https://github.com/jynew/jynew/wiki/2.4%E6%88%98%E6%96%97%E8%B0%83%E8%AF%95)
 * [2.5角色模型配置管理器](https://github.com/jynew/jynew/wiki/2.5%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E5%99%A8)
 
 ### 程序篇
@@ -69,7 +75,7 @@
 
 ### 艺术和资产篇
 * 4.1艺术和资产概述（TODO）
-* 4.2人物立绘制作标准（TODO）
+* [4.2人物立绘制作标准](https://github.com/jynew/jynew/wiki/4.2%E4%BA%BA%E7%89%A9%E7%AB%8B%E7%BB%98%E5%88%B6%E4%BD%9C%E6%A0%87%E5%87%86)
 * [4.3人物三维模型和动作制作标准](https://github.com/jynew/jynew/wiki/4.3%E4%BA%BA%E7%89%A9%E5%8A%A8%E4%BD%9C%E5%88%B6%E4%BD%9C%E6%A0%87%E5%87%86)
 * 4.4技能特效制作标准（TODO）
 * 4.5三维场景和道具制作标准（TODO）
@@ -101,13 +107,6 @@
 ## 项目结构示意图
 
 ![image](https://user-images.githubusercontent.com/7448857/118384406-5b3bc680-b638-11eb-9186-8888b90bcc35.png)
-
-## 开发中画面
-
-![image](https://user-images.githubusercontent.com/7448857/118384457-aa81f700-b638-11eb-972b-810a88040939.png)
-![image](https://user-images.githubusercontent.com/7448857/118384458-b2419b80-b638-11eb-8411-8822289759b4.png)
-![image](https://user-images.githubusercontent.com/7448857/118384459-b53c8c00-b638-11eb-8a83-80228747067f.png)
-![image](https://user-images.githubusercontent.com/7448857/118384466-b968a980-b638-11eb-89b3-11aec9ee8bd2.png)
 
 
 ## 引用项目
