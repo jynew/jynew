@@ -258,12 +258,13 @@ namespace Jyx2
                 Debug.LogError("调用了不存在的role加入队伍，roleid =" + roleId);
                 return;
             }
-            if (!Team.Contains(role)) 
+            if (GetRoleInTeam(roleId) ==null) 
             {
                 Debug.LogError("role is not in main team，roleid =" + roleId);
                 return;
             }
             Team.Remove(role);
+			StoryEngine.Instance.DisplayPopInfo(role.Name + "离队。");
         }
 
         public RoleInstance GetRoleInTeam(int roleId)
