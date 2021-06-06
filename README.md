@@ -55,7 +55,7 @@
 * [2.1技能编辑器（可预览模型、动作、武器挂点、技能特效等）](https://github.com/jynew/jynew/wiki/2.1%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8)
 * [2.2控制台](https://github.com/jynew/jynew/wiki/2.2%E6%8E%A7%E5%88%B6%E5%8F%B0)
 * [2.3存档生成](https://github.com/jynew/jynew/wiki/2.3%E5%AD%98%E6%A1%A3%E7%94%9F%E6%88%90)
-* 2.4战斗调试（TODO）
+* [2.4战斗调试](https://github.com/jynew/jynew/wiki/2.4%E6%88%98%E6%96%97%E8%B0%83%E8%AF%95)
 * [2.5角色模型配置管理器](https://github.com/jynew/jynew/wiki/2.5%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E5%99%A8)
 
 ### 程序篇
