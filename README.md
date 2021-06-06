@@ -10,6 +10,12 @@
 
 > 我们承诺：除了爱好者的自愿捐款以外，不会在任何渠道取得收入，游戏亦不会在任何游戏平台进行发布。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 
+## 开发中画面
+
+![image](https://user-images.githubusercontent.com/7448857/118384457-aa81f700-b638-11eb-972b-810a88040939.png)
+![image](https://user-images.githubusercontent.com/7448857/118384458-b2419b80-b638-11eb-8411-8822289759b4.png)
+![image](https://user-images.githubusercontent.com/7448857/118384459-b53c8c00-b638-11eb-8a83-80228747067f.png)
+![image](https://user-images.githubusercontent.com/7448857/118384466-b968a980-b638-11eb-89b3-11aec9ee8bd2.png)
 
 ## 项目目标
 
@@ -101,13 +107,6 @@
 ## 项目结构示意图
 
 ![image](https://user-images.githubusercontent.com/7448857/118384406-5b3bc680-b638-11eb-9186-8888b90bcc35.png)
-
-## 开发中画面
-
-![image](https://user-images.githubusercontent.com/7448857/118384457-aa81f700-b638-11eb-972b-810a88040939.png)
-![image](https://user-images.githubusercontent.com/7448857/118384458-b2419b80-b638-11eb-8411-8822289759b4.png)
-![image](https://user-images.githubusercontent.com/7448857/118384459-b53c8c00-b638-11eb-8a83-80228747067f.png)
-![image](https://user-images.githubusercontent.com/7448857/118384466-b968a980-b638-11eb-89b3-11aec9ee8bd2.png)
 
 
 ## 引用项目
