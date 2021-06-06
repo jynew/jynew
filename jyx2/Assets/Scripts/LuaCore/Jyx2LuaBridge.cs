@@ -111,6 +111,7 @@ namespace Jyx2
                     if (evt == null)
                     {
                         Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
                         return;
                     }
                     eventId = int.Parse(evt.name); //当前事件
