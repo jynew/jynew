@@ -129,6 +129,10 @@ namespace Jyx2
 
         [XmlAttribute]
         public int XiulianPoint; //修炼点数
+		
+		//added by eaphone at 2021/6/6
+        [XmlAttribute]
+        public string Dialogue; //离队对话
 
         [XmlElement("Wugongs")]
         public List<Jyx2RoleWugong> Wugongs; //武功
@@ -136,6 +140,7 @@ namespace Jyx2
         [XmlElement("Items")]
         public List<Jyx2RoleItem> Items; //武功
 
+		
         //立绘
         public string GetHeadAvata()
         {

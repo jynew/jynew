@@ -151,6 +151,8 @@ public partial class XiakeUIPanel:Jyx2_UIBase
         Jyx2_UIManager.Instance.HideUI("XiakeUIPanel");
     }
 
+	// added handle leave chat logic
+	// by eaphone at 2021/6/6
     void OnLeaveClick() 
     {
         if (m_currentRole == null)
@@ -162,17 +164,24 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             GameUtil.DisplayPopinfo("主角不能离开队伍");
             return;
         }
-        m_roleList.Remove(m_currentRole);
-        GameRuntimeData.Instance.LeaveTeam(m_currentRole.GetJyx2RoleId());
-        if (m_roleList.Count <= 0)
-        {
-            m_currentRole = GameRuntimeData.Instance.Player;
-        }
-        else
-            m_currentRole = m_roleList[0];
-        RefreshScrollView();
-        RefreshCurrent();
+		var eventLuaPath=HSFrameWork.ConfigTable.ConfigTable.Get<Jyx2Role>(m_currentRole.GetJyx2RoleId()).Dialogue;
+		if(eventLuaPath!=null && eventLuaPath!=""){
+			
+			Jyx2.LuaExecutor.Execute("jygame/ka"+eventLuaPath,new Action(()=>{
+				RefreshView();
+			}));
+		}
+		else{
+			GameRuntimeData.Instance.LeaveTeam(m_currentRole.GetJyx2RoleId());
+			RefreshView();
+		}
     }
+	void RefreshView(){
+		m_roleList.Remove(m_currentRole);
+		m_currentRole = GameRuntimeData.Instance.Player;
+		RefreshScrollView();
+		RefreshCurrent();
+	}
 
     GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
     void OnWeaponClick() 
