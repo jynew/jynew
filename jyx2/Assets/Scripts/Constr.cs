@@ -13,14 +13,11 @@ public class ConStr
     {};
 
     public const string ConfigPath = "Assets/BuildSource/Configs/";
-    public const string IconPath = "Assets/BuildSource/Icons/";
-    public const string ItemIconPath = "Assets/BuildSource/Items/";
-    public const string SkillPath = "Assets/BuildSource/Skills/";
-    public const string ModelDescXmlPath = "Assets/3D/XML";
     public const string BattleBlockDatasetPath = "Assets/BuildSource/BattleBlockDataset/";
     public const string BattleboxDatasetPath = "Assets/BuildSource/BattleboxDataset/";
     public const string LevelMaster = "Assets/Prefabs/LevelMaster.prefab";
     public const string Player = "Assets/Prefabs/Player.prefab";
+    public const string PlayerPointLight = "Assets/Prefabs/PlayerPointLight.prefab";
 
     public const string DES_KEY = "test";
 
