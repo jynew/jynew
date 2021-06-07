@@ -125,3 +125,8 @@
 ## 参考项目
 
 [kyscpp](https://github.com/scarsty/kys-cpp)
+
+## 特别补充说明
+
+以下插件仅供学习使用，若希望使用它还请自行购买重新导入：<br>
+[Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
