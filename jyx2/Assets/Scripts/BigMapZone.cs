@@ -154,7 +154,7 @@ public class BigMapZone : MonoBehaviour
 		if(isWeiAtCurMap!=null && isWeiAtCurMap.activeSelf){
 			LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
 			level.ReplaceSceneObject(cur.Jyx2MapId.ToString(), weiPath, "0");
-			level.ReplaceSceneObject(cur.Jyx2MapId.ToString(),triggerPath,"0");
+			//level.ReplaceSceneObject(cur.Jyx2MapId.ToString(),triggerPath,"0");
 			var ran=new System.Random();
 			var index=ran.Next(0,targetHotel.Length);
 			while(cur.Key==targetHotel[index]){
@@ -163,7 +163,7 @@ public class BigMapZone : MonoBehaviour
 			var target=ConfigTable.Get<GameMap>(targetHotel[index]);
 			Debug.Log("transport Wei to "+target.GetShowName());
 			level.ReplaceSceneObject(target.Jyx2MapId.ToString(), weiPath, "1");
-			level.ReplaceSceneObject(target.Jyx2MapId.ToString(),triggerPath,"1");
+			//level.ReplaceSceneObject(target.Jyx2MapId.ToString(),triggerPath,"1");
 		}
 	}
 }
