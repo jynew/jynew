@@ -54,14 +54,19 @@ namespace Jyx2
             Loom.RunAsync(() =>
             {
 
-                luaEnv.DoString(luaContent);
-
-                Debug.Log("lua执行完毕: " + path);
-
-                currentLuaContext = null;
-
-                _executing = false;
+                try
+                {
+                    luaEnv.DoString(luaContent);
+                    Debug.Log("lua执行完毕: " + path);
+                    currentLuaContext = null;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("lua执行错误：" + e.ToString());
+                    Debug.LogError(e.StackTrace);
+                }
                 
+                _executing = false;
                 if (callback != null)
                 {
                     Loom.QueueOnMainThread(o => { callback(); }, null);
