@@ -399,7 +399,7 @@ namespace Jyx2
 
         public int GetMoney()
         {
-            return GetItemCount(Jyx2Consts.MONEY_ID);
+            return GetItemCount(GameConst.MONEY_ID);
         }
 
         //探索地图运行时

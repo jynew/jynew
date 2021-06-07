@@ -101,7 +101,7 @@ public partial class XiakeUIPanel:Jyx2_UIBase
     {
         StringBuilder sb = new StringBuilder();
         sb.AppendLine($"等级 {role.Level}");
-        sb.AppendLine($"体力 {role.Tili}/{Jyx2Consts.MaxTili}");
+        sb.AppendLine($"体力 {role.Tili}/{GameConst.MaxTili}");
         sb.AppendLine($"生命 {role.Hp}/{role.MaxHp}");
         sb.AppendLine($"内力 {role.Mp}/{role.MaxMp}");
         sb.AppendLine($"经验 {role.Exp}/{role.GetLevelUpExp()}");

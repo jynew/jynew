@@ -782,11 +782,11 @@ public class LevelMaster : MonoBehaviour
     public Jyx2Player GetPlayer()
     {
 		var player=_player.GetComponent<Jyx2Player>();
-		if(player == null)
-			{
-				player = _player.gameObject.AddComponent<Jyx2Player>();
-				player.Init();
-			}
+        if (player == null)
+        {
+            player = _player.gameObject.AddComponent<Jyx2Player>();
+            player.Init();
+        }
         return player;
     }
 
