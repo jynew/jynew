@@ -11,6 +11,8 @@ if AskRest() == true then goto  label0 end;
         Rest();
         AddItemWithoutHint(174, -100);
         SetScencePosition2(14, 14);
+		-- add by eaphone at 2021/6/5
+		jyx2_MovePlayer("999");
         SetRoleFace(3);
         LightScence();
 do return end;

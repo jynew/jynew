@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using DG.Tweening;
-using HanSquirrel.ResourceManager;
 using UnityEditor;
 using Lean.Pool;
 
@@ -164,29 +162,7 @@ namespace Jyx2.Middleware
             {
                 item.GetComponent<Graphic>().raycastTarget = isOn;
             }
-            //		foreach(Transform child in trans)
-            //		{            
-            //			TurnRaycastTargetOff(child,isOn);
-            //		}
         }
-
-
-        //public static void FadeSprite(GameObject go, float duration, float alpha = 0f, Action callback = null)
-        //{
-        //    foreach (var item in go.GetComponentsInChildren<SpriteRenderer>())
-        //    {
-        //        if (item.sprite != null)
-        //        {
-        //            var c = item.color;
-        //            c.a = alpha;
-        //            item.DOColor(c, duration).OnComplete(() =>
-        //            {
-        //                if (callback != null)
-        //                    callback();
-        //            });
-        //        }
-        //    }
-        //}
 
 
         /// <summary>

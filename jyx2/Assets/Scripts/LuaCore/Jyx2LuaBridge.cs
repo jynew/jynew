@@ -111,6 +111,7 @@ namespace Jyx2
                     if (evt == null)
                     {
                         Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
                         return;
                     }
                     eventId = int.Parse(evt.name); //当前事件
@@ -234,10 +235,7 @@ namespace Jyx2
         static public void Leave(int roleId)
         {
             RunInMainThrad(() => {
-                runtime.Team.RemoveAll(p => p.Key == roleId.ToString());
-
-                var role = ConfigTable.Get<Jyx2Role>(roleId);
-                storyEngine.DisplayPopInfo(role.Name + "离队。");
+                runtime.LeaveTeam(roleId);
                 Next();
             });
             Wait();
@@ -319,9 +317,11 @@ namespace Jyx2
             return runtime.Team.Exists(r => r.Key == roleId.ToString());
         }
 
+		// modify the logicc, when count>=6, team is full
+		// by eaphone at 2021/6/5
         static public bool TeamIsFull()
         {
-            return runtime.Team.Count > Jyx2Consts.MAX_TEAMCOUNT;
+            return runtime.Team.Count > Jyx2Consts.MAX_TEAMCOUNT-1;
         }
 
         /// <summary>
