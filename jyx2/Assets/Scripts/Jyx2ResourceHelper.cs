@@ -27,14 +27,6 @@ static public class Jyx2ResourceHelper
 
         cachedPrefabs = new Dictionary<string, GameObject>();
 
-        //var handler2 = Addressables.LoadAssetsAsync<GameObject>(new List<string> { "uiPrefabs" }, null, Addressables.MergeMode.Union).Task;
-        //await handler2;
-        //foreach(var obj in handler2.Result)
-        //{
-        //    Debug.Log(obj.name);
-        //}
-
-
         foreach (var path in handler.Result.text.Split('\n'))
         {
             if (string.IsNullOrEmpty(path)) continue;

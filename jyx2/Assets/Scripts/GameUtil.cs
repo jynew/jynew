@@ -29,20 +29,7 @@ public class GameUtil
         selectionContent.Add("取消");
         var storyEngine = StoryEngine.Instance;
         storyEngine.BlockPlayerControl = true;
-        //storyEngine.dialogPanel.ShowSelection("主角", "选择使用的人", selectionContent, delegate (int index)
-        //{
-        //    storyEngine.BlockPlayerControl = false;
-
-        //    if (index < 0 || index >= roles.Count)
-        //    {
-        //        Debug.Log("选择取消");
-        //        callback(null);
-        //        return;
-        //    }
-
-        //    var selectRole = roles[index];
-        //    callback(selectRole);
-        //});
+        
         SelectRoleParams selectParams = new SelectRoleParams();
         selectParams.roleList = roles;
         selectParams.title = "选择使用的人";
