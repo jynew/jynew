@@ -4,11 +4,10 @@
 [![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jynew/jynew/blob/main/LICENSE)
 [![release](https://img.shields.io/badge/release-v0.1%20inner-brightgreen)](https://github.com/jynew/jynew/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/jynew/jynew/pulls)
-[![Unity Version](https://img.shields.io/badge/unity-2020.3.9.f1c1-blue)](https://unity.cn/releases/lts/2020)
-![Contributors](https://img.shields.io/github/contributors-anon/jynew/jynew) <br>
+[![Unity Version](https://img.shields.io/badge/unity-2020.3.9.f1c1-blue)](https://unity.cn/releases/lts/2020) <br>
 ![fork](https://img.shields.io/github/forks/jynew/jynew?style=social)
 ![star](https://img.shields.io/github/stars/jynew/jynew?style=social)
-
+![Contributors](https://img.shields.io/github/contributors-anon/jynew/jynew) 
 
 
 * 项目主页 http://www.jy-new.com
