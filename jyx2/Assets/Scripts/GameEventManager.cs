@@ -16,39 +16,6 @@ public class GameEventManager : MonoBehaviour
     GameEvent curEvent = null;
     const int NO_EVENT = -1;
 
-
-    //void Update()
-    //{
-    //    //有激活事件
-    //    if(CurrentActiveEvents.Count > 0)
-    //    {
-    //        var evt = CurrentActiveEvents[0];
-    //        if (evt == curEvent)
-    //            return;
-
-    //        //关闭之前的事件
-    //        if (curEvent != null && curEvent != evt)
-    //        {
-    //            OnExitEvent(curEvent);
-    //        }
-
-    //        //设置当前事件
-    //        curEvent = evt;
-    //        TryTrigger(evt);
-    //    }
-    //    else
-    //    {
-    //        //没有激活事件
-    //        if (curEvent != null)
-    //        {
-    //            UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
-    //            curEvent = null;
-    //            Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
-    //        }
-    //    }
-    //}
-
-
     bool isEmptyEvent(GameEvent evt)
     {
         return IsNoEvent(evt.m_EnterEventId) && IsNoEvent(evt.m_InteractiveEventId) && IsNoEvent(evt.m_UseItemEventId);
@@ -107,21 +74,6 @@ public class GameEventManager : MonoBehaviour
         Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
     }
 
-    //void ShowInteractiveButton(string text)
-    //{
-    //    Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", text, new Action(() =>
-    //    {
-    //        ExecuteLuaEvent(curEvent.m_InteractiveEventId);
-    //    }));
-    //}
-
-    //void ShowUseItemButton()
-    //{
-    //    Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", "使用物品", new Action(() =>
-    //    {
-    //        OnClickedUseItemButton();
-    //    }));
-    //}
 
     /// <summary>
     /// 显示交互面板
