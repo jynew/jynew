@@ -34,5 +34,8 @@ namespace Jyx2
 
         //最大生命和内力
         public const int MAX_HPMP = 999;
+        
+        //最大战斗上场人数
+        public const int MAX_BATTLE_TEAMMATE_COUNT = 6;
     }
 }
