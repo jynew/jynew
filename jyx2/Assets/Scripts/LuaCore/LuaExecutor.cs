@@ -58,7 +58,6 @@ namespace Jyx2
                 {
                     luaEnv.DoString(luaContent);
                     Debug.Log("lua执行完毕: " + path);
-                    currentLuaContext = null;
                 }
                 catch (Exception e)
                 {
@@ -66,6 +65,7 @@ namespace Jyx2
                     Debug.LogError(e.StackTrace);
                 }
                 
+                currentLuaContext = null;
                 _executing = false;
                 if (callback != null)
                 {
