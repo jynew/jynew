@@ -321,7 +321,7 @@ namespace Jyx2
 		// by eaphone at 2021/6/5
         static public bool TeamIsFull()
         {
-            return runtime.Team.Count > Jyx2Consts.MAX_TEAMCOUNT-1;
+            return runtime.Team.Count > GameConst.MAX_TEAMCOUNT-1;
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Jyx2
             RunInMainThrad(() =>
             {
                 var role = runtime.GetRole(roleId);
-                role.IQ = HSFrameWork.Common.Tools.Limit(role.IQ + v, 0, Jyx2Consts.MAX_ZIZHI);
+                role.IQ = HSFrameWork.Common.Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
                 storyEngine.DisplayPopInfo(role.Name + "资质增加" + v);
                 Next();
             });
@@ -456,7 +456,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
-                r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_ROLE_ATTRITE);
+                r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
             });
         }
@@ -468,7 +468,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
-                r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_HPMP);
+                r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
             });
         }
@@ -480,7 +480,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
-                r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_ROLE_ATTRITE);
+                r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.Attack - v0));
             });
         }
@@ -492,7 +492,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
-                r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_HPMP);
+                r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
             });
         }
@@ -698,7 +698,7 @@ namespace Jyx2
 
         static public bool JudgeMoney(int money)
         {
-            return (runtime.GetItemCount(Jyx2Consts.MONEY_ID) >= money);
+            return (runtime.GetItemCount(GameConst.MONEY_ID) >= money);
         }
 
         /// <summary>

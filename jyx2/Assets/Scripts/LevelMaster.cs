@@ -374,7 +374,16 @@ public class LevelMaster : MonoBehaviour
             SetPlayer(playerObj);
             //添加队友
             //CreateTeammates(gameMap, playerObj.transform);
-		}
+
+            var gameMap = GetCurrentGameMap();
+            if (gameMap != null && gameMap.Tags.Contains("POINTLIGHT")) //点光源
+            {
+                var obj = Jyx2ResourceHelper.CreatePrefabInstance(ConStr.PlayerPointLight);
+                obj.transform.SetParent(playerObj.transform);
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localScale = Vector3.one;
+            }
+        }
     }
 
     public void SwitchToBattleUI(bool isOn)
@@ -773,11 +782,11 @@ public class LevelMaster : MonoBehaviour
     public Jyx2Player GetPlayer()
     {
 		var player=_player.GetComponent<Jyx2Player>();
-		if(player == null)
-			{
-				player = _player.gameObject.AddComponent<Jyx2Player>();
-				player.Init();
-			}
+        if (player == null)
+        {
+            player = _player.gameObject.AddComponent<Jyx2Player>();
+            player.Init();
+        }
         return player;
     }
 
