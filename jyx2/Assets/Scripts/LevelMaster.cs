@@ -872,5 +872,34 @@ public class LevelMaster : MonoBehaviour
             
         }
     }
+	
+	//增加接口修改bigmapzone脚本的command。用于和韦小宝对话后，增加传送韦小宝的逻辑
+	//added by eaphone at 2021/6/8
+	public void ModifyBigmapZoneCmd(string cmd, string target="Leave"){
+		var gameMap = GetCurrentGameMap();
+        if (gameMap == null) return;
+
+        //场景ID
+        string sceneId = gameMap.Jyx2MapId;
+
+        //大地图
+        if (string.IsNullOrEmpty(sceneId))
+            return;
+
+        GameObject obj = GameObject.Find("Level/Triggers/"+target);
+        var evt = obj.GetComponent<BigMapZone>();
+		if (evt != null){
+			string eventId = obj.name;
+			if(target==eventId){
+				try
+				{
+					evt.Command = cmd;
+				}catch(Exception e)
+				{
+					Debug.LogError(e);
+				}
+			}
+		}
+	}
 }
 

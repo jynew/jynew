@@ -143,27 +143,65 @@ public class BigMapZone : MonoBehaviour
 		LevelLoader.LoadGameMap(mapKey);
 	}
 
-	// add transport Wei to other hotel when leave hotel after meet him
+	// transport Wei to other hotel when leave hotel if had talked to him
 	// added by eaphone at 2021/6/5
 	public static void TransportWei(){
 		var weiPath="Dynamic/韦小宝";
-		var triggerPath="Triggers/16";
+		var triggerPath="Level/Triggers";
 		string[] targetHotel={"01_heluokezhan","03_youjiankezhan","40_yuelaikezhan","60_longmenkezhan","61_gaoshengkezhan"};
+		int[] weiTrigger={16,14,20,12,9};
 		var cur=LevelMaster.Instance.GetCurrentGameMap();
 		var isWeiAtCurMap=GameObject.Find(weiPath);
+		var isTalkedToWei=false;
 		if(isWeiAtCurMap!=null && isWeiAtCurMap.activeSelf){
 			LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
-			level.ReplaceSceneObject(cur.Jyx2MapId.ToString(), weiPath, "0");
-			//level.ReplaceSceneObject(cur.Jyx2MapId.ToString(),triggerPath,"0");
 			var ran=new System.Random();
 			var index=ran.Next(0,targetHotel.Length);
 			while(cur.Key==targetHotel[index]){
 				index=ran.Next(0,targetHotel.Length);
 			}
-			var target=ConfigTable.Get<GameMap>(targetHotel[index]);
-			Debug.Log("transport Wei to "+target.GetShowName());
-			level.ReplaceSceneObject(target.Jyx2MapId.ToString(), weiPath, "1");
-			//level.ReplaceSceneObject(target.Jyx2MapId.ToString(),triggerPath,"1");
+			GameObject eventsParent = GameObject.Find("Level/Triggers");
+			string eventId="";
+			foreach(Transform t in eventsParent.transform)
+			{
+				var evt = t.GetComponent<GameEvent>();
+				if (evt == null) continue;
+				foreach (var obj in evt.m_EventTargets){//如何获取目标场景trigger?
+					if (obj == null) continue;
+					eventId = t.name;
+					var o = obj.GetComponent<InteractiveObj>();
+					if(o != null && "韦小宝"==o.name){
+						isTalkedToWei=evt.m_InteractiveEventId==938;
+						
+					}
+				}
+			}
+			if(isTalkedToWei){	
+				var target=ConfigTable.Get<GameMap>(targetHotel[index]);
+				Debug.Log("transport Wei to "+target.GetShowName()+"--"+eventId);
+				level.ReplaceSceneObject(cur.Jyx2MapId, weiPath, "0");
+				level.ReplaceSceneObject(target.Jyx2MapId, weiPath, "1");
+				GameRuntimeData.Instance.ModifyEvent(int.Parse(cur.Jyx2MapId), int.Parse(eventId), -1, -1, -1);
+				GameRuntimeData.Instance.ModifyEvent(int.Parse(target.Jyx2MapId), weiTrigger[index], 937, -1, -1);
+                LevelMaster.Instance.RefreshGameEvents();
+			}
 		}
+	}
+	public static object[] GetWeiTrigger(){
+		GameObject eventsParent = GameObject.Find("Level/Triggers");
+		foreach(Transform t in eventsParent.transform)
+		{
+			var evt = t.GetComponent<GameEvent>();
+			if (evt == null) continue;
+			foreach (var obj in evt.m_EventTargets){
+				if (obj == null) continue;
+				string eventId = t.name;
+				var o = obj.GetComponent<InteractiveObj>();
+				if(o != null && "韦小宝"==o.name){
+					return new object[]{eventId,evt.m_InteractiveEventId==938};
+				}
+			}
+		}
+		return new object[]{"",false};
 	}
 }
