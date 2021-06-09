@@ -68,7 +68,7 @@
 * [1.3事件触发器](https://github.com/jynew/jynew/wiki/1.3%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8)
 * [1.4Lua脚本](https://github.com/jynew/jynew/wiki/1.4Lua%E8%84%9A%E6%9C%AC)
 * [1.5搭建游戏世界差异解决办法](https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95)
-* [1.6Git使用流程简介](https://github.com/jynew/jynew/wiki/Git%E6%8B%89%E5%8F%96%EF%BC%8C%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8E%A8%E9%80%81%E6%95%99%E7%A8%8B)
+* [1.6Git使用流程简介](https://github.com/jynew/jynew/wiki/1.6Git%E6%8B%89%E5%8F%96%EF%BC%8C%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8E%A8%E9%80%81%E6%95%99%E7%A8%8B)
 
 ### 游戏内工具篇
 * [2.1技能编辑器（可预览模型、动作、武器挂点、技能特效等）](https://github.com/jynew/jynew/wiki/2.1%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8)
