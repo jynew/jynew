@@ -12,7 +12,7 @@
 
 ## 入门
 
-[git使用相关教程](https://github.com/jynew/jynew/wiki/Git%E6%8B%89%E5%8F%96%EF%BC%8C%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8E%A8%E9%80%81%E6%95%99%E7%A8%8B)
+[git使用相关教程](https://github.com/jynew/jynew/wiki/1.6Git%E6%8B%89%E5%8F%96%EF%BC%8C%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8E%A8%E9%80%81%E6%95%99%E7%A8%8B)
 
 
 ## 贡献准则
