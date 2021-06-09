@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using ch.sycoforge.Decal;
-using Hanjiasongshu.ThreeD.XML;
 using ServiceStack;
 using UnityEditor;
 using UnityEngine;
@@ -93,7 +92,7 @@ public class SceneCoordManagerEditor : Editor
     private void DrawBlocks()
     {
         if (myScript.m_CoordDataSet == null)
-            myScript.LoadCoordDataSet();
+            myScript.LoadCoordDataSet(null);
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         myScript.DrawBlocks(ray, true);
     }
@@ -110,7 +109,7 @@ public class SceneCoordManagerEditor : Editor
         if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
         {
             if (myScript.m_CoordDataSet == null)
-                myScript.LoadCoordDataSet();
+                myScript.LoadCoordDataSet(null);
 
             Debug.Log($"选中了坐标点：{hit.point.x}:{hit.point.z}");
 

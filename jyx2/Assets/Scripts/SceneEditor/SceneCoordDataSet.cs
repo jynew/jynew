@@ -71,18 +71,9 @@ namespace Jyx2
             File.WriteAllBytes(filePath, bs);
         }
 
-        public static SceneCoordDataSet CreateFromFile(string sceneName)
+        public static void CreateBySceneName(string name, Action<SceneCoordDataSet> callback)
         {
-            var dataset = ResourceLoader.LoadAsset<TextAsset>($"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes");
-            if (dataset == null)
-                return null;
-            var obj = dataset.bytes.Deserialize<SceneCoordDataSet>();
-            return obj;
-        }
-
-        public static SceneCoordDataSet CreateBySceneName(string name)
-        {
-            return CreateFromFile(name);
+            Jyx2ResourceHelper.GetSceneCoordDataSet(name, callback);
         }
         
         public int GetCoordValue(int xindex, int yindex)
