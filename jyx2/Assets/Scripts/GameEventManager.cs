@@ -11,8 +11,6 @@ using UnityEngine.UI;
 /// </summary>
 public class GameEventManager : MonoBehaviour
 {
-    List<GameEvent> CurrentActiveEvents = new List<GameEvent>();
-
     GameEvent curEvent = null;
     const int NO_EVENT = -1;
 
@@ -74,6 +72,16 @@ public class GameEventManager : MonoBehaviour
         Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
     }
 
+    public void OnExitAllEvents()
+    {
+        if (curEvent == null)
+            return;
+        
+        UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
+        Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
+        curEvent = null;
+    }
+    
 
     /// <summary>
     /// 显示交互面板

@@ -29,6 +29,14 @@ namespace Jyx2.Editor
         public static readonly string CEFilterTSFile = CachePath.StandardSub("cefilter.ts");
         public static readonly string LastLuaSummaryFile = CachePath.StandardSub("luasummary");
 
+        private const string _firstOpenProjKey = "_jyx2_FirstOpenProj_";
+
+        private static bool IsFirstOpenProj
+        {
+            get => EditorPrefs.GetBool(_firstOpenProjKey, true);
+            set => EditorPrefs.SetBool(_firstOpenProjKey,value);
+        }
+
 
         public static Dictionary<string, string> LanguageResourceMap { get; private set; }
 
@@ -57,6 +65,13 @@ namespace Jyx2.Editor
 
             Directory.CreateDirectory(CachePath);
             EditorPlayMode.PlayModeChanged += OnPlayModeChanged;
+
+            if (IsFirstOpenProj)
+            {
+                Debug.Log("首次打开项目自动GenData");
+                GenDataMenuCmd.GenerateData();
+                IsFirstOpenProj = false;
+            }
         }
 
         private static void OnPlayModeChanged(PlayModeState currentState, PlayModeState changedState)

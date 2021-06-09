@@ -12,6 +12,7 @@ using UniRx;
 using System;
 using UnityEditor;
 using Cinemachine;
+using UnityEditor.Experimental.GraphView;
 
 public class LevelMaster : MonoBehaviour
 {
@@ -190,6 +191,16 @@ public class LevelMaster : MonoBehaviour
 
         //刷新游戏事件
         RefreshGameEvents();        
+        
+        //设置所有trigger
+        var triggers = GameObject.Find("Level/Triggers");
+        if (triggers != null)
+        {
+            foreach (Transform trigger in triggers.transform)
+            {
+                trigger.gameObject.layer = LayerMask.NameToLayer("GameEvent");
+            }
+        }
     }
 
 
@@ -467,6 +478,8 @@ public class LevelMaster : MonoBehaviour
     public void SetPlayerCanController(bool CanController) 
     {
         _CanController = CanController;
+        var player = GetPlayer();
+        player.CanControl(CanController);
     }
     private Action _OnArriveDestination;
     public void PlayerWarkFromTo(Vector3 fromVector,Vector3 toVector, Action callback) 
@@ -872,5 +885,34 @@ public class LevelMaster : MonoBehaviour
             
         }
     }
+	
+	//增加接口修改bigmapzone脚本的command。用于和韦小宝对话后，增加传送韦小宝的逻辑
+	//added by eaphone at 2021/6/8
+	public void ModifyBigmapZoneCmd(string cmd, string target="Leave"){
+		var gameMap = GetCurrentGameMap();
+        if (gameMap == null) return;
+
+        //场景ID
+        string sceneId = gameMap.Jyx2MapId;
+
+        //大地图
+        if (string.IsNullOrEmpty(sceneId))
+            return;
+
+        GameObject obj = GameObject.Find("Level/Triggers/"+target);
+        var evt = obj.GetComponent<BigMapZone>();
+		if (evt != null){
+			string eventId = obj.name;
+			if(target==eventId){
+				try
+				{
+					evt.Command = cmd;
+				}catch(Exception e)
+				{
+					Debug.LogError(e);
+				}
+			}
+		}
+	}
 }
 
