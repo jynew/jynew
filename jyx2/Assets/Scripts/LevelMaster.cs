@@ -12,6 +12,7 @@ using UniRx;
 using System;
 using UnityEditor;
 using Cinemachine;
+using UnityEditor.Experimental.GraphView;
 
 public class LevelMaster : MonoBehaviour
 {
@@ -190,6 +191,16 @@ public class LevelMaster : MonoBehaviour
 
         //刷新游戏事件
         RefreshGameEvents();        
+        
+        //设置所有trigger
+        var triggers = GameObject.Find("Level/Triggers");
+        if (triggers != null)
+        {
+            foreach (Transform trigger in triggers.transform)
+            {
+                trigger.gameObject.layer = LayerMask.NameToLayer("GameEvent");
+            }
+        }
     }
 
 
@@ -467,6 +478,8 @@ public class LevelMaster : MonoBehaviour
     public void SetPlayerCanController(bool CanController) 
     {
         _CanController = CanController;
+        var player = GetPlayer();
+        player.CanControl(CanController);
     }
     private Action _OnArriveDestination;
     public void PlayerWarkFromTo(Vector3 fromVector,Vector3 toVector, Action callback) 
