@@ -10,9 +10,7 @@ using HSFrameWork.ConfigTable;
 using HanSquirrel.ResourceManager;
 using UniRx;
 using System;
-using UnityEditor;
 using Cinemachine;
-using UnityEditor.Experimental.GraphView;
 
 public class LevelMaster : MonoBehaviour
 {
@@ -77,6 +75,8 @@ public class LevelMaster : MonoBehaviour
 
     public ETCJoystick m_Joystick;
 
+    [HideInInspector]
+    public bool IsInited = false;
 
     [Header("Lock Direction")]
     public float unlockDegee = 10f;
@@ -84,9 +84,6 @@ public class LevelMaster : MonoBehaviour
     //BattleHelper m_BattleHelper;
 
     CameraHelper m_CameraHelper;
-
-    public GameObject m_ExploreSkillPanel;
-    public Text m_ExploreSkillPointText;
 
     bool IsMobilePlatform()
     {
@@ -118,7 +115,6 @@ public class LevelMaster : MonoBehaviour
             //测试存档位
             var r = GameRuntimeData.CreateNew();  //选一个没有用过的id
             MapRuntimeData.Instance.Clear();
-
         }
 
         var brain = Camera.main.GetComponent<CinemachineBrain>();
@@ -126,10 +122,7 @@ public class LevelMaster : MonoBehaviour
         {
             brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
         }
-
-        //m_BattleHelper = GetComponent<BattleHelper>();
-        //m_MobileRotateSlider.SetActive(Application.isMobilePlatform);
-
+        
         //播放音乐
         var gameMap = GetCurrentGameMap();
 
@@ -164,18 +157,6 @@ public class LevelMaster : MonoBehaviour
             }
         }
 
-        //搜索地图中所有MapRole，并绑定数据实例
-        //foreach (var r in FindAllMapRole())
-        //{
-        //    if (string.IsNullOrEmpty(r.m_RoleKey))
-        //        continue;
-
-        //    if (r.DataInstance == null) r.CreateRoleInstance(r.m_RoleKey);
-        //    if (!r.gameObject.activeInHierarchy) r.m_IsWaitingForActive = false;
-
-        //    r.RefreshModel();
-        //}
-
         navPointer = Instantiate(navPointerPrefab);
         navPointer.SetActive(false);
 
@@ -187,7 +168,6 @@ public class LevelMaster : MonoBehaviour
 
         //尝试绑定主角
         TryBindPlayer();
-
 
         //刷新游戏事件
         RefreshGameEvents();        
@@ -201,6 +181,8 @@ public class LevelMaster : MonoBehaviour
                 trigger.gameObject.layer = LayerMask.NameToLayer("GameEvent");
             }
         }
+
+        IsInited = true;
     }
 
 
@@ -242,13 +224,11 @@ public class LevelMaster : MonoBehaviour
         //大地图或editor上都不显示
         m_Joystick.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.BigMap);
         m_TouchPad.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.BigMap);
-        //m_ExploreSkillPanel.SetActive(m_CurrentType == MapType.Explore);
-        m_ExploreSkillPanel.SetActive(false);
+        
         //战斗中移动按钮隐藏
         if (BattleManager.Instance.IsInBattle)
         {
             m_Joystick.gameObject.SetActive(false);
-            m_ExploreSkillPanel.SetActive(false);
         }
     }
 
