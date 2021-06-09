@@ -19,7 +19,7 @@ namespace Jyx2.Editor
         }
 
         [MenuItem("配置表/[GEN DATA (强制更新)]")]
-        static void GenerateDataForce()
+        public static void GenerateDataForce()
         {
             using (HSUtils.ExeTimer("菜单：[GEN DATA (强制更新)]"))
                 MenuHelper.SafeWrapMenuAction("GENERATE DATA重新转换XLS", title => GenerateDataWithEnding(title, true, false));

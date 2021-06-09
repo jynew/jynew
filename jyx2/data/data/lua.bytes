@@ -6853,12 +6853,14 @@ if InTeam(53) == true then goto label0 end;
     ModifyEvent(-2, 0, -2, -2, -1, -1, 491, -1, -1, -1, -2, -2, -2);
 do return end;
 
-�
-/lua/jygame/ka49.lua�Talk(0, "哇塞！这山洞有怪物住着，难道就是传说中的雪怪．糟了，被发现了．", "talkname0", 1);
+�
+/lua/jygame/ka49.lua�Talk(0, "哇塞！这山洞有怪物住着，难道就是传说中的雪怪．糟了，被发现了．", "talkname0", 1);
 if TryBattle(5) == false then goto label0 end;
     ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);--by fanyu|杀死雪怪。场景05-编号00
     ModifyEvent(-2, 1, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号01
+	jyx2_ReplaceSceneObject("","NPCs/xueguai1","0");
     ModifyEvent(-2, 2, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号02
+	jyx2_ReplaceSceneObject("","NPCs/xueguai2","0");
     LightScence();
     AddRepute(2);
     do return end;
@@ -7080,13 +7082,16 @@ if AskBattle() == true then goto label0 end;
         ModifyEvent(-2, -2, -2, -2, 4, -2, -2, -2, -2, -2, -2, -2, -2);
 do return end;
 
-�
-/lua/jygame/ka50.lua�Talk(0, "这山洞中有那么多雪怪，莫非藏有宝物？管他的，富贵险中求．", "talkname0", 1);
+�
+/lua/jygame/ka50.lua�Talk(0, "这山洞中有那么多雪怪，莫非藏有宝物？管他的，富贵险中求．", "talkname0", 1);
 if TryBattle(6) == false then goto label0 end;
     ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);--by fanyu|杀死雪怪。场景05-编号06
     ModifyEvent(-2, 3, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号03
     ModifyEvent(-2, 4, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号04
     ModifyEvent(-2, 5, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号05
+	jyx2_ReplaceSceneObject("","NPCs/xueguai3","0");
+	jyx2_ReplaceSceneObject("","NPCs/xueguai4","0");
+	jyx2_ReplaceSceneObject("","NPCs/xueguai5","0");
     LightScence();
     AddRepute(5);
     do return end;
