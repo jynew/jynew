@@ -110,6 +110,22 @@ public class LevelMaster : MonoBehaviour
     // Use this for initialization
     async void Start()
     {
+        //先关闭触发事件
+        GameObject triggers = GameObject.Find("Level/Triggers");
+        if (triggers != null)
+        {
+            foreach (Transform trigger in triggers.transform)
+            {
+                trigger.gameObject.layer = LayerMask.NameToLayer("GameEvent");
+                var c = trigger.gameObject.GetComponent<Collider>();
+                if (c != null)
+                {
+                    c.enabled = false;
+                }
+            }
+        }
+        
+        
         if (RuntimeDataSimulate && runtime == null)
         {
             //测试存档位
@@ -172,13 +188,15 @@ public class LevelMaster : MonoBehaviour
         //刷新游戏事件
         RefreshGameEvents();        
         
-        //设置所有trigger
-        var triggers = GameObject.Find("Level/Triggers");
+        //全部初始化完以后，激活trigger的触发 
+        triggers = GameObject.Find("Level/Triggers");
         if (triggers != null)
         {
             foreach (Transform trigger in triggers.transform)
             {
-                trigger.gameObject.layer = LayerMask.NameToLayer("GameEvent");
+                var c = trigger.gameObject.GetComponent<Collider>();
+                if(c != null)
+                    c.enabled = true;
             }
         }
 

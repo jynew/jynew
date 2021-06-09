@@ -980,10 +980,7 @@ namespace Jyx2
             RunInMainThrad(() =>
             {
                 Sequence seq = DOTween.Sequence();
-                seq.AppendCallback(() =>
-                {
-                    Next();
-                })
+                seq.AppendCallback(Next)
                 .SetDelay(duration);
             });
             Wait();

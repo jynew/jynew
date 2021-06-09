@@ -132,6 +132,11 @@ public class GameEvent : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
         if (LevelMaster.Instance == null || LevelMaster.Instance.IsInited == false)
             return;
         
@@ -144,11 +149,6 @@ public class GameEvent : MonoBehaviour
             return;
         
         evtManager.OnTriggerEvent(this);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        
     }
 
     
