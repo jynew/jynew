@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +15,8 @@ public partial class GameMainMenu
 	private RectTransform InputNamePanel_RectTransform;
 	private InputField NameInput_InputField;
 	private Button inputSure_Button;
-	private RectTransform StartNewRolePanel_RectTransform;
+    private Button inputBack_Button;
+    private RectTransform StartNewRolePanel_RectTransform;
 	private Button NoBtn_Button;
 	private Button YesBtn_Button;
 	private RectTransform PropertyItem_RectTransform;
@@ -37,7 +36,8 @@ public partial class GameMainMenu
 		InputNamePanel_RectTransform = transform.Find("InputNamePanel").GetComponent<RectTransform>();
 		NameInput_InputField = transform.Find("InputNamePanel/NameInput").GetComponent<InputField>();
 		inputSure_Button = transform.Find("InputNamePanel/inputSure").GetComponent<Button>();
-		StartNewRolePanel_RectTransform = transform.Find("StartNewRolePanel").GetComponent<RectTransform>();
+        inputBack_Button = transform.Find("InputNamePanel/inputBack").GetComponent<Button>();
+        StartNewRolePanel_RectTransform = transform.Find("StartNewRolePanel").GetComponent<RectTransform>();
 		NoBtn_Button = transform.Find("StartNewRolePanel/NoBtn").GetComponent<Button>();
 		YesBtn_Button = transform.Find("StartNewRolePanel/YesBtn").GetComponent<Button>();
 		PropertyItem_RectTransform = transform.Find("StartNewRolePanel/PropertyItem").GetComponent<RectTransform>();
