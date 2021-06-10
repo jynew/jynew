@@ -50,7 +50,8 @@ public partial class ShopUIPanel:Jyx2_UIBase
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
-        curShopId = (int)allParams[0];
+        //curShopId = (int)allParams[0];
+		curShopId=int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
         curShopData = ConfigTable.Get<Jyx2Shop>(curShopId);
 
         curSelectIndex = 0;

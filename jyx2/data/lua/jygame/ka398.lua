@@ -3,4 +3,8 @@ ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|移出�
 ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+jyx2_ReplaceSceneObject("", "NPC/大雕站立", "");
+jyx2_ReplaceSceneObject("", "NPC/蟒蛇-死", "");
+jyx2_ReplaceSceneObject("", "Triggers/13", "1");
+jyx2_ReplaceSceneObject("", "NPC/大雕站立-杨过旁", "1");
 do return end;
