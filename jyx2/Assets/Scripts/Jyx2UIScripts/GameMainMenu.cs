@@ -1,14 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Jyx2;
-using HSFrameWork.SPojo;
 using System;
 using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
-using UnityEngine.SceneManagement;
-using UnityEngine.Playables;
-using UnityEngine.UI;
 
 public partial class GameMainMenu : Jyx2_UIBase {
 
@@ -109,6 +102,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
         BindListener(this.LoadGameButton_Button,OnLoadGameClicked);
         BindListener(this.QuitGameButton_Button,OnQuitGameClicked);
         BindListener(this.inputSure_Button,OnCreateBtnClicked);
+        BindListener(this.inputBack_Button,OnBackBtnClicked);
         BindListener(this.YesBtn_Button,OnCreateRoleYesClick);
         BindListener(this.NoBtn_Button,OnCreateRoleNoClick);
     }
@@ -145,6 +139,12 @@ public partial class GameMainMenu : Jyx2_UIBase {
         }
         m_randomProperty. RefreshProperty();
     }
+	
+	private void OnBackBtnClicked()
+	{
+        this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
+        this.InputNamePanel_RectTransform.gameObject.SetActive(false);
+	}
 
     protected override void OnHidePanel()
     {
