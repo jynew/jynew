@@ -11,6 +11,8 @@ if TryBattle(66) == true then goto label0 end;
 
     jyx2_ReplaceSceneObject("", "NPC/大雕", "");
     jyx2_ReplaceSceneObject("", "NPC/蟒蛇", "");
+	jyx2_ReplaceSceneObject("", "NPC/大雕站立", "1");
+    jyx2_ReplaceSceneObject("", "NPC/蟒蛇-死", "1");
 
     LightScence();
     Talk(0, "这巨蟒还真难对付，总算把它搞定了．雕兄，你还好吧？", "talkname0", 1);
