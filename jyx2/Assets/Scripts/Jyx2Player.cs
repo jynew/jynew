@@ -28,6 +28,9 @@ public class Jyx2Player : MonoBehaviour
     
     public static Jyx2Player GetPlayer()
     {
+        if (LevelMaster.Instance == null)
+            return null;
+        
         return LevelMaster.Instance.GetPlayer();
     }
 

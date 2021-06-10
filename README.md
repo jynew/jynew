@@ -1,7 +1,7 @@
 # 金庸群侠传3D重制版
 
 ![coverage](https://img.shields.io/badge/coverage-80%25-yellowgreen)
-[![license](https://img.shields.io/badge/license-MIT%2B%E9%87%91%E7%BE%A43D%E9%87%8D%E7%BD%AE%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT%2B%E9%87%91%E7%BE%A43D%E9%87%8D%E5%88%B6%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
 [![release](https://img.shields.io/badge/release-v0.1%20inner-brightgreen)](https://github.com/jynew/jynew/releases)
 [![Unity Version](https://img.shields.io/badge/unity-2020.3.9.f1c1-blue)](https://unity.cn/releases/lts/2020) 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/jynew/jynew/pulls) 
@@ -18,7 +18,7 @@
 * 联系我们 jy_remastered@163.com
 * 开发者Q群 749167552 （入群密码是本代码仓库名称）
 
-金庸群侠传3D重制版是一个非盈利游戏项目，重制《金庸群侠传》并支持后续一系列MOD和二次开发。
+金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《金庸群侠传》并支持后续一系列MOD和二次开发。
 
 > 我们承诺：除了爱好者的自愿捐款以外，不会在任何渠道取得收入，游戏亦不会在任何游戏平台进行发布。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 
@@ -39,8 +39,7 @@
 ## 开发环境和搭建
 
 * 开发工具：[Unity 2020.3.9.f1c1(LTS) (64-bit)](https://unity.cn/releases/lts/2020)
-* 首次加载项目需要运行菜单项 配置表/Gendata
-* 直接点击播放按钮左方的"P"按钮启动游戏（或切换启动场景为0_GameStart.scene）
+* 直接点击播放按钮左方的"P"按钮启动游戏（或切换启动场景为0_GameStart.unity点击播放）
 
 ## 我如何开始？
 

@@ -137,12 +137,15 @@ public class GameEvent : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (LevelMaster.Instance == null || LevelMaster.Instance.IsInited == false)
+            return;
+        
         //只保留进入触发事件
         if (this.m_EnterEventId == NO_EVENT)
             return;
 
         var player = Jyx2Player.GetPlayer();
-        if (other.gameObject != player.gameObject)
+        if (player == null || other.gameObject != player.gameObject)
             return;
         
         evtManager.OnTriggerEvent(this);

@@ -43,6 +43,7 @@ public class GameConst
     public const int MAX_DEPOISON = 100;
     public const int MAX_ANTIPOISON = 100;
 
+    public const int GAME_START_MUSIC_ID = 16;
     /// <summary>
     /// 最大角色的武器熟练度
     /// </summary>

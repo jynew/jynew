@@ -5,7 +5,6 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GLib;
-using Hanjiasongshu.ThreeD.XML;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Sirenix.OdinInspector;
@@ -21,52 +20,37 @@ using Debug = UnityEngine.Debug;
 namespace Jyx2
 {
     [CreateAssetMenu(fileName = "NewModelAsset", menuName = "Model Asset")]
-    
     public class ModelAsset : ScriptableObject
     {
         [BoxGroup("数据", false)]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         [OnValueChanged("AtuoBindModelData")]
         public GameObject m_View;
-        
-        [BoxGroup("数据")]
-        [Header("剑")]
-        [SerializeReference]
+
+        [BoxGroup("数据")] [Header("剑")] [SerializeReference]
         public SwordPart m_SwordWeapon;
-        
-        [BoxGroup("数据")]
-        [Header("刀")]
-        [SerializeReference]
+
+        [BoxGroup("数据")] [Header("刀")] [SerializeReference]
         public KnifePart m_KnifeWeapon;
-        
-        [BoxGroup("数据")]
-        [Header("长柄")]
-        [SerializeReference]
+
+        [BoxGroup("数据")] [Header("长柄")] [SerializeReference]
         public SpearPart m_SpearWeapon;
-        
-        [BoxGroup("数据")]
-        [Header("其他类型")]
-        [SerializeReference]
+
+        [BoxGroup("数据")] [Header("其他类型")] [SerializeReference]
         public List<WeaponPart> m_OtherWeapons;
-        
-        [EnumToggleButtons]
-        [ShowInInspector]
-        [LabelText("预览武器类型")]
+
+        [EnumToggleButtons] [ShowInInspector] [LabelText("预览武器类型")]
         private WeaponPartType weaponType = WeaponPartType.Sword;
-        
+
         public enum WeaponPartType
         {
-            [LabelText("剑")]
-            Sword = 1, 
-            
-            [LabelText("刀")]
-            Knife = 2, 
-            
-            [LabelText("长柄")]
-            Spear = 3,
-            
-            [LabelText("其他")]
-            Other = 4,
+            [LabelText("剑")] Sword = 1,
+
+            [LabelText("刀")] Knife = 2,
+
+            [LabelText("长柄")] Spear = 3,
+
+            [LabelText("其他")] Other = 4,
         }
 
 #if UNITY_EDITOR
@@ -76,7 +60,8 @@ namespace Jyx2
         {
             if (m_View == null) return;
 
-            var scene = EditorSceneManager.OpenScene("Assets/Scripts/Jyx2Model/ModelPreviewScene.unity", OpenSceneMode.Additive);
+            var scene = EditorSceneManager.OpenScene("Assets/Scripts/Jyx2Model/ModelPreviewScene.unity",
+                OpenSceneMode.Additive);
 
             var gameObjects = scene.GetRootGameObjects();
             gameObjects.ForEachG(delegate(GameObject o)
@@ -86,26 +71,27 @@ namespace Jyx2
                     DestroyImmediate(o);
                 }
             });
-            
-            viewWithWeapon = (GameObject)PrefabUtility.InstantiatePrefab(m_View, scene);
+
+            viewWithWeapon = (GameObject) PrefabUtility.InstantiatePrefab(m_View, scene);
             viewWithWeapon.transform.SetAsLastSibling();
-            PrefabUtility.UnpackPrefabInstance(viewWithWeapon, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            PrefabUtility.UnpackPrefabInstance(viewWithWeapon, PrefabUnpackMode.Completely,
+                InteractionMode.AutomatedAction);
             EditorGUIUtility.PingObject(viewWithWeapon);
             Selection.activeGameObject = viewWithWeapon;
             SceneView.lastActiveSceneView.LookAt(viewWithWeapon.transform.position);
-            
+
             DestroyImmediate(currentWeapon);
             var weaponPart = GetWeaponPart(weaponType);
             if (weaponPart != null && weaponPart.m_PartView != null)
             {
-                currentWeapon = (GameObject)PrefabUtility.InstantiatePrefab(weaponPart.m_PartView, scene);
+                currentWeapon = (GameObject) PrefabUtility.InstantiatePrefab(weaponPart.m_PartView, scene);
                 var parent = UnityTools.DeepFindChild(viewWithWeapon.transform, weaponPart.m_BindBone);
                 currentWeapon.transform.SetParent(parent);
                 currentWeapon.transform.localScale = weaponPart.m_OffsetScale;
                 currentWeapon.transform.localPosition = weaponPart.m_OffsetPosition;
                 currentWeapon.transform.localRotation = Quaternion.Euler(weaponPart.m_OffsetRotation);
             }
-            
+
             EditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
         }
@@ -118,11 +104,11 @@ namespace Jyx2
             weaponPart.m_OffsetScale = currentWeapon.transform.localScale;
             weaponPart.m_OffsetPosition = currentWeapon.transform.localPosition;
             weaponPart.m_OffsetRotation = currentWeapon.transform.localEulerAngles;
-            
+
             EditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
         }
-        
+
         private GameObject currentWeapon = null;
 
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true, PreviewHeight = 600f)]
@@ -132,7 +118,7 @@ namespace Jyx2
         [BoxGroup("完整预览", Order = 99)]
         private GameObject viewWithWeapon;
 #endif
-        
+
         /// <summary>
         /// 获取武器模型配置
         /// </summary>
@@ -143,7 +129,7 @@ namespace Jyx2
             int index = (int) type;
             return GetWeaponPart(index.ToString());
         }
-        
+
         /// <summary>
         /// 获取武器模型配置
         /// </summary>
@@ -179,7 +165,7 @@ namespace Jyx2
         {
             if (m_View == null) return;
             var animator = m_View.GetComponent<Animator>();
-            
+
             //非人型清空武器配置
             if (animator == null || animator.avatar == null || !animator.avatar.isHuman)
             {
@@ -188,11 +174,11 @@ namespace Jyx2
                 m_SpearWeapon = null;
                 return;
             }
-            
+
             //自动绑定武器配置
-            if(m_SwordWeapon == null) m_SwordWeapon = new SwordPart();
-            if(m_KnifeWeapon == null) m_KnifeWeapon = new KnifePart();
-            if(m_SpearWeapon == null) m_SpearWeapon = new SpearPart();
+            if (m_SwordWeapon == null) m_SwordWeapon = new SwordPart();
+            if (m_KnifeWeapon == null) m_KnifeWeapon = new KnifePart();
+            if (m_SpearWeapon == null) m_SpearWeapon = new SpearPart();
 
             //自动绑定右手骨骼信息
             foreach (var bone in animator.avatar.humanDescription.human)
@@ -205,43 +191,41 @@ namespace Jyx2
                     break;
                 }
             }
-            
+
 #if UNITY_EDITOR
             EditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
 #endif
         }
-        
+
 #if UNITY_EDITOR
         private void OnEnable()
         {
             AtuoBindModelData();
         }
 #endif
-        
     }
-    
+
     [SerializeField]
     public class WeaponPart
     {
         // [ValueDropdown("GetListOfBones", ExpandAllMenuItems = true)]
         public int m_Id;
         public string m_BindBone;
-        
-        [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
-        [InlineButton("LoadDefaultView", "缺省模型")]
+
+        [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)] [InlineButton("LoadDefaultView", "缺省模型")]
         public GameObject m_PartView;
-        
+
         public Vector3 m_OffsetPosition;
         public Vector3 m_OffsetRotation;
         public Vector3 m_OffsetScale;
-        
+
         public WeaponPart()
         {
             m_OffsetScale = Vector3.one;
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void LoadDefaultView()
         {
             switch (m_Id)
@@ -262,12 +246,12 @@ namespace Jyx2
                     break;
                 }
             }
-            
+
             AssetDatabase.SaveAssets();
         }
-        #endif
+#endif
     }
-    
+
     [SerializeField]
     public class SwordPart : WeaponPart
     {
@@ -276,7 +260,7 @@ namespace Jyx2
             base.m_Id = 1;
         }
     }
-    
+
     [SerializeField]
     public class KnifePart : WeaponPart
     {
@@ -285,7 +269,7 @@ namespace Jyx2
             base.m_Id = 2;
         }
     }
-    
+
     [SerializeField]
     public class SpearPart : WeaponPart
     {

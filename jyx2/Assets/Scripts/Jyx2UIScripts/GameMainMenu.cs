@@ -1,14 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Jyx2;
-using HSFrameWork.SPojo;
 using System;
 using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
-using UnityEngine.SceneManagement;
-using UnityEngine.Playables;
-using UnityEngine.UI;
 
 public partial class GameMainMenu : Jyx2_UIBase {
 
@@ -109,6 +102,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
         BindListener(this.LoadGameButton_Button,OnLoadGameClicked);
         BindListener(this.QuitGameButton_Button,OnQuitGameClicked);
         BindListener(this.inputSure_Button,OnCreateBtnClicked);
+        BindListener(this.inputBack_Button,OnBackBtnClicked);
         BindListener(this.YesBtn_Button,OnCreateRoleYesClick);
         BindListener(this.NoBtn_Button,OnCreateRoleNoClick);
     }
@@ -122,13 +116,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
 
         //加载地图
         var startMap = GameMap.GetGameStartMap();
-		// transport player to trigger Startup animation at new game startMap
-		// modified by eaphone at 2021/05/30
-        //LevelLoader.LoadGameMap(startMap, loadPara, "", () =>
-        LevelLoader.LoadGameMap(startMap, null, "transport#0", () =>
+        
+        LevelLoader.LoadGameMap(startMap, loadPara, "", () =>
 		{
             //首次进入游戏音乐
-            AudioManager.PlayMusic(16);
+            AudioManager.PlayMusic(GameConst.GAME_START_MUSIC_ID);
             Jyx2_UIManager.Instance.HideUI("GameMainMenu");
             LevelMaster.Instance.GetPlayer().transform.rotation = Quaternion.Euler(Vector3.zero);
         });
@@ -147,6 +139,12 @@ public partial class GameMainMenu : Jyx2_UIBase {
         }
         m_randomProperty. RefreshProperty();
     }
+	
+	private void OnBackBtnClicked()
+	{
+        this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
+        this.InputNamePanel_RectTransform.gameObject.SetActive(false);
+	}
 
     protected override void OnHidePanel()
     {

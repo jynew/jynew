@@ -4,6 +4,9 @@ if TryBattle(6) == false then goto label0 end;
     ModifyEvent(-2, 3, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号03
     ModifyEvent(-2, 4, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号04
     ModifyEvent(-2, 5, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杀死雪怪。场景05-编号05
+	jyx2_ReplaceSceneObject("","NPCs/xueguai3","0");
+	jyx2_ReplaceSceneObject("","NPCs/xueguai4","0");
+	jyx2_ReplaceSceneObject("","NPCs/xueguai5","0");
     LightScence();
     AddRepute(5);
     do return end;

@@ -3,6 +3,7 @@ using HSFrameWork.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -212,24 +213,30 @@ public class GameEventManager : MonoBehaviour
 
     void OnFinishEvent()
     {
-		if(curEvent!=null){
-			curEvent.MarkChest();
-		}else{
-			Debug.Log("curEvent is null");
-		}
+        if (curEvent != null)
+        {
+            curEvent.MarkChest();
+        }
+        else
+        {
+            Debug.Log("curEvent is null");
+        }
+
         SetCurrentGameEvent(null);
-		// fix drag motion continuous move the player when scene is playing
-		// modified by eaphone at 2021/05/31
+        // fix drag motion continuous move the player when scene is playing
+        // modified by eaphone at 2021/05/31
         var levelMaster = LevelMaster.Instance;
         if (levelMaster != null)
         {
-			levelMaster.SetPlayerCanController(true);
-		}
-		if(curEvent!=null){
-			UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
-		}
+            levelMaster.SetPlayerCanController(true);
+        }
 
-        //TryTrigger();
+        if (curEvent != null)
+        {
+            UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
+        }
+
+        curEvent = null;
     }
 
     static string _currentEvt;

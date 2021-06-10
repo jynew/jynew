@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hanjiasongshu.ThreeD.XML;
 using HanSquirrel.ResourceManager;
 using Jyx2;
 using HSFrameWork.Common;
@@ -637,22 +636,22 @@ public class MapRole : Jyx2AnimationBattleRole
             }
         }
 
-        modelAsset = ResourceLoader.LoadAsset<ModelAsset>($"Assets/BuildSource/Jyx2RoleModelAssets/{modelId}.asset");
-        if (modelAsset == null) return;
-        
-        var modelView = Instantiate(modelAsset.m_View);
-        modelView.transform.SetParent(gameObject.transform, false);
-        modelView.transform.localPosition = Vector3.zero;
-        DataInstance.Model = modelAsset;
-        
-        var animator = GetComponent<Animator>();
-        if(animator != null)
-            animator.enabled = false;
-
-        if(callback != null)
+        string path = $"Assets/BuildSource/Jyx2RoleModelAssets/{modelId}.asset";
+        Jyx2ResourceHelper.LoadAsset<ModelAsset>(path, modelAsset =>
         {
-            callback();
-        }
+            if (modelAsset == null) return;
+        
+            var modelView = Instantiate(modelAsset.m_View);
+            modelView.transform.SetParent(gameObject.transform, false);
+            modelView.transform.localPosition = Vector3.zero;
+            DataInstance.Model = modelAsset;
+        
+            var animator = GetComponent<Animator>();
+            if(animator != null)
+                animator.enabled = false;
+
+            callback?.Invoke();
+        });
     }
     #region 角色残影
 

@@ -88,14 +88,13 @@ public class BattleboxManager : MonoBehaviour
     public void InitFromFile()
     {
         var filePath = GetFilePath();
-        var bs = ResourceLoader.LoadAsset<TextAsset>(filePath);
-        if (bs == null || string.IsNullOrEmpty(bs.text)) return;
 
-        var obj = bs.bytes.Deserialize<BattleboxDataset>();
-        m_Dataset = obj;
-
-        if(m_Dataset != null)
-            Debug.Log($"载入文件结束：{m_Dataset.GetCount()}个格子中，一共有多少格子有效：{m_Dataset.GetValidCount()}");
+        Jyx2ResourceHelper.GetBattleboxDataset(filePath, r =>
+        {
+            m_Dataset = r;
+            if(m_Dataset != null)
+                Debug.Log($"载入文件结束：{m_Dataset.GetCount()}个格子中，一共有多少格子有效：{m_Dataset.GetValidCount()}");
+        });
     }
 
     public void SaveToFile()
