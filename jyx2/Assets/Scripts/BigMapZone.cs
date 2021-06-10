@@ -148,27 +148,24 @@ public class BigMapZone : MonoBehaviour
 	public static void TransportWei(){
 		var weiPath="Dynamic/韦小宝";
 		var triggerPath="Level/Triggers";
-		string[] targetHotel={"01_heluokezhan","03_youjiankezhan","40_yuelaikezhan","60_longmenkezhan","61_gaoshengkezhan"};
-		int[] weiTrigger={16,14,20,12,9};
 		var cur=LevelMaster.Instance.GetCurrentGameMap();
 		var isWeiAtCurMap=GameObject.Find(weiPath);
 		var isTalkedToWei=false;
 		if(isWeiAtCurMap!=null && isWeiAtCurMap.activeSelf){
+			var hotelList=new List<Jyx2Shop>(ConfigTable.GetAll<Jyx2Shop>());
 			LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
 			var ran=new System.Random();
-			var index=ran.Next(0,targetHotel.Length);
-			while(cur.Key==targetHotel[index]){
-				index=ran.Next(0,targetHotel.Length);
+			var index=ran.Next(0,hotelList.Count);
+			while(cur.Jyx2MapId==hotelList[index].Id){
+				index=ran.Next(0,hotelList.Count);
 			}
 			GameObject eventsParent = GameObject.Find("Level/Triggers");
-			string eventId="";
 			foreach(Transform t in eventsParent.transform)
 			{
 				var evt = t.GetComponent<GameEvent>();
 				if (evt == null) continue;
-				foreach (var obj in evt.m_EventTargets){//如何获取目标场景trigger?
+				foreach (var obj in evt.m_EventTargets){
 					if (obj == null) continue;
-					eventId = t.name;
 					var o = obj.GetComponent<InteractiveObj>();
 					if(o != null && "韦小宝"==o.name){
 						isTalkedToWei=evt.m_InteractiveEventId==938;
@@ -177,31 +174,14 @@ public class BigMapZone : MonoBehaviour
 				}
 			}
 			if(isTalkedToWei){	
-				var target=ConfigTable.Get<GameMap>(targetHotel[index]);
-				Debug.Log("transport Wei to "+target.GetShowName()+"--"+eventId);
+				var curTriggerId = ConfigTable.Get<Jyx2Shop>(int.Parse(cur.Jyx2MapId)).Trigger;
+				Debug.Log("transport Wei to "+hotelList[index].Id);
 				level.ReplaceSceneObject(cur.Jyx2MapId, weiPath, "0");
-				level.ReplaceSceneObject(target.Jyx2MapId, weiPath, "1");
-				GameRuntimeData.Instance.ModifyEvent(int.Parse(cur.Jyx2MapId), int.Parse(eventId), -1, -1, -1);
-				GameRuntimeData.Instance.ModifyEvent(int.Parse(target.Jyx2MapId), weiTrigger[index], 937, -1, -1);
+				level.ReplaceSceneObject(hotelList[index].Id, weiPath, "1");
+				GameRuntimeData.Instance.ModifyEvent(int.Parse(cur.Jyx2MapId), curTriggerId, -1, -1, -1);
+				GameRuntimeData.Instance.ModifyEvent(int.Parse(hotelList[index].Id), hotelList[index].Trigger, 937, -1, -1);
                 LevelMaster.Instance.RefreshGameEvents();
 			}
 		}
-	}
-	public static object[] GetWeiTrigger(){
-		GameObject eventsParent = GameObject.Find("Level/Triggers");
-		foreach(Transform t in eventsParent.transform)
-		{
-			var evt = t.GetComponent<GameEvent>();
-			if (evt == null) continue;
-			foreach (var obj in evt.m_EventTargets){
-				if (obj == null) continue;
-				string eventId = t.name;
-				var o = obj.GetComponent<InteractiveObj>();
-				if(o != null && "韦小宝"==o.name){
-					return new object[]{eventId,evt.m_InteractiveEventId==938};
-				}
-			}
-		}
-		return new object[]{"",false};
 	}
 }
