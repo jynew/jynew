@@ -277,6 +277,8 @@ namespace Jyx2
 
         }
         
+		//修改这个接口逻辑为在当前trigger对应事件序号基础上加上v1,v2,v3 (只对大于0的进行相加，-1，-2都保留原事件序号)
+		// modified by eaphone at 2021/6/12
         static public void Add3EventNum(int scene, int eventId,int v1,int v2,int v3)
         {
             RunInMainThrad(() =>
@@ -299,8 +301,14 @@ namespace Jyx2
                     eventId = int.Parse(evt.name); //当前事件
                 }
 
-                //更新全局记录
-                runtime.ModifyEvent(scene, eventId, v1, v2, v3);
+				var curEvt=GameEventManager.GetCurrentGameEvent();
+				if(curEvt!=null){
+					if(v1>-1) v1+=curEvt.m_InteractiveEventId;
+					if(v2>-1) v2+=curEvt.m_UseItemEventId;
+					if(v3>-1) v3+=curEvt.m_EnterEventId;
+					//更新全局记录
+					runtime.ModifyEvent(scene, eventId, v1, v2, v3);
+				}
 
                 //刷新当前场景中的事件
                 LevelMaster.Instance.RefreshGameEvents();
