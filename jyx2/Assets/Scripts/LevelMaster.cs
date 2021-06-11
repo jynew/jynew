@@ -722,7 +722,6 @@ public class LevelMaster : MonoBehaviour
 	
 	public void TransportToTransform(string path, string name, string target)
 	{
-		Debug.LogError(path);
 		var rootObj = GameObject.Find(path);
         var trans = rootObj.transform.Find(name);
 
