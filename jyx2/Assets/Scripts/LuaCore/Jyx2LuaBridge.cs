@@ -785,14 +785,17 @@ namespace Jyx2
             });
             Wait();
         }
-		// add to handle indoor transport player
+		// add to handle indoor transport object
+		// path: name of destination transform
+		// parent: parent path of destination transform
+		// target: "" mean transport player. otherwise, need the full path of transport object.
 		// eahphone at 2021/6/5
-        static public void jyx2_MovePlayer(string path)
+        static public void jyx2_MovePlayer(string path,string parent="Level/Triggers",string target="")
         {
 			RunInMainThrad(() =>
             {
                 var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
-				levelMaster.Transport("999");
+				levelMaster.TransportToTransform(parent,path,target);
 				Next();
             });
 			Wait();
