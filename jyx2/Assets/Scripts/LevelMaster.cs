@@ -717,18 +717,28 @@ public class LevelMaster : MonoBehaviour
     //传送
     public void Transport(string transportName)
     {
-        var rootObj = GameObject.Find("Level/Triggers");
-        var trans = rootObj.transform.Find(transportName);
+        TransportToTransform("Level/Triggers",transportName,"");
+    }
+	
+	public void TransportToTransform(string path, string name, string target)
+	{
+		var rootObj = GameObject.Find(path);
+        var trans = rootObj.transform.Find(name);
 
         if(trans != null)
         {
-            Transport(trans.position);
+			if(target==""){
+				Transport(trans.position);
+			}else{
+				var t=GameObject.Find(target).transform;
+				t.position=trans.position;
+			}
         }
         else
         {
-            Debug.LogError("找不到传送点：" + transportName);
+            Debug.LogError("找不到传送点：" + name);
         }
-    }
+	}
 
     //传送
     public void Transport(Vector3 position)
