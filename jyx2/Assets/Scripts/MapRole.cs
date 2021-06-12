@@ -72,7 +72,12 @@ public class MapRole : Jyx2AnimationBattleRole
 
         if(_animator == null)
         {
-            _animator = transform.GetChild(0).GetComponentInChildren<Animator>();
+			for(var index=0;index<transform.childCount;index++){
+				_animator = transform.GetChild(index).GetComponentInChildren<Animator>();
+				if(_animator!=null){
+					break;
+				}
+			}
         }
         return _animator;
     }
