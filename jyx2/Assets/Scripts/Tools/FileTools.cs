@@ -8,7 +8,6 @@ namespace Jyx2.Middleware
     /// </summary>
     public static class FileTools
     {
-
         /// <summary>
         /// 获取路径下所有文件
         /// </summary>
