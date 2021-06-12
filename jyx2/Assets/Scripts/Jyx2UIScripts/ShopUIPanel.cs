@@ -14,7 +14,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
     int curSelectIndex = 0;
     ShopUIItem curSelectItem;
 
-    Dictionary<int, int> currentBuyCount = new Dictionary<int, int>();//当前已经购买的物品数量
+    Dictionary<int, int> currentBuyCount = new Dictionary<int, int>();
     protected override void OnCreate()
     {
         InitTrans();
@@ -50,7 +50,8 @@ public partial class ShopUIPanel:Jyx2_UIBase
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
-        curShopId = (int)allParams[0];
+        //curShopId = (int)allParams[0];
+		curShopId=int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
         curShopData = ConfigTable.Get<Jyx2Shop>(curShopId);
 
         curSelectIndex = 0;
@@ -63,7 +64,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
     void RefreshMoney() 
     {
         int num = GameRuntimeData.Instance.GetMoney();
-        MoneyNum_Text.text = $"持有银两:{num}";
+        MoneyNum_Text.text = $"鎸佹湁閾朵袱:{num}";
     }
 
     void RefreshChild() 
@@ -129,13 +130,13 @@ public partial class ShopUIPanel:Jyx2_UIBase
         int moneyCost = count * item.Price;
         if (GameRuntimeData.Instance.GetMoney() < moneyCost) 
         {
-            GameUtil.DisplayPopinfo("银两不够");
+            GameUtil.DisplayPopinfo("鎸佹湁閾朵袱涓嶈冻");
             return;
         }
         GameRuntimeData.Instance.AddItem(item.Id, count);
         AddBuyCount(item.Id, count);
-        GameUtil.DisplayPopinfo($"获得物品{itemCfg.Name},数量{count}");
-        GameRuntimeData.Instance.AddItem(Jyx2Consts.MONEY_ID, -moneyCost);
+        GameUtil.DisplayPopinfo($"璐拱{itemCfg.Name},鏁伴噺{count}");
+        GameRuntimeData.Instance.AddItem(GameConst.MONEY_ID, -moneyCost);
 
         RefreshChild();
         RefreshMoney();

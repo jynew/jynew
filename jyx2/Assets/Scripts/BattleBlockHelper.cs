@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using ch.sycoforge.Decal;
 using Jyx2;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 
@@ -28,14 +27,16 @@ public class BattleBlockHelper : MonoBehaviour {
     void Start()
     {
         var sceneName = SceneManager.GetActiveScene().name;
-        m_CoordDataSet = SceneCoordDataSet.CreateBySceneName(sceneName);
-        if (m_CoordDataSet == null)
+        SceneCoordDataSet.CreateBySceneName(sceneName, r =>
         {
-            Debug.LogWarning($"没有初始化格子信息，请在编辑器模式下初始化场景的格子信息（Level下的LevelEditor");
-        }
+            m_CoordDataSet = r;
+            if (m_CoordDataSet == null)
+            {
+                Debug.LogWarning($"没有初始化格子信息，请在编辑器模式下初始化场景的格子信息（Level下的LevelEditor");
+            }
+        });
     }
 
-    
     public void OnTestControl()
     {
         if (Input.GetKey("g"))

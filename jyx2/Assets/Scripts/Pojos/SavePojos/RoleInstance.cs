@@ -71,7 +71,7 @@ namespace Jyx2
             SetHPAndRefreshHudBar(MaxHp);
 
             Mp = MaxMp;
-            Tili = Jyx2Consts.MaxTili;
+            Tili = GameConst.MaxTili;
         }
 
         public int HpInc { get { return Data.HpInc; } }
@@ -1258,7 +1258,7 @@ namespace Jyx2
         //JYX2的休息逻辑，对应kyscpp  BattleScene::actRest
         public void OnRest()
         {
-            Tili = Tools.Limit(Tili + 5, 0, Jyx2Consts.MaxTili);
+            Tili = Tools.Limit(Tili + 5, 0, GameConst.MaxTili);
             int tmpHp = Hp;
             Hp = Tools.Limit((int)(Hp + MaxHp * 0.05), 0, MaxHp);
             View?.MarkHpBarIsDirty();
@@ -1282,7 +1282,7 @@ namespace Jyx2
             {
                 if(skill.Key == magicId)
                 {
-                    if(skill.GetLevel() < Jyx2Consts.MAX_SKILL_LEVEL)
+                    if(skill.Level < GameConst.MAX_SKILL_LEVEL)
                     {
                         skill.Level += 100;
                         return 0;
@@ -1294,7 +1294,7 @@ namespace Jyx2
                 }
             }
 
-            if (Wugongs.Count >= Jyx2Consts.MAX_SKILL_COUNT)
+            if (Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
                 return -3; //武学已满
 
             

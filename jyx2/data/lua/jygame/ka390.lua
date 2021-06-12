@@ -8,10 +8,7 @@ if TryBattle(66) == true then goto label0 end;
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 4, 1, 1, 391, -1, -1, 6194, 6194, 6194, 0, 25, 35);--by fanyu|雕胜利，变换贴图。场景07-编号4
     ModifyEvent(-2, 5, 1, 1, 392, -1, -1, 6224, 6224, 6224, 0, 24, 36);--by fanyu|雕胜利，变换贴图。场景07-编号5
-
-    jyx2_ReplaceSceneObject("", "NPC/大雕", "");
-    jyx2_ReplaceSceneObject("", "NPC/蟒蛇", "");
-
+	--需要添加修改模型controller的逻辑
     LightScence();
     Talk(0, "这巨蟒还真难对付，总算把它搞定了．雕兄，你还好吧？", "talkname0", 1);
     Talk(104, "嘎，嘎，嘎．．．．", "talkname104", 0);

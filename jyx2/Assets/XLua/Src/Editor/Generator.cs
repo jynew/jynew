@@ -1824,7 +1824,11 @@ namespace CSObjectWrapEditor
             }
             if (!DelegateBridge.Gen_Flag)
             {
-                throw new InvalidOperationException("Code has not been genrated, may be not work in phone!");
+                #if UNITY_EDITOR_WIN || UNITY_EDITOR_WIN64
+                    Debug.Log("没有生成lua wrap，但不影响在windows下运行");
+                #else
+                    throw new InvalidOperationException("Code has not been genrated, may be not work in phone!");
+                #endif
             }
         }
 #endif

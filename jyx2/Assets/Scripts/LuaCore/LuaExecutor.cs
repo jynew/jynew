@@ -33,16 +33,17 @@ namespace Jyx2
 
             var chunk = LuaManager.LoadLua(path);
             string luaContent = Encoding.UTF8.GetString(chunk).Trim('\n').Trim('\r');
-            ExecuteLua(luaContent,callback,path);
+            ExecuteLua(luaContent, callback, path);
         }
 
-        public static void ExecuteLua(string luaContent, Action callback = null,string path = "")
+        public static void ExecuteLua(string luaContent, Action callback = null, string path = "")
         {
 
             //BY CG:JYX2的特殊情况，有空文件
             if (luaContent.Equals("do return end;"))
             {
                 //Debug.Log("识别到空的lua文件，直接跳过:" + path);
+                callback?.Invoke();
                 return;
             }
 
@@ -53,18 +54,22 @@ namespace Jyx2
             _executing = true;
             Loom.RunAsync(() =>
             {
-
-                luaEnv.DoString(luaContent);
-
-                Debug.Log("lua执行完毕: " + path);
+                try
+                {
+                    luaEnv.DoString(luaContent);
+                    Debug.Log("lua执行完毕: " + path);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("lua执行错误：" + e.ToString());
+                    Debug.LogError(e.StackTrace);
+                }
 
                 currentLuaContext = null;
-
                 _executing = false;
-                
                 if (callback != null)
                 {
-                    Loom.QueueOnMainThread(o => { callback(); }, null);
+                    Loom.QueueOnMainThread(_ => { callback(); }, null);
                 }
             });
         }

@@ -1,12 +1,24 @@
 # 金庸群侠传3D重制版
 
+![coverage](https://img.shields.io/badge/coverage-80%25-yellowgreen)
+[![license](https://img.shields.io/badge/license-MIT%2B%E9%87%91%E7%BE%A43D%E9%87%8D%E5%88%B6%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
+[![release](https://img.shields.io/badge/release-v0.1%20inner-brightgreen)](https://github.com/jynew/jynew/releases)
+[![Unity Version](https://img.shields.io/badge/unity-2020.3.9.f1c1-blue)](https://unity.cn/releases/lts/2020) 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/jynew/jynew/pulls) 
+![commit](https://img.shields.io/github/last-commit/jynew/jynew)<br>
+![Contributors](https://img.shields.io/github/contributors-anon/jynew/jynew) 
+![fork](https://img.shields.io/github/forks/jynew/jynew?style=social)
+![star](https://img.shields.io/github/stars/jynew/jynew?style=social)
+
+
+
 
 * 项目主页 http://www.jy-new.com
 * B站主页 https://space.bilibili.com/1092529660
 * 联系我们 jy_remastered@163.com
 * 开发者Q群 749167552 （入群密码是本代码仓库名称）
 
-金庸群侠传3D重制版是一个非盈利游戏项目，重制《金庸群侠传》并支持后续一系列MOD和二次开发。
+金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《金庸群侠传》并支持后续一系列MOD和二次开发。
 
 > 我们承诺：除了爱好者的自愿捐款以外，不会在任何渠道取得收入，游戏亦不会在任何游戏平台进行发布。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 
@@ -27,8 +39,7 @@
 ## 开发环境和搭建
 
 * 开发工具：[Unity 2020.3.9.f1c1(LTS) (64-bit)](https://unity.cn/releases/lts/2020)
-* 首次加载项目需要运行菜单项 配置表/Gendata
-* 直接点击播放按钮左方的"P"按钮启动游戏（或切换启动场景为0_GameStart.scene）
+* 直接点击播放按钮左方的"P"按钮启动游戏（或切换启动场景为0_GameStart.unity点击播放）
 
 ## 我如何开始？
 
@@ -56,6 +67,7 @@
 * [1.3事件触发器](https://github.com/jynew/jynew/wiki/1.3%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8)
 * [1.4Lua脚本](https://github.com/jynew/jynew/wiki/1.4Lua%E8%84%9A%E6%9C%AC)
 * [1.5搭建游戏世界差异解决办法](https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95)
+* [1.6Git使用流程简介](https://github.com/jynew/jynew/wiki/1.6Git%E6%8B%89%E5%8F%96%EF%BC%8C%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8E%A8%E9%80%81%E6%95%99%E7%A8%8B)
 
 ### 游戏内工具篇
 * [2.1技能编辑器（可预览模型、动作、武器挂点、技能特效等）](https://github.com/jynew/jynew/wiki/2.1%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8)
@@ -88,14 +100,7 @@
 
 ## 贡献给项目
 
-欢迎贡献代码和资源素材，遵循以下原则的提交将被通过
-
-* 承诺符合本项目原则和授权协议，贡献的资源制作默认视为满足[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)
-* 代码符合既定风格和编码规范，能正常编译通过，有自测(目前项目没有单元测试，请自测，逻辑需符合《金庸群侠传》DOS版，或作为后续MOD可扩展功能存在)
-* 每次Pull Request只做一件事，或者实现一类功能（方便追溯）
-* Pull Request请尽量自行解决完与最新版本的冲突
-* 资源提交符合当前*项目标准(TODO)*
-* 长期参与代码贡献的开发者可以被添加直接Write（免PullRequest）权限
+本项目非常欢迎社区进行贡献，请阅读[社区贡献指南](https://github.com/jynew/jynew/blob/main/CONTRIBUTING.md)查看具体规则和流程。
 
 ## 授权声明
 
@@ -116,3 +121,8 @@
 ## 参考项目
 
 [kyscpp](https://github.com/scarsty/kys-cpp)
+
+## 特别补充说明
+
+以下插件仅供学习使用，若希望使用它还请自行购买重新导入：<br>
+[Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)

@@ -15,7 +15,7 @@ public class GameEvent : MonoBehaviour
         return GameEventManager.GetCurrentGameEvent();
     }
 
-    const int NO_EVENT = -1;
+    public const int NO_EVENT = -1;
 
     /// <summary>
     /// 交互对象
@@ -102,6 +102,10 @@ public class GameEvent : MonoBehaviour
 
     void OnClickTarget(InteractiveObj target)
     {
+        //BY CGGG 2021/6/9，已经修改为面朝向射线触发，不会再需要鼠标点击
+        //DO NOTHING
+
+        return;
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -128,13 +132,40 @@ public class GameEvent : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (LevelMaster.Instance == null || LevelMaster.Instance.IsInited == false)
+            return;
+        
+        //只保留进入触发事件
+        if (this.m_EnterEventId == NO_EVENT)
+            return;
+
+        var player = Jyx2Player.GetPlayer();
+        if (player == null || other.gameObject != player.gameObject)
+            return;
+        
+        evtManager.OnTriggerEvent(this);
+    }
+
+    
+    /*
+    void OnTriggerStay(Collider other)
+    {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
         if (Jyx2Player.GetPlayer().IsOnBoat)
             return;
 
-        evtManager.OnTriggerEvent(this);
+        //这里只触发非交互类事件
+        if (this.m_EnterEventId != NO_EVENT)
+        {
+            evtManager.OnTriggerEvent(this);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -145,13 +176,17 @@ public class GameEvent : MonoBehaviour
         if (Jyx2Player.GetPlayer().IsOnBoat)
             return;
 
-        evtManager.OnTriggerEvent(this);
+        //这里只触发非交互类事件
+        if (this.m_EnterEventId != NO_EVENT)
+        {
+            evtManager.OnTriggerEvent(this);
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
         evtManager.OnExitEvent(this);
-    }
+    }*/
 
 
     public void MarkChest()

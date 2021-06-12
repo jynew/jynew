@@ -142,7 +142,7 @@ public class BattleLoader : MonoBehaviour
             selectPram.roleList = runtime.Team;
             selectPram.mustSelect = mustRoleFunc;
             selectPram.title = "选择上场角色";
-            selectPram.maxCount = 5;//TODO 最大上场人数
+            selectPram.maxCount = GameConst.MAX_BATTLE_TEAMMATE_COUNT;//TODO 最大上场人数
             selectPram.canCancel = false;
             selectPram.callback = (cb) =>
             {

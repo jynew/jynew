@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
+using HSFrameWork.Common;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Lean.Pool;
 
@@ -26,14 +27,6 @@ static public class Jyx2ResourceHelper
         await handler;
 
         cachedPrefabs = new Dictionary<string, GameObject>();
-
-        //var handler2 = Addressables.LoadAssetsAsync<GameObject>(new List<string> { "uiPrefabs" }, null, Addressables.MergeMode.Union).Task;
-        //await handler2;
-        //foreach(var obj in handler2.Result)
-        //{
-        //    Debug.Log(obj.name);
-        //}
-
 
         foreach (var path in handler.Result.text.Split('\n'))
         {
@@ -76,6 +69,30 @@ static public class Jyx2ResourceHelper
         string p = ("Assets/BuildSource/head/" + path + ".png");
         Addressables.LoadAssetAsync<Sprite>(p).Completed += r => { callback(r.Result); };
     }
+
+    static public void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
+    {
+        string path = $"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes";
+        Addressables.LoadAssetAsync<TextAsset>(path).Completed += r =>
+        {
+            if (r.Result == null)
+                callback(null);
+            var obj = r.Result.bytes.Deserialize<SceneCoordDataSet>();
+            callback(obj);
+        };
+    }
+    
+    static public void GetBattleboxDataset(string fullPath, Action<BattleboxDataset> callback)
+    {
+        Addressables.LoadAssetAsync<TextAsset>(fullPath).Completed += r =>
+        {
+            if (r.Result == null)
+                callback(null);
+            var obj = r.Result.bytes.Deserialize<BattleboxDataset>();
+            callback(obj);
+        };
+    }
+    
 
     static public void GetSprite(RoleInstance role, Action<Sprite> callback)
     {

@@ -111,6 +111,7 @@ namespace Jyx2
                     if (evt == null)
                     {
                         Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
                         return;
                     }
                     eventId = int.Parse(evt.name); //当前事件
@@ -276,6 +277,8 @@ namespace Jyx2
 
         }
         
+		//修改这个接口逻辑为在当前trigger对应事件序号基础上加上v1,v2,v3 (只对大于0的进行相加，-1，-2都保留原事件序号)
+		// modified by eaphone at 2021/6/12
         static public void Add3EventNum(int scene, int eventId,int v1,int v2,int v3)
         {
             RunInMainThrad(() =>
@@ -298,8 +301,14 @@ namespace Jyx2
                     eventId = int.Parse(evt.name); //当前事件
                 }
 
-                //更新全局记录
-                runtime.ModifyEvent(scene, eventId, v1, v2, v3);
+				var curEvt=GameEventManager.GetCurrentGameEvent();
+				if(curEvt!=null){
+					if(v1>-1) v1+=curEvt.m_InteractiveEventId;
+					if(v2>-1) v2+=curEvt.m_UseItemEventId;
+					if(v3>-1) v3+=curEvt.m_EnterEventId;
+					//更新全局记录
+					runtime.ModifyEvent(scene, eventId, v1, v2, v3);
+				}
 
                 //刷新当前场景中的事件
                 LevelMaster.Instance.RefreshGameEvents();
@@ -320,7 +329,7 @@ namespace Jyx2
 		// by eaphone at 2021/6/5
         static public bool TeamIsFull()
         {
-            return runtime.Team.Count > Jyx2Consts.MAX_TEAMCOUNT-1;
+            return runtime.Team.Count > GameConst.MAX_TEAMCOUNT-1;
         }
 
         /// <summary>
@@ -396,7 +405,7 @@ namespace Jyx2
             RunInMainThrad(() =>
             {
                 var role = runtime.GetRole(roleId);
-                role.IQ = HSFrameWork.Common.Tools.Limit(role.IQ + v, 0, Jyx2Consts.MAX_ZIZHI);
+                role.IQ = HSFrameWork.Common.Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
                 storyEngine.DisplayPopInfo(role.Name + "资质增加" + v);
                 Next();
             });
@@ -455,7 +464,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
-                r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_ROLE_ATTRITE);
+                r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
             });
         }
@@ -467,7 +476,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
-                r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_HPMP);
+                r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
             });
         }
@@ -479,7 +488,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
-                r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_ROLE_ATTRITE);
+                r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.Attack - v0));
             });
         }
@@ -491,7 +500,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
-                r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, Jyx2Consts.MAX_HPMP);
+                r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
             });
         }
@@ -697,7 +706,7 @@ namespace Jyx2
 
         static public bool JudgeMoney(int money)
         {
-            return (runtime.GetItemCount(Jyx2Consts.MONEY_ID) >= money);
+            return (runtime.GetItemCount(GameConst.MONEY_ID) >= money);
         }
 
         /// <summary>
@@ -776,14 +785,17 @@ namespace Jyx2
             });
             Wait();
         }
-		// add to handle indoor transport player
+		// add to handle indoor transport object
+		// path: name of destination transform
+		// parent: parent path of destination transform
+		// target: "" mean transport player. otherwise, need the full path of transport object.
 		// eahphone at 2021/6/5
-        static public void jyx2_MovePlayer(string path)
+        static public void jyx2_MovePlayer(string path,string parent="Level/Triggers",string target="")
         {
 			RunInMainThrad(() =>
             {
                 var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
-				levelMaster.Transport("999");
+				levelMaster.TransportToTransform(parent,path,target);
 				Next();
             });
 			Wait();
@@ -979,10 +991,7 @@ namespace Jyx2
             RunInMainThrad(() =>
             {
                 Sequence seq = DOTween.Sequence();
-                seq.AppendCallback(() =>
-                {
-                    Next();
-                })
+                seq.AppendCallback(Next)
                 .SetDelay(duration);
             });
             Wait();

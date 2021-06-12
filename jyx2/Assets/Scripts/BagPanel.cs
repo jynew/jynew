@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using HanSquirrel.ResourceManager;
 using Jyx2;
 using Jyx2.Middleware;
 using HSFrameWork.ConfigTable;
 using HSFrameWork.SPojo;
-using Jyx2;
 using UnityEngine;
 using UnityEngine.UI;
 
