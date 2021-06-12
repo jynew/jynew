@@ -51,7 +51,7 @@ namespace Jyx2
                         //}
 
                         //初始化队伍状态
-                        //foreach (var r in MapRuntimeData.Instance.ExploreTeam)
+                        //foreach (var r in GameConst.MapTeam)
                         //{
                         //    r.Hp = r.Maxhp;
                         //}

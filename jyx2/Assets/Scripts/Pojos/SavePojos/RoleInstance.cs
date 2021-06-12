@@ -833,44 +833,6 @@ namespace Jyx2
             return Data.GetBattleAnimator();
         }
 
-        /*过期代码
-        [Obsolete]
-        Dictionary<string, string> weaponMountMapping = null;
-        
-        [Obsolete]
-        public string GetWeaponMount(string code)
-        {
-            //首次载入时初始化
-            if(weaponMountMapping == null)
-            {
-                weaponMountMapping = new Dictionary<string, string>();
-                string weaponMount = Data.GetWeaponMount();
-                if(!string.IsNullOrEmpty(weaponMount))
-                {
-                    foreach (var line in weaponMount.Split('\n'))
-                    {
-                        var tmp = line.Trim('\r').Split('|');
-                        if (tmp.Length < 2)
-                        {
-                            Debug.LogError("武器挂载格式错误,RoleKey =" + this.Key);
-                            return null;
-                        }
-
-                        var list = tmp.ToList();
-                        list.RemoveAt(0);
-                        weaponMountMapping[tmp[0]] = string.Join("|", list.ToArray());
-                    }
-                }
-            }
-
-            if(weaponMountMapping.ContainsKey(code))
-            {
-                return weaponMountMapping[code];
-            }
-            return null;
-        }
-        */
-
         public Jyx2Role Data
         {
             get
