@@ -195,19 +195,19 @@ public class GameEventManager : MonoBehaviour
             return;
         }
 
-        SetCurrentGameEvent(curEvent);
-        var eventLuaPath = "jygame/ka" + eventId;
-        Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent, context);
-
         //停止导航
         var levelMaster = LevelMaster.Instance;
         if (levelMaster != null)
         {
-			// fix drag motion continuous move the player when scene is playing
-			// modified by eaphone at 2021/05/31
-			levelMaster.SetPlayerCanController(false);
+            // fix drag motion continuous move the player when scene is playing
+            // modified by eaphone at 2021/05/31
+            levelMaster.SetPlayerCanController(false);
             levelMaster.StopPlayerNavigation();
         }
+        
+        SetCurrentGameEvent(curEvent);
+        var eventLuaPath = "jygame/ka" + eventId;
+        Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent, context);
     }
 
 

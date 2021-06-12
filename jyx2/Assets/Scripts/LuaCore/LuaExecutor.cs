@@ -43,6 +43,7 @@ namespace Jyx2
             if (luaContent.Equals("do return end;"))
             {
                 //Debug.Log("识别到空的lua文件，直接跳过:" + path);
+                callback?.Invoke();
                 return;
             }
 
