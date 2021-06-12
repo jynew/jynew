@@ -99,7 +99,7 @@ namespace Jyx2.Editor
                     using (HSUtils.ExeTimer("AssetTool.BuildCurrent"))
                     {
                         MenuHelper.SafeDisplayProgressBar(title, "AssetTool.BuildCurrent", 0.9f);
-                        AssetTool.BuildCurrent();
+                        /*AssetTool.BuildCurrent();*/
                         Debug.LogWarning("▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ [ 成功完成BuildCurrent ] ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲".EatWithTID());
                     }
                 }

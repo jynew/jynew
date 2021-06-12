@@ -84,8 +84,9 @@ namespace Jyx2.Editor
 
         private static void MoveAndGenMD5(bool isBuildForIOS, string title)
         {
-            MenuHelper.SafeDisplayProgressBar(title, "AssetTool.Move*", 0.8f);
+            /*MenuHelper.SafeDisplayProgressBar(title, "AssetTool.Move*", 0.8f);
                 AssetTool.MoveInAllExternalAB_CurrentTarget();
+                */
 
             MenuHelper.SafeDisplayProgressBar(title, "GenerateABMd5", 0.9f);
             MD5Menu.GenerateStreamingAssetsMD5Summary();
