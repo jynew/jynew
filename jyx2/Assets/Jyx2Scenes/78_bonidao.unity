@@ -4388,12 +4388,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.02
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.02
+      value: 0.031
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4427,6 +4439,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 97a2c0232b5a01c4ab45389c780d74c4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c29011eec73742818c412a5196234, type: 3}
 --- !u!1 &386603480
@@ -8629,8 +8645,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 0, y: 0, z: 0}
-    lastRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastScale: {x: 1, y: 1, z: 1}
+    lastRotation: {x: 0, y: 0, z: 0, w: 1}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -15588,7 +15604,7 @@ GameObject:
   - component: {fileID: 1665095290}
   - component: {fileID: 1665095289}
   - component: {fileID: 1665095288}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Terrain
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -17146,9 +17162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: Xia_HFH
-  m_WeaponName: "\u7A7A\u624B"
-  AvataType: 0
 --- !u!114 &1809565864
 MonoBehaviour:
   m_ObjectHideFlags: 0
