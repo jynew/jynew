@@ -46,13 +46,15 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         if (map != null)
         {
             MapName_Text.text = map.GetShowName();
-            bool isWolrd = map.Tags.Contains("WORLDMAP");
-            MapButton_Button.gameObject.SetActive(!isWolrd);
-			// for change main ui panel background image
-			// added by eaphone at 2021/05/27
-			var rt = Image_Right.GetComponent<RectTransform>();
-　　		rt.sizeDelta = new Vector2(isWolrd?480:640, 100);
+            bool isWorldMap = map.Tags.Contains("WORLDMAP");
+            
+            //BY CGGG：小地图不提供传送到大地图的功能 2021/6/13
+            //MapButton_Button.gameObject.SetActive(!isWorldMap);
+            MapButton_Button.gameObject.SetActive(false);
+            
 			
+			//var rt = Image_Right.GetComponent<RectTransform>();
+　　		//rt.sizeDelta = new Vector2(isWorldMap?480:640, 100);
         }
     }
 
