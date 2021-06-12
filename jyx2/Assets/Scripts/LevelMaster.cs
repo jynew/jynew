@@ -130,7 +130,6 @@ public class LevelMaster : MonoBehaviour
         {
             //测试存档位
             var r = GameRuntimeData.CreateNew();  //选一个没有用过的id
-            MapRuntimeData.Instance.Clear();
         }
 
         var brain = Camera.main.GetComponent<CinemachineBrain>();
@@ -354,11 +353,11 @@ public class LevelMaster : MonoBehaviour
         }
         else
         {
-            _playerNavAgent.speed = MapRuntimeData.Instance.ExploreSpeed;
+            _playerNavAgent.speed = GameConst.MapSpeed;
         }
         
-        _playerNavAgent.angularSpeed = MapRuntimeData.Instance.ExploreAngularSpeed;
-        _playerNavAgent.acceleration = MapRuntimeData.Instance.ExploreAcceleration;
+        _playerNavAgent.angularSpeed = GameConst.MapAngularSpeed;
+        _playerNavAgent.acceleration = GameConst.MapAcceleration;
 
         var playerCom = _player.GetComponent<Jyx2Player>();
         if(playerCom == null)
@@ -745,21 +744,6 @@ public class LevelMaster : MonoBehaviour
     {
         _playerNavAgent.Warp(position);
         _player.position = position;
-
-        if (MapRuntimeData.Instance == null || MapRuntimeData.Instance.ExploreTeam == null)
-            return;
-
-        //跟随的npc和teammate一起传送
-        foreach (var role in MapRuntimeData.Instance.ExploreTeam)
-        {
-            //npc传送到离玩家1米以内的随机点
-            var npcPos = _player.position + new Vector3(UnityEngine.Random.Range(-1, 1), 0, UnityEngine.Random.Range(-1, 1));
-            if (role.View != null && role.View.GetComponent<NavMeshAgent>() != null)
-            {
-                role.View.GetComponent<NavMeshAgent>().Warp(npcPos);
-                role.View.transform.position = npcPos;
-            }
-        }
     }
 	
 	// implement change player facing. 0:top-right, 1:down-right, 2:top-left, 3:down-left

@@ -93,7 +93,7 @@ public class LevelMasterBooster : MonoBehaviour
         //    //}
 
         //    //探索技能值
-        //    //MapRuntimeData.Instance.ExploreSkillPoint = 100;
+        //    //GameConst.MapSkillPoint = 100;
         //}
         //场景准备完成 显示主界面
         Jyx2_UIManager.Instance.ShowMainUI();

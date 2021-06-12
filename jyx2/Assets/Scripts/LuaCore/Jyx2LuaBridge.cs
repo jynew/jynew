@@ -303,9 +303,21 @@ namespace Jyx2
 
 				var curEvt=GameEventManager.GetCurrentGameEvent();
 				if(curEvt!=null){
-					if(v1>-1) v1+=curEvt.m_InteractiveEventId;
-					if(v2>-1) v2+=curEvt.m_UseItemEventId;
-					if(v3>-1) v3+=curEvt.m_EnterEventId;
+					if(v1==-2){//值为-2时，取当前值
+						v1=curEvt.m_InteractiveEventId;
+					}else if(v1>-1){
+						v1+=curEvt.m_InteractiveEventId;
+					}
+					if(v2==-2){
+						v2=curEvt.m_UseItemEventId;
+					}else if(v2>-1){
+						v2+=curEvt.m_UseItemEventId;
+					}
+					if(v3==-2){
+						v3=curEvt.m_EnterEventId;
+					}else if(v3>-1){
+						v3+=curEvt.m_EnterEventId;
+					}
 					//更新全局记录
 					runtime.ModifyEvent(scene, eventId, v1, v2, v3);
 				}

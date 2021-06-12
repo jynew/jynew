@@ -54,8 +54,6 @@ namespace Jyx2
             //主角入当前队伍
             runtime.Team.Add(runtime.GetRole(0));
 
-            MapRuntimeData.Instance.Clear();
-            MapRuntimeData.Instance.AddToExploreTeam(player);
 #if JYX2_TEST
             //可自由实现新的语法
             var content = File.ReadAllLines("CreateTeamDebug.txt");
@@ -401,14 +399,7 @@ namespace Jyx2
         {
             return GetItemCount(GameConst.MONEY_ID);
         }
-
-        //探索地图运行时
-        public MapRuntimeData MapRuntimeData
-        {
-            get { return GetPojoAutoCreate<MapRuntimeData>("MapRuntimeData"); }
-            set { SavePojo("MapRuntimeData", value); }
-        }
-
+        
 
         #region JYX2
 

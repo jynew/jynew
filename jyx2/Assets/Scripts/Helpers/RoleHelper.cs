@@ -35,20 +35,9 @@ public static class RoleHelper
         roleView.m_RoleKey = role.Key;
         roleView.name = role.Key;
         roleView.tag = tag;
-        if (MapRuntimeData.Instance != null) MapRuntimeData.Instance.AddMapRole(role);
         return roleView;
     }
-
-    /// <summary>
-    /// 通过角色Key创建角色数据示例
-    /// </summary>
-    public static RoleInstance CreateRoleInstance(string roleKey)
-    {
-        RoleInstance role = new RoleInstance(roleKey);
-        if (MapRuntimeData.Instance != null) MapRuntimeData.Instance.AddMapRole(role);
-        return role;
-    }
-
+    
     /// <summary>
     /// 地图角色绑定新的数据实例
     /// </summary>
