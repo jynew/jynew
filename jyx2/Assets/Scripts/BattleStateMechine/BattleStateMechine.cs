@@ -1,4 +1,4 @@
-﻿using HanSquirrel.ResourceManager;
+using HanSquirrel.ResourceManager;
 using Jyx2;
 using System;
 using System.Collections;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HSFrameWork.Common;
 
 namespace Jyx2.Crossplatform.BasePojo

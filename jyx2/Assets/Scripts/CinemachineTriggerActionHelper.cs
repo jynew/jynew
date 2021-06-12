@@ -1,4 +1,4 @@
-﻿using Cinemachine;
+using Cinemachine;
 using HanSquirrel.ResourceManager;
 using Jyx2;
 using System;

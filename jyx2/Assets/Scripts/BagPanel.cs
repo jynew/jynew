@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Jyx2;
 using Jyx2.Middleware;
 using HSFrameWork.ConfigTable;

@@ -1,4 +1,4 @@
-﻿using HanSquirrel.ResourceManager;
+using HanSquirrel.ResourceManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

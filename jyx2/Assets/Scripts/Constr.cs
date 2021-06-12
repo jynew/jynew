@@ -1,4 +1,4 @@
-﻿using GLib;
+using GLib;
 using HanSquirrel.ResourceManager;
 using System;
 using System.Collections.Generic;

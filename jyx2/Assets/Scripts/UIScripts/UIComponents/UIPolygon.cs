@@ -1,4 +1,4 @@
-﻿namespace UnityEngine.UI.Extensions {
+namespace UnityEngine.UI.Extensions {
   
    [AddComponentMenu("UI/Extensions/Primitives/UI Polygon")]  
    public class UIPolygon : UIPrimitiveBase  
