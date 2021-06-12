@@ -39,7 +39,7 @@ public partial class FullSuggestUIPanel:Jyx2_UIBase
 
         Title_Text.text = m_title;
         Content_Text.text = m_content;
-        m_canClickTime = Time.unscaledTime + 0.5f;//0.5sºó²ÅÄÜµã»÷
+        m_canClickTime = Time.unscaledTime + 0.5f;//0.5såæ‰èƒ½ç‚¹å‡»
         GameUtil.GamePause(true);
     }
 

@@ -1,4 +1,4 @@
-﻿using HSFrameWork.ConfigTable;
+using HSFrameWork.ConfigTable;
 using System.Xml.Serialization;
 
 namespace Jyx2

@@ -1,4 +1,4 @@
-﻿using HSFrameWork.Common;
+using HSFrameWork.Common;
 using HSFrameWork.ConfigTable;
 using System.Collections.Generic;
 using System.Linq;

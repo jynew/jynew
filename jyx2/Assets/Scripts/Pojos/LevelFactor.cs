@@ -1,4 +1,4 @@
-﻿using System.Xml.Serialization;
+using System.Xml.Serialization;
 using HSFrameWork.Common;
 using HSFrameWork.ConfigTable;
 using ObscuredInt=System.Int32;

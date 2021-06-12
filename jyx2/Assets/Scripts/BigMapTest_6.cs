@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using HedgehogTeam.EasyTouch;
 using System.Collections.Generic;
 using UnityEngine;

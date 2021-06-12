@@ -1,4 +1,4 @@
-﻿using HanSquirrel.ResourceManager;
+using HanSquirrel.ResourceManager;
 using UnityEngine;
 
 public class PlayerBooster : MonoBehaviour

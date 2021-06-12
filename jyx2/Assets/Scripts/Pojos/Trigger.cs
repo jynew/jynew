@@ -1,4 +1,4 @@
-﻿using HSFrameWork.ConfigTable;
+using HSFrameWork.ConfigTable;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 

@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;

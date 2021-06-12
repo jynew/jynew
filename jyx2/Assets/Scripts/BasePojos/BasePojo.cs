@@ -1,4 +1,4 @@
-﻿
+
 namespace Jyx2
 {
     public abstract class BasePojo : HSFrameWork.ConfigTable.BaseBean {}

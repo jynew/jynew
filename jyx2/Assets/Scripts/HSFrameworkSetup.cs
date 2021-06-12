@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HSFrameWork.ConfigTable;
 using System.Collections.Generic;
 //using XLua;

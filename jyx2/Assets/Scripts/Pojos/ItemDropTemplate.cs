@@ -1,4 +1,4 @@
-﻿using Jyx2.Crossplatform.BasePojo;
+using Jyx2.Crossplatform.BasePojo;
 using HSFrameWork.Common;
 using HSFrameWork.ConfigTable;
 using System;

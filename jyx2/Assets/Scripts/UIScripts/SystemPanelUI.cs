@@ -1,4 +1,4 @@
-﻿using Jyx2;
+using Jyx2;
 using HSUI;
 using UnityEngine;
 using UnityEngine.UI;
