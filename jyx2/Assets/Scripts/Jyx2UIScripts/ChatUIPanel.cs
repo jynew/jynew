@@ -1,12 +1,11 @@
 using Jyx2;
 using HSFrameWork.ConfigTable;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 
 public enum ChatType 
 {
@@ -30,6 +29,8 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 
         StorySelectionItem_Button.gameObject.SetActive(false);
         MainBg_Button.onClick.AddListener(OnMainBgClick);
+
+        InitPanelTrigger();
     }
 
     void OnMainBgClick() 
@@ -92,6 +93,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         int preIndex = _currentShowIndex;
         _currentShowIndex += 10000;
         _currentShowIndex = Mathf.Clamp(_currentShowIndex, 0, _currentText.Length - 1);
+ 
         MainContent_Text.text = _currentText.Substring(preIndex, _currentShowIndex - preIndex);
     }
 
@@ -272,6 +274,28 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
     public void DoHideAnimator()
     {
         
+    }
+
+    private void InitPanelTrigger()
+    {
+        List<EventTrigger.Entry> entries = Panel_Trigger.triggers;
+        for (int i = 0; i < entries.Count; i++)
+        {
+            if (entries[i].eventID == EventTriggerType.PointerClick)
+            {
+                entries[i].callback = new EventTrigger.TriggerEvent();
+                entries[i].callback.AddListener(new UnityEngine.Events.UnityAction<BaseEventData>((BaseEventData) =>
+                {
+                    OnMainBgClick();
+                }));
+                break;
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) OnMainBgClick();
     }
 
     protected override void OnHidePanel()
