@@ -44,12 +44,6 @@ namespace Jyx2
         [XmlAttribute]
         public string Tags;
 
-        [XmlAttribute]
-        public string Music;
-
-        [XmlAttribute]
-        public string StartStorys;
-
         //获得开场地图
         public static GameMap GetGameStartMap()
         {
@@ -77,7 +71,7 @@ namespace Jyx2
             }
             else
             {
-                return Music;
+                return string.Empty;
             }
         }
 
