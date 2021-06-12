@@ -677,25 +677,7 @@ public class MapRole : Jyx2AnimationBattleRole
         }
     }
     #endregion
-
-    #region 探索技能相关
-    public void Acc(bool enabled)
-    {
-        if (enabled)
-        {
-            var mesh = GetComponent<SkinnedMeshRenderer>();
-            mesh.material.SetColor("_OutColor", Color.yellow);
-            _navMeshAgent.speed = MapRuntimeData.Instance.ExploreSpeed;
-        }
-        else
-        {
-            var mesh = GetComponent<SkinnedMeshRenderer>();
-            mesh.material.SetColor("_OutColor", Color.black);
-            _navMeshAgent.speed = MapRuntimeData.Instance.ExploreSpeed;
-        }
-    }
-    #endregion
-
+    
     public void HitEffect(string effectName, float deltaTime = 0f, bool showDeath = false)
     {
         /*if (DataInstance.IsDead() && showDeath)

@@ -28,19 +28,6 @@ namespace Jyx2
             private set;
         }
 
-        public List<RoleInstance> NPCList
-        {
-            get { return Roles.Except(ExploreTeam).ToList(); }
-        }
-
-        public int ExploreSkillPoint
-        {
-            get { return Get("ExploreSkillPoint", 0); }
-            set { Save("ExploreSkillPoint", value); }
-        }
-
-        public List<string> ActiveExploreSkill;
-
         public List<RoleInstance> Roles
         {
             get { return GetList<RoleInstance>("Roles"); }
@@ -55,7 +42,6 @@ namespace Jyx2
         {
             base.Clear();
             ExploreTeam = new List<RoleInstance>();
-            ActiveExploreSkill = new List<string>();
         }
 
         public void AddMapRole(RoleInstance role)

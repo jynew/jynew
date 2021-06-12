@@ -18,18 +18,7 @@ namespace Jyx2.Crossplatform.BasePojo
         /// </summary>
         protected static readonly List<Type> _SharedTypes = new List<Type>(){
                 //client
-                typeof(KeyValue),
-                typeof(Attribute),
-                typeof(Role),
-                typeof(BattleSkill),
-                typeof(BattleZhaoshi),
                 typeof(GameMap),
-                typeof(MapEvt),
-                typeof(LevelFactor),
-                typeof(RoleGrowTemplate),
-                typeof(Trigger),
-                typeof(Item),
-                typeof(ItemDropTemplate),
                 typeof(System.Numerics.Vector3),
                 typeof(System.Numerics.Vector2),
 
@@ -54,18 +43,7 @@ namespace Jyx2.Crossplatform.BasePojo
         /// </summary>
         protected override void BuildTypeNodes()
         {
-            AddTypeNode<KeyValue>("kv");
-            AddTypeNode<Attribute>("attribute");
-            AddTypeNode<Role>("role");
-            AddTypeNode<BattleSkill>("battleskill");
-            AddTypeNode<BattleZhaoshi>("battlezhaoshi");
             AddTypeNode<GameMap>("gamemap");
-            AddTypeNode<MapEvt>("mapevt");
-            AddTypeNode<LevelFactor>("levelfactor");
-            AddTypeNode<RoleGrowTemplate>("rolegrowtemplate");
-            AddTypeNode<Trigger>("trigger");
-            AddTypeNode<Item>("item");
-            AddTypeNode<ItemDropTemplate>("itemdrop");
 
             //jyx2
             AddTypeNode<Jyx2Role>("jyx2role");

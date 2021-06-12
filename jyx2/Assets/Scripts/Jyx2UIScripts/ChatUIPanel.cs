@@ -2,6 +2,7 @@ using Jyx2;
 using HSFrameWork.ConfigTable;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -10,7 +11,6 @@ using UnityEngine.EventSystems;
 public enum ChatType 
 {
     None = -1,
-    RoleKey = 0,
     RoleId = 1,
     Selection = 2,
 }
@@ -21,7 +21,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 
     Action _callback;
     ChatType _currentShowType = ChatType.None;
-    string _currentText;//´æÒ»ÏÂÒªÏÔÊ¾µÄÎÄ×Ö µ±ÎÄ×ÖÒªÏÔÊ¾µÄÊ±ºò ÓÃÒ»¸öÖ¸ÕëÏÔÊ¾µ±Ç°ÏÔÊ¾µ½µÄË÷Òı ·Ö¶à´ÎÏÔÊ¾£¬µã»÷ÏÔÊ¾½ÓÏÂÀ´µÄ
+    string _currentText;//å­˜ä¸€ä¸‹è¦æ˜¾ç¤ºçš„æ–‡å­— å½“æ–‡å­—è¦æ˜¾ç¤ºçš„æ—¶å€™ ç”¨ä¸€ä¸ªæŒ‡é’ˆæ˜¾ç¤ºå½“å‰æ˜¾ç¤ºåˆ°çš„ç´¢å¼• åˆ†å¤šæ¬¡æ˜¾ç¤ºï¼Œç‚¹å‡»æ˜¾ç¤ºæ¥ä¸‹æ¥çš„
     int _currentShowIndex = 0;
     protected override void OnCreate()
     {
@@ -53,9 +53,6 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             case ChatType.RoleId:
                 Show((int)allParams[1], (string)allParams[2], (int)allParams[3], (Action)allParams[4]);
                 break;
-            case ChatType.RoleKey:
-                Show((string)allParams[1], (string)allParams[2], (Action)allParams[3]);
-                break;
             case ChatType.Selection:
                 ShowSelection((string)allParams[1], (string)allParams[2], (List<string>)allParams[3], (Action<int>)allParams[4]);
                 break;
@@ -81,7 +78,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         }
     }
 
-    //¸ù¾İ¶Ô»°¿ò×î´óÏÔÊ¾×Ö·ûÒÔ¼°±êµã¶Ï¾ä·Ö¶ÎÏÔÊ¾¶Ô»° by eaphone at 2021/6/12
+    //æ ¹æ®å¯¹è¯æ¡†æœ€å¤§æ˜¾ç¤ºå­—ç¬¦ä»¥åŠæ ‡ç‚¹æ–­å¥åˆ†æ®µæ˜¾ç¤ºå¯¹è¯ by eaphone at 2021/6/12
     void ShowText() 
     {
         if (_currentShowIndex >= _currentText.Length - 1) 
@@ -94,10 +91,10 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 		var finalS=_currentText;
 		if(_currentText.Length>GameConst.MAX_CHAT_CHART_NUM){
 			int preIndex = _currentShowIndex;
-			string[] sList=_currentText.Substring(preIndex,_currentText.Length - preIndex).Split(new char[]{'£¡','£¿','£¬','¡¡'},StringSplitOptions.RemoveEmptyEntries);//ÔİÊ±²»¶Ô,'£®'½øĞĞ·Ö¸î£¬²»È»¶Ô»°ÖĞ...¶¼»á±»È¥³ıµô
+			string[] sList=_currentText.Substring(preIndex,_currentText.Length - preIndex).Split(new char[]{'ï¼','ï¼Ÿ','ï¼Œ','ã€€'},StringSplitOptions.RemoveEmptyEntries);//æš‚æ—¶ä¸å¯¹,'ï¼'è¿›è¡Œåˆ†å‰²ï¼Œä¸ç„¶å¯¹è¯ä¸­...éƒ½ä¼šè¢«å»é™¤æ‰
 			var tempIndex=0;
 			foreach(var i in sList){
-				var tempNum=i.Length+1;//°üº¬·Ö¸ô·û
+				var tempNum=i.Length+1;//åŒ…å«åˆ†éš”ç¬¦
 				if(tempIndex+tempNum<GameConst.MAX_CHAT_CHART_NUM){
 					tempIndex+=tempNum;
 					_currentShowIndex+=tempNum;
@@ -121,7 +118,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 
         HeadAvataPre_RectTransform.gameObject.SetActive(!(type == 2 || type == 3));
 
-        //²»ÏÔÊ¾ÈËÎï
+        //ä¸æ˜¾ç¤ºäººç‰©
         if (type == 2 || type == 3)
         {
             ChangePosition(1,false);
@@ -142,7 +139,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         }
         ShowText();
     }
-    //¸ù¾İ½ÇÉ«IDĞŞ¸Ä×óÓÒÎ»ÖÃ
+    //æ ¹æ®è§’è‰²IDä¿®æ”¹å·¦å³ä½ç½®
     public void ChangePosition(int roleId, bool ShowName = true)
     {
         Name_RectTransform.gameObject.SetActive(ShowName);
@@ -181,86 +178,34 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         Name_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
         Name_RectTransform.anchoredPosition = new Vector2(roleId == 0 ? -450 : 450 , 280); 
     }
-
-
-
-    public void Show(string roleKey, string msg, Action callback)
-    {
-        Role role = Role.Get(roleKey);
-        //Ã»ÓĞ¶¨ÒåRole»òÕßHeadAvata
-        if (role == null || string.IsNullOrEmpty(role.HeadAvata))
-        {
-            ChangePosition(1);
-            _currentText = $"{roleKey}£º{msg}";
-            HeadAvataPre_RectTransform.gameObject.SetActive(false);
-        }
-        else
-        {
-            //Ã»ÓĞPlayer
-            if (roleKey == "Ö÷½Ç" && GameRuntimeData.Instance.Player != null)
-            {
-             
-                ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0);
-                _currentText = $"{GameRuntimeData.Instance.Player.Name}:{msg}";
-            }
-            else
-            {
-                ChangePosition(1);
-                ShowCharacter(role.HeadAvata,1);
-                _currentText = $"{role.Name}£º{msg}";
-            }
-        }
-        SelectionPanel_RectTransform.gameObject.SetActive(false);
-        _callback = callback;
-        ShowText();
-    }
-
-    public void ShowSelection(string roleKey, string msg, List<string> selectionContent, Action<int> callback)
+    
+    public void ShowSelection(string roleName, string msg, List<string> selectionContent, Action<int> callback)
     {
 
-        //Ã»ÓĞPlayer
-        if (roleKey == "Ö÷½Ç" && GameRuntimeData.Instance.Player != null)
+        //æ²¡æœ‰Player
+        if (roleName == "ä¸»è§’" && GameRuntimeData.Instance.Player != null)
         {
             ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0);
             MainContent_Text.text = $"{msg}";
         }
         else
         {
-            Role role = Role.Get(roleKey);
-            //Ã»ÓĞ¶¨ÒåRole»òÕßHeadAvata
-            if (role == null || string.IsNullOrEmpty(role.HeadAvata))
+            Jyx2Role role = ConfigTable.GetAll<Jyx2Role>().First(r => r.Name == roleName);
+            
+            //æ²¡æœ‰å®šä¹‰Roleæˆ–è€…HeadAvata
+            if (role == null )
             {
-                MainContent_Text.text = $"{roleKey}£º{msg}";
+                MainContent_Text.text = $"{roleName}ï¼š{msg}";
                 RoleHeadImage_Image.gameObject.SetActive(false);
             }
             else
             {
-                ShowCharacter(role.HeadAvata,1);
-                MainContent_Text.text = $"{role.Name}£º{msg}";
+                var headMapping = ConfigTable.Get<Jyx2RoleHeadMapping>(role.Id);
+                ShowCharacter(headMapping.HeadAvata,1);
+                MainContent_Text.text = $"{role.Name}ï¼š{msg}";
             }
         }
 
-        //Role role = Role.Get(roleKey);
-        ////Ã»ÓĞ¶¨ÒåRole»òÕßHeadAvata
-        //if (role == null || string.IsNullOrEmpty(role.HeadAvata))
-        //{
-        //    MainContent_Text.text = $"{roleKey}£º{msg}";
-        //    RoleHeadImage_Image.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    //Ã»ÓĞPlayer
-        //    if (roleKey == "Ö÷½Ç" && GameRuntimeData.Instance.Player != null)
-        //    {
-        //        ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata);
-        //        MainContent_Text.text = $"{GameRuntimeData.Instance.Player.Name}:{msg}";
-        //    }
-        //    else
-        //    {
-        //        ShowCharacter(role.HeadAvata);
-        //        MainContent_Text.text = $"{role.Name}£º{msg}";
-        //    }
-        //}
         ClearChildren(Container_RectTransform.transform);
         for (int i = 0; i < selectionContent.Count; i++)
         {
