@@ -2,6 +2,7 @@ using Jyx2;
 using HSFrameWork.ConfigTable;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -10,7 +11,6 @@ using UnityEngine.EventSystems;
 public enum ChatType 
 {
     None = -1,
-    RoleKey = 0,
     RoleId = 1,
     Selection = 2,
 }
@@ -52,9 +52,6 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         {
             case ChatType.RoleId:
                 Show((int)allParams[1], (string)allParams[2], (int)allParams[3], (Action)allParams[4]);
-                break;
-            case ChatType.RoleKey:
-                Show((string)allParams[1], (string)allParams[2], (Action)allParams[3]);
                 break;
             case ChatType.Selection:
                 ShowSelection((string)allParams[1], (string)allParams[2], (List<string>)allParams[3], (Action<int>)allParams[4]);
@@ -181,86 +178,34 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         Name_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
         Name_RectTransform.anchoredPosition = new Vector2(roleId == 0 ? -450 : 450 , 280); 
     }
-
-
-
-    public void Show(string roleKey, string msg, Action callback)
-    {
-        Role role = Role.Get(roleKey);
-        //没有定义Role或者HeadAvata
-        if (role == null || string.IsNullOrEmpty(role.HeadAvata))
-        {
-            ChangePosition(1);
-            _currentText = $"{roleKey}：{msg}";
-            HeadAvataPre_RectTransform.gameObject.SetActive(false);
-        }
-        else
-        {
-            //没有Player
-            if (roleKey == "主角" && GameRuntimeData.Instance.Player != null)
-            {
-             
-                ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0);
-                _currentText = $"{GameRuntimeData.Instance.Player.Name}:{msg}";
-            }
-            else
-            {
-                ChangePosition(1);
-                ShowCharacter(role.HeadAvata,1);
-                _currentText = $"{role.Name}：{msg}";
-            }
-        }
-        SelectionPanel_RectTransform.gameObject.SetActive(false);
-        _callback = callback;
-        ShowText();
-    }
-
-    public void ShowSelection(string roleKey, string msg, List<string> selectionContent, Action<int> callback)
+    
+    public void ShowSelection(string roleName, string msg, List<string> selectionContent, Action<int> callback)
     {
 
         //没有Player
-        if (roleKey == "主角" && GameRuntimeData.Instance.Player != null)
+        if (roleName == "主角" && GameRuntimeData.Instance.Player != null)
         {
             ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0);
             MainContent_Text.text = $"{msg}";
         }
         else
         {
-            Role role = Role.Get(roleKey);
+            Jyx2Role role = ConfigTable.GetAll<Jyx2Role>().First(r => r.Name == roleName);
+            
             //没有定义Role或者HeadAvata
-            if (role == null || string.IsNullOrEmpty(role.HeadAvata))
+            if (role == null )
             {
-                MainContent_Text.text = $"{roleKey}：{msg}";
+                MainContent_Text.text = $"{roleName}：{msg}";
                 RoleHeadImage_Image.gameObject.SetActive(false);
             }
             else
             {
-                ShowCharacter(role.HeadAvata,1);
+                var headMapping = ConfigTable.Get<Jyx2RoleHeadMapping>(role.Id);
+                ShowCharacter(headMapping.HeadAvata,1);
                 MainContent_Text.text = $"{role.Name}：{msg}";
             }
         }
 
-        //Role role = Role.Get(roleKey);
-        ////没有定义Role或者HeadAvata
-        //if (role == null || string.IsNullOrEmpty(role.HeadAvata))
-        //{
-        //    MainContent_Text.text = $"{roleKey}：{msg}";
-        //    RoleHeadImage_Image.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    //没有Player
-        //    if (roleKey == "主角" && GameRuntimeData.Instance.Player != null)
-        //    {
-        //        ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata);
-        //        MainContent_Text.text = $"{GameRuntimeData.Instance.Player.Name}:{msg}";
-        //    }
-        //    else
-        //    {
-        //        ShowCharacter(role.HeadAvata);
-        //        MainContent_Text.text = $"{role.Name}：{msg}";
-        //    }
-        //}
         ClearChildren(Container_RectTransform.transform);
         for (int i = 0; i < selectionContent.Count; i++)
         {

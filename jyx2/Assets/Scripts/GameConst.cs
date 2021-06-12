@@ -28,6 +28,12 @@ public class ColorStringDefine
 
 public class GameConst
 {
+    
+    public const float MapSpeed = 5;
+    public const float MapAngularSpeed = 360;
+    public const float MapAcceleration = 15;
+
+    
     public const bool SEMI_REAL = false;//游戏是否是半即时制
     public const int ACTION_SP = 1000;//半即时制的情况下 行动一次的花费
     public const int MAX_ROLE_LEVEL = 30;

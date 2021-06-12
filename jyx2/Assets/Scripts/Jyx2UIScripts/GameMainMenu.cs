@@ -85,7 +85,6 @@ public partial class GameMainMenu : Jyx2_UIBase {
         };
         player.BindKey();
         runtime.Team.Add(player);
-        runtime.MapRuntimeData.Clear();
 
         //开场地图
         var startMap = GameMap.GetGameStartMap();
