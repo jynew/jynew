@@ -4083,7 +4083,7 @@ GameObject:
   - component: {fileID: 451442216}
   - component: {fileID: 451442215}
   - component: {fileID: 451442214}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Terrain
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -5593,6 +5593,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 156317644}
     m_Modifications:
+    - target: {fileID: 4379760802628515445, guid: 94968680a71da5a4fbec8839939f2599,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b29ac158fd8042542b7e6f487a9fb015, type: 2}
     - target: {fileID: 7017722328156452533, guid: 94968680a71da5a4fbec8839939f2599,
         type: 3}
       propertyPath: m_Name
@@ -5601,7 +5606,7 @@ PrefabInstance:
     - target: {fileID: 7649405655059000335, guid: 94968680a71da5a4fbec8839939f2599,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7649405655059000335, guid: 94968680a71da5a4fbec8839939f2599,
         type: 3}
@@ -7864,8 +7869,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 0, y: 0, z: 0}
-    lastRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastScale: {x: 1, y: 1, z: 1}
+    lastRotation: {x: 0, y: 0, z: 0, w: 1}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -8965,9 +8970,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.3970512, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39705023, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.4115566, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.41155565, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -18057,11 +18062,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.04
+      value: 4.438
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18069,23 +18086,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.648682
+      value: 6.696
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.7155392
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.69857264
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -18093,12 +18110,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 271.375
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6ac7aec27432c3943838418f71d1824a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 240ba4a66a2e11343bcf2fe7b568d08f, type: 3}
 --- !u!4 &1723773892 stripped
@@ -18731,7 +18752,7 @@ GameObject:
   - component: {fileID: 1804595320}
   - component: {fileID: 1804595319}
   - component: {fileID: 1804595318}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18985,32 +19006,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbb03d26d1a32949a6c91dfaaa94858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animator: {fileID: 1809565868}
-  m_NavMeshAgent: {fileID: 1809565867}
-  m_CapsuleCollider: {fileID: 1809565865}
-  m_Rigidbody: {fileID: 1809565866}
-  m_SkinnedMeshRenderer: {fileID: 0}
-  m_MapRole: {fileID: 1809565864}
-  m_CustomOutlooking: {fileID: 1809565863}
-  m_NavMove: {fileID: 0}
-  m_MoveAnimator: {fileID: 0}
-  m_RoleKey: "\u4E3B\u89D2"
-  m_Speed: 7
-  m_Behavior: 4
-  m_BehaviorParas: []
-  m_NpcWords: []
-  m_IsKeyRole: 0
-  m_HasWeaponNotInBattle: 0
-  m_IsAutoNav: 0
-  m_Path: {fileID: 0}
-  m_PathLoopType: 0
-  m_PathStartPoint: 0
-  m_Sex: 0
-  m_ModelType: 1
-  m_ModelBodyName: nan_body1
-  m_ModelHairName: nan_hair1
-  m_ModelXiakeName: "\u88F8\u7537"
-  m_ModelWeaponName: "\u7A7A\u624B"
 --- !u!114 &1809565863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19023,8 +19018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ModelId: Xia_HFH
-  m_WeaponName: "\u7A7A\u624B"
 --- !u!114 &1809565864
 MonoBehaviour:
   m_ObjectHideFlags: 0
