@@ -81,6 +81,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         }
     }
 
+    //根据对话框最大显示字符以及标点断句分段显示对话 by eaphone at 2021/6/12
     void ShowText() 
     {
         if (_currentShowIndex >= _currentText.Length - 1) 
@@ -90,11 +91,26 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             _callback = null;
             return;
         }
-        int preIndex = _currentShowIndex;
-        _currentShowIndex += 10000;
-        _currentShowIndex = Mathf.Clamp(_currentShowIndex, 0, _currentText.Length - 1);
- 
-        MainContent_Text.text = _currentText.Substring(preIndex, _currentShowIndex - preIndex);
+		var finalS=_currentText;
+		if(_currentText.Length>GameConst.MAX_CHAT_CHART_NUM){
+			int preIndex = _currentShowIndex;
+			string[] sList=_currentText.Substring(preIndex,_currentText.Length - preIndex).Split(new char[]{'！','？','，','　'},StringSplitOptions.RemoveEmptyEntries);//暂时不对,'．'进行分割，不然对话中...都会被去除掉
+			var tempIndex=0;
+			foreach(var i in sList){
+				var tempNum=i.Length+1;//包含分隔符
+				if(tempIndex+tempNum<GameConst.MAX_CHAT_CHART_NUM){
+					tempIndex+=tempNum;
+					_currentShowIndex+=tempNum;
+					continue;
+				}
+				break;
+			}
+			_currentShowIndex = Mathf.Clamp(_currentShowIndex, 0, _currentText.Length);
+			finalS=_currentText.Substring(preIndex, _currentShowIndex - preIndex);
+		}else{
+			_currentShowIndex = _currentText.Length;
+		}
+		MainContent_Text.text = finalS;
     }
 
     public void Show(int roleId, string msg, int type, Action callback)
