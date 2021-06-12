@@ -4,6 +4,6 @@ ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_ReplaceSceneObject("", "NPC/蟒蛇", "");
-jyx2_MovePlayer("大雕-杨过旁","Level/Triggers", "Level/Triggers/4");
+jyx2_MovePlayer("大雕-杨过旁","Level/Dynamic", "Level/Triggers/4");
 jyx2_MovePlayer("大雕-杨过旁","Level/Dynamic", "Level/NPC/大雕");
 do return end;
