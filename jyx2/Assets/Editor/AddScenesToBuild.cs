@@ -76,8 +76,21 @@ public sealed class AddScenesToBuildTool
             _buildSettingScene[_files.Count + i] = new EditorBuildSettingsScene(_scenesList[i], true);
         }
 
+        //将GameStart挪到第一个
+        for (int i = 0; i < _buildSettingScene.Length; ++i)
+        {
+            if (_buildSettingScene[i].path.EndsWith("0_GameStart.unity"))
+            {
+                var tmp = _buildSettingScene[i];
+                _buildSettingScene[i] = _buildSettingScene[0];
+                _buildSettingScene[0] = tmp;
+                break;
+            }
+        }
+        
         // 设置场景
         EditorBuildSettings.scenes = _buildSettingScene;
+
         Debug.Log("场景添加完毕");
     }
 

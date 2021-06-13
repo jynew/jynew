@@ -401,8 +401,6 @@ namespace Jyx2
         }
         
 
-        #region JYX2
-
 
         //JYX2物品，{ID，数量}
         public SaveableNumberDictionary<int> Items
@@ -545,9 +543,6 @@ namespace Jyx2
             string key = "SceneEntraceCondition_" + scene;
             SetKeyValues(key, value.ToString());
         }
-
-        #endregion
-
 
         #endregion
     }
