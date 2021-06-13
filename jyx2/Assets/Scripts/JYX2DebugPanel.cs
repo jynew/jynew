@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using Jyx2;
 using HSFrameWork.ConfigTable;
 using System.Collections;

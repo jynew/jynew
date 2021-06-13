@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;

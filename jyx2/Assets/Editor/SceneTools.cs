@@ -6,7 +6,6 @@ using System.IO;
 
 public class SceneTools
 {
-
     [MenuItem("Tools/场景/打开烘培")]
     public static void OpenBake()
     {

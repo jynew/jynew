@@ -1,4 +1,4 @@
-﻿using Jyx2.Middleware;
+using Jyx2.Middleware;
 using System;
 using System.Collections;
 using System.Collections.Generic;

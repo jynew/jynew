@@ -1,4 +1,4 @@
-﻿using HSFrameWork.Common;
+using HSFrameWork.Common;
 using ProtoBuf;
 using System.Xml.Serialization;
 

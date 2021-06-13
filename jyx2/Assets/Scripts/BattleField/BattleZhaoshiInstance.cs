@@ -1,4 +1,4 @@
-﻿using HSFrameWork.Common;
+using HSFrameWork.Common;
 using Jyx2;
 using System;
 using System.Collections.Generic;

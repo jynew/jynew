@@ -1,4 +1,4 @@
-﻿using Cinemachine;
+using Cinemachine;
 using HSUI;
 using System;
 using UniRx;

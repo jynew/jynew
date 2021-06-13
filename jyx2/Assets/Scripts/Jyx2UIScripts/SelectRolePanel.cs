@@ -12,13 +12,13 @@ public class SelectRoleParams
     public List<RoleInstance> selectList = new List<RoleInstance>();
     public Func<RoleInstance, bool> mustSelect;
     public Action<SelectRoleParams> callback;
-    public int maxCount = 1;//×î´óÑ¡ÔñÈËÊı
-    public string title = "Ñ¡Ôñ½ÇÉ«";
-    public bool canCancel = true;//Ä¬ÈÏ¿ÉÒÔÈ¡ÏûÑ¡Ôñ
-    public bool needCloseAfterClickOK = true;//µã»÷È·ÈÏÖ®ºóÊÇ·ñĞèÒª¹Ø±Õ Èç¹û²»ĞèÒª¹Ø±Õ ÄÇÃ´Ë¢ĞÂÏÂÃæ°å
-    public List<int> showPropertyIds = new List<int>() { 13, 15, 14 };//ÒªÏÔÊ¾µÄÊôĞÔ Ä¬ÈÏÊÇÉúÃü ÌåÁ¦ ÄÚÁ¦
+    public int maxCount = 1;//æœ€å¤§é€‰æ‹©äººæ•°
+    public string title = "é€‰æ‹©è§’è‰²";
+    public bool canCancel = true;//é»˜è®¤å¯ä»¥å–æ¶ˆé€‰æ‹©
+    public bool needCloseAfterClickOK = true;//ç‚¹å‡»ç¡®è®¤ä¹‹åæ˜¯å¦éœ€è¦å…³é—­ å¦‚æœä¸éœ€è¦å…³é—­ é‚£ä¹ˆåˆ·æ–°ä¸‹é¢æ¿
+    public List<int> showPropertyIds = new List<int>() { 13, 15, 14 };//è¦æ˜¾ç¤ºçš„å±æ€§ é»˜è®¤æ˜¯ç”Ÿå‘½ ä½“åŠ› å†…åŠ›
     public bool IsFull { get { return selectList.Count >= maxCount; } }
-    //Ä¬ÈÏÑ¡Ôñ½ÇÉ«ºÍ±ØĞëÉÏ³¡µÄ½ÇÉ«
+    //é»˜è®¤é€‰æ‹©è§’è‰²å’Œå¿…é¡»ä¸Šåœºçš„è§’è‰²
     public void SetDefaltRole() 
     {
         if (selectList.Count > 0 || roleList.Count <= 0)
@@ -55,7 +55,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
             return;
         }
 
-        m_params.SetDefaltRole();//Èç¹ûÃ»ÓĞÑ¡Ôñ Ä¬ÈÏÑ¡ÔñÒ»¸ö
+        m_params.SetDefaltRole();//å¦‚æœæ²¡æœ‰é€‰æ‹© é»˜è®¤é€‰æ‹©ä¸€ä¸ª
         TitleText_Text.text = m_params.title;
         ShowBtns();
         RefreshScroll();
@@ -100,7 +100,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
                 return;
             if (m_params.mustSelect != null && m_params.mustSelect.Invoke(role)) 
             {
-                GameUtil.DisplayPopinfo("´Ë½ÇÉ«Ç¿ÖÆÉÏ³¡");
+                GameUtil.DisplayPopinfo("æ­¤è§’è‰²å¼ºåˆ¶ä¸Šåœº");
                 return;
             }
             m_params.selectList.Remove(role);
@@ -110,7 +110,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
         {
             if (m_params.IsFull) 
             {
-                GameUtil.DisplayPopinfo($"×î¶àÖ»ÄÜÑ¡Ôñ{m_params.maxCount}ÈË");
+                GameUtil.DisplayPopinfo($"æœ€å¤šåªèƒ½é€‰æ‹©{m_params.maxCount}äºº");
                 return;
             }
             m_params.selectList.Add(role);
@@ -121,7 +121,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
     void OnConfirmClick() 
     {
         SelectRoleParams param = m_params;
-        if (m_params.callback == null) //ËµÃ÷²»ĞèÒª»Øµ÷ Ö±½ÓË¢ĞÂÃæ°å
+        if (m_params.callback == null) //è¯´æ˜ä¸éœ€è¦å›è°ƒ ç›´æ¥åˆ·æ–°é¢æ¿
         {
             RefreshScroll();
         }

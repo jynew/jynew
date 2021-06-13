@@ -36,7 +36,10 @@ namespace Jyx2Editor
             
             //强制GENDATA
             GenDataMenuCmd.GenerateDataForce();
-            
+
+            // 处理场景文件
+            AddScenesToBuildTool.AddScenesToBuild();
+
             //打包
             BuildPipeline.BuildPlayer(GetScenePaths(), path + "/jyx2.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
             

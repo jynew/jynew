@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// UGUI animation Component.
 /// 
 /// 使用方法：把他和Image组件挂在同一个GameObject上，调整好偏移。
