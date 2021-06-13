@@ -77,7 +77,7 @@
 * [2.5角色模型配置管理器](https://github.com/jynew/jynew/wiki/2.5%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E5%99%A8)
 
 ### 程序篇
-* 3.1理解代码结构(TODO)
+* [3.1项目代码总览](https://github.com/jynew/jynew/wiki/3.1%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E6%80%BB%E8%A7%88)
 * 3.2资源加载管理机制(TODO)
 * 3.3配置表加载和读取（TODO）
 * 3.4存档数据结构（TODO）
