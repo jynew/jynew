@@ -73,5 +73,9 @@ namespace Jyx2
                 }
             });
         }
+		
+		public static bool isExcutling(){
+			return _executing;
+		}
     }
 }

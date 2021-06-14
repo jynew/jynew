@@ -166,7 +166,7 @@ public class GameEventManager : MonoBehaviour
     bool TryTrigger(GameEvent evt)
     {
         //直接触发
-        if (!IsNoEvent(evt.m_EnterEventId))
+        if (!IsNoEvent(evt.m_EnterEventId) && !LuaExecutor.isExcutling())
         {
             ExecuteLuaEvent(evt.m_EnterEventId);
             return true;
