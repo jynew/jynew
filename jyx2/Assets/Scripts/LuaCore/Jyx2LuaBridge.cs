@@ -36,7 +36,6 @@ namespace Jyx2
 
         static public void Talk(int roleId, string content, string talkName, int type)
         {
-			Debug.LogError(content);
             RunInMainThrad(() =>
             {
                 storyEngine.BlockPlayerControl = true;
@@ -784,6 +783,7 @@ namespace Jyx2
                 storyEngine.DisplayPopInfo("增加声望:" + value);
                 Next();
             });
+            Wait();
         }
 
         //韦小宝商店
