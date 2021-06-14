@@ -197,6 +197,7 @@ public class GameEvent : MonoBehaviour
             var chest = target.GetComponent<MapChest>();
             if (chest != null)
             {
+				chest.ChangeLockStatus(m_UseItemEventId>0);
                 chest.MarkAsOpened();
             }
         }

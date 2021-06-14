@@ -6,7 +6,8 @@ if TryBattle(91) == true then goto label0 end;
 ::label0::
     ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|敌人死亡贴图变没。场景08-编号00
     ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|敌人死亡贴图变没。场景08-编号01
-    jyx2_ReplaceSceneObject("","GasWalls/Wall1","");
+    jyx2_ReplaceSceneObject("","NPC/LaMa","");
+    jyx2_ReplaceSceneObject("","NPC/LaMa (1)","");
     LightScence();
     AddRepute(1);
 do return end;

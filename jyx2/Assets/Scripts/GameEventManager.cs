@@ -253,15 +253,20 @@ public class GameEventManager : MonoBehaviour
     }
     static public GameEvent GetCurrentGameEvent()
     {
-        if (string.IsNullOrEmpty(_currentEvt))
+        return GetGameEventByID(_currentEvt);
+    }
+	
+	static public GameEvent GetGameEventByID(string id)
+	{
+        if (string.IsNullOrEmpty(id))
             return null;
 
         foreach (var evt in FindObjectsOfType<GameEvent>())
         {
-            if (evt.name == _currentEvt)
+            if (evt.name == id)
                 return evt;
         }
 
         return null;
-    }
+	}
 }
