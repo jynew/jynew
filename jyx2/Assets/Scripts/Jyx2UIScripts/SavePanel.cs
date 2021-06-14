@@ -37,7 +37,7 @@ public partial class SavePanel:Jyx2_UIBase
             btn.transform.localScale = Vector3.one;
             btn.name = i.ToString();
             Text title = btn.transform.Find("Title").GetComponent<Text>();
-            title.text = "´æµµ" + GameConst.GetUPNumber(i+1);
+            title.text = "存档" + GameConst.GetUPNumber(i+1);
 
             var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
             var summaryInfoKey = GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + i;
@@ -47,7 +47,7 @@ public partial class SavePanel:Jyx2_UIBase
             }
             else
             {
-                txt.text = "¿Õ´æµµÎ»";
+                txt.text = "空档位";
             }
 
             BindListener(btn, () =>
