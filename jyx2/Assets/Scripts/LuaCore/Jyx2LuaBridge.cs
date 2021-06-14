@@ -36,6 +36,7 @@ namespace Jyx2
 
         static public void Talk(int roleId, string content, string talkName, int type)
         {
+			Debug.LogError(content);
             RunInMainThrad(() =>
             {
                 storyEngine.BlockPlayerControl = true;
@@ -775,11 +776,13 @@ namespace Jyx2
 
         }
 
-        //增加道德
-        static public void AddRepute(int daode)
+        //增加声望
+        static public void AddRepute(int value)
         {
             RunInMainThrad(() =>{
-                storyEngine.DisplayPopInfo("增加道德:" + daode);
+                runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ZIZHI);
+                storyEngine.DisplayPopInfo("增加声望:" + value);
+                Next();
             });
         }
 
