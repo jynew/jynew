@@ -14,6 +14,8 @@ public class MapChest : MonoBehaviour
     [Header("宝箱的打开状态，是直接消失还是变为打开")] 
     public MapChestOpenDisplayType displayType = MapChestOpenDisplayType.Hide;
 
+	public bool isLock;
+
     public enum MapChestOpenDisplayType
     {
         Hide, //直接消失
@@ -41,9 +43,11 @@ public class MapChest : MonoBehaviour
 
     public void MarkAsOpened()
     {
-        runtime.SetKeyValues(GetRuntimeKey(), "1");
-        //播放动画
-        m_MapChestInteract.Open(RefreshOpenStates);
+		if(!isLock){
+			runtime.SetKeyValues(GetRuntimeKey(), "1");
+			//播放动画
+			m_MapChestInteract.Open(RefreshOpenStates);
+		}
     }
 
     /// <summary>
@@ -108,4 +112,8 @@ public class MapChest : MonoBehaviour
         if (!runtime.KeyExist(pk)) return 0;
         return int.Parse(runtime.GetKeyValues(pk));
     }
+	
+	public void ChangeLockStatus(bool status){
+		isLock=status;
+	}
 }
