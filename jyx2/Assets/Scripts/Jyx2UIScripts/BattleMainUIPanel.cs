@@ -31,7 +31,11 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
-
+		
+		if(childMgr==null){
+			childMgr = GameUtil.GetOrAddComponent<ChildGoComponent>(BattleHpRoot_RectTransform);
+			childMgr.Init(HUDItem_RectTransform, OnHUDCreate);
+		}
         BattleMainUIState state = (BattleMainUIState)allParams[0];
         if (state == BattleMainUIState.ShowRole)
         {
@@ -99,4 +103,13 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
             item.BindRole(role);
         }
     }
+	
+	protected override void OnHidePanel()
+    {
+        base.OnHidePanel();
+        AutoBattle_Toggle.isOn = false;
+        AutoBattle_Toggle.gameObject.SetActive(false);
+		childMgr=null;
+		m_currentRole=null;
+	}
 }
