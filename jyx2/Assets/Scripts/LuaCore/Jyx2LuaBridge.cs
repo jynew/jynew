@@ -775,12 +775,15 @@ namespace Jyx2
 
         }
 
-        //增加道德
-        static public void AddRepute(int daode)
+        //增加声望
+        static public void AddRepute(int value)
         {
             RunInMainThrad(() =>{
-                storyEngine.DisplayPopInfo("增加道德:" + daode);
+                runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ZIZHI);
+                storyEngine.DisplayPopInfo("增加声望:" + value);
+                Next();
             });
+            Wait();
         }
 
         //韦小宝商店

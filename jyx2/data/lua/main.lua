@@ -68,7 +68,7 @@ JudgeMoney = CS.Jyx2.Jyx2LuaBridge.JudgeMoney
 AddItem = CS.Jyx2.Jyx2LuaBridge.AddItem
 --33=21|4|0|0|0|LearnMagic2(#0, #1, #2); --学会武功
 LearnMagic2 = CS.Jyx2.Jyx2LuaBridge.LearnMagic2
---34=22|3|0|0|0|AddAptitude(#0, #1);  --增加声望
+--34=22|3|0|0|0|AddAptitude(#0, #1);  --增加资质
 AddAptitude = CS.Jyx2.Jyx2LuaBridge.AddAptitude
 --35=23|5|0|0|0|SetOneMagic(#0, #1, #2, #3); --设置角色的武功
 SetOneMagic = CS.Jyx2.Jyx2LuaBridge.SetOneMagic
@@ -112,7 +112,7 @@ ShowRepute = CS.Jyx2.Jyx2LuaBridge.ShowRepute
 OpenAllScence = CS.Jyx2.Jyx2LuaBridge.OpenAllScence
 --55=37|5|1|3|4|if JudgeEventNum(#0, #1) == bool then goto label#x end;
 JudgeEventNum = CS.Jyx2.Jyx2LuaBridge.JudgeEventNum
---56=38|2|0|0|0|AddRepute(#0);
+--56=38|2|0|0|0|AddRepute(#0);  --增加声望
 AddRepute = CS.Jyx2.Jyx2LuaBridge.AddRepute
 --57=39|1|0|0|0|instruct_57();
 instruct_57 = CS.Jyx2.Jyx2LuaBridge.instruct_57

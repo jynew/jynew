@@ -1,5 +1,4 @@
-Talk(0, "哇！这里这么多人，干什么这么热闹，可少不了小侠我．我说名门正派又怎么样，还不是一样赶尽杀绝，跟魔教又有什么两样，只不过藉口好听一点罢了．", "talkname0", 1);
-Talk(14, "都是你这个兔崽子，打伤了鹰王和我，", "talkname14", 0);
+Talk(0, "哇！这里这么多人，干什么这么热闹，可少不了小侠我．我说名门正派又怎么样，还不是一样赶尽杀绝，跟魔教又有什么两样，只不过藉口好听一点罢了．", "talkname0", 1);Talk(14, "都是你这个兔崽子，打伤了鹰王和我，", "talkname14", 0);
 Talk(11, "还有我．", "talkname11", 0);
 Talk(14, "害我们只剩下范右使应战，寡不敌众．．．．．", "talkname14", 0);
 Talk(0, "既然如此，我就帮你们打发这些人，当是陪罪好了．", "talkname0", 1);
@@ -184,7 +183,6 @@ jyx2_ReplaceSceneObject("", "NPC/武当弟子 (5)", "");
     SetScencePosition2(29, 34);
     LightScence();
     jyx2_ReplaceSceneObject("", "NPC/weiyixiao", "1");--韦一笑出现
-
     jyx2_ReplaceSceneObject("", "NPC/yintianzheng", "1"); --殷天正出现
 
     Talk(14, "小子，你还不赖嘛！", "talkname14", 0);
