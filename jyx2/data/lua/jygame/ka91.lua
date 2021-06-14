@@ -10,10 +10,10 @@ if TryBattle(13) == true then goto label0 end;
     ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("9", "NPC/成昆喽喽1", "");
-    jyx2_ReplaceSceneObject("9", "NPC/成昆喽喽2", "");
-    jyx2_ReplaceSceneObject("9", "NPC/成昆喽喽3", "");
-    jyx2_ReplaceSceneObject("9", "NPC/成昆", "");
+    jyx2_ReplaceSceneObject("", "NPC/成昆喽喽1", "");--非当前场景时，目前代码逻辑不会立即刷新gameobject。所以显示/隐藏当前场景人物时，不需要带场景号
+    jyx2_ReplaceSceneObject("", "NPC/成昆喽喽2", "");
+    jyx2_ReplaceSceneObject("", "NPC/成昆喽喽3", "");
+    jyx2_ReplaceSceneObject("", "NPC/成昆", "");
     LightScence();
     Talk(0, "今天真是大快人心，替武林除了一个大害．", "talkname0", 1);
     AddItem(191, 1);
