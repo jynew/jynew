@@ -3,6 +3,9 @@ using HSFrameWork.ConfigTable;
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +16,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
     Jyx2Shop curShopData;
     int curSelectIndex = 0;
     ShopUIItem curSelectItem;
+	Action callback;
 
     Dictionary<int, int> currentBuyCount = new Dictionary<int, int>();
     protected override void OnCreate()
@@ -59,7 +63,15 @@ public partial class ShopUIPanel:Jyx2_UIBase
         RefreshChild();
         RefreshProperty();
         RefreshMoney();
+		if(allParams.Length>1){
+			callback=(Action)allParams[1];
+		}
     }
+	
+    protected override void OnHidePanel(){
+		base.OnHidePanel();
+		callback?.Invoke();
+	}
 
     void RefreshMoney() 
     {
