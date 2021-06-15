@@ -792,7 +792,7 @@ namespace Jyx2
             RunInMainThrad(() =>
             {
                 //int shopId = Tools.GetRandomInt(0, 4);
-                Jyx2_UIManager.Instance.ShowUI("ShopUIPanel", shopId, new Action(()=>{Next();}));
+                Jyx2_UIManager.Instance.ShowUI("ShopUIPanel", "", new Action(()=>{Next();}));
             });
 			Wait();
         }
