@@ -23,19 +23,15 @@ jyx2_ReplaceSceneObject("11", "NPC/yangxiao", "1");
 jyx2_ReplaceSceneObject("11", "NPC/fanyao", "1"); 
 
 ModifyEvent(11, 65, 1, 1, -1, -1, -1, 5430, 5430, 5430, -2, -2, -2);--崆峒死人
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子-死 (1)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子65-死", "1");
 ModifyEvent(11, 66, 1, 1, -1, -1, -1, 5436, 5436, 5436, -2, -2, -2);--峨眉死人
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子-死 (1)", "1");
-ModifyEvent(11, 67, 1, 1, -1, -1, -1, 5432, 5432, 5432, -2, -2, -2);--死人
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子66-死", "1");
+ModifyEvent(11, 67, 1, 1, -1, -1, -1, 5432, 5432, 5432, -2, -2, -2);--昆仑死人
 ModifyEvent(11, 68, 1, 1, -1, -1, -1, 5440, 5440, 5440, -2, -2, -2);--武当死人
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子-死", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子68-死", "1");
 ModifyEvent(11, 69, 1, 1, -1, -1, -1, 5444, 5444, 5444, -2, -2, -2);--少林死人
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子-死 (1)", "1");
-ModifyEvent(11, 70, 1, 1, -1, -1, -1, 5432, 5432, 5432, -2, -2, -2);--崆峒派死人
-ModifyEvent(11, 19, 1, 1, -2, -2, -2, 5434, 5434, 5434, -2, -2, -2);--昆仑派死人
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子-死", "1");
-ModifyEvent(11, 28, 1, 1, -2, -2, -2, 5428, 5428, 5428, -2, -2, -2);--崆峒派死人
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子-死", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子69-死", "1");
+ModifyEvent(11, 70, 1, 1, -1, -1, -1, 5432, 5432, 5432, -2, -2, -2);--昆仑死人
 
 ModifyEvent(11, 7, 1, 1, -2, -2, -2, 5348, 5348, 5348, -2, -2, -2);
 jyx2_ReplaceSceneObject("11", "NPC/hetaichong", "1");--何太冲
@@ -47,14 +43,16 @@ ModifyEvent(11, 15, 1, 1, -2, -2, -2, 5412, 5412, 5412, -2, -2, -2);
 ModifyEvent(11, 16, 1, 1, -2, -2, -2, 5412, 5412, 5412, -2, -2, -2);
 ModifyEvent(11, 17, 1, 1, -2, -2, -2, 5412, 5412, 5412, -2, -2, -2);
 ModifyEvent(11, 18, 1, 1, -2, -2, -2, 5412, 5412, 5412, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子", "1");
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子 (1)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子 (2)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子 (3)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子 (4)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子 (5)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子 (6)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子 (7)", "1");
+ModifyEvent(11, 19, 1, 1, -2, -2, -2, 5434, 5434, 5434, -2, -2, -2);--昆仑死人
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子11", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子12", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子13", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子14", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子15", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子16", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子17", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子18", "1");
+jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子19-死", "1");
 
 ModifyEvent(11, 8, 1, 1, -2, -2, -2, 5364, 5364, 5364, -2, -2, -2);--崆峒派
 jyx2_ReplaceSceneObject("11", "NPC/tangwenliang", "1");--唐文亮
@@ -66,14 +64,16 @@ ModifyEvent(11, 24, 1, 1, -2, -2, -2, 5404, 5404, 5404, -2, -2, -2);
 ModifyEvent(11, 25, 1, 1, -2, -2, -2, 5404, 5404, 5404, -2, -2, -2);
 ModifyEvent(11, 26, 1, 1, -2, -2, -2, 5404, 5404, 5404, -2, -2, -2);
 ModifyEvent(11, 27, 1, 1, -2, -2, -2, 5404, 5404, 5404, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子", "1");
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (1)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (2)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (3)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (4)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (5)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (6)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子 (7)", "1");
+ModifyEvent(11, 28, 1, 1, -2, -2, -2, 5428, 5428, 5428, -2, -2, -2);--崆峒死人
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子20", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子21", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子22", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子23", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子24", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子25", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子26", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子27", "1");
+jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子28-死", "1");
 
 ModifyEvent(11, 29, 1, 1, -2, -2, -2, 5182, 5182, 5182, -2, -2, -2);--华山派
 ModifyEvent(11, 30, 1, 1, -2, -2, -2, 5182, 5182, 5182, -2, -2, -2);
@@ -82,13 +82,13 @@ ModifyEvent(11, 32, 1, 1, -2, -2, -2, 5182, 5182, 5182, -2, -2, -2);
 ModifyEvent(11, 33, 1, 1, -2, -2, -2, 5182, 5182, 5182, -2, -2, -2);
 ModifyEvent(11, 34, 1, 1, -2, -2, -2, 5182, 5182, 5182, -2, -2, -2);
 ModifyEvent(11, 35, 1, 1, -2, -2, -2, 5182, 5182, 5182, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/华山弟子", "1");
-jyx2_ReplaceSceneObject("11", "NPC/华山弟子 (1)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/华山弟子 (2)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/华山弟子 (3)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/华山弟子 (4)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/华山弟子 (5)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/华山弟子 (6)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/华山弟子29", "1");
+jyx2_ReplaceSceneObject("11", "NPC/华山弟子30", "1");
+jyx2_ReplaceSceneObject("11", "NPC/华山弟子31", "1");
+jyx2_ReplaceSceneObject("11", "NPC/华山弟子32", "1");
+jyx2_ReplaceSceneObject("11", "NPC/华山弟子33", "1");
+jyx2_ReplaceSceneObject("11", "NPC/华山弟子34", "1");
+jyx2_ReplaceSceneObject("11", "NPC/华山弟子35", "1");
 
 ModifyEvent(11, 9, 1, 1, -2, -2, -2, 5378, 5378, 5378, -2, -2, -2);--少林派
 jyx2_ReplaceSceneObject("11", "NPC/xuanci", "1");--玄慈
@@ -104,18 +104,18 @@ ModifyEvent(11, 44, 1, 1, -2, -2, -2, 5426, 5426, 5426, -2, -2, -2);
 ModifyEvent(11, 45, 1, 1, -2, -2, -2, 5426, 5426, 5426, -2, -2, -2);
 ModifyEvent(11, 46, 1, 1, -2, -2, -2, 5426, 5426, 5426, -2, -2, -2);
 ModifyEvent(11, 47, 1, 1, -2, -2, -2, 5444, 5444, 5444, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (1)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (2)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (3)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (4)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (5)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (6)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (7)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (8)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (9)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子 (10)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/少林弟子-死", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子36", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子37", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子38", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子39", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子40", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子41", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子42", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子43", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子44", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子45", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子46", "1");
+jyx2_ReplaceSceneObject("11", "NPC/少林弟子47-死", "1");
 
 ModifyEvent(11, 10, 1, 1, -2, -2, -2, 5362, 5362, 5362, -2, -2, -2);--峨眉派
 jyx2_ReplaceSceneObject("11", "NPC/miejue", "1");--峨嵋派
@@ -129,16 +129,16 @@ ModifyEvent(11, 54, 1, 1, -2, -2, -2, 5402, 5402, 5402, -2, -2, -2);
 ModifyEvent(11, 55, 1, 1, -2, -2, -2, 5402, 5402, 5402, -2, -2, -2);
 ModifyEvent(11, 56, 1, 1, -2, -2, -2, 5402, 5402, 5402, -2, -2, -2);
 ModifyEvent(11, 57, 1, 1, -2, -2, -2, 5436, 5436, 5436, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (1)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (2)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (3)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (4)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (5)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (6)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (7)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子 (8)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子-死 (1)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子48", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子49", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子50", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子51", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子52", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子53", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子54", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子55", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子56", "1");
+jyx2_ReplaceSceneObject("11", "NPC/峨嵋弟子57-死", "1");
 
 ModifyEvent(11, 58, 1, 1, -2, -2, -2, 5392, 5392, 5392, -2, -2, -2);--武当派
 ModifyEvent(11, 59, 1, 1, -2, -2, -2, 5392, 5392, 5392, -2, -2, -2);
@@ -147,13 +147,13 @@ ModifyEvent(11, 61, 1, 1, -2, -2, -2, 5392, 5392, 5392, -2, -2, -2);
 ModifyEvent(11, 62, 1, 1, -2, -2, -2, 5392, 5392, 5392, -2, -2, -2);
 ModifyEvent(11, 63, 1, 1, -2, -2, -2, 5392, 5392, 5392, -2, -2, -2);
 ModifyEvent(11, 64, 1, 1, -2, -2, -2, 5392, 5392, 5392, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子", "1");
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (1)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (2)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (3)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (4)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (5)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/武当弟子 (6)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子58", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子59", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子60", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子61", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子62", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子63", "1");
+jyx2_ReplaceSceneObject("11", "NPC/武当弟子64", "1");
 
 ModifyEvent(11, 77, 1, 1, -2, -2, -2, 5302, 5302, 5302, -2, -2, -2);--明教
 ModifyEvent(11, 78, 1, 1, -2, -2, -2, 5302, 5302, 5302, -2, -2, -2);
@@ -163,12 +163,12 @@ ModifyEvent(11, 81, 1, 1, -2, -2, -2, 5312, 5312, 5312, -2, -2, -2);
 ModifyEvent(11, 82, 1, 1, -2, -2, -2, 5312, 5312, 5312, -2, -2, -2);
 ModifyEvent(11, 83, 1, 1, -2, -2, -2, 5310, 5310, 5310, -2, -2, -2);
 ModifyEvent(11, 84, 1, 1, -2, -2, -2, 5314, 5314, 5314, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子", "1");
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子 (1)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子 (2)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子 (3)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子 (4)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子 (5)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子 (6)", "1");
-jyx2_ReplaceSceneObject("11", "NPC/明教弟子 (7)", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子77", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子78", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子79", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子80", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子81", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子82", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子83", "1");
+jyx2_ReplaceSceneObject("11", "NPC/明教弟子84", "1");
 do return end;
