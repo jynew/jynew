@@ -71,6 +71,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
     protected override void OnHidePanel(){
 		base.OnHidePanel();
 		callback?.Invoke();
+		callback=null;
 	}
 
     void RefreshMoney() 
