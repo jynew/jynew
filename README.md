@@ -36,18 +36,13 @@
 ![image](https://user-images.githubusercontent.com/7448857/118384459-b53c8c00-b638-11eb-8a83-80228747067f.png)
 ![image](https://user-images.githubusercontent.com/7448857/118384466-b968a980-b638-11eb-89b3-11aec9ee8bd2.png)
 
-## 开发环境和搭建
+  
+## 项目文档导航
 
-* 开发工具：[Unity 2020.3.9.f1c1(LTS) (64-bit)](https://unity.cn/releases/lts/2020)
-* 直接点击播放按钮左方的"P"按钮启动游戏（或切换启动场景为0_GameStart.unity点击播放）
-
-## 我如何开始？
-
-你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。你亦可通过查看[金庸群侠传3d重制版视频操作教程](https://github.com/jynew/jynew/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A03d%E9%87%8D%E5%88%B6%E7%89%88%E8%A7%86%E9%A2%91%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B)来学习如何搭建游戏场景、添加和配置技能动作等。
-
-## 贡献给项目
-
-本项目非常欢迎社区进行贡献，请阅读[社区贡献指南](https://github.com/jynew/jynew/blob/main/CONTRIBUTING.md)查看具体规则和流程。
+* 查看[开发环境和搭建](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)来将你本地的游戏环境运行起来！
+* 你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。
+* 可通过查看[金庸群侠传3d重制版视频操作教程](https://github.com/jynew/jynew/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A03d%E9%87%8D%E5%88%B6%E7%89%88%E8%A7%86%E9%A2%91%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B)来学习如何搭建游戏场景、添加和配置技能动作等。
+* 本项目非常欢迎社区进行贡献，请阅读[社区贡献指南](https://github.com/jynew/jynew/blob/main/CONTRIBUTING.md)查看具体规则和流程。
 
 ## 授权声明
 
