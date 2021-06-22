@@ -2,7 +2,7 @@
 
 ## 入门
 
-[写给新手的金庸重制版github使用教程](https://github.com/jynew/jynew/wiki/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9A%84%E9%87%91%E5%BA%B8%E9%87%8D%E5%88%B6%E7%89%88github%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B)<br>
+[写给新手的金群重制版github使用教程](https://github.com/jynew/jynew/wiki/%E5%86%99%E7%BB%99%E6%96%B0%E6%89%8B%E7%9A%84%E9%87%91%E7%BE%A4%E9%87%8D%E5%88%B6%E7%89%88github%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B)<br>
 
 [git使用相关教程](https://github.com/jynew/jynew/wiki/1.6Git%E6%8B%89%E5%8F%96%EF%BC%8C%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8E%A8%E9%80%81%E6%95%99%E7%A8%8B)
 
