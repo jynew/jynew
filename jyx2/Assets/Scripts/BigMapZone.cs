@@ -69,12 +69,6 @@ public class BigMapZone : MonoBehaviour
         }
 
         return false;
-        //if (string.IsNullOrEmpty(mapKey))
-        //    return false;
-        //if (mapKey.Contains("BigMap") || mapKey.Contains("heluokezhan")
-        //    ||mapKey.Contains("Battle")||mapKey.Contains("xiaoxiamiju"))
-        //    return true;
-        //return HasGetNanxianjuPosition();
     }
 
     void ShowEnterButton(string mapKey, string command, string showText)
