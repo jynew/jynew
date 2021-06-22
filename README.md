@@ -18,7 +18,7 @@
 * 联系我们 jy_remastered@163.com
 * 开发者Q群 749167552 （入群密码是本代码仓库名称）
 
-金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《金庸群侠传》并支持后续一系列MOD和二次开发。
+金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《金庸群侠传》（[在线试玩](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)、[维基百科](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)）并支持后续一系列MOD和二次开发。
 
 > 我们承诺：除了爱好者的自愿捐款以外，不会在任何渠道取得收入，游戏亦不会在任何游戏平台进行发布。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 
@@ -43,60 +43,7 @@
 
 ## 我如何开始？
 
-1、查看视频教程
-
-* [场景编辑：如何配置一个门？（控制物体显示/隐藏）](https://www.bilibili.com/video/BV1mz4y117j3?p=1)
-* [场景编辑：典型的配置一段剧情的方式](https://www.bilibili.com/video/BV1mz4y117j3?p=2)
-* [场景编辑：制作寻路网格，烘焙Navimesh](https://www.bilibili.com/video/BV1mz4y117j3?p=3)
-* [场景编辑：配置和刷出NPC](https://www.bilibili.com/video/BV1mz4y117j3?p=4)
-* [场景编辑：调整场景中的人物](https://www.bilibili.com/video/BV1mz4y117j3?p=6)  【部分内容已过期】
-* [场景编辑：调整场景中的人物动作](https://www.bilibili.com/video/BV1mz4y117j3?p=13)
-* [战斗编辑：生成格子](https://www.bilibili.com/video/BV1mz4y117j3?p=7)
-* [战斗编辑：配置和测试一场战斗](https://www.bilibili.com/video/BV1mz4y117j3?p=8)
-* [资产配置：导入模型并且调整风格化渲染参数](https://www.bilibili.com/video/BV1mz4y117j3?p=5)
-* [资产配置：导入动作](https://www.bilibili.com/video/BV1mz4y117j3?p=9)
-* [资产配置：战斗动作和技能](https://www.bilibili.com/video/BV1mz4y117j3?p=11)
-* [资产配置：战斗技能编辑和预览](https://www.bilibili.com/video/BV1mz4y117j3?p=12)
-
-
-2、系统的阅读文档深入了解
-
-### 通用篇
-* [1.1准备开始](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)
-* [1.2游戏运行机制](https://github.com/jynew/jynew/wiki/1.2%E6%B8%B8%E6%88%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6)
-* [1.3事件触发器](https://github.com/jynew/jynew/wiki/1.3%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8)
-* [1.4Lua脚本](https://github.com/jynew/jynew/wiki/1.4Lua%E8%84%9A%E6%9C%AC)
-* [1.5搭建游戏世界差异解决办法](https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95)
-* [1.6Git使用流程简介](https://github.com/jynew/jynew/wiki/1.6Git%E6%8B%89%E5%8F%96%EF%BC%8C%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8E%A8%E9%80%81%E6%95%99%E7%A8%8B)
-
-### 游戏内工具篇
-* [2.1技能编辑器（可预览模型、动作、武器挂点、技能特效等）](https://github.com/jynew/jynew/wiki/2.1%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8)
-* [2.2控制台](https://github.com/jynew/jynew/wiki/2.2%E6%8E%A7%E5%88%B6%E5%8F%B0)
-* [2.3存档生成](https://github.com/jynew/jynew/wiki/2.3%E5%AD%98%E6%A1%A3%E7%94%9F%E6%88%90)
-* [2.4战斗调试](https://github.com/jynew/jynew/wiki/2.4%E6%88%98%E6%96%97%E8%B0%83%E8%AF%95)
-* [2.5角色模型配置管理器](https://github.com/jynew/jynew/wiki/2.5%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E5%99%A8)
-
-### 程序篇
-* [3.1项目代码总览](https://github.com/jynew/jynew/wiki/3.1%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E6%80%BB%E8%A7%88)
-* 3.2资源加载管理机制(TODO)
-* 3.3配置表加载和读取（TODO）
-* 3.4存档数据结构（TODO）
-* 3.5Lua虚拟机（TODO）
-* 3.6地图流程说明（TODO）
-* 3.7战斗流程说明（TODO）
-
-### 艺术和资产篇
-* 4.1艺术和资产概述（TODO）
-* [4.2人物立绘制作标准](https://github.com/jynew/jynew/wiki/4.2%E4%BA%BA%E7%89%A9%E7%AB%8B%E7%BB%98%E5%88%B6%E4%BD%9C%E6%A0%87%E5%87%86)
-* [4.3人物三维模型和动作制作标准](https://github.com/jynew/jynew/wiki/4.3%E4%BA%BA%E7%89%A9%E5%8A%A8%E4%BD%9C%E5%88%B6%E4%BD%9C%E6%A0%87%E5%87%86)
-* 4.4技能特效制作标准（TODO）
-* 4.5三维场景和道具制作标准（TODO）
-* 4.6UI标准（TODO）
-* 4.7音频标准（TODO）
-
-### 项目篇
-* 5.1我们如何制定ROADMAP(TODO)
-* 5.2如何协作和参与开发(TODO)
+你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。你亦可通过查看[金庸群侠传3d重制版视频操作教程](https://github.com/jynew/jynew/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A03d%E9%87%8D%E5%88%B6%E7%89%88%E8%A7%86%E9%A2%91%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B)来学习如何搭建游戏场景、添加和配置技能动作等。
 
 ## 贡献给项目
 
