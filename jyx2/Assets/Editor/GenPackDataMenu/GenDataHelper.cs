@@ -19,9 +19,6 @@ namespace Jyx2.Editor
 
             GPDC.LuaBytes.Delete();
             GPDC.LastLuaSummaryFile.Delete();
-
-            GPDC.FilterTSFile.Delete();
-            GPDC.CEFilterTSFile.Delete();
         }
 
     }

@@ -23,8 +23,6 @@ namespace Jyx2.Editor
         public static readonly string LuaBytes = Application.dataPath.StandardSub("/../data/data/lua.bytes");
 
         public static readonly string CachePath = HSCTC.CachePath;
-        public static readonly string FilterTSFile = CachePath.StandardSub("filter.ts");
-        public static readonly string CEFilterTSFile = CachePath.StandardSub("cefilter.ts");
         public static readonly string LastLuaSummaryFile = CachePath.StandardSub("luasummary");
 
         private const string _firstOpenProjKey = "_jyx2_FirstOpenProj_";
