@@ -55,12 +55,6 @@ namespace Jyx2.Editor
             {
                 BeanDictMenu.GenBeanDictAllTheWay(title, force, xls2XMLExe); //【Assets/StreamingAssets/value】
 
-                using (HSUtils.ExeTimer("ZipEncFilter"))
-                {
-                    MenuHelper.SafeDisplayProgressBar(title, "FinalPackHelper.ZipAndEncryptFilter", 0.6f);
-                    GenDataHelper.ZipAndEncryptFilter();  //【Assets/StreamingAssets/filter】
-                }
-
                 using (HSUtils.ExeTimer("PackZipEncLua"))
                 {
                     MenuHelper.SafeDisplayProgressBar(title, "FinalPackHelper.PackZipAndEncryptLua", 0.7f);

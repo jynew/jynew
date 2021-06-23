@@ -22,8 +22,6 @@ namespace Jyx2.Editor
         public static readonly string LuaPath = HSCTC.AppDataPath.StandardSub("/../data" + LuaPathShort);
         public static readonly string LuaBytes = Application.dataPath.StandardSub("/../data/data/lua.bytes");
 
-        public static readonly string FilterFile = Application.dataPath.StandardSub("/../data/data/filter.txt");
-
         public static readonly string CachePath = HSCTC.CachePath;
         public static readonly string FilterTSFile = CachePath.StandardSub("filter.ts");
         public static readonly string CEFilterTSFile = CachePath.StandardSub("cefilter.ts");
