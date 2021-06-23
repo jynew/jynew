@@ -86,6 +86,10 @@ namespace Jyx2Editor
 
             string apkPath = path + $"/jyx2AndroidBuild-{DateTime.Now.ToString("yyyyMMdd")}.apk";
             
+            //动态设置keystore的密码
+            PlayerSettings.Android.keystorePass = "123456";
+            PlayerSettings.Android.keyaliasPass = "123456";
+            
             //打包
             BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
             
