@@ -1034,6 +1034,45 @@ namespace Jyx2
             Wait();
         }
 
+
+        /// <summary>
+        /// 切换角色动作
+        ///
+        /// 调用样例（胡斐居）
+        /// jyx2_SwitchRoleAnimation("Level/NPC/胡斐", "Assets/BuildSource/AnimationControllers/打坐.controller")
+        /// </summary>
+        /// <param name="rolePath"></param>
+        /// <param name="animationControllerPath"></param>
+        static public void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
+        {
+            Debug.Log("jyx2_SwitchRoleAnimation called");
+            RunInMainThrad(() =>
+            {
+                var roleObj = GameObject.Find(rolePath);
+                if (roleObj == null)
+                {
+                    Debug.LogError($"错误：{rolePath}不存在。");
+                    Next();
+                    return;
+                }
+                var animator = roleObj.GetComponent<Animator>();
+                if (animator == null)
+                {
+                    Debug.LogError($"错误：{rolePath}没有Animator组件。");
+                    Next();
+                    return;
+                }
+
+                Jyx2ResourceHelper.LoadAsset<RuntimeAnimatorController>(animationControllerPath, rst =>
+                {
+                    animator.runtimeAnimatorController = rst;
+                    Next();
+                });
+                
+            });
+            Wait();
+        }
+
         #endregion
 
 
