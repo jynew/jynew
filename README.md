@@ -49,7 +49,7 @@
 * 本项目素材一部分为社区自制，一部分为互联网上取得
 * 本项目遵循MIT协议，但[金庸群侠传3D重制版社区素材协议](https://github.com/jynew/jynew/tree/main/COMMUNITY_LICENSE_FOR_JYX2)描述了若干种在本项目中覆盖MIT协议情况，请仔细阅读
 * 项目中所包含外部插件源代码、资源和链接库等，如希望在其他场景使用，请务必确认符合其本身授权规范
-
+* 不遵守授权协议的产品和企业、个人都将被[耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)记录在案
 
 ## 项目结构示意图
 
