@@ -11,10 +11,12 @@ if TryBattle(3) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
-jyx2_ReplaceSceneObject("", "NPC/shenlongjiaotu", "");--战斗结束，移除人物
-jyx2_ReplaceSceneObject("", "NPC/shenlongjiaotu1", "");--战斗结束，移除人物
-jyx2_ReplaceSceneObject("", "NPC/shenlongjiaotu2", "");--战斗结束，移除人物
-jyx2_ReplaceSceneObject("", "NPC/shenlongjiaotu3", "");--战斗结束，移除人物
+	jyx2_ReplaceSceneObject("", "NPC/神龙弟子2", "");--战斗结束，移除人物
+	jyx2_ReplaceSceneObject("", "NPC/神龙弟子3", "");--战斗结束，移除人物
+	jyx2_ReplaceSceneObject("", "NPC/神龙弟子4", "");--战斗结束，移除人物
+	jyx2_ReplaceSceneObject("", "NPC/神龙弟子5", "");--战斗结束，移除人物
+	jyx2_ReplaceSceneObject("", "NPC/神龙弟子6", "");--战斗结束，移除人物
+	jyx2_ReplaceSceneObject("", "NPC/神龙弟子7", "");--战斗结束，移除人物
     ModifyEvent(-2, 2, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除人物 场景24-编号2
     ModifyEvent(-2, 3, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除人物 场景24-编号3
     ModifyEvent(-2, 4, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除人物 场景24-编号4
@@ -22,6 +24,7 @@ jyx2_ReplaceSceneObject("", "NPC/shenlongjiaotu3", "");--战斗结束，移除�
     ModifyEvent(-2, 6, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除人物 场景24-编号6
     ModifyEvent(-2, 7, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除人物 场景24-编号7
     SetScencePosition2(35, 31);
+	jyx2_MovePlayer("afterBattle", "Level/Dynamic");
     LightScence();
     Talk(3, "小兄弟，你尊姓大名，与我可有渊源？", "talkname3", 0);
     Talk(0, "丈夫结交，但重义气，只需肝胆相照，何必提名道姓．", "talkname0", 1);
@@ -39,6 +42,7 @@ jyx2_ReplaceSceneObject("", "NPC/shenlongjiaotu3", "");--战斗结束，移除�
         SetScenceMap(49, 1, 28, 37, 0);--by fanyu  场景49-编号1，坐标的贴图改变，门移除
         SetScenceMap(49, 1, 27, 37, 3692);--by fanyu  场景49-编号1，坐标的贴图改变，门移除
         SetScenceMap(49, 1, 27, 36, 3694);--by fanyu  场景49-编号1，坐标的贴图改变，门移除
+		jyx2_ReplaceSceneObject("49", "Bake/Static/Door/Door_02", "");
         ModifyEvent(-2, 9, -2, -2, -2, -2, 35, -2, -2, -2, -2, -2, -2);--by fanyu 启动35脚本 场景24-编号9
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
         AddEthics(2);

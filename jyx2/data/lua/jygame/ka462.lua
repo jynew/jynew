@@ -11,12 +11,14 @@ if UseItem(176) == true then goto label0 end;
     Talk(0, "谢谢前辈．", "talkname0", 1);
     DarkScence();
     SetScencePosition2(30, 33);
+	jyx2_MovePlayer("30-33", "Level/Dynamic");
     SetRoleFace(2);
     LightScence();
     Talk(69, "看好了，我只使一遍．", "talkname69", 0);
     PlayAnimation(0, 6228, 6254);
     DarkScence();
     SetScencePosition2(26, 33);
+	jyx2_MovePlayer("26-33", "Level/Dynamic");
     ModifyEvent(-2, -2, -2, -2, 463, -1, -1, 6122, 6122, 6122, -2, -2, -2);--by fanyu 改变贴图，启动脚本463 场景23-编号0
     ModifyEvent(-2, 1, -2, -2, -1, -1, 464, -1, -1, -1, -2, -2, -2);--by fanyu 启动脚本464 场景23-编号1
     LightScence();
