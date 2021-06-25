@@ -25,12 +25,6 @@ public class FixWithGameRuntime : MonoBehaviour
     public FixTypeEnum FixType = FixTypeEnum.Move;
     public string Flag;
     public Transform MoveTo;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        Reload();
-    }
 
     public void Reload()
     {

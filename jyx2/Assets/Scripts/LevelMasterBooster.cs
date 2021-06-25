@@ -61,11 +61,16 @@ public class LevelMasterBooster : MonoBehaviour
             chest.Init();
         }
 
-
         //设置所有的场景变更
         RefreshSceneObjects();
 
 
+        //所有改变的物体
+        foreach (var obj in FindObjectsOfType<FixWithGameRuntime>())
+        {
+            obj.Reload();
+        }
+        
         //if (m_RuntimeDataSimulate && GameRuntimeData.Instance == null)
         //{
         //    var runtime = GameRuntimeData.CreateNew();
