@@ -161,7 +161,7 @@ namespace Jyx2
         /// <summary>
         /// 自动绑定模型配置
         /// </summary>
-        public void AtuoBindModelData()
+        public void AutoBindModelData()
         {
             if (m_View == null) return;
             var animator = m_View.GetComponent<Animator>();
@@ -193,15 +193,15 @@ namespace Jyx2
             }
 
 #if UNITY_EDITOR
-            EditorUtility.SetDirty(this);
-            AssetDatabase.SaveAssets();
+            //EditorUtility.SetDirty(this);
+            //AssetDatabase.SaveAssets();
 #endif
         }
 
 #if UNITY_EDITOR
         private void OnEnable()
         {
-            AtuoBindModelData();
+            AutoBindModelData();
         }
 #endif
     }
