@@ -43,7 +43,7 @@
 * 你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。
 * 可通过查看[金庸群侠传3d重制版视频操作教程](https://github.com/jynew/jynew/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A03d%E9%87%8D%E5%88%B6%E7%89%88%E8%A7%86%E9%A2%91%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B)来学习如何搭建游戏场景、添加和配置技能动作等。
 * 本项目非常欢迎社区进行贡献，请阅读[社区贡献指南](https://github.com/jynew/jynew/blob/main/CONTRIBUTING.md)查看具体规则和流程。
-* 本项目美术原始文件位于[jynew/jynew_art](https://github.com/jynew/jynew_art)。
+* 本项目美术原始文件位于[jynew/jynew_art](https://github.com/jynew/jynew_art)，你可以下载3DMAX等原始文件查看。但请注意：此项目内容同样遵守社区协议。
 
 ## 授权声明
 
