@@ -103,7 +103,7 @@ public class JYX2ConsolePanel : MonoBehaviour
                     break;
                 }
             default:
-                Debug.LogError("没有识别的指令，将执行lua替代：" + cmd);
+                Debug.Log("没有识别的指令，将执行lua替代：" + cmd);
                 string luaContent = cmd;
                 Jyx2.LuaExecutor.ExecuteLua(luaContent);
                 break;

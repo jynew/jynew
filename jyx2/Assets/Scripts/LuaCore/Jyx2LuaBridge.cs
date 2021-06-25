@@ -1082,6 +1082,33 @@ namespace Jyx2
             Wait();
         }
 
+        static public void jyx2_FixMapObject(string key, bool isSet)
+        {
+            RunInMainThrad(() =>
+            {
+                if (isSet)
+                {
+                    runtime.KeyValues[key] = "1";
+                }
+                else
+                {
+                    runtime.RemoveKey(key);
+                }
+
+                var objs = GameObject.FindObjectsOfType<FixWithGameRuntime>();
+                if (objs != null)
+                {
+                    foreach (var obj in objs)
+                    {
+                        obj.Reload();
+                    }
+                }
+                Next();
+            });
+
+            Wait();
+        }
+
         #endregion
 
 

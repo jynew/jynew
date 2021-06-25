@@ -16150,6 +16150,7 @@ GameObject:
   - component: {fileID: 1464301102}
   - component: {fileID: 1464301101}
   - component: {fileID: 1464301100}
+  - component: {fileID: 1464301103}
   m_Layer: 0
   m_Name: 4
   m_TagString: Entrance
@@ -16211,6 +16212,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464301098}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1464301103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464301098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6a8d73bfe6fbf44bf8b99fea40f05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FixType: 0
+  Flag: "\u795E\u96D5\u79FB\u52A8\u5230\u6768\u8FC7\u65C1"
+  MoveTo: {fileID: 1581175090}
 --- !u!1001 &1468828762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16845,14 +16861,13 @@ GameObject:
   - component: {fileID: 1581175091}
   - component: {fileID: 1581175094}
   - component: {fileID: 1581175093}
-  - component: {fileID: 1581175092}
   m_Layer: 0
   m_Name: "4-\u6768\u8FC7\u65C1"
   m_TagString: Entrance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1581175091
 Transform:
   m_ObjectHideFlags: 0
@@ -16867,25 +16882,6 @@ Transform:
   m_Father: {fileID: 1531856070}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1581175092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1581175090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28456c42ed689d9458276be4c9851804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EventTargets:
-  - {fileID: 879743900}
-  m_InteractiveEventId: 391
-  m_UseItemEventId: -1
-  m_EnterEventId: -1
-  m_InteractiveInfo: "\u4EA4\u4E92"
-  m_UseItemInfo: "\u4F7F\u7528\u7269\u54C1"
 --- !u!65 &1581175093
 BoxCollider:
   m_ObjectHideFlags: 0
