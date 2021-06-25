@@ -14,7 +14,6 @@ namespace Jyx2
     {
 
         public AnimationClip clip;
-        public float ness;
 
         private AnimancerComponent _animancerComponent;
 

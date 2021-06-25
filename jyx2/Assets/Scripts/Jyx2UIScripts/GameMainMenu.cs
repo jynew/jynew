@@ -150,4 +150,9 @@ public partial class GameMainMenu : Jyx2_UIBase {
         base.OnHidePanel();
         //释放资源
     }
+
+    public void OnOpenURL(string url)
+    {
+        Tools.openURL(url);
+    }
 }
