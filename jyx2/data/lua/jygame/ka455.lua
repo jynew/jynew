@@ -9,8 +9,7 @@ if AskBattle() == true then goto label0 end;
         do return end;
 ::label1::
         ModifyEvent(-2, 1, -2, -2, 456, -1, -1, 6114, 6114, 6114, -2, 31, 48);--by fanyu|改变贴图，改变坐标，启动456脚本。场景19-编号01
-        jyx2_ReplaceSceneObject("","NPC/QZhenDiZi","");
-        jyx2_ReplaceSceneObject("","NPC/QZhenDiZi (6)","1");
+		jyx2_FixMapObject("重阳宫大门弟子让路", 1);
         ModifyEvent(-2, 2, -2, -2, 456, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu|启动456脚本。场景19-编号02
         ModifyEvent(-2, 3, -2, -2, 456, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu|启动456脚本。场景19-编号03
         ModifyEvent(-2, 4, -2, -2, 456, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu|启动456脚本。场景19-编号04
