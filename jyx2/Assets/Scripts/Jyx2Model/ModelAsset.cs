@@ -24,7 +24,7 @@ namespace Jyx2
     {
         [BoxGroup("数据", false)]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
-        [OnValueChanged("AtuoBindModelData")]
+        [OnValueChanged("AutoBindModelData")]
         public GameObject m_View;
 
         [BoxGroup("数据")] [Header("剑")] [SerializeReference]
