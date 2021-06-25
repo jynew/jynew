@@ -4,7 +4,5 @@ ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_ReplaceSceneObject("", "NPC/蟒蛇", "");
-jyx2_ReplaceSceneObject("", "NPC/大雕", ""); 
-jyx2_ReplaceSceneObject("", "Triggers/4-杨过旁", "1"); 
-jyx2_ReplaceSceneObject("", "Dynamic/大雕-杨过旁", "1"); 
+jyx2_FixMapObject("神雕移动到杨过旁", 1);
 do return end;
