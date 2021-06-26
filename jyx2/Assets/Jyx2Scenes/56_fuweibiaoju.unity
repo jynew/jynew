@@ -6831,6 +6831,47 @@ MonoBehaviour:
   no: {fileID: 0}
   GameEventId: 4
   InteractiveEvtId: -1
+--- !u!114 &590865742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a339ded35808854285265a8e645c216, type: 3}
+  m_Name: "\u4FEE\u6539\u5927\u5730\u56FE\u97F3\u4E50"
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1376379106}
+  position: {x: 4328, y: 216}
+  ports:
+    keys:
+    - prev
+    - next
+    values:
+    - _fieldName: prev
+      _node: {fileID: 590865742}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 1528608476}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 590865742}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  prev: {fileID: 0}
+  next: {fileID: 0}
+  MusicId: 3
 --- !u!1001 &592635079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16508,6 +16549,8 @@ MonoBehaviour:
   - {fileID: 1415604006}
   - {fileID: 1556196095}
   - {fileID: 2091252987}
+  - {fileID: 1528608476}
+  - {fileID: 590865742}
 --- !u!1001 &1384333675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18831,6 +18874,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1505745962}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1528608476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820ecc860325c704393d8cede8389d23, type: 3}
+  m_Name: "\u589E\u52A0\u58F0\u671B"
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1376379106}
+  position: {x: 4136, y: 216}
+  ports:
+    keys:
+    - prev
+    - next
+    values:
+    - _fieldName: prev
+      _node: {fileID: 1528608476}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 2091252987}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 1528608476}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: prev
+        node: {fileID: 590865742}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  prev: {fileID: 0}
+  next: {fileID: 0}
+  AddValue: 1
 --- !u!1 &1530800799
 GameObject:
   m_ObjectHideFlags: 0
@@ -26569,7 +26656,10 @@ MonoBehaviour:
     - _fieldName: next
       _node: {fileID: 2091252987}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: prev
+        node: {fileID: 1528608476}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
