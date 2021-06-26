@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Jyx2;
 using UnityEngine;
 using XNode;
 
 [CreateNodeMenu("战斗")]
 [NodeWidth(256)]
-public class Jyx2TryBattleNode : Node
+public class Jyx2TryBattleNode : Jyx2BaseNode
 {
-    [Input] public Node prev;
     [Output] public Node win;
     [Output] public Node lose;
 
@@ -16,5 +16,12 @@ public class Jyx2TryBattleNode : Node
     
     private void Reset() {
         name = "战斗";
+    }
+
+
+    protected override string OnPlay()
+    {
+        bool ret = Jyx2LuaBridge.TryBattle(BattleId);
+        return ret ? nameof(win) : nameof(lose);
     }
 }

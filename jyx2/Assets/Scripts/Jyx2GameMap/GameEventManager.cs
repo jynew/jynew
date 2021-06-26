@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 /// <summary>
@@ -106,7 +107,7 @@ public class GameEventManager : MonoBehaviour
             uiParams.Add(curEvent.m_InteractiveInfo);
             uiParams.Add(new Action(() =>
             {
-                ExecuteLuaEvent(curEvent.m_InteractiveEventId);
+                ExecuteJyx2Event(curEvent.m_InteractiveEventId);
             }));
             buttonCount++;
         }
@@ -150,7 +151,7 @@ public class GameEventManager : MonoBehaviour
                 return;
 
             //使用道具
-            ExecuteLuaEvent(curEvent.m_UseItemEventId, new JYX2LuaEvnContext() { currentItemId = itemId });
+            ExecuteJyx2Event(curEvent.m_UseItemEventId, new JYX2EventContext() { currentItemId = itemId });
         }));
     }
 
@@ -159,7 +160,7 @@ public class GameEventManager : MonoBehaviour
         if (evt.m_InteractiveEventId == NO_EVENT) return;
 
         curEvent = evt;
-        ExecuteLuaEvent(evt.m_InteractiveEventId);
+        ExecuteJyx2Event(evt.m_InteractiveEventId);
     }
 
 
@@ -177,7 +178,7 @@ public class GameEventManager : MonoBehaviour
         //直接触发
         if (!IsNoEvent(evt.m_EnterEventId) && !LuaExecutor.isExcutling())
         {
-            ExecuteLuaEvent(evt.m_EnterEventId);
+            ExecuteJyx2Event(evt.m_EnterEventId);
             return true;
         }
 
@@ -196,7 +197,7 @@ public class GameEventManager : MonoBehaviour
 
 
 
-    private void ExecuteLuaEvent(int eventId, JYX2LuaEvnContext context = null)
+    private void ExecuteJyx2Event(int eventId, JYX2EventContext context = null)
     {
         if (eventId < 0)
         {
@@ -215,20 +216,34 @@ public class GameEventManager : MonoBehaviour
         }
         
         SetCurrentGameEvent(curEvent);
-        var eventLuaPath = "jygame/ka" + eventId;
-        Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent, context);
+        
+        //设置运行环境上下文
+        JYX2EventContext.current = context;
+        
+        //先判断是否有蓝图类
+        //如果有则执行蓝图，否则执行lua
+        Jyx2ResourceHelper.LoadEventGraph(eventId, (graph) =>
+        {
+            graph.Run(OnFinishEvent);
+        }, () =>
+        {
+            //执行lua
+            var eventLuaPath = "jygame/ka" + eventId;
+            Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
+        });
     }
-
 
     void OnFinishEvent()
     {
+        JYX2EventContext.current = null;
+        
         if (curEvent != null)
         {
             curEvent.MarkChest();
         }
         else
         {
-            Debug.Log("curEvent is null");
+            //Debug.Log("curEvent is null");
         }
 
         SetCurrentGameEvent(null);

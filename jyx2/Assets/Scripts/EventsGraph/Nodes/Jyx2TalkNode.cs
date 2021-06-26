@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Jyx2;
-using UnityEditor;
 using UnityEngine;
 using XNode;
 
 [CreateNodeMenu("对话")]
 [NodeWidth(256)]
-public class Jyx2TalkNode : Jyx2BaseNode
+public class Jyx2TalkNode : Jyx2SimpleNode
 {
 
 	private void Reset() {
@@ -30,17 +29,10 @@ public class Jyx2TalkNode : Jyx2BaseNode
 	public override object GetValue(NodePort port) {
 		return null; // Replace this
 	}
-
-	public Texture2D GetRoleHeadTexture()
+	
+	
+	protected override void DoExecute()
 	{
-		int id = GetInputValue("roleId", this.roleId);
-
-		return AssetDatabase.LoadAssetAtPath<Texture2D>($"Assets/BuildSource/head/{id}.png");
+		Jyx2LuaBridge.Talk(roleId, content, "", 0);
 	}
-
-	/*[ContextMenu("中文测试")]
-	void Hello()
-	{
-		Debug.Log("hello!");
-	}*/
 }

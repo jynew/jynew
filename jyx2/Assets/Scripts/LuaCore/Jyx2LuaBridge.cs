@@ -29,6 +29,13 @@ using UnityEngine.Timeline;
 
 namespace Jyx2
 {
+    public class JYX2EventContext
+    {
+        public int currentItemId;
+        
+        static public JYX2EventContext current = null;
+    }
+
     /// <summary>
     /// lua的桥接函数
     /// 
@@ -252,10 +259,10 @@ namespace Jyx2
         //当前正在使用的物品ID
         static public bool UseItem(int itemId)
         {
-            if (LuaExecutor.currentLuaContext == null)
+            if (JYX2EventContext.current == null)
                 return false;
 
-            return itemId == LuaExecutor.currentLuaContext.currentItemId;
+            return itemId == JYX2EventContext.current.currentItemId;
         }
 
         //离队
@@ -1120,7 +1127,7 @@ namespace Jyx2
 
         static private void RunInMainThrad(Action run)
         {
-            Loom.QueueOnMainThread((o) =>
+            Loom.QueueOnMainThread(_ =>
             {
                 run();
             }, null);

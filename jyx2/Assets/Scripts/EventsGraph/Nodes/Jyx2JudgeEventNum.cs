@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Jyx2;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("条件节点/判断触发器的交互事件")]
+[CreateNodeMenu("流程控制/判断触发器的交互事件")]
 [NodeWidth(150)]
-public class Jyx2JudgeEventNum : Node
+public class Jyx2JudgeEventNum : Jyx2BaseNode
 {
-    [Input] public Node prev;
     [Output] public Node yes;
     [Output] public Node no;
 
@@ -16,5 +16,12 @@ public class Jyx2JudgeEventNum : Node
     
     private void Reset() {
         name = "判断触发器的交互事件";
+    }
+
+
+    protected override string OnPlay()
+    {
+        bool ret = Jyx2LuaBridge.JudgeEventNum(GameEventId, InteractiveEvtId);
+        return ret ? nameof(yes) : nameof(no);
     }
 }

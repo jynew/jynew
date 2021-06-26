@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("GAME OVER")]
+[CreateNodeMenu("流程控制/GAME OVER")]
 [NodeWidth(100)]
 public class Jyx2DeadNode : Node
 {

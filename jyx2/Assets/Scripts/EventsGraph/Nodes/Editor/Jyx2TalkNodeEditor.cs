@@ -46,7 +46,7 @@ public class Jyx2TalkNodeEditor : NodeEditor
         }
         
         //角色头像
-        var roleHeadContent = new GUIContent(myNode.GetRoleHeadTexture());
+        var roleHeadContent = new GUIContent(GetRoleHeadTexture());
         
         EditorGUIUtility.labelWidth = 25.0f; // Replace this with any width
         EditorGUILayout.PropertyField(serializedObject.FindProperty("content"),
@@ -55,5 +55,12 @@ public class Jyx2TalkNodeEditor : NodeEditor
 
         // Apply property modifications
         serializedObject.ApplyModifiedProperties();
+    }
+    
+    public Texture2D GetRoleHeadTexture()
+    {
+        int id = serializedObject.FindProperty("roleId").intValue;
+
+        return AssetDatabase.LoadAssetAtPath<Texture2D>($"Assets/BuildSource/head/{id}.png");
     }
 }
