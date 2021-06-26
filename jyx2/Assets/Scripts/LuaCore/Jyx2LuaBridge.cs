@@ -878,11 +878,15 @@ namespace Jyx2
             jyx2_CameraFollow("Level/Player");
         }
 
+		//fromName:-1, 获取主角当前位置作为起始点
         static public void jyx2_WalkFromTo(int fromName, int toName) 
         {
             RunInMainThrad(() =>
             {
-                var fromObj = GameObject.Find($"Level/NavigateObjs/{fromName}");
+                var fromObj = GameObject.Find("Level/Player");
+				if(fromName!=-1){
+					fromObj=GameObject.Find($"Level/NavigateObjs/{fromName}");
+				}
                 var toObj = GameObject.Find($"Level/NavigateObjs/{toName}");
                 if (fromObj == null || toObj == null) 
                 {
