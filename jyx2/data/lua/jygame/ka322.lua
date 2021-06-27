@@ -1,3 +1,5 @@
+jyx2_WalkFromTo(-1,87);
+SetRoleFace(1);
 Talk(19, "少侠，老夫听说你独自攻上这黑木崖来，特别率我五岳派门徒赶上来帮你．东方不败那魔头呢？", "talkname19", 0);
 Talk(0, "唉！你们怎么跟电影剧情一样，事情都结束后才出现．东方不败那个变态家伙，已经被我”干掉”了．", "talkname0", 1);
 Talk(19, "真是如此！少侠又替我武林正派立了一项大功．", "talkname19", 0);
@@ -22,6 +24,7 @@ if InTeam(35) == false then goto label0 end;
         Dead();
         do return end;
 ::label1::
+		SetRoleFace(1);
         ModifyEvent(-2, 61, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号61
         ModifyEvent(-2, 62, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号62
         ModifyEvent(-2, 63, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号63
@@ -46,6 +49,7 @@ if InTeam(35) == false then goto label0 end;
         ModifyEvent(-2, 83, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号83
         ModifyEvent(-2, 84, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号84
         ModifyEvent(-2, 85, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号85
+		jyx2_ReplaceSceneObject("","NPC/五岳剑派弟子","");
         LightScence();
         Talk(0, "五岳派的各位，今日多有冒犯之处，请多包涵．", "talkname0", 1);
         Talk(19, "哼！我们走．", "talkname19", 0);
@@ -55,6 +59,7 @@ if InTeam(35) == false then goto label0 end;
         ModifyEvent(-2, 58, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号58
         ModifyEvent(-2, 59, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号59
         ModifyEvent(-2, 60, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号60
+		jyx2_ReplaceSceneObject("","NPC/五岳剑派掌门","");
         LightScence();
         Talk(0, "想不到在找寻这本书的过程中，让我看到人性中为了争权夺利所展现的丑陋面．不管是正派中的左冷禅与岳不群，还是邪派中的任我行与东方不败，都是一样的．", "talkname0", 1);
         ModifyEvent(-2, 87, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除敌人， 场景26-编号87

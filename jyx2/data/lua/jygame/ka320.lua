@@ -7,6 +7,8 @@ ModifyEvent(-2, 51, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移除�
 ModifyEvent(-2, 52, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移除脚本，可以通过 场景26-编号52
 ModifyEvent(-2, 53, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移除脚本，可以通过 场景26-编号53
 ModifyEvent(-2, 54, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移除脚本，可以通过 场景26-编号54
+jyx2_WalkFromTo(-1,46);
+SetRoleFace(2);
 Talk(0, "你就是东方不败？＜怎么看起来像个娘们？＞", "talkname0", 1);
 Talk(33, "小子，梅庄的帐还没跟你算，你还敢上黑木崖来．", "talkname33", 0);
 Talk(0, "嗨！四位近来过的如何？”麻将”的技术有没有更精进呢？", "talkname0", 1);
@@ -54,7 +56,11 @@ if TeamIsFull() == false then goto label0 end;
                         ModifyEvent(-2, 55, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
                         ModifyEvent(-2, 0, 1, 1, 321, -1, -1, 5910, 5910, 5910, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号0
                         ModifyEvent(-2, 1, 1, 1, 321, -1, -1, 5908, 5908, 5908, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号1
-                        ModifyEvent(-2, 86, 1, 1, -1, -1, -1, 7966, 7966, 7966, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号86
+                        jyx2_FixMapObject("任我行战斗后","1");
+						jyx2_SwitchRoleAnimation("Level/NPC/renwoxing","Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
+						ModifyEvent(-2, 86, 1, 1, -1, -1, -1, 7966, 7966, 7966, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号86
+						jyx2_FixMapObject("东方不败战斗后","1");
+						jyx2_SwitchRoleAnimation("Level/NPC/dongfangbubai","");
                         LightScence();
                         if InTeam(26) == false then goto label6 end;
                             Leave(26);
@@ -68,11 +74,9 @@ if TeamIsFull() == false then goto label0 end;
                             Talk(26, "我现在不想杀你了，我也找个地方安养你好了．来人啊，把他带下去．", "talkname26", 0);
                             Talk(27, "你好狠毒！", "talkname27", 0);
                             DarkScence();
-                            jyx2_ReplaceSceneObject("", "NPC/dongfangbubai", "");--东方不败离场
                             ModifyEvent(-2, 86, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 人物离场 场景26-编号86
+                            jyx2_ReplaceSceneObject("", "NPC/dongfangbubai", "");--东方不败离场
                             LightScence();
-                            jyx2_ReplaceSceneObject("", "NPC/renwoxing", "");--任我行战到教主之位
-                            jyx2_ReplaceSceneObject("", "NPC/renjiaozhu", "1");--任教主登场
                             Talk(33, "恭喜教主，今日诛却大逆．从此我教在教主庇荫之下，扬威四海．教主千秋万载，一统江湖．", "talkname33", 0);
                             Talk(26, "胡说八道！什么千秋万载？哈！哈！哈！小兄弟，这一役诛奸复位，你实占首功．这本”笑傲江湖”你就拿去吧．江湖上的人以为它是个高深的武功秘笈，其实只不过是本故事书罢了．", "talkname26", 0);
                             Talk(26, "要说到真正的武功秘笈，有什么能比的上这本”葵花宝典”呢？可惜，这并不是常人可以练的．", "talkname26", 0);
