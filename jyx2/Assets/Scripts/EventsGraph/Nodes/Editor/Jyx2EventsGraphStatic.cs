@@ -18,9 +18,16 @@ static public class Jyx2EventsGraphStatic
         {
             tmp.Add(role.Name);
         }
-
         s_roleList = tmp.ToArray();
+
+        tmp.Clear();
+        foreach (var item in ConfigTable.GetAll<Jyx2Item>())
+        {
+            tmp.Add(item.Name);
+        }
+        s_itemList = tmp.ToArray();
     }
 
     public static string[] s_roleList;
+    public static string[] s_itemList;
 }

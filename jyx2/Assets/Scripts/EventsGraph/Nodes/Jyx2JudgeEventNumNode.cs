@@ -6,7 +6,7 @@ using XNode;
 
 [CreateNodeMenu("流程控制/判断触发器的交互事件")]
 [NodeWidth(150)]
-public class Jyx2JudgeEventNum : Jyx2BaseNode
+public class Jyx2JudgeEventNumNode : Jyx2BaseNode
 {
     [Output] public Node yes;
     [Output] public Node no;

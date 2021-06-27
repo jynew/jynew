@@ -4,18 +4,18 @@ using Jyx2;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("游戏数据/增加声望")]
+[CreateNodeMenu("游戏数据/增加道德")]
 [NodeWidth(150)]
-public class Jyx2AddReputeNode : Jyx2SimpleNode
+public class Jyx2AddEthicsNode : Jyx2SimpleNode
 {
     public int AddValue;
     
     private void Reset() {
-        name = "增加声望";
+        name = "增加道德";
     }
 
     protected override void DoExecute()
     {
-        Jyx2LuaBridge.AddRepute(AddValue);
+        Jyx2LuaBridge.AddEthics(AddValue);
     }
 }
