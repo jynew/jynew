@@ -206,7 +206,8 @@ public class GameEvent : MonoBehaviour
             var chest = target.GetComponent<MapChest>();
             if (chest != null)
             {
-				chest.ChangeLockStatus(m_UseItemEventId>0);
+				//使用物品事件为-1时可以直接打开。>0时候需要对应钥匙才能解开。-2时不能打开，参考南贤居宝箱一开始不能打开，交谈后可以直接打开
+				chest.ChangeLockStatus(m_UseItemEventId!=-1);
                 chest.MarkAsOpened();
             }
         }

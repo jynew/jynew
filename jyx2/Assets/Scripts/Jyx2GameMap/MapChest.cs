@@ -24,6 +24,7 @@ public class MapChest : MonoBehaviour
     [Header("宝箱的打开状态，是直接消失还是变为打开")] 
     public MapChestOpenDisplayType displayType = MapChestOpenDisplayType.Hide;
 
+	[Header("标识宝箱是否上锁。不需要额外设置。会根据绑定使用物品事件id自动设置")] 
 	public bool isLock;
 
     public enum MapChestOpenDisplayType
