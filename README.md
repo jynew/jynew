@@ -59,7 +59,7 @@
 
 ## 引用项目
 
-[xlua](https://github.com/Tencent/xLua)   [xNode](https://github.com/Siccity/xNode)
+[xlua](https://github.com/Tencent/xLua)   [xNode](https://github.com/Siccity/xNode) [UnityEditorJunkie](https://github.com/roboryantron/UnityEditorJunkie)
 
 ## 参考项目
 
