@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class ModelAssetManager : OdinMenuEditorWindow
 {
-    [MenuItem("配置管理器/模型配置管理器")]
+    [MenuItem("项目快速导航/模型配置管理器")]
     private static void OpenWindow()
     {
         GetWindow<ModelAssetManager>().titleContent = new GUIContent()
