@@ -8,6 +8,7 @@ using Jyx2;
 using Jyx2Editor;
 using MK.Toon;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using XNodeEditor;
 
@@ -51,6 +52,14 @@ public class Jyx2ModifyEventNodeEditor : NodeEditor
             Jyx2NodeEditorHelperQuickButtons.NavigateToSceneButton(sceneId);
         }
         DrawField("本触发器", -2, "EventId", ref isDefaultEvt);
+        
+        //有指定具体场景具体触发器的情况下，可以直接导航到该GameObject
+        if (!isDefaultScene && !isDefaultEvt)
+        {
+            int sceneId = serializedObject.FindProperty("SceneId").intValue;
+            int gameEventId = serializedObject.FindProperty("EventId").intValue;
+            Jyx2NodeEditorHelperQuickButtons.NavigateToGameEventObjButton(sceneId, gameEventId);
+        }
 
         
         DrawDropdownField("交互事件", nameof(myNode.InteractiveEventId));

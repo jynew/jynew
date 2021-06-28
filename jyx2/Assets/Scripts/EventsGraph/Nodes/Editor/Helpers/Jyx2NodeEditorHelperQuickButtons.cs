@@ -8,11 +8,30 @@ using HSFrameWork.ConfigTable;
 using Jyx2;
 using Jyx2Editor;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 static public class Jyx2NodeEditorHelperQuickButtons
 {
 
+    public static void NavigateToGameEventObjButton(int sceneId, int gameEventId, string text = "快速导航到该触发器")
+    {
+        if (GUILayout.Button(text))
+        {
+            string path = GetSceneAssetPath(sceneId);
+            if (string.IsNullOrEmpty(path))
+            {
+                ShowErrMessageBox($"找不到场景id={sceneId}");
+                return;
+            }
+
+            EditorSceneManager.SaveOpenScenes();
+            EditorSceneManager.OpenScene(path, OpenSceneMode.Single); 
+            
+            Selection.activeGameObject = GameObject.Find($"Level/Triggers/{gameEventId}");
+        }
+    }
+    
     /// <summary>
     /// 绘制跳转到场景的按钮
     /// </summary>
@@ -22,17 +41,29 @@ static public class Jyx2NodeEditorHelperQuickButtons
     {
         if (GUILayout.Button(text))
         {
-            var jyx2Map = ConfigTable.GetAll<GameMap>()
-                .SingleOrDefault(map => map.Jyx2MapId.Equals(sceneId.ToString()));
-
-            if (jyx2Map == null)
+            string path = GetSceneAssetPath(sceneId);
+            if (!string.IsNullOrEmpty(path))
+            {
+                EditorSceneManager.SaveOpenScenes();
+                EditorSceneManager.OpenScene(path, OpenSceneMode.Single);   
+            }else
             {
                 ShowErrMessageBox($"找不到场景id={sceneId}");
             }
-
-            string path = $"Assets/Jyx2Scenes/{jyx2Map.Key}.unity";
-            Jyx2MenuItems.NavigateToPath(path);
         }
+    }
+
+    private static string GetSceneAssetPath(int sceneId)
+    {
+        var jyx2Map = ConfigTable.GetAll<GameMap>()
+            .SingleOrDefault(map => map.Jyx2MapId.Equals(sceneId.ToString()));
+
+        if (jyx2Map == null)
+        {
+            return null;
+        }
+        
+        return $"Assets/Jyx2Scenes/{jyx2Map.Key}.unity";
     }
     
     /// <summary>
