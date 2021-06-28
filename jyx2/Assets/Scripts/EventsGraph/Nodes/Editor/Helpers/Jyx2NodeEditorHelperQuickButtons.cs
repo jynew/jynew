@@ -24,8 +24,8 @@ static public class Jyx2NodeEditorHelperQuickButtons
                 ShowErrMessageBox($"找不到场景id={sceneId}");
                 return;
             }
-
-            EditorSceneManager.SaveOpenScenes();
+            
+            EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
             EditorSceneManager.OpenScene(path, OpenSceneMode.Single); 
             
             Selection.activeGameObject = GameObject.Find($"Level/Triggers/{gameEventId}");
@@ -44,7 +44,7 @@ static public class Jyx2NodeEditorHelperQuickButtons
             string path = GetSceneAssetPath(sceneId);
             if (!string.IsNullOrEmpty(path))
             {
-                EditorSceneManager.SaveOpenScenes();
+                EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
                 EditorSceneManager.OpenScene(path, OpenSceneMode.Single);   
             }else
             {
