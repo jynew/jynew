@@ -305,9 +305,10 @@ namespace Jyx2
             });
             Wait();
         }
-
+        
         static public void ScenceFromTo(int x,int y,int x2,int y2)
         {
+            //重制版不需要再实现，使用  jyx2_CameraFollow、jyx2_CameraFollowPlayer
 
         }
         
@@ -788,7 +789,7 @@ namespace Jyx2
 
         static public void SetScencePosition2(int x, int y)
         {
-
+            //设置位置，没用了，调用jyx2_MovePlayer替代
         }
 
         //增加声望

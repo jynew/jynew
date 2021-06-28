@@ -24,13 +24,13 @@ namespace Jyx2Editor
             SceneHelper.StartScene("Assets/3D/AllModels.unity");
         }
 
-        [MenuItem("项目快速导航/脚本编辑/事件图形化编辑")]
+        [MenuItem("项目快速导航/游戏事件脚本/蓝图脚本")]
         private static void OpenEventsGraphMenu()
         {
             NavigateToPath("Assets/BuildSource/EventsGraph/README.txt");
         }
         
-        [MenuItem("项目快速导航/脚本编辑/lua")]
+        [MenuItem("项目快速导航/游戏事件脚本/lua脚本")]
         private static void OpenLuaMenu()
         {
             EditorUtility.RevealInFinder("data/lua/jygame");
@@ -84,7 +84,7 @@ namespace Jyx2Editor
             NavigateToPath("Assets/BuildSource/sound/atk00.wav");
         }
 
-        private static void NavigateToPath(string path)
+        public static void NavigateToPath(string path)
         {
             UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object));
             Selection.activeObject = obj;
