@@ -71,7 +71,7 @@ namespace Jyx2
         public int Armor; //防具
 
         [XmlAttribute]
-        public int MpType; //内力性质
+        public int MpType; //内力性质 ,0:阴 1:阳 2:调和
 
         [XmlAttribute]
         public int Mp;
