@@ -1,3 +1,12 @@
+/*
+ * 金庸群侠传3D重制版
+ * https://github.com/jynew/jynew
+ *
+ * 这是本开源项目文件头，所有代码均使用MIT协议。
+ * 但游戏内资源和第三方插件、dll等请仔细阅读LICENSE相关授权协议文档。
+ *
+ * 金庸老先生千古！
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -107,7 +116,7 @@ public class GameConst
     public const int MAX_BATTLE_TEAMMATE_COUNT = 6;
 	
 	//对话框最大可以显示字符
-	public const int MAX_CHAT_CHART_NUM=157;
+	public const int MAX_CHAT_CHART_NUM=156;
 	
 	//战斗胜利结果最大显示行数
 	public const int MAX_BATTLE_RESULT_LINE_NUM=7;

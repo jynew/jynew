@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine.UI;
 using System.Reflection;
-using HSFrameWork.Common;
-using HSUI;
 
 public class DebugTools : EditorWindow
 {

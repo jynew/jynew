@@ -1,3 +1,12 @@
+/*
+ * 金庸群侠传3D重制版
+ * https://github.com/jynew/jynew
+ *
+ * 这是本开源项目文件头，所有代码均使用MIT协议。
+ * 但游戏内资源和第三方插件、dll等请仔细阅读LICENSE相关授权协议文档。
+ *
+ * 金庸老先生千古！
+ */
 using Jyx2.Middleware;
 using System;
 using System.Collections;
@@ -49,24 +58,13 @@ public abstract class Jyx2_UIBase : MonoBehaviour
         this.OnHidePanel();
     }
 
-    public void BindListener(Button button, Action callback, BUTTON_TYPE type = BUTTON_TYPE.CLICK)
+    public void BindListener(Button button, Action callback)
     {
         if (button != null)
         {
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(delegate
+            button.onClick.AddListener(()=>
             {
-                switch (type)
-                {
-                    case BUTTON_TYPE.CLICK:
-                        //AudioManager.PlayEffect("音效.点击");
-                        break;
-                    case BUTTON_TYPE.SWITCH:
-                        //AudioManager.PlayEffect("音效.切换界面");
-                        break;
-                    default:
-                        break;
-                }
                 callback();
             });
             var nav = Navigation.defaultNavigation;

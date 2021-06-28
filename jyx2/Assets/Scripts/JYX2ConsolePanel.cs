@@ -1,3 +1,12 @@
+/*
+ * 金庸群侠传3D重制版
+ * https://github.com/jynew/jynew
+ *
+ * 这是本开源项目文件头，所有代码均使用MIT协议。
+ * 但游戏内资源和第三方插件、dll等请仔细阅读LICENSE相关授权协议文档。
+ *
+ * 金庸老先生千古！
+ */
 using Jyx2;
 using HSFrameWork.ConfigTable;
 using Jyx2;
@@ -94,7 +103,7 @@ public class JYX2ConsolePanel : MonoBehaviour
                     break;
                 }
             default:
-                Debug.LogError("没有识别的指令，将执行lua替代：" + cmd);
+                Debug.Log("没有识别的指令，将执行lua替代：" + cmd);
                 string luaContent = cmd;
                 Jyx2.LuaExecutor.ExecuteLua(luaContent);
                 break;

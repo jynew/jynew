@@ -1,16 +1,15 @@
 using Cinemachine;
-using HSUI;
 using System;
 using UniRx;
 using UnityEngine;
 
-public class CameraHelper : BaseUI
+public class CameraHelper : MonoBehaviour
 {
     public static CameraHelper Instance
     {
         get
         {
-            if (_instance == null) _instance = FindObjectOfType<CameraHelper>();
+            if (_instance == null) _instance = GameObject.FindObjectOfType<CameraHelper>();
             return _instance;
         }
     }

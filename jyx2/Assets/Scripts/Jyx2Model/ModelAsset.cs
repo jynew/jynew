@@ -1,3 +1,12 @@
+/*
+ * 金庸群侠传3D重制版
+ * https://github.com/jynew/jynew
+ *
+ * 这是本开源项目文件头，所有代码均使用MIT协议。
+ * 但游戏内资源和第三方插件、dll等请仔细阅读LICENSE相关授权协议文档。
+ *
+ * 金庸老先生千古！
+ */
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +33,7 @@ namespace Jyx2
     {
         [BoxGroup("数据", false)]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
-        [OnValueChanged("AtuoBindModelData")]
+        [OnValueChanged("AutoBindModelData")]
         public GameObject m_View;
 
         [BoxGroup("数据")] [Header("剑")] [SerializeReference]
@@ -161,7 +170,7 @@ namespace Jyx2
         /// <summary>
         /// 自动绑定模型配置
         /// </summary>
-        public void AtuoBindModelData()
+        public void AutoBindModelData()
         {
             if (m_View == null) return;
             var animator = m_View.GetComponent<Animator>();
@@ -193,15 +202,15 @@ namespace Jyx2
             }
 
 #if UNITY_EDITOR
-            EditorUtility.SetDirty(this);
-            AssetDatabase.SaveAssets();
+            //EditorUtility.SetDirty(this);
+            //AssetDatabase.SaveAssets();
 #endif
         }
 
 #if UNITY_EDITOR
         private void OnEnable()
         {
-            AtuoBindModelData();
+            AutoBindModelData();
         }
 #endif
     }

@@ -1,3 +1,12 @@
+/*
+ * 金庸群侠传3D重制版
+ * https://github.com/jynew/jynew
+ *
+ * 这是本开源项目文件头，所有代码均使用MIT协议。
+ * 但游戏内资源和第三方插件、dll等请仔细阅读LICENSE相关授权协议文档。
+ *
+ * 金庸老先生千古！
+ */
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +29,13 @@ using UnityEngine.Timeline;
 
 namespace Jyx2
 {
+    public class JYX2EventContext
+    {
+        public int currentItemId;
+        
+        static public JYX2EventContext current = null;
+    }
+
     /// <summary>
     /// lua的桥接函数
     /// 
@@ -243,10 +259,10 @@ namespace Jyx2
         //当前正在使用的物品ID
         static public bool UseItem(int itemId)
         {
-            if (LuaExecutor.currentLuaContext == null)
+            if (JYX2EventContext.current == null)
                 return false;
 
-            return itemId == LuaExecutor.currentLuaContext.currentItemId;
+            return itemId == JYX2EventContext.current.currentItemId;
         }
 
         //离队
@@ -869,11 +885,15 @@ namespace Jyx2
             jyx2_CameraFollow("Level/Player");
         }
 
+		//fromName:-1, 获取主角当前位置作为起始点
         static public void jyx2_WalkFromTo(int fromName, int toName) 
         {
             RunInMainThrad(() =>
             {
-                var fromObj = GameObject.Find($"Level/NavigateObjs/{fromName}");
+                var fromObj = GameObject.Find("Level/Player");
+				if(fromName!=-1){
+					fromObj=GameObject.Find($"Level/NavigateObjs/{fromName}");
+				}
                 var toObj = GameObject.Find($"Level/NavigateObjs/{toName}");
                 if (fromObj == null || toObj == null) 
                 {
@@ -1034,6 +1054,72 @@ namespace Jyx2
             Wait();
         }
 
+
+        /// <summary>
+        /// 切换角色动作
+        ///
+        /// 调用样例（胡斐居）
+        /// jyx2_SwitchRoleAnimation("Level/NPC/胡斐", "Assets/BuildSource/AnimationControllers/打坐.controller")
+        /// </summary>
+        /// <param name="rolePath"></param>
+        /// <param name="animationControllerPath"></param>
+        static public void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
+        {
+            Debug.Log("jyx2_SwitchRoleAnimation called");
+            RunInMainThrad(() =>
+            {
+                var roleObj = GameObject.Find(rolePath);
+                if (roleObj == null)
+                {
+                    Debug.LogError($"错误：{rolePath}不存在。");
+                    Next();
+                    return;
+                }
+                var animator = roleObj.GetComponent<Animator>();
+                if (animator == null)
+                {
+                    Debug.LogError($"错误：{rolePath}没有Animator组件。");
+                    Next();
+                    return;
+                }
+
+                Jyx2ResourceHelper.LoadAsset<RuntimeAnimatorController>(animationControllerPath, rst =>
+                {
+                    animator.runtimeAnimatorController = rst;
+                    Next();
+                });
+                
+            });
+            Wait();
+        }
+
+        static public void jyx2_FixMapObject(string flag, bool isSet)
+        {
+            RunInMainThrad(() =>
+            {
+                if (isSet)
+                {
+                    runtime.KeyValues[flag] = "1";
+                }
+                else
+                {
+                    runtime.RemoveKey(flag);
+                }
+
+                var objs = GameObject.FindObjectsOfType<FixWithGameRuntime>();
+                if (objs != null)
+                {
+                    foreach (var obj in objs)
+                    {
+                        obj.Reload();
+                    }
+                }
+                Next();
+            });
+
+            Wait();
+        }
+
         #endregion
 
 
@@ -1041,7 +1127,7 @@ namespace Jyx2
 
         static private void RunInMainThrad(Action run)
         {
-            Loom.QueueOnMainThread((o) =>
+            Loom.QueueOnMainThread(_ =>
             {
                 run();
             }, null);
