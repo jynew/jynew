@@ -84,7 +84,7 @@ namespace Jyx2Editor
             NavigateToPath("Assets/BuildSource/sound/atk00.wav");
         }
 
-        private static void NavigateToPath(string path)
+        public static void NavigateToPath(string path)
         {
             UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object));
             Selection.activeObject = obj;

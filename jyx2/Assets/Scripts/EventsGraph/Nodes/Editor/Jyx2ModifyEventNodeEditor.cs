@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using DG.DemiLib;
 using HSFrameWork.ConfigTable;
 using Jyx2;
+using Jyx2Editor;
 using MK.Toon;
 using UnityEditor;
 using UnityEngine;
@@ -13,8 +17,8 @@ public class Jyx2ModifyEventNodeEditor : NodeEditor
 {
     private Jyx2ModifyEventNode myNode;
 
-    private bool isEditScene;
-    private bool isEditEvt;
+    private bool isDefaultScene;
+    private bool isDefaultEvt;
 
 
     private readonly string[] evtModifyTypes = new string[3] {"保留", "清空", "指定ID"};
@@ -24,8 +28,8 @@ public class Jyx2ModifyEventNodeEditor : NodeEditor
         base.OnCreate();
         if (myNode == null) myNode = target as Jyx2ModifyEventNode;
 
-        isEditScene = serializedObject.FindProperty("SceneId").intValue == -2;
-        isEditEvt = serializedObject.FindProperty("EventId").intValue == -2;
+        isDefaultScene = serializedObject.FindProperty("SceneId").intValue == -2;
+        isDefaultEvt = serializedObject.FindProperty("EventId").intValue == -2;
         
 
     }
@@ -40,8 +44,13 @@ public class Jyx2ModifyEventNodeEditor : NodeEditor
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("prev"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("next"));
 
-        DrawField("本场景", -2, "SceneId", ref isEditScene);
-        DrawField("本事件", -2, "EventId", ref isEditEvt);
+        DrawField("本场景", -2, "SceneId", ref isDefaultScene);
+        if (!isDefaultScene)
+        {
+            int sceneId = serializedObject.FindProperty("SceneId").intValue;
+            Jyx2NodeEditorHelperQuickButtons.NavigateToSceneButton(sceneId);
+        }
+        DrawField("本触发器", -2, "EventId", ref isDefaultEvt);
 
         
         DrawDropdownField("交互事件", nameof(myNode.InteractiveEventId));
@@ -88,15 +97,15 @@ public class Jyx2ModifyEventNodeEditor : NodeEditor
         
         int sel = EditorGUILayout.Popup(labelName, selectIndex, evtModifyTypes);
 
-        if (sel == 0)
+        if (sel == 0) //保留
         {
             serializedObject.FindProperty(fieldName).intValue = keepValue;
         }
-        else if (sel == 1)
+        else if (sel == 1) //清空
         {
             serializedObject.FindProperty(fieldName).intValue = clearValue;
         }
-        else
+        else //手动指定ID
         {
             if (serializedObject.FindProperty(fieldName).intValue < 0)
             {
@@ -104,6 +113,9 @@ public class Jyx2ModifyEventNodeEditor : NodeEditor
             }
                 
             NodeEditorGUILayout.PropertyField(serializedObject.FindProperty(fieldName));
+            
+            //跳转event按钮
+            Jyx2NodeEditorHelperQuickButtons.NavigateToEventButton(serializedObject.FindProperty(fieldName).intValue);
         }
         
     }
