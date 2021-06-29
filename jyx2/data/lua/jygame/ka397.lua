@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(58, "好啊！或许旅途中会有龙儿的下落也说不定．", "talkname58", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|杨过加入队伍。场景07-编号06
+        jyx2_ReplaceSceneObject("", "NPC/杨过", ""); 
         LightScence();
         Join(58);
         AddEthics(3);
