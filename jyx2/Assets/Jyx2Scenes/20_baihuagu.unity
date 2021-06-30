@@ -25664,6 +25664,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: zhoubotong
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 6b0b6911077682649b71970db1c3fb9a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2f4fd6144b243e740acbf6e25d3f83c4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b0b6911077682649b71970db1c3fb9a, type: 3}
 --- !u!4 &683670206 stripped
@@ -56543,10 +56548,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
-  - Desktop
   - Mobile
   shaderIndex: 0
-  shader: {fileID: 4800000, guid: 4bcc0b68579a5c740ad31644411ffb54, type: 3}
+  shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
   isUnlit: 0
@@ -56580,9 +56584,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.39704832, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39704117, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.41155374, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.4115466, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -56596,7 +56600,7 @@ MonoBehaviour:
   - World-aligned (planar)
   worldSpaceTiling: 0
   refractionAmount: 0.018
-  enableNormalMap: 1
+  enableNormalMap: 0
   normalStrength: 0.307
   enableMacroNormals: 0
   macroNormalsDistance: 2000
@@ -56708,10 +56712,10 @@ MonoBehaviour:
   enableShadows: 0
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: 31cc54898a6ea2449a4c17acf45079b8, type: 2}
-  isMobileAdvanced: 0
-  isMobilePlatform: 0
+  isMobileAdvanced: 1
+  isMobilePlatform: 1
   isMobileBasic: 0
-  shaderName: StylizedWater/Desktop
+  shaderName: StylizedWater/Mobile
   isWaterLayer: 0
   hasShaderParams: 1
   hasMaterial: 1
