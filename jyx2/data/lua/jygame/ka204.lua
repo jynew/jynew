@@ -8,6 +8,7 @@ if TryBattle(29) == true then goto label0 end;
     do return end;
 ::label0::
     ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+	jyx2_ReplaceSceneObject("","NPC/嵩山弟子1","");
     ModifyEvent(-2, 2, -2, -2, 205, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 3, -2, -2, 205, -1, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
