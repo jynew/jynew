@@ -1,6 +1,8 @@
 if HaveItem(173) == false then goto label0 end;
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
     Talk(0, "咦！头比较不晕了，反而有股淡淡的微香，这朵蓝花真是神奇．", "talkname0", 1);
+    jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_02", "");
+    jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_02 (1)", "");
     do return end;
 ::label0::
     Talk(0, "啊！又闻到这香味了，看来我又得昏倒了．", "talkname0", 1);

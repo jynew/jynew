@@ -28,6 +28,11 @@ if TryBattle(1) == false then goto label0 end;
     Talk(4, "那儿的话，那少侠就随便看看，若不嫌弃的话，有什么喜欢的就拿去吧．", "talkname4", 0);
     ModifyEvent(-2, 7, -2, -2, -2, -2, 25, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 8, -2, -2, -2, -2, -2, -1, -1, -1, -2, -2, -2);
+    if InTeam(1) == true then goto label1 end;
+    do return end;
+::label1::
+    ModifyEvent(-2, 1, 1, -2, 28, -2, -2, -2, -2, -2, 0, -2, -2);
+    do return end;
     AddRepute(1);
     do return end;
 ::label0::
