@@ -12,6 +12,6 @@ if TryBattle(26) == true then goto label0 end;
     Talk(23, "今日不杀我，我五岳剑派同气连枝，改日我们再上黑木崖向阁下及东方不败讨教．", "talkname23", 0);
     AddItem(68, 1);
     ModifyEvent(-2, -2, -2, -2, 177, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本177 场景29-01
-    Add3EventNum(27, 0, 0, 0, 56)
+    Add3EventNum(27, 0, 0, 0, 1);--需要拜访嵩山以外4派才会触发五岳并派事件。嵩山入口0号trigger对应起始事件为198，每拜访1派事件序号+1，202号事件为并派事件。
     AddRepute(3);
 do return end;
