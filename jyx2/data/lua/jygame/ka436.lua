@@ -24,10 +24,10 @@ if InTeam(58) == false then goto label0 end;
     Talk(58, "我想先和龙儿回古墓中，兄弟将来若有什么困难，尽管到古墓中找我夫妇俩．", "talkname58", 1);
     Talk(0, "杨兄慢走，愿你夫妇俩别再分离．", "talkname0", 1);
     Talk(58, "那我夫妇俩先走了，祝兄弟一路顺风．", "talkname58", 1);
+    DarkScence();
     jyx2_ReplaceSceneObject("", "NPC/yangguo", "");--杨过离开
     jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女离开
-
-    DarkScence();
+    LightScence();
     SetScenceMap(18, 1, 44, 31, 0);
     SetScenceMap(18, 1, 44, 30, 0);
     jyx2_ReplaceSceneObject("18", "Bake/Static/Door/Door_035", "");--古墓开门
@@ -45,7 +45,7 @@ if InTeam(58) == false then goto label0 end;
     LearnMagic2(58, 24, 1);
     NPCAddItem(58, 61, 1);
     Leave(58);
-    LightScence();
+ 
     Talk(0, "”问世间情是何物，直叫人生死相许”他们夫妇俩真是令人羡慕的神仙侠侣．”神仙侠侣”！．．．．．”神雕侠侣”？对了，还有那头老雕，那本书该不会是在他俩身上吧．　　　　看来有空还要再前往古墓找他夫妇俩．", "talkname0", 1);
     do return end;
 ::label0::
@@ -67,8 +67,9 @@ if InTeam(58) == false then goto label0 end;
     Talk(59, "过儿现在在那里？", "talkname59", 0);
     Talk(0, "杨兄现正在神雕穴中练功休养，那神雕穴是在．．．．", "talkname0", 1);
     Talk(59, "我这就去找他．少侠将来有空，可到古墓中找我夫妇．", "talkname59", 0);
-    jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女离开
     DarkScence();
+    jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女离开   
+    LightScence();
     SetScenceMap(18, 1, 44, 31, 0);
     SetScenceMap(18, 1, 44, 30, 0);
     jyx2_ReplaceSceneObject("18", "Bake/Static/Door/Door_035", "");--古墓开门
@@ -85,6 +86,5 @@ if InTeam(58) == false then goto label0 end;
     ModifyEvent(18, 5, -2, -2, 443, -1, -1, -2, -2, -2, -2, -2, -2);
     LearnMagic2(58, 24, 1);
     NPCAddItem(58, 61, 1);
-    LightScence();
     Talk(0, "”问世间情是何物，直叫人生死相许”他们夫妇俩真是令人羡慕的神仙侠侣．”神仙侠侣”！．．．．．”神雕侠侣”？对了，还有那头老雕，那本书该不会是在他俩身上吧．　　　　看来有空还要再前往古墓找他夫妇俩．", "talkname0", 1);
 do return end;
