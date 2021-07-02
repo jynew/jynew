@@ -716,6 +716,10 @@ public class LevelMaster : MonoBehaviour
         {
 			if(target==""){
 				Transport(trans.position);
+				//增加传送时设置朝向。rotation为0时不作调整，需要朝向0时候，可以使用360.
+				if(trans.rotation!=Quaternion.identity){
+					_player.rotation=trans.rotation;
+				}
 			}else{
 				var t=GameObject.Find(target).transform;
 				t.position=trans.position;

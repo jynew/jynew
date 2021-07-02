@@ -28,10 +28,10 @@ if UseItem(133) == true then goto label0 end;
                     Talk(0, "胡大哥肯随我闯荡江湖帮这个忙，那再好也不过了．", "talkname0", 1);
                     DarkScence();
                     ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
-                    jyx2_ReplaceSceneObject("", "NPC/胡斐", ""); 
+                    jyx2_ReplaceSceneObject("", "NPC/胡斐",""); 
                     LightScence();
                     ModifyEvent(-2, 1, -2, -2, -2, -2, 7, -2, -2, -2, -2, -2, -2);
-                    jyx2_ReplaceSceneObject("","NPC/胡斐","");
+                    --jyx2_ReplaceSceneObject("","NPC/胡斐","");
 
                     Join(1);
                     AddEthics(1);

@@ -114,10 +114,12 @@ namespace Jyx2
         {
             RunInMainThrad(() => {
 
+				bool isCurrentScene=false;
                 //场景ID
                 if(scene == -2) //当前场景
                 {
                     scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+					isCurrentScene=true;
                 }
 
 				var evt = GameEvent.GetCurrentGameEvent();
@@ -135,19 +137,18 @@ namespace Jyx2
 					evt=GameEventManager.GetGameEventByID(eventId.ToString());
 				}
 				
-				if(interactiveEventId==-2||useItemEventId==-2||enterEventId==-2){
-					if(evt!=null){
-						if(interactiveEventId==-2){
-							interactiveEventId=evt.m_InteractiveEventId;
-						}
-						
-						if(useItemEventId==-2){
-							useItemEventId=evt.m_UseItemEventId;
-						}
-						
-						if(enterEventId==-2){
-							enterEventId=evt.m_EnterEventId;
-						}
+				if(isCurrentScene && evt!=null)//非当前场景事件如何获取
+				{
+					if(interactiveEventId==-2){
+						interactiveEventId=evt.m_InteractiveEventId;
+					}
+					
+					if(useItemEventId==-2){
+						useItemEventId=evt.m_UseItemEventId;
+					}
+					
+					if(enterEventId==-2){
+						enterEventId=evt.m_EnterEventId;
 					}
 				}
 
@@ -312,16 +313,18 @@ namespace Jyx2
 
         }
         
-		//修改这个接口逻辑为在当前trigger对应事件序号基础上加上v1,v2,v3 (只对大于0的进行相加，-1，-2都保留原事件序号)
+		//修改这个接口逻辑为在当前trigger对应事件序号基础上加上v1,v2,v3 (只对大于0的进行相加，-2保留原事件序号，-1为直接设置)
 		// modified by eaphone at 2021/6/12
         static public void Add3EventNum(int scene, int eventId,int v1,int v2,int v3)
         {
-            RunInMainThrad(() =>
+			RunInMainThrad(() =>
             {
+				bool isCurrentScene=false;
                 //场景ID
                 if (scene == -2) //当前场景
                 {
                     scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+					isCurrentScene=true;
                 }
 
 				var evt=GameEvent.GetCurrentGameEvent();
@@ -338,35 +341,33 @@ namespace Jyx2
 					evt=GameEventManager.GetGameEventByID(eventId.ToString());
 				}
 
-				if(v1!=-1||v2!=-1||v3!=-1){
-					if(evt!=null){
-						if(v1==-2){//值为-2时，取当前值
-							v1=evt.m_InteractiveEventId;
-						}else if(v1>-1){
-							v1+=evt.m_InteractiveEventId;
-						}
-						if(v2==-2){
-							v2=evt.m_UseItemEventId;
-						}else if(v2>-1){
-							v2+=evt.m_UseItemEventId;
-						}
-						if(v3==-2){
-							v3=evt.m_EnterEventId;
-						}else if(v3>-1){
-							v3+=evt.m_EnterEventId;
-						}
-						//更新全局记录
+				if(isCurrentScene && evt!=null)//非当前场景事件如何获取
+				{
+					if(v1==-2){//值为-2时，取当前值
+						v1=evt.m_InteractiveEventId;
+					}else if(v1>-1){
+						v1+=evt.m_InteractiveEventId;
 					}
-				}
-				runtime.ModifyEvent(scene, eventId, v1, v2, v3);
+					if(v2==-2){
+						v2=evt.m_UseItemEventId;
+					}else if(v2>-1){
+						v2+=evt.m_UseItemEventId;
+					}
+					if(v3==-2){
+						v3=evt.m_EnterEventId;
+					}else if(v3>-1){
+						v3+=evt.m_EnterEventId;
+					}
+					
+					runtime.ModifyEvent(scene, eventId, v1, v2, v3);
 
-                //刷新当前场景中的事件
-                LevelMaster.Instance.RefreshGameEvents();
+					//刷新当前场景中的事件
+					LevelMaster.Instance.RefreshGameEvents();
+				}
 
                 //下一条指令
                 Next();
-            });
-
+			});
             Wait();
         }
 
