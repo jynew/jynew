@@ -20,10 +20,10 @@ if AskJoin () == true then goto label0 end;
         Talk(59, "你的队伍已满，我无法加入．", "talkname59", 0);
         do return end;
 ::label1::
-        jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女加入队伍
         DarkScence();
-
-        ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+        jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女加入队伍
+        ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);        
         LightScence();
         Join(59);
+
 do return end;
