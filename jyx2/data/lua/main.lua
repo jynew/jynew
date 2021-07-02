@@ -83,7 +83,7 @@ OpenScence = CS.Jyx2.Jyx2LuaBridge.OpenScence
 --40=28|2|0|0|0|SetRoleFace(#0);
 SetRoleFace = CS.Jyx2.Jyx2LuaBridge.SetRoleFace
 --41=29|4|0|0|0|NPCGetItem(#0, #1, #2); --NPC角色获得道具
-NPCGetItem = CS.Jyx2.Jyx2LuaBridge.NPCGetItem
+NPCAddItem = CS.Jyx2.Jyx2LuaBridge.NPCGetItem
 --42=2a|3|1|1|2|if JudgeFemaleInTeam() == bool then goto label#x end; --判断队伍里是否有女性
 JudgeFemaleInTeam = CS.Jyx2.Jyx2LuaBridge.JudgeFemaleInTeam
 --43=2b|4|1|2|3|if HaveItem(#0) == bool then goto label#x end; --判断是否拥有道具
