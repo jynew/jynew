@@ -18,7 +18,7 @@ ModifyEvent(-2, 3, -2, -2, 382, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(-2, 0, -2, -2, 368, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(-2, 1, -2, -2, 369, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(-2, 16, 0, 0, -1, -1, 371, -2, -2, -2, -2, -2, -2);
---Add3EventNum(-2, 4, 0, 0, 26)
---Add3EventNum(-2, 5, 0, 0, 26)
---Add3EventNum(-2, 6, 0, 0, -1)
+Add3EventNum(-2, 4, 0, 0, 1);
+Add3EventNum(-2, 5, 0, 0, 1);
+Add3EventNum(-2, 6, 0, 0, 1);
 do return end;
