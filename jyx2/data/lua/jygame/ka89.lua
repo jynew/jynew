@@ -28,10 +28,10 @@ ModifyEvent(-2, 90, 1, 1, 88, -1, -1, 5334, 5334, 5334, -2, -2, -2);--by fanyu|�
 ModifyEvent(-2, 91, 1, 1, 84, -1, -1, 5318, 5318, 5318, -2, -2, -2);--by fanyu|启动脚本-84改变对话，改变贴图。场景11-91
 ModifyEvent(-2, 92, 1, 1, 85, -1, -1, 5324, 5324, 5324, -2, -2, -2);--by fanyu|启动脚本-85改变对话，改变贴图。场景11-92
 ModifyEvent(-2, 93, 1, 1, 83, -1, -1, 5342, 5342, 5342, -2, -2, -2);--by fanyu|启动脚本-83改变对话，改变贴图。场景11-93
-jyx2_ReplaceSceneObject("", "NPC/范遥", "1");
-jyx2_ReplaceSceneObject("", "NPC/杨逍1", "1");
-jyx2_ReplaceSceneObject("", "NPC/韦一笑2", "1");
-jyx2_ReplaceSceneObject("", "NPC/殷天正2", "1");
+jyx2_ReplaceSceneObject("", "NPC/范遥90", "1");
+jyx2_ReplaceSceneObject("", "NPC/殷天正91", "1");
+jyx2_ReplaceSceneObject("", "NPC/韦一笑92", "1");
+jyx2_ReplaceSceneObject("", "NPC/杨逍93", "1");
 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 --崆峒
 ModifyEvent(34, 0, -2, -2, 130, -2, -2, -2, -2, -2, -2, -2, -2);--by fanyu|启动脚本-130。场景34-0
