@@ -10,6 +10,8 @@ if InTeam(49) == true then goto label0 end;
     SetScenceMap(53, 1, 23, 24, 0);--by fanyu修改地图，开门 场景53
     SetScenceMap(53, 1, 24, 24, 1536);--by fanyu修改地图，开门 场景53
     SetScenceMap(53, 1, 24, 23, 1538);--by fanyu修改地图，开门 场景53
+    jyx2_ReplaceSceneObject("53", "Bake/Static/Door_02", "");
+    jyx2_ReplaceSceneObject("53", "Bake/Static/Door_02 (1)", "");
     Leave(49);
     AddEthics(10);
 do return end;

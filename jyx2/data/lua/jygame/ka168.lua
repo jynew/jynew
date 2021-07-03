@@ -16,9 +16,10 @@ if AskBattle() == true then goto label0 end;
         ModifyEvent(-2, 3, -2, -2, 169, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本169 场景31-3
         ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移出角色 场景31-4
         ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移出角色 场景31-5
+        jyx2_ReplaceSceneObject("","NPC/恒山弟子4","");
+        jyx2_ReplaceSceneObject("","NPC/恒山弟子5","");
         ModifyEvent(-2, 6, -2, -2, 169, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本169 场景31-6
         ModifyEvent(-2, 7, -2, -2, 169, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本169 场景31-7
-        jyx2_ReplaceSceneObject("","GasWalls/Wall1","");
         LightScence();
         Talk(0, "哼！愈是不让我来，我就愈想探个究竟．", "talkname0", 1);
         AddRepute(1);

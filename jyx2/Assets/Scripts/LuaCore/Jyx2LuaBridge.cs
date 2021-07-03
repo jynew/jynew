@@ -406,7 +406,6 @@ namespace Jyx2
                 }
 				
 				result= runtime.GetEventCount(scene,eventId,targetEvent);
-				Debug.LogError(result);
                 Next();
 			});
             Wait();
