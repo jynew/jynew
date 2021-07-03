@@ -490,27 +490,27 @@ namespace Jyx2
             return null;
         }
 
-		public SaveableStrDictionary EventCounter
+		public SaveableNumberDictionary<int> EventCounter
 		{
-			get {return GetPojoAutoCreate<SaveableStrDictionary>("EventCounter");}
+			get {return GetPojoAutoCreate<SaveableNumberDictionary<int>>("EventCounter");}
 			set {SavePojo("EventCounter", value);}
 		}
 
 		public void AddEventCount(int scene, int eventId, int eventName, int num)
 		{
-			string key=string.Format("{0}_{1}_{2}", scene, eventId, eventName);
+			string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
 			if(EventCounter.ContainsKey(key)){
-				EventCounter[key]=(int.Parse(EventCounter[key])+num).ToString();
+				EventCounter[key]+=num;
 			}else{
-				EventCounter[key]=num.ToString();
+				EventCounter[key]=num;
 			}
 		}
 		
 		public int GetEventCount(int scene, int eventId, int eventName)
 		{
-			string key=string.Format("{0}_{1}_{2}", scene, eventId, eventName);
+			string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
 			if(EventCounter.ContainsKey(key)){
-				return int.Parse(EventCounter[key]);
+				return EventCounter[key];
 			}
 			return 0;
 		}
