@@ -159,6 +159,7 @@ jyx2_StopTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_StopTimeline
 jyx2_Wait = CS.Jyx2.Jyx2LuaBridge.jyx2_Wait
 jyx2_SwitchRoleAnimation = CS.Jyx2.Jyx2LuaBridge.jyx2_SwitchRoleAnimation
 jyx2_FixMapObject = CS.Jyx2.Jyx2LuaBridge.jyx2_FixMapObject
+jyx2_CheckEventCount = CS.Jyx2.Jyx2LuaBridge.jyx2_CheckEventCount
 
 function main_getLuaFiles()
 	return {}

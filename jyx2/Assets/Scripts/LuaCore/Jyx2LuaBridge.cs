@@ -363,6 +363,16 @@ namespace Jyx2
 
 					//刷新当前场景中的事件
 					LevelMaster.Instance.RefreshGameEvents();
+				}else{
+					if(v1>0){
+						runtime.AddEventCount(scene,eventId,0,v1);
+					}
+					if(v2>0){
+						runtime.AddEventCount(scene,eventId,1,v2);
+					}
+					if(v3>0){
+						runtime.AddEventCount(scene,eventId,2,v3);
+					}
 				}
 
                 //下一条指令
@@ -370,6 +380,38 @@ namespace Jyx2
 			});
             Wait();
         }
+		
+		//targetEvent:0-interactiveEvent, 1-useItemEvent, 2-enterEvent
+		static public int jyx2_CheckEventCount(int scene, int eventId, int targetEvent)
+        {
+			int result=0;
+			RunInMainThrad(() =>
+            {
+				//场景ID
+                if (scene == -2) //当前场景
+                {
+                    scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+                }
+
+                //事件ID
+                if (eventId == -2)
+                {
+					var evt=GameEvent.GetCurrentGameEvent();
+                    if (evt == null)
+                    {
+                        Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        return;
+                    }
+                    eventId = int.Parse(evt.name); //当前事件
+                }
+				
+				result= runtime.GetEventCount(scene,eventId,targetEvent);
+				Debug.LogError(result);
+                Next();
+			});
+            Wait();
+			return result;
+		}
 
         static public bool InTeam(int roleId)
         {
