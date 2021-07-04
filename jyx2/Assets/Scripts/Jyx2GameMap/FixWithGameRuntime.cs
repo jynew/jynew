@@ -25,10 +25,18 @@ public class FixWithGameRuntime : MonoBehaviour
     public FixTypeEnum FixType = FixTypeEnum.Move;
     public string Flag;
     public Transform MoveTo;
+	private Vector3 storeP;//记录原始位置，清除flag之后复位。
+	private Quaternion storeR;
 
-    public void Reload()
+    public bool Reload()
     {
+		bool result=false;
         var runtime = GameRuntimeData.Instance;
+		if(storeP==new Vector3(0,0,0))
+		{
+			storeP=transform.position;
+			storeR=transform.rotation;
+		}
         if (runtime != null)
         {
             if (runtime.KeyExist(Flag))
@@ -39,10 +47,17 @@ public class FixWithGameRuntime : MonoBehaviour
                 }
                 else
                 {
+					result=true;
                     transform.position = MoveTo.position;
                     transform.rotation = MoveTo.rotation;
                 }
             }
+			else
+			{
+				transform.position = storeP;
+                transform.rotation = storeR;
+			}
         }
+		return result;
     }
 }
