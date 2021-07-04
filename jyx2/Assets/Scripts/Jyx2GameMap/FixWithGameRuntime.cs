@@ -28,18 +28,17 @@ public class FixWithGameRuntime : MonoBehaviour
 	private Vector3 storeP;//记录原始位置，清除flag之后复位。
 	private Quaternion storeR;
 
-    public bool Reload()
+    public void Reload()
     {
-		bool result=false;
         var runtime = GameRuntimeData.Instance;
 		if(storeP==new Vector3(0,0,0))
 		{
 			storeP=transform.position;
 			storeR=transform.rotation;
 		}
-        if (runtime != null)
+        if (runtime != null && runtime.KeyExist(Flag))
         {
-            if (runtime.KeyExist(Flag))
+            if (runtime.KeyValues[Flag]=="1")
             {
                 if (MoveTo == null)
                 {
@@ -47,7 +46,6 @@ public class FixWithGameRuntime : MonoBehaviour
                 }
                 else
                 {
-					result=true;
                     transform.position = MoveTo.position;
                     transform.rotation = MoveTo.rotation;
                 }
@@ -58,6 +56,5 @@ public class FixWithGameRuntime : MonoBehaviour
                 transform.rotation = storeR;
 			}
         }
-		return result;
     }
 }
