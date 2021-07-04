@@ -7,8 +7,8 @@ if AskBattle() == false then goto label0 end;
         do return end;
 ::label1::
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，移除田伯光 场景59-0
+		jyx2_ReplaceSceneObject("", "NPC/田伯光", "");
         ModifyEvent(30, 0, -2, -2, 303, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本303 场景30-0
-        jyx2_ReplaceSceneObject("", "NPC/田伯光", "");--田伯光死掉
         SetScenceMap(-2, 1, 17, 15, 2674);
         LightScence();
         AddRepute(4);

@@ -1,12 +1,16 @@
 Talk(70, "阿弥陀佛，施主请留步．", "talkname70", 0);
 DarkScence();
-jyx2_ReplaceSceneObject("", "NPC/xuanci", "");--玄慈追出山门
-jyx2_ReplaceSceneObject("", "NPC/xuanci1", "1");--玄慈在山门
-jyx2_ReplaceSceneObject("", "NPC/murongfu1", "1");--慕容复在山门
 ModifyEvent(-2, 3, 1, 1, 515, -1, -1, 5372, 5372, 5372, -2, -2, -2);--by fanyu 启动脚本515，改变贴图 场景28-3
+jyx2_ReplaceSceneObject("", "NPC/方丈12", "");--玄慈追出山门
+jyx2_ReplaceSceneObject("", "NPC/方丈3", "1");--玄慈在山门
+jyx2_ReplaceSceneObject("", "NPC/murongfu1", "1");--慕容复在山门
+SetRoleFace(2);
 ModifyEvent(-2, 4, 1, 1, -1, -1, -1, 5420, 5420, 5420, -2, -2, -2);--by fanyu 改变贴图 场景28-4
 ModifyEvent(-2, 5, 1, 1, -1, -1, -1, 5420, 5420, 5420, -2, -2, -2);--by fanyu 改变贴图 场景28-5
 ModifyEvent(-2, 6, 1, 1, -1, -1, -1, 5420, 5420, 5420, -2, -2, -2);--by fanyu 改变贴图 场景28-6
+jyx2_ReplaceSceneObject("", "NPC/少林弟子4", "1");
+jyx2_ReplaceSceneObject("", "NPC/少林弟子5", "1");
+jyx2_ReplaceSceneObject("", "NPC/少林弟子6", "1");
 LightScence();
 Talk(51, "怎么，方丈后悔了．", "talkname51", 1);
 Talk(70, "老衲想通了，既造业因，便有业果．自己的名声固然重要，但是我亏欠乔峰一家人实在太多了，我不能再让你去害他．", "talkname70", 0);
@@ -31,10 +35,13 @@ if TryBattle(81) == true then goto label0 end;
     ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移除人物 场景28-4
     ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移除人物 场景28-5
     ModifyEvent(-2, 6, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 移除人物 场景28-6
+	jyx2_ReplaceSceneObject("", "NPC/方丈3", "");
+	jyx2_ReplaceSceneObject("", "NPC/少林弟子4", "");
+	jyx2_ReplaceSceneObject("", "NPC/少林弟子5", "");
+	jyx2_ReplaceSceneObject("", "NPC/少林弟子6", "");
     ModifyEvent(-2, 12, -2, -2, 578, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 玄慈回寺里 启动脚本578 场景28-12
-    jyx2_ReplaceSceneObject("", "NPC/xuanci", "1");--玄慈回寺里
-    jyx2_ReplaceSceneObject("", "NPC/xuanci1", "");--
-    jyx2_ReplaceSceneObject("", "NPC/murongfu1", "");--慕容复归队
+	jyx2_ReplaceSceneObject("", "NPC/方丈12", "1");
+	jyx2_ReplaceSceneObject("", "NPC/murongfu1", "");
     ModifyEvent(51, 14, -2, -2, 527, 531, -1, -2, -2, -2, -2, -2, -2);--by fanyu  启动脚本527,531 场景51-14
     LightScence();
     Talk(51, "没事了，我们走吧．", "talkname51", 1);

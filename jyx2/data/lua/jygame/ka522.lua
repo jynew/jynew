@@ -14,7 +14,10 @@ if AskBattle() == true then goto label0 end;
         ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|移除人物。场景28-4
         ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|移除人物。场景28-5
         ModifyEvent(-2, 6, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|移除人物。场景28-6
-        jyx2_ReplaceSceneObject("","GasWalls/Wall1","");
+		jyx2_ReplaceSceneObject("", "NPC/少林弟子3", "");
+		jyx2_ReplaceSceneObject("", "NPC/少林弟子4", "");
+		jyx2_ReplaceSceneObject("", "NPC/少林弟子5", "");
+		jyx2_ReplaceSceneObject("", "NPC/少林弟子6", "");
         LightScence();
         AddRepute(1);
 do return end;

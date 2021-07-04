@@ -9,7 +9,9 @@ if TryBattle(80) == true then goto label0 end;
     ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu战斗结束，移除npc，可以通过，场景28-7
     ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu战斗结束，移除npc，可以通过，场景28-8
     ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu战斗结束，移除npc，可以通过，场景28-9
-    jyx2_ReplaceSceneObject("","GasWalls/Wall2","");
+	jyx2_ReplaceSceneObject("", "NPC/少林弟子7", "");
+	jyx2_ReplaceSceneObject("", "NPC/少林弟子8", "");
+	jyx2_ReplaceSceneObject("", "NPC/少林弟子9", "");
     LightScence();
     AddRepute(2);
 do return end;

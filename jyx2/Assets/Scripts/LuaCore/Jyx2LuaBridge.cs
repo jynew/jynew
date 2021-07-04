@@ -1136,26 +1136,18 @@ namespace Jyx2
             Wait();
         }
 
-        static public void jyx2_FixMapObject(string flag, bool isSet)
+        static public void jyx2_FixMapObject(string flag, string isSet)
         {
             RunInMainThrad(() =>
             {
-                if (isSet)
-                {
-                    runtime.KeyValues[flag] = "1";
-                }
-                else
-                {
-                    runtime.RemoveKey(flag);
-                }
-
+                runtime.KeyValues[flag] = isSet;
                 var objs = GameObject.FindObjectsOfType<FixWithGameRuntime>();
                 if (objs != null)
                 {
-                    foreach (var obj in objs)
-                    {
-                        obj.Reload();
-                    }
+					foreach(var obj in objs)
+					{
+						obj.Reload();
+					}
                 }
                 Next();
             });

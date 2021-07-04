@@ -37,8 +37,8 @@ if InTeam(51) == true then goto label0 end;
 ::label6::
                             do return end;
 ::label0::
-                            Talk(51, "大师，我们是来向你借一样东西的．", "talkname51", 1);
                             jyx2_ReplaceSceneObject("", "NPC/murongfu", "1");--慕容复
+                            Talk(51, "大师，我们是来向你借一样东西的．", "talkname51", 1);
                             Talk(70, "不知施主要跟老衲借什么？", "talkname70", 0);
                             Talk(51, "一份信件．", "talkname51", 1);
                             Talk(70, "一份信件？", "talkname70", 0);

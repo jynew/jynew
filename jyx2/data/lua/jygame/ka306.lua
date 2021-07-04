@@ -8,6 +8,7 @@ if AskJoin () == false then goto label0 end;
         Talk(29, "好！你这兄弟一点也不做作．不像其他假正经的家伙，只会以名门正派自居．要知”做那档事”是人心本能的欲望，何必刻意去掩饰呢？我喜欢你，我们就一起去游戏人间．", "talkname29", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+        jyx2_ReplaceSceneObject("", "NPC/田伯光", "");  
         SetScenceMap(-2, 1, 17, 15, 2674);
         LightScence();
         Join(29);
