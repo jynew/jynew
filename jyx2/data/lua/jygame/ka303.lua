@@ -22,8 +22,8 @@ if JudgeEventNum(1, -1) == true then goto label0 end;
 ::label5::
                         Talk(28, "我平一指说话算话．", "talkname28", 0);
                         DarkScence();
-                        jyx2_ReplaceSceneObject("", "NPC/pingyizhi", "");--平一指加入队伍
                         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+                        jyx2_ReplaceSceneObject("", "NPC/平一指", "");--平一指加入队伍
                         LightScence();
                         Join(28);
                         AddEthics(-1);

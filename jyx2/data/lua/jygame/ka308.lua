@@ -6,6 +6,7 @@ if AskBattle() == false then goto label0 end;
         do return end;
 ::label1::
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+        jyx2_ReplaceSceneObject("", "NPC/田伯光", "");
         ModifyEvent(30, 0, -2, -2, 303, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本303 场景30-0
         SetScenceMap(-2, 1, 17, 15, 2674);--田伯光死掉
         LightScence();
@@ -20,6 +21,7 @@ if AskBattle() == false then goto label0 end;
 ::label3::
                 DarkScence();
                 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 田伯光加入队伍 场景59-0
+				jyx2_ReplaceSceneObject("", "NPC/田伯光", "");
                 SetScenceMap(-2, 1, 17, 15, 2674);
                 LightScence();
                 Join(29);
