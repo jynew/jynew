@@ -32,4 +32,7 @@ if UseItem(136) == true then goto label0 end;
             ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             ModifyEvent(40, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             ModifyEvent(40, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+            jyx2_ReplaceSceneObject("40", "NPC/shipotian1", "");--悦来客栈删石破天
+
+
 do return end;
