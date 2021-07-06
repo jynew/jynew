@@ -1,7 +1,6 @@
 if InTeam(47) == false then goto label0 end;
     Talk(46, "阿紫，你居然还敢回来．”神木王鼎”呢？", "talkname46", 0);
-    jyx2_ReplaceSceneObject("","NPC/阿紫1","1");
-    jyx2_ReplaceSceneObject("","NPC/阿紫1","");
+    jyx2_ReplaceSceneObject("","NPC/阿紫2","1");
 ::label0::
     Talk(0, "＜怎么长的好像小孩子，莫非真练到返老还童了？＞丁春秋，你认得这七宝指环吗？", "talkname0", 1);
     Talk(46, "你是谁，怎么会有这东西．", "talkname46", 0);
@@ -18,9 +17,11 @@ if InTeam(47) == false then goto label0 end;
         do return end;
 ::label1::
         ModifyEvent(-2, 0, 1, 1, 590, -1, -1, 6600, 6600, 6600, -2, 39, 28);
-        jyx2_ReplaceSceneObject("", "NPC/dingchunqiu", "");--战斗结束，移除人物
         ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+        jyx2_FixMapObject("丁春秋战死",1);
+		jyx2_SwitchRoleAnimation("Level/NPC/dingchunqiu", "");--需要改死掉的controller, 脸朝地趴着
+		jyx2_ReplaceSceneObject("","NPC/阿紫2","");
         ModifyEvent(-2, 4, -2, -2, 547, -1, -1, -2, -2, -2, -2, -2, -2);
         ModifyEvent(-2, 5, -2, -2, 548, -1, -1, -2, -2, -2, -2, -2, -2);
         ModifyEvent(-2, 6, -2, -2, 549, -1, -1, -2, -2, -2, -2, -2, -2);

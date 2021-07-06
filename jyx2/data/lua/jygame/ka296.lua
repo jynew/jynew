@@ -12,7 +12,7 @@ if InTeam(36) == true then goto label0 end;
         ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-        jyx2_ReplaceSceneObject("", "NPC/yucanghai", "");--战斗结束，移除人物
+        jyx2_ReplaceSceneObject("", "NPC", "");--战斗结束，移除人物
         LightScence();
         Talk(36, "痛快！！！今天真是杀的大快人心．", "talkname36", 1);
         AddRepute(3);

@@ -2,8 +2,6 @@ Talk(0, "贤弟，这是怎么一回事？那躺在地上的老人又是谁？",
 Talk(49, "我自己也迷糊了．我走进这房子后，屋内有个老人，他说我福缘深厚，破解了这盘棋局．接着硬化去了我原有的武功，并将他七十余年的功力注入我体内．", "talkname49", 0);
 Talk(0, "有这种事．", "talkname0", 1);
 Talk(49, "他还叫我去杀了星宿老怪丁春秋．", "talkname49", 0);
-jyx2_ReplaceSceneObject("", "NPC/suxinghe2", "1");--苏星河进屋
-jyx2_ReplaceSceneObject("", "NPC/suxinghe", "");--苏星河进屋
 Talk(0, "苏前辈，这是怎么回事？", "talkname0", 1);
 Talk(52, "事情是这样子的．本派乃逍遥派，师父收了我和丁春秋两个弟子．我师父有个规矩，因他所学　甚杂，谁要做掌门，各种本　事都要比试，不但比武，还　得比琴棋书画．但丁春秋于各种杂学一窍不通，眼见掌门人无望，竟忽施暗算将师父打落深谷，又将我打得重伤．", "talkname52", 0);
 Talk(0, "这人真是可恶．", "talkname0", 1);
@@ -15,13 +13,16 @@ Talk(0, "别可是了，你看，这位老前辈因为要传你毕生功力而�
 Talk(49, "．．．．．．．", "talkname49", 0);
 Talk(0, "好，我看就这样了．苏前辈，我们会去找那星宿老怪，杀了他替你师父报仇", "talkname0", 1);
 Talk(52, "老朽谢谢这位少侠的帮忙．掌门师弟，此去路上一切要小心，丁春秋那老贼行事卑鄙．．．．对了，我有一个徒弟医术高明，人称”阎王敌”的薛神医，你可以去找他帮忙．见到他时只要出示掌门信物的”七宝指环”即可．", "talkname52", 0);
-jyx2_ReplaceSceneObject("", "NPC/xiaoyaozi", "");--逍遥子1
 DarkScence();
 ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+jyx2_ReplaceSceneObject("", "NPC/xiaoyaozi", "");--逍遥子1
 ModifyEvent(-2, 2, 1, 1, 581, -1, -1, 6522, 6522, 6522, -2, -2, -2);
 ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 0, 1, 1, 537, -1, -1, 6340, 6340, 6340, -2, -2, -2);
 ModifyEvent(35, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+jyx2_FixMapObject("逍遥子传功完毕",0);
+jyx2_SwitchRoleAnimation("Level/NPC/suxinghe", "Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
+jyx2_ReplaceSceneObject("35","NPC/星宿弟子3","");
 NPCAddItem(49, 128, 1);
 NPCAddItem(49, 56, 1);
 NPCAddItem(49, 40, 1);
@@ -32,9 +33,7 @@ if TeamIsFull() == false then goto label0 end;
     do return end;
 ::label0::
     DarkScence();
-    jyx2_ReplaceSceneObject("", "NPC/xuzhu2", "");--虚竹加入
-    jyx2_ReplaceSceneObject("", "NPC/suxinghe2", "");--苏星河离开房子
-    jyx2_ReplaceSceneObject("", "NPC/suxinghe", "1");--苏星河在门口
+    jyx2_ReplaceSceneObject("", "NPC/xuzhu", "");--虚竹加入
     ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     LightScence();
     AddMP(49, 300);
