@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(0, "能有美人相伴天涯，实乃我之荣幸．", "talkname0", 1);
         DarkScence();
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+		jyx2_ReplaceSceneObject("", "NPC/lanfenghuang", "");--蓝凤凰加入
         ModifyEvent(-2, 0, -2, -2, 619, -1, -1, -2, -2, -2, -2, -2, -2);
         ModifyEvent(-2, 1, -2, -2, 619, -1, -1, -2, -2, -2, -2, -2, -2);
         ModifyEvent(-2, 2, -2, -2, 619, -1, -1, -2, -2, -2, -2, -2, -2);
