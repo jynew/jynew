@@ -9,7 +9,7 @@ if AskJoin () == true then goto label0 end;
 ::label1::
         Talk(38, "好啊！", "talkname38", 0);
         DarkScence();
-        jyx2_ReplaceSceneObject("", "NPC/shipotian1", "");--石破天加入队伍
+        jyx2_ReplaceSceneObject("", "NPC/shipotian", "");--石破天加入队伍
         ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -1, -2, -2);
         ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -1, -2, -2);
         LightScence();
