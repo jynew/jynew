@@ -7,6 +7,7 @@ ScenceFromTo(28, 17, 28, 24);
 jyx2_CameraFollowPlayer();
 Talk(0, "＜搞不好侠客岛上有线索？  不是有本书与”侠”字有  关联吗？＞", "talkname0", 1);
 WalkFromTo(28, 24, 28, 19);
+jyx2_WalkFromTo(-1,2819);
 Talk(0, "铜牌给我好不好？", "talkname0", 1);
 Talk(41, "恐怕不行，侠客岛所邀请的是各门派的掌门及对武学有特殊见解的武林高手．", "talkname41", 0);
 Talk(0, "那如果我打败他，是不是表示我比他有资格去．", "talkname0", 1);
