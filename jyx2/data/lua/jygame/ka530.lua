@@ -89,8 +89,8 @@ if InTeam(51) == false then goto label0 end;
                                                     ModifyEvent(52, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
                                                     ModifyEvent(42, 6, 1, 1, 594, -1, -1, 6296, 6296, 6296, -2, -2, -2);
                                                     ModifyEvent(42, 7, 1, 1, 593, -1, -1, 6308, 6308, 6308, -2, -2, -2);
-                                                    jyx2_ReplaceSceneObject("42", "NPC/wangyuyan", "1");--王语嫣出现
-                                                    jyx2_ReplaceSceneObject("42", "NPC/段誉1", "1");--段誉出现
+                                                    jyx2_ReplaceSceneObject("42", "NPC/王语嫣6", "1");--王语嫣出现
+                                                    jyx2_ReplaceSceneObject("42", "NPC/段誉7", "1");--段誉出现
 
                                                     LightScence();
                                                     Talk(0, "别人都已有情人终成眷属，而我呢？唉！别想这么多了，走吧！", "talkname0", 1);

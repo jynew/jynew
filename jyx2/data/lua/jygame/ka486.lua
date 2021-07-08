@@ -6,6 +6,7 @@ if TryBattle(78) == true then goto label0 end;
     do return end;
 ::label0::
     ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+    jyx2_ReplaceSceneObject("", "NPC/蟒牯朱蛤", "");
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
