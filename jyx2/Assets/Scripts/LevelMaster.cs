@@ -491,7 +491,7 @@ public class LevelMaster : MonoBehaviour
         if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
  
         //到达目的地了
-        if (_playerNavAgent.enabled && !_playerNavAgent.isStopped && _playerNavAgent.remainingDistance <= _playerNavAgent.stoppingDistance)
+        if (!_playerNavAgent.pathPending && _playerNavAgent.enabled && !_playerNavAgent.isStopped && _playerNavAgent.remainingDistance <= _playerNavAgent.stoppingDistance)
         {
             _playerNavAgent.isStopped = true;
             if (_OnArriveDestination != null) 

@@ -2,12 +2,14 @@ Talk(0, "这雕像中的女子倒也美丽．．．．．咦！这下面写着�
 if InTeam(53) == true then goto label0 end;
     do return end;
 ::label0::
-    jyx2_ReplaceSceneObject("", "NPC/duanyu", "1");--段誉出现
+    jyx2_ReplaceSceneObject("", "NPC/段誉11", "1");--段誉出现
     Talk(53, "神仙姊姊，小生段誉今日得睹芳容，死而无憾．姊姊在此离世独居，不也太寂寞了吗？", "talkname53", 1);
     Talk(0, "段兄，你该不会在跟这玉像说话吧．＜这人真是呆得可以＞", "talkname0", 1);
     Talk(53, "藐姑射之山，有神人居焉，肌肤若冰雪，绰约若处子，不食五谷，吸风饮露．神仙姊姊，你若能活过来跟我说一句话，我便为你死一千遍，一万遍，也如身登极乐，欢喜无限．磕首千遍，原本就是天经地义之事．．．．", "talkname53", 1);
     DarkScence();
     ModifyEvent(-2, 0, -2, -2, -2, -2, -2, 6316, 6316, 6316, -2, -2, -2);
+    jyx2_SwitchRoleAnimation("Level/NPC/段誉11", "Assets/BuildSource/AnimationControllers/sit_on_floor.controller");--需要改为跪拜
+	jyx2_MovePlayer("观看段誉磕头","Level/Dynamic");
     LightScence();
     PlayAnimation(0, 6316, 6334);
     PlayAnimation(0, 6316, 6334);
@@ -19,7 +21,9 @@ if InTeam(53) == true then goto label0 end;
     Talk(0, "我的妈呀！", "talkname0", 1);
     DarkScence();
     ModifyEvent(-2, 0, -2, -2, -2, -2, -2, 6338, 6338, 6338, -2, -2, -2);
+	jyx2_ReplaceSceneObject("", "Dynamic/Chair_11", "");--需要替换破烂的蒲团
     ModifyEvent(-2, 11, -2, -2, -2, -2, -2, 6312, 6312, 6312, -2, -2, -2);
+    jyx2_SwitchRoleAnimation("Level/NPC/段誉11", "");
     LightScence();
     Talk(0, "兄弟，你还真磕了一千下，你的头还好吧．你看，蒲团都被你磕破了．", "talkname0", 1);
     Talk(53, "咦！这蒲团中似乎藏有一个绸包，这上面还有写字．．．．．．．”汝既磕首千遍，自当供我驱策，终身无悔．此卷为我逍遥派武功精要，每日卯午酉三时，务须用心修习一次．．．．”", "talkname53", 1);
@@ -31,9 +35,9 @@ if InTeam(53) == true then goto label0 end;
     Talk(0, "段兄想通了，肯练武了．", "talkname0", 1);
     Talk(53, "但今后我会对人加倍客气，别人不会来打我，我自然也不会去吸他的内力．至于这”凌波微步”我更要用心练熟，眼见不对，立刻溜之大吉．", "talkname53", 1);
     Talk(0, "随便你了，我们走吧．", "talkname0", 1);
-    jyx2_ReplaceSceneObject("", "NPC/duanyu", "0");--段誉归队
     DarkScence();
     ModifyEvent(-2, 11, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+    jyx2_ReplaceSceneObject("", "NPC/段誉11", "");--段誉归队
     LightScence();
     AddItem(63, 1);
     AddItem(47, 1);
@@ -44,11 +48,13 @@ if InTeam(53) == true then goto label0 end;
     SetPersonMPPro(53,2);
     ModifyEvent(-2, 1, -2, -2, 485, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 2, 1, 1, -1, -1, -1, 6752, 6752, 6752, -2, -2, -2);
+    jyx2_ReplaceSceneObject("", "NPC/蟒牯朱蛤", "1");
     ModifyEvent(-2, 3, -2, -2, -1, -1, 486, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 4, -2, -2, -1, -1, 486, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 5, -2, -2, -1, -1, 486, -2, -2, -2, -2, -2, -2);
     SetScenceMap(52, 1, 27, 28, 1842);
     SetScenceMap(52, 1, 27, 20, 1838);
     SetScenceMap(52, 1, 27, 29, 0);
+	jyx2_FixMapObject("燕子坞开门",1);
     PlayWave(21);
 do return end;
