@@ -42,8 +42,7 @@ if TryBattle(3) == true then goto label0 end;
         SetScenceMap(49, 1, 28, 37, 0);--by fanyu  场景49-编号1，坐标的贴图改变，门移除
         SetScenceMap(49, 1, 27, 37, 3692);--by fanyu  场景49-编号1，坐标的贴图改变，门移除
         SetScenceMap(49, 1, 27, 36, 3694);--by fanyu  场景49-编号1，坐标的贴图改变，门移除
-		jyx2_ReplaceSceneObject("49", "Bake/Static/Door/Door_02", "");
-        jyx2_ReplaceSceneObject("49", "Bake/Static/Door/Door_02 (1)", "");
+		jyx2_FixMapObject("药王庄开门",1);
         ModifyEvent(-2, 9, -2, -2, -2, -2, 35, -2, -2, -2, -2, -2, -2);--by fanyu 启动35脚本 场景24-编号9
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
         AddEthics(2);
