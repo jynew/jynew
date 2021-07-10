@@ -46,7 +46,6 @@ if InTeam(49) == true then goto label0 end;
     ModifyEvent(-2, 2, 1, 1, 536, -1, -1, 6522, 6522, 6522, -2, -2, -2);
     ModifyEvent(-2, 3, 1, 1, -1, -1, -1, 6342, 6342, 6342, -2, -2, -2);
 	jyx2_SwitchRoleAnimation("Level/NPC/xiaoyaozi", "");--逍遥子死，需要改为脸朝天躺地上controller
-	jyx2_SwitchRoleAnimation("Level/NPC/suxinghe", "Assets/BuildSource/AnimationControllers/打坐.controller");--需要改为地上跪拜controller
 	jyx2_FixMapObject("逍遥子传功完毕",1);
     LightScence();
     Talk(0, "奇怪，怎么进去这么久．．我也进去看看好了．", "talkname0", 1);
