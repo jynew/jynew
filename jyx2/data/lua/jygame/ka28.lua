@@ -16,11 +16,11 @@ if InTeam(1) == true then goto label0 end;
     SetOneUsePoi(4, 99);
     if TryBattle(2) == false then goto label1 end;
         ModifyEvent(-2, 1, 0, -1, -1, -1, -1, -1, -1, -1, 0, -2, -2);
+        jyx2_ReplaceSceneObject("", "NPC/yanji", "");-- 移除人物
         LightScence();
         AddItem(158, 1);
         AddRepute(2);
         AddEthics(2);
-        jyx2_ReplaceSceneObject("", "NPC/yanji", "");-- 移除人物
         do return end;
 ::label1::
         Dead();
