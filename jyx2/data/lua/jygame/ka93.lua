@@ -2,6 +2,7 @@ Talk(16, "还不快滚．", "talkname16", 0);
 if InTeam(9) == true then goto label0 end;
     do return end;
 ::label0::
+	jyx2_ReplaceSceneObject("", "NPC/张无忌", "1"); 
     Talk(9, "胡伯伯，你忘记我啦？我是无忌啊，武当张翠山的后人，张无忌啊！", "talkname9", 1);
     Talk(16, "你是无忌！长这么大了？你看起来气色很好，身上的寒毒好了吗？", "talkname16", 0);
     Talk(9, "是啊！我在昆仑山中的一番奇遇，将身上的寒毒都治好了．", "talkname9", 1);
@@ -14,6 +15,7 @@ if InTeam(9) == true then goto label0 end;
     Talk(0, "是嘛！这不过小事一桩，包在我身上．你知道这金花婆婆住在那吗？", "talkname0", 1);
     Talk(16, "似乎是住在东海的小岛上，叫什么灵蛇岛的．", "talkname16", 0);
     Talk(0, "好，看我来个大闹灵蛇岛．", "talkname0", 1);
+	jyx2_ReplaceSceneObject("", "NPC/张无忌", "0");
     ModifyEvent(-2, -2, -2, -2, 94, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(73, 1, -2, -2, 104, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(73, 0, -2, -2, 101, -1, -1, -2, -2, -2, -2, -2, -2);
