@@ -61,6 +61,14 @@ static public class Jyx2ResourceHelper
         {
             Jyx2SkillDisplayAsset.All = task.Result;
         }
+        
+        //全局配置表
+        var t = Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset").Task;
+        await t;
+        if (t.Result != null)
+        {
+            GlobalAssetConfig.Instance = t.Result;
+        }
     }
 
     static public GameObject GetCachedPrefab(string path)

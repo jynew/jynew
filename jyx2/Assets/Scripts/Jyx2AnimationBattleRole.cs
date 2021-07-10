@@ -61,7 +61,7 @@ namespace Jyx2
             AnimationClip clip = null;
             if (CurDisplay == null)
             {
-                clip = Jyx2SkillDisplayAsset.GetDefaultBehitClip();
+                clip = GlobalAssetConfig.Instance.defaultBeHitClip;
             }
             else
             {
@@ -84,8 +84,18 @@ namespace Jyx2
         {
             if (this == null)
                 return;
+            
+            AnimationClip clip = null;
+            if (CurDisplay == null)
+            {
+                clip = GlobalAssetConfig.Instance.defaultMoveClip;
+            }
+            else
+            {
+                clip = CurDisplay.LoadAnimation(Jyx2SkillDisplayAsset.Jyx2RoleAnimationType.Move);
+            }
 
-            PlayAnimation(CurDisplay.LoadAnimation(Jyx2SkillDisplayAsset.Jyx2RoleAnimationType.Move));
+            PlayAnimation(clip);
         }
 
         public virtual void ShowDamage()

@@ -28,7 +28,7 @@ using Debug = UnityEngine.Debug;
 
 namespace Jyx2
 {
-    [CreateAssetMenu(fileName = "NewModelAsset", menuName = "Model Asset")]
+    [CreateAssetMenu(fileName = "NewModelAsset", menuName = "金庸重制版/角色模型配置文件Model Asset")]
     public class ModelAsset : ScriptableObject
     {
         [BoxGroup("数据", false)]

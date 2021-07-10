@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 #endif
 
-[CreateAssetMenu(fileName = "[技能名称]", menuName = "JYX2技能展现配置")]
+[CreateAssetMenu(fileName = "[技能名称]", menuName = "金庸重制版/技能展现配置")]
 public partial class Jyx2SkillDisplayAsset : ScriptableObject
 {
     public static IList<Jyx2SkillDisplayAsset> All;
@@ -123,26 +123,14 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
         }
         else
         {
-            if (_defaultController == null)
-            {
-                _defaultController = Resources.Load<RuntimeAnimatorController>("jyx2humanoidController");
-            }
-            return _defaultController;
+            return GlobalAssetConfig.Instance.defaultAnimatorController;
         }
     }
 
     private static RuntimeAnimatorController _defaultController = null;
     private static AnimationClip _defaultBehitClip = null;
 
-    public static AnimationClip GetDefaultBehitClip()
-    {
-        if (_defaultBehitClip == null)
-        {
-            _defaultBehitClip = Resources.Load<AnimationClip>("标准受击");
-        }
 
-        return _defaultBehitClip;
-    }
 
     public AnimationClip LoadAnimation(Jyx2RoleAnimationType type)
     {
@@ -152,13 +140,9 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
             case Jyx2RoleAnimationType.Idle:
                 return idleClip;
             case Jyx2RoleAnimationType.Behit:
-                if (behitClip == null)
-                {
-                    return GetDefaultBehitClip();
-                }
-                return behitClip;
+                return behitClip == null ? GlobalAssetConfig.Instance.defaultBeHitClip : behitClip;
             case Jyx2RoleAnimationType.Move:
-                return moveClip;
+                return moveClip == null ? GlobalAssetConfig.Instance.defaultMoveClip : moveClip;
             case Jyx2RoleAnimationType.Attack:
                 return attackClip;
             default:
