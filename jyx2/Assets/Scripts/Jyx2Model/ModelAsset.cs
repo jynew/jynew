@@ -53,12 +53,10 @@ namespace Jyx2
 
         public enum WeaponPartType
         {
+            [LabelText("空手")] Fist = 0,
             [LabelText("剑")] Sword = 1,
-
             [LabelText("刀")] Knife = 2,
-
             [LabelText("长柄")] Spear = 3,
-
             [LabelText("其他")] Other = 4,
         }
 

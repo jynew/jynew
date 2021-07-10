@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using Jyx2.Setup;
@@ -167,5 +168,19 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         //切换武器和动作
 
         player.SwitchSkillTo(wugong);
+    }
+
+    public void SwitchToSkill(string skillName)
+    {
+        var skill = ConfigTable.GetAll<Jyx2Skill>().Single(p => p.Name.Equals(skillName));
+        if (skill != null)
+        {
+            int index = allSkills.IndexOf(skill);
+            if (index != -1)
+            {
+                dropSkillId_Dropdown.value = index;
+                OnDisplaySkill();
+            }
+        }
     }
 }

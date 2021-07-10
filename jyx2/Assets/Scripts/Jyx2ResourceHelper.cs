@@ -20,6 +20,7 @@ using HSFrameWork.Common;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Lean.Pool;
 using UnityEditor;
+using UnityEditor.AddressableAssets.Settings;
 
 static public class Jyx2ResourceHelper
 {
@@ -33,6 +34,7 @@ static public class Jyx2ResourceHelper
             return;
         }
 
+        //所有需要预加载的资源
         var handler = Addressables.LoadAssetAsync<TextAsset>("Assets/BuildSource/PreCachedPrefabs.txt").Task;
         await handler;
 
@@ -50,6 +52,14 @@ static public class Jyx2ResourceHelper
                 cachedPrefabs[p] = h.Result;
                 Debug.Log("cached prefab:" + p);
             }
+        }
+        
+        //技能池
+        var task = Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null).Task;
+        await task;
+        if (task.Result != null)
+        {
+            Jyx2SkillDisplayAsset.All = task.Result;
         }
     }
 

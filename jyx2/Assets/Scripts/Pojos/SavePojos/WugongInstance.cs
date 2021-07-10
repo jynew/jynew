@@ -164,7 +164,7 @@ namespace Jyx2
         }
 
 
-        public Jyx2SkillDisplay GetDisplay()
+        public Jyx2SkillDisplayAsset GetDisplay()
         {
             return _skill.Display;
         }

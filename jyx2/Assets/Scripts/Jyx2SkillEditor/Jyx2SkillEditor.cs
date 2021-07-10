@@ -25,7 +25,7 @@ public class Jyx2SkillEditor : MonoBehaviour
 
     public Jyx2SkillEditorEnemy[] enemys;
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         FileSystemWatcher watcher;
 
@@ -43,6 +43,8 @@ public class Jyx2SkillEditor : MonoBehaviour
         player.IsInBattle = true;
         Container.TryResolve<IXLsReloader>()?.Do();
 
+        await BeforeSceneLoad.loadFinishTask;
+        
         Jyx2_UIManager.Instance.ShowUI("SkillEditorUIPanel",player,enemys);
     }
 
@@ -67,5 +69,15 @@ public class Jyx2SkillEditor : MonoBehaviour
         }
 
       
+    }
+
+    /// <summary>
+    /// 预览技能
+    /// </summary>
+    /// <param name="skillName"></param>
+    public void PreviewSkill(string skillName)
+    {
+        var skillEditorUIPanel = FindObjectOfType<SkillEditorUIPanel>();
+        skillEditorUIPanel.SwitchToSkill(skillName);
     }
 }

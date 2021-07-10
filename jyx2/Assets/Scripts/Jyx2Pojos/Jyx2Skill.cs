@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using HSFrameWork.ConfigTable;
+using UnityEngine;
 
 namespace Jyx2
 {
@@ -58,11 +59,11 @@ namespace Jyx2
         public List<Jyx2SkillLevel> SkillLevels; //武功等级因素
 
 
-        public Jyx2SkillDisplay Display
+        public Jyx2SkillDisplayAsset Display
         {
             get
             {
-                return ConfigTable.Get<Jyx2SkillDisplay>(Id);
+                return Jyx2SkillDisplayAsset.Get(Name);
             }
         }
     }
@@ -86,6 +87,7 @@ namespace Jyx2
         public int KillMp; //杀伤内力
     }
 
+    [Obsolete("to be delete")]
     [XmlType("jyx2skillDisplay")]
     public class Jyx2SkillDisplay : BaseBean
     {

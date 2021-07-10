@@ -27,8 +27,10 @@ public class Jyx2SkillEditorEnemy : Jyx2AnimationBattleRole
     }
     
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        await BeforeSceneLoad.loadFinishTask;
+        
         animator = GetComponent<Animator>();
         Jyx2Skill skill = ConfigTable.Get<Jyx2Skill>(SkillId.ToString());
         var wugong = new WugongInstance(SkillId);

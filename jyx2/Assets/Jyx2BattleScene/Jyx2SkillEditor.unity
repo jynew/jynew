@@ -1698,20 +1698,6 @@ MonoBehaviour:
   m_IsWaitingForActive: 1
   IsInBattle: 0
   m_FootStepTimespan: 0.4
---- !u!114 &121518785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 121518783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ModelId: Xia_HFH
-  m_WeaponName: 
 --- !u!1001 &121705151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10622,7 +10608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0ead122ae9aba4b8517dc2810d8009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleIdlePoseCode: 0
+  SkillId: 4
 --- !u!1 &697800079
 GameObject:
   m_ObjectHideFlags: 0
@@ -11427,7 +11413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0ead122ae9aba4b8517dc2810d8009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleIdlePoseCode: 0
+  SkillId: 4
 --- !u!1 &736880777
 GameObject:
   m_ObjectHideFlags: 0
@@ -15770,9 +15756,15 @@ MonoBehaviour:
   m_ShowToolkit: 0
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeTransparentBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeTransparent, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: EdgeDetect_AfterStack, Assembly-CSharp-firstpass, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1021558904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17380,6 +17372,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1123253892
@@ -20042,7 +20035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0ead122ae9aba4b8517dc2810d8009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleIdlePoseCode: 0
+  SkillId: 4
 --- !u!1 &1297659434
 GameObject:
   m_ObjectHideFlags: 0
@@ -21100,6 +21093,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1398168152
@@ -30488,12 +30482,6 @@ MonoBehaviour:
   - {fileID: 736569613}
   - {fileID: 696902908}
   - {fileID: 1294372177}
-  SkillId: 1
-  SkillLevel: 0
-  DisplaySkill: 0
-  SwitchSkill: 0
-  PlayerRoleId: 0
-  SwitchRoleModel: 0
 --- !u!4 &2073511887
 Transform:
   m_ObjectHideFlags: 0

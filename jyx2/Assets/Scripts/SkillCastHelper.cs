@@ -59,7 +59,7 @@ namespace Jyx2
         public BattleZhaoshiInstance Zhaoshi;
 
 
-        Jyx2SkillDisplay GetDisplay()
+        Jyx2SkillDisplayAsset GetDisplay()
         {
             return Zhaoshi.Data.GetDisplay();
         }
@@ -82,35 +82,35 @@ namespace Jyx2
             if (Source != null)
             {
                 Source.CurDisplay = display;
-                GameUtil.CallWithDelay(display.AnimaionDelay, Source.Attack);
+                GameUtil.CallWithDelay(display.animationDelay, Source.Attack);
             }
 
 
             //普通特效
-            if (!string.IsNullOrEmpty(display.CastEft))
+            if (display.partilePrefab != null)
             {
-                GameUtil.CallWithDelay(display.CastDelay, DisplayCastEft);
+                GameUtil.CallWithDelay(display.particleDelay, DisplayCastEft);
             }
 
             //格子特效
-            if(!string.IsNullOrEmpty(display.BlockEft))
+            if(display.blockPartilePrefab != null)
             {
-                GameUtil.CallWithDelay(display.BlockDelay, DisplayBlockEft);
+                GameUtil.CallWithDelay(display.blockParticleDelay, DisplayBlockEft);
             }
 
             //音效
-            if(!string.IsNullOrEmpty(display.AudioEft))
+            if(display.audio != null)
             {
-                GameUtil.CallWithDelay(display.AudioEftDelay,ExecuteSoundEffect);
+                GameUtil.CallWithDelay(display.audioDelay,ExecuteSoundEffect);
             }
             
             //播放受击动画和飘字
-            GameUtil.CallWithDelay(display.HitDelay, ExecuteBeHit);
+            GameUtil.CallWithDelay(display.behitDelay, ExecuteBeHit);
 
             //回调
             if(callback != null)
             {
-                GameUtil.CallWithDelay(display.Duration, callback);
+                GameUtil.CallWithDelay(display.duration, callback);
             }
         }
 
@@ -140,42 +140,27 @@ namespace Jyx2
         private void DisplayCastEft()
         {
             var display = GetDisplay();
-
-            //播放特效
-            Jyx2ResourceHelper.LoadPrefab(display.CastEft, prefab=> {
-
-                var duration = HSUnityTools.ParticleSystemLength(prefab.transform);
-
-                Vector3 offset = Vector3.zero;
-                if (!string.IsNullOrEmpty(display.CastOffset))
-                {
-                    offset = UnityTools.StringToVector3(display.CastOffset, ',');
-                }
-                CastEffectAndWaitSkill(prefab, duration, Source.gameObject.transform, offset); //默认预留三秒
-            });
+            var prefab = display.partilePrefab;
+            var duration = HSUnityTools.ParticleSystemLength(prefab.transform);
+            Vector3 offset = display.partileOffset;
+            CastEffectAndWaitSkill(prefab, duration, Source.gameObject.transform, offset); //默认预留三秒
         }
 
 
         private void DisplayBlockEft()
         {
             var display = GetDisplay();
+            var prefab = display.blockPartilePrefab;
 
-            Jyx2ResourceHelper.LoadPrefab(display.BlockEft,prefab=> {
+            var blockEftDuration = HSUnityTools.ParticleSystemLength(prefab.transform);
 
-                var blockEftDuration = HSUnityTools.ParticleSystemLength(prefab.transform);
+            Vector3 offset = display.blockPartileOffset;
 
-                Vector3 offset = Vector3.zero;
-                if (!string.IsNullOrEmpty(display.BlockOffset))
-                {
-                    offset = UnityTools.StringToVector3(display.BlockOffset, ',');
-                }
-
-                //播放特效
-                foreach (var block in CoverBlocks)
-                {
-                    CastEffectAndWaitSkill(prefab, blockEftDuration, block, offset);
-                }
-            });
+            //播放特效
+            foreach (var block in CoverBlocks)
+            {
+                CastEffectAndWaitSkill(prefab, blockEftDuration, block, offset);
+            }
         }
 
         /// <summary>
@@ -198,14 +183,11 @@ namespace Jyx2
         private void ExecuteSoundEffect()
         {
             var display = GetDisplay();
-            Jyx2ResourceHelper.LoadAsset<AudioClip>(display.AudioEft, soundEffect =>
-            {
-                if (soundEffect == null)
-                    return;
+            var soundEffect = display.audio;
+            if (soundEffect == null)
+                return;
 
-                AudioSource.PlayClipAtPoint(soundEffect, Camera.main.transform.position, 1);
-            });
+            AudioSource.PlayClipAtPoint(soundEffect, Camera.main.transform.position, 1);
         }
-
     }
 }

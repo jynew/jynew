@@ -326,8 +326,8 @@ public class MapRole : Jyx2AnimationBattleRole
     {
         var display = skill.GetDisplay();
         //切换对应武器
-        var weaponCode = display.WeaponCode;
-        if (!string.IsNullOrEmpty(weaponCode))
+        var weaponCode = display.weaponCode;
+        if (weaponCode > 0)
         {
             ChangeWeapon(weaponCode);
         }
@@ -335,53 +335,32 @@ public class MapRole : Jyx2AnimationBattleRole
         this.CurDisplay = display;
         
         //载入动作
-        var animationController = display.GetAnimationController();
-
-        if (string.IsNullOrEmpty(animationController))
-        {
-            Debug.LogError($"技能{skill.Name}没有配置动画控制器！");
-            return;
-        }
- 
-        //载入动画控制器
-        ChangeAnimationController(animationController,()=> {
-            Idle();
-        });
-    
+        ChangeAnimationController(display.GetAnimationController(), Idle);
     }
 
-    string m_currentAnimatorController = "";
-
-    void ChangeWeapon(string weaponCode)
+    void ChangeWeapon(ModelAsset.WeaponPartType weaponCode)
     {
         DOMountWeapon(weaponCode);
     }
 
-    void ChangeAnimationController(string path, Action callback)
+    void ChangeAnimationController(RuntimeAnimatorController controller, Action callback)
     {
-        if (string.IsNullOrEmpty(path))
+        if (controller == null)
+            return;
+
+        var anim = GetAnimator();
+        if (anim == null)
             return;
 
         //当前已经是该Controller了，不需要再修改
-        if (path.Equals(m_currentAnimatorController))
+        if (controller == anim.runtimeAnimatorController)
         {
             callback();
             return;
         }
         
-        var anim = GetAnimator();
-        if (anim == null)
-            return;
-
-        //否则载入该Controller
-        Jyx2ResourceHelper.LoadAsset<RuntimeAnimatorController>(path, rst =>
-        {
-            if (rst == null)
-                return;
-            anim.runtimeAnimatorController = rst;
-            m_currentAnimatorController = path;
-            callback();
-        });
+        anim.runtimeAnimatorController = controller;
+        callback();
     }
 
 
@@ -445,8 +424,10 @@ public class MapRole : Jyx2AnimationBattleRole
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    private void Start()
+    async private void Start()
     {
+        await BeforeSceneLoad.loadFinishTask;
+        
         if (string.IsNullOrEmpty(m_RoleKey))
             return;
 
@@ -546,12 +527,13 @@ public class MapRole : Jyx2AnimationBattleRole
     /// 挂载武器
     /// </summary>
     /// <param name="weaponStr"></param>
-    void DOMountWeapon(string weaponCode)
+    void DOMountWeapon(ModelAsset.WeaponPartType weaponCode)
     {
         if(!IsInBattle) return;
         UnMountCurrentWeapon();
-        
-        if(string.IsNullOrEmpty(weaponCode)) return;
+
+        if (weaponCode == 0)
+            return;
         if(modelAsset == null) return;
         
         var weapon = modelAsset.GetWeaponPart(weaponCode);
