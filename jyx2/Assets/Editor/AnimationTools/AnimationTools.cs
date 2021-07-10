@@ -28,7 +28,7 @@ public class AnimationTools
                 acs.loopBlendPositionY = true;
                 acs.loopBlendPositionXZ = true;
                 
-                if (clip.name.Contains("站立") || clip.name.Contains("待机") || clip.name.Contains("移动"))
+                if (clip.name.Contains("站立") || clip.name.Contains("待机") || clip.name.Contains("移动") || clip.name.Contains("跑图"))
                 {
                     acs.loopTime = true;
                 }
