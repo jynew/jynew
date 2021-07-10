@@ -6,7 +6,7 @@ jyx2_StopTimeline("[Timeline]ka20_阎基居_中悲酥清风");
 ZeroAllMP();
 ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
 ModifyEvent(-2, 1, 1, -2, 21, -1, -1, 5168, 5168, 5168, 0, -2, -2);
-jyx2_ReplaceSceneObject("","NPC/yanji","1") --刷出阎基
+jyx2_ReplaceSceneObject("","NPC/yanji","1"); --刷出阎基
 
 jyx2_PlayTimeline("[Timeline]ka20_阎基居_苏醒", 0, true);
 LightScence();
@@ -28,6 +28,7 @@ if TryBattle(1) == false then goto label0 end;
     Talk(4, "那儿的话，那少侠就随便看看，若不嫌弃的话，有什么喜欢的就拿去吧．", "talkname4", 0);
     ModifyEvent(-2, 7, -2, -2, -2, -2, 25, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 8, -2, -2, -2, -2, -2, -1, -1, -1, -2, -2, -2);
+	jyx2_ReplaceSceneObject("","Dynamic/香炉","");
     AddRepute(1);
     do return end;
 ::label0::

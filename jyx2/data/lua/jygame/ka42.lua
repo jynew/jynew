@@ -13,6 +13,7 @@ if AskJoin () == true then goto label0 end;
             Talk(2, "看在胡公子的面子上，我就陪你们到处玩一玩．", "talkname2", 0);
             DarkScence();
             ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+			jyx2_ReplaceSceneObject("", "NPC/chenglingsu", "");
             LightScence();
             Join(2);
             AddEthics(1);
