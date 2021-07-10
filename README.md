@@ -12,7 +12,7 @@
 
 
 
-
+* 项目必看 [项目Wiki](https://github.com/jynew/jynew/wiki)
 * 项目主页 http://www.jy-new.com
 * B站主页 https://space.bilibili.com/1092529660
 * 联系我们 jy_remastered@163.com
