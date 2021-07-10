@@ -40,7 +40,6 @@ namespace Jyx2.Crossplatform.BasePojo
                 typeof(Jyx2RoleWugong),
                 typeof(Jyx2RoleItem),
                 typeof(Jyx2SkillLevel),
-                typeof(Jyx2SkillDisplay),
                 typeof(Jyx2Battle),
                 typeof(Jyx2IntWrap),
                 typeof(Jyx2Shop),
@@ -60,7 +59,6 @@ namespace Jyx2.Crossplatform.BasePojo
             AddTypeNode<Jyx2Item>("jyx2item");
             AddTypeNode<Jyx2Skill>("jyx2skill");
             AddTypeNode<Jyx2RoleHeadMapping>("jyx2role_headMapping");
-            AddTypeNode<Jyx2SkillDisplay>("jyx2skillDisplay");
             AddTypeNode<Jyx2Battle>("jyx2battle");
             AddTypeNode<Jyx2Shop>("jyx2shop");
         }
