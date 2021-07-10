@@ -7,6 +7,7 @@ if TryBattle(70) == true then goto label0 end;
 ::label0::
     ModifyEvent(-2, 2, -2, -2, 449, -1, -1, 6092, 6092, 6092, -2, 27, 47);
     ModifyEvent(-2, 3, -2, -2, 449, -1, -1, 6098, 6098, 6098, -2, 30, 47);
+	jyx2_FixMapObject("铁掌弟子让路",1);
     ModifyEvent(-2, 4, -2, -2, 449, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 5, -2, -2, 449, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 6, -2, -2, 449, -1, -1, -2, -2, -2, -2, -2, -2);
@@ -15,7 +16,6 @@ if TryBattle(70) == true then goto label0 end;
     ModifyEvent(-2, 9, -2, -2, 449, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 10, -2, -2, 449, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 11, -2, -2, 449, -1, -1, -2, -2, -2, -2, -2, -2);
-    jyx2_ReplaceSceneObject("","GasWalls/Wall1","");
     LightScence();
     AddRepute(1);
 do return end;
