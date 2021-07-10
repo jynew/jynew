@@ -21,8 +21,8 @@ if InTeam(63) == false then goto label0 end;
         Talk(0, "但我听说段皇爷为人仁慈，是个受人敬爱的仁君，前辈为什么要杀他．", "talkname0", 1);
         Talk(66, "他为人仁慈？他眼睁睁的看我孩儿死去，却不肯伸出援手．．．要杀不杀随你．四张机，鸳鸯织就欲双飞．可怜未老头先白，春波碧草晓寒深处，相对浴红衣．", "talkname66", 0);
         AddItem(184, 1);
-        jyx2_ReplaceSceneObject("47", "NPC/yideng", "1"); 
         ModifyEvent(-2, -2, -2, -2, 418, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu|启动418脚本。场景21-编号01
         ModifyEvent(47, 0, 1, 1, 425, 426, -1, 6150, 6150, 6150, -2, -2, -2);--by fanyu|启动425,426脚本，更改贴图。场景47-编号00
+        jyx2_ReplaceSceneObject("47", "NPC/一灯", "1"); 
         ChangeMMapMusic(3);
 do return end;
