@@ -514,6 +514,31 @@ namespace Jyx2
 			}
 			return 0;
 		}
+		
+		public SaveableNumberDictionary<int> MapPic
+		{
+			get {return GetPojoAutoCreate<SaveableNumberDictionary<int>>("MapPic");}
+			set {SavePojo("MapPic", value);}
+		}
+
+		public void SetMapPic(int scene, int eventId, int pic)
+		{
+			string key=(string.Format("{0}_{1}", scene, eventId));
+			if(MapPic.ContainsKey(key) && pic==-1){
+				MapPic.Remove(key);
+			}else{
+				MapPic[key]=pic;
+			}
+		}
+		
+		public int GetMapPic(int scene, int eventId)
+		{
+			string key=(string.Format("{0}_{1}", scene, eventId));
+			if(MapPic.ContainsKey(key)){
+				return MapPic[key];
+			}
+			return -1;
+		}
 
 
         //JYX2场景相关记录
