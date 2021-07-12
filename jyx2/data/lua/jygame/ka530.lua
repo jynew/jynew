@@ -12,7 +12,7 @@ if InTeam(51) == false then goto label0 end;
         if InTeam(51) == true then goto label2 end;--慕容复不是队员，出现王语嫣，如果之前带段誉拜访过燕子坞，同时出现段誉
             ModifyEvent(-2, 23, 1, 1, -1, -1, -1, 6298, 6298, 6298, -2, -2, -2);--by fanyu 改变贴图 场景51-23
             jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "1");--王语嫣
-			if JudgeScencePic(52, 3, 6310, 0, 14) then goto label3 end;
+			if JudgeScencePic(52, 3, 6310, 0, 14)==false then goto label3 end;
                 ModifyEvent(-2, 24, 1, 1, -1, -1, -1, 6314, 6314, 6314, -2, -2, -2);--by fanyu 改变贴图 场景51-24
 				jyx2_ReplaceSceneObject("", "NPC/段誉", "1");--段誉出现
 ::label2::
