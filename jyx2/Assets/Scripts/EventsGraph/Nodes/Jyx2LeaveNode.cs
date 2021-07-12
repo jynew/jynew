@@ -8,8 +8,8 @@ using UnityEngine;
 using XNode;
 
 [CreateNodeMenu("游戏数据/角色离队")]
-[NodeWidth(150)]
-public class Jyx2RestNode : Jyx2SimpleNode
+[NodeWidth(180)]
+public class Jyx2LeaveNode : Jyx2SimpleNode
 {
     private void Reset() {
         name = "角色离队";
@@ -18,7 +18,8 @@ public class Jyx2RestNode : Jyx2SimpleNode
     public int roleId;
     
     protected override void DoExecute()
-	{
+	{   
+        Debug.Assert(Jyx2LuaBridge.InTeam(roleId));
 		Jyx2LuaBridge.Leave(roleId);
 	}
 }
