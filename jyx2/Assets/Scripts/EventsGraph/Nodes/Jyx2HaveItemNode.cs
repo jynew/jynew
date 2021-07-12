@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Jyx2;
 using UnityEngine;
+using XNode;
 
-public class Jyx2HasItemNode : MonoBehaviour
+[CreateNodeMenu("流程控制/是否拥有道具")]
+[NodeWidth(150)]
+public class Jyx2HaveItemNode : Jyx2BaseNode
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [Output] public Node yes;
+    [Output] public Node no;
+    [Header("物品id")]
+	public int itemId;  
+    private void Reset() {
+        name = "判断是否拥有道具";
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    protected override string OnPlay()
     {
-        
+        bool ret = Jyx2LuaBridge.HaveItem(itemId);
+        return ret ? nameof(yes) : nameof(no);
     }
 }
