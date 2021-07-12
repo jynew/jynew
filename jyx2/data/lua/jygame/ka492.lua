@@ -14,9 +14,8 @@ if InTeam(76) == true then goto label0 end;
             do return end;
 ::label2::
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/duanyu", "");--段誉
-            jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "");--段誉
             ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+            jyx2_ReplaceSceneObject("", "NPC/duanyu", "");--段誉
             LightScence();
             Join(53);
 do return end;
