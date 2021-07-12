@@ -1,7 +1,9 @@
 if InTeam(38) == true then goto label0 end;
     do return end;
 ::label0::
-jyx2_ReplaceSceneObject("", "NPC/shipotian4", "1");--石破天出现
+-- DarkScence()
+-- jyx2_ReplaceSceneObject("", "NPC/shipotian4", "1");--石破天出现
+-- LightScence()
     Talk(38, "大哥，这没有什么好看的，我们走了好不好．．．", "talkname38", 1);
     Talk(0, "贤弟，小声一点，别吵到两位岛主练功．．", "talkname0", 1);
     Talk(38, "＜这些字怎么如此古怪，看上一眼，便会头晕？＞＜至阳穴好热，原来这些蝌蚪看似乱钻乱游，其实还是和内息有关＞", "talkname38", 1);
@@ -47,14 +49,14 @@ jyx2_ReplaceSceneObject("", "NPC/shipotian4", "1");--石破天出现
     Talk(38, "不识字难道也有好处？", "talkname38", 1);
     Talk(39, "兄弟，你我心愿已了，我们也该歇息了．这腊八粥之约以后也不必了．我们这就去告诉各位掌门不用再钻研此图解了．公子，你们也可赶紧离去，但千万别对人说石兄弟已练成此神功，否则后患无穷．", "talkname39", 0);
     Talk(0, "前辈，告辞了．", "talkname0", 1);
-    jyx2_ReplaceSceneObject("", "NPC/shipotian4", "");--石破天出现
+    DarkScence()
+    -- jyx2_ReplaceSceneObject("", "NPC/shipotian4", "");--石破天出现
     jyx2_ReplaceSceneObject("", "NPC/daozhu2", "1");-- 
     jyx2_ReplaceSceneObject("", "NPC/daozhu1", "1");-- 
     jyx2_ReplaceSceneObject("", "NPC/daozhu21", "");-- 
     jyx2_ReplaceSceneObject("", "NPC/daozhu11", "");-- 
     AddItem(154, 1);
     AddItem(60, 1);
-    DarkScence();
     ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
@@ -79,4 +81,5 @@ jyx2_ReplaceSceneObject("", "NPC/shipotian4", "1");--石破天出现
     LightScence();
     LearnMagic2(38, 23, 0);
     AddAttack(38, 10);
+    ModifyEvent(39, 9, 0, 0, 345, -1, -1, -1, -1, -1, -2, -2, -2);
 do return end;
