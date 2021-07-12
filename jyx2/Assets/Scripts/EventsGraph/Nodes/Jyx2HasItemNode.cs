@@ -4,21 +4,21 @@ using Jyx2;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("流程控制/角色是否在队里")]
+[CreateNodeMenu("流程控制/是否拥有道具")]
 [NodeWidth(150)]
-public class Jyx2InTeamNode : Jyx2BaseNode
+public class Jyx2HaveItemNode : Jyx2BaseNode
 {
     [Output] public Node yes;
     [Output] public Node no;
-    [Header("角色id")]
-	public int roleId;  
+    [Header("物品id")]
+	public int itemId;  
     private void Reset() {
-        name = "判断角色是否在队里";
+        name = "判断是否拥有道具";
     }
     
     protected override string OnPlay()
     {
-        bool ret = Jyx2LuaBridge.InTeam(roleId);
+        bool ret = Jyx2LuaBridge.HaveItem(itemId);
         return ret ? nameof(yes) : nameof(no);
     }
 }
