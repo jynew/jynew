@@ -4,19 +4,21 @@ using Jyx2;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("游戏数据/增加道德")]
-[NodeWidth(150)]
-public class Jyx2AddEthicsNode : Jyx2SimpleNode
+[CreateNodeMenu("游戏数据/增加资质")]
+[NodeWidth(180)]
+public class Jyx2AddAptitudeNode : Jyx2SimpleNode
 {
+    [Header("角色id")]
+    public int roleId;
     [Header("增加数值")]
     public int addValue;
     
     private void Reset() {
-        name = "增加道德";
+        name = "增加资质";
     }
 
     protected override void DoExecute()
     {
-        Jyx2LuaBridge.AddEthics(addValue);
+        Jyx2LuaBridge.AddAptitude(roleId, addValue);
     }
 }
