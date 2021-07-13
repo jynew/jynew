@@ -8,7 +8,7 @@ using UnityEngine;
 using XNode;
 
 [CreateNodeMenu("游戏数据/设置用毒能力")]
-[NodeWidth(150)]
+[NodeWidth(180)]
 public class Jyx2SetOneUsePoiNode : Jyx2SimpleNode
 {
 	private void Reset() {

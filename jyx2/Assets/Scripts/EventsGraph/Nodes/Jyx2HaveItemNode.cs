@@ -5,7 +5,7 @@ using UnityEngine;
 using XNode;
 
 [CreateNodeMenu("流程控制/是否拥有道具")]
-[NodeWidth(150)]
+[NodeWidth(200)]
 public class Jyx2HaveItemNode : Jyx2BaseNode
 {
     [Output] public Node yes;

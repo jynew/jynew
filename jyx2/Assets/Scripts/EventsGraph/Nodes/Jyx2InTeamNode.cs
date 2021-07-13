@@ -5,7 +5,7 @@ using UnityEngine;
 using XNode;
 
 [CreateNodeMenu("流程控制/角色是否在队里")]
-[NodeWidth(150)]
+[NodeWidth(180)]
 public class Jyx2InTeamNode : Jyx2BaseNode
 {
     [Output] public Node yes;
