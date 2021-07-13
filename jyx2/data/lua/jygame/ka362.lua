@@ -4,7 +4,9 @@ if InTeam(38) == true then goto label0 end;
     Talk(20, "不对，”吴钩霜雪明”是主，”犹胜曲全钩”是宾．喧宾夺主，必非正道．", "talkname20", 1);
     do return end;
 ::label0::
-    jyx2_ReplaceSceneObject("", "NPC/shipotian2", "1");--石破天出现
+    -- DarkScence();
+    -- jyx2_ReplaceSceneObject("", "NPC/shipotian2", "1");--石破天出现
+    -- LightScence();
     Talk(38, "＜这些口诀甚是深奥，我是弄不明白的．唉！没读过书就是不行．＞", "talkname38", 1);
     Talk(23, "这壁上的注解说道：白居易诗云”勿轻直折剑，犹胜曲全勾”．可见我这直折之剑，方合石壁注文原意．", "talkname23", 0);
     Talk(20, "不对，”吴钩霜雪明”是主，”犹胜曲全钩”是宾．喧宾夺主，必非正道．", "talkname20", 1);
@@ -14,5 +16,7 @@ if InTeam(38) == true then goto label0 end;
     Add3EventNum(-2, 6, 0, 0, 1);
     ModifyEvent(-2, 10, -2, -2, 387, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 11, -2, -2, 387, -1, -1, -2, -2, -2, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/shipotian2", "");--石破天出现
+    -- DarkScence();
+    -- jyx2_ReplaceSceneObject("", "NPC/shipotian2", "");--石破天出现
+    -- LightScence();
 do return end;

@@ -52,7 +52,7 @@ namespace Jyx2
 
         static public void Talk(int roleId, string content, string talkName, int type)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 storyEngine.BlockPlayerControl = true;
                 //storyEngine.dialogPanel.Show(
@@ -73,7 +73,7 @@ namespace Jyx2
         /// <param name="count"></param>
         static public void AddItemWithoutHint(int itemId, int count)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var item = ConfigTable.Get<Jyx2Item>(itemId);
                 if (item == null)
@@ -112,7 +112,7 @@ namespace Jyx2
             int enterEventId,
             int p7,int p8,int p9,int p10,int p11,int p12)
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
 
 				bool isCurrentScene=false;
                 //场景ID
@@ -188,7 +188,7 @@ namespace Jyx2
             }
 
             bool isWin = false;
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 var pos = LevelMaster.Instance.GetPlayerPosition();
                 string posStr = UnityTools.Vector3ToString(pos);
                 string currentScene = SceneManager.GetActiveScene().name;
@@ -209,7 +209,7 @@ namespace Jyx2
         //替换当前的出门音乐
         static public void ChangeMMapMusic(int musicId)
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 LevelMaster.Instance.GetCurrentGameMap().ForceSetLeaveMusicId = musicId;
             });
         }
@@ -222,7 +222,7 @@ namespace Jyx2
         //角色加入，同时获得对方身上的物品
         static public void Join(int roleId)
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 RoleInstance role = runtime.GetRole(roleId);
                 if (role == null)
                 {
@@ -246,7 +246,7 @@ namespace Jyx2
         
         static public void Dead()
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 
                 //TODO..
                 MessageBox.Create("GAME OVER", () =>
@@ -273,7 +273,7 @@ namespace Jyx2
         //离队
         static public void Leave(int roleId)
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 runtime.LeaveTeam(roleId);
                 Next();
             });
@@ -282,7 +282,7 @@ namespace Jyx2
 
         static public void ZeroAllMP()
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 foreach (var r in runtime.Team)
                 {
                     r.Mp = 0;
@@ -295,7 +295,7 @@ namespace Jyx2
         //设置用毒
         static public void SetOneUsePoi(int roleId, int v)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var role = runtime.GetRole(roleId);
                 if (role != null)
@@ -321,7 +321,7 @@ namespace Jyx2
 		// modified by eaphone at 2021/6/12
         static public void Add3EventNum(int scene, int eventId,int v1,int v2,int v3)
         {
-			RunInMainThrad(() =>
+			RunInMainThread(() =>
             {
 				bool isCurrentScene=false;
                 //场景ID
@@ -389,7 +389,7 @@ namespace Jyx2
 		static public int jyx2_CheckEventCount(int scene, int eventId, int targetEvent)
         {
 			int result=0;
-			RunInMainThrad(() =>
+			RunInMainThread(() =>
             {
 				//场景ID
                 if (scene == -2) //当前场景
@@ -481,7 +481,7 @@ namespace Jyx2
 
         static public void LearnMagic2(int roleId,int magicId,int noDisplay)
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 var role = runtime.GetRole(roleId);
                 role.LearnMagic(magicId);
 
@@ -498,7 +498,7 @@ namespace Jyx2
         //增加资质
         static public void AddAptitude(int roleId,int v)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var role = runtime.GetRole(roleId);
                 role.IQ = HSFrameWork.Common.Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
@@ -510,7 +510,7 @@ namespace Jyx2
 
         static public void SetOneMagic(int roleId,int magicIndexRole,int magicId, int level)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var role = runtime.GetRole(roleId); 
 
@@ -556,7 +556,7 @@ namespace Jyx2
         //增加轻功
         static public void AddSpeed(int roleId, int value)
         {
-            RunInMainThrad(() => 
+            RunInMainThread(() => 
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
@@ -568,7 +568,7 @@ namespace Jyx2
         //内力
         static public void AddMaxMp(int roleId, int value)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
@@ -580,7 +580,7 @@ namespace Jyx2
         //攻击力
         static public void AddAttack(int roleId, int value)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
@@ -592,7 +592,7 @@ namespace Jyx2
         //生命值
         static public void AddHp(int roleId, int value)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
@@ -615,7 +615,7 @@ namespace Jyx2
 
         static public void ShowEthics()
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 MessageBox.Create("你的道德指数为" + runtime.Player.Pinde, Next);
             });
             Wait();
@@ -623,7 +623,7 @@ namespace Jyx2
 
         static public void ShowRepute()
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 MessageBox.Create("你的声望指数为" + runtime.Player.Shengwang, Next);
             });
@@ -633,7 +633,7 @@ namespace Jyx2
         static public bool JudgeEventNum(int eventIndex, int value)
         {
             bool result = false;
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 var evt = GameEvent.GetCurrentSceneEvent(eventIndex.ToString());
                 if(evt != null)
                 {
@@ -720,7 +720,7 @@ namespace Jyx2
 
         static public void PlayMusic(int id)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 AudioManager.PlayMusic(id);
             });
@@ -735,7 +735,7 @@ namespace Jyx2
 		// modify by eaphone at 2021/6/5
         static public void SetRoleFace(int dir)
         {
-			RunInMainThrad(() =>
+			RunInMainThread(() =>
             {
                 var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
 				levelMaster.SetRotation(dir);
@@ -751,7 +751,7 @@ namespace Jyx2
 
         static public void PlayWave(int waveIndex)
         {
-            RunInMainThrad(()=>
+            RunInMainThread(()=>
             {
                 string path = "Assets/BuildSource/sound/e" +
                     (waveIndex < 10 ? "0" + waveIndex.ToString() : waveIndex.ToString()) + ".wav";
@@ -771,7 +771,7 @@ namespace Jyx2
 
         static public void DarkScence()
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var blackCover = LevelMaster.Instance.transform.Find("UI/BlackCover");
                 if (blackCover == null)
@@ -790,7 +790,7 @@ namespace Jyx2
 
         static public void Rest()
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
 
                 foreach (var role in runtime.Team)
@@ -802,7 +802,7 @@ namespace Jyx2
 
         static public void LightScence()
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var blackCover = LevelMaster.Instance.transform.Find("UI/BlackCover");
                 if (blackCover == null)
@@ -835,7 +835,7 @@ namespace Jyx2
         /// <param name="count">可为负数</param>
         static public void AddItem(int itemId, int count)
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 var item = ConfigTable.Get<Jyx2Item>(itemId);
                 if (item == null)
                 {
@@ -864,7 +864,7 @@ namespace Jyx2
         //增加声望
         static public void AddRepute(int value)
         {
-            RunInMainThrad(() =>{
+            RunInMainThread(() =>{
                 runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ZIZHI);
                 storyEngine.DisplayPopInfo("增加声望:" + value);
                 Next();
@@ -875,7 +875,7 @@ namespace Jyx2
         //韦小宝商店
         static public void WeiShop()
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 //int shopId = Tools.GetRandomInt(0, 4);
                 Jyx2_UIManager.Instance.ShowUI("ShopUIPanel", "", new Action(()=>{Next();}));
@@ -885,7 +885,7 @@ namespace Jyx2
 
         static public void AskSoftStar()
         {
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
                 var eventLuaPath = "jygame/ka" + UnityEngine.Random.Range(801, 820).ToString();
                 Jyx2.LuaExecutor.Execute(eventLuaPath, null);
             });
@@ -900,7 +900,7 @@ namespace Jyx2
         #region 扩展函数
         static public void jyx2_ReplaceSceneObject(string scene,string path, string replace)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
                 level.ReplaceSceneObject(scene, path, replace);
@@ -915,7 +915,7 @@ namespace Jyx2
 		// eahphone at 2021/6/5
         static public void jyx2_MovePlayer(string path,string parent="Level/Triggers",string target="")
         {
-			RunInMainThrad(() =>
+			RunInMainThread(() =>
             {
                 var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
 				levelMaster.TransportToTransform(parent,path,target);
@@ -926,7 +926,7 @@ namespace Jyx2
 
         static public void jyx2_CameraFollow(string path)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var followObj = GameObject.Find(path);
                 if (followObj == null)
@@ -958,7 +958,7 @@ namespace Jyx2
 		//fromName:-1, 获取主角当前位置作为起始点
         static public void jyx2_WalkFromTo(int fromName, int toName) 
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var fromObj = GameObject.Find("Level/Player");
 				if(fromName!=-1){
@@ -995,7 +995,7 @@ namespace Jyx2
 
         static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var timeLineRoot = GameObject.Find("Timeline");
                 var timeLineObj = timeLineRoot.transform.Find(timelineName);
@@ -1081,7 +1081,7 @@ namespace Jyx2
 
         static public void jyx2_StopTimeline(string timelineName)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var timeLineRoot = GameObject.Find("Timeline");
                 var timeLineObj = timeLineRoot.transform.Find(timelineName);
@@ -1115,7 +1115,7 @@ namespace Jyx2
 
         static public void jyx2_Wait(float duration)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(Next)
@@ -1136,7 +1136,7 @@ namespace Jyx2
         static public void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
         {
             Debug.Log("jyx2_SwitchRoleAnimation called");
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var roleObj = GameObject.Find(rolePath);
                 if (roleObj == null)
@@ -1165,7 +1165,7 @@ namespace Jyx2
 
         static public void jyx2_FixMapObject(string flag, string isSet)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 runtime.KeyValues[flag] = isSet;
                 var objs = GameObject.FindObjectsOfType<FixWithGameRuntime>();
@@ -1187,7 +1187,7 @@ namespace Jyx2
 
         #region private
 
-        static private void RunInMainThrad(Action run)
+        static private void RunInMainThread(Action run)
         {
             Loom.QueueOnMainThread(_ =>
             {
@@ -1215,7 +1215,7 @@ namespace Jyx2
 
         static private bool ShowYesOrNoSelectPanel(string selectMessage)
         {
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 List<string> selectionContent = new List<string>() { "是", "否" };
                 storyEngine.BlockPlayerControl = true;
@@ -1240,7 +1240,7 @@ namespace Jyx2
         static private bool JudgeRoleValue(int roleId, Predicate<RoleInstance> judge)
         {
             bool result = false;
-            RunInMainThrad(() =>
+            RunInMainThread(() =>
             {
                 var role = runtime.GetRole(roleId);
                 if (role == null)
