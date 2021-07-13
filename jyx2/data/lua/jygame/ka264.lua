@@ -18,12 +18,6 @@ if UseItem(177) == true then goto label0 end;
         Talk(0, "难道这梅庄中还另有高手？没关系，我说过只要贵庄中有人可以打败我，我这四件书画，一定双手奉上．", "talkname0", 1);
         Talk(33, "大哥，没问题的，有我们在旁边守着，那老怪物跑不掉的．", "talkname33", 0);
         Talk(34, "二弟你还说！少侠，敝庄中已无可胜你之人，你就请回吧．", "talkname34", 0);
-jyx2_ReplaceSceneObject("", "NPC/danqingsheng4", "");--丹青生
-jyx2_ReplaceSceneObject("", "NPC/danqingsheng", "1");--丹青生
-jyx2_ReplaceSceneObject("", "NPC/tubiweng3", "");--秃笔翁
-jyx2_ReplaceSceneObject("", "NPC/tubiweng", "1");--秃笔翁
-jyx2_ReplaceSceneObject("", "NPC/heibaizi2", "");--黑白子
-jyx2_ReplaceSceneObject("", "NPC/heibaizi", "1");--黑白子
         ModifyEvent(-2, -2, -2, -2, 265, -1, -1, -2, -2, -2, -2, -2, -2);
         ModifyEvent(-2, 16, -2, -2, 266, -1, -1, -2, -2, -2, -2, -2, -2);
         ModifyEvent(-2, 17, -2, -2, 267, -1, -1, -2, -2, -2, -2, -2, -2);

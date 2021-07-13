@@ -5,6 +5,5 @@ SetScenceMap(55, 1, 31, 46, 2054);
 SetScenceMap(55, 1, 29, 47, 2048);
 SetScenceMap(55, 1, 31, 47, 2052);
 SetScenceMap(55, 1, 30, 47, 0);
-jyx2_ReplaceSceneObject("55","Bake/Static/Others/Door_11","") --梅庄开门
-jyx2_ReplaceSceneObject("55","Bake/Static/Others/Door_1","") --梅庄开门
+jyx2_FixMapObject("梅庄大门打开",1);
 do return end;
