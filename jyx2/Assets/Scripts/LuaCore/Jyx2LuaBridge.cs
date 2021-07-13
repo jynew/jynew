@@ -674,7 +674,7 @@ namespace Jyx2
         static public bool JudgeScencePic(int scene, int eventId, int pic)
         {
             bool result = false;
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
 				//场景ID
                 if(scene == -2) //当前场景
                 {
