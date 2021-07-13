@@ -20,15 +20,15 @@ if TryBattle(47) == true then goto label0 end;
     Talk(0, "你们是日月神教的？", "talkname0", 1);
     Talk(33, "不错，我们是奉教主之命，在此看守任老怪的，你居然利用我们的弱点救他出去．", "talkname33", 0);
     Talk(34, "别说了，得赶紧回黑木崖向东方教主报告这件事．走！", "talkname34", 0);
-    jyx2_ReplaceSceneObject("", "NPC/danqingsheng1", "");--丹青生
-    jyx2_ReplaceSceneObject("", "NPC/tubiweng1", "");--秃笔翁
-    jyx2_ReplaceSceneObject("", "NPC/heibaizi1", "");--黑白子
-    yx2_ReplaceSceneObject("", "NPC/huangzhonggong1", "");--黄钟公
     DarkScence();
     ModifyEvent(-2, 20, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 21, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 22, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 23, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+    jyx2_ReplaceSceneObject("", "NPC/danqingsheng", "");--丹青生
+    jyx2_ReplaceSceneObject("", "NPC/tubiweng", "");--秃笔翁
+    jyx2_ReplaceSceneObject("", "NPC/heibaizi", "");--黑白子
+    yx2_ReplaceSceneObject("", "NPC/huangzhonggong", "");--黄钟公
     ModifyEvent(-2, 24, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

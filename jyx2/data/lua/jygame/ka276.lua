@@ -29,14 +29,7 @@ ModifyEvent(55, 21, 1, 1, -1, -1, -1, 6050, 6050, 6050, -2, -2, -2);
 ModifyEvent(55, 22, 1, 1, -1, -1, -1, 6062, 6062, 6062, -2, -2, -2);
 ModifyEvent(55, 23, 1, 1, -1, -1, -1, 6074, 6074, 6074, -2, -2, -2);
 ModifyEvent(55, 24, 0, 0, -1, -1, 275, -1, -1, -1, -2, -2, -2);
-jyx2_ReplaceSceneObject("55", "NPC/danqingsheng1", "1");--丹青生
-jyx2_ReplaceSceneObject("55", "NPC/tubiweng1", "1");--秃笔翁
-jyx2_ReplaceSceneObject("55", "NPC/heibaizi1", "1");--黑白子
-jyx2_ReplaceSceneObject("55", "NPC/huangzhonggong1", "1");--黄钟公
-jyx2_ReplaceSceneObject("55", "NPC/danqingsheng", "");--丹青生
-jyx2_ReplaceSceneObject("55", "NPC/tubiweng", "");--秃笔翁
-jyx2_ReplaceSceneObject("55", "NPC/heibaizi", "");--黑白子
-jyx2_ReplaceSceneObject("55", "NPC/huangzhonggong", "");--黄钟公
+jyx2_FixMapObject("任我行逃出地牢",1);
 ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

@@ -21,16 +21,12 @@ if UseItem(178) == true then goto label0 end;
         ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 11, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         SetScenceMap(-2, 1, 37, 34, 0);
-        jyx2_ReplaceSceneObject("", "NPC/danqingsheng3", "");--丹青生
-jyx2_ReplaceSceneObject("", "NPC/danqingsheng4", "1");--丹青生
-jyx2_ReplaceSceneObject("", "NPC/tubiweng2", "");--秃笔翁
-jyx2_ReplaceSceneObject("", "NPC/tubiweng3", "1");--秃笔翁
-jyx2_ReplaceSceneObject("", "NPC/heibaizi", "");--黑白子
-jyx2_ReplaceSceneObject("", "NPC/heibaizi2", "1");--黑白子
-        jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_026", "");--黄钟公开门
+        jyx2_ReplaceSceneObject("", "Dynamic/Door_026", "");--黄钟公开门
+		jyx2_SwitchRoleAnimation("Level/NPC/tubiweng", "Assets/BuildSource/AnimationControllers/jyx2humanoidController.controller");
         ModifyEvent(-2, 16, 1, 1, -1, -1, -1, 6064, 6064, 6064, -2, -2, -2);
         ModifyEvent(-2, 17, 1, 1, -1, -1, -1, 6060, 6060, 6060, -2, -2, -2);
         ModifyEvent(-2, 18, 1, 1, -1, -1, -1, 6046, 6046, 6046, -2, -2, -2);
+		jyx2_FixMapObject("梅庄求助黄钟公",1);
         LightScence();
         AddRepute(3);
 do return end;
