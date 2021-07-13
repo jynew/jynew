@@ -154,6 +154,10 @@ namespace Jyx2
 
                 //更新全局记录
                 runtime.ModifyEvent(scene, eventId, interactiveEventId, useItemEventId, enterEventId);
+				
+				if(p7!=-2){
+					runtime.SetMapPic(scene,eventId,p7);
+				}
 
                 //刷新当前场景中的事件
                 LevelMaster.Instance.RefreshGameEvents();
@@ -666,10 +670,33 @@ namespace Jyx2
             
         }
 
-        static public bool JudgeScencePic(int sceneId, int eventId, int pic)
+		//判断场景贴图。ModifyEvent里如果p7!=-2时，会更新对应{场景}_{事件}的贴图信息，可以用此方法JudegeScencePic检查对应的贴图信息
+        static public bool JudgeScencePic(int scene, int eventId, int pic)
         {
-            //判断场景图片？待修改
-            return false;
+            bool result = false;
+            RunInMainThrad(() => {
+				//场景ID
+                if(scene == -2) //当前场景
+                {
+                    scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+                }
+
+                //事件ID
+                if(eventId == -2)
+                {
+					var evt = GameEvent.GetCurrentGameEvent();
+                    if (evt != null)
+                    {
+                        eventId = int.Parse(evt.name); //当前事件
+					}
+                }
+				var _target=runtime.GetMapPic(scene, eventId);
+				//Debug.LogError(_target);
+                result = _target==pic;
+                Next();
+            });
+            Wait();
+            return result;
         }
 
         static public bool Judge14BooksPlaced()

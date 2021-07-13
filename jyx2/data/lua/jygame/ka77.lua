@@ -9,7 +9,6 @@ if TryBattle(8) == false then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/NPC2", "");--喽喽死掉
     jyx2_ReplaceSceneObject("", "NPC/NPC3", "");--喽喽死掉
     jyx2_ReplaceSceneObject("", "NPC/NPC4", "");--喽喽死掉
-    jyx2_ReplaceSceneObject("","GasWalls/Wall1","");
     LightScence();
     AddRepute(2);
     do return end;
