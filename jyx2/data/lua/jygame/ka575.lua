@@ -11,6 +11,7 @@ if AskRest() == true then goto  label0 end;
         Rest();
         AddItemWithoutHint(174, -20);
         SetScencePosition2(14, 14);
+		jyx2_MovePlayer("休息后","Level/Dynamic");
         SetRoleFace(3);
         LightScence();
 do return end;
