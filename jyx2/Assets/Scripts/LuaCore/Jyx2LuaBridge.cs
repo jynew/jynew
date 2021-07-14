@@ -727,7 +727,7 @@ namespace Jyx2
         }
 
         //标记一个场景是否可以进入
-        static public void OpenScence(int sceneId)
+        static public void OpenScene(int sceneId)
         {
             runtime.SetSceneEntraceCondition(sceneId.ToString(), 1);
         }
