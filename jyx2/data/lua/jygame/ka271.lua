@@ -15,10 +15,9 @@ Talk(0, "不好，用”春夏秋冬”或是”梅兰竹菊”比较好．较�
 Talk(33, "是吗？听起来似乎不错．", "talkname33", 0);
 Talk(0, "我这就去找他．", "talkname0", 1);
 ModifyEvent(-2, -2, -2, -2, 281, -1, -1, -2, -2, -2, -2, -2, -2);
-jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_0288", "");--开门
-jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_022", "");--开门
 SetScenceMap(-2, 1, 28, 30, 1832);
 SetScenceMap(-2, 1, 29, 30, 0);
 SetScenceMap(-2, 1, 30, 30, 1836);
+jyx2_FixMapObject("梅庄里门打开",1);
 AddItem(161, 1);
 do return end;
