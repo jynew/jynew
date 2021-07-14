@@ -9,5 +9,5 @@ if UseItem(191) == true then goto label0 end;
     AddItem(117, 1);
     ModifyEvent(-2, -2, -2, -2, 66, -1, -2, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 3, -2, -2, -1, -1, 67, -2, -2, -2, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/xiexun", ""); 
+
 do return end;
