@@ -674,7 +674,7 @@ namespace Jyx2
         static public bool JudgeScencePic(int scene, int eventId, int pic)
         {
             bool result = false;
-            RunInMainThrad(() => {
+            RunInMainThread(() => {
 				//场景ID
                 if(scene == -2) //当前场景
                 {
@@ -727,7 +727,7 @@ namespace Jyx2
         }
 
         //标记一个场景是否可以进入
-        static public void OpenScence(int sceneId)
+        static public void OpenScene(int sceneId)
         {
             runtime.SetSceneEntraceCondition(sceneId.ToString(), 1);
         }
@@ -1136,29 +1136,19 @@ namespace Jyx2
         static public void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
         {
             Debug.Log("jyx2_SwitchRoleAnimation called");
+
             RunInMainThread(() =>
             {
-                var roleObj = GameObject.Find(rolePath);
-                if (roleObj == null)
+                LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
+                if (level == null)
                 {
-                    Debug.LogError($"错误：{rolePath}不存在。");
-                    Next();
-                    return;
-                }
-                var animator = roleObj.GetComponent<Animator>();
-                if (animator == null)
-                {
-                    Debug.LogError($"错误：{rolePath}没有Animator组件。");
+                    Debug.LogError("jyx2_SwitchRoleAnimation调用错误，找不到LevelMaster");
                     Next();
                     return;
                 }
 
-                Jyx2ResourceHelper.LoadAsset<RuntimeAnimatorController>(animationControllerPath, rst =>
-                {
-                    animator.runtimeAnimatorController = rst;
-                    Next();
-                });
-                
+                level.ReplaceNpcAnimatorController("", rolePath, animationControllerPath);
+                Next();
             });
             Wait();
         }

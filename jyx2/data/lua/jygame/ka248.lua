@@ -19,9 +19,8 @@ if UseItem(180) == true then goto label0 end;
         DarkScence();
         ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         SetScenceMap(-2, 1, 37, 42, 0);
-        jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_027", "");--秃笔翁开门
-        jyx2_ReplaceSceneObject("", "NPC/danqingsheng", "");--丹青生
-        jyx2_ReplaceSceneObject("", "NPC/danqingsheng2", "1");--丹青生
+        jyx2_ReplaceSceneObject("", "Dynamic/Door_027", "");--秃笔翁开门
+		jyx2_FixMapObject("梅庄求助秃笔翁",1);
         ModifyEvent(-2, 8, 1, 1, 251, -1, -1, 6048, 6048, 6048, -2, -2, -2);
         LightScence();
         AddRepute(2);
