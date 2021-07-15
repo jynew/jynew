@@ -26,8 +26,23 @@ static public class Jyx2EventsGraphStatic
             tmp.Add(item.Name);
         }
         s_itemList = tmp.ToArray();
+
+        tmp.Clear();
+        foreach (var item in ConfigTable.GetAll<Jyx2Skill>())
+        {
+            tmp.Add(item.Name);
+        }
+        s_skillList = tmp.ToArray();
+        tmp.Clear();
+        foreach (var item in ConfigTable.GetAll<Jyx2Map>())
+        {
+            tmp.Add(item.Name);
+        }
+        s_sceneList = tmp.ToArray();
     }
 
     public static string[] s_roleList;
     public static string[] s_itemList;
+    public static string[] s_skillList;
+    public static string[] s_sceneList;
 }
