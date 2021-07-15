@@ -20,11 +20,15 @@ if TryBattle(87) == true then goto label0 end;
     ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/xingxiupai1", "");--战斗结束，移除人物
-    jyx2_ReplaceSceneObject("", "NPC/xingxiupai2", "");--战斗结束，移除人物
-    jyx2_ReplaceSceneObject("", "NPC/xingxiupai3", "");--战斗结束，移除人物
+    jyx2_ReplaceSceneObject("", "NPC/星宿弟子5", "");
+    jyx2_ReplaceSceneObject("", "NPC/星宿弟子6", "");
+    jyx2_ReplaceSceneObject("", "NPC/星宿弟子7", "");
+    jyx2_ReplaceSceneObject("", "NPC/星宿弟子8", "");
+    jyx2_ReplaceSceneObject("", "NPC/星宿弟子9", "");
     ModifyEvent(-2, 4, -2, -2, -2, -1, -1, 6378, 6378, 6378, -2, 35, 24);
+	jyx2_SwitchRoleAnimation("NPC/youtanzhi","");
     SetScencePosition2(37, 25);
+	jyx2_MovePlayer("战斗后","Level/Dynamic");
     LightScence();
     Talk(0, "姑娘，这是怎么一回事？", "talkname0", 1);
     Talk(47, "我师哥他们要杀我，你跑出来救了我，就是这样啊．", "talkname47", 0);
