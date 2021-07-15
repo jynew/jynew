@@ -1,7 +1,7 @@
 if InTeam(53) == true then goto label0 end;
     do return end;
 ::label0::
-    if JudgeScencePic(-2, 2, 6298, 1, 0) then goto label1 end;
+    if JudgeScenePic(-2, 2, 6298, 1, 0) then goto label1 end;
         do return end;
 ::label1::
         Talk(53, "兄弟，我决定要留下来陪神仙姊姊，服侍她．你自己走吧．", "talkname53", 1);

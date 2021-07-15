@@ -120,8 +120,8 @@ instruct_57 = CS.Jyx2.Jyx2LuaBridge.instruct_57
 FightForTop = CS.Jyx2.Jyx2LuaBridge.FightForTop
 --59=3b|1|0|0|0|AllLeave();
 AllLeave = CS.Jyx2.Jyx2LuaBridge.AllLeave
---60=3c|6|1|4|5|JudgeScencePic(#0, #1, #2, #3, #4);
-JudgeScencePic = CS.Jyx2.Jyx2LuaBridge.JudgeScencePic
+--60=3c|6|1|4|5|JudgeScenePic(#0, #1, #2, #3, #4);
+JudgeScenePic = CS.Jyx2.Jyx2LuaBridge.JudgeScenePic
 --61=3d|3|1|1|2|if Judge14BooksPlaced() == bool then goto label#x end; --这个写法太蠢了，待调整
 Judge14BooksPlaced = CS.Jyx2.Jyx2LuaBridge.Judge14BooksPlaced
 --62=3e|7|0|0|0|EndAmination(#0, #1, #2, #3, #4, #5, #6); --结局动画

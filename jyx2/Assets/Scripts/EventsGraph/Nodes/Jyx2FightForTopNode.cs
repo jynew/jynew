@@ -17,6 +17,6 @@ public class Jyx2FightForTopNode : Jyx2SimpleNode
     
     protected override void DoExecute()
 	{   
-		Jyx2LuaBridge.FightForTop(roleId);
+		Jyx2LuaBridge.FightForTop();
 	}
 }

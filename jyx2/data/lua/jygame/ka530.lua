@@ -12,7 +12,7 @@ if InTeam(51) == false then goto label0 end;
         if InTeam(51) == true then goto label2 end;--慕容复不是队员，出现王语嫣
             ModifyEvent(-2, 23, 1, 1, -1, -1, -1, 6298, 6298, 6298, -2, -2, -2);--by fanyu 改变贴图 场景51-23
             jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "1");--王语嫣
-			if JudgeScencePic(52, 3, 6310, 0, 14)==false then goto label3 end;--如果之前带段誉拜访过燕子坞，同时出现段誉. 否则跳转label3
+			if JudgeScenePic(52, 3, 6310, 0, 14)==false then goto label3 end;--如果之前带段誉拜访过燕子坞，同时出现段誉. 否则跳转label3
                 ModifyEvent(-2, 24, 1, 1, -1, -1, -1, 6314, 6314, 6314, -2, -2, -2);--by fanyu 改变贴图 场景51-24
 				jyx2_ReplaceSceneObject("", "NPC/段誉", "1");--段誉出现
 ::label2::
@@ -49,14 +49,14 @@ if InTeam(51) == false then goto label0 end;
                                 ModifyEvent(52, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 								jyx2_ReplaceSceneObject("52", "NPC/murongfu", "");
                                 LightScence();
-                                if JudgeScencePic(-2, 23, 6298, 1, 0) then goto label8 end;--如果前面显示王语嫣，跳转label8
+                                if JudgeScenePic(-2, 23, 6298, 1, 0) then goto label8 end;--如果前面显示王语嫣，跳转label8
                                     do return end;
 ::label8::
                                     Talk(0, "王姑娘，你怎么还在这，你表哥已经走了．", "talkname0", 1);
                                     Talk(109, "唉！我表哥为了大燕复国之事，已经发疯了．在他一生之中，便是梦想要做大燕皇帝．这也难怪，因为他慕容氏世世代代，做的便是这个梦．他祖宗几十代做下来的梦，传到他身上，怎又能盼他觉醒呢？我表哥他本性并不坏，只不　过为了想做大燕皇帝，行事　才会变得如此不择手段．．", "talkname109", 0);
                                     Talk(0, "可是你不是一直都喜欢着他吗．．．", "talkname0", 1);
                                     Talk(109, "在我表哥心中，复兴大业一直都是他心中最重要的事，儿女私情只不过．．．．．", "talkname109", 0);
-                                    if JudgeScencePic(-2, 24, 6314, 46, 0) then goto label9 end;--如果上面显示段誉跳转label9
+                                    if JudgeScenePic(-2, 24, 6314, 46, 0) then goto label9 end;--如果上面显示段誉跳转label9
                                         Talk(0, "王姑娘，你别烦恼，或许过阵子你表哥就会想通了．", "talkname0", 1);
                                         Talk(109, "希望如此．那我先回燕子坞了．公子，告辞！", "talkname109", 0);
                                         DarkScence();

@@ -17,6 +17,6 @@ public class Jyx2AllLeaveNode : Jyx2SimpleNode
     
     protected override void DoExecute()
 	{   
-		Jyx2LuaBridge.AllLeave(roleId);
+		Jyx2LuaBridge.AllLeave();
 	}
 }
