@@ -3,23 +3,6 @@ if UseItem(160) == true then goto label0 end;
 ::label0::
     Talk(0, "咦！怎么有字浮现出来，写着什么来着 ．．．”连城诀”．．．江陵城南西天宁寺大殿佛像后．．．", "talkname0", 1);
     ModifyEvent(-2, -2, -2, -2, -2, 604, -1, -2, -2, -2, -2, -2, -2);
-    jyx2_ReplaceSceneObject("63", "NPC/1", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/2", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/3", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/4", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/5", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/6", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/7", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/8", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/9", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/10", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/11", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/12", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/13", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/14", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/15", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "NPC/16", "1");--天宁寺出现
-    jyx2_ReplaceSceneObject("63", "Bake/Static/Book", "1");--天宁寺出现
     ModifyEvent(63, 1, 1, 1, -1, -1, -1, 6768, 6768, 6768, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本
     ModifyEvent(63, 2, 1, 1, -1, -1, -1, 6768, 6768, 6768, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本
     ModifyEvent(63, 3, 1, 1, -1, -1, -1, 6766, 6766, 6766, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本
@@ -36,6 +19,8 @@ if UseItem(160) == true then goto label0 end;
     ModifyEvent(63, 14, 1, 1, -1, -1, -1, 5222, 5222, 5222, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本
     ModifyEvent(63, 15, 1, 1, -1, -1, -1, 5222, 5222, 5222, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本
     ModifyEvent(63, 16, 1, 1, -1, -1, -1, 6778, 6778, 6778, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本
+	jyx2_ReplaceSceneObject("63", "NPC/各派弟子", "1");
     ModifyEvent(63, 17, 0, 0, -1, -1, 606, -1, -1, -1, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本
     ModifyEvent(63, 18, 0, 0, 644, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|场景06-编号00。在天宁寺（场景63）生成一批敌人，进入天宁寺后启动606脚本，战斗胜利后启动644脚本
+    jyx2_ReplaceSceneObject("63", "Dynamic/Book", "1");--天宁寺出现
 do return end;
