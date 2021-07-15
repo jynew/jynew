@@ -646,7 +646,7 @@ namespace Jyx2
         }
 
         //打开所有场景
-        static public void OpenAllScence()
+        static public void OpenAllScene()
         {
             foreach(var map in ConfigTable.GetAll<Jyx2Map>())
             {
