@@ -4,6 +4,6 @@ Talk(0, "我不会杀你的，快去包扎包扎．", "talkname0", 1);
 --jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_06", "");--地道打开
 --jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_07", "");--地道打开
 --jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_08", "");--地道打开
-jyx2_ReplaceSceneObject("", "NPC/chuzi", "");--厨子去包扎
+-- jyx2_ReplaceSceneObject("", "NPC/chuzi", "");--厨子去包扎
 
 do return end;

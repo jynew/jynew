@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2473856402868463696}
   - component: {fileID: 8409570283994821162}
+  - component: {fileID: 99407169}
   m_Layer: 0
   m_Name: "\u660E\u6559\u5F1F\u5B50"
   m_TagString: Untagged
@@ -166,7 +167,7 @@ Animator:
   m_GameObject: {fileID: 2963148541032968938}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6b91317339aa1794c9f9f0ca3d7b7ce6, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ca7ad3a0ecd33d94a80754bcac1bc7b4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -175,6 +176,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!208 &99407169
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2963148541032968938}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3268233856928505245
 GameObject:
   m_ObjectHideFlags: 0
