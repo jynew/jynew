@@ -11,6 +11,7 @@ if TryBattle(9) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
+    DarkScence();
     ModifyEvent(-2, 4, -2, -2, -1, -1, -1, 5308, 5308, 5308, -2, -2, -2);--by fanyu|战斗后人物贴图替换。场景12-编号4
     ModifyEvent(-2, 5, -2, -2, -1, -1, -1, 5310, 5310, 5310, -2, -2, -2);--by fanyu|战斗后人物贴图替换。场景12-编号5
     ModifyEvent(-2, 6, -2, -2, -1, -1, -1, 5312, 5312, 5312, -2, -2, -2);--by fanyu|战斗后人物贴图替换。场景12-编号6
@@ -38,12 +39,13 @@ if TryBattle(9) == true then goto label0 end;
     Talk(18, "哼！就凭你．", "talkname18", 0);
     Talk(11, "你．．你．．真的行吗？", "talkname11", 0);
     Talk(0, "别忘了，如果连我也不行的话，那你可能更惨哦！快去吧，我随后就到．", "talkname0", 1);
-    jyx2_ReplaceSceneObject("", "NPC/yangxiao", "");--杨逍离开去光明顶
     AddRepute(4);
     if TryBattle(10) == true then goto label1 end;
         Dead();
         do return end;
 ::label1::
+        DarkScence();
+        jyx2_ReplaceSceneObject("", "NPC/yangxiao", "");--杨逍离开去光明
         ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号4
         ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号5
         ModifyEvent(-2, 6, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号6
@@ -58,13 +60,11 @@ if TryBattle(9) == true then goto label0 end;
          jyx2_ReplaceSceneObject("", "NPC/NPC7", "");--明教教徒离开去光明顶
          jyx2_ReplaceSceneObject("", "NPC/NPC8", "");--明教教徒离开去光明顶
          jyx2_ReplaceSceneObject("", "NPC/NPC9", "");--明教教徒离开去光明顶
-        jyx2_ReplaceSceneObject("", "NPC/chengkun", "");--成昆从地道逃跑
-        
+        jyx2_ReplaceSceneObject("", "NPC/chengkun", "");--成昆从地道逃跑      
         ModifyEvent(-2, 11, 1, 1, 80, -1, -1, 5310, 5310, 5310, -2, -2, -2);--by fanyu|生成人物，启动80号脚本。场景12-编号11
         jyx2_ReplaceSceneObject("", "NPC/chuzi", "1");--厨子出来
         SetScenceMap(-2, 1, 28, 24, 0);--by fanyu|明教地道的门打开。场景12-坐标28,24
-		jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_08", "");--地道打开
-        
+		jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_08", "");--地道打开       
         LightScence();
         
         Talk(0, "这老贼溜的倒快，没时间追他了，我得赶快赶去光明顶才是．", "talkname0", 1);
