@@ -8,8 +8,8 @@ using UnityEngine;
 using XNodeEditor;
 
 
-[CustomNodeEditor(typeof(Jyx2AddAptitudeNode))]
-public class Jyx2AddAptitudeNodeEditor : NodeEditor
+[CustomNodeEditor(typeof(Jyx2SetSexualNode))]
+public class Jyx2SetSexualNodeEditor : NodeEditor
 {
     private Jyx2NodeEditorHelperRole _roleDrawer;
 
@@ -25,10 +25,9 @@ public class Jyx2AddAptitudeNodeEditor : NodeEditor
         serializedObject.Update();
         
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("prev"));
-        _roleDrawer.DrawAll();
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("increment"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("next"));
-        
+        _roleDrawer.DrawAll();
+        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("gender"));
         // Apply property modifications
         serializedObject.ApplyModifiedProperties();
     }

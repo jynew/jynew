@@ -646,7 +646,7 @@ namespace Jyx2
         }
 
         //打开所有场景
-        static public void OpenAllScence()
+        static public void OpenAllScene()
         {
             foreach(var map in ConfigTable.GetAll<Jyx2Map>())
             {
@@ -670,8 +670,8 @@ namespace Jyx2
             
         }
 
-		//判断场景贴图。ModifyEvent里如果p7!=-2时，会更新对应{场景}_{事件}的贴图信息，可以用此方法JudegeScencePic检查对应的贴图信息
-        static public bool JudgeScencePic(int scene, int eventId, int pic)
+		//判断场景贴图。ModifyEvent里如果p7!=-2时，会更新对应{场景}_{事件}的贴图信息，可以用此方法JudegeScenePic检查对应的贴图信息
+        static public bool JudgeScenePic(int scene, int eventId, int pic)
         {
             bool result = false;
             RunInMainThread(() => {

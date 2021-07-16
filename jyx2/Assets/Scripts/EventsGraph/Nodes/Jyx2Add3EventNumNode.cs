@@ -7,7 +7,7 @@ using Jyx2;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("修改触发器事件")]
+[CreateNodeMenu("场景/修改触发器事件")]
 [NodeWidth(150)]
 public class Jyx2Add3EventNumNode : Jyx2SimpleNode
 {

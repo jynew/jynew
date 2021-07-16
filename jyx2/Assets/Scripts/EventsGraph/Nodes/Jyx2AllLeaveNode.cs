@@ -7,18 +7,16 @@ using Jyx2;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("场景/标记场景可以进入")]
-[NodeWidth(200)]
-public class Jyx2OpenSceneNode : Jyx2SimpleNode
+[CreateNodeMenu("游戏数据/全体队友离队")]
+[NodeWidth(180)]
+public class Jyx2AllLeaveNode : Jyx2SimpleNode
 {
     private void Reset() {
-        name = "标记场景可以进入";
+        name = "全体队友离队";
     }
-    [Header("场景id")]
-    public int sceneId;
     
     protected override void DoExecute()
 	{   
-		Jyx2LuaBridge.OpenScene(sceneId);
+		Jyx2LuaBridge.AllLeave();
 	}
 }
