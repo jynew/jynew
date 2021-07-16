@@ -646,6 +646,7 @@ public class MapRole : Jyx2AnimationBattleRole
             if(animator != null)
                 animator.enabled = false;
 
+            this.modelAsset = modelAsset;
             callback?.Invoke();
         });
     }

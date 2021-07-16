@@ -13,8 +13,7 @@ if AskRest() == true then goto  label0 end;
         Rest();
         AddItemWithoutHint(174, -200);
         SetScencePosition2(14, 14);
-		-- add by eaphone at 2021/6/5
-		jyx2_MovePlayer("999");
+		jyx2_MovePlayer("休息后","Level/Dynamic");
         SetRoleFace(3);
         LightScence();
 do return end;
