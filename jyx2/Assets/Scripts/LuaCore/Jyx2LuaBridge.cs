@@ -1157,15 +1157,19 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                runtime.KeyValues[flag] = isSet;
+				runtime.KeyValues[flag] = isSet;
                 var objs = GameObject.FindObjectsOfType<FixWithGameRuntime>();
                 if (objs != null)
                 {
 					foreach(var obj in objs)
 					{
-						obj.Reload();
+						if(flag==obj.Flag)
+							obj.Reload();
+						else continue;
 					}
                 }
+				LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
+				level.RefreshSceneObjects();
                 Next();
             });
 

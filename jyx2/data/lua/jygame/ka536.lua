@@ -21,7 +21,7 @@ ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 0, 1, 1, 537, -1, -1, 6340, 6340, 6340, -2, -2, -2);
 ModifyEvent(35, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_FixMapObject("逍遥子传功完毕",0);
-jyx2_SwitchRoleAnimation("Level/NPC/suxinghe", "Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
+jyx2_SwitchRoleAnimation("NPC/suxinghe", "Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
 jyx2_ReplaceSceneObject("35","NPC/星宿弟子3","");
 NPCAddItem(49, 128, 1);
 NPCAddItem(49, 56, 1);
