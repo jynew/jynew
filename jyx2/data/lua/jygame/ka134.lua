@@ -4,7 +4,6 @@ Talk(0, "是吗？那我可得小心点．在下告退了．", "talkname0", 1);
 SetScenceMap(-2, 1, 18, 24, 0);
 SetScenceMap(-2, 1, 17, 24, 1832);
 SetScenceMap(-2, 1, 19, 24, 1836);
-jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_0242", "");--开门
-jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_0243", "");--开门
+jyx2_FixMapObject("昆仑派开门",1);
 ModifyEvent(-2, -2, -2, -2, 164, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

@@ -50,11 +50,6 @@ if InTeam(38) == true then goto label0 end;
     Talk(39, "兄弟，你我心愿已了，我们也该歇息了．这腊八粥之约以后也不必了．我们这就去告诉各位掌门不用再钻研此图解了．公子，你们也可赶紧离去，但千万别对人说石兄弟已练成此神功，否则后患无穷．", "talkname39", 0);
     Talk(0, "前辈，告辞了．", "talkname0", 1);
     DarkScence()
-    -- jyx2_ReplaceSceneObject("", "NPC/shipotian4", "");--石破天出现
-    jyx2_ReplaceSceneObject("", "NPC/daozhu2", "1");-- 
-    jyx2_ReplaceSceneObject("", "NPC/daozhu1", "1");-- 
-    jyx2_ReplaceSceneObject("", "NPC/daozhu21", "");-- 
-    jyx2_ReplaceSceneObject("", "NPC/daozhu11", "");-- 
     AddItem(154, 1);
     AddItem(60, 1);
     ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
@@ -64,20 +59,24 @@ if InTeam(38) == true then goto label0 end;
     ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 11, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+	jyx2_ReplaceSceneObject("", "NPC/唐文亮7", "");
+	jyx2_ReplaceSceneObject("", "NPC/何太冲8", "");
+	jyx2_ReplaceSceneObject("", "NPC/定闲9", "");
+	jyx2_ReplaceSceneObject("", "NPC/天门道人10", "");
+	jyx2_ReplaceSceneObject("", "NPC/莫大11", "");
     ModifyEvent(-2, 12, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 13, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+	jyx2_FixMapObject("侠客岛岛主移动到房间",0);
+	jyx2_SwitchRoleAnimation("NPC/龙岛主","");
+	jyx2_SwitchRoleAnimation("NPC/木岛主","");
     ModifyEvent(-2, 16, 0, 0, -1, -1, 388, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 17, 0, 0, -1, -1, 388, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 18, 0, 0, -1, -1, 388, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 2, 1, 1, 364, -1, -1, 5132, 5132, 5132, -2, -2, -2);
     ModifyEvent(-2, 3, 1, 1, 365, -1, -1, 5136, 5136, 5136, -2, -2, -2);
     ModifyEvent(-2, 14, 1, 1, 366, -1, -1, 5148, 5148, 5148, -2, -2, -2);
-    ModifyEvent(-2, 15, 1, 1, 367, -1, -1, 5142, 5142, 5142, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/NPC 7", "");--侠客岛众人离去
-    jyx2_ReplaceSceneObject("", "NPC/NPC 8", "");-- 
-    jyx2_ReplaceSceneObject("", "NPC/NPC 9", "");-- 
-    jyx2_ReplaceSceneObject("", "NPC/NPC10", "");-- 
-    jyx2_ReplaceSceneObject("", "NPC/NPC11", "");-- 
+    ModifyEvent(-2, 15, 1, 1, 367, -1, -1, 5142, 5142, 5142, -2, -2, -2); 
+	jyx2_FixMapObject("侠客岛弟子移动到岛主后",1);
     LightScence();
     LearnMagic2(38, 23, 0);
     AddAttack(38, 10);

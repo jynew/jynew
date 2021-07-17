@@ -57,10 +57,10 @@ if TeamIsFull() == false then goto label0 end;
                         ModifyEvent(-2, 0, 1, 1, 321, -1, -1, 5910, 5910, 5910, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号0
                         ModifyEvent(-2, 1, 1, 1, 321, -1, -1, 5908, 5908, 5908, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号1
                         jyx2_FixMapObject("任我行战斗后","1");
-						jyx2_SwitchRoleAnimation("Level/NPC/renwoxing","Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
+						jyx2_SwitchRoleAnimation("NPC/renwoxing","Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
 						ModifyEvent(-2, 86, 1, 1, -1, -1, -1, 7966, 7966, 7966, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号86
 						jyx2_FixMapObject("东方不败战斗后","1");
-						jyx2_SwitchRoleAnimation("Level/NPC/dongfangbubai","");--需要改为脸朝天躺地上controller
+						jyx2_SwitchRoleAnimation("NPC/dongfangbubai","");--需要改为脸朝天躺地上controller
                         LightScence();
                         if InTeam(26) == false then goto label6 end;
                             Leave(26);
