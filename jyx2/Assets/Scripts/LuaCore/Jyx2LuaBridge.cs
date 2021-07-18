@@ -708,7 +708,7 @@ namespace Jyx2
 
         static public bool Judge14BooksPlaced()
         {
-            return false;
+            return jyx2_CheckEventCount(82,999,0)==14;
         }
 
         static public void EndAmination(int p1, int p2, int p3, int p4, int p5, int p6, int p7)

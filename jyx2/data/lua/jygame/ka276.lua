@@ -13,17 +13,23 @@ Talk(0, "竟有如此狼心狗肺的家伙，不要让我遇上，不然一定�
 Talk(26, "哈！哈！哈！就凭你．哈．．．！", "talkname26", 0);
 Talk(0, "啊．．．．．", "talkname0", 1);
 PlayAnimation(-1, 5974, 5992);
+jyx2_PlayTimeline("[Timeline]ka37_药王山庄_晕倒", 0, false);
+jyx2_Wait(2);
 DarkScence();
+jyx2_StopTimeline("[Timeline]ka37_药王山庄_晕倒");
 AddItemWithoutHint(177, -1);
 AddItemWithoutHint(178, -1);
 AddItemWithoutHint(179, -1);
 AddItemWithoutHint(180, -1);
 ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_ReplaceSceneObject("", "NPC/renwoxing", "");--任我行逃走
+jyx2_PlayTimeline("[Timeline]ka37_药王山庄_苏醒", 0, false);
 LightScence();
 PlayAnimation(-1, 6014, 6024);
+jyx2_StopTimeline("[Timeline]ka37_药王山庄_苏醒");
 Talk(0, "可恶的老头，竟趁我不备偷袭．．．．啊！我的宝物！我上当了！一定是那四个卑鄙狗贼，明的打不过我，来阴的．真是太无耻下流了．", "talkname0", 1);
 Talk(0, "这是什么鬼地方？奇怪？方才那老家伙突然一阵吼声．．．．．喔！一定是那四个狗贼，明的打不过我，来暗的．真是太无耻下流了．咦？这门没关，又不像是要把我关在这儿．嗯，真是可疑？看来可得好好的”瞧瞧”这个鬼地方！", "talkname0", 1);
+jyx2_StopTimeline("[Timeline]ka37_药王山庄_苏醒");
 ModifyEvent(55, 20, 1, 1, -1, -1, -1, 6060, 6060, 6060, -2, -2, -2);
 ModifyEvent(55, 21, 1, 1, -1, -1, -1, 6050, 6050, 6050, -2, -2, -2);
 ModifyEvent(55, 22, 1, 1, -1, -1, -1, 6062, 6062, 6062, -2, -2, -2);
