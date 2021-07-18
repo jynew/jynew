@@ -1170,7 +1170,7 @@ namespace Jyx2
                 {
 					foreach(var obj in objs)
 					{
-						if(flag==obj.Flag)
+						if(key==obj.Flag)
 							obj.Reload();
 						else continue;
 					}
