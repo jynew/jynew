@@ -1170,9 +1170,13 @@ namespace Jyx2
                 {
 					foreach(var obj in objs)
 					{
-						obj.Reload();
+						if(flag==obj.Flag)
+							obj.Reload();
+						else continue;
 					}
                 }
+				LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
+				level.RefreshSceneObjects();
                 Next();
             });
 

@@ -13,7 +13,12 @@ if TryBattle(94) == true then goto label0 end;
     ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "Gaswall/Wall1", "");--战斗结束，移除空气墙
+    jyx2_ReplaceSceneObject("","NPC/神龙弟子5","");
+    jyx2_ReplaceSceneObject("","NPC/神龙弟子6","");
+    jyx2_ReplaceSceneObject("","NPC/神龙弟子7","");
+    jyx2_ReplaceSceneObject("","NPC/神龙弟子8","");
+    jyx2_ReplaceSceneObject("","NPC/神龙弟子9","");
+    jyx2_ReplaceSceneObject("","NPC/神龙弟子10","");
     LightScence();
     Talk(0, "踏破铁鞋无觅处，得来全不费功夫．这里或许有我要找的书，进去找他们老大要．", "talkname0", 1);
     AddRepute(1);
