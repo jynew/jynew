@@ -7,5 +7,5 @@ if UseItem(188) == true then goto label0 end;
     Talk(0, "哈！这刀孔大小正适合放这把鸯刀．", "talkname0", 1);
     SetScenceMap(-2, 1, 23, 39, 0);
     SetScenceMap(-2, 1, 24, 39, 0);
-    jyx2_ReplaceSceneObject("", "Bake/Static/Langan_05", "");-- open door 
+    jyx2_FixMapObject("鸳鸯山洞开门",1);
 do return end;

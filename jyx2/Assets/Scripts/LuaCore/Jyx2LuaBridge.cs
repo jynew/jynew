@@ -667,7 +667,14 @@ namespace Jyx2
         //所有人离队
         static public void AllLeave()
         {
-            
+            RunInMainThread(() => {
+                Debug.Log("call AllLeave()");
+                Debug.Log(runtime.Team.Count);
+                runtime.Team.ForEach(r => Debug.Log(r.Key));
+                runtime.Team.RemoveAll(role => role.Key != "0");
+                Next();
+            });
+            Wait();
         }
 
 		//判断场景贴图。ModifyEvent里如果p7!=-2时，会更新对应{场景}_{事件}的贴图信息，可以用此方法JudegeScenePic检查对应的贴图信息
@@ -701,7 +708,7 @@ namespace Jyx2
 
         static public bool Judge14BooksPlaced()
         {
-            return false;
+            return jyx2_CheckEventCount(82,999,0)==14;
         }
 
         static public void EndAmination(int p1, int p2, int p3, int p4, int p5, int p6, int p7)
@@ -913,12 +920,12 @@ namespace Jyx2
 		// parent: parent path of destination transform
 		// target: "" mean transport player. otherwise, need the full path of transport object.
 		// eahphone at 2021/6/5
-        static public void jyx2_MovePlayer(string path,string parent="Level/Triggers",string target="")
+        static public void jyx2_MovePlayer(string path, string parent="Level/Triggers", string target="")
         {
 			RunInMainThread(() =>
             {
                 var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
-				levelMaster.TransportToTransform(parent,path,target);
+				levelMaster.TransportToTransform(parent, path, target);
 				Next();
             });
 			Wait();
@@ -1153,17 +1160,17 @@ namespace Jyx2
             Wait();
         }
 
-        static public void jyx2_FixMapObject(string flag, string isSet)
+        static public void jyx2_FixMapObject(string key, string value)
         {
             RunInMainThread(() =>
             {
-				runtime.KeyValues[flag] = isSet;
+                runtime.KeyValues[key] = value;
                 var objs = GameObject.FindObjectsOfType<FixWithGameRuntime>();
                 if (objs != null)
                 {
 					foreach(var obj in objs)
 					{
-						if(flag==obj.Flag)
+						if(key==obj.Flag)
 							obj.Reload();
 						else continue;
 					}

@@ -2,11 +2,7 @@ ModifyEvent(-2, 35, 1, 1, -1, -1, -1, 8246, 8246, 8246, -2, -2, -2);
 ModifyEvent(-2, 36, 1, 1, -1, -1, -1, 8248, 8248, 8248, -2, -2, -2);
 ModifyEvent(-2, 37, 1, 1, -1, -1, -1, 8250, 8250, 8250, -2, -2, -2);
 ModifyEvent(-2, 38, 1, 1, -1, -1, -1, 8252, 8252, 8252, -2, -2, -2);
-jyx2_ReplaceSceneObject("", "NPC/nanxian", "1");--南贤出现
-jyx2_ReplaceSceneObject("", "NPC/beichou", "1");--北丑出现
-jyx2_ReplaceSceneObject("", "NPC/chushi", "1");--厨师出现
-jyx2_ReplaceSceneObject("", "NPC/kongbala", "1");--孔巴拉出现
-jyx2_ReplaceSceneObject("", "Bake/Static/Langan_05_2", "");--开门
+jyx2_ReplaceSceneObject("", "NPC/四大金刚", "1");
 ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 Talk(0, "门总算开了，终于可以回去了．可是，心里面好像怪怪的，总觉得好像少了件什么事．．．．．．", "talkname0", 1);
@@ -23,17 +19,8 @@ if JudgeEthics(0, 0, 50) == true then goto label0 end;
     ModifyEvent(-2, 31, 1, 1, -1, -1, -1, 8218, 8218, 8218, -2, -2, -2);
     ModifyEvent(-2, 32, 1, 1, -1, -1, -1, 8220, 8220, 8220, -2, -2, -2);
     ModifyEvent(-2, 33, 1, 1, -1, -1, -1, 8222, 8222, 8222, -2, -2, -2);
-    ModifyEvent(-2, 34, 1, 1, -1, -1, -1, 8224, 8224, 8224, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/xuanci", "1");--玄慈出现
-    jyx2_ReplaceSceneObject("", "NPC/zhangsanfeng", "1");--张三丰出现
-    jyx2_ReplaceSceneObject("", "NPC/miaorenfeng", "1");--苗人凤出现
-    jyx2_ReplaceSceneObject("", "NPC/guojing", "1");--郭靖出现
-    jyx2_ReplaceSceneObject("", "NPC/zhoubotong", "1");--周伯通出现
-    jyx2_ReplaceSceneObject("", "NPC/huangrong", "1");--黄蓉出现
-    jyx2_ReplaceSceneObject("", "NPC/huangyaoshi", "1");--黄药师出现
-    jyx2_ReplaceSceneObject("", "NPC/hongqigong", "1");--洪七公出现
-    jyx2_ReplaceSceneObject("", "NPC/qiaofeng", "1");--乔峰出现
-    jyx2_ReplaceSceneObject("", "NPC/qiuchuji", "1");--丘处机出现   
+    ModifyEvent(-2, 34, 1, 1, -1, -1, -1, 8224, 8224, 8224, -2, -2, -2);  
+	jyx2_ReplaceSceneObject("", "NPC/反派NPC", "1");
     SetRoleFace(1);
     LightScence();
     Talk(0, "我就知道，每次在结局前，总是少不了一场大混战．", "talkname0", 1);
@@ -52,16 +39,6 @@ if JudgeEthics(0, 0, 50) == true then goto label0 end;
         LightScence();
         Talk(60, "哼！算你厉害．我们走．", "talkname60", 0);
         DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/xuanci", "");--玄慈离开
-    jyx2_ReplaceSceneObject("", "NPC/zhangsanfeng", "");--张三丰离开
-    jyx2_ReplaceSceneObject("", "NPC/miaorenfeng", "");--苗人凤离开
-    jyx2_ReplaceSceneObject("", "NPC/guojing", "");--郭靖离开
-    jyx2_ReplaceSceneObject("", "NPC/zhoubotong", "");--周伯通离开
-    jyx2_ReplaceSceneObject("", "NPC/huangrong", "");--黄蓉离开
-    jyx2_ReplaceSceneObject("", "NPC/huangyaoshi", "");--黄药师离开
-    jyx2_ReplaceSceneObject("", "NPC/hongqigong", "");--洪七公离开
-    jyx2_ReplaceSceneObject("", "NPC/qiaofeng", "");--乔峰离开
-    jyx2_ReplaceSceneObject("", "NPC/qiuchuji", "");--丘处机离开 
         ModifyEvent(-2, 25, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 26, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 27, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
@@ -72,13 +49,15 @@ if JudgeEthics(0, 0, 50) == true then goto label0 end;
         ModifyEvent(-2, 32, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 33, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 34, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+        jyx2_ReplaceSceneObject("", "NPC/反派NPC", "");
         LightScence();
         PlayWave(23);
         Talk(0, "总算料理完毕了．咦！好像又有声音．", "talkname0", 1);
         DarkScence();
         SetScenceMap(-2, 1, 18, 25, 4062);
         SetScenceMap(-2, 1, 18, 26, 4062);
-        jyx2_ReplaceSceneObject("", "Bake/Static/Light/Langan_05_2", "1");--关门
+		jyx2_MovePlayer("战斗后","Level/Dynamic");
+		jyx2_FixMapObject("圣堂开门",0);
         LightScence();
         Talk(0, "怎么门又关起来了．这次大概真的结束了．走吧，我得赶快了．", "talkname0", 1);
         do return end;
@@ -96,16 +75,7 @@ if JudgeEthics(0, 0, 50) == true then goto label0 end;
         ModifyEvent(-2, 32, 1, 1, -1, -1, -1, 8240, 8240, 8240, -2, -2, -2);
         ModifyEvent(-2, 33, 1, 1, -1, -1, -1, 8242, 8242, 8242, -2, -2, -2);
         ModifyEvent(-2, 34, 1, 1, -1, -1, -1, 8244, 8244, 8244, -2, -2, -2);
-            jyx2_ReplaceSceneObject("", "NPC/xuanci", "1");--玄慈出现
-    jyx2_ReplaceSceneObject("", "NPC/zhangsanfeng", "1");--张三丰出现
-    jyx2_ReplaceSceneObject("", "NPC/miaorenfeng", "1");--苗人凤出现
-    jyx2_ReplaceSceneObject("", "NPC/guojing", "1");--郭靖出现
-    jyx2_ReplaceSceneObject("", "NPC/zhoubotong", "1");--周伯通出现
-    jyx2_ReplaceSceneObject("", "NPC/huangrong", "1");--黄蓉出现
-    jyx2_ReplaceSceneObject("", "NPC/huangyaoshi", "1");--黄药师出现
-    jyx2_ReplaceSceneObject("", "NPC/hongqigong", "1");--洪七公出现
-    jyx2_ReplaceSceneObject("", "NPC/qiaofeng", "1");--乔峰出现
-    jyx2_ReplaceSceneObject("", "NPC/qiuchuji", "1");--丘处机出现 
+        jyx2_ReplaceSceneObject("", "NPC/正派NPC", "1");
         SetRoleFace(1);
         LightScence();
         Talk(0, "我就知道，每次在结局前，总是少不了一场大混战．", "talkname0", 1);
@@ -118,9 +88,9 @@ if JudgeEthics(0, 0, 50) == true then goto label0 end;
         Talk(50, "别怪我们出手太重，你留在这世间也只是个祸害．", "talkname50", 0);
         Talk(69, "动手吧．", "talkname69", 0);
         Talk(70, "阿弥陀佛！", "talkname70", 0);
-        if TryBattle(134) == true then goto label2 end;
-            Dead();
-            do return end;
+        --if TryBattle(134) == true then goto label2 end;
+        --    Dead();
+        --    do return end;
 ::label2::
             LightScence();
             Talk(55, "我们已经尽力了，还是无法消灭你这祸害．", "talkname55", 0);
@@ -137,23 +107,15 @@ if JudgeEthics(0, 0, 50) == true then goto label0 end;
             ModifyEvent(-2, 32, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             ModifyEvent(-2, 33, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             ModifyEvent(-2, 34, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/xuanci", "");--玄慈离开
-    jyx2_ReplaceSceneObject("", "NPC/zhangsanfeng", "");--张三丰离开
-    jyx2_ReplaceSceneObject("", "NPC/miaorenfeng", "");--苗人凤离开
-    jyx2_ReplaceSceneObject("", "NPC/guojing", "");--郭靖离开
-    jyx2_ReplaceSceneObject("", "NPC/zhoubotong", "");--周伯通离开
-    jyx2_ReplaceSceneObject("", "NPC/huangrong", "");--黄蓉离开
-    jyx2_ReplaceSceneObject("", "NPC/huangyaoshi", "");--黄药师离开
-    jyx2_ReplaceSceneObject("", "NPC/hongqigong", "");--洪七公离开
-    jyx2_ReplaceSceneObject("", "NPC/qiaofeng", "");--乔峰离开
-    jyx2_ReplaceSceneObject("", "NPC/qiuchuji", "");--丘处机离开 
+			jyx2_ReplaceSceneObject("", "NPC/正派NPC", "");
             LightScence();
             PlayWave(23);
             Talk(0, "总算料理完毕了．咦！好像又有声音．", "talkname0", 1);
             DarkScence();
             SetScenceMap(-2, 1, 18, 25, 4062);
             SetScenceMap(-2, 1, 18, 26, 4062);
-            jyx2_ReplaceSceneObject("", "Bake/Static/Light/Langan_05_2", "1");--关门
+			jyx2_MovePlayer("战斗后","Level/Dynamic");
+			jyx2_FixMapObject("圣堂开门",0);
             LightScence();
             Talk(0, "怎么门又关起来了．这次大概真的结束了．走吧，我得赶快了．", "talkname0", 1);
 do return end;
