@@ -17,10 +17,7 @@ ModifyEvent(-2, 35, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 36, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 37, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 38, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-jyx2_ReplaceSceneObject("", "NPC/nanxian", "");--南贤离开
-jyx2_ReplaceSceneObject("", "NPC/beichou", "");--北丑离开
-jyx2_ReplaceSceneObject("", "NPC/chushi", "");--厨师离开
-jyx2_ReplaceSceneObject("", "NPC/kongbala", "");--孔巴拉离开
+jyx2_ReplaceSceneObject("", "NPC/四大金刚", "");
 LightScence();
 Talk(0, "这会真的都没人了，那我可要回家了！", "talkname0", 1);
 AddItem(143, 1);
