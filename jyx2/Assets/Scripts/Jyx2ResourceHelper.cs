@@ -7,29 +7,25 @@
  *
  * 金庸老先生千古！
  */
-using HanSquirrel.ResourceManager;
-using Jyx2;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
+
 using HSFrameWork.Common;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using Jyx2;
 using Lean.Pool;
-using UnityEditor;
-using UnityEditor.AddressableAssets.Settings;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 
 static public class Jyx2ResourceHelper
 {
-    static Dictionary<string, GameObject> cachedPrefabs;
+    private static Dictionary<string, GameObject> cachedPrefabs;
 
     async static public Task Init()
     {
         //已经初始化过了
-        if(cachedPrefabs != null)
+        if (cachedPrefabs != null)
         {
             return;
         }
@@ -47,13 +43,13 @@ static public class Jyx2ResourceHelper
             var p = path.Replace("\r", "");
             var h = Addressables.LoadAssetAsync<GameObject>(p).Task;
             await h;
-            if(h.Result != null)
+            if (h.Result != null)
             {
                 cachedPrefabs[p] = h.Result;
                 Debug.Log("cached prefab:" + p);
             }
         }
-        
+
         //技能池
         var task = Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null).Task;
         await task;
@@ -61,7 +57,7 @@ static public class Jyx2ResourceHelper
         {
             Jyx2SkillDisplayAsset.All = task.Result;
         }
-        
+
         //全局配置表
         var t = Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset").Task;
         await t;
@@ -109,7 +105,7 @@ static public class Jyx2ResourceHelper
             callback(obj);
         };
     }
-    
+
     static public void GetBattleboxDataset(string fullPath, Action<BattleboxDataset> callback)
     {
         Addressables.LoadAssetAsync<TextAsset>(fullPath).Completed += r =>
@@ -120,7 +116,6 @@ static public class Jyx2ResourceHelper
             callback(obj);
         };
     }
-    
 
     static public void GetSprite(RoleInstance role, Action<Sprite> callback)
     {
@@ -138,7 +133,7 @@ static public class Jyx2ResourceHelper
     {
         GetRoleHeadSprite(path, r => setImage.sprite = r);
     }
-    
+
     static public void GetRoleHeadSprite(RoleInstance role, Image setImage)
     {
         GetSprite(role, r => setImage.sprite = r);
@@ -147,12 +142,13 @@ static public class Jyx2ResourceHelper
     static public void GetItemSprite(int itemId, Image setImage)
     {
         string p = ("Assets/BuildSource/Jyx2Items/" + itemId + ".png");
-        Addressables.LoadAssetAsync<Sprite>(p).Completed += r => {
+        Addressables.LoadAssetAsync<Sprite>(p).Completed += r =>
+        {
             setImage.sprite = r.Result;
         };
     }
 
-    static public void GetSprite(string iconName, string atlasName, Action<Sprite> cb) 
+    static public void GetSprite(string iconName, string atlasName, Action<Sprite> cb)
     {
         string path = $"Assets/BuildSource/UI/{atlasName}/{iconName}.png";
         Addressables.LoadAssetAsync<Sprite>(path).Completed += r =>
@@ -161,12 +157,10 @@ static public class Jyx2ResourceHelper
         };
     }
 
-
     static public void SpawnPrefab(string path, Action<GameObject> callback)
     {
         Addressables.InstantiateAsync(path).Completed += r => { callback(r.Result); };
     }
-
 
     static public void LoadPrefab(string path, Action<GameObject> callback)
     {
@@ -180,7 +174,7 @@ static public class Jyx2ResourceHelper
 
     static public void ReleaseInstance(GameObject obj)
     {
-        if(obj != null)
+        if (obj != null)
         {
             Addressables.ReleaseInstance(obj);
         }
@@ -197,7 +191,7 @@ static public class Jyx2ResourceHelper
             failed();
             return;
         }
-        
+
         var task = Addressables.LoadAssetAsync<Jyx2NodeGraph>(url).Task;
         await task;
         if (task.Result != null)
