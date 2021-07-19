@@ -379,7 +379,6 @@ GameObject:
   - component: {fileID: 5687526933127249297}
   - component: {fileID: 5685763191427856421}
   - component: {fileID: 5505054679153038213}
-  - component: {fileID: 5505240320103583171}
   m_Layer: 0
   m_Name: DialogPanel
   m_TagString: Untagged
@@ -448,24 +447,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5505240320103583171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5617861361878251605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3a42df6b830a4e4f9d2c399705e6fcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roleHeadImage: {fileID: 2465207186699494371}
-  message: {fileID: 5505916785498117057}
-  SelectionPanel: {fileID: 9014290352252569904}
-  SelectionPanelContainer: {fileID: 6819327648856196090}
-  SelectionItem: {fileID: 732235175820519758, guid: 6634b120d983d514b987a0a4503a669d,
-    type: 3}
 --- !u!1 &5617889232997772951
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -585,7 +567,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5505240320103583171}
+      - m_Target: {fileID: 5505240320103583171, guid: 2fa514f8bbc5c45459e88c5ba342e513,
+          type: 3}
         m_TargetAssemblyTypeName: 
         m_MethodName: OnCallback
         m_Mode: 1

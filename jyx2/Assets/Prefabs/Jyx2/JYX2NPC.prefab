@@ -2373,10 +2373,9 @@ GameObject:
   - component: {fileID: 3773400928023178441}
   - component: {fileID: 3773400928023178442}
   - component: {fileID: 3773400928023178443}
-  - component: {fileID: 3773400928023178548}
   - component: {fileID: 3773400928023178550}
   m_Layer: 16
-  m_Name: NPC (1)
+  m_Name: JYX2NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2408,7 +2407,7 @@ Animator:
   m_GameObject: {fileID: 3773400928023178544}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 48fbba6a5298d4640b02dd25bcf9475c, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3e3d033389ce5d24d853ab5def9f9579, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2467,25 +2466,8 @@ MonoBehaviour:
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
+  IsInBattle: 0
   m_FootStepTimespan: 0.4
---- !u!114 &3773400928023178548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3773400928023178544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BodyName: nan_body24
-  m_HairName: nan_hair28
-  m_WeaponName: "\u7A7A\u624B"
-  m_IsOldXiake: 0
-  m_OldXiakeName: Xia_HFH
-  m_IsMale: 1
 --- !u!137 &3773400928023178550
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -2500,11 +2482,13 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 03e82397b38678b4086dad8ced5b1364, type: 2}
-  - {fileID: 2100000, guid: e78105d4dae563243b5d3e6560146815, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2512,6 +2496,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
