@@ -88,9 +88,9 @@ if JudgeEthics(0, 0, 50) == true then goto label0 end;
         Talk(50, "别怪我们出手太重，你留在这世间也只是个祸害．", "talkname50", 0);
         Talk(69, "动手吧．", "talkname69", 0);
         Talk(70, "阿弥陀佛！", "talkname70", 0);
-        --if TryBattle(134) == true then goto label2 end;
-        --    Dead();
-        --    do return end;
+        if TryBattle(134) == true then goto label2 end;
+            Dead();
+            do return end;
 ::label2::
             LightScence();
             Talk(55, "我们已经尽力了，还是无法消灭你这祸害．", "talkname55", 0);

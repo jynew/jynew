@@ -8,7 +8,6 @@ if TryBattle(66) == true then goto label0 end;
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 4, 1, 1, 391, -1, -1, 6194, 6194, 6194, 0, 25, 35);--by fanyu|雕胜利，变换贴图。场景07-编号4
     ModifyEvent(-2, 5, 1, 1, 392, -1, -1, 6224, 6224, 6224, 0, 24, 36);--by fanyu|雕胜利，变换贴图。场景07-编号5
-	--需要添加修改模型controller的逻辑
     jyx2_SwitchRoleAnimation("NPC/蟒蛇", "Assets/BuildSource/AnimationControllers/Viper_jyx2_dead.controller");--蟒蛇动作
     jyx2_SwitchRoleAnimation("NPC/大雕", "Assets/BuildSource/AnimationControllers/Eagle_idle.controller");--大雕动作
     LightScence();

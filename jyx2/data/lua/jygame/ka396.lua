@@ -11,10 +11,8 @@ if UseItem(134) == true then goto label0 end;
     Talk(0, "杨兄怎么了？", "talkname0", 1);
     Talk(58, "．．．．．", "talkname58", 0);
     DarkScence();
-    jyx2_ReplaceSceneObject("", "NPC/杨过受伤", "");  -- 模型切换
-    jyx2_ReplaceSceneObject("", "NPC/杨过", "1");    -- 模型切换
-    ModifyEvent(-2, 6, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);    -- 原触发器删除
-    ModifyEvent(-2, 13, -2, -2, 397, -1, -1, -2, -2, -2, -2, -2, -2);--新触发器
+    ModifyEvent(-2, -2, -2, -2, 397, -1, -1, 6186, 6186, 6186, -2, -2, -2);--by fanyu|杨过贴图替换。场景07-编号06
+    jyx2_SwitchRoleAnimation("Level/NPC/杨过", "Assets/BuildSource/AnimationControllers/备份/杨过Controller.controller");--尽量不要增加新trigger
     LightScence();
     Talk(58, "我杨某这条命是少侠你救回来的．", "talkname58", 0);
     Talk(0, "你身上的毒质当真都解了？还好还好，我刚真捏了把冷汗．", "talkname0", 1);
