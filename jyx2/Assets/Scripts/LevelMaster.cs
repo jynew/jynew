@@ -712,6 +712,11 @@ public class LevelMaster : MonoBehaviour
 		var rootObj = GameObject.Find(path);
         var trans = rootObj.transform.Find(name);
 
+		if(trans == null)
+		{
+			rootObj = GameObject.Find("Level/Dynamic");
+			trans=rootObj.transform.Find(name);
+		}
         if(trans != null)
         {
 			if(target==""){
