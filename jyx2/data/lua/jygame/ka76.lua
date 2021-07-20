@@ -64,7 +64,7 @@ if TryBattle(9) == true then goto label0 end;
         ModifyEvent(-2, 11, 1, 1, 80, -1, -1, 5310, 5310, 5310, -2, -2, -2);--by fanyu|生成人物，启动80号脚本。场景12-编号11
         jyx2_ReplaceSceneObject("", "NPC/chuzi", "1");--厨子出来
         SetScenceMap(-2, 1, 28, 24, 0);--by fanyu|明教地道的门打开。场景12-坐标28,24
-		jyx2_ReplaceSceneObject("", "Bake/Static/Door/Door_08", "");--地道打开       
+		jyx2_FixMapObject("明教分舵开门",1);    
         LightScence();
         
         Talk(0, "这老贼溜的倒快，没时间追他了，我得赶快赶去光明顶才是．", "talkname0", 1);

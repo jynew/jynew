@@ -23,8 +23,12 @@ if TryBattle(12) == true then goto label0 end;
     ModifyEvent(-2, 16, 0, 0, -1, -1, -1, 5434, 5434, 5434, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-16
     ModifyEvent(-2, 17, 0, 0, -1, -1, -1, 5432, 5432, 5432, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-17
     ModifyEvent(-2, 18, 0, 0, -1, -1, -1, 5434, 5434, 5434, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-18
+	jyx2_SwitchRoleAnimation("NPC/昆仑弟子16","Assets/BuildSource/AnimationControllers/Dead.controller");
+	jyx2_SwitchRoleAnimation("NPC/昆仑弟子17","Assets/BuildSource/AnimationControllers/Dead.controller");
+	jyx2_SwitchRoleAnimation("NPC/昆仑弟子18","Assets/BuildSource/AnimationControllers/Dead.controller");
 	--崆峒派
     ModifyEvent(-2, 20, 0, 0, -1, -1, -1, 5428, 5428, 5428, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-20
+	jyx2_SwitchRoleAnimation("NPC/崆峒弟子20","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 21, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-21
     ModifyEvent(-2, 22, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-22
     ModifyEvent(-2, 23, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-23
@@ -32,9 +36,11 @@ if TryBattle(12) == true then goto label0 end;
 	jyx2_ReplaceSceneObject("", "NPC/崆峒弟子22", "");
 	jyx2_ReplaceSceneObject("", "NPC/崆峒弟子23", "");
     ModifyEvent(-2, 24, 0, 0, -1, -1, -1, 5428, 5428, 5428, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-24
+	jyx2_SwitchRoleAnimation("NPC/崆峒弟子24","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 25, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-25
 	jyx2_ReplaceSceneObject("", "NPC/崆峒弟子25", "");
     ModifyEvent(-2, 26, 0, 0, -1, -1, -1, 5430, 5430, 5430, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-26
+	jyx2_SwitchRoleAnimation("NPC/崆峒弟子26","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 27, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-27
 	jyx2_ReplaceSceneObject("", "NPC/崆峒弟子27", "");
 	--华山派
@@ -52,17 +58,21 @@ if TryBattle(12) == true then goto label0 end;
     ModifyEvent(-2, 38, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-38
 	jyx2_ReplaceSceneObject("", "NPC/少林弟子38", "");
     ModifyEvent(-2, 39, 0, 0, -1, -1, -1, 5446, 5446, 5446, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-39
+	jyx2_SwitchRoleAnimation("NPC/少林弟子39","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 40, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-40
 	jyx2_ReplaceSceneObject("", "NPC/少林弟子40", "");
     ModifyEvent(-2, 41, 0, 0, -1, -1, -1, 5444, 5444, 5444, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-41
+	jyx2_SwitchRoleAnimation("NPC/少林弟子41","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 42, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-42
     ModifyEvent(-2, 43, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-43
 	jyx2_ReplaceSceneObject("", "NPC/少林弟子42", "");
 	jyx2_ReplaceSceneObject("", "NPC/少林弟子43", "");
     ModifyEvent(-2, 44, 0, 0, -1, -1, -1, 5444, 5444, 5444, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-44
+	jyx2_SwitchRoleAnimation("NPC/少林弟子44","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 45, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-45
 	jyx2_ReplaceSceneObject("", "NPC/少林弟子45", "");
     ModifyEvent(-2, 46, 0, 0, -1, -1, -1, 5446, 5446, 5446, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-46
+	jyx2_SwitchRoleAnimation("NPC/少林弟子46","Assets/BuildSource/AnimationControllers/Dead.controller");
 	--峨嵋
     ModifyEvent(-2, 48, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-48
     ModifyEvent(-2, 51, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-51
@@ -70,19 +80,25 @@ if TryBattle(12) == true then goto label0 end;
 	jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子51", "");
     ModifyEvent(-2, 52, 0, 0, -1, -1, -1, 5436, 5436, 5436, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-52
     ModifyEvent(-2, 53, 0, 0, -1, -1, -1, 5438, 5438, 5438, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-53
+	jyx2_SwitchRoleAnimation("NPC/峨嵋弟子52","Assets/BuildSource/AnimationControllers/Dead.controller");
+	jyx2_SwitchRoleAnimation("NPC/峨嵋弟子53","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 54, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-54
 	jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子54", "");
     ModifyEvent(-2, 55, 0, 0, -1, -1, -1, 5436, 5436, 5436, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-55
+	jyx2_SwitchRoleAnimation("NPC/峨嵋弟子55","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 56, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-56
 	jyx2_ReplaceSceneObject("", "NPC/峨嵋弟子56", "");
 	--武当
     ModifyEvent(-2, 58, 0, 0, -1, -1, -1, 5442, 5442, 5442, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-58
+	jyx2_SwitchRoleAnimation("NPC/武当弟子58","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 59, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-59
 	jyx2_ReplaceSceneObject("", "NPC/武当弟子59", "");
     ModifyEvent(-2, 60, 0, 0, -1, -1, -1, 5440, 5440, 5440, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-60
+	jyx2_SwitchRoleAnimation("NPC/武当弟子60","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 61, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-61
 	jyx2_ReplaceSceneObject("", "NPC/武当弟子61", "");
     ModifyEvent(-2, 62, 0, 0, -1, -1, -1, 5442, 5442, 5442, -2, -2, -2);--by fanyu|改变贴图，战斗胜利。场景11-62
+	jyx2_SwitchRoleAnimation("NPC/武当弟子62","Assets/BuildSource/AnimationControllers/Dead.controller");
     ModifyEvent(-2, 63, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|战斗胜利，贴图消失。场景11-63
 	jyx2_ReplaceSceneObject("", "NPC/武当弟子63", "");
     LightScence();

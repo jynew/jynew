@@ -9,8 +9,7 @@ SetScenceMap(11, 1, 28, 46, 2050);--by fanyu|门打开。场景11-编号1
 SetScenceMap(11, 1, 30, 46, 2054);--by fanyu|门打开。场景11-编号1
 SetScenceMap(11, 1, 30, 47, 2052);--by fanyu|门打开。场景11-编号1
 SetScenceMap(11, 1, 28, 47, 2048);--by fanyu|门打开。场景11-编号1
-jyx2_ReplaceSceneObject("11", "Bake/Static/Others/Door_1", "");--光明顶开门
-jyx2_ReplaceSceneObject("11", "Bake/Static/Others/Door_1_1", "");-- 
+jyx2_FixMapObject("光明顶开门",1);
 ModifyEvent(11, 0, 0, 0, -1, -1, 81, -1, -1, -1, -2, -2, -2);--by fanyu|启动81号脚本。场景11-编号0
 
 ModifyEvent(11, 1, 1, 1, -1, -1, -1, 5316, 5316, 5316, -2, -2, -2);--by fanyu|改变贴图，出现人物。场景11-以下都是
