@@ -91,6 +91,9 @@ MonoBehaviour:
       - fieldName: yes
         node: {fileID: 304797778909082723}
         reroutePoints: []
+      - fieldName: next
+        node: {fileID: -4585441364897448014}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -113,7 +116,7 @@ MonoBehaviour:
   m_Name: "\u4E8B\u4EF6\u4FEE\u6539"
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3665.018, y: 171.92883}
+  position: {x: 3672, y: 168}
   ports:
     keys:
     - prev
@@ -124,7 +127,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
-        node: {fileID: -6231115035868294820}
+        node: {fileID: -3851806841812768595}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -161,7 +164,7 @@ MonoBehaviour:
   m_Name: "\u4E8B\u4EF6\u4FEE\u6539"
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3441.018, y: 171.92883}
+  position: {x: 3400, y: 136}
   ports:
     keys:
     - prev
@@ -183,7 +186,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: prev
-        node: {fileID: -7594696530340945946}
+        node: {fileID: -3851806841812768595}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -244,6 +247,52 @@ MonoBehaviour:
   InteractiveEventId: 293
   UseItemEventId: -1
   EnterEventId: -1
+--- !u!114 &-5941379600893229051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb7f85baf2aa744da9e6385c75357f2, type: 3}
+  m_Name: "\u663E\u793A\u9690\u85CF\u7269\u4F53"
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3896, y: 472}
+  ports:
+    keys:
+    - next
+    - prev
+    values:
+    - _fieldName: next
+      _node: {fileID: -5941379600893229051}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: prev
+        node: {fileID: -495223835712689586}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: prev
+      _node: {fileID: -5941379600893229051}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -981255276372650133}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  prev: {fileID: 0}
+  next: {fileID: 0}
+  sceneId: 1
+  isShow: 0
+  path: "NPC/\u9752\u57CE\u5F1F\u5B5013"
 --- !u!114 &-5416162420420281100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +374,10 @@ MonoBehaviour:
     - _fieldName: next
       _node: {fileID: -4585441364897448014}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: prev
+        node: {fileID: -7785742895533177667}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -333,10 +385,56 @@ MonoBehaviour:
   prev: {fileID: 0}
   next: {fileID: 0}
   SceneId: -2
-  EventId: -2
+  EventId: 3
   InteractiveEventId: 948
   UseItemEventId: -1
   EnterEventId: -1
+--- !u!114 &-3851806841812768595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb7f85baf2aa744da9e6385c75357f2, type: 3}
+  m_Name: "\u663E\u793A\u9690\u85CF\u7269\u4F53"
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3384, y: 440}
+  ports:
+    keys:
+    - next
+    - prev
+    values:
+    - _fieldName: next
+      _node: {fileID: -3851806841812768595}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: prev
+        node: {fileID: -7594696530340945946}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: prev
+      _node: {fileID: -3851806841812768595}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -6231115035868294820}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  prev: {fileID: 0}
+  next: {fileID: 0}
+  sceneId: 1
+  isShow: 0
+  path: "NPC/\u9752\u57CE\u5F1F\u5B5011"
 --- !u!114 &-3797337864022417974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,7 +536,7 @@ MonoBehaviour:
   m_Name: "\u4FEE\u6539\u5927\u5730\u56FE\u97F3\u4E50"
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4545.018, y: 139.92883}
+  position: {x: 4488, y: 56}
   ports:
     keys:
     - prev
@@ -479,7 +577,7 @@ MonoBehaviour:
   m_Name: "\u4E8B\u4EF6\u4FEE\u6539"
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3873.018, y: 171.92883}
+  position: {x: 3912, y: 168}
   ports:
     keys:
     - prev
@@ -501,7 +599,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: prev
-        node: {fileID: -495223835712689586}
+        node: {fileID: -5941379600893229051}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -617,7 +715,7 @@ MonoBehaviour:
   m_Name: "\u4E8B\u4EF6\u4FEE\u6539"
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4081.018, y: 171.92883}
+  position: {x: 4184, y: 216}
   ports:
     keys:
     - prev
@@ -628,7 +726,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
-        node: {fileID: -981255276372650133}
+        node: {fileID: -5941379600893229051}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -639,7 +737,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: prev
-        node: {fileID: 4236024918729907626}
+        node: {fileID: 7877588224342532398}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -694,6 +792,10 @@ MonoBehaviour:
   - {fileID: -2767032477437539215}
   - {fileID: 304797778909082723}
   - {fileID: -7785742895533177667}
+  - {fileID: 4878311714893881077}
+  - {fileID: -3851806841812768595}
+  - {fileID: -5941379600893229051}
+  - {fileID: 7877588224342532398}
 --- !u!114 &304797778909082723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,7 +843,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
-        node: {fileID: 7322901235573160223}
+        node: {fileID: 4878311714893881077}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -810,7 +912,7 @@ MonoBehaviour:
   m_Name: "\u5BF9\u8BDD"
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 577.01807, y: -68.07117}
+  position: {x: 584, y: -72}
   ports:
     keys:
     - prev
@@ -1114,7 +1216,7 @@ MonoBehaviour:
   m_Name: "\u589E\u52A0\u58F0\u671B"
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4353.018, y: 139.92883}
+  position: {x: 4472, y: 328}
   ports:
     keys:
     - prev
@@ -1125,7 +1227,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
-        node: {fileID: -495223835712689586}
+        node: {fileID: 7877588224342532398}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1144,7 +1246,7 @@ MonoBehaviour:
       _dynamic: 0
   prev: {fileID: 0}
   next: {fileID: 0}
-  AddValue: 1
+  addValue: 1
 --- !u!114 &4236495224198006247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1237,10 +1339,58 @@ MonoBehaviour:
   prev: {fileID: 0}
   next: {fileID: 0}
   SceneId: -2
-  EventId: -2
+  EventId: 4
   InteractiveEventId: 949
   UseItemEventId: -1
   EnterEventId: -1
+--- !u!114 &4878311714893881077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5666755e291eb474f9dab5a2eaad2d76, type: 3}
+  m_Name: "\u4E8B\u4EF6\u4FEE\u6539"
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2088, y: 232}
+  ports:
+    keys:
+    - next
+    - prev
+    values:
+    - _fieldName: next
+      _node: {fileID: 4878311714893881077}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: prev
+        node: {fileID: 304797778909082723}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: prev
+      _node: {fileID: 4878311714893881077}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 7322901235573160223}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  prev: {fileID: 0}
+  next: {fileID: 0}
+  SceneId: -2
+  EventId: 2
+  InteractiveEventId: -1
+  UseItemEventId: -1
+  EnterEventId: 299
 --- !u!114 &5689519568546941224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,7 +1516,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: prev
-        node: {fileID: 304797778909082723}
+        node: {fileID: 4878311714893881077}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -1475,6 +1625,52 @@ MonoBehaviour:
   InteractiveEventId: 293
   UseItemEventId: -1
   EnterEventId: -1
+--- !u!114 &7877588224342532398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb7f85baf2aa744da9e6385c75357f2, type: 3}
+  m_Name: "\u663E\u793A\u9690\u85CF\u7269\u4F53"
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4168, y: 504}
+  ports:
+    keys:
+    - next
+    - prev
+    values:
+    - _fieldName: next
+      _node: {fileID: 7877588224342532398}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: prev
+        node: {fileID: 4236024918729907626}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: prev
+      _node: {fileID: 7877588224342532398}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -495223835712689586}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  prev: {fileID: 0}
+  next: {fileID: 0}
+  sceneId: 1
+  isShow: 0
+  path: "NPC/\u9752\u57CE\u5F1F\u5B5014"
 --- !u!114 &7884641640457724956
 MonoBehaviour:
   m_ObjectHideFlags: 0
