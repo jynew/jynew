@@ -152,6 +152,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
 	{
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
         this.InputNamePanel_RectTransform.gameObject.SetActive(false);
+		m_panelType = PanelType.Home;
 	}
 
     protected override void OnHidePanel()
