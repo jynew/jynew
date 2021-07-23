@@ -194,7 +194,10 @@ public class BattleStateMechine:MonoBehaviour
         //清理所有格子
         BattleboxHelper.Instance.ClearAllBlocks();
         //相机照射主角
-        CameraHelper.Instance.ChangeFollow(GameRuntimeData.Instance.Player.View.transform);
+		if(CurrentRole!=null && CurrentRole.View!=null)
+		{
+			CameraHelper.Instance.ChangeFollow(CurrentRole.View.transform);
+		}
         //Jyx2_UIManager.Instance.HideUI("BattleActionOrderPanel");
         IBattleState curState = GetState(m_currentState);
         if (curState != null)
