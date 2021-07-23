@@ -216,14 +216,10 @@ public class BattleLoader : MonoBehaviour
         List<RoleInstance> roles = new List<RoleInstance>();
         foreach (var r in m_Roles)
         {
-            RoleInstance roleInstance = null;
-            if(r.roleKey == "0")
+            RoleInstance roleInstance = runtime.GetRoleInTeam(int.Parse(r.roleKey));
+            if(roleInstance==null)
             {
-                roleInstance = runtime.Team[0]; //临时写法，现在是直接取主角
-            }
-            else
-            {
-                roleInstance = runtime.GetRole(int.Parse(r.roleKey));
+                roleInstance=new RoleInstance(r.roleKey);
             }
             
             if(roleInstance == null)
