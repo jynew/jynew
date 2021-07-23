@@ -71,7 +71,7 @@ public class GameConst
     public const int MAX_ROLE_DEFENCE = 100;
     public const int MAX_ROLE_QINGGONG = 100;
     public const int MAX_ROLE_ATK_POISON = 100;
-    public const int MAX_ROLE_SHENGWANG = 100;
+    public const int MAX_ROLE_SHENGWANG = 200;
     public const int MAX_ROLE_PINDE = 100;
 
     public const int MAX_ROLE_ZIZHI = 100;

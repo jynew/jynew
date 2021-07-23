@@ -872,7 +872,7 @@ namespace Jyx2
         static public void AddRepute(int value)
         {
             RunInMainThread(() =>{
-                runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ZIZHI);
+                runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
                 storyEngine.DisplayPopInfo("增加声望:" + value);
                 Next();
             });
@@ -915,6 +915,8 @@ namespace Jyx2
             });
             Wait();
         }
+		
+		
 		// add to handle indoor transport object
 		// path: name of destination transform
 		// parent: parent path of destination transform
@@ -1182,6 +1184,22 @@ namespace Jyx2
 
             Wait();
         }
+		
+		static public bool jyx2_CheckBookAndRepute()
+		{
+			if(runtime.Player.Shengwang<200)
+			{
+				return false;
+			}
+			for(var i=144;i<158;i++)
+			{
+				if(!HaveItem(i))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 
         #endregion
 
