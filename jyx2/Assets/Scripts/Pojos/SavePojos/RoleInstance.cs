@@ -47,7 +47,7 @@ namespace Jyx2
                 _data.Wugongs = new List<Jyx2RoleWugong>();
                 _data.Items = new List<Jyx2RoleItem>();
             }
-
+			_data.Exp=0;//已经有初始等级。经验值应该抵消，设置为0.
 
             //初始化武功列表
             Wugongs.Clear();

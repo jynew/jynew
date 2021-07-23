@@ -282,7 +282,12 @@ public class BattleManager:MonoBehaviour
                 {
                     role.UseItem(practiseItem);
                     change++;
-                    rst += $"{role.Name}学会{practiseItem.Name}\n";
+					var level=role.GetWugongLevel(practiseItem.Wugong);
+					rst += $"{role.Name} 修炼 {practiseItem.Name} 成功\n";
+					if(level>1)
+					{
+						rst += $"{practiseItem.Name} 升为 "+level.ToString()+" 级\n";
+					}
                 }
 
                 var runtime = GameRuntimeData.Instance;
