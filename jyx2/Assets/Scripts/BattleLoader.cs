@@ -223,7 +223,7 @@ public class BattleLoader : MonoBehaviour
             }
             else
             {
-                roleInstance = new RoleInstance(r.roleKey);
+                roleInstance = runtime.GetRole(int.Parse(r.roleKey));
             }
             
             if(roleInstance == null)
