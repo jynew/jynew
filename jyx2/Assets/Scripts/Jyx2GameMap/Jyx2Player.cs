@@ -227,6 +227,7 @@ public class Jyx2Player : MonoBehaviour
     {
         var runtime = GameRuntimeData.Instance;
         runtime.WorldPosition = UnityTools.Vector3ToString(this.transform.position);
+		runtime.WorldRotation = UnityTools.QuaternionToString(this.transform.rotation);
         runtime.BoatWorldPos = UnityTools.Vector3ToString(_boat.transform.position);
         runtime.BoatRotate = UnityTools.QuaternionToString(_boat.transform.rotation);
         runtime.OnBoat = IsOnBoat ? 1 : 0;
@@ -236,7 +237,7 @@ public class Jyx2Player : MonoBehaviour
     {
         var runtime = GameRuntimeData.Instance;
         var pos = UnityTools.StringToVector3(runtime.WorldPosition); //大地图读取当前位置
-        PlayerSpawnAt(pos);
+        PlayerSpawnAt(pos,UnityTools.StringToQuaternion(runtime.WorldRotation));
 
         if (!string.IsNullOrEmpty(runtime.BoatWorldPos))
         {
@@ -250,11 +251,12 @@ public class Jyx2Player : MonoBehaviour
         }
     }
 
-    void PlayerSpawnAt(Vector3 spawnPos)
+    void PlayerSpawnAt(Vector3 spawnPos,Quaternion ori)
     {
         _navMeshAgent.enabled = false;
         Debug.Log("load pos = " + spawnPos);
         transform.position = spawnPos;
+		transform.rotation = ori;
         _navMeshAgent.enabled = true;
     }
 }

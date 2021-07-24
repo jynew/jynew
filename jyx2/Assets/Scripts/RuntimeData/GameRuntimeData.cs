@@ -363,12 +363,24 @@ namespace Jyx2
             get { return Get("CurrentPos", string.Empty); }
             set { Save("CurrentPos", value); }
         }
+		
+        //当前位置
+        public string CurrentOri
+        {
+            get { return Get("CurrentOri", string.Empty); }
+            set { Save("CurrentOri", value); }
+        }
 
         //世界位置
         public string WorldPosition
         {
             get { return Get("WorldPosition", string.Empty); }
             set { Save("WorldPosition", value); }
+        }
+        public string WorldRotation
+        {
+            get { return Get("WorldRotation", string.Empty); }
+            set { Save("WorldRotation", value); }
         }
 
 
