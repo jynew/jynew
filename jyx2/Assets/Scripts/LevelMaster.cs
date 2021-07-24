@@ -39,6 +39,7 @@ public class LevelMaster : MonoBehaviour
         public LevelLoadType loadType = LevelLoadType.Entrance;
         public string triggerName = "";
         public string CurrentPos;
+        public string CurrentOri;
     }
 
     static public LevelLoadPara loadPara = new LevelLoadPara();
@@ -280,6 +281,7 @@ public class LevelMaster : MonoBehaviour
             {
                 var pos = UnityTools.StringToVector3(runtime.CurrentPos); //从指定位置读取
                 PlayerSpawnAt(pos);
+				PlayerSpawnAt(UnityTools.StringToQuaternion(runtime.CurrentOri));
             }
 
         }
@@ -316,6 +318,7 @@ public class LevelMaster : MonoBehaviour
         }else if(loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtPos)
         {
             PlayerSpawnAt(UnityTools.StringToVector3(loadPara.CurrentPos));
+			PlayerSpawnAt(UnityTools.StringToQuaternion(loadPara.CurrentOri));
         }
     }
 
@@ -325,6 +328,11 @@ public class LevelMaster : MonoBehaviour
         Debug.Log("load pos = " + spawnPos);
         _player.position = spawnPos;
         _playerNavAgent.enabled = true;
+    }
+    void PlayerSpawnAt(Quaternion ori)
+    {
+        Debug.Log("load ori = " + ori);
+        _player.rotation = ori;
     }
 
 
@@ -767,6 +775,7 @@ public class LevelMaster : MonoBehaviour
         else
         {
             runtime.CurrentPos = UnityTools.Vector3ToString(_player.position);
+			runtime.CurrentOri = UnityTools.QuaternionToString(_player.rotation);
         }
 
         Debug.Log("set current pos = " + runtime.CurrentPos);
@@ -777,6 +786,10 @@ public class LevelMaster : MonoBehaviour
     public Vector3 GetPlayerPosition()
     {
         return _player.position;
+    }
+    public Quaternion GetPlayerOrientation()
+    {
+        return _player.rotation;
     }
 
 	// handle player null exception

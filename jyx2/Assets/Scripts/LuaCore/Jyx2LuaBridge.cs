@@ -191,11 +191,13 @@ namespace Jyx2
             RunInMainThread(() => {
                 var pos = LevelMaster.Instance.GetPlayerPosition();
                 string posStr = UnityTools.Vector3ToString(pos);
+                string posOri = UnityTools.QuaternionToString(LevelMaster.Instance.GetPlayerOrientation());
                 string currentScene = SceneManager.GetActiveScene().name;
                 LevelLoader.LoadBattle(battleId, (ret) => {
                     LevelLoader.LoadGameMap(ConfigTable.Get<GameMap>(currentScene), new LevelMaster.LevelLoadPara() {
                         loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
-                        CurrentPos = posStr
+                        CurrentPos = posStr,
+						CurrentOri = posOri,
                     }, "", ()=> {
                         isWin = (ret == BattleResult.Win);
                         Next();
