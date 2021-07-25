@@ -738,7 +738,7 @@ namespace Jyx2
         //标记一个场景是否可以进入
         static public void OpenScene(int sceneId)
         {
-            runtime.SetSceneEntraceCondition(sceneId.ToString(), 1);
+            runtime.SetSceneEntraceCondition(sceneId.ToString(), 0);
         }
 
 		// modify by eaphone at 2021/6/5
