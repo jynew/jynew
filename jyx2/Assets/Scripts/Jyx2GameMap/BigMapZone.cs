@@ -72,12 +72,18 @@ public class BigMapZone : MonoBehaviour
 #endif
 
         var runtime = GameRuntimeData.Instance;
-        if(runtime.GetSceneEntranceCondition(mapKey) == 0)
+		var key=runtime.GetSceneEntranceCondition(mapKey);
+        if(key == 0)
         {
             return true;
-        }
-
-        return false;
+        }else if(key==2)
+		{
+			foreach(var role in runtime.Team)
+			{
+				if(role.Qinggong>=75) return true;
+			}
+		}
+		return false;
     }
 
     void ShowEnterButton(string mapKey, string command, string showText)

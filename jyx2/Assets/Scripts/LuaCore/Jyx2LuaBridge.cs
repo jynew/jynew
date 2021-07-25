@@ -654,8 +654,8 @@ namespace Jyx2
             {
                 runtime.SetSceneEntraceCondition(map.Id, 0);
             }
-            runtime.SetSceneEntraceCondition("2", 2); //云鹤崖
-            runtime.SetSceneEntraceCondition("38", 2); //摩天崖
+            runtime.SetSceneEntraceCondition("2", 2); //云鹤崖 需要轻功大于75
+            runtime.SetSceneEntraceCondition("38", 2); //摩天崖 需要轻功大于75
             runtime.SetSceneEntraceCondition("75", 1); //桃花岛
             runtime.SetSceneEntraceCondition("80", 1); //绝情谷底
         }
