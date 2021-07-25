@@ -1,5 +1,5 @@
 if InTeam(35) == false then goto label0 end;
-    jyx2_ReplaceSceneObject("", "NPC/linghuchong", "1");-- 原作不需要显示令狐冲，是否有必要？
+    --jyx2_ReplaceSceneObject("", "NPC/令狐冲", "1");-- 原作不需要显示令狐冲，是否有必要？
     Talk(35, "师父！", "talkname35", 1);
     Talk(19, "谁是你师父了？岳某早跟你脱却了师徒名份．", "talkname19", 0);
     Talk(35, "弟子做错了不少事，愿领师父重责，只是．．．．．．只是逐出门墙的责罚，务请师父收回成命．", "talkname35", 1);
@@ -26,7 +26,7 @@ if InTeam(35) == false then goto label0 end;
         Talk(35, "是啊，师父，到时我们一定会去帮你．", "talkname35", 1);
         Talk(19, "只盼你能立了大功，我才有理由让你重回华山门下．", "talkname19", 0);
         Talk(35, "兄弟，下月十五，我们一定要到嵩山去阻止左冷禅的阴谋！", "talkname35", 1);
-        jyx2_ReplaceSceneObject("", "NPC/linghuchong", "");-- 
+        --jyx2_ReplaceSceneObject("", "NPC/令狐冲", "");-- 
 ::label1::
         ModifyEvent(-2, -2, -2, -2, 196, -1, -1, -2, -2, -2, -2, -2, -2);
         Add3EventNum(27, 0, 0, 0, 1);--需要拜访嵩山以外4派才会触发五岳并派事件。嵩山入口0号trigger对应起始事件为198，每拜访1派事件序号+1，202号事件为并派事件。

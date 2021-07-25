@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(59, "好的．", "talkname59", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/小龙女","");
         LightScence();
         Join(59);
 do return end;

@@ -21,7 +21,7 @@ if AskJoin () == true then goto label0 end;
         do return end;
 ::label1::
         DarkScence();
-        jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女加入队伍
+        jyx2_ReplaceSceneObject("", "NPC/小龙女", "");--小龙女加入队伍
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);        
         LightScence();
         Join(59);

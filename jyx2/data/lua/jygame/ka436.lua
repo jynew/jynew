@@ -3,7 +3,7 @@ jyx2_ReplaceSceneObject("7", "NPC/杨过", "");
 AddEthics(5);
 if InTeam(58) == false then goto label0 end;
     Talk(58, "龙儿！", "talkname58", 1);
-    jyx2_ReplaceSceneObject("", "NPC/yangguo", "1");--杨过出现
+    jyx2_ReplaceSceneObject("", "NPC/杨过", "1");--杨过出现
     Talk(59, "过儿！", "talkname59", 0);
     Talk(58, "．．．．．", "talkname58", 1);
     Talk(59, "．．．．．", "talkname59", 0);
@@ -30,12 +30,12 @@ if InTeam(58) == false then goto label0 end;
     SetScenceMap(18, 1, 44, 30, 0);
     jyx2_FixMapObject("古墓开门",1);
     ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/yangguo", "");--杨过离开
-    jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女离开
+    jyx2_ReplaceSceneObject("", "NPC/杨过", "");--杨过离开
+    jyx2_ReplaceSceneObject("", "NPC/小龙女", "");--小龙女离开
     ModifyEvent(18, 1, 1, 1, 438, -1, -1, 6188, 6188, 6188, -2, -2, -2);
     ModifyEvent(18, 0, 1, 1, 440, -1, -1, 6068, 6068, 6068, -2, -2, -2);
-    jyx2_ReplaceSceneObject("18", "NPC/yangguo", "1");--杨过出现
-    jyx2_ReplaceSceneObject("18", "NPC/xiaolongnv", "1");--小龙女出现
+    jyx2_ReplaceSceneObject("18", "NPC/杨过", "1");--杨过出现
+    jyx2_ReplaceSceneObject("18", "NPC/小龙女", "1");--小龙女出现
     ModifyEvent(18, 2, -2, -2, 442, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(18, 3, -2, -2, 442, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(18, 4, -2, -2, 443, -1, -1, -2, -2, -2, -2, -2, -2);
@@ -70,12 +70,12 @@ if InTeam(58) == false then goto label0 end;
     SetScenceMap(18, 1, 44, 30, 0);
     jyx2_FixMapObject("古墓开门",1);
     ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/xiaolongnv", "");--小龙女离开 
+    jyx2_ReplaceSceneObject("", "NPC/小龙女", "");--小龙女离开 
     ModifyEvent(7, 6, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(18, 1, 1, 1, 438, -1, -1, 6188, 6188, 6188, -2, -2, -2);
     ModifyEvent(18, 0, 1, 1, 440, -1, -1, 6068, 6068, 6068, -2, -2, -2);
-    jyx2_ReplaceSceneObject("18", "NPC/yangguo", "1");--杨过出现
-    jyx2_ReplaceSceneObject("18", "NPC/xiaolongnv", "1");--小龙女出现
+    jyx2_ReplaceSceneObject("18", "NPC/杨过", "1");--杨过出现
+    jyx2_ReplaceSceneObject("18", "NPC/小龙女", "1");--小龙女出现
     ModifyEvent(18, 2, -2, -2, 442, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(18, 3, -2, -2, 442, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(18, 4, -2, -2, 443, -1, -1, -2, -2, -2, -2, -2, -2);

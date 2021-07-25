@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(25, "真的，没骗我．我原以为你也是个负心汉，看来是误会你了．走吧．", "talkname25", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/lanfenghuang","");
         LightScence();
         Join(25);
 do return end;

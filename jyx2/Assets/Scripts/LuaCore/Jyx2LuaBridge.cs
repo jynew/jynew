@@ -654,8 +654,8 @@ namespace Jyx2
             {
                 runtime.SetSceneEntraceCondition(map.Id, 0);
             }
-            runtime.SetSceneEntraceCondition("2", 2); //云鹤崖
-            runtime.SetSceneEntraceCondition("38", 2); //摩天崖
+            runtime.SetSceneEntraceCondition("2", 2); //云鹤崖 需要轻功大于75
+            runtime.SetSceneEntraceCondition("38", 2); //摩天崖 需要轻功大于75
             runtime.SetSceneEntraceCondition("75", 1); //桃花岛
             runtime.SetSceneEntraceCondition("80", 1); //绝情谷底
         }
@@ -663,7 +663,81 @@ namespace Jyx2
         //武林大会
         static public void FightForTop()
         {
-
+			Dictionary<int, string> heads= new Dictionary<int, string>();
+			heads.Add(8,"唐文亮来领教阁下的高招．");
+			heads.Add(21,"贫尼定闲愿领教阁下高招．");
+			heads.Add(23,"贫道天门领教阁下高招．");
+			heads.Add(31,"小兄弟，我们再来玩玩．");
+			heads.Add(32,"小兄弟，秃笔翁陪你玩玩．");
+			heads.Add(43,"白某愿领教阁下高招．");
+			heads.Add(7,"何太冲来领教阁下的高招．");
+			heads.Add(11,"杨逍技痒，和少侠玩玩．");
+			heads.Add(14,"韦一笑技痒，和少侠玩玩．");
+			heads.Add(20,"莫某再次领教阁下高招．");
+			heads.Add(33,"小兄弟，黑白子向你讨教．");
+			heads.Add(34,"小兄弟，黄钟公向你讨教．");
+			heads.Add(10,"范某技痒，和少侠玩玩．");
+			heads.Add(12,"老朽技痒，和少侠玩玩．");
+			heads.Add(19,"岳某不才，向少侠挑战．");
+			heads.Add(22,"左冷禅愿领教阁下高招．");
+			heads.Add(56,"黄蓉愿领教阁下高招．");
+			heads.Add(68,"丘处机领教阁下高招．");
+			heads.Add(13,"谢某技痒，和少侠玩玩．");
+			heads.Add(55,"郭靖愿领教阁下高招．");
+			heads.Add(62,"老夫领教少侠高招！");
+			heads.Add(67,"裘千仞来领教阁下的高招．");
+			heads.Add(70,"阿弥陀佛，贫道愿向少侠挑战．");
+			heads.Add(71,"洪某拜教！");
+			heads.Add(26,"任某来领教阁下的高招．");
+			heads.Add(57,"少侠的确武功高强，我黄老邪来领教领教．");
+			heads.Add(60,"让我老毒物来会会你．");
+			heads.Add(64,"哇！你又学了这麽多新奇的功夫.来，来，老顽童陪你玩玩．");
+			heads.Add(3,"苗某向少侠讨教．");
+			heads.Add(69,"不错不错，七公我来领教领教．");
+			var ran=new System.Random();
+			var keys=heads.Keys.ToList();
+			var values=heads.Values.ToList();
+			for(int i=0;i<5;i++)
+			{
+				var tempList=new List<int>();
+				for(int i2=0;i2<3;i2++)
+				{
+					int j=ran.Next(0,6);
+					while(tempList.Contains(j))
+					{
+						j=ran.Next(0,6);
+					}
+					tempList.Add(j);
+					Talk(keys[i*6+j],values[i*6+j],"",0);
+					if (!TryBattle(102 + i*6+j))
+					{
+						Dead();
+						return;
+					}
+				}
+				if(i!=4){
+					Talk(70,"少侠已连战三场，可先休息再战．","talkname0", 0);
+					Rest();
+					DarkScence();
+					LightScence();
+				}
+			}
+			
+			Talk(0,"接下来换谁？","talkname0", 1);
+			Talk(0,"．．．．．．．．","talkname0", 1);
+			Talk(0,"没有人了吗？","talkname0", 1);
+			Talk(70,"如果还没有人要出来向这位少侠挑战，那麽这武功天下第一之名，武林盟主之位，就由这位少侠夺得．","talkname0", 0);
+			Talk(70,"．．．．．．．．．．．．．．．．．．","talkname0", 0);
+			Talk(70,"好，恭喜少侠，这武林盟主之位就由少侠获得，而这把”武林神杖”也由你保管．","talkname0", 0);
+			Talk(12,"恭喜少侠！","talkname0", 0);
+			Talk(64,"小兄弟，恭喜你！","talkname0", 0);
+			Talk(19,"好，今年的武林大会到此已圆满结束，希望明年各位武林同道能再到我华山一游．","talkname0", 0);
+			DarkScence();
+			jyx2_ReplaceSceneObject("","NPC/华山弟子","");
+			jyx2_ReplaceSceneObject("","NPC/battleNPC","");
+			LightScence();
+			Talk(0,"历经千辛万苦，我终于打败群雄，得到这武林盟主之位及神杖．但是”圣堂”在那呢？为什麽没人告诉我，难道大家都不知道．这会儿又有的找了．","talkname0", 1);
+			AddItem(143,1);
         }
 
         //所有人离队
@@ -738,7 +812,7 @@ namespace Jyx2
         //标记一个场景是否可以进入
         static public void OpenScene(int sceneId)
         {
-            runtime.SetSceneEntraceCondition(sceneId.ToString(), 1);
+            runtime.SetSceneEntraceCondition(sceneId.ToString(), 0);
         }
 
 		// modify by eaphone at 2021/6/5

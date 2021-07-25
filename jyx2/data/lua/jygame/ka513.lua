@@ -32,7 +32,7 @@ if InTeam(51) == true then goto label0 end;
                             do return end;
 ::label0::
                             Talk(51, "大师，我们是来向你借一样东西的．", "talkname51", 1);
-                            jyx2_ReplaceSceneObject("", "NPC/murongfu", "1");--慕容复
+                            jyx2_ReplaceSceneObject("", "NPC/慕容复", "1");--慕容复
                             Talk(70, "不知施主要跟老衲借什么？", "talkname70", 0);
                             Talk(51, "一份信件．", "talkname51", 1);
                             Talk(70, "一份信件？", "talkname70", 0);
@@ -54,7 +54,7 @@ if InTeam(51) == true then goto label0 end;
                             Talk(51, "兄弟，得手了，我们去丐帮揭发乔峰吧．", "talkname51", 1);
                             Talk(70, "阿弥陀佛，阿弥陀佛！施主得饶人处且饶人．", "talkname70", 0);
                             ModifyEvent(-2, -2, -2, -2, 512, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本512 场景28
-                            jyx2_ReplaceSceneObject("", "NPC/murongfu", "");--慕容复
+                            jyx2_ReplaceSceneObject("", "NPC/慕容复", "");--慕容复
                             AddItem(183, 1);
                             AddEthics(-3);
                             ModifyEvent(-2, 0, -2, -2, -1, -1, 514, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本514 场景28-0

@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(45, "公子有需，薛某自当效力．", "talkname45", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/xuemuhua","");
         LightScence();
         Join(45);
 do return end;

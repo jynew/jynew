@@ -80,6 +80,9 @@ namespace Jyx2
 
             Mp = MaxMp;
             Tili = GameConst.MaxTili;
+			
+			Hurt = 0;
+            Poison = 0;
         }
 
         public int HpInc { get { return Data.HpInc; } }
