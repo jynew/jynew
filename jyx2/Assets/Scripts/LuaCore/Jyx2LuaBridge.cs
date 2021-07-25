@@ -695,28 +695,40 @@ namespace Jyx2
 			heads.Add(3,"苗某向少侠讨教．");
 			heads.Add(69,"不错不错，七公我来领教领教．");
 			var ran=new System.Random();
-			int i=0;
-			foreach (KeyValuePair<int, string> kvp in heads)
+			var keys=heads.Keys.ToList();
+			var values=heads.Values.ToList();
+			for(int i=0;i<5;i++)
 			{
-				Talk(kvp.Key,kvp.Value,"talkname"+kvp.Key.ToString(),0);
-				if (!TryBattle(102 + i))
+				var tempList=new List<int>();
+				for(int i2=0;i2<3;i2++)
 				{
-					Dead();
-					return;
+					int j=ran.Next(0,6);
+					while(tempList.Contains(j))
+					{
+						j=ran.Next(0,6);
+					}
+					tempList.Add(j);
+					Talk(keys[i*6+j],values[i*6+j],"",0);
+					if (!TryBattle(102 + i*6+j))
+					{
+						Dead();
+						return;
+					}
 				}
-				LightScence();
-				if (i % 3 == 2 && i <29)
-				{
+				if(i!=4){
 					Talk(70,"少侠已连战三场，可先休息再战．","talkname0", 0);
 					Rest();
 					DarkScence();
 					LightScence();
 				}
-				i++;
 			}
-
-			Talk(0,"接下来换谁？．．．．．．．．没有人了吗？","talkname0", 1);
-			Talk(70,"如果还没有人要出来向这位少侠挑战，那麽这武功天下第一之名，武林盟主之位，就由这位少侠夺得．．．．．．．．．．．．．．．．．．．好，恭喜少侠，这武林盟主之位就由少侠获得，而这把”武林神杖”也由你保管．","talkname0", 0);
+			
+			Talk(0,"接下来换谁？","talkname0", 1);
+			Talk(0,"．．．．．．．．","talkname0", 1);
+			Talk(0,"没有人了吗？","talkname0", 1);
+			Talk(70,"如果还没有人要出来向这位少侠挑战，那麽这武功天下第一之名，武林盟主之位，就由这位少侠夺得．","talkname0", 0);
+			Talk(70,"．．．．．．．．．．．．．．．．．．","talkname0", 0);
+			Talk(70,"好，恭喜少侠，这武林盟主之位就由少侠获得，而这把”武林神杖”也由你保管．","talkname0", 0);
 			Talk(12,"恭喜少侠！","talkname0", 0);
 			Talk(64,"小兄弟，恭喜你！","talkname0", 0);
 			Talk(19,"好，今年的武林大会到此已圆满结束，希望明年各位武林同道能再到我华山一游．","talkname0", 0);
