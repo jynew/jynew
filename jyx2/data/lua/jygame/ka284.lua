@@ -13,7 +13,7 @@ if InTeam(35) == true then goto label0 end;
     Talk(35, "徒儿遵命．", "talkname35", 1);
     DarkScence();
     ModifyEvent(-2, 3, 1, 1, -1, -1, -1, 7624, 7624, 7624, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/linghuchong", "1");--令狐冲
+    jyx2_ReplaceSceneObject("", "NPC/令狐冲", "1");--令狐冲
     LightScence();
     PlayAnimation(3, 7624, 7654);
     PlayAnimation(3, 7624, 7654);
@@ -45,6 +45,6 @@ if InTeam(35) == true then goto label0 end;
     AddAptitude(0, 5);
     DarkScence();
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/linghuchong", "");--令狐冲
+    jyx2_ReplaceSceneObject("", "NPC/令狐冲", "");--令狐冲
     LightScence();
 do return end;

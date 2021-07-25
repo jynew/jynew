@@ -4,7 +4,7 @@ if UseItem(127) == true then goto label0 end;
     AddItemWithoutHint(127, -1);
     Talk(35, "好一只翡翠杯！得此美酒佳器，人生更有何憾．我令狐冲先干为敬，谢谢兄弟赠酒之情．", "talkname35", 0);
     PlayAnimation(3, 5722, 5748);
-    jyx2_PlayTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒", 0, false, "NPC/linghuchong");
+    jyx2_PlayTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒", 0, false, "NPC/令狐冲");
     jyx2_Wait(0.9);
     jyx2_StopTimeline("[Timeline]ka238_悦来客栈_令狐冲喝酒");
     ModifyEvent(-2, -2, -2, -2, 243, -1, -1, 5722, 5748, 5722, -2, -2, -2);

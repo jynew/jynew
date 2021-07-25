@@ -11,7 +11,7 @@ if UseItem(136) == true then goto label0 end;
     DarkScence();
     ModifyEvent(-2, -2, -2, -2, -2, -2, -2, 5152, 5152, 5152, -2, -2, -2);
 	jyx2_FixMapObject("石破天痊愈",1);
-    jyx2_SwitchRoleAnimation("NPC/shipotian", "Assets/BuildSource/AnimationControllers/备份/石破天Controller.controller");
+    jyx2_SwitchRoleAnimation("NPC/石破天", "Assets/BuildSource/AnimationControllers/备份/石破天Controller.controller");
     ModifyEvent(-2, 1, -2, -2, -2, -2, 338, -2, -2, -2, -2, -2, -2);
     LightScence();
     Talk(38, "哇！这酒怎么这么辛辣！不过好像真的挺有效的，谢谢你！既然老伯伯不在了，我要去找妈妈跟小黄了．", "talkname38", 0);
@@ -25,7 +25,7 @@ if UseItem(136) == true then goto label0 end;
 ::label2::
             Talk(38, "好啊！", "talkname38", 0);
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/shipotian", "");--石破天加入队伍
+            jyx2_ReplaceSceneObject("", "NPC/石破天", "");--石破天加入队伍
             ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
             LightScence();
             Join(38);

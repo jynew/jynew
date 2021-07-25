@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(2, "那有什么问题．", "talkname2", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/chenglingsu","");
         LightScence();
         Join(2);
 do return end;

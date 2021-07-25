@@ -14,8 +14,8 @@ if AskJoin () == true then goto label0 end;
 ::label2::
             Talk(109, "既然我表哥都加入了，我当然要伴着他．", "talkname109", 0);
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "");--王语嫣
             ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+            jyx2_ReplaceSceneObject("", "NPC/王语嫣", "");--王语嫣
             LightScence();
             Join(76);
             AddEthics(1);

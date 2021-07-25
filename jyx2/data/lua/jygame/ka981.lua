@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(48, "嗯．", "talkname48", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/youtanzhi","");
         LightScence();
         Join(48);
 do return end;

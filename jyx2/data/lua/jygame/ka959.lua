@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(17, "少侠的救命之恩，王难姑一辈子都报答不完．所以这个忙是一定要帮的．", "talkname17", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/王难姑","");
         LightScence();
         Join(17);
 do return end;

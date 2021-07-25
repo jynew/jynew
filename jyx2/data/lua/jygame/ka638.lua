@@ -10,7 +10,7 @@ if AskJoin () == true then goto label0 end;
         Talk(54, "好．离开武林这么多年，也　不知变得怎么样了．袁某的功夫不知是否还管用．", "talkname54", 0);
         Talk(0, "我们走吧．", "talkname0", 1);
         DarkScence();
-        jyx2_ReplaceSceneObject("", "NPC/yuanchengzhi", "");-- 袁承志加入队伍
+        jyx2_ReplaceSceneObject("", "NPC/袁承志", "");-- 袁承志加入队伍
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         LightScence();
         Join(54);

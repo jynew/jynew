@@ -12,6 +12,7 @@ if AskJoin () == true then goto label0 end;
         DarkScence();
         ModifyEvent(-2, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
         ModifyEvent(-2, 1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/欧阳克","");
         LightScence();
         Join(61);
 do return end;

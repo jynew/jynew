@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(58, "那有什么问题，别的没有，就是有”一臂”．", "talkname58", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/杨过","");
         LightScence();
         Join(58);
 do return end;

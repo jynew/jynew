@@ -45,7 +45,7 @@ if UseItem(131) == true then goto label0 end;
             do return end;
 ::label2::
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/murongfu", "");--慕容复
+            jyx2_ReplaceSceneObject("", "NPC/慕容复", "");--慕容复
             ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             ModifyEvent(-2, 2, -2, -2, 495, -1, -1, -2, -2, -2, -2, -2, -2);
             LightScence();

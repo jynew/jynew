@@ -3,7 +3,7 @@ DarkScence();
 ModifyEvent(-2, 3, 1, 1, 515, -1, -1, 5372, 5372, 5372, -2, -2, -2);--by fanyu 启动脚本515，改变贴图 场景28-3
 jyx2_ReplaceSceneObject("", "NPC/方丈12", "");--玄慈追出山门
 jyx2_ReplaceSceneObject("", "NPC/方丈3", "1");--玄慈在山门
-jyx2_ReplaceSceneObject("", "NPC/murongfu1", "1");--慕容复在山门
+jyx2_ReplaceSceneObject("", "NPC/慕容复1", "1");--慕容复在山门
 SetRoleFace(2);
 ModifyEvent(-2, 4, 1, 1, -1, -1, -1, 5420, 5420, 5420, -2, -2, -2);--by fanyu 改变贴图 场景28-4
 ModifyEvent(-2, 5, 1, 1, -1, -1, -1, 5420, 5420, 5420, -2, -2, -2);--by fanyu 改变贴图 场景28-5
@@ -41,7 +41,7 @@ if TryBattle(81) == true then goto label0 end;
 	jyx2_ReplaceSceneObject("", "NPC/少林弟子6", "");
     ModifyEvent(-2, 12, -2, -2, 578, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu 玄慈回寺里 启动脚本578 场景28-12
 	jyx2_ReplaceSceneObject("", "NPC/方丈12", "1");
-	jyx2_ReplaceSceneObject("", "NPC/murongfu1", "");
+	jyx2_ReplaceSceneObject("", "NPC/慕容复1", "");
     ModifyEvent(51, 14, -2, -2, 527, 531, -1, -2, -2, -2, -2, -2, -2);--by fanyu  启动脚本527,531 场景51-14
     LightScence();
     Talk(51, "没事了，我们走吧．", "talkname51", 1);

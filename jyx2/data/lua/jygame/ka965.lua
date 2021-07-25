@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(29, "那就走吧．我一个人玩也没什么意思，团体的比较好玩．", "talkname29", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/田伯光","");
         LightScence();
         Join(29);
 do return end;

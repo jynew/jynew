@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(16, "少侠有求，胡某自当效力．", "talkname16", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/胡青牛","");
         LightScence();
         Join(16);
 do return end;

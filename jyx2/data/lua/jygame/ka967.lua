@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(35, "那我们就再一起结伴天涯，喝尽世间的美酒！", "talkname35", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/令狐冲","");
         LightScence();
         Join(35);
 do return end;

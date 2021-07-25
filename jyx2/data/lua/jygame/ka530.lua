@@ -8,10 +8,10 @@ if InTeam(51) == false then goto label0 end;
         ModifyEvent(-2, 20, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 21, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 22, 1, 1, -1, -1, -1, 6306, 6306, 6306, -2, -2, -2);--by fanyu 改变贴图 场景51-22
-        jyx2_ReplaceSceneObject("", "NPC/murongfu", "1");--慕容复
+        jyx2_ReplaceSceneObject("", "NPC/慕容复", "1");--慕容复
         if InTeam(51) == true then goto label2 end;--慕容复不是队员，出现王语嫣
             ModifyEvent(-2, 23, 1, 1, -1, -1, -1, 6298, 6298, 6298, -2, -2, -2);--by fanyu 改变贴图 场景51-23
-            jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "1");--王语嫣
+            jyx2_ReplaceSceneObject("", "NPC/王语嫣", "1");--王语嫣
 			if JudgeScenePic(52, 3, 6310, 0, 14)==false then goto label3 end;--如果之前带段誉拜访过燕子坞，同时出现段誉. 否则跳转label3
                 ModifyEvent(-2, 24, 1, 1, -1, -1, -1, 6314, 6314, 6314, -2, -2, -2);--by fanyu 改变贴图 场景51-24
 				jyx2_ReplaceSceneObject("", "NPC/段誉", "1");--段誉出现
@@ -19,7 +19,7 @@ if InTeam(51) == false then goto label0 end;
 ::label3::
                 if InTeam(76) == false then goto label4 end;--如果慕容复是队员，王语嫣和段誉根据是否是队员决定是否出现
                     ModifyEvent(-2, 23, 1, 1, -1, -1, -1, 6298, 6298, 6298, -2, -2, -2);--by fanyu 改变贴图 场景51-23
-                    jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "1");--王语嫣
+                    jyx2_ReplaceSceneObject("", "NPC/王语嫣", "1");--王语嫣
 					if InTeam(53) == false then goto label5 end;
                         ModifyEvent(-2, 24, 1, 1, -1, -1, -1, 6314, 6314, 6314, -2, -2, -2);--by fanyu 改变贴图 场景51-24
                         jyx2_ReplaceSceneObject("", "NPC/段誉", "1");--段誉出现
@@ -45,9 +45,9 @@ if InTeam(51) == false then goto label0 end;
                                 Leave(51);
 ::label7::
                                 ModifyEvent(-2, 22, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-								jyx2_ReplaceSceneObject("", "NPC/murongfu", "");--慕容复离开
+								jyx2_ReplaceSceneObject("", "NPC/慕容复", "");--慕容复离开
                                 ModifyEvent(52, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-								jyx2_ReplaceSceneObject("52", "NPC/murongfu", "");
+								jyx2_ReplaceSceneObject("52", "NPC/慕容复", "");
                                 LightScence();
                                 if JudgeScenePic(-2, 23, 6298, 1, 0) then goto label8 end;--如果前面显示王语嫣，跳转label8
                                     do return end;
@@ -64,9 +64,9 @@ if InTeam(51) == false then goto label0 end;
                                             Leave(76);
 ::label10::
                                             ModifyEvent(-2, 23, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-											jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "");--王语嫣离开
+											jyx2_ReplaceSceneObject("", "NPC/王语嫣", "");--王语嫣离开
                                             ModifyEvent(52, 2, 1, 1, 495, -1, -1, 6298, 6298, 6298, -2, -2, -2);--by fanyu 启动495脚本，改变贴图(王语嫣) 场景52-2
-                                            jyx2_ReplaceSceneObject("52", "NPC/wangyuyan", "1");--王语嫣出现
+                                            jyx2_ReplaceSceneObject("52", "NPC/王语嫣", "1");--王语嫣出现
                                             do return end;
 ::label9::
                                             Talk(53, "王姑娘，你别烦恼，我去劝劝你表哥，让他对你好一点．．．．．", "talkname53", 0);
@@ -84,11 +84,11 @@ if InTeam(51) == false then goto label0 end;
 ::label12::
                                                     ModifyEvent(-2, 23, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
                                                     ModifyEvent(-2, 24, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-													jyx2_ReplaceSceneObject("", "NPC/wangyuyan", "");--王语嫣离开
+													jyx2_ReplaceSceneObject("", "NPC/王语嫣", "");--王语嫣离开
 													jyx2_ReplaceSceneObject("", "NPC/段誉", "");--段誉离开
                                                     ModifyEvent(52, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
                                                     ModifyEvent(52, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-													jyx2_ReplaceSceneObject("52", "NPC/wangyuyan", "");
+													jyx2_ReplaceSceneObject("52", "NPC/王语嫣", "");
 													jyx2_ReplaceSceneObject("52", "NPC/段誉", "");
                                                     ModifyEvent(42, 6, 1, 1, 594, -1, -1, 6296, 6296, 6296, -2, -2, -2);
                                                     ModifyEvent(42, 7, 1, 1, 593, -1, -1, 6308, 6308, 6308, -2, -2, -2);
