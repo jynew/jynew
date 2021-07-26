@@ -419,6 +419,12 @@ namespace Jyx2
             set { Save("TeamLevel", value); }
         }
 
+        //野球拳使用次数
+        public int YeQiuQuanCounter
+        {
+            get { return Get("YeQiuQuanCounter", 0); }
+            set { Save("YeQiuQuanCounter", value); }
+        }
 
         public int GetMoney()
         {

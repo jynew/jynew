@@ -74,12 +74,13 @@ namespace Jyx2
                 level = GetLevel();
             }
                 
-            if(level < 0 || level > skill.SkillLevels.Count)
+            if(level < 0 || level > skill.SkillLevels.Count-1)
             {
                 Debug.LogError("skill level error");
                 return null;
             }
-            return skill.SkillLevels[level - 1];
+            //return skill.SkillLevels[level - 1];//为何要-1？
+			return skill.SkillLevels[level];
         }
 
         public string Name
@@ -166,7 +167,7 @@ namespace Jyx2
 
         public Jyx2SkillDisplayAsset GetDisplay()
         {
-            return _skill.Display;
+			return GetSkill().Display;
         }
 
         public int GetCoolDown()

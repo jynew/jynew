@@ -12,6 +12,8 @@ using HSFrameWork.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HSFrameWork.ConfigTable;
+using System;
 
 public class PlayingActionState : IBattleState
 {
@@ -79,11 +81,13 @@ public class PlayingActionState : IBattleState
             Zhaoshi = m_skill,
             Targets = beHitAnimationList.ToMapRoles(),
         };
-
-        if (attackTwiceCounter < m_role.Zuoyouhubo)
+		
+		
+        if (attackTwiceCounter < m_role.Zuoyouhubo && m_skill.Data.GetSkill().DamageType==0 && BattleManager.Instance.GetModel().GetBattleResult()==BattleResult.InProgress)//非战斗技能不适用左右互博
         {
             castHelper.Play(() => {
                 attackTwiceCounter ++;
+				CheckYeQiuQuan();
                 CastSkill();
             });
         }
@@ -95,10 +99,20 @@ public class PlayingActionState : IBattleState
                 {
                     role.CheckDeath();
                 }
+				CheckYeQiuQuan();
                 OnCaskSkillOver();
             });
         }
+		
     }
+	
+	void CheckYeQiuQuan()
+	{
+		if(m_skill.Key=="1")
+		{
+			m_role.CheckYeQiuQuan();
+		}
+	}
 
     //技能释放结束
     void OnCaskSkillOver() 

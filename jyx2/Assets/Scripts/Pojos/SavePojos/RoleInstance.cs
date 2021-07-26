@@ -50,13 +50,16 @@ namespace Jyx2
 			_data.Exp=0;//已经有初始等级。经验值应该抵消，设置为0.
 
             //初始化武功列表
-            Wugongs.Clear();
-            foreach (var wugong in _data.Wugongs)
-            {
-                if (wugong.Id == 0)
-                    continue;
-                Wugongs.Add(new WugongInstance(wugong));
-            }
+            //Wugongs.Clear();			
+			if(Wugongs.Count==0)
+			{
+				foreach (var wugong in _data.Wugongs)
+				{
+					if (wugong.Id == 0)
+						continue;
+					Wugongs.Add(new WugongInstance(wugong));
+				}
+			}
 
             //没有设置武功，默认增加一个普通攻击
             if (Wugongs.Count == 0 && _data.Wugongs != null && _data.Wugongs.Count > 0)
@@ -181,7 +184,25 @@ namespace Jyx2
 
             Debug.Log($"{this.Name}升到{this.Level}级！");
         }
-
+		
+		public void CheckYeQiuQuan()
+		{
+			var key=1;
+			var ran=new System.Random();
+			GameRuntimeData.Instance.YeQiuQuanCounter+=ran.Next(1,3);
+			if(GameRuntimeData.Instance.YeQiuQuanCounter>=100 && GetWugongLevel(key)<GameConst.MAX_SKILL_LEVEL)
+			{
+				this.LearnMagic(key);
+				GameRuntimeData.Instance.YeQiuQuanCounter-=100;
+				Loom.QueueOnMainThread(_ =>
+				{					
+					new Action(() => {
+						StoryEngine.Instance.DisplayPopInfo("野球拳升为第 "+GetWugongLevel(key)+" 级！");
+					})();
+				}, null);
+			}
+		}
+		
         void Limit()
         {
             Exp = Tools.Limit(Exp, 0, GameConst.MAX_EXP);
