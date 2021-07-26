@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using HanSquirrel.ResourceManager;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -40,10 +41,13 @@ public class LoadingPanel : MonoBehaviour
 
         string level = levelKey.Contains("&") ? levelKey.Split('&')[0] : levelKey;
         string command = levelKey.Contains("&") ? levelKey.Split('&')[1] : "";
-        var async = SceneManager.LoadSceneAsync(level);
-        while (!async.isDone)
+        //var async = SceneManager.LoadSceneAsync(level);
+
+        var async = Addressables.LoadSceneAsync(level);
+        
+        while (!async.IsDone)
         {
-            m_LoadingText.text = "载入中... " + (int)(async.progress * 100) + "%";
+            m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
             yield return 0;
         }
         if (!string.IsNullOrEmpty(command))

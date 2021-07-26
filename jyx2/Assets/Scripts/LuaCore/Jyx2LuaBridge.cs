@@ -1078,6 +1078,13 @@ namespace Jyx2
 
         static Animator clonePlayer;
 
+        private static float _timelineSpeed = 1;
+
+        static public void jyx2_SetTimelineSpeed(float speed)
+        {
+            _timelineSpeed = speed;
+        }
+        
         static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
         {
             RunInMainThread(() =>
@@ -1103,8 +1110,15 @@ namespace Jyx2
                 {
                     Next();
                 }
-
+                
                 playableDirector.Play();
+
+                //timeline播放速度
+                if (_timelineSpeed != 1 && _timelineSpeed > 0)
+                {
+                    playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(_timelineSpeed);    
+                }
+                
 
                 //没有指定对象，则默认为主角播放
                 if (string.IsNullOrEmpty(tagRole) || tagRole == "PLAYER")
@@ -1204,7 +1218,7 @@ namespace Jyx2
             {
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(Next)
-                .SetDelay(duration);
+                .SetDelay(duration / _timelineSpeed);
             });
             Wait();
         }

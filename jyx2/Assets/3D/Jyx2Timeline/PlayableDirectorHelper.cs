@@ -7,8 +7,7 @@ public class PlayableDirectorHelper : MonoBehaviour
 {
     public Animator m_PreviewRole;
 
-    [Header("绑定物体到指定节点上")]
-    public GameObject m_BindObject;
+    [Header("绑定物体到指定节点上")] public GameObject m_BindObject;
     public string m_BindBoneName;
     public bool m_IsLocalTransform;
 
@@ -21,7 +20,7 @@ public class PlayableDirectorHelper : MonoBehaviour
 
     public void BindPlayer(GameObject player)
     {
-        if(m_PreviewRole != null)
+        if (m_PreviewRole != null)
         {
             player.transform.position = m_PreviewRole.transform.position;
             player.transform.rotation = m_PreviewRole.transform.rotation;
@@ -66,12 +65,13 @@ public class PlayableDirectorHelper : MonoBehaviour
 
     Transform FindChild(Transform parent, string name)
     {
-        Transform tf = parent.Find(name);
+        Transform tf = parent.Find(name);
         if (tf != null)
-        {
+        {
             return tf;
         }
-        for (int i = 0; i < parent.childCount; i++)
+
+        for (int i = 0; i < parent.childCount; i++)
         {
             Transform target = FindChild(parent.GetChild(i), name);
             if (target != null)
@@ -79,15 +79,13 @@ public class PlayableDirectorHelper : MonoBehaviour
                 return target;
             }
         }
+
         return null;
     }
 
     public void ClearTempObjects()
     {
-        _tempObjs.ForEach(delegate (GameObject go)
-        {
-            GameObject.Destroy(go);
-        });
+        _tempObjs.ForEach(delegate(GameObject go) { GameObject.Destroy(go); });
         _tempObjs.Clear();
     }
 }

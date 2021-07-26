@@ -1,3 +1,20 @@
+--[[
+/*
+ * 金庸群侠传3D重制版
+ * https://github.com/jynew/jynew
+ *
+ * 这是本开源项目文件头，所有代码均使用MIT协议。
+ * 但游戏内资源和第三方插件、dll等请仔细阅读LICENSE相关授权协议文档。
+ *
+ * 金庸老先生千古！
+ */
+ ]]--
+ 
+ 
+--所有的指令文档可以参阅以下链接
+--https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%BA%8B%E4%BB%B6%E6%8C%87%E4%BB%A4
+
+
 --注释后面标记的是对应的指令号
 
 --0=0|1|0|0|0|
@@ -161,6 +178,7 @@ jyx2_SwitchRoleAnimation = CS.Jyx2.Jyx2LuaBridge.jyx2_SwitchRoleAnimation
 jyx2_FixMapObject = CS.Jyx2.Jyx2LuaBridge.jyx2_FixMapObject
 jyx2_CheckEventCount = CS.Jyx2.Jyx2LuaBridge.jyx2_CheckEventCount
 jyx2_CheckBookAndRepute=CS.Jyx2.Jyx2LuaBridge.jyx2_CheckBookAndRepute
+jyx2_SetTimelineSpeed = CS.Jyx2.Jyx2LuaBridge.jyx2_SetTimelineSpeed
 
 function main_getLuaFiles()
 	return {}
