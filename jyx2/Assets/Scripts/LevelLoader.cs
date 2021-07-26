@@ -13,6 +13,7 @@ using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Jyx2
 {
@@ -65,10 +66,11 @@ namespace Jyx2
             var battle = ConfigTable.Get<Jyx2Battle>(battleId);
 
             string sceneName = "Jyx2Battle_" + battle.MapId;
-            if(!Application.CanStreamedLevelBeLoaded(sceneName))
+
+            /*if(!Application.CanStreamedLevelBeLoaded(sceneName))
             {
                 sceneName = "BattleScene_hufeiju";
-            }
+            }*/
 
             LoadingPanel.Create(sceneName, ()=> {
 
