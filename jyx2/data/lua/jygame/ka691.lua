@@ -1,3 +1,4 @@
+jyx2_SetTimelineSpeed(3); --播放速度X3
 jyx2_PlayTimeline("[Timeline]ka691_小虾米居_醒来", 0, false);
 jyx2_Wait(1);
 Talk(0, "啊！头好痛呀！是不是最近Ｋ书Ｋ太凶了，所以有点恍惚了．．．．．．我记得我正在玩”金庸群侠传”啊！怎么突然就睡着了．管他的，我得赶紧起来玩，这游戏可是等了半年多才玩到的，非第一个破关不可．", "talkname0", 1);
@@ -53,6 +54,7 @@ jyx2_StopTimeline("[Timeline]ka691_小虾米居_四处观察");
 jyx2_StopTimeline("[Timeline]ka691_小虾米居_转身");
 jyx2_StopTimeline("[Timeline]ka691_小虾米居_软体娃娃跳起");
 jyx2_StopTimeline("[Timeline]ka691_小虾米居_软体娃娃打招呼");
+jyx2_SetTimelineSpeed(1); --播放速度还原
 SetRoleFace(0); --修正朝向角度
 LightScence(); --增加过场
 ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

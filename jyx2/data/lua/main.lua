@@ -161,6 +161,7 @@ jyx2_SwitchRoleAnimation = CS.Jyx2.Jyx2LuaBridge.jyx2_SwitchRoleAnimation
 jyx2_FixMapObject = CS.Jyx2.Jyx2LuaBridge.jyx2_FixMapObject
 jyx2_CheckEventCount = CS.Jyx2.Jyx2LuaBridge.jyx2_CheckEventCount
 jyx2_CheckBookAndRepute=CS.Jyx2.Jyx2LuaBridge.jyx2_CheckBookAndRepute
+jyx2_SetTimelineSpeed = CS.Jyx2.Jyx2LuaBridge.jyx2_SetTimelineSpeed
 
 function main_getLuaFiles()
 	return {}
