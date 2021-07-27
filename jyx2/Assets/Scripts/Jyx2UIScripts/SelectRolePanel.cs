@@ -27,6 +27,7 @@ public class SelectRoleParams
     public bool needCloseAfterClickOK = true;//点击确认之后是否需要关闭 如果不需要关闭 那么刷新下面板
     public List<int> showPropertyIds = new List<int>() { 13, 15, 14 };//要显示的属性 默认是生命 体力 内力
     public bool IsFull { get { return selectList.Count >= maxCount; } }
+	public bool isDefaultSelect=true;
     //默认选择角色和必须上场的角色
     public void SetDefaltRole() 
     {
@@ -64,7 +65,10 @@ public partial class SelectRolePanel:Jyx2_UIBase
             return;
         }
 
-        m_params.SetDefaltRole();//如果没有选择 默认选择一个
+		if(m_params.isDefaultSelect)
+		{
+			m_params.SetDefaltRole();//如果没有选择 默认选择一个
+		}
         TitleText_Text.text = m_params.title;
         ShowBtns();
         RefreshScroll();
@@ -105,9 +109,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
         bool hasIt = m_params.selectList.Contains(role);
         if (hasIt)
         {
-            if (m_params.selectList.Count <= 1)
-                return;
-            if (m_params.mustSelect != null && m_params.mustSelect.Invoke(role)) 
+            if (m_params.mustSelect != null && m_params.mustSelect.Invoke(role) && m_params.selectList.Count <= 1) 
             {
                 GameUtil.DisplayPopinfo("此角色强制上场");
                 return;
@@ -129,6 +131,11 @@ public partial class SelectRolePanel:Jyx2_UIBase
 
     void OnConfirmClick() 
     {
+		if(m_params.selectList.Count==0)
+		{
+			GameUtil.DisplayPopinfo($"未选择任何人");
+			return;
+		}
         SelectRoleParams param = m_params;
         if (m_params.callback == null) //说明不需要回调 直接刷新面板
         {

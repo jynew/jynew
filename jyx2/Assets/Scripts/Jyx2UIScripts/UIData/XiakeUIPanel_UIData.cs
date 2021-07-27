@@ -25,6 +25,8 @@ public partial class XiakeUIPanel
 	private Button LeaveButton_Button;
 	private RectTransform RoleParent_RectTransform;
 	private Button BackButton_Button;
+	private Button ButtonHeal_Button;
+	private Button ButtonDetoxicate_Button;
 
 	public void InitTrans()
 	{
@@ -39,6 +41,8 @@ public partial class XiakeUIPanel
 		LeaveButton_Button = transform.Find("MainContent/LeaveButton").GetComponent<Button>();
 		RoleParent_RectTransform = transform.Find("RoleScroll/Viewport/RoleParent").GetComponent<RectTransform>();
 		BackButton_Button = transform.Find("BackButton").GetComponent<Button>();
+		ButtonHeal_Button = transform.Find("MainContent/ButtonHeal").GetComponent<Button>();
+		ButtonDetoxicate_Button = transform.Find("MainContent/ButtonDetoxicate").GetComponent<Button>();
 
 	}
 }

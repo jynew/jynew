@@ -40,6 +40,7 @@ public class GameUtil
         SelectRoleParams selectParams = new SelectRoleParams();
         selectParams.roleList = roles;
         selectParams.title = "选择使用的人";
+		selectParams.isDefaultSelect=false;
         selectParams.callback = (cbParam) => 
         {
             storyEngine.BlockPlayerControl = false;

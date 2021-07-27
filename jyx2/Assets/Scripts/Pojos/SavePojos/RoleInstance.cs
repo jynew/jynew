@@ -161,7 +161,7 @@ namespace Jyx2
             this.Tili = GameConst.MAX_ROLE_TILI;
             this.MaxHp += this.Data.HpInc * 3 + Tools.GetRandomInt(0, 6);
             this.SetHPAndRefreshHudBar(this.MaxHp);
-            this.MaxMp = 20 + Tools.GetRandomInt(0, 6);
+            this.MaxMp += 20 + Tools.GetRandomInt(0, 6);
             this.Mp = this.MaxMp;
 
             this.Hurt = 0;
