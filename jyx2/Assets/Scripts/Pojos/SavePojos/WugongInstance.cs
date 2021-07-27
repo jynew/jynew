@@ -69,18 +69,16 @@ namespace Jyx2
         public Jyx2SkillLevel GetSkillLevelInfo(int level = -1)
         {
             var skill = GetSkill();
-            if(level == -1)
+            if(level < 1)
             {
                 level = GetLevel();
             }
-                
-            if(level < 0 || level > skill.SkillLevels.Count-1)
+            if(level > skill.SkillLevels.Count)
             {
                 Debug.LogError("skill level error");
                 return null;
             }
-            //return skill.SkillLevels[level - 1];//为何要-1？
-			return skill.SkillLevels[level];
+            return skill.SkillLevels[level - 1];//为何要-1
         }
 
         public string Name
