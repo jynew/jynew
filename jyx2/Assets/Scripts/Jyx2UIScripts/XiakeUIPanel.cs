@@ -32,6 +32,8 @@ public partial class XiakeUIPanel:Jyx2_UIBase
         BindListener(LeaveButton_Button, OnLeaveClick);
         BindListener(ButtonSelectArmor_Button, OnArmorClick);
         BindListener(ButtonSelectBook_Button, OnXiulianClick);
+        BindListener(ButtonHeal_Button, OnHealClick);
+        BindListener(ButtonDetoxicate_Button, OnDetoxicateClick);
     }
 
     protected override void OnShowPanel(params object[] allParams)
@@ -64,6 +66,11 @@ public partial class XiakeUIPanel:Jyx2_UIBase
         InfoText_Text.text = GetInfoText(m_currentRole);
         SkillText_Text.text = GetSkillText(m_currentRole);
         ItemsText_Text.text = GetItemsText(m_currentRole);
+		
+		bool canDepoison = m_currentRole.DePoison > 0 && m_currentRole.Tili >= 30;
+        ButtonHeal_Button.gameObject.SetActive(canDepoison);
+        bool canHeal = m_currentRole.Heal > 0 && m_currentRole.Tili >= 10;
+        ButtonDetoxicate_Button.gameObject.SetActive(canHeal);
     }
 
     void RefreshScrollView() 
@@ -277,4 +284,60 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             RefreshCurrent();
         }), filter);
     }
+	
+	void OnHealClick() 
+    {
+        SelectRoleParams selectParams = new SelectRoleParams();
+        selectParams.roleList = m_roleList;
+        selectParams.title = "选择需要医疗的人";
+		selectParams.isDefaultSelect=false;
+        selectParams.callback = (cbParam) => 
+        {
+            StoryEngine.Instance.BlockPlayerControl = false;
+            if (cbParam.selectList.Count <= 0)
+            {
+                return;
+            }
+            var selectRole = cbParam.selectList[0];//默认只会选择一个
+            var zhaoshi = new HealZhaoshiInstance(m_currentRole.Heal);
+			var result = AIManager.Instance.GetSkillResult(m_currentRole, selectRole, zhaoshi, new BattleBlockVector(0,0));
+            result.Run();
+			if(result.heal>0)
+			{
+				m_currentRole.Tili-=2;
+			}
+			RefreshScrollView();
+			RefreshCurrent();
+        };
+
+        Jyx2_UIManager.Instance.ShowUI("SelectRolePanel", selectParams);
+    }
+	
+	void OnDetoxicateClick() 
+	{
+		SelectRoleParams selectParams = new SelectRoleParams();
+        selectParams.roleList = m_roleList;
+        selectParams.title = "选择需要解毒的人";
+		selectParams.isDefaultSelect=false;
+        selectParams.callback = (cbParam) => 
+        {
+            StoryEngine.Instance.BlockPlayerControl = false;
+            if (cbParam.selectList.Count <= 0)
+            {
+                return;
+            }
+            var selectRole = cbParam.selectList[0];//默认只会选择一个
+            var zhaoshi = new DePoisonZhaoshiInstance(m_currentRole.DePoison);
+			var result = AIManager.Instance.GetSkillResult(m_currentRole, selectRole, zhaoshi, new BattleBlockVector(0,0));
+            result.Run();
+			if(result.depoison<0)
+			{
+				m_currentRole.Tili-=2;
+			}
+			RefreshScrollView();
+			RefreshCurrent();
+        };
+
+        Jyx2_UIManager.Instance.ShowUI("SelectRolePanel", selectParams);
+	}
 }
