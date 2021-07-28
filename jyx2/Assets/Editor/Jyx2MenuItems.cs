@@ -115,14 +115,20 @@ namespace Jyx2Editor
             AddScenesToBuildTool.AddScenesToBuild();
 
             //打包
-            BuildPipeline.BuildPlayer(GetScenePaths(), path + "/jyx2.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
-            
+            //BuildPipeline.BuildPlayer(GetScenePaths(), path + "/jyx2.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
+            BuildPipeline.BuildPlayer(new BuildPlayerOptions()
+            {
+                locationPathName = path + "/jyx2.exe",
+                target = BuildTarget.StandaloneWindows64,
+                options = BuildOptions.None
+            });
             //强制移动目录
             //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
         
+        [Obsolete("不再使用这种方式调用")]
         static string[] GetScenePaths() {
             string[] scenes = new string[EditorBuildSettings.scenes.Length];
             for(int i = 0; i < scenes.Length; i++) {
@@ -145,9 +151,8 @@ namespace Jyx2Editor
                     return;
 
                 //生成luaWrap
+                Generator.ClearAll();
                 Generator.GenAll();
-                AssetDatabase.Refresh();
-
 
                 //重新生成Addressable相关文件
                 AddressableAssetSettings.BuildPlayerContent();
@@ -166,8 +171,14 @@ namespace Jyx2Editor
                 PlayerSettings.Android.keyaliasPass = "123456";
 
                 //打包
-                BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
+                //BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
 
+                BuildPipeline.BuildPlayer(new BuildPlayerOptions()
+                {
+                    locationPathName = path + "/jyx2.exe",
+                    target = BuildTarget.Android,
+                    options = BuildOptions.None
+                });
                 //强制移动目录
                 //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
 
