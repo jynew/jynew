@@ -47,11 +47,11 @@ public class LoadingPanel : MonoBehaviour
         string scenePath = "";
         if (level.Contains("Battle"))
         {
-            scenePath = $"Assets/Jyx2BattleScene/{level}";
+            scenePath = $"Assets/Jyx2BattleScene/{level}.unity";
         }
         else
         {
-            scenePath = $"Assets/Jyx2Scenes/{level}";
+            scenePath = $"Assets/Jyx2Scenes/{level}.unity";
         }
         
         var async = Addressables.LoadSceneAsync(scenePath);

@@ -26,9 +26,6 @@ public sealed class AddScenesToBuildTool
     [MenuItem("Tools/场景/AddScenesToBuild")]
     public static void AddScenesToBuild()
     {
-        
-        
-        
         for (int i = 0; i < __SCENES_DIR.Length; ++i)
         {
             if (!Directory.Exists(Application.dataPath + __SCENES_DIR[i]))
