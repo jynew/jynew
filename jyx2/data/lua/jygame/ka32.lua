@@ -9,8 +9,7 @@ if UseItem(137) == true then goto label0 end;
         Talk(0, "苗大侠，我这就帮你敷上解药．", "talkname0", 1);
         DarkScence();
         ModifyEvent(-2, -2, -2, -2, 33, -1, -1, 5216, 5216, 5216, -2, -2, -2);--by fanyu 启动脚本33，改变贴图 场景24-编号8
-        jyx2_ReplaceSceneObject("","NPC/miaorenfeng1","1") --苗人凤坐下
-        jyx2_ReplaceSceneObject("","NPC/miaorenfeng","") --
+		jyx2_SwitchRoleAnimation("","NPC/miaorenfeng1","Assets/BuildSource/AnimationControllers/jyx2humanoidController.controller");
         ModifyEvent(-2, 9, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         LightScence();
         Talk(0, "苗大侠，你觉得怎么样．", "talkname0", 1);
@@ -24,7 +23,7 @@ if UseItem(137) == true then goto label0 end;
         Talk(0, "这好朋友姓啥叫什么？", "talkname0", 1);
         Talk(3, "辽东大侠胡一刀．", "talkname3", 0);
         if InTeam(1) == false then goto label2 end;
-        jyx2_ReplaceSceneObject("","NPC/HuFei","1") --刷出hufei
+        --jyx2_ReplaceSceneObject("","NPC/HuFei","1") --刷出hufei
             Talk(1, "当真是你杀了我父亲．", "talkname1", 1);
             Talk(3, "你是胡一刀的儿子！好，快来将我杀了，替你爹报仇．", "talkname3", 0);
             Talk(0, "且慢．这中间有很大的误会", "talkname0", 1);

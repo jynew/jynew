@@ -8,7 +8,9 @@ Talk(0, "那里，那里，路见不平，拔刀相助，本是我辈中人该�
 Talk(17, "好，那我先回蝴蝶谷了，待少侠有空时，一定要到我蝴蝶谷中作客．你一定要来哦！我和外子一定要送你些东西来报答你．", "talkname17", 0);
 Talk(0, "前辈慢走．", "talkname0", 1);
 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+jyx2_ReplaceSceneObject("", "NPC/王难姑", ""); 
 ModifyEvent(44, 1, 1, 1, 123, -1, -1, 5290, 5290, 5290, -2, -2, -2);
+jyx2_ReplaceSceneObject("44", "NPC/王难姑", "1"); 
 ModifyEvent(44, 0, -2, -2, 95, -1, -1, -2, -2, -2, -2, -2, -2);
 DarkScence();
 LightScence();

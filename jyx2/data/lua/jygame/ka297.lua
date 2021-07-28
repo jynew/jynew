@@ -8,7 +8,7 @@ Talk(86, "谢谢少侠，少侠这么好心，将来一定娶个美娇娘．", "
 Talk(0, "这话听来还蛮舒服的．你本质还不坏，别跟着这坏人了，快回家种田去吧．", "talkname0", 1);
 Talk(86, "是．．是 ．．．", "talkname86", 0);
 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-jyx2_ReplaceSceneObject("", "NPC/hourenxiong", "");-- 移除人物
+jyx2_ReplaceSceneObject("", "NPC/青城弟子3", "");-- 移除人物
 ModifyEvent(56, 1, -2, -2, 289, -1, -1, -2, -2, -2, -2, -2, -2);
 DarkScence();
 LightScence();
