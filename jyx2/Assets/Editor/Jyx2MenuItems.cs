@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using CSObjectWrapEditor;
+using DG.DemiLib;
 using Jyx2.Editor;
 using UnityEngine;
 using UnityEditor;
@@ -135,35 +137,51 @@ namespace Jyx2Editor
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
 
-            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
-        
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
 
-            if (string.IsNullOrEmpty(path))
-                return;
-            
-            //重新生成Addressable相关文件
-            AddressableAssetSettings.BuildPlayerContent();
-            
-            
-            //强制GENDATA
-            GenDataMenuCmd.GenerateDataForce();
+                if (string.IsNullOrEmpty(path))
+                    return;
 
-            // 处理场景文件
-            AddScenesToBuildTool.AddScenesToBuild();
+                //生成luaWrap
+                Generator.GenAll();
+                AssetDatabase.Refresh();
 
-            string apkPath = path + $"/jyx2AndroidBuild-{DateTime.Now.ToString("yyyyMMdd")}.apk";
-            
-            //动态设置keystore的密码
-            PlayerSettings.Android.keystorePass = "123456";
-            PlayerSettings.Android.keyaliasPass = "123456";
-            
-            //打包
-            BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
-            
-            //强制移动目录
-            //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
 
-            EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+
+
+                //强制GENDATA
+                GenDataMenuCmd.GenerateDataForce();
+
+                // 处理场景文件
+                AddScenesToBuildTool.AddScenesToBuild();
+
+                string apkPath = path + $"/jyx2AndroidBuild-{DateTime.Now.ToString("yyyyMMdd")}.apk";
+
+                //动态设置keystore的密码
+                PlayerSettings.Android.keystorePass = "123456";
+                PlayerSettings.Android.keyaliasPass = "123456";
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
+
+                //强制移动目录
+                //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
+
+                //清理luaWrap
+                Generator.ClearAll();
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
         }
     }
 }
