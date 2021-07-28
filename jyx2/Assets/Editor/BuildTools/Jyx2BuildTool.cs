@@ -107,6 +107,9 @@ namespace Jyx2Editor.BuildTool
             //     PlayerSettings.Android.keyaliasPass = "password";
             // }
 
+            PlayerSettings.Android.keystorePass = "123456";
+            PlayerSettings.Android.keyaliasPass = "123456";
+            
             var csDefineSymbol = GetEnvironmentVariable(EnvOption.CS_DEF_SYMBOL);
             if (!string.IsNullOrEmpty(csDefineSymbol))
             {
@@ -170,7 +173,7 @@ namespace Jyx2Editor.BuildTool
             GenDataMenuCmd.GenerateDataForce();
 
             // 处理场景文件
-            AddScenesToBuildTool.AddScenesToBuild();
+            //AddScenesToBuildTool.AddScenesToBuild();
 
             //打包
             BuildPipeline.BuildPlayer(buildPlayerOptions);

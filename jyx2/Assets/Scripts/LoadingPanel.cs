@@ -43,7 +43,18 @@ public class LoadingPanel : MonoBehaviour
         string command = levelKey.Contains("&") ? levelKey.Split('&')[1] : "";
         //var async = SceneManager.LoadSceneAsync(level);
 
-        var async = Addressables.LoadSceneAsync(level);
+        //苟且写法
+        string scenePath = "";
+        if (level.Contains("Battle"))
+        {
+            scenePath = $"Assets/Jyx2BattleScene/{level}";
+        }
+        else
+        {
+            scenePath = $"Assets/Jyx2Scenes/{level}";
+        }
+        
+        var async = Addressables.LoadSceneAsync(scenePath);
         
         while (!async.IsDone)
         {

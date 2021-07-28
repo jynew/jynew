@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using CSObjectWrapEditor;
 using DG.DemiLib;
 using Jyx2.Editor;
@@ -112,34 +113,35 @@ namespace Jyx2Editor
             GenDataMenuCmd.GenerateDataForce();
 
             // 处理场景文件
-            AddScenesToBuildTool.AddScenesToBuild();
+            //AddScenesToBuildTool.AddScenesToBuild();
 
             //打包
-            //BuildPipeline.BuildPlayer(GetScenePaths(), path + "/jyx2.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
-            BuildPipeline.BuildPlayer(new BuildPlayerOptions()
-            {
-                locationPathName = path + "/jyx2.exe",
-                target = BuildTarget.StandaloneWindows64,
-                options = BuildOptions.None
-            });
+            BuildPipeline.BuildPlayer(GetScenePaths(), path + "/jyx2.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
+
             //强制移动目录
             //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
         
-        [Obsolete("不再使用这种方式调用")]
+        
         static string[] GetScenePaths() {
-            string[] scenes = new string[EditorBuildSettings.scenes.Length];
+            /*string[] scenes = new string[EditorBuildSettings.scenes.Length];
             for(int i = 0; i < scenes.Length; i++) {
                 scenes[i] = EditorBuildSettings.scenes[i].path;
             }
-            return scenes;
+            return scenes;*/
+
+            return new string[] {"Assets/Jyx2Scenes/0_GameStart.unity"};
         }
         
         [MenuItem("一键打包/Android")]
         private static void BuildAndroid()
         {
+            if (!EditorUtility.DisplayDialog("重要提示", 
+                "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
+                return;
+            
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
 
@@ -151,18 +153,17 @@ namespace Jyx2Editor
                     return;
 
                 //生成luaWrap
-                Generator.ClearAll();
-                Generator.GenAll();
+                //Generator.ClearAll();
+                //Generator.GenAll();
 
                 //重新生成Addressable相关文件
                 AddressableAssetSettings.BuildPlayerContent();
-
 
                 //强制GENDATA
                 GenDataMenuCmd.GenerateDataForce();
 
                 // 处理场景文件
-                AddScenesToBuildTool.AddScenesToBuild();
+                //AddScenesToBuildTool.AddScenesToBuild();
 
                 string apkPath = path + $"/jyx2AndroidBuild-{DateTime.Now.ToString("yyyyMMdd")}.apk";
 
@@ -171,21 +172,15 @@ namespace Jyx2Editor
                 PlayerSettings.Android.keyaliasPass = "123456";
 
                 //打包
-                //BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
+                BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
 
-                BuildPipeline.BuildPlayer(new BuildPlayerOptions()
-                {
-                    locationPathName = path + "/jyx2.exe",
-                    target = BuildTarget.Android,
-                    options = BuildOptions.None
-                });
                 //强制移动目录
                 //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
 
                 //清理luaWrap
-                Generator.ClearAll();
+                //Generator.ClearAll();
                 AssetDatabase.Refresh();
             }
             catch (Exception e)
