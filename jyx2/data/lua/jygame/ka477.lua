@@ -15,9 +15,9 @@ if AskJoin () == true then goto label0 end;
 ::label2::
             Talk(53, "好啊，有个人做伴，路上也有个照应．", "talkname53", 0);
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/段誉", "");--段誉加入队伍
             ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+            jyx2_ReplaceSceneObject("", "NPC/段誉", "");--段誉加入队伍
             LightScence();
             Join(53);
 do return end;
