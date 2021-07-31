@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(35, "这个提议甚好，咱们就一起喝尽人世间的佳酿美酒，走！对了，兄弟，告诉你一个好玩的地方，是我在华山时发现的．那地方甚为隐密，入口在华山的背面，有空我们可以去看看．", "talkname35", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -1, -2, -2);
+		jyx2_ReplaceSceneObject("","NPC/令狐冲","");
         LightScence();
         Join(35);
         AddEthics(3);

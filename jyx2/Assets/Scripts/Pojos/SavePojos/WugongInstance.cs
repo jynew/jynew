@@ -68,17 +68,16 @@ namespace Jyx2
 
         public Jyx2SkillLevel GetSkillLevelInfo(int level = -1)
         {
-            var skill = GetSkill();
             if(level < 1)
             {
                 level = GetLevel();
             }
-            if(level > skill.SkillLevels.Count)
+            if(level > _skill.SkillLevels.Count)
             {
                 Debug.LogError("skill level error");
                 return null;
             }
-            return skill.SkillLevels[level - 1];//为何要-1
+            return _skill.SkillLevels[level - 1];
         }
 
         public string Name
@@ -91,22 +90,19 @@ namespace Jyx2
 
         public Jyx2Skill GetSkill(Jyx2Item _anqi = null)
         {
-            if (_skill == null)
-            {
-                _skill = ConfigTable.Get<Jyx2Skill>(Key);
+            var skillT = ConfigTable.Get<Jyx2Skill>(Key);
 
-                //暗器
-                if (_anqi != null)
-                {
-                    _skill.Animation = _anqi.AnqiAnimation;
-                    _skill.Poison = _anqi.ChangePoisonLevel;
-                    foreach (Jyx2SkillLevel sl in _skill.SkillLevels)
-                    {
-                        sl.Attack = Mathf.Abs(_anqi.AddHp);
-                    }
-                }
-            }
-            return _skill;
+			//暗器
+			if (_anqi != null)
+			{
+				skillT.Animation = _anqi.AnqiAnimation;
+				skillT.Poison = _anqi.ChangePoisonLevel;
+				foreach (Jyx2SkillLevel sl in _skill.SkillLevels)
+				{
+					sl.Attack = Mathf.Abs(_anqi.AddHp);
+				}
+			}
+            return skillT;
         }
 
         public void ResetSkill()
@@ -114,8 +110,16 @@ namespace Jyx2
             _skill = null;
         }
 
-
-        Jyx2Skill _skill;
+		Jyx2Skill skill;
+        Jyx2Skill _skill{
+			get {
+				if(skill==null) skill=GetSkill();
+				return skill;
+			}
+			set {
+				skill=value;
+			}
+		}
 
         public SkillCoverType CoverType
         {
@@ -165,7 +169,7 @@ namespace Jyx2
 
         public Jyx2SkillDisplayAsset GetDisplay()
         {
-			return GetSkill().Display;
+			return _skill.Display;
         }
 
         public int GetCoolDown()

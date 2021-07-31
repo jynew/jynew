@@ -29,6 +29,7 @@ if InTeam(76) == false then goto label0 end;
                     Talk(53, "那的话．兄弟能有今天，还不是靠大哥帮忙的吗？今日大哥既然有难，兄弟我当然义不容辞的帮你了．", "talkname53", 0);
                     DarkScence();
                     ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+					jyx2_ReplaceSceneObject("", "NPC/段誉", "");--段誉加入队伍
                     LightScence();
                     Join(53);
                     AddEthics(2);

@@ -8,7 +8,7 @@ if TeamIsFull() == false then goto label0 end;
     ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     LightScence();
     AddMP(49, 300);
-    AddHP(49, 200);
+    AddHp(49, 200);
     AddAttack(49, 30);
     AddSpeed(49, 20);
     LearnMagic2(49, 15, 0);
