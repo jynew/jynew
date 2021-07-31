@@ -28,7 +28,7 @@ if TryBattle(47) == true then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/danqingsheng", "");--丹青生
     jyx2_ReplaceSceneObject("", "NPC/tubiweng", "");--秃笔翁
     jyx2_ReplaceSceneObject("", "NPC/heibaizi", "");--黑白子
-    yx2_ReplaceSceneObject("", "NPC/huangzhonggong", "");--黄钟公
+    jyx2_ReplaceSceneObject("", "NPC/huangzhonggong", "");--黄钟公
     ModifyEvent(-2, 24, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
