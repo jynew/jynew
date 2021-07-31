@@ -9,5 +9,5 @@ ModifyEvent(20, 13, 1, 1, 415, -1, -1, 6158, 6158, 6158, -2, -2, -2);--by fanyu|
 jyx2_ReplaceSceneObject("20", "NPC/zhoubotong", "1");--周伯通回到百花谷
 jyx2_ReplaceSceneObject("20", "NPC/yinggu", "1");--锳姑回到百花谷
 ChangeScencePic(-2, 0, 990, 994);
-jyx2_ReplaceSceneObject("", "Bake/Static/hidenBridges", "0"); 
+jyx2_ReplaceSceneObject("", "Bake/Static/stone", ""); 
 do return end;
