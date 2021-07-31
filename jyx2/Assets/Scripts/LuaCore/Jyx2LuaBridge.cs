@@ -1351,7 +1351,11 @@ namespace Jyx2
             bool result = false;
             RunInMainThread(() =>
             {
-                var role = runtime.GetRole(roleId);
+                var role = runtime.GetRoleInTeam(roleId);
+				if(role == null)
+				{
+					role = runtime.GetRole(roleId);
+				}
                 if (role == null)
                 {
                     Debug.LogError("调用了不存在的role，roleid=" + roleId);
