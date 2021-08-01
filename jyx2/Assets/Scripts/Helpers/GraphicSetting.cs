@@ -7,39 +7,58 @@
  *
  * 金庸老先生千古！
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.SceneManagement;
 
-//新增项，必须是属性，且在默认构造函数里初始化
+/// <summary>
+/// 新增项，必须是属性，且在默认构造函数里初始化
+/// </summary>
 public class GraphicSetting : MonoBehaviour
 {
-    //是否开启全局雾效（顶点雾），默认开启
+    /// <summary>
+    /// 是否开启全局雾效（顶点雾），默认开启
+    /// </summary>
     public int HasFog { get; set; }
-    //是否开启后处理（调色以及一些临时效果），默认开启
+
+    /// <summary>
+    /// 是否开启后处理（调色以及一些临时效果），默认开启
+    /// </summary>
     public int HasPost { get; set; }
-    //是否开启水面法线，默认开启，暂未实现
+
+    /// <summary>
+    /// 是否开启水面法线，默认开启，暂未实现
+    /// </summary>
     public int HasWaterNormal { get; set; }
 
-    //阴影质量
+    /// <summary>
+    /// 阴影质量
+    /// </summary>
     public ShadowQuality ShadowQuality { get; set; }
-    //最大帧率，默认60
+
+    /// <summary>
+    /// 最大帧率，默认60
+    /// </summary>
     public MaxFpsEnum MaxFps { get; set; }
-    //图形质量级别，默认高
+
+    /// <summary>
+    /// 图形质量级别，默认高
+    /// </summary>
     public QualityLevelEnum QualityLevel { get; set; }
-    //Shader LOD级别，默认为高（效果全开）
+
+    /// <summary>
+    /// Shader LOD级别，默认为高（效果全开）
+    /// </summary>
     public ShaderLodLevelEnum ShaderLodLevel { get; set; }
-    //阴影显示层级，默认只显示自己team，暂未实现
+
+    /// <summary>
+    /// 阴影显示层级，默认只显示自己team，暂未实现
+    /// </summary>
     public ShadowShowLevelEnum ShadowShowLevel { get; set; }
 
     private static GraphicSetting _globalSetting;
+
     public static GraphicSetting GlobalSetting
     {
         get
@@ -58,10 +77,23 @@ public class GraphicSetting : MonoBehaviour
         HasFog = 1;
         HasPost = 1;
         HasWaterNormal = 1;
+
+#if UNITY_EDITOR
+
         MaxFps = MaxFpsEnum.Fps200;
         QualityLevel = QualityLevelEnum.High;
         ShaderLodLevel = ShaderLodLevelEnum.High;
         ShadowQuality = ShadowQuality.All;
+
+#else
+
+        MaxFps = MaxFpsEnum.Fps30;
+        QualityLevel = QualityLevelEnum.Mid;
+        ShaderLodLevel = ShaderLodLevelEnum.Mid;
+        ShadowQuality = ShadowQuality.HardOnly;
+
+#endif
+
         ShadowShowLevel = ShadowShowLevelEnum.Team;
     }
 
@@ -80,7 +112,7 @@ public class GraphicSetting : MonoBehaviour
         }
         PlayerPrefs.Save();
     }
-    
+
     public void Load()
     {
         var type = this.GetType();
@@ -97,9 +129,14 @@ public class GraphicSetting : MonoBehaviour
             }
         }
     }
-    
+
     public void Execute()
     {
+        Application.targetFrameRate = (int)MaxFps;
+        QualitySettings.SetQualityLevel((int)QualityLevel, true);
+        Shader.globalMaximumLOD = (int)ShaderLodLevel;
+        QualitySettings.shadows = ShadowQuality;
+
         /*RenderSettings.fog = HasFog == 1;
         var post = Camera.main.GetComponent<PostProcessLayer>();
         if (post != null) post.enabled = HasPost == 1;

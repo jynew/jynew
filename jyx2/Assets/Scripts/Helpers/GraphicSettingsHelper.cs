@@ -7,14 +7,13 @@
  *
  * 金庸老先生千古！
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
+/// <summary>
+/// 处理图像设置相关功能
+/// </summary>
 public class GraphicSettingsHelper
 {
     public Camera m_MainCamera;
@@ -29,7 +28,7 @@ public class GraphicSettingsHelper
     private string m_shaderLODKey = "config-shaderlod";
     private int m_iMaxFrameRate = 30;
     private string m_maxFrameRateKey = "config-maxframerate";
-    
+
     public void InitSettings(Camera mainCamera)
     {
         if (mainCamera == null) return;
@@ -98,7 +97,7 @@ public class GraphicSettingsHelper
     {
         RenderSettings.fog = m_bFog;
         var post = m_MainCamera.GetComponent<PostProcessLayer>();
-        if(post != null) post.enabled = m_bPost;
+        if (post != null) post.enabled = m_bPost;
         QualitySettings.SetQualityLevel(m_iQuality, true);
         Shader.globalMaximumLOD = m_iShaderLOD;
         Application.targetFrameRate = m_iMaxFrameRate;
