@@ -16,5 +16,7 @@ public class GlobalAssetConfig : ScriptableObject
 
     [BoxGroup("游戏动作")] [LabelText("默认角色动作控制器")]
     public RuntimeAnimatorController defaultAnimatorController;
-
+    
+    [BoxGroup("游戏动作")][LabelText("默认NPC动作控制器")]
+    public RuntimeAnimatorController defaultNPCAnimatorController;
 }

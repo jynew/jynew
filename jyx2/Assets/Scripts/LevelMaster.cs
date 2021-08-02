@@ -208,6 +208,17 @@ public class LevelMaster : MonoBehaviour
                     c.enabled = true;
             }
         }
+        
+        
+        //修复所有没有绑定controller的角色
+        foreach (var animator in FindObjectsOfType<Animator>())
+        {
+            if (animator.runtimeAnimatorController != null) continue;
+            if (animator.transform.parent.name == "NPC")
+            {
+                animator.runtimeAnimatorController = GlobalAssetConfig.Instance.defaultNPCAnimatorController;
+            }
+        }
 
         IsInited = true;
     }
