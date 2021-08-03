@@ -17,7 +17,7 @@ using UnityEngine.UI;
 using Object = System.Object;
 using StylizedWater;
 
-public class GraphicSettingsPanelUI : MonoBehaviour
+public class GraphicSettingsPanel : Jyx2_UIBase
 {
     public Toggle m_FogToggle;
     public Toggle m_PostToggle;
@@ -58,6 +58,7 @@ public class GraphicSettingsPanelUI : MonoBehaviour
         _graphicSetting.Save();
         _graphicSetting.Execute();
         gameObject.SetActive(false);
+        Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
     }
     
     public void InitUi()
@@ -164,5 +165,10 @@ public class GraphicSettingsPanelUI : MonoBehaviour
     public void SetWaterNormal(bool value)
     {
         _graphicSetting.HasWaterNormal = value ? 1 : 0;
+    }
+
+    protected override void OnCreate()
+    {
+        
     }
 }

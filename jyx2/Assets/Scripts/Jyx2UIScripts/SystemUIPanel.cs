@@ -63,6 +63,8 @@ public partial class SystemUIPanel:Jyx2_UIBase
         {
             Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
             //runTimeHelper.ShowGraphicSettingsPanel();
+
+            Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
         });
 
         BindListener(MainBg_Button, delegate
