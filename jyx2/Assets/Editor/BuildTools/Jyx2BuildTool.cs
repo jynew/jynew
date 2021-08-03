@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using CSObjectWrapEditor;
 using Jyx2.Editor;
 using NPOI.OpenXml4Net.OPC.Internal;
 using UnityEditor;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
+using XLua;
 
 namespace Jyx2Editor.BuildTool
 {
@@ -174,6 +176,13 @@ namespace Jyx2Editor.BuildTool
 
             // 处理场景文件
             //AddScenesToBuildTool.AddScenesToBuild();
+            
+            //生成luaWrap
+            DelegateBridge.Gen_Flag = true;
+            Generator.ClearAll();
+            Generator.GenAll();
+            
+            AssetDatabase.Refresh();
 
             //打包
             BuildPipeline.BuildPlayer(buildPlayerOptions);
