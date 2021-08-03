@@ -2204,6 +2204,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 6b0b6911077682649b71970db1c3fb9a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2f4fd6144b243e740acbf6e25d3f83c4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b0b6911077682649b71970db1c3fb9a, type: 3}
 --- !u!4 &86839267 stripped
@@ -20288,6 +20293,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8682620163126011689, guid: 3d88f0b19b3e57349aedb6cc79b62c44,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 802c7e8f29d60f14ab6157c03439b696, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d88f0b19b3e57349aedb6cc79b62c44, type: 3}
 --- !u!4 &815021729 stripped
@@ -33197,8 +33207,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
+  - Desktop
   - Mobile
-  shaderIndex: 0
+  shaderIndex: 1
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -33233,9 +33244,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.4339226, g: 0.36944234, b: 0.3049621, a: 0.85882354}
+  waterShallowColor: {r: 0.43392915, g: 0.3694489, b: 0.30496866, a: 0.85882354}
   depth: 15
-  waterColor: {r: 0.462264, g: 0.42950234, b: 0.41641936, a: 1}
+  waterColor: {r: 0.462264, g: 0.42950886, b: 0.4164259, a: 1}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.6320754, g: 0.5651325, b: 0.5277233, a: 0.35686275}
@@ -33362,7 +33373,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: bb7e956bb4dfc3d4280c659dc9144806, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 1
+  isMobilePlatform: 0
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
