@@ -87,10 +87,10 @@ public class GraphicSetting : MonoBehaviour
 
 #else
 
-        MaxFps = MaxFpsEnum.Fps30;
-        QualityLevel = QualityLevelEnum.Mid;
-        ShaderLodLevel = ShaderLodLevelEnum.Mid;
-        ShadowQuality = ShadowQuality.HardOnly;
+        MaxFps = MaxFpsEnum.Fps120;
+        QualityLevel = QualityLevelEnum.High;
+        ShaderLodLevel = ShaderLodLevelEnum.High;
+        ShadowQuality = ShadowQuality.All;
 
 #endif
 
