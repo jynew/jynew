@@ -245,9 +245,10 @@ public class XiakePanelUI : MonoBehaviour
             //卸下现有
             unquipCallback();
 
+            //装备选择的武器
             if (itemId != -1)
             {
-                unquipCallback();
+                //unquipCallback();
                 runtime.AddItem(itemId, -1);
                 callback(itemId);
             }
