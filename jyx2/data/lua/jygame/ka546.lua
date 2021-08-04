@@ -20,7 +20,7 @@ if InTeam(47) == false then goto label0 end;
         ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         jyx2_FixMapObject("丁春秋战死",1);
-		jyx2_SwitchRoleAnimation("NPC/dingchunqiu", "");--需要改死掉的controller, 脸朝地趴着
+		jyx2_SwitchRoleAnimation("NPC/dingchunqiu", "Assets/BuildSource/AnimationControllers/Dead-FaceUp.controller");
 		jyx2_ReplaceSceneObject("","NPC/阿紫2","");
         ModifyEvent(-2, 4, -2, -2, 547, -1, -1, -2, -2, -2, -2, -2, -2);
         ModifyEvent(-2, 5, -2, -2, 548, -1, -1, -2, -2, -2, -2, -2, -2);

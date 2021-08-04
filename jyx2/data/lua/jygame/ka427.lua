@@ -7,7 +7,7 @@ if AskBattle() == true then goto label0 end;
     if TryBattle(68) == false then goto label1 end;
         ModifyEvent(21, 1, -2, -2, 420, -1, -1, -2, -2, -2, -2, -2, -2);--by fanyu|启动420脚本。场景21-编号01
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, 6226, 6226, 6226, -2, -2, -2);--by fanyu|改变贴图。场景47-编号00
-		jyx2_SwitchRoleAnimation("NPC/一灯","Assets/BuildSource/AnimationControllers/sit_on_floor.controller");--需要替换为死掉controller
+		jyx2_SwitchRoleAnimation("NPC/一灯","Assets/BuildSource/AnimationControllers/Dead.controller");
         LightScence();
         AddEthics(-10);
         AddRepute(10);
