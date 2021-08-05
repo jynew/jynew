@@ -218,7 +218,7 @@ public partial class XiakeUIPanel:Jyx2_UIBase
                     m_currentRole.Weapon = -1;
                 }
             },
-            (item) => { return item.EquipmentType == 0; });
+            (item) => { return item.EquipmentType == 0 && item.Id!=m_currentRole.Weapon.ToString(); });
     }
 
     void OnArmorClick() 
