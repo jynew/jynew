@@ -11,7 +11,14 @@
 
 
 
-* 项目必看 [项目Wiki](https://github.com/jynew/jynew/wiki)
+# ------------------这非常重要!!!!!!!!!!!!!------------------
+
+* # 项目必看 [项目Wiki](https://github.com/jynew/jynew/wiki)
+
+# ------------------这非常重要!!!!!!!!!!!!!------------------  
+
+
+
 * 项目主页 http://www.jy-new.com
 * B站主页 https://space.bilibili.com/1092529660
 * 联系我们 jy_remastered@163.com
@@ -35,7 +42,7 @@
 ![image](https://user-images.githubusercontent.com/7448857/118384459-b53c8c00-b638-11eb-8a83-80228747067f.png)
 ![image](https://user-images.githubusercontent.com/7448857/118384466-b968a980-b638-11eb-89b3-11aec9ee8bd2.png)
 
-  
+
 ## 项目文档导航
 
 * 查看[开发环境和搭建](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)来将你本地的游戏环境运行起来！
