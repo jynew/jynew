@@ -169,11 +169,11 @@ public class XiakePanelUI : MonoBehaviour
             {
                 if (_role.Weapon != -1)
                 {
-                    runtime.AddItem(_role.Weapon, 1);
+                    // runtime.AddItem(_role.Weapon, 1);
                     _role.Weapon = -1;
                 }
             },
-            (item) => { return item.EquipmentType == 0; });
+            (item) => { return item.EquipmentType == 0;});
     }
 
     public void OnSelectArmor()
@@ -241,15 +241,13 @@ public class XiakePanelUI : MonoBehaviour
                 MessageBox.Create("该角色不满足使用条件", null);
                 return;
             }
-
-            //卸下现有
-            unquipCallback();
-
-            //装备选择的武器
+            
             if (itemId != -1)
             {
-                //unquipCallback();
-                runtime.AddItem(itemId, -1);
+                //卸下现有
+                unquipCallback();
+                //装备选择的武器
+                // runtime.AddItem(itemId,-1);
                 callback(itemId);
             }
 
