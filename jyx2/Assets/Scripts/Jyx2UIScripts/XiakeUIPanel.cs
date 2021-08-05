@@ -202,6 +202,7 @@ public partial class XiakeUIPanel:Jyx2_UIBase
     GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
     void OnWeaponClick() 
     {
+        Debug.Log("selectweapon");
         SelectFromBag(
             (itemId) => 
             { 
@@ -212,7 +213,7 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             {
                 if (m_currentRole.Weapon != -1)
                 {
-                    runtime.AddItem(m_currentRole.Weapon, 1);
+                    // runtime.AddItem(m_currentRole.Weapon, 1);
                     m_currentRole.UnequipItem(m_currentRole.GetWeapon());
                     m_currentRole.Weapon = -1;
                 }
@@ -277,7 +278,7 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             if (itemId != -1)
             {
                 unquipCallback();
-                runtime.AddItem(itemId, -1);
+                // runtime.AddItem(itemId, -1);
                 callback(itemId);
             }
 
