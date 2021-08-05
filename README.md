@@ -4,7 +4,7 @@
 [![release](https://img.shields.io/badge/release-v0.1%20inner-brightgreen)](https://github.com/jynew/jynew/releases)
 [![Unity Version](https://img.shields.io/badge/unity-2020.3.9.f1c1-blue)](https://unity.cn/releases/lts/2020) 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/jynew/jynew/pulls) 
-![commit](https://img.shields.io/github/last-commit/jynew/jynew)
+![commit](https://img.shields.io/github/last-commit/jynew/jynew)<br>
 ![Contributors](https://img.shields.io/github/contributors-anon/jynew/jynew) 
 ![fork](https://img.shields.io/github/forks/jynew/jynew?style=social)
 ![star](https://img.shields.io/github/stars/jynew/jynew?style=social)
@@ -15,13 +15,7 @@
 
 * # 项目必看 [项目Wiki](https://github.com/jynew/jynew/wiki)
 
-# ------------------这非常重要!!!!!!!!!!!!!------------------
-
-
-
-
-
-
+# ------------------这非常重要!!!!!!!!!!!!!------------------  
 
 
 
