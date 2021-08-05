@@ -202,7 +202,6 @@ public partial class XiakeUIPanel:Jyx2_UIBase
     GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
     void OnWeaponClick() 
     {
-        Debug.Log("selectweapon");
         SelectFromBag(
             (itemId) => 
             { 
