@@ -43,7 +43,8 @@ public class Jyx2ItemUI : MonoBehaviour
     {
         _id = id;
         var item = GetItem();
-        m_NameText.text = item.Name;
+		var color=item.NeedMPType==0?ColorStringDefine.Default:item.NeedMPType==1?ColorStringDefine.Mp_type1:ColorStringDefine.Mp_type2;
+        m_NameText.text = $"<color={color}>{item.Name}</color>";
         m_CountText.text = (count > 1 ? count.ToString() : "");
 
         Jyx2ResourceHelper.GetItemSprite(id, m_Image);

@@ -894,6 +894,7 @@ GameObject:
   - component: {fileID: 9082761883726449116}
   - component: {fileID: 9082761883726449119}
   - component: {fileID: 6398978455124357077}
+  - component: {fileID: 8799032742742902798}
   m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
@@ -941,7 +942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -961,10 +962,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
-  m_Text: "\u7B49\u7EA7 16\n\u4F53\u529B 100/100\n\u751F\u547D 409/409\n\u5185\u529B
-    200/300\n\u7ECF\u9A8C 133/1600\n\n\u653B\u51FB 81\n\u9632\u5FA1 51\n\u8F7B\u529F
-    83\n\u533B\u7597 0\n\u89E3\u8BFB 0\n\u7528\u6BD2 0\n\n\u62F3\u638C 16\n\u5FA1\u5251
-    21\n\u800D\u5200 85\n\u7279\u6B8A 8\n\u6697\u5668 66\n"
+  m_Text: "\u7B49\u7EA7 16\n\u4F53\u529B 100/100\n\u751F\u547D: <color=#FD726F>18</color>/<color=green>213</color>\n\u5185\u529B:
+    <color=#A564DB>282/332</color>\n\u7ECF\u9A8C 133/1600\n\n\u653B\u51FB 81\n\u9632\u5FA1
+    51\n\u8F7B\u529F 83\n\u533B\u7597 0\n\u89E3\u8BFB 0\n\u7528\u6BD2 0\n\n\u62F3\u638C
+    16\n\u5FA1\u5251 21\n\u800D\u5200 85\n\u7279\u6B8A 8\n\u6697\u5668 66\n"
 --- !u!114 &6398978455124357077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -979,6 +980,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_exportComponentList:
   - {fileID: 9082761883726449119}
+--- !u!23 &8799032742742902798
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9082761883726449089}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9082761883982863235
 GameObject:
   m_ObjectHideFlags: 0
