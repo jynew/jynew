@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Jyx2
 {
@@ -96,7 +97,7 @@ namespace Jyx2
         public const int MOVEBLOCK_MAX_Y = 500;
 
         /// <summary>
-        /// 获取攻击方向，注意，UP和DOWN两个方向，距离是2的倍数
+        /// 获取攻击方向，注意，UP和DOWN两个方向，距离是2的倍数//旧逻辑?，目前看不存在2倍关系
         /// </summary>
         /// <param name="tx">target x</param>
         /// <param name="ty">target y</param>
@@ -113,40 +114,40 @@ namespace Jyx2
                 if (tx < sx) return MoveDirection.LEFT;
             }
 
-            if (tx == sx && (ty - sy) % 2 == 0)
+            if (tx == sx )
             {
-                if (ty > sy) return MoveDirection.UP;
-                if (ty < sy) return MoveDirection.DOWN;
+                if (ty > sy) return MoveDirection.DOWN;
+                if (ty < sy) return MoveDirection.UP;
             }
 
-            if (sy % 2 == 0)
-            {
-                if (tx >= sx)
-                {
-                    if (ty > sy) return MoveDirection.UP_RIGHT;
-                    if (ty < sy) return MoveDirection.DOWN_RIGHT;
-                }
-
-                if (tx < sx)
-                {
-                    if (ty > sy) return MoveDirection.UP_LEFT;
-                    if (ty < sy) return MoveDirection.DOWN_LEFT;
-                }
-            }
-            else
-            {
-                if (tx > sx)
-                {
-                    if (ty > sy) return MoveDirection.UP_RIGHT;
-                    if (ty < sy) return MoveDirection.DOWN_RIGHT;
-                }
-
-                if (tx <= sx)
-                {
-                    if (ty > sy) return MoveDirection.UP_LEFT;
-                    if (ty < sy) return MoveDirection.DOWN_LEFT;
-                }
-            }
+            //if (sy % 2 == 0)
+            //{
+            //    if (tx >= sx)
+            //    {
+            //        if (ty > sy) return MoveDirection.UP_RIGHT;
+            //        if (ty < sy) return MoveDirection.DOWN_RIGHT;
+            //    }
+			//
+            //    if (tx < sx)
+            //    {
+            //        if (ty > sy) return MoveDirection.UP_LEFT;
+            //        if (ty < sy) return MoveDirection.DOWN_LEFT;
+            //    }
+            //}
+            //else
+            //{
+            //    if (tx > sx)
+            //    {
+            //        if (ty > sy) return MoveDirection.UP_RIGHT;
+            //        if (ty < sy) return MoveDirection.DOWN_RIGHT;
+            //    }
+			//
+            //    if (tx <= sx)
+            //    {
+            //        if (ty > sy) return MoveDirection.UP_LEFT;
+            //        if (ty < sy) return MoveDirection.DOWN_LEFT;
+            //    }
+            //}
 
             return MoveDirection.ERROR;
         }
@@ -558,16 +559,17 @@ namespace Jyx2
                 }
                 case SkillCoverType.CROSS:
                 {
-                    rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                    for (int i = 0; i < 6; ++i)
+                    //rst.Add(new BattleBlockVector() { X = tx, Y = ty });
+					var directionList=new MoveDirection[4]{MoveDirection.LEFT,MoveDirection.RIGHT,MoveDirection.UP,MoveDirection.DOWN};
+                    for (int i = 0; i < directionList.Count(); i++)
                     {
                         int tmpx = tx;
                         int tmpy = ty;
-                        MoveDirection direction = (MoveDirection)i;
-                        for (int j = 0; j < coversize; ++j)
+                        MoveDirection direction = directionList[i];
+						for (int j = 0; j < coversize; ++j)
                         {
                             BattleBlockVector b = GetNearBlock(tmpx, tmpy, direction);
-                            if (b == null) continue;
+							if (b == null) continue;
                             rst.Add(b);
                             tmpx = b.X;
                             tmpy = b.Y;

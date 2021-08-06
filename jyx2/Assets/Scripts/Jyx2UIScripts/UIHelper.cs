@@ -131,7 +131,7 @@ public class UIHelper
             if (!GameConst.ProItemDic.ContainsKey(effect.Key.ToString()))
                 continue;
             PropertyItem pro = GameConst.ProItemDic[effect.Key.ToString()];
-            sb.Append($"{pro.Name}:  {effect.Value.ToString()}\n");
+			sb.Append($"{pro.Name}:  {effect.Value.ToString()}\n");
         }
         return sb.ToString();
     }
@@ -177,7 +177,7 @@ public class UIHelper
     {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.Append($"<size=35><color=#FFDB00>{item.Name}</color></size>\n");
-        strBuilder.Append($"{item.Desc}");
+		strBuilder.Append($"{item.Desc}");
 
         string effect = GetEffectText(item);
         if (!string.IsNullOrEmpty(effect))

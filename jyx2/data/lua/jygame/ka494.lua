@@ -11,6 +11,7 @@ if AskJoin () == true then goto label0 end;
 ::label1::
         DarkScence();
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+		jyx2_ReplaceSceneObject("", "NPC/慕容复", "");
         LightScence();
         Join(51);
         AddEthics(-4);

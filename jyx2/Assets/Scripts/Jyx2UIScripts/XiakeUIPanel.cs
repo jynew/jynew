@@ -116,10 +116,13 @@ public partial class XiakeUIPanel:Jyx2_UIBase
     string GetInfoText(RoleInstance role)
     {
         StringBuilder sb = new StringBuilder();
+		var color=role.MpType==0?ColorStringDefine.Default:role.MpType==1?ColorStringDefine.Mp_type1:ColorStringDefine.Mp_type2;
+		var color1=role.Hurt>20?ColorStringDefine.Hp_hurt_heavy:role.Hurt>0?ColorStringDefine.Hp_hurt_light:ColorStringDefine.Default;
+		var color2=role.Poison>0?ColorStringDefine.Hp_posion:ColorStringDefine.Default;
         sb.AppendLine($"等级 {role.Level}");
         sb.AppendLine($"体力 {role.Tili}/{GameConst.MaxTili}");
-        sb.AppendLine($"生命 {role.Hp}/{role.MaxHp}");
-        sb.AppendLine($"内力 {role.Mp}/{role.MaxMp}");
+        sb.AppendLine($"生命 <color={color1}>{role.Hp}</color>/<color={color2}>{role.MaxHp}</color>");
+        sb.AppendLine($"内力 <color={color}>{role.Mp}/{role.MaxMp}</color>");
         sb.AppendLine($"经验 {role.Exp}/{role.GetLevelUpExp()}");
         sb.AppendLine();
         sb.AppendLine($"攻击 {role.Attack}");

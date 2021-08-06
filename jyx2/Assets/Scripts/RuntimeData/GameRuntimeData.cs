@@ -275,6 +275,13 @@ namespace Jyx2
                 return;
             }
             Team.Remove(role);
+			role.Recover();
+			for(var index=0;index< AllRoles.Count;index++){
+				if(AllRoles[index].Key==role.Key){
+					AllRoles[index]=role;
+				}
+			}
+			
 			StoryEngine.Instance.DisplayPopInfo(role.Name + "离队。");
         }
 

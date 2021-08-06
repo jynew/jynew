@@ -133,7 +133,17 @@ public class XiakePanelUI : MonoBehaviour
         sb.AppendLine("防具：" + (armor == null ? "" : armor.Name));
 
         var xiulianItem = role.GetXiulianItem();
-        sb.AppendLine("修炼：" + (xiulianItem == null ? "" : xiulianItem.Name + $"({role.ExpForItem}/{role.GetFinishedExpForItem()})")); 
+		var xiulianString="修炼：";
+		if(xiulianItem != null)
+		{
+			if(role.GetWugongLevel(xiulianItem.Wugong)<10)
+			{
+				xiulianString+="-/{role.GetFinishedExpForItem()}";
+			}else{
+				xiulianString+=xiulianItem.Name + $"({role.ExpForItem}/{role.GetFinishedExpForItem()})";
+			}
+		}
+        sb.AppendLine(xiulianString); 
 
         return sb.ToString();
     }

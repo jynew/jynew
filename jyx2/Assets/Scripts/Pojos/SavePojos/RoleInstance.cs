@@ -602,6 +602,11 @@ namespace Jyx2
             {
                 if(item.ItemType == 2)
                 {
+                    //有仅适合人物，直接判断
+                    if (item.OnlySuitableRole >= 0)
+                    {
+                        return item.OnlySuitableRole == int.Parse(this.Key); 
+                    }
                     //内力属性判断
                     if ((this.MpType == 0 || this.MpType == 1) && (item.NeedMPType == 0 || item.NeedMPType == 1))
                     {
@@ -609,11 +614,6 @@ namespace Jyx2
                         {
                             return false;
                         }
-                    }
-                    //有仅适合人物，直接判断
-                    if (item.OnlySuitableRole >= 0)
-                    {
-                        return item.OnlySuitableRole == int.Parse(this.Key); 
                     }
                 }
 

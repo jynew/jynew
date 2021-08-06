@@ -15,7 +15,7 @@ if AskJoin () == true then goto label0 end;
 ::label2::
             Talk(63, "嗯！好吧．反正我一人在此也是无聊，就随公子一游吧．", "talkname63", 0);
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/chengying", "");--程英加入队伍
+            jyx2_ReplaceSceneObject("", "NPC/程英", "");--程英加入队伍
             ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             LightScence();
             Join(63);
