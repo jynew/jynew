@@ -215,12 +215,12 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             {
                 if (m_currentRole.Weapon != -1)
                 {
-                    runtime.AddItem(m_currentRole.Weapon, 1);
+                    // runtime.AddItem(m_currentRole.Weapon, 1);
                     m_currentRole.UnequipItem(m_currentRole.GetWeapon());
                     m_currentRole.Weapon = -1;
                 }
             },
-            (item) => { return item.EquipmentType == 0; });
+            (item) => { return item.EquipmentType == 0 && item.Id!=m_currentRole.Weapon.ToString(); });
     }
 
     void OnArmorClick() 
@@ -235,12 +235,12 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             {
                 if (m_currentRole.Armor != -1)
                 {
-                    runtime.AddItem(m_currentRole.Armor, 1);
+                    // runtime.AddItem(m_currentRole.Armor, 1);
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
                     m_currentRole.Armor = -1;
                 }
             },
-            (item) => { return item.EquipmentType == 1; });
+            (item) => { return item.EquipmentType == 1 && item.Id!=m_currentRole.Armor.ToString(); });
     }
 
     void OnXiulianClick() 
@@ -255,12 +255,12 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             {
                 if (m_currentRole.Xiulianwupin != -1)
                 {
-                    runtime.AddItem(m_currentRole.Xiulianwupin, 1);
+                    // runtime.AddItem(m_currentRole.Xiulianwupin, 1);
                     m_currentRole.UnequipItem(m_currentRole.GetXiulianItem()); // Maybe this shouldn't be unequipped? Still need to change
                     m_currentRole.Xiulianwupin = -1;
                 }
             },
-            (item) => { return item.ItemType == 2; });
+            (item) => { return item.ItemType == 2 && item.Id!=m_currentRole.Xiulianwupin.ToString(); });
     }
 
     void SelectFromBag(Action<int> callback, Action unquipCallback, Func<Jyx2Item, bool> filter)
@@ -280,7 +280,7 @@ public partial class XiakeUIPanel:Jyx2_UIBase
             if (itemId != -1)
             {
                 unquipCallback();
-                runtime.AddItem(itemId, -1);
+                // runtime.AddItem(itemId, -1);
                 callback(itemId);
             }
 

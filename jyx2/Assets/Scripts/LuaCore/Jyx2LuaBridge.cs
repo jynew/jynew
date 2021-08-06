@@ -260,7 +260,7 @@ namespace Jyx2
 
         static public bool HaveItem(int itemId)
         {
-            return runtime.GetItemCount(itemId) > 0;
+            return runtime.HaveItemBool(itemId);
         }
 
         //当前正在使用的物品ID
