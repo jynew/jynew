@@ -249,7 +249,7 @@ public class BattleManager:MonoBehaviour
             if (role.Level >= GameConst.MAX_ROLE_LEVEL)
             {
                 role.ExpForItem += role.ExpGot;
-            }else if(practiseItem != null)
+            }else if(practiseItem != null && role.GetWugongLevel(practiseItem.Wugong)<=10)
             {
                 role.Exp += role.ExpGot / 2;
                 role.ExpForItem += role.ExpGot / 2;
@@ -265,7 +265,7 @@ public class BattleManager:MonoBehaviour
 
             //升级
             int change = 0;
-            while (role.CanLevelUp())
+            while (role.CanLevelUp() && role.GetWugongLevel(practiseItem.Wugong)<=10)
             {
                 role.LevelUp();
                 change++;
