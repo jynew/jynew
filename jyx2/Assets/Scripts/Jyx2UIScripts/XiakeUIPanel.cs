@@ -216,6 +216,10 @@ public partial class XiakeUIPanel:Jyx2_UIBase
                 if (m_currentRole.Weapon != -1)
                 {
                     // runtime.AddItem(m_currentRole.Weapon, 1);
+                    if (!runtime.HaveItemBool(m_currentRole.Weapon))
+                    {
+                        runtime.AddItem(m_currentRole.Weapon,1);
+                    }
                     m_currentRole.UnequipItem(m_currentRole.GetWeapon());
                     m_currentRole.Weapon = -1;
                 }
@@ -236,6 +240,10 @@ public partial class XiakeUIPanel:Jyx2_UIBase
                 if (m_currentRole.Armor != -1)
                 {
                     // runtime.AddItem(m_currentRole.Armor, 1);
+                    if (!runtime.HaveItemBool(m_currentRole.Armor))
+                    {
+                        runtime.AddItem(m_currentRole.Armor,1);
+                    }
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
                     m_currentRole.Armor = -1;
                 }
@@ -256,6 +264,10 @@ public partial class XiakeUIPanel:Jyx2_UIBase
                 if (m_currentRole.Xiulianwupin != -1)
                 {
                     // runtime.AddItem(m_currentRole.Xiulianwupin, 1);
+                    if (!runtime.HaveItemBool(m_currentRole.Xiulianwupin))
+                    {
+                        runtime.AddItem(m_currentRole.Xiulianwupin,1);
+                    }
                     m_currentRole.UnequipItem(m_currentRole.GetXiulianItem()); // Maybe this shouldn't be unequipped? Still need to change
                     m_currentRole.Xiulianwupin = -1;
                 }
@@ -274,11 +286,11 @@ public partial class XiakeUIPanel:Jyx2_UIBase
                 return;
             }
 
-            //卸下现有
-            unquipCallback();
+            
 
             if (itemId != -1)
             {
+                //卸下现有
                 unquipCallback();
                 // runtime.AddItem(itemId, -1);
                 callback(itemId);
