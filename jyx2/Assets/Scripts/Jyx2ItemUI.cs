@@ -43,7 +43,7 @@ public class Jyx2ItemUI : MonoBehaviour
     {
         _id = id;
         var item = GetItem();
-		var color=item.NeedMPType==0?ColorStringDefine.Default:item.NeedMPType==1?ColorStringDefine.Mp_type1:ColorStringDefine.Mp_type2;
+		var color=item.ItemType==2? item.NeedMPType==0?ColorStringDefine.Default:item.NeedMPType==1?ColorStringDefine.Mp_type1:ColorStringDefine.Mp_type2:ColorStringDefine.Default;
         m_NameText.text = $"<color={color}>{item.Name}</color>";
         m_CountText.text = (count > 1 ? count.ToString() : "");
 

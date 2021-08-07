@@ -190,7 +190,7 @@ namespace Jyx2
 			var key=1;
 			var ran=new System.Random();
 			GameRuntimeData.Instance.YeQiuQuanCounter+=ran.Next(1,3);
-			if(GameRuntimeData.Instance.YeQiuQuanCounter>=100 && GetWugongLevel(key)<GameConst.MAX_SKILL_LEVEL)
+			if(GameRuntimeData.Instance.YeQiuQuanCounter>=100 && GetWugongLevel(key)<=GameConst.MAX_WUGONG_LEVEL)
 			{
 				this.LearnMagic(key);
 				GameRuntimeData.Instance.YeQiuQuanCounter-=100;
