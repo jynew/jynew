@@ -193,7 +193,7 @@ namespace Jyx2
 			if(GameRuntimeData.Instance.YeQiuQuanCounter>=100 && GetWugongLevel(key)<=GameConst.MAX_WUGONG_LEVEL)
 			{
 				this.LearnMagic(key);
-				GameRuntimeData.Instance.YeQiuQuanCounter-=100;
+				GameRuntimeData.Instance.YeQiuQuanCounter=0;
 				Loom.QueueOnMainThread(_ =>
 				{					
 					new Action(() => {

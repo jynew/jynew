@@ -452,8 +452,8 @@ public class AIManager
     {
         SkillCastResult rst = new SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
         var magic = skill.Data.GetSkill();
-        int level_index = skill.Data.GetLevel();
-        level_index = skill.calMaxLevelIndexByMP(r1.Mp, level_index);
+        int level_index = skill.Data.GetLevel()-1;//此方法返回的是显示的武功等级，1-10。用于calMaxLevelIndexByMP时需要先-1变为数组index再使用
+        level_index = skill.calMaxLevelIndexByMP(r1.Mp, level_index)+1;//此处计算是基于武功等级数据index，0-9.用于GetSkillLevelInfo时需要+1，因为用于GetSkillLevelInfo时需要里是基于GetLevel计算的，也就是1-10.
         //普通攻击
         if (magic.DamageType == 0)
         {
