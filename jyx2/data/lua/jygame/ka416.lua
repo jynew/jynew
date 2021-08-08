@@ -6,7 +6,6 @@ if InTeam(63) == true then goto label0 end;
     ChangeScencePic(-2, 0, 994, 990);
     jyx2_ReplaceSceneObject("", "Bake/Static/stone", "1"); 
     LightScence();
-    ModifyEvent(-2, 1, -2, -2, 417, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 5, -2, -2, -1, -1, 434, -1, -1, -1, -2, -2, -2);--by fanyu 启动脚本434 场景21-编号5
 do return end;
