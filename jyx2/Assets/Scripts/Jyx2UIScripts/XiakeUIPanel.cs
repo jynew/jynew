@@ -238,14 +238,13 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void OnWeaponClick()
     {
+        if (!runtime.HaveItemBool(m_currentRole.Weapon) && m_currentRole.Weapon != -1)
+        {
+            runtime.AddItem(m_currentRole.Weapon, 1);
+        }
         SelectFromBag(
             (itemId) =>
             {
-                if (!runtime.HaveItemBool(m_currentRole.Weapon) && m_currentRole.Weapon != -1)
-                {
-                    runtime.AddItem(m_currentRole.Weapon, 1);
-                }
-
                 //选择了当前使用的装备，则卸下
                 if (m_currentRole.Weapon == itemId)
                 {
@@ -266,14 +265,13 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void OnArmorClick()
     {
+        if (!runtime.HaveItemBool(m_currentRole.Armor) && m_currentRole.Armor != -1)
+        {
+            runtime.AddItem(m_currentRole.Armor, 1);
+        }
         SelectFromBag(
             (itemId) =>
             {
-                if (!runtime.HaveItemBool(m_currentRole.Armor) && m_currentRole.Armor != -1)
-                {
-                    runtime.AddItem(m_currentRole.Armor, 1);
-                }
-
                 if (m_currentRole.Armor == itemId)
                 {
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
@@ -292,14 +290,13 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void OnXiulianClick()
     {
+        if (!runtime.HaveItemBool(m_currentRole.Xiulianwupin) && m_currentRole.Xiulianwupin != -1)
+        {
+            runtime.AddItem(m_currentRole.Xiulianwupin, 1);
+        }
         SelectFromBag(
             (itemId) =>
             {
-                if (!runtime.HaveItemBool(m_currentRole.Xiulianwupin) && m_currentRole.Xiulianwupin != -1)
-                {
-                    runtime.AddItem(m_currentRole.Xiulianwupin, 1);
-                }
-
                 if (m_currentRole.Xiulianwupin == itemId)
                 {
                     m_currentRole.UnequipItem(m_currentRole.GetXiulianItem());
