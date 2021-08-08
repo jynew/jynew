@@ -18,6 +18,7 @@ public partial class BagUIPanel
 	private Text DesText_Text;
 	private RectTransform ItemRoot_RectTransform;
 	private Button UseBtn_Button;
+	private Text UseBtn_Text;
 	private Button CloseBtn_Button;
 
 	public void InitTrans()
@@ -26,6 +27,7 @@ public partial class BagUIPanel
 		DesText_Text = transform.Find("ItemDes/Viewport/DesText").GetComponent<Text>();
 		ItemRoot_RectTransform = transform.Find("ItemScroll/Viewport/ItemRoot").GetComponent<RectTransform>();
 		UseBtn_Button = transform.Find("Btns/UseBtn").GetComponent<Button>();
+		UseBtn_Text = transform.Find("Btns/UseBtn/Text").GetComponent<Text>();
 		CloseBtn_Button = transform.Find("Btns/CloseBtn").GetComponent<Button>();
 
 	}

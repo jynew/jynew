@@ -26,6 +26,8 @@ public partial class BagUIPanel:Jyx2_UIBase
     SaveableNumberDictionary<int> m_itemDatas;
     Jyx2ItemUI m_selectItem;
     Func<Jyx2Item, bool> m_filter = null;
+    private bool castFromSelectPanel=false;
+    private int current_item;
     protected override void OnCreate()
     {
         InitTrans();
@@ -42,6 +44,12 @@ public partial class BagUIPanel:Jyx2_UIBase
             m_callback = (Action<int>)allParams[1];
         if (allParams.Length > 2)
             m_filter = (Func<Jyx2Item, bool>)allParams[2];
+        if (allParams.Length > 3)
+        {
+            castFromSelectPanel = true;
+            current_item = (int) allParams[3];
+        }
+        else castFromSelectPanel = false;
 
         RefreshScroll();
     }
@@ -81,6 +89,9 @@ public partial class BagUIPanel:Jyx2_UIBase
             }
             itemUI.Select(m_selectItem == itemUI);
         }
+
+        setBtnText();
+
         ShowItemDes();
     }
 
@@ -108,6 +119,9 @@ public partial class BagUIPanel:Jyx2_UIBase
             m_selectItem.Select(false);
         m_selectItem = itemUI;
         m_selectItem.Select(true);
+        
+        setBtnText();
+
         ShowItemDes();
     }
 
@@ -138,5 +152,14 @@ public partial class BagUIPanel:Jyx2_UIBase
         m_callback = null;
         m_filter = null;
         HSUnityTools.DestroyChildren(ItemRoot_RectTransform);
+    }
+
+    void setBtnText()
+    {
+        if (m_selectItem.GetItem()==null)return;
+        if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item.ToString())
+            UseBtn_Text.text = "卸 下";
+        else
+            UseBtn_Text.text = "使 用";
     }
 }
