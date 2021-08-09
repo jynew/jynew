@@ -167,8 +167,8 @@ public class BattleManager:MonoBehaviour
                     {
                         EndBattle();
                         m_battleParams.callback?.Invoke(result);
-                        if (m_battleParams.backToBigMap)
-                            LevelLoader.LoadGameMap("Level_BigMap");
+                        //if (m_battleParams.backToBigMap) //由dead指令实现返回主界面逻辑
+                        //    LevelLoader.LoadGameMap("Level_BigMap");
                         m_battleParams = null;
                     });
                     break;
