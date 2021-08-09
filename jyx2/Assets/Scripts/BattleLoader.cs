@@ -133,6 +133,14 @@ public class BattleLoader : MonoBehaviour
                 var roleId = v.Value;
                 if (roleId == -1) continue;
                 AddRole(roleId, 0); //TODO IS AUTO
+				for(var i=0;i<m_Roles.Count;i++)
+				{
+					if(m_Roles[i].roleKey==roleId.ToString())
+					{
+						RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
+						if(roleInstance.Hp==0) roleInstance.Hp=1;
+					}
+				}
             }
             LoadJyx2BattleStep2(battle, null, callback);
         }
