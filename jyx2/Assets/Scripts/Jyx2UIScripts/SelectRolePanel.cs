@@ -37,7 +37,10 @@ public class SelectRoleParams
         {
             RoleInstance role = roleList[i];
             if (mustSelect != null && mustSelect(role))
-                selectList.Add(role);
+            {   
+				if(role.Hp==0) role.Hp=1;	
+				selectList.Add(role);
+			}
         }
         if(selectList.Count <= 0)
             selectList.Add(roleList[0]);
@@ -85,10 +88,19 @@ public partial class SelectRolePanel:Jyx2_UIBase
         if (m_params.roleList == null || m_params.roleList.Count <= 0)
             return;
         
+		var counter=0;
+        for (int i = 0; i < m_params.roleList.Count; i++)
+        {
+            var role = m_params.roleList[i];
+			if(role.Hp!=0) counter+=1; 
+		}
+		if(counter==0)
+			m_params.roleList[0].Hp=1;
         for (int i = 0; i < m_params.roleList.Count; i++)
         {
             var role = m_params.roleList[i];
             var item = RoleUIItem.Create();
+			if(role.Hp==0) continue;
             item.transform.SetParent(RoleParent_RectTransform);
             item.transform.localScale = Vector3.one;
 
