@@ -54,7 +54,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
             if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.Home){
                 OnNewGame();
             }
-        }));
+        }),"选择读档位");
     }
 
     public void OnQuitGameClicked()
