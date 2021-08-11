@@ -14,6 +14,7 @@ if AskJoin () == true then goto label0 end;
             Talk(37, "好吧！如果你不怕被我这个不幸之人连累的话．", "talkname37", 0);
             DarkScence();
             ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2); --by fanyu|狄云加入队伍。场景08-编号08
+            jyx2_ReplaceSceneObject("", "NPC/狄云", ""); 
             ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             LightScence();

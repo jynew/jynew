@@ -115,11 +115,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     string GetInfoText(RoleInstance role)
     {
         StringBuilder sb = new StringBuilder();
-        var color = role.MpType == 0 ? ColorStringDefine.Default :
-            role.MpType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type2;
-        var color1 = role.Hurt > 20 ? ColorStringDefine.Hp_hurt_heavy :
-            role.Hurt > 0 ? ColorStringDefine.Hp_hurt_light : ColorStringDefine.Default;
-        var color2 = role.Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
+        var color = role.GetMPColor();
+        var color1 = role.GetHPColor1();
+        var color2 = role.GetHPColor2();
         sb.AppendLine($"等级 {role.Level}");
         sb.AppendLine($"体力 {role.Tili}/{GameConst.MaxTili}");
         sb.AppendLine($"生命 <color={color1}>{role.Hp}</color>/<color={color2}>{role.MaxHp}</color>");

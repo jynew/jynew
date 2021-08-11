@@ -65,8 +65,8 @@ public class RoleUIItem : MonoBehaviour
             var proItem = GameConst.ProItemDic[proId];
             if (proItem.PropertyName == "Hp")
             {
-				var color1=m_role.Hurt>20?ColorStringDefine.Hp_hurt_heavy:m_role.Hurt>0?ColorStringDefine.Hp_hurt_light:ColorStringDefine.Default;
-				var color2=m_role.Poison>0?ColorStringDefine.Hp_posion:ColorStringDefine.Default;
+				var color1 = m_role.GetHPColor1();
+				var color2 = m_role.GetHPColor2();
                 sb.Append($"{proItem.Name}:<color={color1}>{m_role.Hp}</color>/<color={color2}>{m_role.MaxHp}</color>\n");
             }
             else if (proItem.PropertyName == "Tili")
@@ -75,7 +75,7 @@ public class RoleUIItem : MonoBehaviour
             }
             else if (proItem.PropertyName == "Mp")
             {
-				var color=m_role.MpType==0?ColorStringDefine.Default:m_role.MpType==1?ColorStringDefine.Mp_type1:ColorStringDefine.Mp_type2;
+				var color = m_role.GetMPColor();
 		        sb.Append($"{proItem.Name}:<color={color}>{m_role.Mp}/{m_role.MaxMp}</color>\n");
             }
             else 

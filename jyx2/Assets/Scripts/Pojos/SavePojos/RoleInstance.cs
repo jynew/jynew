@@ -18,7 +18,6 @@ using UnityEngine;
 using UniRx;
 using Jyx2;
 using HSFrameWork.ConfigTable;
-using UnityEditor.SceneManagement;
 
 namespace Jyx2
 {
@@ -1372,5 +1371,20 @@ namespace Jyx2
             ResetZhaoshis();
             return 0;
         }
+		
+		public string GetMPColor()
+		{
+			return MpType == 2 ? ColorStringDefine.Default : MpType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0;
+		}
+		
+		public string GetHPColor1()
+		{
+			return Hurt > 20 ? ColorStringDefine.Hp_hurt_heavy : Hurt > 0 ? ColorStringDefine.Hp_hurt_light : ColorStringDefine.Default;
+		}
+		
+		public string GetHPColor2()
+		{
+			return Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
+		}
     }
 }
