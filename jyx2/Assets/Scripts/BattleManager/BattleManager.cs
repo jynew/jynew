@@ -167,8 +167,8 @@ public class BattleManager:MonoBehaviour
                     {
                         EndBattle();
                         m_battleParams.callback?.Invoke(result);
-                        if (m_battleParams.backToBigMap)
-                            LevelLoader.LoadGameMap("Level_BigMap");
+                        //if (m_battleParams.backToBigMap) //由dead指令实现返回主界面逻辑
+                        //    LevelLoader.LoadGameMap("Level_BigMap");
                         m_battleParams = null;
                     });
                     break;
@@ -265,7 +265,7 @@ public class BattleManager:MonoBehaviour
 
             //升级
             int change = 0;
-            while (role.CanLevelUp() && role.GetWugongLevel(practiseItem.Wugong)<=10)
+            while (role.CanLevelUp())
             {
                 role.LevelUp();
                 change++;
@@ -278,7 +278,7 @@ public class BattleManager:MonoBehaviour
             if(practiseItem != null)
             {
                 change = 0;
-                while (role.CanFinishedItem())
+                while (role.CanFinishedItem() && (practiseItem!=null && role.GetWugongLevel(practiseItem.Wugong)<=10))
                 {
                     role.UseItem(practiseItem);
                     change++;
