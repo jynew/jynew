@@ -18,7 +18,6 @@ using UnityEngine;
 using UniRx;
 using Jyx2;
 using HSFrameWork.ConfigTable;
-using UnityEditor.SceneManagement;
 
 namespace Jyx2
 {
