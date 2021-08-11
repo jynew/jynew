@@ -18,6 +18,7 @@ using UnityEngine;
 using UniRx;
 using Jyx2;
 using HSFrameWork.ConfigTable;
+using UnityEditor.SceneManagement;
 
 namespace Jyx2
 {
@@ -71,6 +72,11 @@ namespace Jyx2
             {
                 Wugongs.Add(new WugongInstance(_data.Wugongs[0]));
             }
+
+            //初始化属性增强
+            AddEffect(this.GetWeapon(), 1);
+            AddEffect(this.GetArmor(), 1);
+            AddEffect(this.GetXiulianItem(), 1);
 
             //每次战斗前reset一次
             ResetForBattle();
@@ -289,7 +295,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("MaxHp", Data.MaxHp)
-                    : Tools.Limit(Get("MaxHp", Data.MaxHp), 0, GameConst.MAX_ROLE_HP);
+                    : Tools.Limit(Get("MaxHp", Data.MaxHp), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_HP, "AddMaxHp"));
             }
             set { Save("MaxHp", value); }
         }
@@ -306,7 +313,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Poison", Data.PoisonLevel)
-                    : Tools.Limit(Get("Poison", Data.PoisonLevel), 0, GameConst.MAX_POISON);
+                    : Tools.Limit(Get("Poison", Data.PoisonLevel), 0,
+                        MaxValueWithEquipment(GameConst.MAX_POISON, "ChangePoisonLevel"));
             }
             set { Save("Poison", value); }
         }
@@ -315,7 +323,9 @@ namespace Jyx2
         {
             get
             {
-                return getOrigin ? Get("Tili", Data.Tili) : Tools.Limit(Get("Tili", Data.Tili), 0, GameConst.MaxTili);
+                return getOrigin
+                    ? Get("Tili", Data.Tili)
+                    : Tools.Limit(Get("Tili", Data.Tili), 0, MaxValueWithEquipment(GameConst.MaxTili, "AddTili"));
             }
 
             set { Save("Tili", value); }
@@ -359,7 +369,12 @@ namespace Jyx2
 
         public int Mp
         {
-            get { return getOrigin ? Get("Mp", Data.Mp) : Tools.Limit(Get("Mp", Data.Mp), 0, MaxMp); }
+            get
+            {
+                return getOrigin
+                    ? Get("Mp", Data.Mp)
+                    : Tools.Limit(Get("Mp", Data.Mp), 0, MaxValueWithEquipment(MaxMp, "AddMp"));
+            }
             set { Save("Mp", value); }
         }
 
@@ -369,7 +384,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("MaxMp", Data.MaxMp)
-                    : Tools.Limit(Get("MaxMp", Data.MaxMp), 0, GameConst.MAX_ROLE_MP);
+                    : Tools.Limit(Get("MaxMp", Data.MaxMp), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_MP, "AddMaxMp"));
             }
             set { Save("MaxMp", value); }
         }
@@ -380,7 +396,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Attack", Data.Attack)
-                    : Tools.Limit(Get("Attack", Data.Attack), 0, GameConst.MAX_ROLE_ATTACK);
+                    : Tools.Limit(Get("Attack", Data.Attack), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_ATTACK, "Attack"));
             }
             set { Save("Attack", value); }
         }
@@ -391,7 +408,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Qinggong", Data.Qinggong)
-                    : Tools.Limit(Get("Qinggong", Data.Qinggong), 0, GameConst.MAX_ROLE_QINGGONG);
+                    : Tools.Limit(Get("Qinggong", Data.Qinggong), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_QINGGONG, "Qinggong"));
             }
             set { Save("Qinggong", value); }
         }
@@ -402,7 +420,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Defence", Data.Defence)
-                    : Tools.Limit(Get("Defence", Data.Defence), 0, GameConst.MAX_ROLE_DEFENCE);
+                    : Tools.Limit(Get("Defence", Data.Defence), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_DEFENCE, "Defence"));
             }
             set { Save("Defence", value); }
         }
@@ -411,7 +430,9 @@ namespace Jyx2
         {
             get
             {
-                return getOrigin ? Get("Heal", Data.Heal) : Tools.Limit(Get("Heal", Data.Heal), 0, GameConst.MAX_HEAL);
+                return getOrigin
+                    ? Get("Heal", Data.Heal)
+                    : Tools.Limit(Get("Heal", Data.Heal), 0, MaxValueWithEquipment(GameConst.MAX_HEAL, "Heal"));
             }
             set { Save("Heal", value); }
         }
@@ -422,7 +443,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("UsePoison", Data.UsePoison)
-                    : Tools.Limit(Get("UsePoison", Data.UsePoison), 0, GameConst.MAX_USE_POISON);
+                    : Tools.Limit(Get("UsePoison", Data.UsePoison), 0,
+                        MaxValueWithEquipment(GameConst.MAX_USE_POISON, "UsePoison"));
             }
             set { Save("UsePoison", value); }
         }
@@ -433,7 +455,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("DePoison", Data.DePoison)
-                    : Tools.Limit(Get("DePoison", Data.DePoison), 0, GameConst.MAX_DEPOISON);
+                    : Tools.Limit(Get("DePoison", Data.DePoison), 0,
+                        MaxValueWithEquipment(GameConst.MAX_DEPOISON, "DePoison"));
             }
             set { Save("DePoison", value); }
         }
@@ -444,7 +467,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("AntiPoison", Data.AntiPoison)
-                    : Tools.Limit(Get("AntiPoison", Data.AntiPoison), 0, GameConst.MAX_ANTIPOISON);
+                    : Tools.Limit(Get("AntiPoison", Data.AntiPoison), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ANTIPOISON, "AntiPoison"));
             }
             set { Save("AntiPoison", value); }
         }
@@ -455,7 +479,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Quanzhang", Data.Quanzhang)
-                    : Tools.Limit(Get("Quanzhang", Data.Quanzhang), 0, GameConst.MAX_ROLE_WEAPON_ATTR);
+                    : Tools.Limit(Get("Quanzhang", Data.Quanzhang), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_WEAPON_ATTR, "Quanzhang"));
             }
             set { Save("Quanzhang", value); }
         }
@@ -466,7 +491,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Yujian", Data.Yujian)
-                    : Tools.Limit(Get("Yujian", Data.Yujian), 0, GameConst.MAX_ROLE_WEAPON_ATTR);
+                    : Tools.Limit(Get("Yujian", Data.Yujian), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_WEAPON_ATTR, "Yujian"));
             }
             set { Save("Yujian", value); }
         }
@@ -477,7 +503,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Shuadao", Data.Shuadao)
-                    : Tools.Limit(Get("Shuadao", Data.Shuadao), 0, GameConst.MAX_ROLE_WEAPON_ATTR);
+                    : Tools.Limit(Get("Shuadao", Data.Shuadao), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_WEAPON_ATTR, "Shuadao"));
             }
             set { Save("Shuadao", value); }
         }
@@ -488,7 +515,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Qimen", Data.Qimen)
-                    : Tools.Limit(Get("Qimen", Data.Qimen), 0, GameConst.MAX_ROLE_WEAPON_ATTR);
+                    : Tools.Limit(Get("Qimen", Data.Qimen), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_WEAPON_ATTR, "Qimen"));
             }
             set { Save("Qimen", value); }
         }
@@ -511,7 +539,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Pinde", Data.Pinde)
-                    : Tools.Limit(Get("Pinde", Data.Pinde), 0, GameConst.MAX_ROLE_PINDE);
+                    : Tools.Limit(Get("Pinde", Data.Pinde), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_PINDE, "AddPinde"));
             }
             set { Save("Pinde", value); }
         }
@@ -522,7 +551,8 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("AttackPoison", Data.AttackPoison)
-                    : Tools.Limit(Get("AttackPoison", Data.AttackPoison), 0, GameConst.MAX_ROLE_ATK_POISON);
+                    : Tools.Limit(Get("AttackPoison", Data.AttackPoison), 0,
+                        MaxValueWithEquipment(GameConst.MAX_ROLE_ATK_POISON, "AttackPoison"));
             }
             set { Save("AttackPoison", value); }
         }
@@ -786,6 +816,43 @@ namespace Jyx2
 
         //getOrigin的意思是获取源数据，即get方法不使用limit
         private bool getOrigin = false;
+        private Jyx2Item AddEffectModel = new Jyx2Item();
+
+        private void AddEffect(Jyx2Item item, int AddType)
+        {
+            if (item == null) return;
+            AddEffectModel.AddTili += item.AddTili * AddType;
+            AddEffectModel.AddMaxHp += item.AddMaxHp * AddType;
+            AddEffectModel.AddMp += item.AddMp * AddType;
+            AddEffectModel.AddMaxMp += item.AddMaxMp * AddType;
+            AddEffectModel.ChangePoisonLevel += item.ChangePoisonLevel * AddType;
+            AddEffectModel.Heal += item.Heal * AddType;
+            AddEffectModel.DePoison += item.DePoison * AddType;
+            AddEffectModel.AntiPoison += item.AntiPoison * AddType;
+            AddEffectModel.UsePoison += item.UsePoison * AddType;
+
+            AddEffectModel.Attack += item.Attack * AddType;
+            AddEffectModel.Defence += item.Defence * AddType;
+            AddEffectModel.Qinggong += item.Qinggong * AddType;
+
+            AddEffectModel.Quanzhang += item.Quanzhang * AddType;
+            AddEffectModel.Yujian += item.Yujian * AddType;
+            AddEffectModel.Shuadao += item.Shuadao * AddType;
+            AddEffectModel.Qimen += item.Qimen * AddType;
+
+            AddEffectModel.AddPinde += item.AddPinde * AddType;
+            AddEffectModel.AttackPoison += item.AttackPoison * AddType;
+        }
+
+        private int MaxValueWithEquipment(int GameConst_value, string attr)
+        {
+            if (this.Weapon < 0 && this.Armor < 0 && this.Xiulianwupin < 0) return GameConst_value;
+            else
+            {
+                return GameConst_value +
+                       Convert.ToInt16(AddEffectModel.GetType().GetField(attr).GetValue(AddEffectModel));
+            }
+        }
 
         /// <summary>
         /// 使用物品
@@ -797,6 +864,9 @@ namespace Jyx2
 
             if (item == null)
                 return;
+
+            if (item.EquipmentType == 0 || item.EquipmentType == 1 || item.EquipmentType == 2)
+                AddEffect(item, 1);
 
             this.Tili += item.AddTili;
             this.SetHPAndRefreshHudBar(this.Hp + item.AddHp);
@@ -836,7 +906,7 @@ namespace Jyx2
                 this.LearnMagic(item.Wugong);
                 this.ExpForItem -= need_item_exp;
             }
-            
+
             getOrigin = false;
 
             this.Limit();
@@ -849,6 +919,7 @@ namespace Jyx2
         public void UnequipItem(Jyx2Item item)
         {
             getOrigin = true;
+            AddEffect(item, -1);
 
             if (item == null)
                 return;
@@ -891,7 +962,7 @@ namespace Jyx2
                 this.LearnMagic(item.Wugong);
                 this.ExpForItem -= need_item_exp;
             }
-            
+
             getOrigin = false;
 
             this.Limit();
