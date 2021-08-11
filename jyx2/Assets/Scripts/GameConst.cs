@@ -36,7 +36,7 @@ public class ColorStringDefine
 	
 	public const string Default="white";
 	public const string Mp_type1="orange";
-	public const string Mp_type2="#A564DB";
+	public const string Mp_type0="#A564DB";
 	public const string Hp_posion="green";
 	public const string Hp_hurt_light="#FD726F";
 	public const string Hp_hurt_heavy="#F8413E";
