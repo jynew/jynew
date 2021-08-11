@@ -156,7 +156,7 @@ public partial class BagUIPanel:Jyx2_UIBase
 
     void setBtnText()
     {
-        if (m_selectItem.GetItem()==null)return;
+        if (m_selectItem==null)return;
         if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item.ToString())
             UseBtn_Text.text = "卸 下";
         else
