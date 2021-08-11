@@ -236,10 +236,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void OnWeaponClick()
     {
-        if (!runtime.HaveItemBool(m_currentRole.Weapon) && m_currentRole.Weapon != -1)
-        {
-            runtime.AddItem(m_currentRole.Weapon, 1);
-        }
         SelectFromBag(
             (itemId) =>
             {
@@ -263,10 +259,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void OnArmorClick()
     {
-        if (!runtime.HaveItemBool(m_currentRole.Armor) && m_currentRole.Armor != -1)
-        {
-            runtime.AddItem(m_currentRole.Armor, 1);
-        }
         SelectFromBag(
             (itemId) =>
             {
@@ -288,10 +280,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void OnXiulianClick()
     {
-        if (!runtime.HaveItemBool(m_currentRole.Xiulianwupin) && m_currentRole.Xiulianwupin != -1)
-        {
-            runtime.AddItem(m_currentRole.Xiulianwupin, 1);
-        }
         SelectFromBag(
             (itemId) =>
             {
