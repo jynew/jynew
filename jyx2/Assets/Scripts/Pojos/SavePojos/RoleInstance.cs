@@ -205,27 +205,25 @@ namespace Jyx2
 
             Debug.Log($"{this.Name}升到{this.Level}级！");
         }
-
-        public void CheckYeQiuQuan()
-        {
-            var key = 1;
-            var ran = new System.Random();
-            GameRuntimeData.Instance.YeQiuQuanCounter += ran.Next(1, 3);
-            if (GameRuntimeData.Instance.YeQiuQuanCounter >= 100 && GetWugongLevel(key) < GameConst.MAX_SKILL_LEVEL)
-            {
-                this.LearnMagic(key);
-                GameRuntimeData.Instance.YeQiuQuanCounter -= 100;
-                Loom.QueueOnMainThread(
-                    _ =>
-                    {
-                        new Action(() =>
-                        {
-                            StoryEngine.Instance.DisplayPopInfo("野球拳升为第 " + GetWugongLevel(key) + " 级！");
-                        })();
-                    }, null);
-            }
-        }
-
+        
+		public void CheckYeQiuQuan()
+		{
+			var key=1;
+			var ran=new System.Random();
+			GameRuntimeData.Instance.YeQiuQuanCounter+=ran.Next(1,3);
+			if(GameRuntimeData.Instance.YeQiuQuanCounter>=100 && GetWugongLevel(key)<=GameConst.MAX_WUGONG_LEVEL)
+			{
+				this.LearnMagic(key);
+				GameRuntimeData.Instance.YeQiuQuanCounter=0;
+				Loom.QueueOnMainThread(_ =>
+				{					
+					new Action(() => {
+						StoryEngine.Instance.DisplayPopInfo("野球拳升为第 "+GetWugongLevel(key)+" 级！");
+					})();
+				}, null);
+			}
+		}
+		
         void Limit()
         {
             Exp = Tools.Limit(Exp, 0, GameConst.MAX_EXP);

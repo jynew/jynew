@@ -32,6 +32,7 @@ public partial class SavePanel:Jyx2_UIBase
         base.OnShowPanel(allParams);
 
         m_selectCallback = allParams[0] as Action<int>;
+		Main_Text.text=allParams[1] as string;
         RefreshSave();
     }
 

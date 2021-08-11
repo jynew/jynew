@@ -17,12 +17,13 @@ public partial class SavePanel
 	private RectTransform SaveParent_RectTransform;
 	private Button BackButton_Button;
 	private Button SaveItem_Button;
+	private Text Main_Text;
 
 	public void InitTrans()
 	{
 		SaveParent_RectTransform = transform.Find("SaveParent").GetComponent<RectTransform>();
 		BackButton_Button = transform.Find("TopbarUI/BackButton").GetComponent<Button>();
 		SaveItem_Button = transform.Find("ItemRoot/SaveItem").GetComponent<Button>();
-
+		Main_Text = transform.Find("MainText").GetComponent<Text>();
 	}
 }

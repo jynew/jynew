@@ -69,7 +69,9 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         AutoBattle_Toggle.gameObject.SetActive(true);
         CurrentRole_RectTransform.gameObject.SetActive(true);
         NameText_Text.text = m_currentRole.Name;
-        DetailText_Text.text = string.Format("体力 {0}/100\n生命 {1}/{2}\n内力 {3}/{4}", m_currentRole.Tili, m_currentRole.Hp, m_currentRole.MaxHp, m_currentRole.Mp, m_currentRole.MaxMp);
+		var color1=m_currentRole.Hurt>20?ColorStringDefine.Hp_hurt_heavy:m_currentRole.Hurt>0?ColorStringDefine.Hp_hurt_light:ColorStringDefine.Default;
+		var color2=m_currentRole.Poison>0?ColorStringDefine.Hp_posion:ColorStringDefine.Default;
+        DetailText_Text.text = ($"体力 {m_currentRole.Tili}/100\n生命 <color={color1}>{m_currentRole.Hp}</color>/<color={color2}>{m_currentRole.MaxHp}</color>\n内力 {m_currentRole.Mp}/{m_currentRole.MaxMp}");
 
         Jyx2ResourceHelper.GetRoleHeadSprite(m_currentRole, PreImage_Image);
     }

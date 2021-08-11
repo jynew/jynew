@@ -59,7 +59,7 @@ public class ShopUIItem : MonoBehaviour
             return;
         }
         Jyx2ResourceHelper.GetItemSprite(int.Parse(item.Id),iconImg);
-        desText.text = $"{item.Name}\n价格:{shopItem.Price}";
+        desText.text = $"{item.Name}\n价格：{shopItem.Price}";
         leftNum = shopItem.Count - hasBuyNum;
         leftNum = Tools.Limit(leftNum,0,shopItem.Count);
         itemNum.text = leftNum.ToString();
@@ -71,7 +71,7 @@ public class ShopUIItem : MonoBehaviour
         int moneyCount = GameRuntimeData.Instance.GetMoney();
         int needCount = shopItem.Price * buyCount;
         Color textColor = moneyCount >= needCount ? Color.white : Color.red;
-        totalCost.text = needCount.ToString();
+        totalCost.text = "花费："+needCount.ToString();
         totalCost.color = textColor;
     }
 
