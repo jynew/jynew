@@ -1332,7 +1332,7 @@ namespace Jyx2
             View?.MarkHpBarIsDirty();
 
             int tmpMp = Mp;
-            Mp = Tools.Limit((int) (Hp + MaxMp * 0.05), 0, MaxMp);
+            Mp = Tools.Limit((int) (Mp + MaxMp * 0.05), 0, MaxMp);
 
             if (Hp > tmpHp)
                 this.View.ShowAttackInfo($"<color=green>+{Hp - tmpHp}</color>");

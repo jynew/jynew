@@ -157,7 +157,7 @@ public class GameConst
         ["22"] = new PropertyItem(22, "Pinde", "品德", 30, 20),
         ["23"] = new PropertyItem(23, "AttackPoison", "功夫带毒", 30, 20),
         ["24"] = new PropertyItem(24, "Zuoyouhubo", "左右互搏", 30, 20),
-        ["25"] = new PropertyItem(25, "IQ", "资质", 30, 20),
+        ["25"] = new PropertyItem(25, "IQ", "资质", 100, 30),
         ["26"] = new PropertyItem(26, "Poison", "中毒", 30, 20),
     };
 
