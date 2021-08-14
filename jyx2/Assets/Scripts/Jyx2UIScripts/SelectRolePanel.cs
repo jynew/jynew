@@ -121,7 +121,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
         bool hasIt = m_params.selectList.Contains(role);
         if (hasIt)
         {
-            if (m_params.mustSelect != null && m_params.mustSelect.Invoke(role) && m_params.selectList.Count <= 1) 
+            if (m_params.mustSelect != null && m_params.mustSelect.Invoke(role)) 
             {
                 GameUtil.DisplayPopinfo("此角色强制上场");
                 return;

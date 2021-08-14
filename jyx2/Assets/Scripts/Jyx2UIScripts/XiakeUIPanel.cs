@@ -30,7 +30,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         InitTrans();
         BindListener(BackButton_Button, OnBackClick);
         BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
-        BindListener(LeaveButton_Button, OnLeaveClick);
+		BindListener(LeaveButton_Button, OnLeaveClick);
         BindListener(ButtonSelectArmor_Button, OnArmorClick);
         BindListener(ButtonSelectBook_Button, OnXiulianClick);
         BindListener(ButtonHeal_Button, OnHealClick);
@@ -44,6 +44,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         if (allParams.Length > 1)
             m_roleList = allParams[1] as List<RoleInstance>;
 
+        var curMap=GameRuntimeData.Instance.CurrentMap;
+		(LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);
         RefreshScrollView();
         RefreshCurrent();
     }
