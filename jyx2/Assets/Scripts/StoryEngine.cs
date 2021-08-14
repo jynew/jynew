@@ -192,12 +192,8 @@ public class StoryEngine : MonoBehaviour
         foreach (var role in r.Team)
         {
             role.BindKey();
-        }
-
-        //因为更改了存储的数据结构，需要检查存档的数据
-        var roleList = runtime.Team as List<RoleInstance>;
-        foreach (var role in roleList)
-        {
+            
+            //因为更改了存储的数据结构，需要检查存档的数据
             if (!runtime.HaveItemBool(role.Weapon) && role.Weapon != -1) runtime.AddItem(role.Weapon, 1);
             if (!runtime.HaveItemBool(role.Armor) && role.Armor != -1) runtime.AddItem(role.Armor, 1);
             if (!runtime.HaveItemBool(role.Xiulianwupin) && role.Xiulianwupin != -1)
