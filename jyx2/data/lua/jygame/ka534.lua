@@ -32,6 +32,7 @@ if InTeam(49) == true then goto label0 end;
     Play2Amination(1, 6486, 6520, 2, 6450, 6484, 44);
     Play2Amination(1, 6486, 6520, 2, 6450, 6484, 44);
     Play2Amination(1, 6486, 6520, 2, 6450, 6484, 25);
+	jyx2_Wait(2);
     ScenceFromTo(24, 19, 17, 28);
 	jyx2_CameraFollowPlayer();
     DarkScence();
