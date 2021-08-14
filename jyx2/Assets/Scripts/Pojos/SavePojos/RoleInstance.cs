@@ -34,11 +34,6 @@ namespace Jyx2
             BindKey();
             Recover();
         }
-        
-        private static GameRuntimeData runtime
-        {
-            get { return GameRuntimeData.Instance; }
-        }
 
         public void BindKey()
         {
