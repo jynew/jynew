@@ -60,7 +60,7 @@ public class Jyx2_UIManager : MonoBehaviour
 
     public void GameStart() 
     {
-        Jyx2_UIManager.Instance.ShowUI("GameMainMenu");
+        Jyx2_UIManager.Instance.ShowUI("GameMainMenu", $"当前版本：{Application.version}");
     }
 
     Transform GetUIParent(UILayer layer) 
