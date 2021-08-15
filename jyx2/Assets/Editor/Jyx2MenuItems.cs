@@ -115,8 +115,14 @@ namespace Jyx2Editor
             // 处理场景文件
             //AddScenesToBuildTool.AddScenesToBuild();
 
+            string currentDate = DateTime.Now.ToString("yyyyMMdd");
+            string exePath = path + $"/jyx2-{currentDate}.exe";
+
+            //设置版本号
+            PlayerSettings.bundleVersion = currentDate;
+
             //打包
-            BuildPipeline.BuildPlayer(GetScenePaths(), path + "/jyx2.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
+            BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.None);
 
             //强制移动目录
             //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
@@ -165,7 +171,11 @@ namespace Jyx2Editor
                 // 处理场景文件
                 //AddScenesToBuildTool.AddScenesToBuild();
 
-                string apkPath = path + $"/jyx2AndroidBuild-{DateTime.Now.ToString("yyyyMMdd")}.apk";
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
 
                 //动态设置keystore的密码
                 PlayerSettings.Android.keystorePass = "123456";

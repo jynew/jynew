@@ -38,6 +38,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
         base.OnShowPanel(allParams);
         AudioManager.PlayMusic(16);
         m_panelType = PanelType.Home;
+        Version_Text.text = allParams[0] as string;
     }
     
     public void OnNewGameClicked()
