@@ -294,7 +294,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("MaxHp", Data.MaxHp)
                     : Tools.Limit(Get("MaxHp", Data.MaxHp), 0,
-                        AddEffectModel.AddMaxHp);;
+                        GameConst.MAX_ROLE_HP);
             }
             set { Save("MaxHp", value); }
         }
@@ -312,7 +312,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Poison", Data.PoisonLevel)
                     : Tools.Limit(Get("Poison", Data.PoisonLevel), 0,
-                        AddEffectModel.ChangePoisonLevel);;
+                        GameConst.MAX_POISON);
             }
             set { Save("Poison", value); }
         }
@@ -323,7 +323,7 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Tili", Data.Tili)
-                    : Tools.Limit(Get("Tili", Data.Tili), 0, AddEffectModel.AddTili);;
+                    : Tools.Limit(Get("Tili", Data.Tili), 0, GameConst.MaxTili);
             }
 
             set { Save("Tili", value); }
@@ -379,7 +379,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("MaxMp", Data.MaxMp)
                     : Tools.Limit(Get("MaxMp", Data.MaxMp), 0,
-                        AddEffectModel.AddMaxMp);;
+                        GameConst.MAX_ROLE_MP);
             }
             set { Save("MaxMp", value); }
         }
@@ -391,7 +391,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Attack", Data.Attack)
                     : Tools.Limit(Get("Attack", Data.Attack), 0,
-                        AddEffectModel.Attack);;
+                        MaxAttack);
             }
             set { Save("Attack", value); }
         }
@@ -403,7 +403,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Qinggong", Data.Qinggong)
                     : Tools.Limit(Get("Qinggong", Data.Qinggong), 0,
-                        AddEffectModel.Qinggong);;
+                        MaxQinggong);
             }
             set { Save("Qinggong", value); }
         }
@@ -415,7 +415,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Defence", Data.Defence)
                     : Tools.Limit(Get("Defence", Data.Defence), 0,
-                        AddEffectModel.Defence);;
+                        MaxDefence);
             }
             set { Save("Defence", value); }
         }
@@ -426,7 +426,7 @@ namespace Jyx2
             {
                 return getOrigin
                     ? Get("Heal", Data.Heal)
-                    : Tools.Limit(Get("Heal", Data.Heal), 0, AddEffectModel.Heal);;
+                    : Tools.Limit(Get("Heal", Data.Heal), 0, GameConst.MAX_HEAL);
             }
             set { Save("Heal", value); }
         }
@@ -438,7 +438,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("UsePoison", Data.UsePoison)
                     : Tools.Limit(Get("UsePoison", Data.UsePoison), 0,
-                        AddEffectModel.UsePoison);;
+                        GameConst.MAX_USE_POISON);
             }
             set { Save("UsePoison", value); }
         }
@@ -450,7 +450,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("DePoison", Data.DePoison)
                     : Tools.Limit(Get("DePoison", Data.DePoison), 0,
-                        AddEffectModel.DePoison);;
+                        GameConst.MAX_DEPOISON);
             }
             set { Save("DePoison", value); }
         }
@@ -462,7 +462,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("AntiPoison", Data.AntiPoison)
                     : Tools.Limit(Get("AntiPoison", Data.AntiPoison), 0,
-                        AddEffectModel.AntiPoison);;
+                        GameConst.MAX_ANTIPOISON);
             }
             set { Save("AntiPoison", value); }
         }
@@ -474,7 +474,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Quanzhang", Data.Quanzhang)
                     : Tools.Limit(Get("Quanzhang", Data.Quanzhang), 0,
-                        AddEffectModel.Quanzhang);;
+                        GameConst.MAX_ROLE_WEAPON_ATTR);
             }
             set { Save("Quanzhang", value); }
         }
@@ -486,7 +486,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Yujian", Data.Yujian)
                     : Tools.Limit(Get("Yujian", Data.Yujian), 0,
-                        AddEffectModel.Yujian);;
+                        GameConst.MAX_ROLE_WEAPON_ATTR);
             }
             set { Save("Yujian", value); }
         }
@@ -498,7 +498,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Shuadao", Data.Shuadao)
                     : Tools.Limit(Get("Shuadao", Data.Shuadao), 0,
-                        AddEffectModel.Shuadao);;
+                        GameConst.MAX_ROLE_WEAPON_ATTR);
             }
             set { Save("Shuadao", value); }
         }
@@ -510,7 +510,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Qimen", Data.Qimen)
                     : Tools.Limit(Get("Qimen", Data.Qimen), 0,
-                        AddEffectModel.Qimen);;
+                        GameConst.MAX_ROLE_WEAPON_ATTR);
             }
             set { Save("Qimen", value); }
         }
@@ -534,7 +534,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("Pinde", Data.Pinde)
                     : Tools.Limit(Get("Pinde", Data.Pinde), 0,
-                        AddEffectModel.AddPinde);;
+                        GameConst.MAX_ROLE_PINDE);
             }
             set { Save("Pinde", value); }
         }
@@ -546,7 +546,7 @@ namespace Jyx2
                 return getOrigin
                     ? Get("AttackPoison", Data.AttackPoison)
                     : Tools.Limit(Get("AttackPoison", Data.AttackPoison), 0,
-                        AddEffectModel.AttackPoison);;
+                        GameConst.MAX_ROLE_ATK_POISON);
             }
             set { Save("AttackPoison", value); }
         }
@@ -810,52 +810,18 @@ namespace Jyx2
 
         //getOrigin的意思是获取源数据，即get方法不使用limit
         private bool getOrigin = false;
-
-        private Jyx2Item AddEffectModel = new Jyx2Item()
-        {
-            AddMaxHp=GameConst.MAX_ROLE_HP,
-            ChangePoisonLevel=GameConst.MAX_POISON,
-            AddTili=GameConst.MaxTili,
-            AddMaxMp=GameConst.MAX_ROLE_MP,
-            Attack=GameConst.MAX_ROLE_ATTACK,
-            Qinggong=GameConst.MAX_ROLE_QINGGONG,
-            Defence=GameConst.MAX_ROLE_DEFENCE,
-            Heal=GameConst.MAX_HEAL,
-            UsePoison=GameConst.MAX_USE_POISON,
-            DePoison=GameConst.MAX_DEPOISON,
-            AntiPoison=GameConst.MAX_ANTIPOISON,
-            Quanzhang=GameConst.MAX_ROLE_WEAPON_ATTR,
-            Yujian=GameConst.MAX_ROLE_WEAPON_ATTR,
-            Shuadao=GameConst.MAX_ROLE_WEAPON_ATTR,
-            Qimen=GameConst.MAX_ROLE_WEAPON_ATTR,
-            AddPinde=GameConst.MAX_ROLE_PINDE,
-            AttackPoison=GameConst.MAX_ROLE_ATK_POISON
-        };
-
+        private int MaxAttack = GameConst.MAX_ROLE_ATTACK;
+        private int MaxQinggong = GameConst.MAX_ROLE_QINGGONG;
+        private int MaxDefence = GameConst.MAX_ROLE_DEFENCE;
+        
         private void AddEffect(Jyx2Item item, int AddType)
         {
             if (item == null) return;
-            AddEffectModel.AddTili += item.AddTili * AddType;
-            AddEffectModel.AddMaxHp += item.AddMaxHp * AddType;
-            AddEffectModel.AddMaxMp += item.AddMaxMp * AddType;
-            AddEffectModel.ChangePoisonLevel += item.ChangePoisonLevel * AddType;
-            AddEffectModel.Heal += item.Heal * AddType;
-            AddEffectModel.DePoison += item.DePoison * AddType;
-            AddEffectModel.AntiPoison += item.AntiPoison * AddType;
-            AddEffectModel.UsePoison += item.UsePoison * AddType;
-
-            AddEffectModel.Attack += item.Attack * AddType;
-            AddEffectModel.Defence += item.Defence * AddType;
-            AddEffectModel.Qinggong += item.Qinggong * AddType;
-
-            AddEffectModel.Quanzhang += item.Quanzhang * AddType;
-            AddEffectModel.Yujian += item.Yujian * AddType;
-            AddEffectModel.Shuadao += item.Shuadao * AddType;
-            AddEffectModel.Qimen += item.Qimen * AddType;
-
-            AddEffectModel.AddPinde += item.AddPinde * AddType;
-            AddEffectModel.AttackPoison += item.AttackPoison * AddType;
+            MaxAttack += item.Attack*AddType;
+            MaxDefence += item.Defence*AddType;
+            MaxQinggong += item.Qinggong*AddType;
         }
+        
 
         /// <summary>
         /// 使用物品
