@@ -121,8 +121,8 @@ namespace Jyx2
 
         public int SaveIndex = 0;
 
-        private const string ARCHIVE_FILE_NAME = "archive_{0}.dat";
-        private const string ARCHIVE_FILE_DIR = "Save";
+        public const string ARCHIVE_FILE_NAME = "archive_{0}.dat";
+        public const string ARCHIVE_FILE_DIR = "Save";
         public const string ARCHIVE_SUMMARY_PREFIX = "save_summaryinfo_";
 
         public void GameSave(int index = -1)

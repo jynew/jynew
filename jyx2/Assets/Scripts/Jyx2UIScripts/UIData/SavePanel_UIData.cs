@@ -18,6 +18,8 @@ public partial class SavePanel
 	private Button BackButton_Button;
 	private Button SaveItem_Button;
 	private Text Main_Text;
+	private Button ImButton_Button;
+	private Button ExButton_Button;
 
 	public void InitTrans()
 	{
@@ -25,5 +27,7 @@ public partial class SavePanel
 		BackButton_Button = transform.Find("TopbarUI/BackButton").GetComponent<Button>();
 		SaveItem_Button = transform.Find("ItemRoot/SaveItem").GetComponent<Button>();
 		Main_Text = transform.Find("MainText").GetComponent<Text>();
+		ImButton_Button = transform.Find("FileIO/Import").GetComponent<Button>();
+		ExButton_Button = transform.Find("FileIO/Export").GetComponent<Button>();
 	}
 }
