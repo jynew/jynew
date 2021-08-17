@@ -780,10 +780,6 @@ namespace Jyx2
             if (item == null)
                 return;
 
-            //test
-            if (item.Id == "3")
-                ExpForItem += 100;
-
             if (item.EquipmentType == 0 || item.EquipmentType == 1)
                 AddEffect(item, 1);
 
