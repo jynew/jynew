@@ -287,14 +287,15 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             {
                 if (m_currentRole.Xiulianwupin == itemId)
                 {
-                    m_currentRole.UnequipItem(m_currentRole.GetXiulianItem());
                     m_currentRole.Xiulianwupin = -1;
                 }
                 else
                 {
-                    m_currentRole.UnequipItem(m_currentRole.GetXiulianItem());
                     m_currentRole.Xiulianwupin = itemId;
-                    m_currentRole.UseItem(m_currentRole.GetXiulianItem());
+                    while (m_currentRole.CanFinishedItem())
+                    {
+                        m_currentRole.UseItem(m_currentRole.GetXiulianItem());
+                    }
                 }
             },
             (item) => { return item.ItemType == 2 && JudgeFree(int.Parse(item.Id), 2); },
