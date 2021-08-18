@@ -18,7 +18,6 @@ using UnityEngine;
 using UniRx;
 using Jyx2;
 using HSFrameWork.ConfigTable;
-using UnityEditor.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Jyx2
@@ -748,6 +747,9 @@ namespace Jyx2
         /// <param name="item"></param>
         public string LianZhiItem(Jyx2Item practiseItem)
         {
+            if (practiseItem == null)
+                return "";
+            
             if (practiseItem.GenerateItems[0].Id > 0 && ExpForMakeItem >= practiseItem.GenerateItemNeedExp &&
                 runtime.HaveItemBool(practiseItem.GenerateItemNeedCost))
             {
@@ -765,7 +767,7 @@ namespace Jyx2
                 var item = makeItemList[index];
                 runtime.AddItem(item.Id, item.Count);
                 runtime.AddItem(practiseItem.GenerateItemNeedCost, -1);
-                return $"{GetXiulianItem().Name}炼出{ConfigTable.Get<Jyx2Item>(item.Id.ToString()).Name}*{item.Count}";
+                return $"{GetXiulianItem().Name} 炼出 {ConfigTable.Get<Jyx2Item>(item.Id.ToString()).Name}×{item.Count}";
             }
 
             return "";
