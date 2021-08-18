@@ -10,13 +10,25 @@
 using Jyx2;
 using Jyx2.Middleware;
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Keiwando.NFSO;
+using UnityEngine.SceneManagement;
 
 public partial class SavePanel:Jyx2_UIBase
 {
+	
+#if UNITY_STANDALONE_WIN
+	private const string testDirectory = @"C:\Users";
+#elif UNITY_STANDALONE_OSX
+	private const string testDirectory = @"~/Desktop";
+#else
+	private const string testDirectory = "";
+#endif
+
     public override UILayer Layer => UILayer.NormalUI;
 
     Action<int> m_selectCallback;
@@ -25,6 +37,8 @@ public partial class SavePanel:Jyx2_UIBase
         InitTrans();
 
         BindListener(BackButton_Button, OnBackClick);
+		BindListener(ImButton_Button, OnImportClick);
+		BindListener(ExButton_Button, OnExportClick);
     }
 
     protected override void OnShowPanel(params object[] allParams)
@@ -33,6 +47,11 @@ public partial class SavePanel:Jyx2_UIBase
 
         m_selectCallback = allParams[0] as Action<int>;
 		Main_Text.text=allParams[1] as string;
+		
+		var curScene=SceneManager.GetActiveScene().name;
+		var isHouse=(curScene!="0_GameStart" && curScene!="0_BigMap");
+		(ImButton_Button.gameObject).SetActive(!isHouse);
+		(ExButton_Button.gameObject).SetActive(!isHouse);
         RefreshSave();
     }
 
@@ -85,4 +104,78 @@ public partial class SavePanel:Jyx2_UIBase
     {
         Jyx2_UIManager.Instance.HideUI("SavePanel");
     }
+
+    private void OnImportClick()
+    {
+		#if UNITY_ANDROID
+			for(int i=0;i<3;i++){
+				string fileName = string.Format(GameRuntimeData.ARCHIVE_FILE_NAME, i);
+				string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR;
+				string sPath = sFolderPath + "/" + fileName;
+				if (File.Exists(sPath))
+				{
+					PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX +i, "import  save data: "+i);
+				}
+			}
+			//NativeFileSOMobile.shared.OpenFile(new SupportedFileType[]{SupportedFileType.Any}, delegate (bool didSelectPath, OpenedFile file) {
+			//	if (didSelectPath) {
+			//		string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR+"/"+file.Name;
+			//		NativeFileSOMobile.shared.SaveFile(new FileToSave(sFolderPath, file+".dat"));
+			//	}
+			//	PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + SaveIndex, summaryInfo);
+			//	RefreshSave();
+			//});
+		#else
+			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory, delegate (bool didSelectPath, string savePath) {
+				if (didSelectPath) {
+					string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR+"/";
+					int SaveIndex=-1;
+					if (File.Exists(savePath)&&savePath.Contains("archive_")&&savePath.Contains(".dat"))
+					{
+						var lines=savePath.Split('\\');
+						File.Copy(savePath,sFolderPath+lines[lines.Length-1]);
+						try{
+							SaveIndex=int.Parse(savePath.Substring(savePath.Length-5,1));
+						}catch{}
+					}
+					if(SaveIndex>-1){
+						PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX +SaveIndex, "import  save data: "+SaveIndex);
+					}
+				}
+			});
+		#endif
+		RefreshSave();
+    }
+	
+    private void OnExportClick()
+    {
+		#if UNITY_ANDROID
+			transform.Find("FileIO/Export/Text").GetComponent<Text>().text="暂不支持";
+		#else
+			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory, delegate (bool didSelectPath, string savePath) {
+				if (didSelectPath) {
+					ExportSaveData(savePath);
+				}
+			});
+		#endif
+    }
+
+	private FileToSave GetFileToSave() 
+	{
+		var testFilePath = Application.persistentDataPath;
+		return new FileToSave(testFilePath, "archive_{0}.dat", SupportedFileType.Any);
+	}
+	
+	private void ExportSaveData(string savePath)
+	{
+		for(int i=0;i<3;i++){
+			string fileName = string.Format(GameRuntimeData.ARCHIVE_FILE_NAME, i);
+			string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR;
+			string sPath = sFolderPath + "/" + fileName;
+			if (File.Exists(sPath))
+			{
+				File.Copy(sPath,string.Format(savePath, i));
+			}
+		}
+	}
 }

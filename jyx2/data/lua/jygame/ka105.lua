@@ -16,11 +16,11 @@ ModifyEvent(11, 91, 1, 1, 112, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(11, 92, 1, 1, 113, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(11, 93, 1, 1, 114, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(11, 94, 1, 1, 115, -1, -1, -2, -2, -2, -2, -2, -2);
+DarkScence();
 ModifyEvent(11, 101, 1, 1, 116, -1, -1, 5288, 5288, 5288, -2, -2, -2);
 jyx2_ReplaceSceneObject("11", "NPC/金花婆婆101", "1");--紫衫龙王
 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_ReplaceSceneObject("", "NPC/金花婆婆", "");--紫衫龙王
-DarkScence();
 LightScence();
 ChangeMMapMusic(3);
 do return end;

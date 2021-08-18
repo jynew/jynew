@@ -30,7 +30,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         InitTrans();
         BindListener(BackButton_Button, OnBackClick);
         BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
-        BindListener(LeaveButton_Button, OnLeaveClick);
+		BindListener(LeaveButton_Button, OnLeaveClick);
         BindListener(ButtonSelectArmor_Button, OnArmorClick);
         BindListener(ButtonSelectBook_Button, OnXiulianClick);
         BindListener(ButtonHeal_Button, OnHealClick);
@@ -44,6 +44,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         if (allParams.Length > 1)
             m_roleList = allParams[1] as List<RoleInstance>;
 
+        var curMap=GameRuntimeData.Instance.CurrentMap;
+		(LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);
         RefreshScrollView();
         RefreshCurrent();
     }
@@ -115,11 +117,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     string GetInfoText(RoleInstance role)
     {
         StringBuilder sb = new StringBuilder();
-        var color = role.MpType == 0 ? ColorStringDefine.Default :
-            role.MpType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type2;
-        var color1 = role.Hurt > 20 ? ColorStringDefine.Hp_hurt_heavy :
-            role.Hurt > 0 ? ColorStringDefine.Hp_hurt_light : ColorStringDefine.Default;
-        var color2 = role.Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
+        var color = role.GetMPColor();
+        var color1 = role.GetHPColor1();
+        var color2 = role.GetHPColor2();
         sb.AppendLine($"等级 {role.Level}");
         sb.AppendLine($"体力 {role.Tili}/{GameConst.MaxTili}");
         sb.AppendLine($"生命 <color={color1}>{role.Hp}</color>/<color={color2}>{role.MaxHp}</color>");
