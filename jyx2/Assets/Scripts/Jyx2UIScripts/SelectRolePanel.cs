@@ -29,6 +29,7 @@ public class SelectRoleParams
     public bool IsFull { get { return selectList.Count >= maxCount; } }
 	public bool isDefaultSelect=true;
     //默认选择角色和必须上场的角色
+    public bool isCancelClick = false;//是否点击取消
     public void SetDefaltRole() 
     {
         if (selectList.Count > 0 || roleList.Count <= 0)
@@ -163,7 +164,10 @@ public partial class SelectRolePanel:Jyx2_UIBase
 
     void OnCancelClick() 
     {
+        m_params.isCancelClick = true;
+        SelectRoleParams param = m_params;
         Jyx2_UIManager.Instance.HideUI("SelectRolePanel");
+        param.callback(param);
     }
 
     protected override void OnHidePanel()
