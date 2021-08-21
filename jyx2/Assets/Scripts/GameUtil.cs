@@ -44,6 +44,10 @@ public class GameUtil
         selectParams.callback = (cbParam) => 
         {
             storyEngine.BlockPlayerControl = false;
+            if (cbParam.isCancelClick == true)
+            {
+                return;
+            }
             if (cbParam.selectList.Count <= 0)
             {
                 callback(null);
