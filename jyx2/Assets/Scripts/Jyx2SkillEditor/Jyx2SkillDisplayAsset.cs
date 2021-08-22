@@ -95,6 +95,8 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
     [BoxGroup("特效")] [LabelText("施展特效偏移")]
     public Vector3 partileOffset;
 
+    [BoxGroup("特效")] [LabelText("特效放大倍数")] public float particleScale = 1;
+
     [BoxGroup("特效（格子）")] [LabelText("特效")] 
     public GameObject blockPartilePrefab;
 
@@ -104,12 +106,23 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
     [BoxGroup("特效（格子）")] [LabelText("格子特效偏移")]
     public Vector3 blockPartileOffset;
 
+    [BoxGroup("特效（格子）")] [LabelText("格子特效放大倍数")]
+    public float blockParticleScale = 1;
+
     [BoxGroup("音效")] [LabelText("音效")]
     [AssetSelector(Paths = "Assets/BuildSource/sound")]
     public AudioClip audio;
 
     [BoxGroup("音效")] [LabelText("音效延迟")] [PropertyRange(0, MAX_SKILL_DURATION)]
     public float audioDelay = 0.5f;
+    
+    [BoxGroup("音效2")] [LabelText("音效2")]
+    [AssetSelector(Paths = "Assets/BuildSource/sound")]
+    public AudioClip audio2;
+
+    [BoxGroup("音效2")] [LabelText("音效延迟2")] [PropertyRange(0, MAX_SKILL_DURATION)]
+    public float audioDelay2 = 0.5f;
+
 
     [BoxGroup("附加")] [LabelText("动画控制器")]
     [AssetSelector(Paths = "Assets/BuildSource/AnimationControllers")]

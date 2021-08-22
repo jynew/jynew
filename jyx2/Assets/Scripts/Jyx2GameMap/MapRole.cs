@@ -327,7 +327,7 @@ public class MapRole : Jyx2AnimationBattleRole
         var display = skill.GetDisplay();
         //切换对应武器
         var weaponCode = display.weaponCode;
-        if (weaponCode > 0)
+        if (weaponCode >= 0)
         {
             ChangeWeapon(weaponCode);
         }
@@ -529,7 +529,7 @@ public class MapRole : Jyx2AnimationBattleRole
     /// <param name="weaponStr"></param>
     void DOMountWeapon(ModelAsset.WeaponPartType weaponCode)
     {
-        if(!IsInBattle) return;
+        //if(!IsInBattle) return;
         UnMountCurrentWeapon();
 
         if (weaponCode == 0)

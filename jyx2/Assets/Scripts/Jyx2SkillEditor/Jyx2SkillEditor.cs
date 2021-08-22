@@ -24,6 +24,10 @@ public class Jyx2SkillEditor : MonoBehaviour
     public MapRole player;
 
     public Jyx2SkillEditorEnemy[] enemys;
+
+    public Transform[] faceTrans;
+    public Transform[] lineTrans;
+    public Transform[] crossTrans;
     // Start is called before the first frame update
     async void Start()
     {
