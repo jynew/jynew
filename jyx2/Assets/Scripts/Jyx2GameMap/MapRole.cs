@@ -26,7 +26,6 @@ using Jyx2.Middleware;
 
 public class MapRole : Jyx2AnimationBattleRole
 {
-
     //数据实例
     public RoleInstance DataInstance
     {

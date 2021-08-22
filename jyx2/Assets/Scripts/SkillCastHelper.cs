@@ -16,6 +16,7 @@ using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using Jyx2.Middleware;
 using HSFrameWork.Common;
+using SkillEffect;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -113,6 +114,21 @@ namespace Jyx2
             //播放受击动画和飘字
             GameUtil.CallWithDelay(display.behitDelay, ExecuteBeHit);
 
+            //残影
+            if (display.isGhostShadowOn)
+            {
+                var ghostShadow = GameUtil.GetOrAddComponent<GhostShadow>(Source.transform);
+                ghostShadow.m_fDuration = 15;
+                ghostShadow.m_fInterval = 0.3f;
+                ghostShadow.m_fIntension = 0.4f;
+                ghostShadow.m_Color = display.ghostShadowColor;
+                ghostShadow.m_bOpenGhost = true;
+                GameUtil.CallWithDelay(display.duration, () =>
+                {
+                    ghostShadow.m_bOpenGhost = false;
+                });
+            }
+            
             //回调
             if(callback != null)
             {

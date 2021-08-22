@@ -127,6 +127,12 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
     [BoxGroup("附加")] [LabelText("动画控制器")]
     [AssetSelector(Paths = "Assets/BuildSource/AnimationControllers")]
     public RuntimeAnimatorController controller;
+    
+    
+    //-------附加残影效果
+    [BoxGroup("残影效果")] [LabelText("是否开启残影")] public bool isGhostShadowOn;
+    [BoxGroup("残影效果")] [LabelText("残影颜色")] public Color ghostShadowColor = Color.blue;
+    
 
     public RuntimeAnimatorController GetAnimationController()
     {
