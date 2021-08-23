@@ -108,6 +108,21 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
 
     [BoxGroup("特效（格子）")] [LabelText("格子特效放大倍数")]
     public float blockParticleScale = 1;
+    
+    [BoxGroup("特效（格子）")] [LabelText("特效2")] 
+    public GameObject blockPartilePrefabAdd;
+    
+    [SuffixLabel("秒", Overlay = true)] [BoxGroup("特效（格子）")] [LabelText("格子特效2延迟")] [PropertyRange(0, MAX_SKILL_DURATION)]
+    public float blockParticleDelayAdd = 0.5f;
+    
+    [BoxGroup("特效（格子）")] [LabelText("格子特效2时长")]
+    public float bloackParticleAddDuration;
+    
+    [BoxGroup("特效（格子）")] [LabelText("格子特效2偏移")]
+    public Vector3 blockPartileOffsetAdd;
+    
+    [BoxGroup("特效（格子）")] [LabelText("格子特效2放大倍数")]
+    public float blockParticleScaleAdd = 1;
 
     [BoxGroup("音效")] [LabelText("音效")]
     [AssetSelector(Paths = "Assets/BuildSource/sound")]

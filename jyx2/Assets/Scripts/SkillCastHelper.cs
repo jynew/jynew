@@ -96,7 +96,7 @@ namespace Jyx2
             //格子特效
             if(display.blockPartilePrefab != null)
             {
-                GameUtil.CallWithDelay(display.blockParticleDelay, DisplayBlockEft);
+                DisplayBlockEft();
             }
 
             //音效
@@ -192,14 +192,35 @@ namespace Jyx2
 
             var blockEftDuration = HSUnityTools.ParticleSystemLength(prefab.transform);
 
-            Vector3 offset = display.blockPartileOffset;
-            var scale = display.blockParticleScale;
-
             //播放特效
             foreach (var block in CoverBlocks)
             {
-                CastEffectAndWaitSkill(prefab, blockEftDuration, block, offset, scale);
+                GameUtil.CallWithDelay(display.blockParticleDelay, () =>
+                {
+                    CastEffectAndWaitSkill(
+                        prefab,
+                        blockEftDuration,
+                        block,
+                        display.blockPartileOffset,
+                        display.blockParticleScale);
+                });
+                
+                
+                //补充特效
+                if (display.blockPartilePrefabAdd != null)
+                {
+                    GameUtil.CallWithDelay(display.blockParticleDelayAdd, () =>
+                    {
+                        CastEffectAndWaitSkill(
+                            display.blockPartilePrefabAdd,
+                            display.bloackParticleAddDuration,
+                            block,
+                            display.blockPartileOffsetAdd,
+                            display.blockParticleScaleAdd);
+                    });
+                }
             }
+
         }
 
         /// <summary>

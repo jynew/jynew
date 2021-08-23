@@ -14,6 +14,7 @@ using System.Linq;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using Jyx2.Setup;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -160,15 +161,20 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
                 blocks = skillEditor.crossTrans;
                 break;
             case SkillCoverType.POINT:
+                
+                //任选一个敌人受击
+                blocks = new Transform[1] {Hanjiasongshu.Tools.GetRandomElement(enemys).transform};
+                
                 //直接在每个敌人身上受击
-                blocks = new Transform[enemys.Length];
+                /*blocks = new Transform[enemys.Length];
                 int index = 0;
                 foreach(var e in enemys)
                 {
                     blocks[index++] = e.transform;
-                }
+                }*/
                 break;
             default:
+                Debug.LogError("invalid skill cover type!");
                 break;                
         }
         
