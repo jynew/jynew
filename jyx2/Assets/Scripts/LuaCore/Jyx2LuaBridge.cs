@@ -484,7 +484,14 @@ namespace Jyx2
         static public void LearnMagic2(int roleId,int magicId,int noDisplay)
         {
             RunInMainThread(() => {
-                var role = runtime.GetRole(roleId);
+                var role = runtime.GetRoleInTeam(roleId);
+
+                if (role == null)
+                {
+                    Debug.LogError("调用不了在队伍的角色,roleId =" + roleId);
+                    return;
+                }
+
                 role.LearnMagic(magicId);
 
                 if(noDisplay != 0)
@@ -514,11 +521,12 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                var role = runtime.GetRole(roleId); 
+                var role = runtime.GetRoleInTeam(roleId); 
 
                 if (role == null)
                 {
                     Debug.LogError("调用不了在队伍的角色,roleId =" + roleId);
+                    return;
                 }
 
                 if(magicIndexRole >= role.Wugongs.Count)
