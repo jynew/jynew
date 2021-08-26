@@ -488,7 +488,7 @@ namespace Jyx2
 
                 if (role == null)
                 {
-                    Debug.LogError("调用不了在队伍的角色,roleId =" + roleId);
+                    Debug.LogError("调用了不在队伍的角色,roleId =" + roleId);
                     return;
                 }
 
@@ -525,7 +525,7 @@ namespace Jyx2
 
                 if (role == null)
                 {
-                    Debug.LogError("调用不了在队伍的角色,roleId =" + roleId);
+                    Debug.LogError("调用了不在队伍的角色,roleId =" + roleId);
                     return;
                 }
 
@@ -595,7 +595,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
                 r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
-                storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.Attack - v0));
+                storyEngine.DisplayPopInfo(r.Name + "攻击力增加" + (r.Attack - v0));
             });
         }
 
