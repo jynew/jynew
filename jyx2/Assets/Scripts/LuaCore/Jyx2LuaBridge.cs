@@ -488,7 +488,12 @@ namespace Jyx2
 
                 if (role == null)
                 {
-                    Debug.LogError("调用了不在队伍的角色,roleId =" + roleId);
+                    role = runtime.GetRole(roleId);
+                }
+
+                if (role == null)
+                {
+                    Debug.LogError("调用了不存在的角色,roleId =" + roleId);
                     return;
                 }
 
@@ -521,11 +526,16 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                var role = runtime.GetRoleInTeam(roleId); 
+                var role = runtime.GetRoleInTeam(roleId);
 
                 if (role == null)
                 {
-                    Debug.LogError("调用了不在队伍的角色,roleId =" + roleId);
+                    role = runtime.GetRole(roleId);
+                }
+
+                if (role == null)
+                {
+                    Debug.LogError("调用了不存在的角色,roleId =" + roleId);
                     return;
                 }
 
