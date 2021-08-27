@@ -1136,6 +1136,11 @@ namespace Jyx2
                     playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(_timelineSpeed);    
                 }
                 
+                //UI隐藏
+                var mainCanvas = GameObject.Find("MainCanvas");
+                if(mainCanvas != null )
+                    mainCanvas.transform.Find("MainUI").gameObject.SetActive(false);
+                
 
                 //没有指定对象，则默认为主角播放
                 if (string.IsNullOrEmpty(tagRole) || tagRole == "PLAYER")
@@ -1199,6 +1204,11 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
+                //UI恢复
+                var mainCanvas = GameObject.Find("MainCanvas");
+                if(mainCanvas != null )
+                    mainCanvas.transform.Find("MainUI").gameObject.SetActive(true);
+                
                 var timeLineRoot = GameObject.Find("Timeline");
                 var timeLineObj = timeLineRoot.transform.Find(timelineName);
 
@@ -1224,6 +1234,7 @@ namespace Jyx2
 
                 playableDiretor.GetComponent<PlayableDirectorHelper>().ClearTempObjects();
                 LevelMaster.Instance.SetPlayerCanController(true);
+
                 Next();
             });
             Wait();

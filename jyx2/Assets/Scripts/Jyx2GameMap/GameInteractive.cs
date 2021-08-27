@@ -229,6 +229,11 @@ public class GameInteractive : MonoBehaviour {
             levelMaster.Transport(m_TranspotTrigger.name);
             GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
         }
+        
+        //UI恢复
+        var mainUI = GameObject.Find("MainUI");
+        if(mainUI != null )
+            mainUI.gameObject.SetActive(true);
 
         if (__timeLineCallback != null)
         {
@@ -249,6 +254,11 @@ public class GameInteractive : MonoBehaviour {
         //阻塞角色行动
         StoryEngine.Instance.BlockPlayerControl = BlockPlayerControl;
         playableDiretor.Play();
+        
+        //UI隐藏
+        var mainUI = GameObject.Find("MainUI");
+        if(mainUI != null )
+            mainUI.gameObject.SetActive(false);
 
         if (m_TranspotTrigger != null)
         {
