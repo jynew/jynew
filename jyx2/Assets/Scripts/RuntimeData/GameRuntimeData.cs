@@ -250,15 +250,23 @@ namespace Jyx2
             set { SaveList("Team", value); }
         }
 
-        public void JoinRoleToTeam(int roleId)
+        public bool JoinRoleToTeam(int roleId)
         {
+            if (GetRoleInTeam(roleId) != null)
+            {
+                Debug.LogError($"错误，角色重复入队：id = {roleId}");
+                return false;
+            }
+            
             var role = GetRole(roleId);
             if(role == null)
             {
-                Debug.LogError("调用了不存在的role加入队伍，roleid =" + roleId);
-                return;
+                Debug.LogError($"调用了不存在的role加入队伍，id = {roleId}");
+                return false;
             }
+            
             Team.Add(role);
+            return true;
         }
 
         public void LeaveTeam(int roleId) 

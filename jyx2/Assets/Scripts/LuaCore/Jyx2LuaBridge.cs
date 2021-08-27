@@ -225,22 +225,21 @@ namespace Jyx2
         static public void Join(int roleId)
         {
             RunInMainThread(() => {
-                RoleInstance role = runtime.GetRole(roleId);
-                if (role == null)
+                
+                if (runtime.JoinRoleToTeam(roleId))
                 {
-                    Debug.LogError("加入了未定义角色，id=" + roleId);
-                    return;
-                }
-                runtime.JoinRoleToTeam(roleId);
-                storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
+                    RoleInstance role = runtime.GetRole(roleId);
+                    storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
 
-                //同时获得对方身上的物品
-                foreach (var item in role.Items)
-                {
-                    if (item.Count == 0) item.Count = 1;
-                    AddItem(item.Id, item.Count);
+                    //同时获得对方身上的物品
+                    foreach (var item in role.Items)
+                    {
+                        if (item.Count == 0) item.Count = 1;
+                        AddItem(item.Id, item.Count);
+                    }
+                    role.Items.Clear();    
                 }
-                role.Items.Clear();
+                
                 Next();
             });
             Wait();
