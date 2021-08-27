@@ -484,7 +484,19 @@ namespace Jyx2
         static public void LearnMagic2(int roleId,int magicId,int noDisplay)
         {
             RunInMainThread(() => {
-                var role = runtime.GetRole(roleId);
+                var role = runtime.GetRoleInTeam(roleId);
+
+                if (role == null)
+                {
+                    role = runtime.GetRole(roleId);
+                }
+
+                if (role == null)
+                {
+                    Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    return;
+                }
+
                 role.LearnMagic(magicId);
 
                 if(noDisplay != 0)
@@ -514,11 +526,17 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                var role = runtime.GetRole(roleId); 
+                var role = runtime.GetRoleInTeam(roleId);
 
                 if (role == null)
                 {
-                    Debug.LogError("调用不了在队伍的角色,roleId =" + roleId);
+                    role = runtime.GetRole(roleId);
+                }
+
+                if (role == null)
+                {
+                    Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    return;
                 }
 
                 if(magicIndexRole >= role.Wugongs.Count)
@@ -587,7 +605,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
                 r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
-                storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.Attack - v0));
+                storyEngine.DisplayPopInfo(r.Name + "攻击力增加" + (r.Attack - v0));
             });
         }
 
