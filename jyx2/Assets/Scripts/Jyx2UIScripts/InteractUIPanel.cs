@@ -8,6 +8,7 @@
  * 金庸老先生千古！
  */
 using System;
+using UnityEngine;
 
 public partial class InteractUIPanel : Jyx2_UIBase
 {
@@ -48,6 +49,17 @@ public partial class InteractUIPanel : Jyx2_UIBase
         Action temp = buttonIndex == 0 ? m_callback1 : m_callback2;
         Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
         temp?.Invoke();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (LevelMaster.Instance.IsPlayerCanControl())
+            {
+                OnBtnClick(0);
+            }
+        }
     }
 
     protected override void OnHidePanel()

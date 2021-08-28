@@ -16,6 +16,17 @@ using UnityEngine.UI;
 public partial class SystemUIPanel:Jyx2_UIBase
 {
     public override UILayer Layer => UILayer.NormalUI;
+
+    private void OnEnable()
+    {
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, Close);
+    }
+
+    private void OnDisable()
+    {
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+    }
+
     protected override void OnCreate()
     {
         InitTrans();
@@ -52,7 +63,7 @@ public partial class SystemUIPanel:Jyx2_UIBase
 
         BindListener(LoadButton_Button, () => 
         {
-            Jyx2_UIManager.Instance.ShowUI("SavePanel", new Action<int>((index) =>
+            Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) =>
             {
                 StoryEngine.DoLoadGame(index);
                 Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
@@ -67,11 +78,12 @@ public partial class SystemUIPanel:Jyx2_UIBase
             Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
         });
 
-        BindListener(MainBg_Button, delegate
-        {
-            Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
-            
-        });
+        BindListener(MainBg_Button, Close);
 
+    }
+
+    void Close()
+    {
+        Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
     }
 }

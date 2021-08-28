@@ -144,4 +144,21 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
     {
         
     }
+
+    private void OnEnable()
+    {
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
+        {
+            if (LevelMaster.Instance.IsPlayerCanControl())
+            {
+                OnSystemBtnClick();
+            }
+        });
+    }
+
+    private void OnDisable()
+    {
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+    }
+
 }

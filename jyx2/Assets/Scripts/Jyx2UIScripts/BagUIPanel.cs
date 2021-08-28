@@ -35,6 +35,16 @@ public partial class BagUIPanel:Jyx2_UIBase
         BindListener(UseBtn_Button, OnUseBtnClick);
         BindListener(CloseBtn_Button, OnCloseBtnClick);
     }
+    
+    private void OnEnable()
+    {
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnCloseBtnClick);
+    }
+
+    private void OnDisable()
+    {
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+    }
 
     protected override void OnShowPanel(params object[] allParams)
     {

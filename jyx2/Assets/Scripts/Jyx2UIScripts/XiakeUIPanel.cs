@@ -49,6 +49,16 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         RefreshScrollView();
         RefreshCurrent();
     }
+    
+    private void OnEnable()
+    {
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
+    }
+
+    private void OnDisable()
+    {
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+    }
 
     protected override void OnHidePanel()
     {

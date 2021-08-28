@@ -44,17 +44,29 @@ public class XiakePanelUI : MonoBehaviour
         var xiakePanelUI = obj.GetComponent<XiakePanelUI>();
         xiakePanelUI.Show(role, roles);
     }
+    
+    private void OnEnable()
+    {
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, Close);
+    }
+
+    private void OnDisable()
+    {
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+    }
 
     private List<RoleInstance> _roles;
     private RoleInstance _role;
 
+    void Close()
+    {
+        Destroy(this.gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        m_BackButton.onClick.AddListener(() => {
-            Destroy(this.gameObject);
-        });
-
+        m_BackButton.onClick.AddListener(Close);
         m_RoleDropdown.onValueChanged.AddListener(OnSelectDropdown);
         m_SelectWeapon.onClick.AddListener(OnSelectWeapon);
         m_SelectArmor.onClick.AddListener(OnSelectArmor);

@@ -50,7 +50,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
     // modified by eaphone at 2021/05/21
     public void OnLoadGameClicked()
     {
-        Jyx2_UIManager.Instance.ShowUI("SavePanel", new Action<int>((index) =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) =>
         {
             if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.Home){
                 OnNewGame();

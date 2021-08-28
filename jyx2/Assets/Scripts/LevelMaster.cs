@@ -485,6 +485,16 @@ public class LevelMaster : MonoBehaviour
         var player = GetPlayer();
         player.CanControl(CanController);
     }
+
+    /// <summary>
+    /// 玩家是否拥有角色控制权
+    /// </summary>
+    /// <returns></returns>
+    public bool IsPlayerCanControl()
+    {
+        return _CanController;
+    }
+    
     private Action _OnArriveDestination;
     public void PlayerWarkFromTo(Vector3 fromVector,Vector3 toVector, Action callback) 
     {

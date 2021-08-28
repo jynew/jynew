@@ -40,6 +40,16 @@ public partial class SavePanel:Jyx2_UIBase
 		BindListener(ImButton_Button, OnImportClick);
 		BindListener(ExButton_Button, OnExportClick);
     }
+    
+    private void OnEnable()
+    {
+	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
+    }
+
+    private void OnDisable()
+    {
+	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+    }
 
     protected override void OnShowPanel(params object[] allParams)
     {
