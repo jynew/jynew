@@ -113,7 +113,7 @@ namespace Jyx2
             //DONOTHING
         }
 
-        private void PlayAnimation(AnimationClip clip, Action callback = null, float fadeDuration = 0f)
+        protected void PlayAnimation(AnimationClip clip, Action callback = null, float fadeDuration = 0f)
         {
             if (clip == null)
             {

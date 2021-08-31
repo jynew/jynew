@@ -19,4 +19,7 @@ public class GlobalAssetConfig : ScriptableObject
     
     [BoxGroup("游戏动作")][LabelText("默认NPC动作控制器")]
     public RuntimeAnimatorController defaultNPCAnimatorController;
+
+    [BoxGroup("游戏动作")] [LabelText("默认死亡动作")]
+    public List<AnimationClip> defaultDieClips;
 }

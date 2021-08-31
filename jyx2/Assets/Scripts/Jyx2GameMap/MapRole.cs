@@ -23,6 +23,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Animancer;
 using Jyx2.Middleware;
+using Tools = UnityEditor.Tools;
 
 public class MapRole : Jyx2AnimationBattleRole
 {
@@ -190,8 +191,6 @@ public class MapRole : Jyx2AnimationBattleRole
 
         info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2/AttackInfoText.prefab");
         hudRoot.NewText(info);
-
-        CheckDeath();
     }
 
     //血条标记为需要刷新
@@ -206,14 +205,6 @@ public class MapRole : Jyx2AnimationBattleRole
         HPBarIsDirty = false;
     }
 
-    void CheckDeath()
-    {
-        if (DataInstance.IsDead())
-        {
-            this.gameObject.SetActive(false); //TODO，播放一个死亡特效
-        }
-    }
-    
     public void ShowBattleText(string mainText,Color textColor) 
     {
         if (StoryEngine.Instance == null) return;
@@ -383,8 +374,22 @@ public class MapRole : Jyx2AnimationBattleRole
 
     public void ShowDeath(int deathCode = -1)
     {
+        var globalConfig = GlobalAssetConfig.Instance;
+        
+        //人型骨骼，播放死亡动作
+        if (this._animator.runtimeAnimatorController == globalConfig.defaultAnimatorController)
+        {
+            var clip = Hanjiasongshu.Tools.GetRandomElement(globalConfig.defaultDieClips);
+            PlayAnimation(clip, () => { Destroy(gameObject); });
+        }
+        else
+        {
+            Destroy(gameObject);  
+        }
+        
+        
         //简单粗暴，直接删除GameObject，回头有空再实现死亡动作
-        GameObject.Destroy(this.gameObject);
+        //GameObject.Destroy(this.gameObject);
 
         //默认播放随机死亡动作
         //if (deathCode == -1) deathCode = ToolsShared.GetRandomInt(0, 2);
