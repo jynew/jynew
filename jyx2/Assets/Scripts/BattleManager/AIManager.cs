@@ -498,13 +498,29 @@ public class AIManager
         }
         else if (magic.DamageType == 1) //吸内
         {
-            int v = skill.Data.GetSkillLevelInfo().KillMp;
+            var levelInfo = skill.Data.GetSkillLevelInfo();
+            
+            //杀伤内力逻辑
+            int v = levelInfo.KillMp;
             v += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
             if (v < 10)
             {
                 v = 1 + UnityEngine.Random.Range(0, 10);
             }
             rst.damageMp = v;
+
+            //吸取内力逻辑
+            int addMp = levelInfo.AddMp;
+            if (addMp > 0)
+            {
+                addMp += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
+                if (addMp < 10)
+                {
+                    addMp = 1 + UnityEngine.Random.Range(0, 10);
+                }
+                rst.addMp = addMp;    
+            }
+            
             return rst;
         }
         else if (magic.DamageType == 2) //用毒 -GameUtil::usePoison
