@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JYX2_water_1
-  m_Shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
-  m_ShaderKeywords: _LIGHTING_ON
+  m_Name: Flowers_03_2
+  m_Shader: {fileID: 4800000, guid: 82e96482862eb17419415ffc7dd0660d, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -35,24 +35,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _GradientTex:
+    - _EmissionTexture:
+        m_Texture: {fileID: 2800000, guid: 0e247d6a73a2af24ea2702c04067ba83, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlashTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 0e247d6a73a2af24ea2702c04067ba83, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Normals:
-        m_Texture: {fileID: 2800000, guid: 2d8cce086a15fed44955f66b975e7275, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -63,75 +67,48 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _RefractionTex:
+    - _texcoord:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Shadermap:
-        m_Texture: {fileID: 2800000, guid: 189dba7eddebb78429445ad345571773, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _Depth: 15
+    - _DISSOLVE: 0
     - _DetailNormalMapScale: 1
+    - _DissolveRatio: 0
     - _DstBlend: 0
-    - _ENABLE_GRADIENT: 0
-    - _ENABLE_SHADOWS: 0
-    - _ENABLE_VC: 0
-    - _EdgeFade: 0.29
-    - _FoamDistortion: 0.45
-    - _FoamOpacity: 0
-    - _FoamSize: 0.027
-    - _FoamSpeed: 0.1
-    - _FoamTiling: 0.05
-    - _Fresnelexponent: 4
+    - _FlashIntensity: 0.6
+    - _FlashScale: 0.5
+    - _FlashSpeedX: 0.5
+    - _FlashSpeedY: 0
+    - _GlobalWind: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.743
+    - _Glossiness: 0
     - _GlossyReflections: 1
-    - _LIGHTING: 1
-    - _MACRO_WAVES: 0
-    - _MacroBlendDistance: 2000
     - _Metallic: 0
     - _Mode: 0
-    - _NORMAL_MAP: 0
-    - _NormalStrength: 0.307
-    - _NormalTiling: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RT_REFRACTION: 0
-    - _ReflectionFresnel: 5
-    - _ReflectionRefraction: 0.05
-    - _ReflectionStrength: 0
-    - _RefractionAmount: 0.018
-    - _RimDistortion: 1
-    - _RimSize: 3.1
-    - _Rimfalloff: 10.2
-    - _Rimtiling: 0.8000001
-    - _SECONDARY_WAVES: 0
+    - _PulseFrequency: 3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SpeedTurbulence: 1
     - _SrcBlend: 1
-    - _Transparency: 1
-    - _USE_VC_INTERSECTION: 0
+    - _Steps: 3
+    - _ToonEffect: 1
+    - _Turbulence: 1
     - _UVSec: 0
-    - _Unlit: 0
-    - _UseIntersectionFoam: 0
-    - _WaveFoam: 0
-    - _WaveHeight: 0.05
-    - _WaveSize: 0.1
-    - _Wavesspeed: 0.75
-    - _Wavetint: 0.198
-    - _Worldspacetiling: 0
+    - _Visibility: 1
+    - _WindMain: 2
+    - _WorkDistance: 5
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
-    - _RimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
-    - _WaterColor: {r: 0.41154465, g: 0.6739922, b: 0.6981132, a: 0}
-    - _WaterShallowColor: {r: 0.39703923, g: 0.7173754, b: 0.8679245, a: 0}
-    - _WaveDirection: {r: 1, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 0}
+    - _MainColor: {r: 1, g: 0.8681708, b: 0.740566, a: 1}
+    - _OffsetScale: {r: 0.1, g: 0, b: 0, a: 0}
+    - _PlayerPos: {r: 0, g: 0, b: 0, a: 0}
+    - _TheFlashColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
