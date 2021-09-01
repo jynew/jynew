@@ -95,10 +95,10 @@ public class PlayingActionState : IBattleState
         {
             castHelper.Play(()=> {
 
-                foreach(var role in beHitAnimationList)
+                /*foreach(var role in beHitAnimationList)
                 {
                     role.CheckDeath();
-                }
+                }*/
 				CheckYeQiuQuan();
                 OnCaskSkillOver();
             });

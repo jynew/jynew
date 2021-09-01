@@ -1183,15 +1183,7 @@ namespace Jyx2
         #endregion
 
         #region 状态相关
-
-        public void CheckDeath(int type = 0)
-        {
-            if (IsDead() && View != null)
-            {
-                View.ShowDeath(type);
-            }
-        }
-
+        
         public bool IsDead()
         {
             return Hp <= 0;

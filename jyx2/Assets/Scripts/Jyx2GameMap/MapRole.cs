@@ -679,50 +679,17 @@ public class MapRole : Jyx2AnimationBattleRole
     }
     #endregion
     
-    public void HitEffect(string effectName, float deltaTime = 0f, bool showDeath = false)
+    public override void DeadOrIdle()
     {
-        /*if (DataInstance.IsDead() && showDeath)
+        if (DataInstance.IsDead())
         {
             ShowDeath();
         }
         else
         {
-            GetAnimator().SetTrigger("hit");
-            GetAnimator().Update(deltaTime);
-            if (!effectName.EndsWith(".prefab")) effectName += ".prefab";
-            Jyx2ResourceHelper.LoadPrefab($"Assets/Effects/Prefabs/{effectName}", effect=> {
-                CastSkillFXAndWait(effect, 1f);
-            });
-        }*/
+            Idle();
+        }
     }
-
-    public void HitVoice(string musicName)
-    {
-        Jyx2ResourceHelper.LoadAsset<AudioClip>($"Assets/BuildSource/SoundEffect/{musicName}", soundEffect=> {
-            //声源位置与摄像机Y轴一致
-            float x = Camera.main.transform.position.x - (Camera.main.transform.position.x - transform.position.x) / 5;
-            float y = Camera.main.transform.position.y;
-            float z = Camera.main.transform.position.z - (Camera.main.transform.position.z - transform.position.z) / 5;
-            Vector3 voicePos = new Vector3(x, y, z);
-            AudioSource.PlayClipAtPoint(soundEffect, voicePos, 1f);
-        });
-    }
-
-    private void CastSkillFXAndWait(GameObject pre, float time, Action callback = null)
-    {
-        if (pre == null) return;
-        GameObject obj = GameObject.Instantiate(pre);
-        Transform _hitPoint = transform;
-        obj.transform.rotation = _hitPoint.rotation;
-        obj.transform.position = _hitPoint.position;
-        Observable.TimerFrame(Convert.ToInt32(time * 60), FrameCountType.Update)
-        .Subscribe(ms =>
-        {
-            GameObject.Destroy(obj);
-            callback?.Invoke();
-        });
-    }
-
 }
 
 public static class MapRoleTools
