@@ -80,6 +80,19 @@ namespace Jyx2
             {
                 role.Tili = Tools.Limit(role.Tili - 5, 0, 100);
             }
+            
+            //暗器，扣除道具
+            if (this is AnqiZhaoshiInstance)
+            {
+                if (!role.isAI)
+                {
+                    GameRuntimeData.Instance.AddItem(Anqi.Id, -1);
+                }
+                else
+                {
+                    role.AddItem(int.Parse(Anqi.Id), -1);
+                }
+            }
         }
 
         /// <summary>
