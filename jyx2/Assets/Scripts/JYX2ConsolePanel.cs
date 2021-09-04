@@ -12,6 +12,7 @@ using HSFrameWork.ConfigTable;
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,12 +21,26 @@ public class JYX2ConsolePanel : MonoBehaviour
 {
     public InputField inputField;
     public Button confirmButton;
+    public Button helpButton;
+    public Button cmdListButton;
 
     private void Start()
     {
         confirmButton.onClick.AddListener(OnConfirm);
+        helpButton.onClick.AddListener(OnHelp);
+        cmdListButton.onClick.AddListener(OnCmdList);
     }
 
+    void OnHelp()
+    {
+        Application.OpenURL("https://github.com/jynew/jynew/wiki/2.2%E6%8E%A7%E5%88%B6%E5%8F%B0");
+    }
+
+    void OnCmdList()
+    {
+        Application.OpenURL("https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%BA%8B%E4%BB%B6%E6%8C%87%E4%BB%A4");
+    }
+    
     void OnConfirm()
     {
         string cmd = inputField.text.Trim();
