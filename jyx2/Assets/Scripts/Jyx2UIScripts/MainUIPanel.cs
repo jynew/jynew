@@ -69,12 +69,12 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
 
     void OnXiakeBtnClick() 
     {
-        Jyx2_UIManager.Instance.ShowUI("XiakeUIPanel", GameRuntimeData.Instance.Player, GameRuntimeData.Instance.Team);
+        Jyx2_UIManager.Instance.ShowUI(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.Team);
     }
 
     void OnBagBtnClick() 
     {
-        Jyx2_UIManager.Instance.ShowUI("BagUIPanel", GameRuntimeData.Instance.Items,new Action<int>(OnUseItem));
+        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items,new Action<int>(OnUseItem));
     }
 
     void OnUseItem(int id)
@@ -131,7 +131,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
 
     void OnSystemBtnClick() 
     {
-        Jyx2_UIManager.Instance.ShowUI("SystemUIPanel");
+        Jyx2_UIManager.Instance.ShowUI(nameof(SystemUIPanel));
     }
 
     public void DoShowAnimator()

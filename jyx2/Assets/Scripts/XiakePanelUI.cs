@@ -256,7 +256,7 @@ public class XiakePanelUI : MonoBehaviour
 
         //    Refresh();
         //},filter);
-        Jyx2_UIManager.Instance.ShowUI("BagUIPanel",new Action<int>((itemId) =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel),new Action<int>((itemId) =>
         {
             if (itemId != -1 && !_role.CanUseItem(itemId))
             {

@@ -56,7 +56,7 @@ namespace Jyx2
             {
                 storyEngine.BlockPlayerControl = true;
                 //storyEngine.dialogPanel.Show(
-                Jyx2_UIManager.Instance.ShowUI("ChatUIPanel", ChatType.RoleId,roleId, content, type,new Action(()=> 
+                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.RoleId,roleId, content, type,new Action(()=> 
                 {
                     storyEngine.BlockPlayerControl = false;
                     Next();
@@ -983,7 +983,7 @@ namespace Jyx2
             RunInMainThread(() =>
             {
                 //int shopId = Tools.GetRandomInt(0, 4);
-                Jyx2_UIManager.Instance.ShowUI("ShopUIPanel", "", new Action(()=>{Next();}));
+                Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
             });
 			Wait();
         }
@@ -1361,13 +1361,7 @@ namespace Jyx2
             {
                 List<string> selectionContent = new List<string>() { "是", "否" };
                 storyEngine.BlockPlayerControl = true;
-                //storyEngine.dialogPanel.ShowSelection("主角", selectMessage, selectionContent, delegate (int index)
-                //{
-                //    _selectResult = index;
-                //    storyEngine.BlockPlayerControl = false;
-                //    Next();
-                //});
-                Jyx2_UIManager.Instance.ShowUI("ChatUIPanel", ChatType.Selection, "主角", selectMessage, selectionContent, new Action<int>((index) =>
+                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "主角", selectMessage, selectionContent, new Action<int>((index) =>
                 {
                     _selectResult = index;
                     storyEngine.BlockPlayerControl = false;

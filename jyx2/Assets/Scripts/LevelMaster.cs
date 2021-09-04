@@ -172,8 +172,7 @@ public class LevelMaster : MonoBehaviour
             else
             {
                 //显示当前地图名，大地图不用显示
-                //StoryEngine.Instance.middleTopMessageSuggestPanel.Show(gameMap.GetShowName());
-                Jyx2_UIManager.Instance.ShowUI("CommonTipsUIPanel", TipsType.MiddleTop, gameMap.GetShowName());
+                Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName());
             }
 
             if (string.IsNullOrEmpty(runtime.CurrentMap))

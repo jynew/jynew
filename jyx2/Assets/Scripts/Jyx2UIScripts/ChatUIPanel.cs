@@ -92,7 +92,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
     {
         if (_currentShowIndex >= _currentText.Length - 1) 
         {
-            Jyx2_UIManager.Instance.HideUI("ChatUIPanel");
+            Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
             _callback?.Invoke();
             _callback = null;
             return;
@@ -225,7 +225,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             selectionItem.transform.SetParent(Container_RectTransform, false);
             BindListener(selectionItem, delegate
             {
-                Jyx2_UIManager.Instance.HideUI("ChatUIPanel");
+                Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
                 callback?.Invoke(currentIndex);
             });
         }

@@ -51,7 +51,7 @@ public class Jyx2SkillEditor : MonoBehaviour
 
         await BeforeSceneLoad.loadFinishTask;
         
-        Jyx2_UIManager.Instance.ShowUI("SkillEditorUIPanel",player,enemys);
+        Jyx2_UIManager.Instance.ShowUI(nameof(SkillEditorUIPanel),player,enemys);
     }
 
     /*

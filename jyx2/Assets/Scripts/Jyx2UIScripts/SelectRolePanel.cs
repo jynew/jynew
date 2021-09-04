@@ -157,7 +157,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
         else 
         {
             if(m_params.needCloseAfterClickOK)
-                Jyx2_UIManager.Instance.HideUI("SelectRolePanel");
+                Jyx2_UIManager.Instance.HideUI(nameof(SelectRolePanel));
             param.callback(param);
         }
     }
@@ -166,7 +166,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
     {
         m_params.isCancelClick = true;
         SelectRoleParams param = m_params;
-        Jyx2_UIManager.Instance.HideUI("SelectRolePanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(SelectRolePanel));
         param.callback(param);
     }
 

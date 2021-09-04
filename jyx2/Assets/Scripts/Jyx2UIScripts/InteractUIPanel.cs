@@ -47,7 +47,7 @@ public partial class InteractUIPanel : Jyx2_UIBase
     void OnBtnClick(int buttonIndex)
     {
         Action temp = buttonIndex == 0 ? m_callback1 : m_callback2;
-        Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
         temp?.Invoke();
     }
 

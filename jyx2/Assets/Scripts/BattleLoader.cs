@@ -165,7 +165,7 @@ public class BattleLoader : MonoBehaviour
             {
                 LoadJyx2BattleStep2(battle, cb.selectList, callback);
             };
-            Jyx2_UIManager.Instance.ShowUI("SelectRolePanel", selectPram);
+            Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectPram);
         }
     }
 

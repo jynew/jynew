@@ -176,7 +176,7 @@ public class StoryEngine : MonoBehaviour
 
     public void DisplayPopInfo(string msg, float duration = 2f)
     {
-        Jyx2_UIManager.Instance.ShowUI("CommonTipsUIPanel", TipsType.Common, msg, duration);
+        Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.Common, msg, duration);
     }
 
     public static bool DoLoadGame(int index)

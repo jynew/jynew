@@ -106,13 +106,13 @@ public partial class SavePanel:Jyx2_UIBase
     void OnSaveItemClick(Button btn) 
     {
         Action<int> cb = m_selectCallback;
-        Jyx2_UIManager.Instance.HideUI("SavePanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
         cb?.Invoke(int.Parse(btn.name));
     }
 
     private void OnBackClick()
     {
-        Jyx2_UIManager.Instance.HideUI("SavePanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
     }
 
     private void OnImportClick()
