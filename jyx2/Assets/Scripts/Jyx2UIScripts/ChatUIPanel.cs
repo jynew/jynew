@@ -66,8 +66,20 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
                 ShowSelection((string)allParams[1], (string)allParams[2], (List<string>)allParams[3], (Action<int>)allParams[4]);
                 break;
         }
+
+        //临时将触发按钮隐藏
+        var panel = FindObjectOfType<InteractUIPanel>();
+        if (panel != null && panel.gameObject.activeSelf)
+        {
+            _interactivePanel = panel.gameObject;
+            panel.gameObject.SetActive(false);
+        }
+
         //Jyx2_UIManager.Instance.SetMainUIActive(false);
     }
+
+
+    private GameObject _interactivePanel = null;
 
     private void ShowCharacter(string roleHeadPath,int roleId)
     {
@@ -95,6 +107,13 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
             _callback?.Invoke();
             _callback = null;
+
+            if (_interactivePanel)
+            {
+                _interactivePanel.SetActive(true);
+                _interactivePanel = null;
+            }
+            
             return;
         }
 		var finalS=_currentText;
