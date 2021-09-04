@@ -17,8 +17,7 @@ public class ScreenLoggerHotkeyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        screenLogger.gameObject.SetActive(isloggerOn);
-        
+        screenLogger.ShowLog = isloggerOn;
         GlobalHotkeyManager.Instance.RegistHotkey(this, HotKey, SwitchLoggerOnAndOff);
         if(ScreenLogger.IsPersistent)
             DontDestroyOnLoad(this);
@@ -33,6 +32,6 @@ public class ScreenLoggerHotkeyManager : MonoBehaviour
     void SwitchLoggerOnAndOff()
     {
         isloggerOn = !isloggerOn;
-        screenLogger.gameObject.SetActive(isloggerOn);
+        screenLogger.ShowLog = isloggerOn;
     }
 }
