@@ -10,6 +10,7 @@
 using UnityEngine;
 using Jyx2;
 using System;
+using System.Collections;
 using HSFrameWork.Common;
 
 public partial class GameMainMenu : Jyx2_UIBase {
@@ -23,6 +24,30 @@ public partial class GameMainMenu : Jyx2_UIBase {
     private RandomPropertyComponent m_randomProperty;
 
     private PanelType m_panelType;
+
+    async void Start()
+    {
+        //显示loading
+        var c = StartCoroutine(ShowLoading());
+        
+        if (BeforeSceneLoad.loadFinishTask != null)
+        {
+            await BeforeSceneLoad.loadFinishTask;
+        }
+
+        StopCoroutine(c);
+        LoadingText.gameObject.SetActive(false);
+        homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
+    }
+
+    IEnumerator ShowLoading()
+    {
+        while (true)
+        {
+            LoadingText.gameObject.SetActive(!LoadingText.gameObject.activeSelf);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
     
     
     public override UILayer Layer { get => UILayer.MainUI;}
