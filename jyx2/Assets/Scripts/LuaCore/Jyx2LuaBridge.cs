@@ -1106,6 +1106,33 @@ namespace Jyx2
         {
             _timelineSpeed = speed;
         }
+
+        /// <summary>
+        /// 简单模式播放timeline，播放完毕后直接关闭
+        /// </summary>
+        /// <param name="timelineName"></param>
+        public static void jyx2_PlayTimelineSimple(string timelineName)
+        {
+            RunInMainThread(() =>
+            {
+                var timeLineRoot = GameObject.Find("Timeline");
+                var timeLineObj = timeLineRoot.transform.Find(timelineName);
+                
+                if (timeLineObj == null)
+                {
+                    Debug.LogError("jyx2_PlayTimeline 找不到Timeline,path=" + timelineName);
+                    Next();
+                    return;
+                }
+                timeLineObj.gameObject.SetActive(true);
+                
+                var playableDirector = timeLineObj.GetComponent<PlayableDirector>();
+                GameUtil.CallWithDelay(playableDirector.duration, () =>
+                {
+                    timeLineObj.gameObject.SetActive(false);
+                });
+            });
+        }
         
         static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
         {

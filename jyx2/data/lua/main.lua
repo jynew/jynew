@@ -179,7 +179,7 @@ jyx2_FixMapObject = CS.Jyx2.Jyx2LuaBridge.jyx2_FixMapObject
 jyx2_CheckEventCount = CS.Jyx2.Jyx2LuaBridge.jyx2_CheckEventCount
 jyx2_CheckBookAndRepute=CS.Jyx2.Jyx2LuaBridge.jyx2_CheckBookAndRepute
 jyx2_SetTimelineSpeed = CS.Jyx2.Jyx2LuaBridge.jyx2_SetTimelineSpeed
-
+jyx2_PlayTimelineSimple = CS.Jyx2.Jyx2LuaBridge.jyx2_PlayTimelineSimple
 function main_getLuaFiles()
 	return {}
 end 

@@ -33,7 +33,7 @@ public class PlayableDirectorHelper : MonoBehaviour
     private void BindSignals(GameObject player)
     {
         var signalReceiver = GetComponent<SignalReceiver>();
-        if (m_BindObject != null)
+        if (m_BindObject != null && signalReceiver != null)
         {
             m_BindObject.gameObject.SetActive(false);
             var bindObject = Instantiate(m_BindObject);
