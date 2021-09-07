@@ -31,3 +31,20 @@ public class Jyx2PlayTimelineNode : Jyx2SimpleNode
 		Jyx2LuaBridge.jyx2_PlayTimeline(timelineName, mode, isClone, tagRole);
 	}
 }
+
+[CreateNodeMenu("场景/播放简单动画")]
+[NodeWidth(200)]
+public class Jyx2PlayTimelineSimpleNode : Jyx2SimpleNode
+{
+	private void Reset() {
+		name = "播放简单动画";
+	}
+    
+	[Header("动画名")]
+	public string timelineName;
+	
+	protected override void DoExecute()
+	{
+		Jyx2LuaBridge.jyx2_PlayTimelineSimple(timelineName);
+	}
+}
