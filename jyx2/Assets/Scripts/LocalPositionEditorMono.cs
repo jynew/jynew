@@ -8,7 +8,7 @@ public class LocalPositionEditorMono : MonoBehaviour
     public Vector3 position;
     public Vector3 rotaion;
     public Vector3 scale;
-
+    
     [Button]
     void ApplyPosition()
     {
