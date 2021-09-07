@@ -181,7 +181,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void OnBackClick()
     {
-        Jyx2_UIManager.Instance.HideUI("XiakeUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(XiakeUIPanel));
     }
 
     // added handle leave chat logic
@@ -314,7 +314,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
     void SelectFromBag(Action<int> Callback, Func<Jyx2Item, bool> filter, int current_itemId)
     {
-        Jyx2_UIManager.Instance.ShowUI("BagUIPanel", runtime.Items, new Action<int>((itemId) =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), runtime.Items, new Action<int>((itemId) =>
         {
             if (itemId != -1 && !m_currentRole.CanUseItem(itemId))
             {
@@ -361,7 +361,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             RefreshCurrent();
         };
 
-        Jyx2_UIManager.Instance.ShowUI("SelectRolePanel", selectParams);
+        Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectParams);
     }
 
     void OnDetoxicateClick()
@@ -392,6 +392,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             RefreshCurrent();
         };
 
-        Jyx2_UIManager.Instance.ShowUI("SelectRolePanel", selectParams);
+        Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectParams);
     }
 }

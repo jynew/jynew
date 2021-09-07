@@ -60,7 +60,7 @@ public class Jyx2_UIManager : MonoBehaviour
 
     public void GameStart() 
     {
-        Jyx2_UIManager.Instance.ShowUI("GameMainMenu", $"当前版本：{Application.version}");
+        Jyx2_UIManager.Instance.ShowUI(nameof(GameMainMenu), $"当前版本：{Application.version}");
     }
 
     Transform GetUIParent(UILayer layer) 
@@ -141,17 +141,17 @@ public class Jyx2_UIManager : MonoBehaviour
         if (map == null)
         {
             //this.HideUI("MainUIPanel");
-            this.ShowUI("BattleMainUIPanel",BattleMainUIState.None);
+            this.ShowUI(nameof(BattleMainUIPanel),BattleMainUIState.None);
             Debug.Log("当前地图没有地图数据");
             return;
         }
         if (map.Tags.Contains("BATTLE"))
         {
-            this.ShowUI("BattleMainUIPanel", BattleMainUIState.None);
+            this.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.None);
             return;
         }
         else
-            this.ShowUI("MainUIPanel");
+            this.ShowUI(nameof(MainUIPanel));
     }
 
     void PushUI(Jyx2_UIBase uibase) 

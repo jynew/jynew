@@ -40,7 +40,7 @@ public class BigMapZone : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         //HideEnterButton();
-        Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
         UnityTools.DisHighLightObjects(m_EventTargets);
     }
 
@@ -100,7 +100,7 @@ public class BigMapZone : MonoBehaviour
             showText = "进入";
         }
             
-        Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", showText, new Action(() =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(InteractUIPanel), showText, new Action(() =>
         {
             //记录当前地图
             LevelMaster.LastGameMap = LevelMaster.Instance.GetCurrentGameMap();

@@ -24,7 +24,7 @@ public class SelectMoveState : IBattleState
         //显示移动范围
         BattleboxHelper.Instance.ShowBlocks(BattleStateMechine.Instance.CurrentMoveList);
         //显示技能动作面板
-        Jyx2_UIManager.Instance.ShowUI("BattleActionUIPanel",role,BattleManager.BattleViewStates.SelectMove);
+        Jyx2_UIManager.Instance.ShowUI(nameof(BattleActionUIPanel),role,BattleManager.BattleViewStates.SelectMove);
     }
 
     public override void RefreshState()
@@ -37,7 +37,7 @@ public class SelectMoveState : IBattleState
     {
         role = null;
         BattleboxHelper.Instance.HideAllBlocks();
-        Jyx2_UIManager.Instance.HideUI("BattleActionUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(BattleActionUIPanel));
     }
 
     void OnEndSelect(BattleBlockData data) 
@@ -50,7 +50,7 @@ public class SelectMoveState : IBattleState
         BattleStateMechine.Instance.CurrentToPos = data.BattlePos;
         BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.Move);
         Debug.Log("moved");
-        Jyx2_UIManager.Instance.HideUI("BattleActionUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(BattleActionUIPanel));
     }
 
     public override void OnUpdate()

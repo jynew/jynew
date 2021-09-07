@@ -23,7 +23,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Animancer;
 using Jyx2.Middleware;
-using Tools = UnityEditor.Tools;
 
 public class MapRole : Jyx2AnimationBattleRole
 {

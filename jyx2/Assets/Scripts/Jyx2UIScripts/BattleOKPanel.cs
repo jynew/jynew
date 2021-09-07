@@ -72,7 +72,7 @@ public partial class BattleOKPanel:Jyx2_UIBase
 
     void OnOKClick() 
     {
-        Jyx2_UIManager.Instance.HideUI("BattleOKPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(BattleOKPanel));
         if (okCallback != null) 
         {
             okCallback();
@@ -82,7 +82,7 @@ public partial class BattleOKPanel:Jyx2_UIBase
 
     void OnCancelClick() 
     {
-        Jyx2_UIManager.Instance.HideUI("BattleOKPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(BattleOKPanel));
         if (cancelCallback != null)
         {
             cancelCallback();

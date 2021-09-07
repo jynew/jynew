@@ -154,7 +154,7 @@ namespace Jyx2Editor
             try
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
-
+                
                 if (string.IsNullOrEmpty(path))
                     return;
 
@@ -188,6 +188,58 @@ namespace Jyx2Editor
                 //System.IO.Directory.Move("StandaloneWindows64", path + "/StandaloneWindows64");
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
+
+                //清理luaWrap
+                //Generator.ClearAll();
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
+        }
+        
+        [MenuItem("一键打包/MacOS")]
+        private static void BuildMacOS()
+        {
+            if (!EditorUtility.DisplayDialog("重要提示", 
+                "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
+                return;
+            
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneOSX);
+                
+                if (string.IsNullOrEmpty(path))
+                    return;
+
+                //生成luaWrap
+                //Generator.ClearAll();
+                //Generator.GenAll();
+
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+
+                //强制GENDATA
+                GenDataMenuCmd.GenerateDataForce();
+
+                // 处理场景文件
+                //AddScenesToBuildTool.AddScenesToBuild();
+
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string outputPath = path + $"/jyxOSXBuild-{currentDate}.app";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX, BuildOptions.None);
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
 
                 //清理luaWrap
                 //Generator.ClearAll();

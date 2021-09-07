@@ -22,7 +22,7 @@ public class SelectSkillState : IBattleState
         role = BattleStateMechine.Instance.CurrentRole;
         zhaoshi = BattleStateMechine.Instance.CurrentZhaoshi;
 
-        Jyx2_UIManager.Instance.ShowUI("BattleActionUIPanel", role, BattleManager.BattleViewStates.SelectSkill);
+        Jyx2_UIManager.Instance.ShowUI(nameof(BattleActionUIPanel), role, BattleManager.BattleViewStates.SelectSkill);
         ShowZhaoshi();
     }
 
@@ -38,7 +38,7 @@ public class SelectSkillState : IBattleState
     {
         zhaoshi = null;
         role = null;
-        Jyx2_UIManager.Instance.HideUI("BattleActionUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(BattleActionUIPanel));
         BattleboxHelper.Instance.HideAllBlocks();
     }
 

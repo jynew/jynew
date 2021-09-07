@@ -33,9 +33,9 @@ public partial class SystemUIPanel:Jyx2_UIBase
 
         BindListener(MainMenuButton_Button, delegate 
         {
-            Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
+            Jyx2_UIManager.Instance.HideUI(nameof(SystemUIPanel));
             List<string> selectionContent = new List<string>() { "是", "否" };
-            Jyx2_UIManager.Instance.ShowUI("ChatUIPanel", ChatType.Selection, "主角", "将丢失未保存进度，是否继续？", selectionContent, new Action<int>((index) =>
+            Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "主角", "将丢失未保存进度，是否继续？", selectionContent, new Action<int>((index) =>
             {
                 if(index == 0)
                 {
@@ -48,7 +48,7 @@ public partial class SystemUIPanel:Jyx2_UIBase
         //返回游戏
         BindListener(QuitGameButton_Button, () =>
         {
-            Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
+            Jyx2_UIManager.Instance.HideUI(nameof(SystemUIPanel));
             //Application.Quit();
         });
 
@@ -66,13 +66,13 @@ public partial class SystemUIPanel:Jyx2_UIBase
             Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) =>
             {
                 StoryEngine.DoLoadGame(index);
-                Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
+                Jyx2_UIManager.Instance.HideUI(nameof(SystemUIPanel));
             }),"选择读档位");
         });
 
         BindListener(GraphicSettingsButton_Button, delegate
         {
-            Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
+            Jyx2_UIManager.Instance.HideUI(nameof(SystemUIPanel));
             //runTimeHelper.ShowGraphicSettingsPanel();
 
             Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
@@ -84,6 +84,6 @@ public partial class SystemUIPanel:Jyx2_UIBase
 
     void Close()
     {
-        Jyx2_UIManager.Instance.HideUI("SystemUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(SystemUIPanel));
     }
 }

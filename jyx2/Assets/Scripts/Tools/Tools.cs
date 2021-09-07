@@ -174,14 +174,7 @@ namespace Jyx2.Middleware
         /// <param name="url"></param>
         public static void openURL(string url)
         {
-            //if (Application.isWebPlayer)
-            //{
-            //	Application.ExternalEval("window.open('" + url + "');");
-            //}
-            //else
-            //{
-            //	Application.OpenURL(url);
-            //}
+            Application.OpenURL(url);
         }
         
 

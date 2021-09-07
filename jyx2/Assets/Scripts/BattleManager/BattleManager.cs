@@ -144,8 +144,8 @@ public class BattleManager : MonoBehaviour
             m_BattleModel.InitBattleModel(); //战场初始化 行动顺序排序这些
             BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
             //提示UI
-            Jyx2_UIManager.Instance.ShowUI("CommonTipsUIPanel", TipsType.MiddleTop, "战斗开始");
-            Jyx2_UIManager.Instance.ShowUI("BattleMainUIPanel", BattleMainUIState.ShowHUD); //展示角色血条
+            Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始");
+            Jyx2_UIManager.Instance.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
         }, 0.5f);
 
         var brain = Camera.main.GetComponent<CinemachineBrain>();
@@ -189,7 +189,7 @@ public class BattleManager : MonoBehaviour
     public void EndBattle()
     {
         IsInBattle = false;
-        Jyx2_UIManager.Instance.HideUI("BattleMainUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(BattleMainUIPanel));
 
         //临时，需要调整
         foreach (var role in m_BattleModel.Roles)

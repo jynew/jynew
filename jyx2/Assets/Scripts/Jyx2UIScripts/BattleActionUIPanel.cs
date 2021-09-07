@@ -232,7 +232,7 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
     {
         bool Filter(Jyx2Item item) => item.ItemType == 3 || item.ItemType == 4;
 
-        Jyx2_UIManager.Instance.ShowUI("BagUIPanel", GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
 
             if (itemId == -1)
