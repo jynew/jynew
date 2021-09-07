@@ -90,9 +90,9 @@ namespace Jyx2
         /// 修改事件
         /// </summary>
         /// <param name="scene">场景，-2为当前场景</param>
-        /// <param name="eventId">事件ID，-2位保留</param>
-        /// <param name="canPass">是否能够经过，-2位保留</param>
-        /// <param name="changeToEventId">修改为的编号，-2为保留</param>
+        /// <param name="eventId">事件ID，-2为保留</param>
+        /// <param name="canPass">是否能够经过，-2为保留，在本作中没有作用</param>
+        /// <param name="changeToEventId">修改为的编号，-2为保留，在本作中没有作用</param>
         /// <param name="interactiveEventId">交互事件ID</param>
         /// <param name="useItemEventId">使用道具事件ID</param>
         /// <param name="enterEventId">进入事件ID</param>

@@ -26,18 +26,28 @@ namespace SkillEffect
         public Color m_Color = Color.blue;
 
         //网格数据
-        SkinnedMeshRenderer m_MeshRender;
+        private readonly List<SkinnedMeshRenderer> m_MeshRenders = new List<SkinnedMeshRenderer>();
 
         private float lastTime = 0;
 
         void Start()
         {
             m_GhostShader = Shader.Find("SkillEffect/GhostShadow");
+
+            m_MeshRenders.Clear();
+            foreach (var mesh in this.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                if (mesh.sharedMesh == null) continue;
+                if (mesh.materials == null || mesh.materials.Length == 0) continue;
+
+                m_MeshRenders.Add(mesh);
+                break;
+            }
         }
 
         void Update()
         {
-            if (!m_bOpenGhost)
+            if (!m_bOpenGhost || m_MeshRenders == null)
                 return;
 
             if (Time.time - lastTime < m_fInterval)
@@ -48,45 +58,43 @@ namespace SkillEffect
 
             lastTime = Time.time;
 
-            if (m_MeshRender == null)
+            for (int i = 0; i < m_MeshRenders.Count; ++i)
             {
-                //获取身上的Mesh
-                m_MeshRender = this.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                if (m_MeshRender == null) return;
+                var meshRender = m_MeshRenders[i];
+                Mesh mesh = new Mesh();
+                try
+                {
+                    meshRender.BakeMesh(mesh);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"严重错误：{e}");
+                }
+
+                GameObject go = new GameObject();
+                go.hideFlags = HideFlags.HideAndDontSave;
+
+                GhostItem item = go.AddComponent<GhostItem>(); //控制残影消失
+                item.duration = m_fDuration;
+                item.deleteTime = Time.time + m_fDuration;
+
+                MeshFilter filter = go.AddComponent<MeshFilter>();
+                filter.mesh = mesh;
+
+                MeshRenderer meshRen = go.AddComponent<MeshRenderer>();
+
+                meshRen.material = meshRender.material;
+                meshRen.material.shader = m_GhostShader; //设置xray效果
+                meshRen.material.SetColor("_RimColor", m_Color);
+                meshRen.material.SetFloat("_RimIntensity", m_fIntension); //颜色强度传入shader中
+
+                go.transform.localScale = meshRender.transform.localScale;
+                go.transform.position = meshRender.transform.position;
+                go.transform.rotation = meshRender.transform.rotation;
+
+                item.meshRenderer = meshRen;
             }
-            
-            Mesh mesh = new Mesh();
-            try
-            {
-                m_MeshRender.BakeMesh(mesh);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"严重错误：{e}");
-            }
 
-            GameObject go = new GameObject();
-            go.hideFlags = HideFlags.HideAndDontSave;
-
-            GhostItem item = go.AddComponent<GhostItem>(); //控制残影消失
-            item.duration = m_fDuration;
-            item.deleteTime = Time.time + m_fDuration;
-
-            MeshFilter filter = go.AddComponent<MeshFilter>();
-            filter.mesh = mesh;
-
-            MeshRenderer meshRen = go.AddComponent<MeshRenderer>();
-
-            meshRen.material = m_MeshRender.material;
-            meshRen.material.shader = m_GhostShader; //设置xray效果
-            meshRen.material.SetColor("_RimColor", m_Color);
-            meshRen.material.SetFloat("_RimIntensity", m_fIntension); //颜色强度传入shader中
-
-            go.transform.localScale = m_MeshRender.transform.localScale;
-            go.transform.position = m_MeshRender.transform.position;
-            go.transform.rotation = m_MeshRender.transform.rotation;
-
-            item.meshRenderer = meshRen;
         }
     }
 }
