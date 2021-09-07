@@ -19,6 +19,17 @@ using UnityEngine.AddressableAssets;
 /// <summary>
 /// MOD根配置文件
 /// </summary>
+///
+/// CG: TODO。。。未完成，待回头继续实现。
+/// 需要做的功能：
+/// []将MOD统一引用进行管理，调整目录结构
+/// []将lua和配置表可以按MOD区分加载
+/// []提供统一的MOD开发和打包发布环境
+/// []验证MOD的Addressable加载
+/// []让MOD可叠加
+/// []修改游戏中各种索引的int格式，特别是配置表中，以防主键冲突
+/// ....
+
 [CreateAssetMenu(fileName = "[MODConfig]", menuName = "金庸重制版/创建MOD配置文件")]
 public class MODConfigAsset : ScriptableObject
 {
@@ -44,3 +55,4 @@ public class MODConfigAsset : ScriptableObject
  [LabelText("战斗地图引用")]
  public List<AssetReference> BattleMapScenes;
 }
+
