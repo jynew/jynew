@@ -183,6 +183,13 @@ public class BattleManager : MonoBehaviour
                 break;
             }
         }
+        
+        //所有人至少有1HP
+        foreach (var role in GameRuntimeData.Instance.Team)
+        {
+            if (role.Hp == 0)
+                role.Hp = 1;
+        }
     }
 
     //清扫战场
