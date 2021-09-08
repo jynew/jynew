@@ -30,7 +30,7 @@ using UnityEngine.AddressableAssets;
 /// []修改游戏中各种索引的int格式，特别是配置表中，以防主键冲突
 /// ....
 
-[CreateAssetMenu(fileName = "[MODConfig]", menuName = "金庸重制版/创建MOD配置文件")]
+[CreateAssetMenu(fileName = "MODConfig-", menuName = "金庸重制版/创建MOD配置文件")]
 public class MODConfigAsset : ScriptableObject
 {
 
