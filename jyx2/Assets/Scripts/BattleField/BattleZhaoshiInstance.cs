@@ -68,7 +68,7 @@ namespace Jyx2
                 role.Mp = Tools.Limit(role.Mp - this.calNeedMP(level_index), 0, role.MaxMp);
 
                 int levelAdd = Tools.Limit(1 + Tools.GetRandomInt(0, 2), 0, 100 * 10);
-                levelAdd += Tools.GetRandomInt(50, 100);//for test
+                //levelAdd += Tools.GetRandomInt(50, 100);//for test
 
                 //空挥升级
                 //己方队员，并且武功等级提升了
