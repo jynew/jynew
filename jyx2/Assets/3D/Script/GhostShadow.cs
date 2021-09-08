@@ -88,9 +88,10 @@ namespace SkillEffect
                 meshRen.material.SetColor("_RimColor", m_Color);
                 meshRen.material.SetFloat("_RimIntensity", m_fIntension); //颜色强度传入shader中
 
-                go.transform.localScale = meshRender.transform.localScale;
-                go.transform.position = meshRender.transform.position;
-                go.transform.rotation = meshRender.transform.rotation;
+                var transform1 = meshRender.transform;
+                go.transform.localScale = transform1.localScale;
+                go.transform.position = transform1.position;
+                go.transform.rotation = transform1.rotation;
 
                 item.meshRenderer = meshRen;
             }
