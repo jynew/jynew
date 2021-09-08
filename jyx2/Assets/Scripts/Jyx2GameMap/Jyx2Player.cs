@@ -211,7 +211,7 @@ public class Jyx2Player : MonoBehaviour
             if(isInTrigger) 
             {
                 Debug.DrawLine(transform.position, target.transform.position, Color.green);
-                Debug.Log("Inside trigger: " + target.transform.name);
+                //Debug.Log("Inside trigger: " + target.transform.name);
 
                 return true;
             }
@@ -220,14 +220,14 @@ public class Jyx2Player : MonoBehaviour
                 //判断主角与目标之间有无其他collider遮挡。忽略trigger。
                 RaycastHit hit;
                 if(Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore)) {
-                    Debug.Log("Hit. hit: " + hit.transform.name + " target:" + target.transform.name);
+                    //Debug.Log("Hit. hit: " + hit.transform.name + " target:" + target.transform.name);
                     if(hit.transform.GetInstanceID() != target.transform.GetInstanceID())
                     {
                         Debug.DrawLine(transform.position, hit.point, Color.red);
                         return false;
                     }
                 }
-                Debug.Log("Outside trigger: " + target.transform.name);
+                //Debug.Log("Outside trigger: " + target.transform.name);
                 Debug.DrawLine(transform.position, target.transform.position, Color.green);
                 return true;
 
