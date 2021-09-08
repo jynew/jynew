@@ -242,6 +242,12 @@ namespace Jyx2
                             item.Count = 0;
                         }
                     }
+                    
+                    //清空角色身上的装备
+                    role.Weapon = -1;
+                    role.Armor = -1;
+                    role.Xiulianwupin = -1;
+                    
                     role.Items.Clear();    
                 }
                 
