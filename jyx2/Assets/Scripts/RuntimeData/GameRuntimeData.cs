@@ -298,6 +298,11 @@ namespace Jyx2
             return Team.Find(r => r.Key == roleId.ToString());
         }
 
+        public bool IsRoleInTeam(int roleId)
+        {
+            return GetRoleInTeam(roleId) != null;
+        }
+
         //JYX2，所有的角色都放到存档里
         public List<RoleInstance> AllRoles
         {

@@ -509,7 +509,8 @@ namespace Jyx2
 
                 role.LearnMagic(magicId);
 
-                if(noDisplay != 0)
+                //只有设置了显示，并且角色在队伍的时候才显示
+                if(noDisplay != 0 && runtime.IsRoleInTeam(roleId))
                 {
                     var skill = ConfigTable.Get<Jyx2Skill>(magicId);
                     storyEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
