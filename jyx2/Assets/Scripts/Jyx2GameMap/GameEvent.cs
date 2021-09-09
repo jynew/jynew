@@ -7,6 +7,8 @@
  *
  * 金庸老先生千古！
  */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using HSFrameWork.Common;
@@ -198,7 +200,7 @@ public class GameEvent : MonoBehaviour
     }*/
 
 
-    public void MarkChest()
+    public IEnumerator MarkChest(Action callback)
     {
         foreach (var target in m_EventTargets)
         {
@@ -207,10 +209,12 @@ public class GameEvent : MonoBehaviour
             if (chest != null)
             {
 				//使用物品事件为-1时可以直接打开。>0时候需要对应钥匙才能解开。-2时不能打开，参考南贤居宝箱一开始不能打开，交谈后可以直接打开
-				chest.ChangeLockStatus(m_UseItemEventId!=-1);
-                chest.MarkAsOpened();
+                chest.ChangeLockStatus(m_UseItemEventId != -1);
+                yield return chest.MarkAsOpened();
             }
         }
+
+        callback?.Invoke();
     }
 
 

@@ -219,32 +219,32 @@ public class GameEventManager : MonoBehaviour
         
         //设置运行环境上下文
         JYX2EventContext.current = context;
-        
-        //先判断是否有蓝图类
-        //如果有则执行蓝图，否则执行lua
-        Jyx2ResourceHelper.LoadEventGraph(eventId, (graph) =>
+
+        void ExecuteCurEvent()
         {
-            graph.Run(OnFinishEvent);
-        }, () =>
+            //先判断是否有蓝图类
+            //如果有则执行蓝图，否则执行lua
+            Jyx2ResourceHelper.LoadEventGraph(eventId, (graph) => { graph.Run(OnFinishEvent); }, () =>
+            {
+                //执行lua
+                var eventLuaPath = "jygame/ka" + eventId;
+                Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
+            });
+        }
+
+        if (curEvent != null)
         {
-            //执行lua
-            var eventLuaPath = "jygame/ka" + eventId;
-            Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
-        });
+            StartCoroutine(curEvent.MarkChest(ExecuteCurEvent));
+        }
+        else
+        {
+            ExecuteCurEvent();
+        }
     }
 
     void OnFinishEvent()
     {
         JYX2EventContext.current = null;
-        
-        if (curEvent != null)
-        {
-            curEvent.MarkChest();
-        }
-        else
-        {
-            //Debug.Log("curEvent is null");
-        }
 
         SetCurrentGameEvent(null);
         // fix drag motion continuous move the player when scene is playing
