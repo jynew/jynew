@@ -137,6 +137,12 @@ public class Jyx2Player : MonoBehaviour
     void Start()
     {
         Init();
+        
+        //修复一些场景里有主角贴图丢失导致紫色的情况
+        if (GetComponent<SkinnedMeshRenderer>() != null)
+        {
+            GetComponent<SkinnedMeshRenderer>().enabled = false;
+        }
     }
 
     public void CanControl(bool isOn)
