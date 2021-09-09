@@ -233,6 +233,7 @@ namespace Jyx2
             Yujian = Tools.Limit(Yujian, 0, GameConst.MAX_ROLE_WEAPON_ATTR);
             Shuadao = Tools.Limit(Shuadao, 0, GameConst.MAX_ROLE_WEAPON_ATTR);
             Qimen = Tools.Limit(Qimen, 0, GameConst.MAX_ROLE_WEAPON_ATTR);
+            Anqi =Tools.Limit(Anqi, 0, GameConst.MAX_ROLE_WEAPON_ATTR);
 
             IQ = Tools.Limit(IQ, 0, GameConst.MAX_ROLE_ZIZHI);
             Pinde = Tools.Limit(Pinde, 0, GameConst.MAX_ROLE_PINDE);
@@ -781,12 +782,14 @@ namespace Jyx2
             this.Attack += item.Attack;
             this.Defence += item.Defence;
             this.Qinggong += item.Qinggong;
+            
             getOrigin = false;
 
             this.Quanzhang += item.Quanzhang;
             this.Yujian += item.Yujian;
             this.Shuadao += item.Shuadao;
             this.Qimen += item.Qimen;
+            this.Anqi += item.Anqi;
 
             this.Pinde += item.AddPinde;
             this.AttackPoison += item.AttackPoison;
@@ -800,7 +803,7 @@ namespace Jyx2
                 this.Zuoyouhubo = 1;
             }
 
-            int need_item_exp = getFinishedExpForItem(item);
+            int need_item_exp = GetFinishedExpForItem(item);
             if (this.ExpForItem >= need_item_exp)
             {
                 this.LearnMagic(item.Wugong);
@@ -855,7 +858,7 @@ namespace Jyx2
                 this.Zuoyouhubo = 1;
             }
 
-            int need_item_exp = getFinishedExpForItem(item);
+            int need_item_exp = GetFinishedExpForItem(item);
             if (this.ExpForItem >= need_item_exp)
             {
                 this.LearnMagic(item.Wugong);
@@ -877,7 +880,7 @@ namespace Jyx2
 
         public int GetFinishedExpForItem()
         {
-            return getFinishedExpForItem(GetXiulianItem());
+            return GetFinishedExpForItem(GetXiulianItem());
         }
 
         /// <summary>
@@ -885,7 +888,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public int getFinishedExpForItem(Jyx2Item item)
+        public int GetFinishedExpForItem(Jyx2Item item)
         {
             if (item == null || item.ItemType != 2 || item.NeedExp < 0)
             {
