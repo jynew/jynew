@@ -173,10 +173,16 @@ public class LevelMasterBooster : MonoBehaviour
                     Debug.LogError($"错误：{obj.name}没有Animator组件。");
                     return;
                 }
-                Jyx2ResourceHelper.LoadAsset<RuntimeAnimatorController>(animationControllerPath, rst =>
+
+                try
                 {
-                    animator.runtimeAnimatorController = rst;
-                });
+                    Jyx2ResourceHelper.LoadAsset<RuntimeAnimatorController>(animationControllerPath,
+                        rst => { animator.runtimeAnimatorController = rst; });
+                }
+                catch
+                {
+                    // ignored
+                }
             }
         }
     }

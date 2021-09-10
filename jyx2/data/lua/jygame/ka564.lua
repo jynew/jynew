@@ -10,6 +10,9 @@ if UseItem(195) == true then goto label0 end;
     PlayAnimation(-1, 6716, 6742);
 
     --缺少timeline
+    jyx2_PlayTimeline("[Timeline]ka564_小虾米破庙挖坟", 0, false);
+    jyx2_Wait(5.2)
+    jyx2_StopTimeline("[Timeline]ka564_小虾米破庙挖坟");
 
     DarkScence();
     ModifyEvent(-2, -2, -2, -2, 565, -1, -1, 6698, 6698, 6698, -2, -2, -2);
