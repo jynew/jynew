@@ -7,39 +7,42 @@
  *
  * 金庸老先生千古！
  */
+
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class AudioManager
 {
     //JYX2
-    static public void PlayMusic(int id)
+    public static void PlayMusic(int id)
     {
-        PlayMusicAtPath("Assets/BuildSource/Musics/" + id + ".mp3");
+        PlayMusicAtPath("Assets/BuildSource/Musics/" + id + ".mp3").Forget();
     }
 
-    static public void PlayMusicAtPath(string path)
+    public static async UniTask PlayMusicAtPath(string path)
     {
         if(_currentPlayMusic == path)
         {
             return;
         }
 
-        Jyx2ResourceHelper.LoadAsset<AudioClip>(path, audioClip=> {
-            if (audioClip != null)
-            {
-                var audioSource = GetAudioSource();
-                audioSource.clip = audioClip;
-                audioSource.Play();
-                _currentPlayMusic = path;
-            }
-        });
+        var audioClip = await Addressables.LoadAssetAsync<AudioClip>(path).Task;
+        if (audioClip != null)
+        {
+            var audioSource = GetAudioSource();
+            audioSource.clip = audioClip;
+            audioSource.Play();
+            _currentPlayMusic = path;
+        }
     }
 
     static string _currentPlayMusic;
 
     static AudioSource s_AudioSource = null;
 
-    static private AudioSource GetAudioSource()
+    private static AudioSource GetAudioSource()
     {
         if (s_AudioSource != null)
             return s_AudioSource;

@@ -20,6 +20,7 @@ using HanSquirrel.ResourceManager;
 using UniRx;
 using System;
 using Cinemachine;
+using Cysharp.Threading.Tasks;
 
 public class LevelMaster : MonoBehaviour
 {
@@ -131,8 +132,7 @@ public class LevelMaster : MonoBehaviour
                 }
             }
         }
-        
-        
+
         if (RuntimeDataSimulate && runtime == null)
         {
             //测试存档位
@@ -145,9 +145,8 @@ public class LevelMaster : MonoBehaviour
             brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
         }
         
-        //播放音乐
-        var gameMap = GetCurrentGameMap();
 
+        var gameMap = GetCurrentGameMap();
         if (gameMap != null)
         {
             if (gameMap.Tags.Contains("WORLDMAP"))//JYX2 临时测试
@@ -237,7 +236,7 @@ public class LevelMaster : MonoBehaviour
 
     public void PlayMusicAtPath(string musicPath)
     {
-        AudioManager.PlayMusicAtPath(musicPath);
+        AudioManager.PlayMusicAtPath(musicPath).Forget();
     }
 
     /// <summary>
@@ -253,7 +252,7 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
-    public void UpdateMobileControllerUI()
+    private void UpdateMobileControllerUI()
     {
         //大地图或editor上都不显示
         m_Joystick.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.BigMap);
@@ -343,7 +342,7 @@ public class LevelMaster : MonoBehaviour
     }
 
 
-    public void SetPlayerSpeed(float speed)
+    private void SetPlayerSpeed(float speed)
     {
         if (_player == null)
             return;
@@ -355,7 +354,7 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
-    public void SetPlayer(MapRole playerRoleView)
+    private void SetPlayer(MapRole playerRoleView)
     {
 		// reverting this change. to fix "reference on null object" error when enter/ exit scene
 		// modified by eaphone at 2021/05/30
@@ -566,25 +565,13 @@ public class LevelMaster : MonoBehaviour
                 }
             }
         }
-
-        //大地图不管其他逻辑，直接播放当前跑速动画
-        //if(m_CurrentType == MapType.BigMap)
-        //{
-        //    _playerAnim.SetFloat("speed", _playerNavAgent.velocity.magnitude);
-        //}
-        //else if (!_playerNavAgent.isStopped)
-        //{
-        //    _playerAnim.SetFloat("speed", _playerNavAgent.velocity.magnitude);
-        //}
     }
 
     void OnManualControlPlayer()
     {
-        //大地图不能手动控制角色
-        //if (m_CurrentType == MapType.BigMap)
-        //    return;
         if (!_CanController)//掉本调用自动寻路的时候 不能手动控制
             return;
+        
         if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             OnManuelMove(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -707,23 +694,7 @@ public class LevelMaster : MonoBehaviour
     }
     #endregion
 
-    IEnumerator CastTexiaoAndWaitSkill(GameObject pre, float time, Transform parent, Action callback = null)
-    {
-        GameObject obj = null;
-        if (pre != null)
-        {
-            obj = GameObject.Instantiate(pre);
-            obj.transform.rotation = parent.rotation;
-            obj.transform.position = parent.position;
-            //obj.transform.SetParent(parent.transform, false);
-        }
-        yield return new WaitForSeconds(time);
-        if (pre != null)
-        {
-            GameObject.Destroy(obj);
-        }
-        callback?.Invoke();
-    }
+
 
 
     //传送
@@ -834,34 +805,6 @@ public class LevelMaster : MonoBehaviour
     {
         SceneManager.LoadScene("0_GameStart");
     }
-
-
-
-    public List<MapRole> FindAllMapRole()
-    {
-        List<MapRole> rst = new List<MapRole>();
-        MapRole[] objs = (MapRole[])Resources.FindObjectsOfTypeAll(typeof(MapRole));
-
-        foreach (MapRole obj in objs)
-        {
-            if (obj.transform.parent == null) continue;
-
-            if (obj.hideFlags == HideFlags.NotEditable || obj.hideFlags == HideFlags.HideAndDontSave) continue;
-
-            //if (Application.isEditor)
-            //{
-            //    string sAssetPath = AssetDatabase.GetAssetPath(pObject.transform.root.gameObject);
-            //    if (!string.IsNullOrEmpty(sAssetPath))
-            //    {
-            //        continue;
-            //    }
-            //}
-            rst.Add(obj);
-        }
-        return rst;
-    }
-
-
 
     //刷新本场景内的所有事件
     //事件执行和更改结果存储在runtime里，需要结合当前场景进行调整
