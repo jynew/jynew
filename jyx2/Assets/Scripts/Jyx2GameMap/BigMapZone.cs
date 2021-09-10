@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Jyx2;
 using HSFrameWork.ConfigTable;
 using UniRx;
@@ -22,23 +23,27 @@ public class BigMapZone : MonoBehaviour
     public string Command;
     public string ButtonText;
     public GameObject[] m_EventTargets;
-
-    private Button mapZoneEnterButton;
-
-    async private void Start()
+    
+    private async void Start()
     {
-        await BeforeSceneLoad.loadFinishTask;
-        mapZoneEnterButton = GameObject.Find("LevelMaster/UI").transform.Find("EnterZoneButton").GetComponent<Button>();
+	    await BeforeSceneLoad.loadFinishTask;
+
+        await UniTask.Delay(TimeSpan.FromSeconds(1f)); //等1秒再生效
+        triggerEnabled = true;
     }
+
+    private bool triggerEnabled = false;
 
     void OnTriggerEnter(Collider other)
     {
+	    if (!triggerEnabled) return;
         ShowEnterButton(EnterMapKey, Command, ButtonText);
         UnityTools.HighLightObjects(m_EventTargets, Color.red);
     }
 
     void OnTriggerExit(Collider other)
     {
+	    if (!triggerEnabled) return;
         //HideEnterButton();
         Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
         UnityTools.DisHighLightObjects(m_EventTargets);
