@@ -1018,26 +1018,20 @@ namespace Jyx2
         public bool isActed = false;
         public bool isWaiting = false; //正在等待
 
-        public bool IsInBattle()
-        {
-            return _isInBattle;
-        }
-
-        public void EnterBattle(int team)
+        public void EnterBattle()
         {
             if (_isInBattle) return;
-            //if (!BattleHelper.Instance.IsInBattle) BattleHelper.Instance.StartBattle();
+            
             _isInBattle = true;
             _currentSkill = null;
 
-            View.SwitchStatus(MapRoleStatus.Battle);
+            View.LazyInitAnimator();
 
-            var defaultWugong = Wugongs[0];
-
-            SwitchAnimationToSkill(defaultWugong);
-
-            //BattleHelper.Instance.AddBattleRole(this, team);
-            BattleManager.Instance.AddBattleRole(this, team);
+            if (Wugongs.Count > 0)
+            {
+                //默认使用第一个武功
+                SwitchAnimationToSkill(Wugongs[0]);    
+            }
         }
 
         public void SetHPAndRefreshHudBar(int hp)
@@ -1064,8 +1058,6 @@ namespace Jyx2
         public void LeaveBattle()
         {
             _isInBattle = false;
-            //View.SwitchStatus(MapRoleStatus.Normal);
-            //View.TakeOffWeapon();
         }
 
 

@@ -10,6 +10,7 @@
 using HanSquirrel.ResourceManager;
 using Jyx2;
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public static class RoleHelper
@@ -79,7 +80,12 @@ public static class RoleHelper
         //JYX2 不刷新临时NPC外观
         if(roleView.m_RoleKey != "testman")
         {
-            roleView.RefreshModel(callback);
+            UniTask.Void(async () =>
+            {
+                await UniTask.SwitchToMainThread();
+                await roleView.RefreshModel();
+                callback ?.Invoke();
+            });
         }
         else
         {

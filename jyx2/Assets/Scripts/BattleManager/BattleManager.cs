@@ -13,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Jyx2;
 using HSFrameWork.Common;
@@ -45,13 +46,7 @@ public class BattleManager : MonoBehaviour
         UseItem, //使用物品的状态 主要播放使用物品动画
         BuffSettlement, //buff结算状态 这里主要是用毒
     }
-
-    string[] battleMusics = new string[]
-    {
-        "Assets/BuildSource/Musics/5.mp3",
-        "Assets/BuildSource/Musics/6.mp3",
-        "Assets/BuildSource/Musics/7.mp3",
-    };
+    
 
     public static BattleManager Instance
     {
@@ -63,7 +58,6 @@ public class BattleManager : MonoBehaviour
                 go.hideFlags = HideFlags.HideInHierarchy;
                 DontDestroyOnLoad(go);
                 _instance = GameUtil.GetOrAddComponent<BattleManager>(go.transform);
-                _instance.Init();
             }
 
             return _instance;
@@ -97,18 +91,14 @@ public class BattleManager : MonoBehaviour
     #endregion
 
     //是否无敌
-    static public bool Whosyourdad = false;
+    public static bool Whosyourdad = false;
 
-    void Init()
-    {
-    }
 
     public bool IsInBattle = false;
-    public BattleStartParams m_battleParams;
+    private BattleStartParams m_battleParams;
     private AudioClip lastAudioClip;
-    public int m_BattleMoveSpeed = 15;
 
-    public void StartBattle(BattleStartParams customParams)
+    public async UniTask StartBattle(BattleStartParams customParams)
     {
         Debug.Log("StartBattle called");
         if (IsInBattle) return;
@@ -121,37 +111,28 @@ public class BattleManager : MonoBehaviour
         //初始化范围逻辑
         rangeLogic = new RangeLogic(BattleboxHelper.Instance.IsBlockExists, m_BattleModel.BlockHasRole);
 
-        //状态初始化
-        HSUtilsEx.CallWithDelay(this, () =>
-        {
-            Debug.Log("-----------HSUtilsEx.CallWithDelay");
-            BattleboxHelper.Instance.EnterBattle(_player.View.transform.position);
-
-            //地图上所有单位进入战斗
-            foreach (var item in m_battleParams.roles)
-            {
-                if (item.View.m_Behavior == MapRoleBehavior.Enemy)
-                {
-                    item.EnterBattle(1);
-                }
-                else
-                {
-                    item.EnterBattle(0);
-                }
-            }
-
-            m_BattleModel.InitBattleModel(); //战场初始化 行动顺序排序这些
-            BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
-            //提示UI
-            Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始");
-            Jyx2_UIManager.Instance.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
-        }, 0.5f);
-
         var brain = Camera.main.GetComponent<CinemachineBrain>();
         if (brain != null)
         {
             brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
         }
+
+        //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+        await UniTask.WaitForEndOfFrame();
+
+        BattleboxHelper.Instance.EnterBattle(_player.View.transform.position);
+
+        //地图上所有单位进入战斗
+        foreach (var role in m_battleParams.roles)
+        {
+            role.EnterBattle();
+            AddBattleRole(role);
+        }
+
+        m_BattleModel.InitBattleModel(); //战场初始化 行动顺序排序这些
+        BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
+        Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
+        Jyx2_UIManager.Instance.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
     }
 
     void OnBattleEnd(BattleResult result)
@@ -218,11 +199,11 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     /// <param name="role"></param>
     /// <param name="team"></param>
-    public void AddBattleRole(RoleInstance role, int team)
+    public void AddBattleRole(RoleInstance role)
     {
+        int team = role.team;
         //计算NPC应该站的点
-        BattleBlockData npcStandBlock = FindNearestBattleBlock( /*team == 0 ? _player.View.transform.position :*/
-            role.View.transform.position);
+        BattleBlockData npcStandBlock = FindNearestBattleBlock(role.View.transform.position);
 
         if (npcStandBlock == null)
         {

@@ -90,7 +90,7 @@ namespace Animancer.Editor
         /// <summary>
         /// A more compact <see cref="EditorStyles.miniButton"/> with a fixed size as a tiny box.
         /// </summary>
-        public static readonly GUIStyle MiniButton = new GUIStyle(EditorStyles.miniButton)
+        public static readonly GUIStyle MiniButton = new GUIStyle(/*EditorStyles.miniButton*/)
         {
             margin = new RectOffset(0, 0, 2, 0),
             padding = new RectOffset(2, 3, 2, 2),

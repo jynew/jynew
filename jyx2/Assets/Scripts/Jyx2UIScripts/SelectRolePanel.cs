@@ -51,12 +51,12 @@ public class SelectRoleParams
 
 public partial class SelectRolePanel:Jyx2_UIBase
 {
-    public static UniTask<SelectRoleParams> Open(SelectRoleParams paras)
+    public static UniTask<List<RoleInstance>> Open(SelectRoleParams paras)
     {
-        var t = new UniTaskCompletionSource<SelectRoleParams>();
+        var t = new UniTaskCompletionSource<List<RoleInstance>>();
         paras.callback = (ret) =>
         {
-            t.TrySetResult(ret);
+            t.TrySetResult(ret.selectList);
         };
         Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), paras);
         return t.Task;

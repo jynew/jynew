@@ -71,7 +71,6 @@ namespace Jyx2
         //增加一个战斗角色
         public void AddBattleRole(RoleInstance role, BattleBlockVector pos, int team, bool isAI)
         {
-            role.View.GetAnimator().SetFloat("speed", 0);
             role.BattleModel = this;
             role.Pos = pos;
             role.team = team;

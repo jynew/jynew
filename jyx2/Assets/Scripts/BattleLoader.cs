@@ -162,7 +162,7 @@ public class BattleLoader : MonoBehaviour
 
             //弹出选择人物面板
             var rst = await SelectRolePanel.Open(selectPram);
-            await LoadJyx2BattleStep2(battle, rst.selectList, callback);
+            await LoadJyx2BattleStep2(battle, rst, callback);
         }
     }
 
@@ -236,7 +236,7 @@ public class BattleLoader : MonoBehaviour
 
             roleInstance.ExpGot = 0;
 
-            CreateRole(roleInstance, r.team, pos);
+            await CreateRole(roleInstance, r.team, pos);
             roles.Add(roleInstance);
         }
 
@@ -248,7 +248,7 @@ public class BattleLoader : MonoBehaviour
             battleData = battleData,
             callback = callback,
         };
-        BattleManager.Instance.StartBattle(startParam);
+        await BattleManager.Instance.StartBattle(startParam);
     }
 
 
@@ -269,9 +269,9 @@ public class BattleLoader : MonoBehaviour
 
     bool setPlayer = false;
 
-    void CreateRole(RoleInstance role, int team, Transform pos)
+    UniTask CreateRole(RoleInstance role, int team, Transform pos)
     {
-        Debug.Log($"--------BattleLoader.CreateRole, role={role.Name}, team={team}, pos={pos.name}");
+        //Debug.Log($"--------BattleLoader.CreateRole, role={role.Name}, team={team}, pos={pos.name}");
         role.LeaveBattle();
         //find or create
         GameObject npcRoot = GameObject.Find("BattleRoles");
@@ -293,15 +293,11 @@ public class BattleLoader : MonoBehaviour
         }
 
         roleView.IsInBattle = true;
-
-        //敌人的警戒距离和队友的跟随距离，都设置一个巨大的数
-        roleView.m_BehaviorParas = new List<float>();
-        roleView.m_BehaviorParas.Add(999);
-
+        
         roleView.transform.SetParent(npcRoot.transform, false);
         roleView.transform.position = pos.position;
 
-        roleView.SetBehavior(team == 0 ? MapRoleBehavior.Teammate : MapRoleBehavior.Enemy);
-        roleView.RefreshModel(); //刷新模型
+        role.team = team;
+        return roleView.RefreshModel(); //刷新模型
     }
 }
