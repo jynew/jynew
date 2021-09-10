@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Jyx2;
 using HSFrameWork.ConfigTable;
 using Jyx2;
@@ -22,12 +23,10 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class BattleLoader : MonoBehaviour
 {
-    [LabelText("载入战斗ID")]
-    public int m_BattleId = 0;
+    [LabelText("载入战斗ID")] public int m_BattleId = 0;
 
 
-    [HideInInspector]
-    public Action<BattleResult> Callback;
+    [HideInInspector] public Action<BattleResult> Callback;
 
 
     public bool IsTestCase = false;
@@ -35,7 +34,7 @@ public class BattleLoader : MonoBehaviour
     public struct BattlePosRole
     {
         public string pos;
-        
+
         public int team;
 
         public string roleKey;
@@ -45,7 +44,7 @@ public class BattleLoader : MonoBehaviour
 
     void CycleLoadBattle()
     {
-        LevelLoader.LoadBattle(m_BattleId, (ret)=> { CycleLoadBattle(); });
+        LevelLoader.LoadBattle(m_BattleId, (ret) => { CycleLoadBattle(); });
     }
 
     // Start is called before the first frame update
@@ -55,20 +54,19 @@ public class BattleLoader : MonoBehaviour
 
         if (IsTestCase)
         {
-            LoadJyx2Battle(m_BattleId, (ret) =>
-            {
-                CycleLoadBattle();
-            });
+            await LoadJyx2Battle(m_BattleId, (ret) => { CycleLoadBattle(); });
         }
         else
         {
-            LoadJyx2Battle(m_BattleId, Callback);
+            await LoadJyx2Battle(m_BattleId, Callback);
         }
-        
     }
 
 
-    GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
+    GameRuntimeData runtime
+    {
+        get { return GameRuntimeData.Instance; }
+    }
 
     //void OnTest()
     //{
@@ -91,7 +89,7 @@ public class BattleLoader : MonoBehaviour
     //}
 
 
-    void LoadJyx2Battle(int id, Action<BattleResult> callback)
+    async UniTask LoadJyx2Battle(int id, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
         if (GameRuntimeData.Instance == null)
@@ -117,7 +115,7 @@ public class BattleLoader : MonoBehaviour
 
         m_Roles = new List<BattlePosRole>();
         Jyx2Battle battle = ConfigTable.Get<Jyx2Battle>(id);
-        if(battle == null)
+        if (battle == null)
         {
             Debug.LogError("载入了未定义的战斗，id=" + id);
             return;
@@ -126,59 +124,58 @@ public class BattleLoader : MonoBehaviour
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
-        if(battle.HasAutoTeamMates())
+        if (battle.HasAutoTeamMates())
         {
             foreach (var v in battle.AutoTeamMates)
             {
                 var roleId = v.Value;
                 if (roleId == -1) continue;
                 AddRole(roleId, 0); //TODO IS AUTO
-				for(var i=0;i<m_Roles.Count;i++)
-				{
-					if(m_Roles[i].roleKey==roleId.ToString())
-					{
-						RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
-						if(roleInstance.Hp==0) roleInstance.Hp=1;
-					}
-				}
+                for (var i = 0; i < m_Roles.Count; i++)
+                {
+                    if (m_Roles[i].roleKey == roleId.ToString())
+                    {
+                        RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
+                        if (roleInstance.Hp == 0) roleInstance.Hp = 1;
+                    }
+                }
             }
-            LoadJyx2BattleStep2(battle, null, callback);
+
+            await LoadJyx2BattleStep2(battle, null, callback);
         }
         else //否则让玩家选择
         {
             //必选人物
-            Func<RoleInstance, bool> mustRoleFunc = (r) => {
+            bool MustRoleFunc(RoleInstance r)
+            {
                 return battle.TeamMates.Exists(t => t.Value.ToString() == r.Key);
-            };
+            }
 
-            //弹出选择人物面板
-            //Jyx2RoleSelector.Create(runtime.Team, mustRoleFunc, (selectRoles) => {
-            //    LoadJyx2BattleStep2(battle, selectRoles, callback);
-            //});
+
+
             SelectRoleParams selectPram = new SelectRoleParams();
             selectPram.roleList = runtime.Team;
-            selectPram.mustSelect = mustRoleFunc;
+            selectPram.mustSelect = MustRoleFunc;
             selectPram.title = "选择上场角色";
-            selectPram.maxCount = GameConst.MAX_BATTLE_TEAMMATE_COUNT;//TODO 最大上场人数
+            selectPram.maxCount = GameConst.MAX_BATTLE_TEAMMATE_COUNT; //TODO 最大上场人数
             selectPram.canCancel = false;
-            selectPram.callback = (cb) =>
-            {
-                LoadJyx2BattleStep2(battle, cb.selectList, callback);
-            };
-            Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectPram);
+
+            //弹出选择人物面板
+            var rst = await SelectRolePanel.Open(selectPram);
+            await LoadJyx2BattleStep2(battle, rst.selectList, callback);
         }
     }
 
-    void LoadJyx2BattleStep2(Jyx2Battle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
+    UniTask LoadJyx2BattleStep2(Jyx2Battle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     {
-        if(selectRoles != null)
+        if (selectRoles != null)
         {
             foreach (var role in selectRoles)
             {
                 AddRole(role.GetJyx2RoleId(), 0);
             }
         }
-        
+
         //预配置队友
         foreach (var v in battle.TeamMates)
         {
@@ -190,13 +187,13 @@ public class BattleLoader : MonoBehaviour
             AddRole(v.Value, 1);
         }
 
-        InitBattle(callback, battle);
+        return InitBattle(callback, battle);
     }
 
     //用于存储各个队伍已经放置的角色编号
     private Dictionary<int, int> teamRoleIndex = new Dictionary<int, int>();
-    
-    void AddRole(int id,int team)
+
+    void AddRole(int id, int team)
     {
         if (id == -1)
             return;
@@ -213,31 +210,25 @@ public class BattleLoader : MonoBehaviour
         //命名方式为：战斗地图号/队伍_序号，目前0是己方队伍，1是敌方队伍
         string posKey = $"battle{m_BattleId}/{team}_{teamRoleIndex[team]}";
         teamRoleIndex[team]++;
-        
-        m_Roles.Add(new BattlePosRole() { pos = posKey, team = team, roleKey = id.ToString() });
+
+        m_Roles.Add(new BattlePosRole() {pos = posKey, team = team, roleKey = id.ToString()});
     }
 
     //初始化战斗
-    void InitBattle(Action<BattleResult> callback, Jyx2Battle battleData)
+    async UniTask InitBattle(Action<BattleResult> callback, Jyx2Battle battleData)
     {
         Debug.Log("-----------BattleLoader.InitBattle");
         List<RoleInstance> roles = new List<RoleInstance>();
         foreach (var r in m_Roles)
         {
             RoleInstance roleInstance = runtime.GetRoleInTeam(int.Parse(r.roleKey));
-            if(roleInstance==null)
+            if (roleInstance == null)
             {
-                roleInstance=new RoleInstance(r.roleKey);
-            }
-            
-            if(roleInstance == null)
-            {
-                Debug.LogError("error roleKey:" + r.roleKey);
-                continue;
+                roleInstance = new RoleInstance(r.roleKey);
             }
 
             var pos = FindSpawnPosition(r.pos, r.team);
-            if(pos == null)
+            if (pos == null)
             {
                 Debug.LogError("未定义的POS:" + r.pos);
                 continue;
@@ -248,46 +239,43 @@ public class BattleLoader : MonoBehaviour
             CreateRole(roleInstance, r.team, pos);
             roles.Add(roleInstance);
         }
-        LevelMaster.Instance.TryBindPlayer(); //尝试绑定角色
-        StartCoroutine(DelayStartBattle(roles,battleData,callback));
-    }
 
-    IEnumerator DelayStartBattle(List<RoleInstance> roles,Jyx2Battle battleData,Action<BattleResult> callback)
-    {
-        yield return 0;
+        LevelMaster.Instance.TryBindPlayer(); //尝试绑定角色
+        await UniTask.WaitForEndOfFrame();
         BattleStartParams startParam = new BattleStartParams()
         {
             roles = roles,
             battleData = battleData,
             callback = callback,
-            range = 100,
         };
-        //BattleHelper.Instance.StartBattle(startParam);
         BattleManager.Instance.StartBattle(startParam);
     }
+
 
     //寻找定义的出生点
     Transform FindSpawnPosition(string posKey, int team)
     {
         var obj = GameObject.Find("Level/BattlePos/" + posKey);
-        
+
         //如果找不到，则用默认的队伍出生点
         if (obj == null)
         {
             obj = GameObject.Find("Level/BattlePos/" + team.ToString());
         }
+
         if (obj == null) return null;
         return obj.transform;
     }
 
     bool setPlayer = false;
+
     void CreateRole(RoleInstance role, int team, Transform pos)
     {
         Debug.Log($"--------BattleLoader.CreateRole, role={role.Name}, team={team}, pos={pos.name}");
         role.LeaveBattle();
         //find or create
         GameObject npcRoot = GameObject.Find("BattleRoles");
-        if(npcRoot == null)
+        if (npcRoot == null)
         {
             npcRoot = new GameObject("BattleRoles");
         }
@@ -314,6 +302,6 @@ public class BattleLoader : MonoBehaviour
         roleView.transform.position = pos.position;
 
         roleView.SetBehavior(team == 0 ? MapRoleBehavior.Teammate : MapRoleBehavior.Enemy);
-        roleView.RefreshModel();//刷新模型
+        roleView.RefreshModel(); //刷新模型
     }
 }

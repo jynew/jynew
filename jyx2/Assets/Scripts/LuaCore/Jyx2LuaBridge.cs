@@ -55,7 +55,6 @@ namespace Jyx2
             RunInMainThread(() =>
             {
                 storyEngine.BlockPlayerControl = true;
-                //storyEngine.dialogPanel.Show(
                 Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.RoleId,roleId, content, type,new Action(()=> 
                 {
                     storyEngine.BlockPlayerControl = false;

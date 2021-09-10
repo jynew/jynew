@@ -25,7 +25,6 @@ public class BattleStartParams
     public Action<BattleResult> callback; //战斗结果
     public List<RoleInstance> roles; //参与战斗的角色
     public Jyx2Battle battleData; //战斗地图数据
-    public int range = 16;
     public bool backToBigMap = true;
     public bool playerJoin = true;
 }
