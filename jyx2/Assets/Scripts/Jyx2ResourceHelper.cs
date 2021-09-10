@@ -14,6 +14,7 @@ using Lean.Pool;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -31,12 +32,11 @@ static public class Jyx2ResourceHelper
         }
 
         //所有需要预加载的资源
-        var handler = Addressables.LoadAssetAsync<TextAsset>("Assets/BuildSource/PreCachedPrefabs.txt").Task;
-        await handler;
-
+        var handler = await Addressables.LoadAssetAsync<TextAsset>("Assets/BuildSource/PreCachedPrefabs.txt").Task;
+        
         cachedPrefabs = new Dictionary<string, GameObject>();
 
-        foreach (var path in handler.Result.text.Split('\n'))
+        foreach (var path in handler.text.Split('\n'))
         {
             if (string.IsNullOrEmpty(path)) continue;
 
@@ -51,23 +51,21 @@ static public class Jyx2ResourceHelper
         }
 
         //技能池
-        var task = Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null).Task;
-        await task;
-        if (task.Result != null)
+        var task = await Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null).Task;
+        if (task != null)
         {
-            Jyx2SkillDisplayAsset.All = task.Result;
+            Jyx2SkillDisplayAsset.All = task;
         }
 
         //全局配置表
-        var t = Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset").Task;
-        await t;
-        if (t.Result != null)
+        var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset").Task;
+        if (t != null)
         {
-            GlobalAssetConfig.Instance = t.Result;
+            GlobalAssetConfig.Instance = t;
         }
     }
 
-    static public GameObject GetCachedPrefab(string path)
+    public static GameObject GetCachedPrefab(string path)
     {
         if (cachedPrefabs.ContainsKey(path))
             return cachedPrefabs[path];
@@ -88,10 +86,10 @@ static public class Jyx2ResourceHelper
         LeanPool.Despawn(obj);
     }
 
-    public static void GetRoleHeadSprite(string path, Action<Sprite> callback)
+    public static async UniTask<Sprite> GetRoleHeadSprite(string path)
     {
-        string p = ("Assets/BuildSource/head/" + path + ".png");
-        Addressables.LoadAssetAsync<Sprite>(p).Completed += r => { callback(r.Result); };
+        string p = "Assets/BuildSource/head/" + path + ".png";
+        return await Addressables.LoadAssetAsync<Sprite>(p).Task;
     }
 
     public static void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
@@ -117,26 +115,28 @@ static public class Jyx2ResourceHelper
         };
     }
 
-    public static void GetSprite(RoleInstance role, Action<Sprite> callback)
+    public static UniTask<Sprite> GetSprite(RoleInstance role)
     {
         if (role.Key == GameRuntimeData.Instance.Player.Key)
         {
-            GetRoleHeadSprite(GameRuntimeData.Instance.Player.HeadAvata, callback);
+            return GetRoleHeadSprite(GameRuntimeData.Instance.Player.HeadAvata);
         }
         else
         {
-            GetRoleHeadSprite(role.HeadAvata, callback);
+            return GetRoleHeadSprite(role.HeadAvata);
         }
     }
 
-    public static void GetRoleHeadSprite(string path, Image setImage)
+    public static async void GetRoleHeadSprite(string path, Image setImage)
     {
-        GetRoleHeadSprite(path, r => setImage.sprite = r);
+        var sprite = await GetRoleHeadSprite(path);
+        setImage.sprite = sprite;
     }
 
-    public static void GetRoleHeadSprite(RoleInstance role, Image setImage)
+    public static async void GetRoleHeadSprite(RoleInstance role, Image setImage)
     {
-        GetSprite(role, r => setImage.sprite = r);
+        var sprite = await GetSprite(role);
+        setImage.sprite = sprite;
     }
 
     public static void GetItemSprite(int itemId, Image setImage)
@@ -180,27 +180,15 @@ static public class Jyx2ResourceHelper
         }
     }
 
-    public static async void LoadEventGraph(int id, Action<Jyx2NodeGraph> successCallback, Action failed)
+    public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)
     {
         string url = $"Assets/BuildSource/EventsGraph/{id}.asset";
-        var handle = Addressables.LoadResourceLocationsAsync(url);
-        await handle.Task;
-
-        if (handle.Result.Count == 0)
+        var rst = await Addressables.LoadResourceLocationsAsync(url).Task;
+        if (rst.Count == 0)
         {
-            failed();
-            return;
+            return null;
         }
 
-        var task = Addressables.LoadAssetAsync<Jyx2NodeGraph>(url).Task;
-        await task;
-        if (task.Result != null)
-        {
-            successCallback(task.Result);
-        }
-        else
-        {
-            failed();
-        }
+        return await Addressables.LoadAssetAsync<Jyx2NodeGraph>(url).Task;
     }
 }

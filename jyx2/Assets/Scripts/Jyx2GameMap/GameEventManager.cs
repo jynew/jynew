@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -220,26 +221,26 @@ public class GameEventManager : MonoBehaviour
         //设置运行环境上下文
         JYX2EventContext.current = context;
 
-        void ExecuteCurEvent()
+        async UniTask ExecuteCurEvent()
         {
+            if (curEvent != null)
+                await curEvent.MarkChest();
+            
             //先判断是否有蓝图类
             //如果有则执行蓝图，否则执行lua
-            Jyx2ResourceHelper.LoadEventGraph(eventId, (graph) => { graph.Run(OnFinishEvent); }, () =>
+            var graph = await Jyx2ResourceHelper.LoadEventGraph(eventId);
+            if (graph != null)
             {
-                //执行lua
+                graph.Run(OnFinishEvent);
+            }
+            else
+            {
                 var eventLuaPath = "jygame/ka" + eventId;
                 Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
-            });
+            }
         }
 
-        if (curEvent != null)
-        {
-            StartCoroutine(curEvent.MarkChest(ExecuteCurEvent));
-        }
-        else
-        {
-            ExecuteCurEvent();
-        }
+        ExecuteCurEvent().Forget();
     }
 
     void OnFinishEvent()

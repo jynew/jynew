@@ -439,47 +439,6 @@ public class MapRole : Jyx2AnimationBattleRole
     //队友寻路
     private NavMeshAgent _navMeshAgent;
 
-    #region 脚步声相关
-
-    //播放脚步声，TODO:根据所处地貌不同改为不同的脚步声
-    void PlayFootStepSoundEffect(float dist)
-    {
-        //屏蔽远处敌人脚步声
-        if (dist > 16) return;
-
-        if (!_initWalkSoundEffect)
-        {
-            _initWalkSoundEffect = true;
-            
-            Jyx2ResourceHelper.LoadAsset<AudioClip>("Assets/BuildSource/SoundEffect/walk_on_grass.mp3", audio=> {
-                walkSoundEffect = audio;
-            });
-        }
-
-        if (walkSoundEffect == null)
-            return;
-
-        if (_navMeshAgent.velocity.magnitude > 0.1f)
-        {
-            playSoundWaitFrame += Time.deltaTime;
-
-            if (playSoundWaitFrame > m_FootStepTimespan) //每间隔一小段时间播放一次
-            {
-                playSoundWaitFrame = 0;
-                AudioSource.PlayClipAtPoint(walkSoundEffect, transform.position, 0.3f);
-            }
-        }
-    }
-
-    //缓存脚步声音频
-    static AudioClip walkSoundEffect;
-
-    static bool _initWalkSoundEffect = false;
-    //播放脚步声计时
-    float playSoundWaitFrame = 0;
-    //脚步声播放间隔
-    public float m_FootStepTimespan = 0.4f;
-    #endregion
     
     public async UniTask RefreshModel()
     {

@@ -11,6 +11,7 @@
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -52,12 +53,12 @@ public class MapChest : MonoBehaviour
         RefreshOpenStates();
     }
 
-    public IEnumerator MarkAsOpened()
+    public async UniTask MarkAsOpened()
     {
 		if(!isLock){
 			runtime.SetKeyValues(GetRuntimeKey(), "1");
 			//播放动画
-			yield return m_MapChestInteract.Open();
+			await m_MapChestInteract.Open();
             RefreshOpenStates();
         }
     }

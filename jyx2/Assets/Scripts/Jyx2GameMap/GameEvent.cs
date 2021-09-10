@@ -11,6 +11,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using HSFrameWork.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -200,7 +201,7 @@ public class GameEvent : MonoBehaviour
     }*/
 
 
-    public IEnumerator MarkChest(Action callback)
+    public async UniTask MarkChest()
     {
         foreach (var target in m_EventTargets)
         {
@@ -210,11 +211,9 @@ public class GameEvent : MonoBehaviour
             {
 				//使用物品事件为-1时可以直接打开。>0时候需要对应钥匙才能解开。-2时不能打开，参考南贤居宝箱一开始不能打开，交谈后可以直接打开
                 chest.ChangeLockStatus(m_UseItemEventId != -1);
-                yield return chest.MarkAsOpened();
+                await chest.MarkAsOpened();
             }
         }
-
-        callback?.Invoke();
     }
 
 

@@ -46,12 +46,6 @@ public class BattleboxManager : MonoBehaviour
         Init();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void Init()
     {
         InitCollider();

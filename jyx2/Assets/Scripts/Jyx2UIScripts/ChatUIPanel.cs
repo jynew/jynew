@@ -12,6 +12,7 @@ using HSFrameWork.ConfigTable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -81,7 +82,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 
     private GameObject _interactivePanel = null;
 
-    private void ShowCharacter(string roleHeadPath,int roleId)
+    private async UniTask ShowCharacter(string roleHeadPath,int roleId)
     {
         ChangePosition(roleId);
         if (string.IsNullOrEmpty((roleHeadPath)))
@@ -91,11 +92,9 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         else
         {
             RoleHeadImage_Image.gameObject.SetActive(false);
-            Jyx2ResourceHelper.GetRoleHeadSprite(roleHeadPath, (head) =>
-            {
-                RoleHeadImage_Image.gameObject.SetActive(true);
-                RoleHeadImage_Image.sprite = head;
-            });
+            var head = await Jyx2ResourceHelper.GetRoleHeadSprite(roleHeadPath);
+            RoleHeadImage_Image.sprite = head;
+            RoleHeadImage_Image.gameObject.SetActive(true);
         }
     }
 
@@ -157,7 +156,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             var headMapping = ConfigTable.Get<Jyx2RoleHeadMapping>(roleId);
             if (headMapping != null && !string.IsNullOrEmpty(headMapping.HeadAvata))
             {
-                ShowCharacter(headMapping.HeadAvata, roleId);
+                ShowCharacter(headMapping.HeadAvata, roleId).Forget();
                 //RoleHeadImage_Image.gameObject.SetActive(true);
             }
             else
@@ -213,7 +212,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         //没有Player
         if (roleName == "主角" && GameRuntimeData.Instance.Player != null)
         {
-            ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0);
+            ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0).Forget();
             MainContent_Text.text = $"{msg}";
         }
         else
@@ -229,7 +228,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             else
             {
                 var headMapping = ConfigTable.Get<Jyx2RoleHeadMapping>(role.Id);
-                ShowCharacter(headMapping.HeadAvata,1);
+                ShowCharacter(headMapping.HeadAvata,1).Forget();
                 MainContent_Text.text = $"{role.Name}：{msg}";
             }
         }

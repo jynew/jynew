@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Animancer;
+using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -43,7 +44,7 @@ namespace Jyx2
             state.Events.OnEnd = _animancerComponent.Playable.PauseGraph;
             state.NormalizedTime = 1;
         }
-        public IEnumerator Open()
+        public UniTask Open()
         {
             _animancerComponent.Playable.UnpauseGraph();
             var state = _animancerComponent.Play(clip);
@@ -52,7 +53,7 @@ namespace Jyx2
             {
                 _animancerComponent.Playable.PauseGraph();
             };
-            yield return new WaitForSeconds(clip.length);
+            return UniTask.Delay(TimeSpan.FromSeconds(clip.length));
         }
 
         public void Close(Action action = null)
