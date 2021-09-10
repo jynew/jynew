@@ -187,12 +187,10 @@ namespace Jyx2
 
             Hurt = 0;
             Poison = 0;
-
-            getOrigin = true;
-            Attack += Tools.GetRandomInt(0, 7);
-            Qinggong += Tools.GetRandomInt(0, 7);
-            Defence += Tools.GetRandomInt(0, 7);
-            getOrigin = false;
+            
+            Attack = getAttack(true)+Tools.GetRandomInt(0, 7);
+            Qinggong = getDefence(true)+Tools.GetRandomInt(0, 7);
+            Defence = getQinggong(true)+Tools.GetRandomInt(0, 7);
 
             Heal = checkUp(Heal, 0, 3);
             DePoison = checkUp(DePoison, 0, 3);
@@ -365,32 +363,19 @@ namespace Jyx2
 
         public int Attack //攻击力
         {
-            get
-            {
-                return getOrigin ? Get("Attack", Data.Attack) : Tools.Limit(Get("Attack", Data.Attack), 0, MaxAttack);
-            }
+            get { return getAttack(false); }
             set { Save("Attack", value); }
         }
 
         public int Qinggong //轻功
         {
-            get
-            {
-                return getOrigin
-                    ? Get("Qinggong", Data.Qinggong)
-                    : Tools.Limit(Get("Qinggong", Data.Qinggong), 0, MaxQinggong);
-            }
+            get { return getQinggong(true); }
             set { Save("Qinggong", value); }
         }
 
         public int Defence //防御力
         {
-            get
-            {
-                return getOrigin
-                    ? Get("Defence", Data.Defence)
-                    : Tools.Limit(Get("Defence", Data.Defence), 0, MaxDefence);
-            }
+            get { return getDefence(false); }
             set { Save("Defence", value); }
         }
 
@@ -737,6 +722,27 @@ namespace Jyx2
             MaxQinggong += (item.Qinggong>0?item.Qinggong:0) * AddType;
         }
 
+        private int getAttack(bool isOrigin)
+        {
+            int Attack = Get("Attack", Data.Attack);
+            if(isOrigin) return Attack;
+            return Tools.Limit(Attack, 0, MaxAttack);
+        }
+
+        private int getDefence(bool isOrigin)
+        {
+            int Defence = Get("Defence", Data.Defence);
+            if (isOrigin) return Defence;
+            return Tools.Limit(Defence, 0, MaxDefence);
+        }
+
+        private int getQinggong(bool isOrigin)
+        {
+            int Qinggong = Get("Qinggong", Data.Qinggong);
+            if (isOrigin) return Qinggong;
+            return Tools.Limit(Qinggong, 0, MaxQinggong);
+        }
+
         private GameRuntimeData runtime
         {
             get { return GameRuntimeData.Instance; }
@@ -797,16 +803,15 @@ namespace Jyx2
             this.AntiPoison += item.AntiPoison;
             this.UsePoison += item.UsePoison;
 
-            getOrigin = true;
-            this.Attack += item.Attack;
-            this.Defence += item.Defence;
-            this.Qinggong += item.Qinggong;
-            getOrigin = false;
+            this.Attack = getAttack(true)+item.Attack;
+            this.Defence = getDefence(true)+item.Defence;
+            this.Qinggong = getQinggong(true)+ item.Qinggong;
 
             this.Quanzhang += item.Quanzhang;
             this.Yujian += item.Yujian;
             this.Shuadao += item.Shuadao;
             this.Qimen += item.Qimen;
+            this.Anqi += item.Anqi;
 
             this.Pinde += item.AddPinde;
             this.AttackPoison += item.AttackPoison;
@@ -851,17 +856,16 @@ namespace Jyx2
             this.DePoison -= item.DePoison;
             this.AntiPoison -= item.AntiPoison;
             this.UsePoison -= item.UsePoison;
-
-            getOrigin = true;
-            this.Attack -= item.Attack;
-            this.Defence -= item.Defence;
-            this.Qinggong -= item.Qinggong;
-            getOrigin = false;
+            
+            this.Attack = getAttack(true)-item.Attack;
+            this.Defence = getDefence(true)-item.Defence;
+            this.Qinggong = getQinggong(true)- item.Qinggong;
 
             this.Quanzhang -= item.Quanzhang;
             this.Yujian -= item.Yujian;
             this.Shuadao -= item.Shuadao;
             this.Qimen -= item.Qimen;
+            this.Anqi -= item.Anqi;
 
             this.Pinde -= item.AddPinde;
             this.AttackPoison -= item.AttackPoison;
