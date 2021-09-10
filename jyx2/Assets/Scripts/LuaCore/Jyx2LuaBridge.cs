@@ -33,7 +33,7 @@ namespace Jyx2
     {
         public int currentItemId;
         
-        static public JYX2EventContext current = null;
+        public static JYX2EventContext current = null;
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ namespace Jyx2
     /// 注意：桥接函数都不是运行在Unity主线程中
     /// </summary>
     [LuaCallCSharp]
-    static public class Jyx2LuaBridge
+    public static class Jyx2LuaBridge
     {
         static StoryEngine storyEngine { get { return StoryEngine.Instance; } }
 
@@ -50,7 +50,7 @@ namespace Jyx2
 
         static GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
 
-        static public void Talk(int roleId, string content, string talkName, int type)
+        public static void Talk(int roleId, string content, string talkName, int type)
         {
             RunInMainThread(() =>
             {
@@ -71,7 +71,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="count"></param>
-        static public void AddItemWithoutHint(int itemId, int count)
+        public static void AddItemWithoutHint(int itemId, int count)
         {
             RunInMainThread(() =>
             {
@@ -102,7 +102,7 @@ namespace Jyx2
         /// <param name="p10">动画延迟</param>
         /// <param name="p11">X坐标</param>
         /// <param name="p12">Y坐标</param>
-        static public void ModifyEvent(
+        public static void ModifyEvent(
             int scene,
             int eventId,
             int canPass,
@@ -171,16 +171,16 @@ namespace Jyx2
 
 
         //询问是否战斗
-        static public bool AskBattle()
+        public static bool AskBattle()
         {
             return ShowYesOrNoSelectPanel("是否与之战斗?");
         }
 
-        static private bool _battleResult = false;
+        private static bool _battleResult = false;
 
-        static public bool isQuickBattle = false;
+        public static bool isQuickBattle = false;
         //开始一场战斗
-        static public bool TryBattle(int battleId)
+        public static bool TryBattle(int battleId)
         {
             if(isQuickBattle)
             {
@@ -209,20 +209,20 @@ namespace Jyx2
         }
 
         //替换当前的出门音乐
-        static public void ChangeMMapMusic(int musicId)
+        public static void ChangeMMapMusic(int musicId)
         {
             RunInMainThread(() => {
                 LevelMaster.Instance.GetCurrentGameMap().ForceSetLeaveMusicId = musicId;
             });
         }
 
-        static public bool AskJoin()
+        public static bool AskJoin()
         {
             return ShowYesOrNoSelectPanel("是否要求加入?");
         }
 
         //角色加入，同时获得对方身上的物品
-        static public void Join(int roleId)
+        public static void Join(int roleId)
         {
             RunInMainThread(() => {
                 
@@ -256,7 +256,7 @@ namespace Jyx2
             Wait();
         }
         
-        static public void Dead()
+        public static void Dead()
         {
             RunInMainThread(() => {
                 
@@ -268,13 +268,13 @@ namespace Jyx2
             });
         }
 
-        static public bool HaveItem(int itemId)
+        public static bool HaveItem(int itemId)
         {
             return runtime.HaveItemBool(itemId);
         }
 
         //当前正在使用的物品ID
-        static public bool UseItem(int itemId)
+        public static bool UseItem(int itemId)
         {
             if (JYX2EventContext.current == null)
                 return false;
@@ -283,7 +283,7 @@ namespace Jyx2
         }
 
         //离队
-        static public void Leave(int roleId)
+        public static void Leave(int roleId)
         {
             RunInMainThread(() => {
                 runtime.LeaveTeam(roleId);
@@ -292,7 +292,7 @@ namespace Jyx2
             Wait();
         }
 
-        static public void ZeroAllMP()
+        public static void ZeroAllMP()
         {
             RunInMainThread(() => {
                 foreach (var r in runtime.Team)
@@ -305,7 +305,7 @@ namespace Jyx2
         }
 
         //设置用毒
-        static public void SetOneUsePoi(int roleId, int v)
+        public static void SetOneUsePoi(int roleId, int v)
         {
             RunInMainThread(() =>
             {
@@ -323,7 +323,7 @@ namespace Jyx2
             Wait();
         }
         
-        static public void ScenceFromTo(int x,int y,int x2,int y2)
+        public static void ScenceFromTo(int x,int y,int x2,int y2)
         {
             //重制版不需要再实现，使用  jyx2_CameraFollow、jyx2_CameraFollowPlayer
 
@@ -331,7 +331,7 @@ namespace Jyx2
         
 		//修改这个接口逻辑为在当前trigger对应事件序号基础上加上v1,v2,v3 (只对大于0的进行相加，-2保留原事件序号，-1为直接设置)
 		// modified by eaphone at 2021/6/12
-        static public void Add3EventNum(int scene, int eventId,int v1,int v2,int v3)
+        public static void Add3EventNum(int scene, int eventId,int v1,int v2,int v3)
         {
 			RunInMainThread(() =>
             {
@@ -398,7 +398,7 @@ namespace Jyx2
         }
 		
 		//targetEvent:0-interactiveEvent, 1-useItemEvent, 2-enterEvent
-		static public int jyx2_CheckEventCount(int scene, int eventId, int targetEvent)
+		public static int jyx2_CheckEventCount(int scene, int eventId, int targetEvent)
         {
 			int result=0;
 			RunInMainThread(() =>
@@ -428,14 +428,14 @@ namespace Jyx2
 			return result;
 		}
 
-        static public bool InTeam(int roleId)
+        public static bool InTeam(int roleId)
         {
             return runtime.Team.Exists(r => r.Key == roleId.ToString());
         }
 
 		// modify the logicc, when count>=6, team is full
 		// by eaphone at 2021/6/5
-        static public bool TeamIsFull()
+        public static bool TeamIsFull()
         {
             return runtime.Team.Count > GameConst.MAX_TEAMCOUNT-1;
         }
@@ -448,7 +448,7 @@ namespace Jyx2
         /// <param name="x">X坐标</param>
         /// <param name="y">Y坐标</param>
         /// <param name="v">贴图编号（需要除以2）</param>
-        static public void SetScenceMap(int sceneId,int layer,int x,int y,int v)
+        public static void SetScenceMap(int sceneId,int layer,int x,int y,int v)
         {
             //这个函数已经不需要实现，具体2D和3D版差异解决的方式可以参考
             //https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95
@@ -456,12 +456,12 @@ namespace Jyx2
         }
 
         //增加道德
-        static public void AddEthics(int add)
+        public static void AddEthics(int add)
         {
             runtime.Player.Pinde = HSFrameWork.Common.Tools.Limit(runtime.Player.Pinde + add, 0, 100);
         }
 
-        static public void ChangeScencePic(int p1,int p2,int p3,int p4)
+        public static void ChangeScencePic(int p1,int p2,int p3,int p4)
         {
             //这个函数已经不需要实现，具体2D和3D版差异解决的方式可以参考
             //https://github.com/jynew/jynew/wiki/1.5%E6%90%AD%E5%BB%BA%E6%B8%B8%E6%88%8F%E4%B8%96%E7%95%8C%E5%B7%AE%E5%BC%82%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95
@@ -469,29 +469,29 @@ namespace Jyx2
         }
 
         //播放动画
-        static public void PlayAnimation(int p1,int p2,int p3) 
+        public static void PlayAnimation(int p1,int p2,int p3) 
         {
             //这个函数已经不需要实现，使用jyx2_PlayTimeline来解决
         }
 
-        static public bool JudgeEthics(int roleId,int low,int high)
+        public static bool JudgeEthics(int roleId,int low,int high)
         {
             return JudgeRoleValue(roleId, (r) => { return r.Pinde >= low && r.Pinde <= high; });
         }
 
-        static public bool JudgeAttack(int roleId,int low,int high)
+        public static bool JudgeAttack(int roleId,int low,int high)
         {
             bool ret = JudgeRoleValue(roleId, (r) => { return r.Attack >= low && r.Attack <= high; });
             return ret;
         }
 
-        static public void WalkFromTo(int x1,int y1,int x2,int y2)
+        public static void WalkFromTo(int x1,int y1,int x2,int y2)
         {
             //这个函数已经不需要实现，使用jyx2_WalkFromTo来解决
         }
 
 
-        static public void LearnMagic2(int roleId,int magicId,int noDisplay)
+        public static void LearnMagic2(int roleId,int magicId,int noDisplay)
         {
             RunInMainThread(() => {
                 var role = runtime.GetRoleInTeam(roleId);
@@ -521,7 +521,7 @@ namespace Jyx2
         }
 
         //增加资质
-        static public void AddAptitude(int roleId,int v)
+        public static void AddAptitude(int roleId,int v)
         {
             RunInMainThread(() =>
             {
@@ -533,7 +533,7 @@ namespace Jyx2
             Wait();
         }
 
-        static public void SetOneMagic(int roleId,int magicIndexRole,int magicId, int level)
+        public static void SetOneMagic(int roleId,int magicIndexRole,int magicId, int level)
         {
             RunInMainThread(() =>
             {
@@ -563,13 +563,13 @@ namespace Jyx2
             Wait();
         }
 
-        static public bool JudgeSexual(int sexual)
+        public static bool JudgeSexual(int sexual)
         {
             return JudgeRoleValue(0, r => r.Sex == sexual);
         }
 
         //判断队伍中是否有女性
-        static public bool JudgeFemaleInTeam()
+        public static bool JudgeFemaleInTeam()
         {
             foreach(var r in runtime.Team)
             {
@@ -579,13 +579,13 @@ namespace Jyx2
             return false;
         }
         
-        static public void Play2Amination(int eventIndex1, int beginPic1, int endPic1, int eventIndex2, int beginPic2, int endPic2)
+        public static void Play2Amination(int eventIndex1, int beginPic1, int endPic1, int eventIndex2, int beginPic2, int endPic2)
         {
             //这个函数已经不需要实现，使用jyx2_PlayTimeline来解决
         }
 
         //增加轻功
-        static public void AddSpeed(int roleId, int value)
+        public static void AddSpeed(int roleId, int value)
         {
             RunInMainThread(() => 
             {
@@ -597,7 +597,7 @@ namespace Jyx2
         }
 
         //内力
-        static public void AddMaxMp(int roleId, int value)
+        public static void AddMaxMp(int roleId, int value)
         {
             RunInMainThread(() =>
             {
@@ -609,7 +609,7 @@ namespace Jyx2
         }
 
         //攻击力
-        static public void AddAttack(int roleId, int value)
+        public static void AddAttack(int roleId, int value)
         {
             RunInMainThread(() =>
             {
@@ -621,7 +621,7 @@ namespace Jyx2
         }
 
         //生命值
-        static public void AddHp(int roleId, int value)
+        public static void AddHp(int roleId, int value)
         {
             RunInMainThread(() =>
             {
@@ -633,18 +633,18 @@ namespace Jyx2
         }
 
         //设置角色内力属性
-        static public void SetPersonMPPro(int roleId, int value)
+        public static void SetPersonMPPro(int roleId, int value)
         {
             var r = runtime.GetRole(roleId);
             r.MpType = value;
         }
 
-        static public void instruct_50(int p1,int p2,int p3,int p4,int p5,int p6,int p7)
+        public static void instruct_50(int p1,int p2,int p3,int p4,int p5,int p6,int p7)
         {
 
         }
 
-        static public void ShowEthics()
+        public static void ShowEthics()
         {
             RunInMainThread(() => {
                 MessageBox.Create("你的道德指数为" + runtime.Player.Pinde, Next);
@@ -652,7 +652,7 @@ namespace Jyx2
             Wait();
         }
 
-        static public void ShowRepute()
+        public static void ShowRepute()
         {
             RunInMainThread(() =>
             {
@@ -661,7 +661,7 @@ namespace Jyx2
             Wait();
         }
 
-        static public bool JudgeEventNum(int eventIndex, int value)
+        public static bool JudgeEventNum(int eventIndex, int value)
         {
             bool result = false;
             RunInMainThread(() => {
@@ -677,7 +677,7 @@ namespace Jyx2
         }
 
         //打开所有场景
-        static public void OpenAllScene()
+        public static void OpenAllScene()
         {
             foreach(var map in ConfigTable.GetAll<Jyx2Map>())
             {
@@ -690,7 +690,7 @@ namespace Jyx2
         }
 
         //武林大会
-        static public void FightForTop()
+        public static void FightForTop()
         {
 			Dictionary<int, string> heads= new Dictionary<int, string>();
 			heads.Add(8,"唐文亮来领教阁下的高招．");
@@ -770,7 +770,7 @@ namespace Jyx2
         }
 
         //所有人离队
-        static public void AllLeave()
+        public static void AllLeave()
         {
             RunInMainThread(() => {
                 Debug.Log("call AllLeave()");
@@ -783,7 +783,7 @@ namespace Jyx2
         }
 
 		//判断场景贴图。ModifyEvent里如果p7!=-2时，会更新对应{场景}_{事件}的贴图信息，可以用此方法JudegeScenePic检查对应的贴图信息
-        static public bool JudgeScenePic(int scene, int eventId, int pic)
+        public static bool JudgeScenePic(int scene, int eventId, int pic)
         {
             bool result = false;
             RunInMainThread(() => {
@@ -811,17 +811,17 @@ namespace Jyx2
             return result;
         }
 
-        static public bool Judge14BooksPlaced()
+        public static bool Judge14BooksPlaced()
         {
             return jyx2_CheckEventCount(82,999,0)==14;
         }
 
-        static public void EndAmination(int p1, int p2, int p3, int p4, int p5, int p6, int p7)
+        public static void EndAmination(int p1, int p2, int p3, int p4, int p5, int p6, int p7)
         {
 
         }
 
-        static public void SetSexual(int roleId,int sexual)
+        public static void SetSexual(int roleId,int sexual)
         {
             var role = runtime.GetRole(roleId);
             if(role != null)
@@ -830,7 +830,7 @@ namespace Jyx2
             }
         }
 
-        static public void PlayMusic(int id)
+        public static void PlayMusic(int id)
         {
             RunInMainThread(() =>
             {
@@ -839,13 +839,13 @@ namespace Jyx2
         }
 
         //标记一个场景是否可以进入
-        static public void OpenScene(int sceneId)
+        public static void OpenScene(int sceneId)
         {
             runtime.SetSceneEntraceCondition(sceneId.ToString(), 0);
         }
 
 		// modify by eaphone at 2021/6/5
-        static public void SetRoleFace(int dir)
+        public static void SetRoleFace(int dir)
         {
 			RunInMainThread(() =>
             {
@@ -856,12 +856,12 @@ namespace Jyx2
 			Wait();
         }
 
-        static public void NPCGetItem(int roleId,int itemId,int count)
+        public static void NPCGetItem(int roleId,int itemId,int count)
         {
             runtime.RoleGetItem(roleId, itemId, count);
         }
 
-        static public void PlayWave(int waveIndex)
+        public static void PlayWave(int waveIndex)
         {
             RunInMainThread(()=>
             {
@@ -876,12 +876,12 @@ namespace Jyx2
         }
 
      
-        static public bool AskRest()
+        public static bool AskRest()
         {
             return ShowYesOrNoSelectPanel("是否休息?");
         }
 
-        static public void DarkScence()
+        public static void DarkScence()
         {
             RunInMainThread(() =>
             {
@@ -900,11 +900,10 @@ namespace Jyx2
             Wait();
         }
 
-        static public void Rest()
+        public static void Rest()
         {
             RunInMainThread(() =>
             {
-
                 foreach (var role in runtime.Team)
                 {
                     role.Recover();
@@ -912,7 +911,7 @@ namespace Jyx2
             });
         }
 
-        static public void LightScence()
+        public static void LightScence()
         {
             RunInMainThread(() =>
             {
@@ -935,7 +934,7 @@ namespace Jyx2
         }
 
 
-        static public bool JudgeMoney(int money)
+        public static bool JudgeMoney(int money)
         {
             return (runtime.GetItemCount(GameConst.MONEY_ID) >= money);
         }
@@ -945,7 +944,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="count">可为负数</param>
-        static public void AddItem(int itemId, int count)
+        public static void AddItem(int itemId, int count)
         {
             RunInMainThread(() => {
                 var item = ConfigTable.Get<Jyx2Item>(itemId);
@@ -968,13 +967,13 @@ namespace Jyx2
             });
         }
 
-        static public void SetScencePosition2(int x, int y)
+        public static void SetScencePosition2(int x, int y)
         {
             //设置位置，没用了，调用jyx2_MovePlayer替代
         }
 
         //增加声望
-        static public void AddRepute(int value)
+        public static void AddRepute(int value)
         {
             RunInMainThread(() =>{
                 runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
@@ -985,7 +984,7 @@ namespace Jyx2
         }
 
         //韦小宝商店
-        static public void WeiShop()
+        public static void WeiShop()
         {
             RunInMainThread(() =>
             {
@@ -995,7 +994,7 @@ namespace Jyx2
 			Wait();
         }
 
-        static public void AskSoftStar()
+        public static void AskSoftStar()
         {
             RunInMainThread(() => {
                 var eventLuaPath = "jygame/ka" + UnityEngine.Random.Range(801, 820).ToString();
@@ -1004,13 +1003,13 @@ namespace Jyx2
         }
 
 
-        static public void instruct_57()
+        public static void instruct_57()
         {
 
         }
 
         #region 扩展函数
-        static public void jyx2_ReplaceSceneObject(string scene,string path, string replace)
+        public static void jyx2_ReplaceSceneObject(string scene,string path, string replace)
         {
             RunInMainThread(() =>
             {
@@ -1027,7 +1026,7 @@ namespace Jyx2
 		// parent: parent path of destination transform
 		// target: "" mean transport player. otherwise, need the full path of transport object.
 		// eahphone at 2021/6/5
-        static public void jyx2_MovePlayer(string path, string parent="Level/Triggers", string target="")
+        public static void jyx2_MovePlayer(string path, string parent="Level/Triggers", string target="")
         {
 			RunInMainThread(() =>
             {
@@ -1038,7 +1037,7 @@ namespace Jyx2
 			Wait();
         }
 
-        static public void jyx2_CameraFollow(string path)
+        public static void jyx2_CameraFollow(string path)
         {
             RunInMainThread(() =>
             {
@@ -1064,13 +1063,13 @@ namespace Jyx2
             Wait();
         }
         
-        static public void jyx2_CameraFollowPlayer()
+        public static void jyx2_CameraFollowPlayer()
         {
             jyx2_CameraFollow("Level/Player");
         }
 
 		//fromName:-1, 获取主角当前位置作为起始点
-        static public void jyx2_WalkFromTo(int fromName, int toName) 
+        public static void jyx2_WalkFromTo(int fromName, int toName) 
         {
             RunInMainThread(() =>
             {
@@ -1094,7 +1093,7 @@ namespace Jyx2
         }
 
         /// <param name="playableDirector"></param>
-        static private void TimeLineNext(PlayableDirector playableDirector)
+        private static void TimeLineNext(PlayableDirector playableDirector)
         {
             Next();
         }
@@ -1109,7 +1108,7 @@ namespace Jyx2
 
         private static float _timelineSpeed = 1;
 
-        static public void jyx2_SetTimelineSpeed(float speed)
+        public static void jyx2_SetTimelineSpeed(float speed)
         {
             _timelineSpeed = speed;
         }
@@ -1141,7 +1140,7 @@ namespace Jyx2
             });
         }
         
-        static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
+        public static void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
         {
             RunInMainThread(() =>
             {
@@ -1239,7 +1238,7 @@ namespace Jyx2
             });
         }
 
-        static public void jyx2_StopTimeline(string timelineName)
+        public static void jyx2_StopTimeline(string timelineName)
         {
             RunInMainThread(() =>
             {
@@ -1279,7 +1278,7 @@ namespace Jyx2
             Wait();
         }
 
-        static public void jyx2_Wait(float duration)
+        public static void jyx2_Wait(float duration)
         {
             RunInMainThread(() =>
             {
@@ -1299,7 +1298,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="rolePath"></param>
         /// <param name="animationControllerPath"></param>
-        static public void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
+        public static void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
         {
             Debug.Log("jyx2_SwitchRoleAnimation called");
 
@@ -1319,7 +1318,7 @@ namespace Jyx2
             Wait();
         }
 
-        static public void jyx2_FixMapObject(string key, string value)
+        public static void jyx2_FixMapObject(string key, string value)
         {
             RunInMainThread(() =>
             {
@@ -1342,7 +1341,7 @@ namespace Jyx2
             Wait();
         }
 		
-		static public bool jyx2_CheckBookAndRepute()
+		public static bool jyx2_CheckBookAndRepute()
 		{
 			if(runtime.Player.Shengwang<200)
 			{
@@ -1363,7 +1362,7 @@ namespace Jyx2
 
         #region private
 
-        static private void RunInMainThread(Action run)
+        private static void RunInMainThread(Action run)
         {
             Loom.QueueOnMainThread(_ =>
             {
@@ -1374,7 +1373,7 @@ namespace Jyx2
         /// <summary>
         /// 等待返回
         /// </summary>
-        static private void Wait()
+        private static void Wait()
         {
             sema.WaitOne();
         }
@@ -1382,14 +1381,14 @@ namespace Jyx2
         /// <summary>
         /// 下一条指令
         /// </summary>
-        static private void Next()
+        private static void Next()
         {
             sema.Release();
         }
 
-        static private int _selectResult;
+        private static int _selectResult;
 
-        static private bool ShowYesOrNoSelectPanel(string selectMessage)
+        private static bool ShowYesOrNoSelectPanel(string selectMessage)
         {
             RunInMainThread(() =>
             {
@@ -1407,7 +1406,7 @@ namespace Jyx2
             return _selectResult == 0;
         }
 
-        static private bool JudgeRoleValue(int roleId, Predicate<RoleInstance> judge)
+        private static bool JudgeRoleValue(int roleId, Predicate<RoleInstance> judge)
         {
             bool result = false;
             RunInMainThread(() =>

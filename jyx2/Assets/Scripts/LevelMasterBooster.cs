@@ -47,7 +47,7 @@ public class LevelMasterBooster : MonoBehaviour
         levelMaster.MobileSimulate = m_MobileSimulate;
     }
 
-    async private void Start()
+    private async void Start()
     {
         await BeforeSceneLoad.loadFinishTask;
         if (GameRuntimeData.Instance == null)

@@ -22,7 +22,7 @@ static public class Jyx2ResourceHelper
 {
     private static Dictionary<string, GameObject> cachedPrefabs;
 
-    async static public Task Init()
+    public static async Task Init()
     {
         //已经初始化过了
         if (cachedPrefabs != null)
@@ -77,24 +77,24 @@ static public class Jyx2ResourceHelper
         return null;
     }
 
-    static public GameObject CreatePrefabInstance(string path)
+    public static GameObject CreatePrefabInstance(string path)
     {
         var obj = GetCachedPrefab(path);
         return LeanPool.Spawn(obj);
     }
 
-    static public void ReleasePrefabInstance(GameObject obj)
+    public static void ReleasePrefabInstance(GameObject obj)
     {
         LeanPool.Despawn(obj);
     }
 
-    static public void GetRoleHeadSprite(string path, Action<Sprite> callback)
+    public static void GetRoleHeadSprite(string path, Action<Sprite> callback)
     {
         string p = ("Assets/BuildSource/head/" + path + ".png");
         Addressables.LoadAssetAsync<Sprite>(p).Completed += r => { callback(r.Result); };
     }
 
-    static public void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
+    public static void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
     {
         string path = $"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes";
         Addressables.LoadAssetAsync<TextAsset>(path).Completed += r =>
@@ -106,7 +106,7 @@ static public class Jyx2ResourceHelper
         };
     }
 
-    static public void GetBattleboxDataset(string fullPath, Action<BattleboxDataset> callback)
+    public static void GetBattleboxDataset(string fullPath, Action<BattleboxDataset> callback)
     {
         Addressables.LoadAssetAsync<TextAsset>(fullPath).Completed += r =>
         {
@@ -117,7 +117,7 @@ static public class Jyx2ResourceHelper
         };
     }
 
-    static public void GetSprite(RoleInstance role, Action<Sprite> callback)
+    public static void GetSprite(RoleInstance role, Action<Sprite> callback)
     {
         if (role.Key == GameRuntimeData.Instance.Player.Key)
         {
@@ -129,17 +129,17 @@ static public class Jyx2ResourceHelper
         }
     }
 
-    static public void GetRoleHeadSprite(string path, Image setImage)
+    public static void GetRoleHeadSprite(string path, Image setImage)
     {
         GetRoleHeadSprite(path, r => setImage.sprite = r);
     }
 
-    static public void GetRoleHeadSprite(RoleInstance role, Image setImage)
+    public static void GetRoleHeadSprite(RoleInstance role, Image setImage)
     {
         GetSprite(role, r => setImage.sprite = r);
     }
 
-    static public void GetItemSprite(int itemId, Image setImage)
+    public static void GetItemSprite(int itemId, Image setImage)
     {
         string p = ("Assets/BuildSource/Jyx2Items/" + itemId + ".png");
         Addressables.LoadAssetAsync<Sprite>(p).Completed += r =>
@@ -148,7 +148,7 @@ static public class Jyx2ResourceHelper
         };
     }
 
-    static public void GetSprite(string iconName, string atlasName, Action<Sprite> cb)
+    public static void GetSprite(string iconName, string atlasName, Action<Sprite> cb)
     {
         string path = $"Assets/BuildSource/UI/{atlasName}/{iconName}.png";
         Addressables.LoadAssetAsync<Sprite>(path).Completed += r =>
@@ -157,22 +157,22 @@ static public class Jyx2ResourceHelper
         };
     }
 
-    static public void SpawnPrefab(string path, Action<GameObject> callback)
+    public static void SpawnPrefab(string path, Action<GameObject> callback)
     {
         Addressables.InstantiateAsync(path).Completed += r => { callback(r.Result); };
     }
 
-    static public void LoadPrefab(string path, Action<GameObject> callback)
+    public static void LoadPrefab(string path, Action<GameObject> callback)
     {
         Addressables.LoadAssetAsync<GameObject>(path).Completed += r => { callback(r.Result); };
     }
 
-    static public void LoadAsset<T>(string path, Action<T> callback)
+    public static void LoadAsset<T>(string path, Action<T> callback)
     {
         Addressables.LoadAssetAsync<T>(path).Completed += r => { callback(r.Result); };
     }
 
-    static public void ReleaseInstance(GameObject obj)
+    public static void ReleaseInstance(GameObject obj)
     {
         if (obj != null)
         {
@@ -180,7 +180,7 @@ static public class Jyx2ResourceHelper
         }
     }
 
-    static async public void LoadEventGraph(int id, Action<Jyx2NodeGraph> successCallback, Action failed)
+    public static async void LoadEventGraph(int id, Action<Jyx2NodeGraph> successCallback, Action failed)
     {
         string url = $"Assets/BuildSource/EventsGraph/{id}.asset";
         var handle = Addressables.LoadResourceLocationsAsync(url);

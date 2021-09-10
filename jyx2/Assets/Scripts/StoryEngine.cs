@@ -172,7 +172,6 @@ public class StoryEngine : MonoBehaviour
         }
     }
 
-    const float POPINFO_FADEOUT_TIME = 1f;
 
     public void DisplayPopInfo(string msg, float duration = 2f)
     {

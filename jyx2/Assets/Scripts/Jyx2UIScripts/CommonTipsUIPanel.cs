@@ -43,16 +43,17 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
         switch (currentType) 
         {
             case TipsType.Common:
-                ShowInfo(text, duration);
+                StartCoroutine(ShowInfo(text, duration));
                 break;
             case TipsType.MiddleTop:
-                ShowMiddleInfo(text);
+                StartCoroutine(ShowMiddleInfo(text));
                 break;
         }
     }
 
-    void ShowInfo(string msg, float duration) 
+    IEnumerator ShowInfo(string msg, float duration) 
     {
+        //初始化
         var popinfoItem = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/Popinfo.prefab");
         popinfoItem.transform.SetParent(PopInfoParent_RectTransform, false);
         popinfoItem.GetComponentInChildren<Text>().text = msg;
@@ -63,25 +64,26 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
 
         if (duration > POPINFO_FADEOUT_TIME)
         {
-            HSUtilsEx.CallWithDelay(this, () =>
-            {
-                mainText.DOFade(0, POPINFO_FADEOUT_TIME);
-                mainImg.DOFade(0, POPINFO_FADEOUT_TIME);
-            }, duration - POPINFO_FADEOUT_TIME);
-        }
+            //FADE相关逻辑
+            yield return new WaitForSeconds(POPINFO_FADEOUT_TIME);
+            mainText.DOFade(0, POPINFO_FADEOUT_TIME);
+            mainImg.DOFade(0, POPINFO_FADEOUT_TIME);
 
-        HSUtilsEx.CallWithDelay(this, () => {
-            Jyx2ResourceHelper.ReleasePrefabInstance(popinfoItem.gameObject);
-        }, duration);
+            yield return new WaitForSeconds(duration - POPINFO_FADEOUT_TIME);
+        }
+        else
+        {
+            yield return new WaitForSeconds(duration);
+        }
+        
+        Jyx2ResourceHelper.ReleasePrefabInstance(popinfoItem);
     }
 
-    void ShowMiddleInfo(string msg) 
+    IEnumerator ShowMiddleInfo(string msg) 
     {
         MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(true);
         MiddleText_Text.text = msg;
-        HSUtilsEx.CallWithDelay(this, ()=> 
-        {
-            MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(false);
-        }, 1f);
+        yield return new WaitForSeconds(1f);
+        MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(false);
     }
 }
