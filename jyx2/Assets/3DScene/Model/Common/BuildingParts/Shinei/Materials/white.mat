@@ -1,0 +1,512 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: white
+  m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
+  m_ShaderKeywords: _DISSOLVE_OFF
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BakedData_temp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 0.88}
+        m_Offset: {x: 0, y: 1.06}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionTexture:
+        m_Texture: {fileID: 2800000, guid: 234e5611c68275c468cbddd3f4b38010, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 1}
+    - _FlashTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 0.88}
+        m_Offset: {x: 0, y: 1.06}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RefractionTex_temp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UF_NMASK_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Utility:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - ADDITIONAL_FOAM_DISTORTION_AMOUNT: 1
+    - DOWNSAMPLING_SAMPLE_SIZE: 0.33
+    - FLAT_HQ_OFFSET: 50
+    - FRES_BLUR_AMOUNT: 3
+    - FRES_BLUR_OFF: 0.3
+    - LOW_ReflectionTex_distortion: 0.1
+    - MAINTEX_VHEIGHT_Amount: 1
+    - MAINTEX_VHEIGHT_Offset: 0.8
+    - MAIN_TEX_ADDDISTORTION_THAN_MOVE_Amount: 100
+    - MAIN_TEX_Amount: 3
+    - MAIN_TEX_BA_Speed: 8
+    - MAIN_TEX_Bright: 0
+    - MAIN_TEX_Contrast: 2
+    - MAIN_TEX_Distortion: 2
+    - MAIN_TEX_FoamGradDirection_1: 0.01
+    - MAIN_TEX_FoamGradDirection_2: 0.01
+    - MAIN_TEX_FoamGradTileYYY_1: 0
+    - MAIN_TEX_FoamGradTile_1: 0.1
+    - MAIN_TEX_FoamGradTile_2: 0.1
+    - MAIN_TEX_FoamGradWavesSpeed_1: 0.1
+    - MAIN_TEX_FoamGradWavesSpeed_2: 0.1
+    - MAIN_TEX_LQDistortion: 0.1
+    - MAIN_TEX_MixOffset: 0
+    - MAIN_TEX_Multy: 1
+    - MainTexSpeed: 1
+    - POSTRIZE_Colors: 12
+    - RIM_Minus: 0.4
+    - RIM_Plus: 50
+    - SHORE_USE_ADDITIONALCONTUR_POW_Amount_1: 10
+    - SHORE_USE_ADDITIONALCONTUR_POW_Amount_2: 10
+    - SIMPLE_VHEIGHT_FADING_AFFECT: 0.3
+    - VERTEX_H_DISTORT: 0
+    - _3DWavesHeight: 1
+    - _3DWavesSpeed: 0.1
+    - _3DWavesSpeedY: 0.1
+    - _3DWavesTileZ: 1
+    - _3DWavesTileZAm: 1
+    - _3DWavesWind: 0.1
+    - _3DWavesYFoamAmount: 0.02
+    - _3Dwaves_BORDER_FACE: 0
+    - _3dwanamnt: 1
+    - _AMOUNTMASK_Amount: 3
+    - _AMOUNTMASK_Tile: 0.1
+    - _AMOUNTMASK_max: 1
+    - _AMOUNTMASK_min: 0.66
+    - _APPLY_REFR_TO_SPECULAR_DISSOLVE: 1
+    - _APPLY_REFR_TO_SPECULAR_DISSOLVE_FAST: 1
+    - _ASEOutlineWidth: 0
+    - _AverageOffset: 0.5
+    - _BakedData_size: 256
+    - _BakedData_temp_size: 256
+    - _BlendAnimSpeed: 1
+    - _BumpAmount: 1
+    - _BumpMixAmount: 0.5
+    - _BumpScale: 1
+    - _BumpZFade: 0
+    - _BumpZOffset: 1
+    - _CAUSTIC_FOG_Amount: 1
+    - _CAUSTIC_FOG_Pow: 4
+    - _CAUSTIC_PROC_BlackOffset: 1
+    - _CAUSTIC_PROC_Contrast: 1
+    - _CAUSTIC_PROC_GlareSpeed: 1
+    - _CAUSTIC_Speed: 1
+    - _CLASNOISE_PW: 0.35
+    - _CN_AMOUNT: 5
+    - _CN_DISTANCE: 200
+    - _CN_SPEED: 2
+    - _CN_TEXEL: 0.01
+    - _C_BLUR_R: 0.05
+    - _C_BLUR_S: 0.05
+    - _Cutoff: 0.5
+    - _DISSOLVE: 0
+    - _DetailNormalMapScale: 1
+    - _DetileAmount: 0.15
+    - _DetileFriq: 5
+    - _DissolveRatio: 0
+    - _DstBlend: 0
+    - _FadingFactor: 0.5
+    - _FastFresnelAmount: 10
+    - _FastFresnelPow: 10
+    - _FixHLClamp: 0.8
+    - _FixMulty: 1
+    - _FlashIntensity: 0.6
+    - _FlashScale: 0.5
+    - _FlashSpeedX: 0.5
+    - _FlashSpeedY: 0
+    - _FlatFriqX: 1
+    - _FlatFriqY: 1
+    - _FlatSpecularAmount: 1
+    - _FlatSpecularClamp: 10
+    - _FlatSpecularShininess: 48
+    - _FoamAlpha2Amount: 0.5
+    - _FoamAmount: 5
+    - _FoamAmount_SW: 5
+    - _FoamBlendOffset: 0
+    - _FoamDirection: 0.05
+    - _FoamDirection_SW: 0.05
+    - _FoamDistortion: 1
+    - _FoamDistortionFade: 0.8
+    - _FoamDistortionFade_SW: 0.8
+    - _FoamDistortionTexture: 1
+    - _FoamDistortion_SW: 1
+    - _FoamLShoreWavesTileX_SW: 1
+    - _FoamLShoreWavesTileY_SW: 1
+    - _FoamLength: 10
+    - _FoamLength_SW: 10
+    - _FoamMaskOffset_SW: 0
+    - _FoamOffset: 0
+    - _FoamOffsetSpeed: 0.2
+    - _FoamTextureTiling: 1
+    - _FoamTextureTiling_SW: 1
+    - _FoamWavesSpeed: 0.15
+    - _FoamWavesSpeed_SW: 0.15
+    - _Frac01Time: 0
+    - _Frac01Time_MAIN_TEX_BA_Speed: 0
+    - _Frac01Time_d8_mBlendAnimSpeed: 0
+    - _Frac01Time_m16_mMAIN_TEX_FoamGradWavesSpeed_1: 0
+    - _Frac2PITime: 0
+    - _FracTimeFull: 0
+    - _FracTimeW: 0
+    - _FracTimeX: 0
+    - _FrameRate: 0
+    - _FresnelAmount: 4
+    - _FresnelFade: 0.7
+    - _FresnelPow: 1.58
+    - _Gloss: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _LOW_DISTOR_Amount: 1
+    - _LOW_DISTOR_MAINTEX_Speed: 8
+    - _LOW_DISTOR_MAINTEX_Tile: 20
+    - _LOW_DISTOR_Speed: 8
+    - _LOW_DISTOR_Tile: 20
+    - _LightAmount: 1
+    - _LightNormalsFactor: 1
+    - _LightSmoothness: 0
+    - _LightThreshold: 0.3
+    - _Light_FlatSpecTopDir: 0.5
+    - _LutAmount: 1
+    - _MAINTEXMASK_Amount: 3
+    - _MAINTEXMASK_Blend: 0.5
+    - _MAINTEXMASK_Tile: 0.1
+    - _MAINTEXMASK_max: 1
+    - _MAINTEXMASK_min: 0.66
+    - _MKEditorShowDetailBehavior: 0
+    - _MKEditorShowDissolveBehavior: 0
+    - _MKEditorShowLightBehavior: 1
+    - _MKEditorShowMainBehavior: 1
+    - _MKEditorShowOutlineBehavior: 1
+    - _MKEditorShowReflectionBehavior: 0
+    - _MKEditorShowRenderBehavior: 0
+    - _MKEditorShowRimBehavior: 1
+    - _MKEditorShowShadowBehavior: 1
+    - _MKEditorShowSketchBehavior: 0
+    - _MKEditorShowSpecularBehavior: 1
+    - _MKEditorShowTranslucentBehavior: 0
+    - _MM_MultyOffset: 0.3
+    - _MOR_Base: 1
+    - _MOR_Offset: 1
+    - _MOR_Tile: 82
+    - _MTDistortion: 0
+    - _MainTexAngle: 0
+    - _Metallic: 0
+    - _Mode: 0
+    - _MultyOctaveNormals: 5
+    - _MultyOctavesSpeedOffset: 0.89
+    - _MyFarClipPlane: 1000
+    - _MyNearClipPlane: 0
+    - _NE1_GlareAmount: 1
+    - _NE1_GlareBlackOffset: 0
+    - _NE1_GlareContrast: 0
+    - _NE1_GlareFriq: 1
+    - _NE1_GlareSpeed: 1
+    - _NHQ_GlareAmount: 1
+    - _NHQ_GlareBlackOffset: 0
+    - _NHQ_GlareContrast: 0
+    - _NHQ_GlareFriq: 30
+    - _NHQ_GlareNormalsEffect: 1
+    - _NHQ_GlareSpeedXY: 1
+    - _NHQ_GlareSpeedZ: 1
+    - _ObjecAngle: 0
+    - _OcclusionStrength: 1
+    - _OutGradBlend: 1
+    - _OutGradZ: 1
+    - _OutShadowsAmount: 20
+    - _OutlineRandomFactor: 0
+    - _OutlineSize: 0.01
+    - _PRCHQ_amount: 1
+    - _PRCHQ_speedTex: 1
+    - _PRCHQ_speedWaves: 1
+    - _PRCHQ_tileTex: 1
+    - _PRCHQ_tileWaves: 1
+    - _Parallax: 0.02
+    - _REFR_MASK_Amount: 3
+    - _REFR_MASK_Tile: 0.1
+    - _REFR_MASK_max: 1
+    - _REFR_MASK_min: 0.66
+    - _RIM_BLEND: 0
+    - _ReflectionAmount: 1
+    - _ReflectionBlendAmount: 2
+    - _ReflectionBlurRadius: 0.1
+    - _ReflectionBlurZOffset: 0
+    - _ReflectionDesaturate: 0.5
+    - _ReflectionLOD: 1
+    - _ReflectionMask_Amount: 3
+    - _ReflectionMask_Offset: 0.66
+    - _ReflectionMask_Tiling: 0.1
+    - _ReflectionMask_UpClamp: 1
+    - _ReflectionTex_size: 256
+    - _ReflectionTex_temp_size: 128
+    - _ReflectionYOffset: -0.15
+    - _RefrAmount: 1
+    - _RefrBled_Fres_Amount: 1
+    - _RefrBled_Fres_Pow: 1
+    - _RefrBlur: 0.25
+    - _RefrDeepAmount: 1
+    - _RefrDeepFactor: 64
+    - _RefrDistortion: 100
+    - _RefrDistortionZ: 0
+    - _RefrLowDist: 0.1
+    - _RefrRecover: 0
+    - _RefrTextureFog: 0
+    - _RefrTopAmount: 1
+    - _RefrZFallOff: 10
+    - _RefrZOffset: 1.8
+    - _RefractionBLendAmount: 0.5
+    - _RefractionBlendFade: 1
+    - _RefractionBlendOffset: 0
+    - _RefractionBlurZOffset: 0
+    - _RefractionDesaturate: 0.5
+    - _RefractionTex_size: 512
+    - _RefractionTex_temp_size: 512
+    - _RimIntensity: 0
+    - _RimSize: 1.5
+    - _RimSmoothness: 0.5
+    - _SFW_Amount: 1
+    - _SFW_Distort: 1
+    - _SFW_NrmAmount: 1
+    - _SURFACE_FOG_Amount: 1
+    - _SURFACE_FOG_Speed: 1
+    - _SURFACE_FOG_Tiling: 1
+    - _ShadorAmount: 0.5
+    - _ShadowIntensity: 0.9
+    - _Shininess: 0.07
+    - _ShoreDistortionTexture: 1
+    - _ShoreWavesQual: 2
+    - _ShoreWavesRadius: 0.1
+    - _SmoothnessTextureChannel: 0
+    - _Specular: 0
+    - _SpecularAmount: 2
+    - _SpecularGlowAmount: 0.2
+    - _SpecularHighlights: 1
+    - _SpecularIntensity: 0
+    - _SpecularShininess: 48
+    - _SrcBlend: 1
+    - _SurfaceFoamAmount: 10
+    - _SurfaceFoamContrast: 200
+    - _TILINGMASK_Amount: 3
+    - _TILINGMASK_Tile: 0.1
+    - _TILINGMASK_factor: 5
+    - _TILINGMASK_max: 1
+    - _TILINGMASK_min: 0.66
+    - _TexRefrDistortFix: 0
+    - _TransparencyLuminosity: 1
+    - _TransparencyPow: 1
+    - _TransparencySimple: 1
+    - _UFSHORE_ADDITIONAL_Length_1: 1
+    - _UFSHORE_ADDITIONAL_Length_2: 1
+    - _UFSHORE_ADD_Amount_1: 1
+    - _UFSHORE_ADD_Amount_2: 1
+    - _UFSHORE_ADD_Distortion_1: 1
+    - _UFSHORE_ADD_Distortion_2: 1
+    - _UFSHORE_ADD_LowDistortion_1: 0.1
+    - _UFSHORE_ADD_LowDistortion_2: 0.1
+    - _UFSHORE_ADD_Tile_1: 0.1
+    - _UFSHORE_ADD_Tile_2: 0.1
+    - _UFSHORE_AlphaAmount_1: 0.25
+    - _UFSHORE_AlphaAmount_2: 0.25
+    - _UFSHORE_AlphaMax_1: 1
+    - _UFSHORE_AlphaMax_2: 1
+    - _UFSHORE_Amount_1: 5
+    - _UFSHORE_Amount_2: 5
+    - _UFSHORE_Distortion_1: 0.8
+    - _UFSHORE_Distortion_2: 0.8
+    - _UFSHORE_Length_1: 10
+    - _UFSHORE_Length_2: 10
+    - _UFSHORE_LowDistortion_1: 1
+    - _UFSHORE_LowDistortion_2: 1
+    - _UFSHORE_ShadowV1_1: 1
+    - _UFSHORE_ShadowV1_2: 1
+    - _UFSHORE_ShadowV2_1: 1
+    - _UFSHORE_ShadowV2_2: 1
+    - _UFSHORE_Speed_1: 1
+    - _UFSHORE_Speed_2: 1
+    - _UFSHORE_UNWRAP_LowDistortion_1: 0
+    - _UFSHORE_UNWRAP_Transparency: 0
+    - _UF_NMASK_Brightnes: 0
+    - _UF_NMASK_Contrast: 1
+    - _UF_NMASK_Tile: 0.1
+    - _UVSec: 0
+    - _VERTEX_ANIM_DETILEAMOUNT: 1
+    - _VERTEX_ANIM_DETILEFRIQ: 5
+    - _VERTEX_ANIM_DETILESPEED: 0
+    - _VERT_Amount: 1
+    - _VertexToUv: 1
+    - _Visibility: 1
+    - _W1_GlareAmount: 1
+    - _W1_GlareBlackOffset: 0
+    - _W1_GlareContrast: 0
+    - _W1_GlareFriq: 1
+    - _W1_GlareSpeed: 1
+    - _W2_GlareAmount: 1
+    - _W2_GlareBlackOffset: 0
+    - _W2_GlareContrast: 0
+    - _W2_GlareFriq: 1
+    - _W2_GlareSpeed: 1
+    - _WaterfrontFade: 10
+    - _WaterfrontFade_SW: 0
+    - _WaveGradMidOffset: 0.5
+    - _WaveGradTopOffset: 1
+    - _WavesDirAngle: 0
+    - _WorkDistance: 5
+    - _ZDistanceCalcOffset: 0.25
+    - _ZWrite: 1
+    - _Z_BLACK_OFFSET_V: 0
+    - __dirty: 0
+    - _sinAmount: 0.1
+    - _sinFriq: 7.28
+    - baked_ReflectionTex_distortion: 15
+    - lerped_post_offset: 0
+    - lerped_post_offset_falloff: 1
+    m_Colors:
+    - MAIN_TEX_CA_Speed: {r: 0.1, g: 0.1, b: 0.1, a: 0.1}
+    - MAIN_TEX_Move: {r: 0, g: 0, b: 0, a: 0}
+    - MAIN_TEX_Tile: {r: 1, g: 1, b: 1, a: 1}
+    - _3DWavesTile: {r: 1, g: 1, b: -1, a: -1}
+    - _AMOUNTMASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 0}
+    - _AnimMove: {r: 0, g: 0, b: 0, a: 0}
+    - _BlendColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CAUSTIC_Offset: {r: 1, g: 2, b: 1, a: 0}
+    - _CAUSTIC_PROC_Tiling: {r: 1, g: 1, b: 1, a: 1}
+    - _CAUSTIC_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _CN_TILING: {r: 5, g: 5, b: 1, a: 1}
+    - _Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FoamColor_SW: {r: 1, g: 1, b: 1, a: 1}
+    - _FracMAIN_TEX_TileTime_mMAIN_TEX_Move: {r: 0, g: 0, b: 0, a: 0}
+    - _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_pMAIN_TEX_CA_Speed: {r: 0, g: 0, b: 0,
+        a: 0}
+    - _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_sMAIN_TEX_CA_Speed: {r: 0, g: 0, b: 0,
+        a: 0}
+    - _FracWTime_m4_m3DWavesSpeed_dPI2: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_UFSHORE_Tile_1Time_d10: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_UFSHORE_Tile_2Time_d10: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_UVS_DIR: {r: 0, g: 0, b: 0, a: 0}
+    - _Frac_WaterTextureTilingTime_m_AnimMove: {r: 0, g: 0, b: 0, a: 0}
+    - _GAmplitude: {r: 0.3, g: 0.35, b: 0.25, a: 0.25}
+    - _GDirectionAB: {r: 0.3, g: 0.85, b: 0.85, a: 0.25}
+    - _GDirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
+    - _GFrequency: {r: 1.3, g: 1.35, b: 1.25, a: 1.25}
+    - _GSpeed: {r: 1.2, g: 1.375, b: 1.1, a: 1.5}
+    - _GSteepness: {r: 1, g: 1, b: 1, a: 1}
+    - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _LightColor0Fake: {r: 1, g: 1, b: 1, a: 1}
+    - _LightDir: {r: -0.5, g: 0.46, b: 0.88, a: 0}
+    - _MAINTEXMASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _MM_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _MM_Tile: {r: 1, g: 1, b: 1, a: 1}
+    - _MM_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 0}
+    - _MainTexColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainTexTile: {r: 1, g: 1, b: 0, a: 0}
+    - _MultyOctavesTileOffset: {r: 1.63, g: 1.63, b: 1, a: 1}
+    - _NE1_WavesDirection: {r: 0.5, g: 0, b: 0.25, a: 1}
+    - _ObjectScale: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _REFR_MASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _ReflectColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ReflectionBakeLayers: {r: 255, g: 255, b: 255, a: 255}
+    - _ReflectionJustColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ReflectionMask_TexOffsetF: {r: 0, g: 0, b: 0, a: 0}
+    - _ReflectionMask_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _RefrTopZColor: {r: 0.89, g: 0.95, b: 1, a: 1}
+    - _RefrZColor: {r: 0.28999996, g: 0.53, b: 0.608, a: 1}
+    - _RefractionBakeLayers: {r: 255, g: 255, b: 255, a: 255}
+    - _ReplaceColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SFW_Dir: {r: 1, g: 0, b: 0, a: 0}
+    - _SFW_Dir1: {r: 0.9, g: 0, b: 0.1, a: 0}
+    - _SFW_Speed: {r: 1, g: 1, b: 1, a: 1}
+    - _SFW_Tile: {r: 1, g: 1, b: 1, a: 1}
+    - _SUrfaceFoamVector: {r: 0.120653294, g: 0.98533523, b: 0.120653294, a: 0}
+    - _ShadowColor: {r: 0, g: 0.05366329, b: 0.4528302, a: 1}
+    - _SpecColor: {r: 0.27450982, g: 0.27450982, b: 0.27450982, a: 1}
+    - _TILINGMASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _TheFlashColor: {r: 0, g: 0, b: 0, a: 0}
+    - _UFSHORE_ADD_Color_1: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_ADD_Color_2: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_Color_1: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_Color_2: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_Tile_1: {r: 1, g: 1, b: 1, a: 1}
+    - _UFSHORE_Tile_2: {r: 1, g: 1, b: 1, a: 1}
+    - _UF_NMASK_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _VERTEX_ANIM_DETILE_YOFFSET: {r: -10, g: 10, b: 0, a: 0}
+    - _VERT_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _VERT_Tile: {r: 1, g: 1, b: 1, a: 1}
+    - _VertexSize: {r: 0, g: 0, b: 1, a: 1}
+    - _WaterTextureTiling: {r: 1, g: 1, b: 1, a: -1}
+    - _WaveGrad0: {r: 1, g: 1, b: 1, a: 1}
+    - _WaveGrad1: {r: 1, g: 1, b: 1, a: 1}
+    - _WaveGrad2: {r: 1, g: 1, b: 1, a: 1}
+    - _ZDepthBakeLayers: {r: 255, g: 255, b: 255, a: 255}
+    - lerped_post_color1: {r: 1, g: 1, b: 1, a: 1}
+    - lerped_post_color2: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

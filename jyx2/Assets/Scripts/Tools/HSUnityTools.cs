@@ -187,10 +187,10 @@ namespace Jyx2.Middleware
             {
                 if (p.enableEmission)
                 {
-                    if (p.loop)
+                    /*if (p.loop)
                     {
                         return -1f;
-                    }
+                    }*/
                     float dunration = 0f;
                     if (p.emissionRate <= 0)
                     {

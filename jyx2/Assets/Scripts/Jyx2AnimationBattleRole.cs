@@ -52,6 +52,11 @@ namespace Jyx2
 
             PlayAnimation(CurDisplay.LoadAnimation(Jyx2SkillDisplayAsset.Jyx2RoleAnimationType.Idle));
         }
+
+        public virtual void DeadOrIdle()
+        {
+            Idle();
+        }
         
         public virtual void BeHit()
         {
@@ -68,7 +73,7 @@ namespace Jyx2
                 clip = CurDisplay.LoadAnimation(Jyx2SkillDisplayAsset.Jyx2RoleAnimationType.Behit);
             }
             
-            PlayAnimation(clip, Idle, 0.25f);
+            PlayAnimation(clip, DeadOrIdle, 0.25f);
         }
 
         public virtual void Attack()
@@ -113,7 +118,7 @@ namespace Jyx2
             //DONOTHING
         }
 
-        private void PlayAnimation(AnimationClip clip, Action callback = null, float fadeDuration = 0f)
+        protected void PlayAnimation(AnimationClip clip, Action callback = null, float fadeDuration = 0f)
         {
             if (clip == null)
             {

@@ -39,38 +39,55 @@ public class LoadingPanel : MonoBehaviour
     {
         yield return 0; //否则BattleHelper还没有初始化
 
-        string level = levelKey.Contains("&") ? levelKey.Split('&')[0] : levelKey;
-        string command = levelKey.Contains("&") ? levelKey.Split('&')[1] : "";
-        //var async = SceneManager.LoadSceneAsync(level);
+        //如果是返回主菜单
+        if (levelKey.Equals(GameConst.DefaultMainMenuScene))
+        {
+            var loadAsync = SceneManager.LoadSceneAsync(levelKey);
+            
+            while (!loadAsync.isDone)
+            {
+                m_LoadingText.text = "载入中... " + (int)(loadAsync.progress * 100) + "%";
+                yield return 0;
+            }
+            if (callback != null)
+                callback();
+            GameObject.Destroy(this.gameObject);
+        }
+        else //否则动态载入场景
+        {
+            string level = levelKey.Contains("&") ? levelKey.Split('&')[0] : levelKey;
+            string command = levelKey.Contains("&") ? levelKey.Split('&')[1] : "";
+            //var async = SceneManager.LoadSceneAsync(level);
 
-        //苟且写法
-        string scenePath = "";
-        if (level.Contains("Battle"))
-        {
-            scenePath = $"Assets/Jyx2BattleScene/{level}.unity";
-        }
-        else
-        {
-            scenePath = $"Assets/Jyx2Scenes/{level}.unity";
-        }
+            //苟且写法
+            string scenePath = "";
+            if (level.Contains("Battle"))
+            {
+                scenePath = $"Assets/Jyx2BattleScene/{level}.unity";
+            }
+            else
+            {
+                scenePath = $"Assets/Jyx2Scenes/{level}.unity";
+            }
         
-        var async = Addressables.LoadSceneAsync(scenePath);
+            var async = Addressables.LoadSceneAsync(scenePath);
         
-        while (!async.IsDone)
-        {
-            m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
+            while (!async.IsDone)
+            {
+                m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
+                yield return 0;
+            }
+            if (!string.IsNullOrEmpty(command))
+            {
+                StoryEngine.Instance.ExecuteCommand(command, null);
+            }
             yield return 0;
-        }
-        if (!string.IsNullOrEmpty(command))
-        {
-            StoryEngine.Instance.ExecuteCommand(command, null);
-        }
-        yield return 0;
 
-        //Jyx2_UIManager.Instance.ShowMainUI(levelKey);
-        if (callback != null)
-            callback();
+            //Jyx2_UIManager.Instance.ShowMainUI(levelKey);
+            if (callback != null)
+                callback();
 
-        GameObject.Destroy(this.gameObject);
+            GameObject.Destroy(this.gameObject);
+        }
     }
 }

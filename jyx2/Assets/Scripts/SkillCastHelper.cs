@@ -16,6 +16,7 @@ using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using Jyx2.Middleware;
 using HSFrameWork.Common;
+using SkillEffect;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -95,18 +96,39 @@ namespace Jyx2
             //格子特效
             if(display.blockPartilePrefab != null)
             {
-                GameUtil.CallWithDelay(display.blockParticleDelay, DisplayBlockEft);
+                DisplayBlockEft();
             }
 
             //音效
             if(display.audio != null)
             {
-                GameUtil.CallWithDelay(display.audioDelay,ExecuteSoundEffect);
+                GameUtil.CallWithDelay(display.audioDelay, () => ExecuteSoundEffect(display.audio));
+            }
+
+            //音效2
+            if (display.audio2 != null)
+            {
+                GameUtil.CallWithDelay(display.audioDelay2, () => ExecuteSoundEffect(display.audio2));
             }
             
             //播放受击动画和飘字
             GameUtil.CallWithDelay(display.behitDelay, ExecuteBeHit);
 
+            //残影
+            if (display.isGhostShadowOn)
+            {
+                var ghostShadow = GameUtil.GetOrAddComponent<GhostShadow>(Source.transform);
+                ghostShadow.m_fDuration = 15;
+                ghostShadow.m_fInterval = 0.3f;
+                ghostShadow.m_fIntension = 0.4f;
+                ghostShadow.m_Color = display.ghostShadowColor;
+                ghostShadow.m_bOpenGhost = true;
+                GameUtil.CallWithDelay(display.duration, () =>
+                {
+                    ghostShadow.m_bOpenGhost = false;
+                });
+            }
+            
             //回调
             if(callback != null)
             {
@@ -122,13 +144,28 @@ namespace Jyx2
         /// <param name="time"></param>
         /// <param name="parent"></param>
         /// <param name="callback"></param>
-        private void CastEffectAndWaitSkill(GameObject pre, float time, Transform parent, Vector3 offset, Action callback = null)
+        private void CastEffectAndWaitSkill(GameObject pre, float time, Transform parent, Vector3 offset, float scale, Action callback = null)
         {
             if (pre == null) return;
+            if (time == 0) time = 2f; //jyx2 修复有的特效无法获取时长的问题
 
             GameObject obj = GameObject.Instantiate(pre);
             obj.transform.rotation = parent.rotation;
             obj.transform.position = parent.position + offset;
+            if (Math.Abs(scale - 1) > 0.001)
+            {
+                var scaleComponent = obj.AddComponent<ScaleParticles>();
+                scaleComponent.ScaleSize = scale;
+            }
+            
+            //修复：将所有的技能特效LOOPING去掉
+            foreach (var p in obj.GetComponentsInChildren<ParticleSystem>())
+            {
+                if (!p.main.loop) continue;
+                var m = p.main;
+                m.loop = true;
+            }
+            
             Observable.Timer(TimeSpan.FromSeconds(time))
             .Subscribe(ms =>
             {
@@ -142,8 +179,9 @@ namespace Jyx2
             var display = GetDisplay();
             var prefab = display.partilePrefab;
             var duration = HSUnityTools.ParticleSystemLength(prefab.transform);
+            var scale = display.particleScale;
             Vector3 offset = display.partileOffset;
-            CastEffectAndWaitSkill(prefab, duration, Source.gameObject.transform, offset); //默认预留三秒
+            CastEffectAndWaitSkill(prefab, duration, Source.gameObject.transform, offset, scale); //默认预留三秒
         }
 
 
@@ -154,13 +192,35 @@ namespace Jyx2
 
             var blockEftDuration = HSUnityTools.ParticleSystemLength(prefab.transform);
 
-            Vector3 offset = display.blockPartileOffset;
-
             //播放特效
             foreach (var block in CoverBlocks)
             {
-                CastEffectAndWaitSkill(prefab, blockEftDuration, block, offset);
+                GameUtil.CallWithDelay(display.blockParticleDelay, () =>
+                {
+                    CastEffectAndWaitSkill(
+                        prefab,
+                        blockEftDuration,
+                        block,
+                        display.blockPartileOffset,
+                        display.blockParticleScale);
+                });
+                
+                
+                //补充特效
+                if (display.blockPartilePrefabAdd != null)
+                {
+                    GameUtil.CallWithDelay(display.blockParticleDelayAdd, () =>
+                    {
+                        CastEffectAndWaitSkill(
+                            display.blockPartilePrefabAdd,
+                            display.bloackParticleAddDuration,
+                            block,
+                            display.blockPartileOffsetAdd,
+                            display.blockParticleScaleAdd);
+                    });
+                }
             }
+
         }
 
         /// <summary>
@@ -180,10 +240,9 @@ namespace Jyx2
         }
 
 
-        private void ExecuteSoundEffect()
+        private void ExecuteSoundEffect(AudioClip clip)
         {
-            var display = GetDisplay();
-            var soundEffect = display.audio;
+            var soundEffect = clip;
             if (soundEffect == null)
                 return;
 

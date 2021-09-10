@@ -39,7 +39,7 @@ public class SkillShowCoverState : IBattleState
 
         BattleBlockData blockData = BattleboxHelper.Instance.GetBlockData(skillPos.X, skillPos.Y);
         //面板需要根据世界坐标算出ui坐标 显示在格子上方 方便点击
-        Jyx2_UIManager.Instance.ShowUI("BattleOKPanel", blockData.WorldPos, new Action(OnConfirm),new Action(OnCancel));
+        Jyx2_UIManager.Instance.ShowUI(nameof(BattleOKPanel), blockData.WorldPos, new Action(OnConfirm),new Action(OnCancel));
     }
 
     void FillBeHitEnemeyGameObject(List<BattleBlockVector> rangeList) 

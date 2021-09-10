@@ -106,7 +106,7 @@ public class BattleStateMechine:MonoBehaviour
         m_roleFocusRing.transform.SetParent(role.View.transform, false);//选中框 跟随目标
         m_roleFocusRing.transform.localPosition = new Vector3(0, 0.15f, 0); //略微比地面高一点
         CameraHelper.Instance.ChangeFollow(role.View.transform); //切换摄像机跟随角色
-        Jyx2_UIManager.Instance.ShowUI("BattleMainUIPanel", BattleMainUIState.ShowRole, role);//展示UI头像
+        Jyx2_UIManager.Instance.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.ShowRole, role);//展示UI头像
 
         //记录本次 可以移动的点的集合 除非是有技能可以二次移动 否则本次移动范围不可更改
         CurrentMoveList = BattleManager.Instance.GetMoveRange(role);

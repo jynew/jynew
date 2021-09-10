@@ -43,16 +43,16 @@ namespace Jyx2
             state.Events.OnEnd = _animancerComponent.Playable.PauseGraph;
             state.NormalizedTime = 1;
         }
-        public void Open(Action action = null)
+        public IEnumerator Open()
         {
             _animancerComponent.Playable.UnpauseGraph();
             var state = _animancerComponent.Play(clip);
             state.Speed = 1;
             state.Events.OnEnd = () =>
             {
-                action?.Invoke();
                 _animancerComponent.Playable.PauseGraph();
             };
+            yield return new WaitForSeconds(clip.length);
         }
 
         public void Close(Action action = null)

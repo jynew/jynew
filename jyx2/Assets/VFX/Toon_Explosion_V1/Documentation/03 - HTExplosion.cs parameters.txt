@@ -1,0 +1,51 @@
+Toon Explosion Volume 1 : HTExplosion.cs parameters guide
+==================================================
+
+The inspector for gameObject with HTExplosion.cs is redefined.
+
+You will find in the order :
+
+Sprite sheet properties :
+--------------------------
+Sprite sheet material : a material with a sprite sheet
+
+Tile X : The number of sprites in X on the texture
+
+Tile Y : The number of sprites in Y on the texture    
+
+Number of sprtie : The real number of sprites on the sprite sheet
+
+Frames per second : Playing speed
+
+On shot : true = Play only once the animation, and destroy the effect. 
+				 If there is a light or sound, The effect will be destroyed after the end of the sound or the effect of light fade.
+
+		  false = The effect is played in loop mode
+		  
+		  
+Sprite properties :
+--------------------
+* Camera facing   : Gives the behavior of the object relative to the camera    
+                        - Bill Board : The object will always face
+                        - Horizontal : the object will always face relative to Y axis       
+                        - Vertical  : the object will always face relative to X axis  
+                        - Never  : the object will never face 
+                        
+* Size : The size of the sprite at the start up
+                   
+* Speed growing  : Shows the growth rate of the size of the object Value = 0 the object will not grow.
+
+* Random rotation : true = At startup the object will take a random rotation on his z axis.
+           	        false = no random rotation.
+           	  
+		  
+Light properties : 
+-------------------
+Add light effect : A point light will be create at the position of the effect
+
+Light range      : The range of the light
+
+Light color      : The color of the light
+
+Light fad speed  : The rate of decrease of the intensity of the light
+					Value =0 the light intensity never decrease.

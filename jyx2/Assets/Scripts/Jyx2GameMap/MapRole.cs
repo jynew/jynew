@@ -26,7 +26,6 @@ using Jyx2.Middleware;
 
 public class MapRole : Jyx2AnimationBattleRole
 {
-
     //数据实例
     public RoleInstance DataInstance
     {
@@ -191,8 +190,6 @@ public class MapRole : Jyx2AnimationBattleRole
 
         info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2/AttackInfoText.prefab");
         hudRoot.NewText(info);
-
-        CheckDeath();
     }
 
     //血条标记为需要刷新
@@ -207,14 +204,6 @@ public class MapRole : Jyx2AnimationBattleRole
         HPBarIsDirty = false;
     }
 
-    void CheckDeath()
-    {
-        if (DataInstance.IsDead())
-        {
-            this.gameObject.SetActive(false); //TODO，播放一个死亡特效
-        }
-    }
-    
     public void ShowBattleText(string mainText,Color textColor) 
     {
         if (StoryEngine.Instance == null) return;
@@ -327,7 +316,7 @@ public class MapRole : Jyx2AnimationBattleRole
         var display = skill.GetDisplay();
         //切换对应武器
         var weaponCode = display.weaponCode;
-        if (weaponCode > 0)
+        if (weaponCode >= 0)
         {
             ChangeWeapon(weaponCode);
         }
@@ -384,8 +373,22 @@ public class MapRole : Jyx2AnimationBattleRole
 
     public void ShowDeath(int deathCode = -1)
     {
+        var globalConfig = GlobalAssetConfig.Instance;
+        
+        //人型骨骼，播放死亡动作
+        if (this._animator.runtimeAnimatorController == globalConfig.defaultAnimatorController)
+        {
+            var clip = Hanjiasongshu.Tools.GetRandomElement(globalConfig.defaultDieClips);
+            PlayAnimation(clip, () => { Destroy(gameObject); });
+        }
+        else
+        {
+            Destroy(gameObject);  
+        }
+        
+        
         //简单粗暴，直接删除GameObject，回头有空再实现死亡动作
-        GameObject.Destroy(this.gameObject);
+        //GameObject.Destroy(this.gameObject);
 
         //默认播放随机死亡动作
         //if (deathCode == -1) deathCode = ToolsShared.GetRandomInt(0, 2);
@@ -529,7 +532,7 @@ public class MapRole : Jyx2AnimationBattleRole
     /// <param name="weaponStr"></param>
     void DOMountWeapon(ModelAsset.WeaponPartType weaponCode)
     {
-        if(!IsInBattle) return;
+        //if(!IsInBattle) return;
         UnMountCurrentWeapon();
 
         if (weaponCode == 0)
@@ -675,50 +678,17 @@ public class MapRole : Jyx2AnimationBattleRole
     }
     #endregion
     
-    public void HitEffect(string effectName, float deltaTime = 0f, bool showDeath = false)
+    public override void DeadOrIdle()
     {
-        /*if (DataInstance.IsDead() && showDeath)
+        if (DataInstance.IsDead())
         {
             ShowDeath();
         }
         else
         {
-            GetAnimator().SetTrigger("hit");
-            GetAnimator().Update(deltaTime);
-            if (!effectName.EndsWith(".prefab")) effectName += ".prefab";
-            Jyx2ResourceHelper.LoadPrefab($"Assets/Effects/Prefabs/{effectName}", effect=> {
-                CastSkillFXAndWait(effect, 1f);
-            });
-        }*/
+            Idle();
+        }
     }
-
-    public void HitVoice(string musicName)
-    {
-        Jyx2ResourceHelper.LoadAsset<AudioClip>($"Assets/BuildSource/SoundEffect/{musicName}", soundEffect=> {
-            //声源位置与摄像机Y轴一致
-            float x = Camera.main.transform.position.x - (Camera.main.transform.position.x - transform.position.x) / 5;
-            float y = Camera.main.transform.position.y;
-            float z = Camera.main.transform.position.z - (Camera.main.transform.position.z - transform.position.z) / 5;
-            Vector3 voicePos = new Vector3(x, y, z);
-            AudioSource.PlayClipAtPoint(soundEffect, voicePos, 1f);
-        });
-    }
-
-    private void CastSkillFXAndWait(GameObject pre, float time, Action callback = null)
-    {
-        if (pre == null) return;
-        GameObject obj = GameObject.Instantiate(pre);
-        Transform _hitPoint = transform;
-        obj.transform.rotation = _hitPoint.rotation;
-        obj.transform.position = _hitPoint.position;
-        Observable.TimerFrame(Convert.ToInt32(time * 60), FrameCountType.Update)
-        .Subscribe(ms =>
-        {
-            GameObject.Destroy(obj);
-            callback?.Invoke();
-        });
-    }
-
 }
 
 public static class MapRoleTools

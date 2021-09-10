@@ -52,13 +52,14 @@ public class MapChest : MonoBehaviour
         RefreshOpenStates();
     }
 
-    public void MarkAsOpened()
+    public IEnumerator MarkAsOpened()
     {
 		if(!isLock){
 			runtime.SetKeyValues(GetRuntimeKey(), "1");
 			//播放动画
-			m_MapChestInteract.Open(RefreshOpenStates);
-		}
+			yield return m_MapChestInteract.Open();
+            RefreshOpenStates();
+        }
     }
 
     /// <summary>

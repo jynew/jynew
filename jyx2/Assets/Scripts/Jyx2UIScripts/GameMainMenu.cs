@@ -10,6 +10,7 @@
 using UnityEngine;
 using Jyx2;
 using System;
+using System.Collections;
 using HSFrameWork.Common;
 
 public partial class GameMainMenu : Jyx2_UIBase {
@@ -23,6 +24,30 @@ public partial class GameMainMenu : Jyx2_UIBase {
     private RandomPropertyComponent m_randomProperty;
 
     private PanelType m_panelType;
+
+    async void Start()
+    {
+        //显示loading
+        var c = StartCoroutine(ShowLoading());
+        
+        if (BeforeSceneLoad.loadFinishTask != null)
+        {
+            await BeforeSceneLoad.loadFinishTask;
+        }
+
+        StopCoroutine(c);
+        LoadingText.gameObject.SetActive(false);
+        homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
+    }
+
+    IEnumerator ShowLoading()
+    {
+        while (true)
+        {
+            LoadingText.gameObject.SetActive(!LoadingText.gameObject.activeSelf);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
     
     
     public override UILayer Layer { get => UILayer.MainUI;}
@@ -50,7 +75,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
     // modified by eaphone at 2021/05/21
     public void OnLoadGameClicked()
     {
-        Jyx2_UIManager.Instance.ShowUI("SavePanel", new Action<int>((index) =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) =>
         {
             if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.Home){
                 OnNewGame();
@@ -130,7 +155,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
 		{
             //首次进入游戏音乐
             AudioManager.PlayMusic(GameConst.GAME_START_MUSIC_ID);
-            Jyx2_UIManager.Instance.HideUI("GameMainMenu");
+            Jyx2_UIManager.Instance.HideUI(nameof(GameMainMenu));
             LevelMaster.Instance.GetPlayer().transform.rotation = Quaternion.Euler(Vector3.zero);
         });
     }

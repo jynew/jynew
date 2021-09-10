@@ -1,0 +1,25 @@
+Toon Explosion Volume 1 : How to create an explosion
+=========================================
+
+Simple Solution :
+-----------------
+1 - Drag and drop a prefab on you scene
+2 - Edit the parameters in the inspector (look at 03 - HTExplosion parameter)
+3 - Create your own prefab, and drag an drop the effect on it.
+4 - Use the new effect on your scene or instantiate it with code.
+
+Advance solution :
+------------------
+1 - Add empty gameobject in you scene
+3 - Add the HTExplosion.cs on this object
+4 - Edit the parameters in the inspector (look at 03 - HTExplosion parameters)
+5 - Create your own prefab, and drag an drop the effect on it.
+6 - Use the new effect on your scene or instantiate it with code.
+
+
+Add a sound :
+--------------
+If you want that your effect emit sound, just add an audio source on the effect gameObject at the same level where there is HTExplosion.cs
+
+
+Warning: Your camera must have the tag MainCamera

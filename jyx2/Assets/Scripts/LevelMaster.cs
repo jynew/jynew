@@ -172,8 +172,7 @@ public class LevelMaster : MonoBehaviour
             else
             {
                 //显示当前地图名，大地图不用显示
-                //StoryEngine.Instance.middleTopMessageSuggestPanel.Show(gameMap.GetShowName());
-                Jyx2_UIManager.Instance.ShowUI("CommonTipsUIPanel", TipsType.MiddleTop, gameMap.GetShowName());
+                Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName());
             }
 
             if (string.IsNullOrEmpty(runtime.CurrentMap))
@@ -485,6 +484,16 @@ public class LevelMaster : MonoBehaviour
         var player = GetPlayer();
         player.CanControl(CanController);
     }
+
+    /// <summary>
+    /// 玩家是否拥有角色控制权
+    /// </summary>
+    /// <returns></returns>
+    public bool IsPlayerCanControl()
+    {
+        return _CanController;
+    }
+    
     private Action _OnArriveDestination;
     public void PlayerWarkFromTo(Vector3 fromVector,Vector3 toVector, Action callback) 
     {

@@ -67,8 +67,20 @@ namespace Jyx2
                 role.Tili = Tools.Limit(role.Tili - 3, 0, 100);
                 role.Mp = Tools.Limit(role.Mp - this.calNeedMP(level_index), 0, role.MaxMp);
 
+                int levelAdd = Tools.Limit(1 + Tools.GetRandomInt(0, 2), 0, 100 * 10);
+                //levelAdd += Tools.GetRandomInt(50, 100);//for test
+
+                //空挥升级
+                //己方队员，并且武功等级提升了
+                if (role.team == 0 && (Data.Level / 100) < ((Data.Level + levelAdd) / 100))
+                {
+                    StoryEngine.Instance.DisplayPopInfo(
+                        $"{role.Name}的{this.Data.Name}升到{((Data.Level + levelAdd) / 100) + 1}级!");
+                }
+                
                 //JYX2:最多10级，每级100
-                this.Data.Level += Tools.Limit(1 + Tools.GetRandomInt(0, 2), 0, 100 * 10);
+                this.Data.Level += levelAdd;
+                this.Data.Level = Tools.Limit(this.Data.Level, 0, GameConst.MAX_SKILL_LEVEL);
 
             }else if(damageType ==2)//用毒
             {
@@ -79,6 +91,19 @@ namespace Jyx2
             }else if(damageType == 4)//医疗
             {
                 role.Tili = Tools.Limit(role.Tili - 5, 0, 100);
+            }
+            
+            //暗器，扣除道具
+            if (this is AnqiZhaoshiInstance)
+            {
+                if (!role.isAI)
+                {
+                    GameRuntimeData.Instance.AddItem(Anqi.Id, -1);
+                }
+                else
+                {
+                    role.AddItem(int.Parse(Anqi.Id), -1);
+                }
             }
         }
 

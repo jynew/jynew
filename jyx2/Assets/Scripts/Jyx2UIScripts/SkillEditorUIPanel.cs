@@ -14,6 +14,7 @@ using System.Linq;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using Jyx2.Setup;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -146,13 +147,39 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         wugong.Level = skillLevel;
         helper.Zhaoshi = new BattleZhaoshiInstance(wugong);
 
-        //直接在每个敌人身上受击
-        List<Transform> blocks = new List<Transform>();
-        foreach(var e in enemys)
+        //根据不同的技能覆盖类型，显示不同的效果
+        Transform[] blocks = null;
+        switch (wugong.CoverType)
         {
-            blocks.Add(e.transform);
+            case SkillCoverType.FACE:
+                blocks = skillEditor.faceTrans;
+                break;
+            case SkillCoverType.LINE:
+                blocks = skillEditor.lineTrans;
+                break;
+            case SkillCoverType.CROSS:
+                blocks = skillEditor.crossTrans;
+                break;
+            case SkillCoverType.POINT:
+                
+                //任选一个敌人受击
+                blocks = new Transform[1] {Hanjiasongshu.Tools.GetRandomElement(enemys).transform};
+                
+                //直接在每个敌人身上受击
+                /*blocks = new Transform[enemys.Length];
+                int index = 0;
+                foreach(var e in enemys)
+                {
+                    blocks[index++] = e.transform;
+                }*/
+                break;
+            default:
+                Debug.LogError("invalid skill cover type!");
+                break;                
         }
+        
         helper.CoverBlocks = blocks; 
+        
 
         helper.Play();
 
@@ -182,5 +209,11 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
                 OnDisplaySkill();
             }
         }
+    }
+
+    private Jyx2SkillEditor skillEditor;
+    void Start()
+    {
+        skillEditor = FindObjectOfType<Jyx2SkillEditor>();
     }
 }

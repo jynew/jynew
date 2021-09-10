@@ -137,6 +137,12 @@ public class Jyx2Player : MonoBehaviour
     void Start()
     {
         Init();
+        
+        //修复一些场景里有主角贴图丢失导致紫色的情况
+        if (GetComponent<SkinnedMeshRenderer>() != null)
+        {
+            GetComponent<SkinnedMeshRenderer>().enabled = false;
+        }
     }
 
     public void CanControl(bool isOn)
@@ -187,18 +193,55 @@ public class Jyx2Player : MonoBehaviour
         {
             var target = targets[i];
 
-            //判断是否在视野内
-            if (Vector3.Angle(transform.forward, target.transform.position - transform.position) <= PLAYER_INTERACTIVE_ANGLE / 2)
+            if (CanSee(target) && SetInteractiveGameEvent(target))
             {
                 //找到第一个可交互的物体，则结束
-                if (SetInteractiveGameEvent(target))
-                {
-                    return target.GetComponent<GameEvent>();
-                }
+                return target.GetComponent<GameEvent>();
             }
         }
 
         return null;
+    }
+
+    bool CanSee(Collider target)
+    {
+
+        //判断是否在视野角度内
+        var isInViewField = Vector3.Angle(transform.forward, target.transform.position - transform.position) <= PLAYER_INTERACTIVE_ANGLE / 2;
+        if(isInViewField) {
+
+            var targetDirection = (target.transform.position - transform.position).normalized;
+
+            //判断主角的NavMesh Agent是否在目标trigger范围內
+            var isInTrigger = target.bounds.Contains(transform.position + targetDirection * _navMeshAgent.radius);
+            if(isInTrigger) 
+            {
+                Debug.DrawLine(transform.position, target.transform.position, Color.green);
+                //Debug.Log("Inside trigger: " + target.transform.name);
+
+                return true;
+            }
+            else
+            {
+                //判断主角与目标之间有无其他collider遮挡。忽略trigger。
+                RaycastHit hit;
+                if(Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore)) {
+                    //Debug.Log("Hit. hit: " + hit.transform.name + " target:" + target.transform.name);
+                    if(hit.transform.GetInstanceID() != target.transform.GetInstanceID())
+                    {
+                        Debug.DrawLine(transform.position, hit.point, Color.red);
+                        return false;
+                    }
+                }
+                //Debug.Log("Outside trigger: " + target.transform.name);
+                Debug.DrawLine(transform.position, target.transform.position, Color.green);
+                return true;
+
+            }
+        }
+
+
+        return false;
     }
 
     bool SetInteractiveGameEvent(Collider c)

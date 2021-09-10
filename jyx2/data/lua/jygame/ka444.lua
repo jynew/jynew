@@ -40,7 +40,8 @@ if TryBattle(69) == true then goto label0 end;
 ::label3::
                 Talk(61, "走吧，再去找一些邪恶的人来加入．", "talkname61", 0);
                 DarkScence();
-                jyx2_ReplaceSceneObject("", "NPC/ouyangke", "");--欧阳克加入队伍
+                jyx2_ReplaceSceneObject("", "NPC/欧阳克", "");--欧阳克加入队伍
+                jyx2_ReplaceSceneObject("", "NPC/欧阳克婢女", "");
                 ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
                 ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
                 ModifyEvent(-2, 2, -2, -2, 472, -1, -1, -2, -2, -2, -2, -2, -2);

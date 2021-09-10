@@ -91,6 +91,7 @@ namespace Jyx2
 
         public int damage; //伤害
         public int damageMp;
+        public int addMp; //增加内力
         public int poison;
         public int depoison;
         public int heal;
@@ -153,6 +154,18 @@ namespace Jyx2
                 if (r2.View != null)
                 {
                     r2.View.ShowAttackInfo($"<color=blue>内力-{damageMp}</color>");
+                }
+
+                //吸取内力逻辑
+                if (rst.addMp > 0)
+                {
+                    int finalMp = Tools.Limit(r1.Mp + rst.addMp, 0, r1.MaxMp);
+                    int deltaMp = finalMp - r1.Mp;
+                    if (deltaMp >= 0)
+                    {
+                        r1.View.ShowAttackInfo($"<color=blue>内力+{deltaMp}</color>");
+                        r1.Mp = finalMp;
+                    }
                 }
 
                 r1.ExpGot += damageMp / 2;

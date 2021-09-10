@@ -44,6 +44,7 @@ public class ColorStringDefine
 
 public class GameConst
 {
+    public const string DefaultMainMenuScene = "0_GameStart";
     
     public const float MapSpeed = 5;
     public const float MapAngularSpeed = 360;

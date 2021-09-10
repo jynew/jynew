@@ -80,7 +80,7 @@ public class GameEventManager : MonoBehaviour
         }
 
         UnityTools.DisHighLightObjects(evt.m_EventTargets);
-        Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
     }
 
     public void OnExitAllEvents()
@@ -89,7 +89,7 @@ public class GameEventManager : MonoBehaviour
             return;
         
         UnityTools.DisHighLightObjects(curEvent.m_EventTargets);
-        Jyx2_UIManager.Instance.HideUI("InteractUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
         curEvent = null;
     }
     
@@ -125,11 +125,11 @@ public class GameEventManager : MonoBehaviour
 
         if (buttonCount == 1)
         {
-            Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", uiParams[0], uiParams[1]);
+            Jyx2_UIManager.Instance.ShowUI(nameof(InteractUIPanel), uiParams[0], uiParams[1]);
         }
         else if (buttonCount == 2)
         {
-            Jyx2_UIManager.Instance.ShowUI("InteractUIPanel", uiParams[0], uiParams[1], uiParams[2], uiParams[3]);
+            Jyx2_UIManager.Instance.ShowUI(nameof(InteractUIPanel), uiParams[0], uiParams[1], uiParams[2], uiParams[3]);
         }
     }
 
@@ -145,7 +145,7 @@ public class GameEventManager : MonoBehaviour
     {
         if (curEvent.m_UseItemEventId == NO_EVENT) return;
 
-        Jyx2_UIManager.Instance.ShowUI("BagUIPanel", GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
             if (itemId == -1) //取消使用
                 return;
@@ -219,32 +219,32 @@ public class GameEventManager : MonoBehaviour
         
         //设置运行环境上下文
         JYX2EventContext.current = context;
-        
-        //先判断是否有蓝图类
-        //如果有则执行蓝图，否则执行lua
-        Jyx2ResourceHelper.LoadEventGraph(eventId, (graph) =>
+
+        void ExecuteCurEvent()
         {
-            graph.Run(OnFinishEvent);
-        }, () =>
+            //先判断是否有蓝图类
+            //如果有则执行蓝图，否则执行lua
+            Jyx2ResourceHelper.LoadEventGraph(eventId, (graph) => { graph.Run(OnFinishEvent); }, () =>
+            {
+                //执行lua
+                var eventLuaPath = "jygame/ka" + eventId;
+                Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
+            });
+        }
+
+        if (curEvent != null)
         {
-            //执行lua
-            var eventLuaPath = "jygame/ka" + eventId;
-            Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
-        });
+            StartCoroutine(curEvent.MarkChest(ExecuteCurEvent));
+        }
+        else
+        {
+            ExecuteCurEvent();
+        }
     }
 
     void OnFinishEvent()
     {
         JYX2EventContext.current = null;
-        
-        if (curEvent != null)
-        {
-            curEvent.MarkChest();
-        }
-        else
-        {
-            //Debug.Log("curEvent is null");
-        }
 
         SetCurrentGameEvent(null);
         // fix drag motion continuous move the player when scene is playing

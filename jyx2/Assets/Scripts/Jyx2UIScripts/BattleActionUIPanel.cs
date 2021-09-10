@@ -23,7 +23,7 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
     RoleInstance m_currentRole;
     BattleManager.BattleViewStates m_currentState;
     SkillUIItem m_selectItem;
-    bool m_chooseBtn = false;//ÊÇ·ñÒÑ¾­Ñ¡ÔñÁËÓÃ¶¾ÕâÐ©¼¼ÄÜ°´Å¥
+    bool m_chooseBtn = false;
     List<SkillUIItem> m_curItemList = new List<SkillUIItem>();
     ChildGoComponent childMgr;
     protected override void OnCreate()
@@ -67,7 +67,6 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
 
     void SetActionBtnState() 
     {
-        //TODO roleInstanceºÍÕâÀïÂß¼­²»Ò»Ñù 
         bool canPoison = m_currentRole.UsePoison > 0 && m_currentRole.Tili >= 30;
         UsePoison_Button.gameObject.SetActive(canPoison);
         bool canDepoison = m_currentRole.DePoison > 0 && m_currentRole.Tili >= 30;
@@ -103,7 +102,7 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
         }
     }
 
-    //Ãæ°åµÄ×´Ì¬¸úËæ×´Ì¬»ú
+
     void SetPanelState() 
     {
         if (m_currentState == BattleManager.BattleViewStates.SelectMove)
@@ -131,8 +130,8 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
                     break;
                 }
             }
-            m_chooseBtn = (m_selectItem == null);//Îª¿Õ ËµÃ÷µ±Ç°Ñ¡ÔñµÄÊÇÌØÊâ¼¼ÄÜ ±ÈÈçÓÃ¶¾
-            if (m_chooseBtn && m_curItemList.Count > 0)//Èç¹ûÊÇÑ¡ÔñµÄ ÌØÊâ¼¼ÄÜ ÄÇÃ´»¹ÊÇÒª¸øÄ¬ÈÏÑ¡ÔñÒ»¸ö¼¼ÄÜ
+            m_chooseBtn = (m_selectItem == null);
+            if (m_chooseBtn && m_curItemList.Count > 0)
                 m_selectItem = m_curItemList[0];
         }
         UpdateSelect();
@@ -156,7 +155,6 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
             m_selectItem.SetSelect(false);
         m_selectItem = item;
         m_chooseBtn = false;
-        //×´Ì¬»ú°ó¶¨ÐÂµÄÕÐÊ½ Õ½³¡ÖÐµÄ±íÏÖ ×´Ì¬»ú»á´¦Àí
         BattleStateMechine.Instance.BindSkill(m_selectItem.GetSkill());
 
         m_currentRole.SwitchAnimationToSkill(m_selectItem.GetSkill().Data);
@@ -167,7 +165,6 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
     {
         if (m_currentState == BattleManager.BattleViewStates.SelectMove)
         {
-            //Ë¢ÐÂÕâ¸ö×´Ì¬
             BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.SelectMove);
             Debug.Log("cancel");
         }
@@ -176,14 +173,12 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
             if (m_chooseBtn)
             {
                 m_chooseBtn = false;
-                //ÖØÐÂ°ó¶¨¼¼ÄÜ
                 BattleStateMechine.Instance.BindSkill(m_selectItem.GetSkill());
                 UpdateSelect();
                 Debug.Log("cm");
             }
             else
             {
-                //Çå¿Õ¼¼ÄÜ
                 BattleStateMechine.Instance.BindSkill(null);
                 BattleStateMechine.Instance.IsCanceling = true;
                 BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.SelectMove);
@@ -191,7 +186,7 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
             }
         }
     }
-    //²»ÐèÒªÒÆ¶¯°´Å¥ÁË Ä¬ÈÏ¾ÍÊÇÒÆ¶¯×´Ì¬
+
     void OnMoveClick() 
     {
 
@@ -233,21 +228,18 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
         CheckNeedChangeState();
     }
 
-    void OnUseItemClick() 
+    void OnUseItemClick()
     {
-        Func<Jyx2Item, bool> filter = (item) => {
-            //Ò©Îï»ò°µÆ÷
-            return item.ItemType == 3 || item.ItemType == 4;
-        };
-        Jyx2_UIManager.Instance.ShowUI("BagUIPanel", GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
+        bool Filter(Jyx2Item item) => item.ItemType == 3 || item.ItemType == 4;
+
+        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
 
             if (itemId == -1)
                 return;
 
             var item = ConfigTable.Get<Jyx2Item>(itemId);
-            //Ò©Æ·
-            if (item.ItemType == 3)
+            if (item.ItemType == 3) //使用道具逻辑
             {
                 if (m_currentRole.CanUseItem(itemId))
                 {
@@ -255,8 +247,7 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
                     BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.UseItem);
                 }
             }
-            //°µÆ÷
-            else if (item.ItemType == 4)
+            else if (item.ItemType == 4) //使用暗器逻辑
             {
                 var zhaoshi = new AnqiZhaoshiInstance(m_currentRole.Anqi, item);
                 m_chooseBtn = true;
@@ -264,7 +255,7 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
                 CheckNeedChangeState();
             }
 
-        }), filter);
+        }), (Func<Jyx2Item, bool>) Filter);
     }
 
     void OnWaitClick() 

@@ -56,7 +56,7 @@ namespace Jyx2
             {
                 storyEngine.BlockPlayerControl = true;
                 //storyEngine.dialogPanel.Show(
-                Jyx2_UIManager.Instance.ShowUI("ChatUIPanel", ChatType.RoleId,roleId, content, type,new Action(()=> 
+                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.RoleId,roleId, content, type,new Action(()=> 
                 {
                     storyEngine.BlockPlayerControl = false;
                     Next();
@@ -90,9 +90,9 @@ namespace Jyx2
         /// 修改事件
         /// </summary>
         /// <param name="scene">场景，-2为当前场景</param>
-        /// <param name="eventId">事件ID，-2位保留</param>
-        /// <param name="canPass">是否能够经过，-2位保留</param>
-        /// <param name="changeToEventId">修改为的编号，-2为保留</param>
+        /// <param name="eventId">事件ID，-2为保留</param>
+        /// <param name="canPass">是否能够经过，-2为保留，在本作中没有作用</param>
+        /// <param name="changeToEventId">修改为的编号，-2为保留，在本作中没有作用</param>
         /// <param name="interactiveEventId">交互事件ID</param>
         /// <param name="useItemEventId">使用道具事件ID</param>
         /// <param name="enterEventId">进入事件ID</param>
@@ -225,22 +225,32 @@ namespace Jyx2
         static public void Join(int roleId)
         {
             RunInMainThread(() => {
-                RoleInstance role = runtime.GetRole(roleId);
-                if (role == null)
+                
+                if (runtime.JoinRoleToTeam(roleId))
                 {
-                    Debug.LogError("加入了未定义角色，id=" + roleId);
-                    return;
-                }
-                runtime.JoinRoleToTeam(roleId);
-                storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
+                    RoleInstance role = runtime.GetRole(roleId);
+                    storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
 
-                //同时获得对方身上的物品
-                foreach (var item in role.Items)
-                {
-                    if (item.Count == 0) item.Count = 1;
-                    AddItem(item.Id, item.Count);
+                    //同时获得对方身上的物品
+                    foreach (var item in role.Items)
+                    {
+                        if(item.Id >= 0)
+                        {
+                            if (item.Count == 0) item.Count = 1;
+                            AddItem(item.Id, item.Count);
+                            item.Id = -1;
+                            item.Count = 0;
+                        }
+                    }
+                    
+                    //清空角色身上的装备
+                    role.Weapon = -1;
+                    role.Armor = -1;
+                    role.Xiulianwupin = -1;
+                    
+                    role.Items.Clear();    
                 }
-                role.Items.Clear();
+                
                 Next();
             });
             Wait();
@@ -484,10 +494,23 @@ namespace Jyx2
         static public void LearnMagic2(int roleId,int magicId,int noDisplay)
         {
             RunInMainThread(() => {
-                var role = runtime.GetRole(roleId);
+                var role = runtime.GetRoleInTeam(roleId);
+
+                if (role == null)
+                {
+                    role = runtime.GetRole(roleId);
+                }
+
+                if (role == null)
+                {
+                    Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    return;
+                }
+
                 role.LearnMagic(magicId);
 
-                if(noDisplay != 0)
+                //只有设置了显示，并且角色在队伍的时候才显示
+                if(noDisplay != 0 && runtime.IsRoleInTeam(roleId))
                 {
                     var skill = ConfigTable.Get<Jyx2Skill>(magicId);
                     storyEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
@@ -514,11 +537,17 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                var role = runtime.GetRole(roleId); 
+                var role = runtime.GetRoleInTeam(roleId);
 
                 if (role == null)
                 {
-                    Debug.LogError("调用不了在队伍的角色,roleId =" + roleId);
+                    role = runtime.GetRole(roleId);
+                }
+
+                if (role == null)
+                {
+                    Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    return;
                 }
 
                 if(magicIndexRole >= role.Wugongs.Count)
@@ -587,7 +616,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
                 r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
-                storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.Attack - v0));
+                storyEngine.DisplayPopInfo(r.Name + "攻击力增加" + (r.Attack - v0));
             });
         }
 
@@ -961,7 +990,7 @@ namespace Jyx2
             RunInMainThread(() =>
             {
                 //int shopId = Tools.GetRandomInt(0, 4);
-                Jyx2_UIManager.Instance.ShowUI("ShopUIPanel", "", new Action(()=>{Next();}));
+                Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
             });
 			Wait();
         }
@@ -1084,6 +1113,33 @@ namespace Jyx2
         {
             _timelineSpeed = speed;
         }
+
+        /// <summary>
+        /// 简单模式播放timeline，播放完毕后直接关闭
+        /// </summary>
+        /// <param name="timelineName"></param>
+        public static void jyx2_PlayTimelineSimple(string timelineName)
+        {
+            RunInMainThread(() =>
+            {
+                var timeLineRoot = GameObject.Find("Timeline");
+                var timeLineObj = timeLineRoot.transform.Find(timelineName);
+                
+                if (timeLineObj == null)
+                {
+                    Debug.LogError("jyx2_PlayTimeline 找不到Timeline,path=" + timelineName);
+                    Next();
+                    return;
+                }
+                timeLineObj.gameObject.SetActive(true);
+                
+                var playableDirector = timeLineObj.GetComponent<PlayableDirector>();
+                GameUtil.CallWithDelay(playableDirector.duration, () =>
+                {
+                    timeLineObj.gameObject.SetActive(false);
+                });
+            });
+        }
         
         static public void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
         {
@@ -1118,6 +1174,11 @@ namespace Jyx2
                 {
                     playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(_timelineSpeed);    
                 }
+                
+                //UI隐藏
+                var mainCanvas = GameObject.Find("MainCanvas");
+                if(mainCanvas != null )
+                    mainCanvas.transform.Find("MainUI").gameObject.SetActive(false);
                 
 
                 //没有指定对象，则默认为主角播放
@@ -1182,6 +1243,11 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
+                //UI恢复
+                var mainCanvas = GameObject.Find("MainCanvas");
+                if(mainCanvas != null )
+                    mainCanvas.transform.Find("MainUI").gameObject.SetActive(true);
+                
                 var timeLineRoot = GameObject.Find("Timeline");
                 var timeLineObj = timeLineRoot.transform.Find(timelineName);
 
@@ -1207,6 +1273,7 @@ namespace Jyx2
 
                 playableDiretor.GetComponent<PlayableDirectorHelper>().ClearTempObjects();
                 LevelMaster.Instance.SetPlayerCanController(true);
+
                 Next();
             });
             Wait();
@@ -1328,13 +1395,7 @@ namespace Jyx2
             {
                 List<string> selectionContent = new List<string>() { "是", "否" };
                 storyEngine.BlockPlayerControl = true;
-                //storyEngine.dialogPanel.ShowSelection("主角", selectMessage, selectionContent, delegate (int index)
-                //{
-                //    _selectResult = index;
-                //    storyEngine.BlockPlayerControl = false;
-                //    Next();
-                //});
-                Jyx2_UIManager.Instance.ShowUI("ChatUIPanel", ChatType.Selection, "主角", selectMessage, selectionContent, new Action<int>((index) =>
+                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "主角", selectMessage, selectionContent, new Action<int>((index) =>
                 {
                     _selectResult = index;
                     storyEngine.BlockPlayerControl = false;

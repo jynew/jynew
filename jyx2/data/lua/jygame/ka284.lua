@@ -13,12 +13,15 @@ if InTeam(35) == true then goto label0 end;
     Talk(35, "徒儿遵命．", "talkname35", 1);
     DarkScence();
     ModifyEvent(-2, 3, 1, 1, -1, -1, -1, 7624, 7624, 7624, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/令狐冲", "1");--令狐冲
     LightScence();
+    --播放timeline
+    jyx2_PlayTimelineSimple("[Timeline]ka284_思过崖_令狐冲演练");
+    jyx2_Wait(4);
     PlayAnimation(3, 7624, 7654);
     PlayAnimation(3, 7624, 7654);
     DarkScence();
     ModifyEvent(-2, 3, 1, 1, -1, -1, -1, 7656, 7656, 7656, -2, -2, -2);
+    jyx2_ReplaceSceneObject("", "NPC/令狐冲", "1");--令狐冲
 	jyx2_FixMapObject("令狐冲表演后",1);
     LightScence();
     Talk(30, "岳不群那小子，当真是狗屁不通．你本是块大好的材料，却给他教得变成蠢牛木马．招数是死的，发招之人却是活的．死招数破的再妙，遇上了活招数，免不了缚手缚脚，只有任人屠戮．这个”活”字，你要牢牢记住了．学招时要活学，使招时要活使．倘若拘泥不化，便熟练了几千万手绝招，遇上了真正高手，终究还是给人家破的干干净净．", "talkname30", 0);

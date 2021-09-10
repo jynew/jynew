@@ -135,7 +135,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
 
     void OnCloseClick() 
     {
-        Jyx2_UIManager.Instance.HideUI("ShopUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(ShopUIPanel));
     }
 
     void OnConfirmClick() 

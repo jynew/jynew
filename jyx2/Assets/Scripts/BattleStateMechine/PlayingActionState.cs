@@ -37,12 +37,16 @@ public class PlayingActionState : IBattleState
     }
 
     int attackTwiceCounter = 0;
-    void CastSkill() 
+    void CastSkill(bool twiceAttack = false) 
     {
         m_role.SwitchAnimationToSkill(m_skill.Data);
 
-        m_skill.CastCD();
-        m_skill.CastCost(m_role);
+        //左右互播，只扣除一次体力和内力等
+        if (!twiceAttack)
+        {
+            m_skill.CastCD();
+            m_skill.CastCost(m_role);    
+        }
 
         List<RoleInstance> beHitAnimationList = new List<RoleInstance>();
         //获取攻击范围
@@ -87,32 +91,19 @@ public class PlayingActionState : IBattleState
         {
             castHelper.Play(() => {
                 attackTwiceCounter ++;
-				CheckYeQiuQuan();
-                CastSkill();
+                CastSkill(true);
             });
         }
         else
         {
             castHelper.Play(()=> {
 
-                foreach(var role in beHitAnimationList)
-                {
-                    role.CheckDeath();
-                }
-				CheckYeQiuQuan();
                 OnCaskSkillOver();
             });
         }
 		
     }
-	
-	void CheckYeQiuQuan()
-	{
-		if(m_skill.Key=="1")
-		{
-			m_role.CheckYeQiuQuan();
-		}
-	}
+
 
     //技能释放结束
     void OnCaskSkillOver() 

@@ -35,6 +35,16 @@ public partial class BagUIPanel:Jyx2_UIBase
         BindListener(UseBtn_Button, OnUseBtnClick);
         BindListener(CloseBtn_Button, OnCloseBtnClick);
     }
+    
+    private void OnEnable()
+    {
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnCloseBtnClick);
+    }
+
+    private void OnDisable()
+    {
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+    }
 
     protected override void OnShowPanel(params object[] allParams)
     {
@@ -127,7 +137,7 @@ public partial class BagUIPanel:Jyx2_UIBase
 
     void OnCloseBtnClick() 
     {
-        Jyx2_UIManager.Instance.HideUI("BagUIPanel");
+        Jyx2_UIManager.Instance.HideUI(nameof(BagUIPanel));
     }
 
     void OnUseBtnClick() 
@@ -140,7 +150,7 @@ public partial class BagUIPanel:Jyx2_UIBase
 
         //if (item.ItemType == 3) //使用未遂，不关闭bag
         //{
-            Jyx2_UIManager.Instance.HideUI("BagUIPanel");
+            Jyx2_UIManager.Instance.HideUI(nameof(BagUIPanel));
         //}
         call(int.Parse(selectId));
     }

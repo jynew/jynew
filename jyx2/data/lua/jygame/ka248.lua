@@ -24,4 +24,5 @@ if UseItem(180) == true then goto label0 end;
         ModifyEvent(-2, 8, 1, 1, 251, -1, -1, 6048, 6048, 6048, -2, -2, -2);
         LightScence();
         AddRepute(2);
+        ModifyEvent(-2, 4, 0, 0, 249, -1, -1, -1, -1, -1, -2, -2, -2); --可以拿梨花酒
 do return end;

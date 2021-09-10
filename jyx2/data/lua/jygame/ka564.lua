@@ -8,10 +8,16 @@ if UseItem(195) == true then goto label0 end;
     PlayAnimation(-1, 6716, 6742);
     PlayAnimation(-1, 6716, 6742);
     PlayAnimation(-1, 6716, 6742);
+
+    --缺少timeline
+
     DarkScence();
     ModifyEvent(-2, -2, -2, -2, 565, -1, -1, 6698, 6698, 6698, -2, -2, -2);
     PlayAnimation(-1, 6702, 6702);
     LightScence();
+    jyx2_ReplaceSceneObject("","Dynamic/Tomb", "0")
+    jyx2_ReplaceSceneObject("","Dynamic/Tomb_2", "1")
+
     Talk(0, "啊！真累，盗墓的工作真不轻松，好在有点收获．这是什么东西来着，全书尽是怪异的文字，封皮写着．．．”广陵散”．．．", "talkname0", 1);
     AddItem(177, 1);
     ModifyEvent(-2, -2, -2, -2, 565, -1, -1, -2, -2, -2, -2, -2, -2);

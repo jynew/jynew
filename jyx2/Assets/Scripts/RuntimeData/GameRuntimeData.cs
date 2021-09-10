@@ -250,15 +250,23 @@ namespace Jyx2
             set { SaveList("Team", value); }
         }
 
-        public void JoinRoleToTeam(int roleId)
+        public bool JoinRoleToTeam(int roleId)
         {
+            if (GetRoleInTeam(roleId) != null)
+            {
+                Debug.LogError($"错误，角色重复入队：id = {roleId}");
+                return false;
+            }
+            
             var role = GetRole(roleId);
             if(role == null)
             {
-                Debug.LogError("调用了不存在的role加入队伍，roleid =" + roleId);
-                return;
+                Debug.LogError($"调用了不存在的role加入队伍，id = {roleId}");
+                return false;
             }
+            
             Team.Add(role);
+            return true;
         }
 
         public void LeaveTeam(int roleId) 
@@ -288,6 +296,11 @@ namespace Jyx2
         public RoleInstance GetRoleInTeam(int roleId)
         {
             return Team.Find(r => r.Key == roleId.ToString());
+        }
+
+        public bool IsRoleInTeam(int roleId)
+        {
+            return GetRoleInTeam(roleId) != null;
         }
 
         //JYX2，所有的角色都放到存档里
@@ -425,13 +438,7 @@ namespace Jyx2
             get { return Get("TeamLevel", 1); }
             set { Save("TeamLevel", value); }
         }
-
-        //野球拳使用次数
-        public int YeQiuQuanCounter
-        {
-            get { return Get("YeQiuQuanCounter", 0); }
-            set { Save("YeQiuQuanCounter", value); }
-        }
+        
 
         public int GetMoney()
         {

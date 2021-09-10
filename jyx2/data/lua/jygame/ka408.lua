@@ -8,10 +8,7 @@ SetScenceMap(-2, 1, 27, 34, 4740);--by fanyu|改变坐标，更改贴图。场�
 SetScenceMap(-2, 1, 27, 31, 4740);--by fanyu|改变坐标，更改贴图。场景20-编号1
 SetScenceMap(-2, 1, 27, 26, 4740);--by fanyu|改变坐标，更改贴图。场景20-编号1
 SetScenceMap(-2, 1, 27, 23, 4740);--by fanyu|改变坐标，更改贴图。场景20-编号1
-jyx2_ReplaceSceneObject("","Dynamic/beeBox/beebox5","1");
-jyx2_ReplaceSceneObject("","Dynamic/beeBox/beebox6","1");
-jyx2_ReplaceSceneObject("","Dynamic/beeBox/beebox7","1");
-jyx2_ReplaceSceneObject("","Dynamic/beeBox/beebox8","1");
+jyx2_ReplaceSceneObject("","Dynamic/beeBox","1");
 ModifyEvent(-2, 5, 1, 1, 409, -1, -1, 6256, 6262, 6256, -2, -2, -2);--by fanyu|更改贴图，启动409脚本。场景20-编号5
 ModifyEvent(-2, 6, 1, 1, 409, -1, -1, 6256, 6262, 6256, -2, -2, -2);--by fanyu|更改贴图，启动409脚本。场景20-编号6
 ModifyEvent(-2, 7, 1, 1, 409, -1, -1, 6256, 6262, 6256, -2, -2, -2);--by fanyu|更改贴图，启动409脚本。场景20-编号7

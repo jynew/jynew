@@ -44,6 +44,10 @@ public class GameUtil
         selectParams.callback = (cbParam) => 
         {
             storyEngine.BlockPlayerControl = false;
+            if (cbParam.isCancelClick == true)
+            {
+                return;
+            }
             if (cbParam.selectList.Count <= 0)
             {
                 callback(null);
@@ -53,7 +57,7 @@ public class GameUtil
             callback(selectRole);
         };
 
-        Jyx2_UIManager.Instance.ShowUI("SelectRolePanel", selectParams);
+        Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectParams);
     }
 
     /// <summary>
@@ -68,7 +72,7 @@ public class GameUtil
 
     static public void ShowFullSuggest(string content, string title = "", Action cb = null) 
     {
-        Jyx2_UIManager.Instance.ShowUI("FullSuggestUIPanel", content, title, cb);
+        Jyx2_UIManager.Instance.ShowUI(nameof(FullSuggestUIPanel), content, title, cb);
     }
 
     static public void GamePause(bool pause) 
