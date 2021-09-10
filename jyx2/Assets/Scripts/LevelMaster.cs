@@ -80,9 +80,6 @@ public class LevelMaster : MonoBehaviour
 
     GameObject navPointer;//寻路终点图标
 
-    public float m_MoveSpeedRatio = 30.0f;
-    public float m_RotateSpeed = 5.0f;
-
     public ETCJoystick m_Joystick;
 
     [HideInInspector]

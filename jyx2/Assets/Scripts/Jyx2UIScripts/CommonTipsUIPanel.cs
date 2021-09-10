@@ -46,7 +46,7 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
                 StartCoroutine(ShowInfo(text, duration));
                 break;
             case TipsType.MiddleTop:
-                StartCoroutine(ShowMiddleInfo(text));
+                StartCoroutine(ShowMiddleInfo(text, duration));
                 break;
         }
     }
@@ -79,11 +79,22 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
         Jyx2ResourceHelper.ReleasePrefabInstance(popinfoItem);
     }
 
-    IEnumerator ShowMiddleInfo(string msg) 
+    IEnumerator ShowMiddleInfo(string msg, float duration = 2)
     {
-        MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(true);
         MiddleText_Text.text = msg;
-        yield return new WaitForSeconds(1f);
+        
+        CanvasGroup cg = MiddleTopMessageSuggest_RectTransform.GetComponent<CanvasGroup>();
+        cg.alpha = 0;
+        
+        MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(true);
+        MiddleTopMessageSuggest_RectTransform.DOScale(1.2f, duration / 2);
+        cg.DOFade(1, duration / 2);
+        yield return new WaitForSeconds(duration / 2);
+        
+        
+        MiddleTopMessageSuggest_RectTransform.DOScale(1f, duration / 2);
+        cg.DOFade(0, duration / 2);
+        yield return new WaitForSeconds(duration / 2);
         MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(false);
     }
 }
