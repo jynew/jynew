@@ -251,7 +251,6 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         SelectionPanel_RectTransform.gameObject.SetActive(true);
     }
 
-    List<Tweener> allTweenList = new List<Tweener>();
     public void DoShowAnimator()
     {
         //Content_RectTransform.anchoredPosition = Vector2.zero;
@@ -285,17 +284,5 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) OnMainBgClick();
-    }
-
-    protected override void OnHidePanel()
-    {
-        base.OnHidePanel();
-        //Jyx2_UIManager.Instance.SetMainUIActive(true);
-        foreach (var item in allTweenList)
-        {
-            item.Complete();
-            item.Kill();
-        }
-        allTweenList.Clear();
     }
 }

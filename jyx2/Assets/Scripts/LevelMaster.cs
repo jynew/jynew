@@ -479,6 +479,12 @@ public class LevelMaster : MonoBehaviour
         _CanController = CanController;
         var player = GetPlayer();
         player.CanControl(CanController);
+
+        var interactUI = FindObjectOfType<InteractUIPanel>();
+        if (interactUI != null)
+        {
+            interactUI.gameObject.SetActive(CanController);
+        }
     }
 
     /// <summary>
