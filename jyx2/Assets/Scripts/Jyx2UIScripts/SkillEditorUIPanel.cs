@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using Jyx2.Setup;
@@ -100,12 +101,12 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         base.OnShowPanel(allParams);
         player = allParams[0] as MapRole;
         enemys = allParams[1] as Jyx2SkillEditorEnemy[];
-        DoSwitchRoleModel();
+        DoSwitchRoleModel().Forget();
     }
 
     private void OnSwitchModel()
     {
-        DoSwitchRoleModel();
+        DoSwitchRoleModel().Forget();
     }
 
     private void OnRunAnim()
@@ -118,16 +119,14 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         TryDisplaySkill();
     }
 
-    void DoSwitchRoleModel()
+    async UniTask DoSwitchRoleModel()
     {
         var role = new RoleInstance(this.roleKey);
-        player.BindRoleInstance(role, () =>
-        {
-            var animator = player.GetAnimator();
-            animator.runtimeAnimatorController = player.GetComponent<Animator>().runtimeAnimatorController; //force set animator
-
-            SwitchSkillPose();
-        });
+        await player.BindRoleInstance(role);
+        
+        var animator = player.GetAnimator();
+        animator.runtimeAnimatorController = player.GetComponent<Animator>().runtimeAnimatorController; //force set animator
+        SwitchSkillPose();
     }
 
     void DoSwitchMove()

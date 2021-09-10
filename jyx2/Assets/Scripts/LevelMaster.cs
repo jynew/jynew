@@ -354,19 +354,13 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
-    private void SetPlayer(MapRole playerRoleView)
+    private async UniTask SetPlayer(MapRole playerRoleView)
     {
 		// reverting this change. to fix "reference on null object" error when enter/ exit scene
 		// modified by eaphone at 2021/05/30
         _playerView = playerRoleView;
         _player = playerRoleView.transform;
         _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
-        playerRoleView.BindRoleInstance(runtime.Player, ()=> {
-            //由于这里是异步加载模型，所以必须加载完后才初始化出生点，因为初始化出生点里有描述玩家是否在船上，需要调用子节点的renderer
-
-            //初始化出生点
-            LoadSpawnPosition();
-        });
         
         SetPlayerSpeed(0);
         var gameMap = GetCurrentGameMap();
@@ -388,6 +382,9 @@ public class LevelMaster : MonoBehaviour
             var player = _player.gameObject.AddComponent<Jyx2Player>();
             player.Init();
         }
+
+        await playerRoleView.BindRoleInstance(runtime.Player);
+        LoadSpawnPosition();
     }
 
 	// fix bind player failed error when select player before start battle
@@ -402,7 +399,7 @@ public class LevelMaster : MonoBehaviour
         if (playerObj != null)
         {
             //设置主角
-            SetPlayer(playerObj);
+            SetPlayer(playerObj).Forget();
             //添加队友
             //CreateTeammates(gameMap, playerObj.transform);
 
@@ -427,35 +424,14 @@ public class LevelMaster : MonoBehaviour
     void FixedUpdate()
     {
         TryClearNavPointer();
-
-        if (BattleManager.Instance.IsInBattle)
-        {
-            //自动战斗镜头控制
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-            {
-                //CameraHelper.Instance.BattleCamMove(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            }
-            else if (m_Joystick.axisX.axisValue != 0 || m_Joystick.axisY.axisValue != 0)
-            {
-                //CameraHelper.Instance.BattleCamMove(-m_Joystick.axisX.axisValue, m_Joystick.axisY.axisValue);
-            }
-        }
-        else
-        {
-            //角色控制
-            PlayerControll();
-
-            if (Input.GetKey(KeyCode.Q))
-            {
-
-            }
-        }
+        PlayerControll();
     }
-	// added by eaphone at 2021/05/30
-	public static bool isEscPressed=false;
-
+    
     void PlayerControll()
     {
+        if (BattleManager.Instance.IsInBattle)
+            return;
+        
         //timeline不允许角色移动
         if (StoryEngine.Instance != null && StoryEngine.Instance.BlockPlayerControl)
         {
