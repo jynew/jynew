@@ -10,6 +10,7 @@
 using HanSquirrel.ResourceManager;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public enum UILayer 
@@ -102,6 +103,7 @@ public class Jyx2_UIManager : MonoBehaviour
 
             _loadingUIParams[uiName] = allParams;
             string uiPath = string.Format(GameConst.UI_PREFAB_PATH, uiName);
+
             Jyx2ResourceHelper.SpawnPrefab(uiPath, OnUILoaded);
         }
     }
@@ -125,12 +127,6 @@ public class Jyx2_UIManager : MonoBehaviour
 
         uibase.Show(allParams);
         _loadingUIParams.Remove(uiName);
-    }
-
-    //显示一个UI的子ui
-    public void ShowSubUI(Transform parent,string uiName, params object[] allParams) 
-    {
-        
     }
 
     //显示主界面 LoadingPanel中加载完场景调用 移到这里来 方便修改

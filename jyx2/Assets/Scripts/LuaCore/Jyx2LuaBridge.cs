@@ -867,7 +867,7 @@ namespace Jyx2
             RunInMainThread(()=>
             {
                 string path = "Assets/BuildSource/sound/e" +
-                    (waveIndex < 10 ? "0" + waveIndex.ToString() : waveIndex.ToString()) + ".wav";
+                    (waveIndex < 10 ? ("0" + waveIndex.ToString()) : waveIndex.ToString()) + ".wav";
 
                 Jyx2ResourceHelper.LoadAsset<AudioClip>(path, clip =>
                 {

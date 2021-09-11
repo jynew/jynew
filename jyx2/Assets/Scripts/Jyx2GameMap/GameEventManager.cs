@@ -198,7 +198,7 @@ public class GameEventManager : MonoBehaviour
 
 
 
-    private void ExecuteJyx2Event(int eventId, JYX2EventContext context = null)
+    public void ExecuteJyx2Event(int eventId, JYX2EventContext context = null)
     {
         if (eventId < 0)
         {

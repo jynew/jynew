@@ -95,6 +95,7 @@ static public class Jyx2ResourceHelper
         return await Addressables.LoadAssetAsync<Sprite>(p).Task;
     }
 
+    [Obsolete("待修改为tilemap")]
     public static void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
     {
         string path = $"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes";
@@ -107,6 +108,7 @@ static public class Jyx2ResourceHelper
         };
     }
 
+    [Obsolete("待修改为tilemap")]
     public static void GetBattleboxDataset(string fullPath, Action<BattleboxDataset> callback)
     {
         Addressables.LoadAssetAsync<TextAsset>(fullPath).Completed += r =>
@@ -131,7 +133,12 @@ static public class Jyx2ResourceHelper
     }
 
 
-    public static async void GetRoleHeadSprite(RoleInstance role, Image setImage)
+    public static void GetRoleHeadSprite(RoleInstance role, Image setImage)
+    {
+        DoGetRoleHeadSprite(role,setImage).Forget();
+    }
+
+    private static async UniTaskVoid DoGetRoleHeadSprite(RoleInstance role, Image setImage)
     {
         var sprite = await GetSprite(role);
         setImage.sprite = sprite;
@@ -143,28 +150,14 @@ static public class Jyx2ResourceHelper
         return await Addressables.LoadAssetAsync<Sprite>(p).Task;
     }
 
-
     public static void SpawnPrefab(string path, Action<GameObject> callback)
     {
         Addressables.InstantiateAsync(path).Completed += r => { callback(r.Result); };
     }
 
-    public static void LoadPrefab(string path, Action<GameObject> callback)
-    {
-        Addressables.LoadAssetAsync<GameObject>(path).Completed += r => { callback(r.Result); };
-    }
-
     public static void LoadAsset<T>(string path, Action<T> callback)
     {
         Addressables.LoadAssetAsync<T>(path).Completed += r => { callback(r.Result); };
-    }
-
-    public static void ReleaseInstance(GameObject obj)
-    {
-        if (obj != null)
-        {
-            Addressables.ReleaseInstance(obj);
-        }
     }
 
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)

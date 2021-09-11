@@ -69,15 +69,20 @@ public class JYX2ConsolePanel : MonoBehaviour
             case "event":
                 {
                     string eventId = paras[1];
+                    /*
                     var eventLuaPath = "jygame/ka" + eventId;
                     Jyx2.LuaExecutor.Execute(eventLuaPath);
-
+                    */
+                    
+                    var eventManager = FindObjectOfType<GameEventManager>();
+                    eventManager.ExecuteJyx2Event(int.Parse(eventId));
+                    
                     //停止导航
-                    var levelMaster = LevelMaster.Instance;
+                    /*var levelMaster = LevelMaster.Instance;
                     if (levelMaster != null)
                     {
                         levelMaster.StopPlayerNavigation();
-                    }
+                    }*/
                     break;
                 }
             case "item":
