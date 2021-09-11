@@ -180,9 +180,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         helper.CoverBlocks = blocks; 
         
 
-        helper.Play();
-
-
+        helper.Play().Forget();
     }
 
     /// <summary>

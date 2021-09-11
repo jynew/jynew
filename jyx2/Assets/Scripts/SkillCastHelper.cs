@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Animancer;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using Jyx2.Middleware;
@@ -70,13 +71,12 @@ namespace Jyx2
         /// 播放
         /// </summary>
         /// <param name="forceChangeWeapon">是否强行更换武器，一般仅用于技能编辑时看效果</param>
-        public void Play(Action callback = null)
+        public async UniTask Play()
         {
             var display = GetDisplay();
             if(display == null)
             {
                 Debug.LogError($"招式{Zhaoshi.Key}没有配置Display!");
-                if (callback != null) callback();
                 return;
             }
 
@@ -128,12 +128,8 @@ namespace Jyx2
                     ghostShadow.m_bOpenGhost = false;
                 });
             }
-            
-            //回调
-            if(callback != null)
-            {
-                GameUtil.CallWithDelay(display.duration, callback);
-            }
+
+            await UniTask.Delay(TimeSpan.FromSeconds(display.duration));
         }
 
 

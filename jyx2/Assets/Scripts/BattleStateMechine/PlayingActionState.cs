@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HSFrameWork.ConfigTable;
 using System;
+using Cysharp.Threading.Tasks;
 
 public class PlayingActionState : IBattleState
 {
@@ -32,14 +33,76 @@ public class PlayingActionState : IBattleState
         }
         var block = BattleboxHelper.Instance.GetBlockData(m_skillPos.X, m_skillPos.Y);
         m_role.View.LookAtBattleBlock(block);//先面向目标
-        attackTwiceCounter = 0;
-        CastSkill();
+        DoCast().Forget();
     }
 
-    int attackTwiceCounter = 0;
+    async UniTaskVoid DoCast()
+    {
+        m_role.SwitchAnimationToSkill(m_skill.Data); //切换姿势
+        m_skill.CastCD(); //技能CD
+        m_skill.CastCost(m_role); //技能消耗（左右互搏之消耗一次）
 
+        await CastOnce();
+        if (Zuoyouhubo())
+            await CastOnce();
+
+        OnCaskSkillOver();
+    }
+
+    //判断招式是否能使用左右互搏
+    bool Zuoyouhubo()
+    {
+        return (m_role.Zuoyouhubo > 0 && m_skill.Data.GetSkill().DamageType == 0 &&
+                BattleManager.Instance.GetModel().GetBattleResult() == BattleResult.InProgress);
+    }
+    
+    async UniTask CastOnce()
+    {
+        List<RoleInstance> beHitAnimationList = new List<RoleInstance>();
+        //获取攻击范围
+        var coverBlocks = BattleManager.Instance.GetSkillCoverBlocks(m_skill, m_skillPos, m_role.Pos);
+        //处理掉血
+        foreach (var blockVector in coverBlocks)
+        {
+            var rolei = BattleManager.Instance.GetModel().GetAliveRole(blockVector);
+            //还活着
+            if (rolei == null || rolei.IsDead()) continue;
+            //打敌人的招式
+            if (m_skill.IsCastToEnemy() && rolei.team == m_role.team) continue;
+            //“打”自己人的招式
+            if (!m_skill.IsCastToEnemy() && rolei.team != m_role.team) continue;
+
+            var result = AIManager.Instance.GetSkillResult(m_role, rolei, m_skill, blockVector);
+
+            result.Run();
+
+            //当需要播放受攻击动画时，不直接刷新血条，延后到播放受攻击动画时再刷新。其他情况直接刷新血条。
+            if (result.IsDamage())
+            {
+                //加入到受击动作List
+                beHitAnimationList.Add(rolei);
+            }
+            else
+            {
+                rolei.View.MarkHpBarIsDirty();
+            }
+        }
+        
+        SkillCastHelper castHelper = new SkillCastHelper
+        {
+            Source = m_role.View,
+            CoverBlocks = coverBlocks.ToTransforms(),
+            Zhaoshi = m_skill,
+            Targets = beHitAnimationList.ToMapRoles(),
+        };
+        
+        await castHelper.Play();
+    }
+    
+
+    /*
     //TODO: 使用async重构这里，代码结构太乱了
-    void CastSkill(bool twiceAttack = false)
+    async UniTaskVoid CastSkill(bool twiceAttack = false)
     {
         m_role.SwitchAnimationToSkill(m_skill.Data);
 
@@ -103,7 +166,7 @@ public class PlayingActionState : IBattleState
             castHelper.Play(() => { OnCaskSkillOver(); });
         }
 
-    }
+    }*/
 
 
     //技能释放结束
