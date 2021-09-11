@@ -130,11 +130,6 @@ static public class Jyx2ResourceHelper
         }
     }
 
-    public static async void GetRoleHeadSprite(string path, Image setImage)
-    {
-        var sprite = await GetRoleHeadSprite(path);
-        setImage.sprite = sprite;
-    }
 
     public static async void GetRoleHeadSprite(RoleInstance role, Image setImage)
     {
@@ -142,23 +137,12 @@ static public class Jyx2ResourceHelper
         setImage.sprite = sprite;
     }
 
-    public static void GetItemSprite(int itemId, Image setImage)
+    public static async UniTask<Sprite> LoadItemSprite(int itemId)
     {
         string p = ("Assets/BuildSource/Jyx2Items/" + itemId + ".png");
-        Addressables.LoadAssetAsync<Sprite>(p).Completed += r =>
-        {
-            setImage.sprite = r.Result;
-        };
+        return await Addressables.LoadAssetAsync<Sprite>(p).Task;
     }
 
-    public static void GetSprite(string iconName, string atlasName, Action<Sprite> cb)
-    {
-        string path = $"Assets/BuildSource/UI/{atlasName}/{iconName}.png";
-        Addressables.LoadAssetAsync<Sprite>(path).Completed += r =>
-        {
-            cb?.Invoke(r.Result);
-        };
-    }
 
     public static void SpawnPrefab(string path, Action<GameObject> callback)
     {

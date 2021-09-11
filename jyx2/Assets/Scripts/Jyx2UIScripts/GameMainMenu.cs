@@ -116,6 +116,19 @@ public partial class GameMainMenu : Jyx2_UIBase {
         var player = runtime.AllRoles[0];
         player.Key = "主角";
         player.HeadAvata = "0";
+        
+        
+        //主角初始物品
+        foreach (var item in player.Items)
+        {
+            if(item.Id >= 0)
+            {
+                if (item.Count == 0) item.Count = 1;
+                runtime.AddItem(item.Id, item.Count);
+                item.Id = -1;
+                item.Count = 0;
+            }
+        }
 
         player.BindKey();
         runtime.Team.Add(player);

@@ -13,6 +13,7 @@ using HSFrameWork.ConfigTable;
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,7 +49,7 @@ public class ShopUIItem : MonoBehaviour
         reduceBtn.onClick.AddListener(OnReduceBtnClick);
     }
 
-    public void Refresh(Jyx2ShopItem shopItem,int index,int hasBuyNum) 
+    public async UniTaskVoid Refresh(Jyx2ShopItem shopItem,int index,int hasBuyNum) 
     {
         this.index = index;
         this.shopItem = shopItem;
@@ -58,11 +59,17 @@ public class ShopUIItem : MonoBehaviour
             GameUtil.LogError("查询不到物品配置，id =" + shopItem.Id);
             return;
         }
-        Jyx2ResourceHelper.GetItemSprite(int.Parse(item.Id),iconImg);
+        
         desText.text = $"{item.Name}\n价格：{shopItem.Price}";
         leftNum = shopItem.Count - hasBuyNum;
         leftNum = Tools.Limit(leftNum,0,shopItem.Count);
         itemNum.text = leftNum.ToString();
+        
+        var sprite = await Jyx2ResourceHelper.LoadItemSprite(int.Parse(item.Id));
+        if (sprite != null)
+        {
+            iconImg.sprite = sprite;
+        }
     }
 
     void RefreshCount() 

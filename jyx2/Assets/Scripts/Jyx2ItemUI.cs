@@ -9,6 +9,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Jyx2;
@@ -21,14 +22,14 @@ public class Jyx2ItemUI : MonoBehaviour
     public Text m_NameText;
     public Text m_CountText;
 
+    private const string ITEM_UI_PREFAB = "Assets/Prefabs/Jyx2ItemUI.prefab";
+    
     public static Jyx2ItemUI Create(int id,int count)
     {
-        var prefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2ItemUI.prefab");
-
-        
-        var obj = Instantiate(prefab); //TODO对象池
+        var prefab = Jyx2ResourceHelper.GetCachedPrefab(ITEM_UI_PREFAB);
+        var obj = Instantiate(prefab); 
         var itemUI = obj.GetComponent<Jyx2ItemUI>();
-        itemUI.Show(id, count);
+        itemUI.Show(id, count).Forget();
         return itemUI;
     }
 
@@ -39,15 +40,26 @@ public class Jyx2ItemUI : MonoBehaviour
         return ConfigTable.Get<Jyx2Item>(_id);
     }
 
-    public void Show(int id,int count)
+    private async UniTaskVoid Show(int id,int count)
     {
         _id = id;
         var item = GetItem();//0-阴性内力，1-阳性内力，2-中性内力
-		var color=item.ItemType==2? item.NeedMPType==2?ColorStringDefine.Default:item.NeedMPType==1?ColorStringDefine.Mp_type1:ColorStringDefine.Mp_type0:ColorStringDefine.Default;
+        var color =
+            item.ItemType == 2
+                ? item.NeedMPType == 2 ? ColorStringDefine.Default :
+                item.NeedMPType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0
+                : ColorStringDefine.Default;
+        
         m_NameText.text = $"<color={color}>{item.Name}</color>";
         m_CountText.text = (count > 1 ? count.ToString() : "");
 
-        Jyx2ResourceHelper.GetItemSprite(id, m_Image);
+        m_Image.gameObject.SetActive(false);
+        var sprite = await Jyx2ResourceHelper.LoadItemSprite(id);
+        if (sprite != null)
+        {
+            m_Image.sprite = sprite;
+            m_Image.gameObject.SetActive(true);
+        }
     }
 
     public void Select(bool active) 
