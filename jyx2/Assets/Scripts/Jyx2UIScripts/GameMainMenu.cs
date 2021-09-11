@@ -118,8 +118,10 @@ public partial class GameMainMenu : Jyx2_UIBase {
             Key = "主角",
             HeadAvata = "0",
         };
+
         player.BindKey();
         runtime.Team.Add(player);
+        runtime.AllRoles[0] = player; //注册到0号角色
 
         //开场地图
         var startMap = GameMap.GetGameStartMap();
