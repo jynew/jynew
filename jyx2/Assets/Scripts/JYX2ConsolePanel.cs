@@ -122,6 +122,14 @@ public class JYX2ConsolePanel : MonoBehaviour
                     
                     break;
                 }
+            
+            case "zuoyouhubo"://主角学会左右互搏
+            {
+                GameRuntimeData.Instance.Player.Zuoyouhubo = int.Parse(paras[1]);
+                StoryEngine.Instance.DisplayPopInfo(
+                    "主角设置左右互搏：" + (GameRuntimeData.Instance.Player.Zuoyouhubo == 1 ? "开":"关"));
+                break;
+            }
             default:
                 Debug.Log("没有识别的指令，将执行lua替代：" + cmd);
                 string luaContent = cmd;
