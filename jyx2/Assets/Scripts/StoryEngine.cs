@@ -198,7 +198,13 @@ public class StoryEngine : MonoBehaviour
             if (!runtime.HaveItemBool(role.Xiulianwupin) && role.Xiulianwupin != -1)
                 runtime.AddItem(role.Xiulianwupin, 1);
         }
-
+        
+        //CGGG: 2021/9/11 修复老的存档主角没有绑定0号角色主角，导致的增加属性数值指令无效的问题
+        if (r.Player != r.AllRoles[0])
+        {
+            r.AllRoles[0] = r.Player;
+        }
+        
         var loadPara = new LevelMaster.LevelLoadPara() {loadType = LevelMaster.LevelLoadPara.LevelLoadType.Load};
 
         //加载地图
