@@ -7,11 +7,15 @@
  *
  * 金庸老先生千古！
  */
+
+using System;
 using DG.Tweening;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.Common;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,15 +47,15 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
         switch (currentType) 
         {
             case TipsType.Common:
-                StartCoroutine(ShowInfo(text, duration));
+                ShowInfo(text, duration).Forget();
                 break;
             case TipsType.MiddleTop:
-                StartCoroutine(ShowMiddleInfo(text, duration));
+                ShowMiddleInfo(text, duration).Forget();
                 break;
         }
     }
 
-    IEnumerator ShowInfo(string msg, float duration) 
+    async UniTaskVoid ShowInfo(string msg, float duration) 
     {
         //初始化
         var popinfoItem = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/Popinfo.prefab");
@@ -65,21 +69,20 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
         if (duration > POPINFO_FADEOUT_TIME)
         {
             //FADE相关逻辑
-            yield return new WaitForSeconds(POPINFO_FADEOUT_TIME);
+            await Task.Delay(TimeSpan.FromSeconds(POPINFO_FADEOUT_TIME));
             mainText.DOFade(0, POPINFO_FADEOUT_TIME);
             mainImg.DOFade(0, POPINFO_FADEOUT_TIME);
-
-            yield return new WaitForSeconds(duration - POPINFO_FADEOUT_TIME);
+            await Task.Delay(TimeSpan.FromSeconds(duration - POPINFO_FADEOUT_TIME));
         }
         else
         {
-            yield return new WaitForSeconds(duration);
+            await Task.Delay(TimeSpan.FromSeconds(duration));
         }
         
         Jyx2ResourceHelper.ReleasePrefabInstance(popinfoItem);
     }
 
-    IEnumerator ShowMiddleInfo(string msg, float duration = 2)
+    async UniTaskVoid ShowMiddleInfo(string msg, float duration = 2)
     {
         MiddleText_Text.text = msg;
         
@@ -89,12 +92,11 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
         MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(true);
         MiddleTopMessageSuggest_RectTransform.DOScale(1.2f, duration / 2);
         cg.DOFade(1, duration / 2);
-        yield return new WaitForSeconds(duration / 2);
-        
+        await Task.Delay(TimeSpan.FromSeconds(duration/2));
         
         MiddleTopMessageSuggest_RectTransform.DOScale(1f, duration / 2);
         cg.DOFade(0, duration / 2);
-        yield return new WaitForSeconds(duration / 2);
+        await Task.Delay(TimeSpan.FromSeconds(duration));
         MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(false);
     }
 }

@@ -591,7 +591,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
                 r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
-                storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
+                //storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
             });
         }
 
@@ -603,7 +603,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
                 r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
+                //storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
             });
         }
 
@@ -615,7 +615,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
                 r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
-                storyEngine.DisplayPopInfo(r.Name + "攻击力增加" + (r.Attack - v0));
+                //storyEngine.DisplayPopInfo(r.Name + "攻击力增加" + (r.Attack - v0));
             });
         }
 
@@ -627,7 +627,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
                 r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
+                //storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
             });
         }
 

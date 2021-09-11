@@ -18,6 +18,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 static public class Jyx2ResourceHelper
 {
@@ -78,12 +79,14 @@ static public class Jyx2ResourceHelper
     public static GameObject CreatePrefabInstance(string path)
     {
         var obj = GetCachedPrefab(path);
-        return LeanPool.Spawn(obj);
+        return Object.Instantiate(obj);
+        //return LeanPool.Spawn(obj);
     }
 
     public static void ReleasePrefabInstance(GameObject obj)
     {
-        LeanPool.Despawn(obj);
+        Object.Destroy(obj);
+        //LeanPool.Despawn(obj);
     }
 
     public static async UniTask<Sprite> GetRoleHeadSprite(string path)
