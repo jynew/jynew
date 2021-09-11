@@ -38,7 +38,11 @@ namespace Jyx2
             CD, //CD中
         }
 
-        public WugongInstance Data;
+        public WugongInstance Data
+        {
+            get; 
+            set;
+        }
 
         public Jyx2Item Anqi;
 
@@ -305,12 +309,15 @@ namespace Jyx2
     /// </summary>
     public class AnqiZhaoshiInstance : BattleZhaoshiInstance
     {
+        private const int ANQI_MAGIC_ID = 97;
 
         public AnqiZhaoshiInstance(int lv, Jyx2Item item)
         {
+            //Key = "暗器_" + item.Name;
+            Key = "暗器";
             _level = lv;
             Anqi = item;
-            Data = new WugongInstance(item);
+            Data = new WugongInstance(item, ANQI_MAGIC_ID);
         }
 
         int _level;

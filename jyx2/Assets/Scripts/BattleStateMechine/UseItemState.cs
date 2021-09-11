@@ -34,6 +34,7 @@ public class UseItemState : IBattleState
 
     void UseItem() 
     {
+        /*
         if (currentRole.View)
         {
             var animator = currentRole.View.GetAnimator();
@@ -44,6 +45,30 @@ public class UseItemState : IBattleState
             {
                 OnAnimOver();
             });
+            */
+
+        if (!currentRole.View)
+        {
+            OnAnimOver();
+            return;
+        }
+        
+        AnimationClip clip = null;
+        var itemType = currentItem.GetItemType();
+        if (itemType == Jyx2ItemType.Costa)
+            clip = GlobalAssetConfig.Instance.useItemClip; //选择吃药的动作
+        else if (itemType == Jyx2ItemType.Anqi)
+            clip = GlobalAssetConfig.Instance.anqiClip; //选择使用暗器的动作
+
+        //如果配置了动作，则先播放动作
+        if (clip != null)
+        {
+            currentRole.View.PlayAnimation(clip, OnAnimOver, 0.25f);    
+        }
+        else //否则直接执行逻辑
+        {
+            OnAnimOver();
+        }
     }
 
     void OnAnimOver()

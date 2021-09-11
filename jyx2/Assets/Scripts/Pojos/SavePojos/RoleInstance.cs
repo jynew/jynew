@@ -548,7 +548,7 @@ namespace Jyx2
             foreach (var item in Data.Items)
             {
                 if (item.Id < 0) continue;
-                _items.Add(item.Clone());
+                _items.Add(item.Clone()); //这里对于NPC来说，每场战斗都会补满道具
             }
         }
 

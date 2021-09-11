@@ -14,6 +14,12 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("游戏动作")] [LabelText("默认移动动作")]
     public AnimationClip defaultMoveClip;
 
+    [BoxGroup("游戏动作")] [LabelText("使用暗器的动作")]
+    public AnimationClip anqiClip;
+    
+    [BoxGroup("游戏动作")] [LabelText("使用药物的动作")]
+    public AnimationClip useItemClip;
+    
     [BoxGroup("游戏动作")] [LabelText("默认角色动作控制器")]
     public RuntimeAnimatorController defaultAnimatorController;
     

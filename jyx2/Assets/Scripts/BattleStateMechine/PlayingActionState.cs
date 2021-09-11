@@ -37,7 +37,9 @@ public class PlayingActionState : IBattleState
     }
 
     int attackTwiceCounter = 0;
-    void CastSkill(bool twiceAttack = false) 
+
+    //TODO: 使用async重构这里，代码结构太乱了
+    void CastSkill(bool twiceAttack = false)
     {
         m_role.SwitchAnimationToSkill(m_skill.Data);
 
@@ -45,7 +47,7 @@ public class PlayingActionState : IBattleState
         if (!twiceAttack)
         {
             m_skill.CastCD();
-            m_skill.CastCost(m_role);    
+            m_skill.CastCost(m_role);
         }
 
         List<RoleInstance> beHitAnimationList = new List<RoleInstance>();
@@ -66,7 +68,7 @@ public class PlayingActionState : IBattleState
 
             result.Run();
 
-			//当需要播放受攻击动画时，不直接刷新血条，延后到播放受攻击动画时再刷新。其他情况直接刷新血条。
+            //当需要播放受攻击动画时，不直接刷新血条，延后到播放受攻击动画时再刷新。其他情况直接刷新血条。
             if (result.IsDamage())
             {
                 //加入到受击动作List
@@ -85,23 +87,22 @@ public class PlayingActionState : IBattleState
             Zhaoshi = m_skill,
             Targets = beHitAnimationList.ToMapRoles(),
         };
-		
-		
-        if (attackTwiceCounter < m_role.Zuoyouhubo && m_skill.Data.GetSkill().DamageType==0 && BattleManager.Instance.GetModel().GetBattleResult()==BattleResult.InProgress)//非战斗技能不适用左右互博
+
+
+        if (attackTwiceCounter < m_role.Zuoyouhubo && m_skill.Data.GetSkill().DamageType == 0 &&
+            BattleManager.Instance.GetModel().GetBattleResult() == BattleResult.InProgress) //非战斗技能不适用左右互博
         {
-            castHelper.Play(() => {
-                attackTwiceCounter ++;
+            castHelper.Play(() =>
+            {
+                attackTwiceCounter++;
                 CastSkill(true);
             });
         }
         else
         {
-            castHelper.Play(()=> {
-
-                OnCaskSkillOver();
-            });
+            castHelper.Play(() => { OnCaskSkillOver(); });
         }
-		
+
     }
 
 

@@ -19,6 +19,16 @@ using UnityEngine;
 
 namespace Jyx2
 {
+    public enum Jyx2ItemType
+    {
+        TaskItem = 0, //道具
+        Equipment = 1, //装备
+        Book = 2, //经书
+        Costa = 3, //消耗品
+        Anqi = 4, //暗器
+    }
+    
+    
     [XmlType("jyx2item")]
     public class Jyx2Item : BaseBean
     {
@@ -53,6 +63,11 @@ namespace Jyx2
 
         [XmlAttribute]
         public int ItemType; //物品类型
+
+        public Jyx2ItemType GetItemType()
+        {
+            return (Jyx2ItemType) ItemType;
+        }
 
         [XmlAttribute]
         public int AddHp; //加生命

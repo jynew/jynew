@@ -147,7 +147,7 @@ namespace Jyx2
         public List<Jyx2RoleWugong> Wugongs; //武功
 
         [XmlElement("Items")]
-        public List<Jyx2RoleItem> Items; //武功
+        public List<Jyx2RoleItem> Items; //道具
 
 		
         //立绘

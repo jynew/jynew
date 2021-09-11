@@ -38,9 +38,9 @@ namespace Jyx2
             GetSkill();
         }
 
-        public WugongInstance(Jyx2Item item)
+        public WugongInstance(Jyx2Item item, int magicId)
         {
-            Key = 0;
+            Key = magicId;
             Level = 0;
             GetSkill(item);
         }
@@ -97,6 +97,7 @@ namespace Jyx2
 			{
 				skillT.Animation = _anqi.AnqiAnimation;
 				skillT.Poison = _anqi.ChangePoisonLevel;
+                
 				foreach (Jyx2SkillLevel sl in _skill.SkillLevels)
 				{
 					sl.Attack = Mathf.Abs(_anqi.AddHp);

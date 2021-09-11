@@ -69,10 +69,7 @@ public class AIManager
 
         //可使用招式
         var zhaoshis = role.GetZhaoshis(false);
-
-        //TODO:攻击计算缓存 by Cherubinxxx
-        //AttackResultCache cache = new AttackResultCache(currentSprite, Field);
-
+        
         //AI算法：穷举每个点，使用招式，取最大收益
         AIResult result = null;
         double maxscore = 0;
@@ -90,11 +87,6 @@ public class AIManager
                 BattleBlockVector movePos = tmp[0];
                 BattleBlockVector castPos = tmp[1];
                 double score = GetSkillCastResultScore(role, zhaoshi, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
-                // yield return 0; //分帧
-                //if (score <= 0 && rst.HitEnemyCount > 0)
-                //{
-                //    score = ToolsShared.GetRandom(0, 1);
-                //}
                 if (score > maxscore)
                 {
                     maxscore = score;

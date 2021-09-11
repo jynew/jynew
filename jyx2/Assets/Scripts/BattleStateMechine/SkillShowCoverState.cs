@@ -73,9 +73,8 @@ public class SkillShowCoverState : IBattleState
             GameRuntimeData.Instance.AddItem(zhaoshi.Anqi.Id, -1);
             GameUtil.DisplayPopinfo($"{role.Name}使用了{zhaoshi.Anqi.Name}");
         }
-        //取消描边 
+        
         BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.PlayingAction);//释放技能
-
     }
 
     //取消
