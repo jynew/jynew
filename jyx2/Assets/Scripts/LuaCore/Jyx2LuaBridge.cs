@@ -603,6 +603,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
                 r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
+                r.Mp = HSFrameWork.Common.Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
                 //storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
             });
         }
@@ -627,6 +628,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
                 r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
+                r.Hp = HSFrameWork.Common.Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
                 //storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
             });
         }
