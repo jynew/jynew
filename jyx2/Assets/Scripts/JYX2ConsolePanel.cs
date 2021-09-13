@@ -16,6 +16,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using AClockworkBerry;
 
 public class JYX2ConsolePanel : MonoBehaviour
 {
@@ -23,12 +24,14 @@ public class JYX2ConsolePanel : MonoBehaviour
     public Button confirmButton;
     public Button helpButton;
     public Button cmdListButton;
+    public Button consoleButton;
 
     private void Start()
     {
         confirmButton.onClick.AddListener(OnConfirm);
         helpButton.onClick.AddListener(OnHelp);
         cmdListButton.onClick.AddListener(OnCmdList);
+        consoleButton.onClick.AddListener(OnConsole);
     }
 
     void OnHelp()
@@ -41,6 +44,13 @@ public class JYX2ConsolePanel : MonoBehaviour
         Application.OpenURL("https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%BA%8B%E4%BB%B6%E6%8C%87%E4%BB%A4");
     }
     
+    void OnConsole()
+    {
+        ScreenLoggerHotkeyManager screenLoggerHotkeyManager = GameObject.Find("ScreenLoggerHotkeyManager").GetComponent<ScreenLoggerHotkeyManager>();
+        screenLoggerHotkeyManager.isloggerOn = !screenLoggerHotkeyManager.isloggerOn;
+        ScreenLogger.Instance.ShowLog = screenLoggerHotkeyManager.isloggerOn;
+    }
+
     void OnConfirm()
     {
         string cmd = inputField.text.Trim();
