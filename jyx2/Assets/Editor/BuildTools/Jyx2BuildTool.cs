@@ -109,6 +109,10 @@ namespace Jyx2Editor.BuildTool
             //     PlayerSettings.Android.keyaliasPass = "password";
             // }
 
+            string currentDate = DateTime.Now.ToString("yyyyMMdd");
+            //设置版本号
+            PlayerSettings.bundleVersion = currentDate;
+            
             PlayerSettings.Android.keystorePass = "123456";
             PlayerSettings.Android.keyaliasPass = "123456";
             
