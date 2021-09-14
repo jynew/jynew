@@ -16,19 +16,27 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using AClockworkBerry;
+using System.Reflection;
 
 public class JYX2ConsolePanel : MonoBehaviour
 {
+    private static ScreenLogger screenLogger;
     public InputField inputField;
     public Button confirmButton;
     public Button helpButton;
     public Button cmdListButton;
+    public Button consoleButton;
+    public Button copyButton;
 
     private void Start()
     {
+        screenLogger = ScreenLogger.Instance;
         confirmButton.onClick.AddListener(OnConfirm);
         helpButton.onClick.AddListener(OnHelp);
         cmdListButton.onClick.AddListener(OnCmdList);
+        consoleButton.onClick.AddListener(OnConsole);
+        copyButton.onClick.AddListener(OnCopy);
     }
 
     void OnHelp()
@@ -41,6 +49,22 @@ public class JYX2ConsolePanel : MonoBehaviour
         Application.OpenURL("https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%BA%8B%E4%BB%B6%E6%8C%87%E4%BB%A4");
     }
     
+    void OnConsole()
+    {
+        ScreenLoggerHotkeyManager screenLoggerHotkeyManager = GameObject.Find("ScreenLoggerHotkeyManager").GetComponent<ScreenLoggerHotkeyManager>();
+        screenLoggerHotkeyManager.isloggerOn = !screenLoggerHotkeyManager.isloggerOn;
+        screenLogger.ShowLog = screenLoggerHotkeyManager.isloggerOn;
+    }
+
+    void OnCopy()
+    {
+        var queueField = screenLogger.GetType().GetField("queue", BindingFlags.Static | BindingFlags.NonPublic);
+        var queue = (Queue<ScreenLogger.LogMessage>)queueField.GetValue(screenLogger);
+        foreach (var m in queue)
+        {
+            GUIUtility.systemCopyBuffer += m.Message + "\n";
+        }
+    }
     void OnConfirm()
     {
         string cmd = inputField.text.Trim();
