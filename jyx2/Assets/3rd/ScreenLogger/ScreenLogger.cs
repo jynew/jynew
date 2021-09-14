@@ -13,7 +13,7 @@ namespace AClockworkBerry
         private static ScreenLogger instance;
         private static bool instantiated = false;
 
-        class LogMessage
+        public class LogMessage
         {
             public string Message;
             public LogType Type;
