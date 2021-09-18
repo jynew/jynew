@@ -74,6 +74,7 @@ public class Jyx2Player : MonoBehaviour
 
         SetHide(true);
         _navMeshAgent.areaMask = GetWaterNavAreaMask();
+		_navMeshAgent.Warp(boat.transform.position);
         _navMeshAgent.updatePosition = true;
     }
 
