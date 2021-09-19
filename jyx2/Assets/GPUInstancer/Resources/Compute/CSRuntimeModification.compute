@@ -1,0 +1,65 @@
+﻿
+#include "Include/PlatformDefines.compute"
+
+#pragma kernel CSInstancedTransformOffsetKernel
+#pragma kernel CSRemoveInsideBounds
+#pragma kernel CSRemoveInsideBox
+#pragma kernel CSRemoveInsideSphere
+#pragma kernel CSRemoveInsideCapsule
+
+RWStructuredBuffer<float4x4> gpuiInstanceData;
+uniform uint bufferSize;
+
+uniform float3 positionOffset;
+
+#include "Include/DataModel.compute"
+#include "Include/Collider.compute"
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSInstancedTransformOffsetKernel(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    gpuiInstanceData[id.x]._14_24_34 += positionOffset;
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSRemoveInsideBounds(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    if (IsInsideBounds(gpuiInstanceData[id.x]._14_24_34))
+        gpuiInstanceData[id.x] = zeroMatrix;
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSRemoveInsideBox(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    if (IsInsideBox(gpuiInstanceData[id.x]._14_24_34))
+        gpuiInstanceData[id.x] = zeroMatrix;
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSRemoveInsideSphere(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    if (IsInsideSphere(gpuiInstanceData[id.x]._14_24_34))
+        gpuiInstanceData[id.x] = zeroMatrix;
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSRemoveInsideCapsule(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    if (IsInsideCapsule(gpuiInstanceData[id.x]._14_24_34))
+        gpuiInstanceData[id.x] = zeroMatrix;
+}

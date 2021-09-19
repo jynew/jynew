@@ -1,0 +1,120 @@
+﻿
+#include "Include/PlatformDefines.compute"
+
+#pragma kernel CSInstancedRenderingGrassInstantiationKernel
+
+// Result buffer
+RWStructuredBuffer<float4x4> gpuiInstanceData;
+
+// Input buffers
+RWStructuredBuffer<uint> detailMapData;
+RWStructuredBuffer<float> heightMapData;
+
+uniform uint detailResolution;
+uniform uint heightResolution;
+uniform float3 startPosition;
+uniform float3 terrainSize;
+uniform float4 detailScale; // Usage: [minWidth, maxWidth, minHeight, maxHeight]
+uniform float4 detailAndHeightMapSize; // Usage: [detailMapWidth, detailMapHeight, heightMapWidth, heightMapHeight]
+
+uniform Texture2D<float4> healthyDryNoiseTexture;
+uniform SamplerState samplerhealthyDryNoiseTexture;
+uniform float noiseSpread;
+uniform float detailUniqueValue;
+uniform float detailDensity;
+
+RWStructuredBuffer<uint> counterBuffer;
+
+#include "Include/DataModel.compute"
+#include "Include/Matrix.compute"
+#include "Include/Random.compute"
+#include "Include/Terrain.compute"
+
+inline uint FixBounds(uint value, uint max, uint failValue)
+{
+    return (value >= max) ? failValue : value;
+}
+
+[numthreads(NUM_THREADS_2D, 1, NUM_THREADS_2D)]
+void CSInstancedRenderingGrassInstantiationKernel(uint3 id : SV_DispatchThreadID)
+{
+    // Check if out of terrain detail size 
+    if (id.x >= uint(detailAndHeightMapSize.x))
+        return;
+    if (id.z >= uint(detailAndHeightMapSize.y))
+        return;
+
+    // Get detail index on maps
+    uint detailIndex = id.x + id.z * detailAndHeightMapSize.x;
+    
+    // Get detail count
+    uint detailCount = detailMapData[detailIndex];
+
+    // Skip if no detail
+    if (detailCount == 0)
+        return;
+    
+    // Get heightMap info
+    uint heightDataSize = detailAndHeightMapSize.z * detailAndHeightMapSize.w;
+    float detailHeightMapScale = (heightResolution - 1.0) / detailResolution;
+    
+    // Convert to world coordinates
+    float multiplierX = terrainSize.x / float(detailResolution);
+    float multiplierZ = terrainSize.z / float(detailResolution);
+
+    // Set corner position
+    float3 position = float3(float(id.x) * multiplierX + startPosition.x, startPosition.y, float(id.z) * multiplierZ + startPosition.z);
+        
+    // Loop for the amount of grass
+    for (uint i = 0; i < detailCount; i++)
+    {
+        uint index;
+        InterlockedAdd(counterBuffer[0], 1, index);
+
+        float multiplier = (i + 1) * abs(detailUniqueValue);
+        
+        if (detailDensity < 1.0)
+        {
+            float densityCheck = randomFloat(((position.z + 0.5) * multiplier) + position.x);
+            if (densityCheck > detailDensity)
+            {
+                gpuiInstanceData[index] = zeroMatrix;
+                continue;
+            }
+        }
+        
+        float2 randomPoint = randomFloat2(float2((position.x + 0.5) * multiplier, position.z + 0.5));
+        float randomRotation = randomFloat(((position.x + 0.5) * multiplier) + position.z);
+        
+        // Get heights around position 
+        float2 heightPoint = float2((float(id.x) + randomPoint.x) * detailHeightMapScale, (float(id.z) + randomPoint.y) * detailHeightMapScale);
+        uint heightIndex = floor(heightPoint.x) + floor(heightPoint.y) * detailAndHeightMapSize.z;
+        float leftBottomH = heightMapData[heightIndex];
+        float leftTopH = heightMapData[FixBounds(heightIndex + detailAndHeightMapSize.z, heightDataSize, heightIndex)];
+        float rightBottomH = heightMapData[heightIndex + 1];
+        float rightTopH = heightMapData[FixBounds(heightIndex + detailAndHeightMapSize.z + 1, heightDataSize, heightIndex)];
+        
+        // Set grass position
+        float sampledHeight = SampleHeight(frac(heightPoint), leftBottomH, leftTopH, rightBottomH, rightTopH);
+        float3 grassPosition = float3(position.x + (randomPoint.x * multiplierX), position.y + sampledHeight * terrainSize.y, position.z + (randomPoint.y * multiplierZ));
+                
+        // Calculate random scale
+        float4 posterize364 = (floor(healthyDryNoiseTexture.SampleLevel(samplerhealthyDryNoiseTexture, ((grassPosition.xz * 0.05) * noiseSpread), 0) * 8.0) / 8.0);
+        float randomScale = 1 - saturate(sqrt((posterize364.r * posterize364.g * posterize364.b)));
+        
+        float xzScale = detailScale[0] + ((detailScale[1] - detailScale[0]) * randomScale);
+        float yScale = detailScale[2] + ((detailScale[3] - detailScale[2]) * randomScale);
+        float3 scale = float3(xzScale, yScale, xzScale);
+
+        // Calculate normal
+        float3 normal = ComputeNormals(leftBottomH, leftTopH, rightBottomH, heightResolution / (terrainSize.x / terrainSize.y));
+        
+        // Calculate random rotation
+        float4 q = FromToRotation(vector3Up, normal);
+        float4 q2 = AngleAxis(vector3Up, radians(randomRotation * 360));
+        float4x4 rotation = SetMatrixRotationWithQuaternion(identityMatrix, QuatMul(q, q2));
+
+        // Add detail 
+        gpuiInstanceData[index] = TRS(grassPosition, rotation, scale);
+    }
+}

@@ -1,0 +1,24 @@
+#ifndef __platformDefines_hlsl_
+#define __platformDefines_hlsl_
+
+#if SHADER_API_METAL
+    #define NUM_THREADS 256
+    #define NUM_THREADS_2D 16
+#elif SHADER_API_GLES3
+    #define NUM_THREADS 128
+    #define NUM_THREADS_2D 8
+#elif SHADER_API_VULKAN
+    #define NUM_THREADS 128
+    #define NUM_THREADS_2D 8
+#elif SHADER_API_GLCORE
+    #define NUM_THREADS 256
+    #define NUM_THREADS_2D 16
+#elif SHADER_API_PS4
+    #define NUM_THREADS 512
+    #define NUM_THREADS_2D 16
+#else
+    #define NUM_THREADS 512
+    #define NUM_THREADS_2D 16
+#endif
+
+#endif

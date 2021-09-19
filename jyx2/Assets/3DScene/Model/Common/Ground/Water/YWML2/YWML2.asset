@@ -775,6 +775,7 @@ Material:
     - __MainTexTile: {r: 0.71, g: 1.24, b: 0, a: 0.12}
     - lerped_post_color1: {r: 0.039649345, g: 0.072416864, b: 0.103773594, a: 1}
     - lerped_post_color2: {r: 0.147, g: 0.147, b: 0.147, a: 1}
+  m_BuildTextureStacks: []
 --- !u!48 &48295943589602538
 Shader:
   m_ObjectHideFlags: 0
@@ -782,6 +783,7 @@ Shader:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+  serializedVersion: 2
   m_ParsedForm:
     m_PropInfo:
       m_Props:
@@ -5147,7 +5149,17 @@ Shader:
           m_TexDim: 1
     m_SubShaders:
     - m_Passes:
-      - m_NameIndices: {}
+      - m_EditorDataHash: []
+        m_Platforms: 
+        m_LocalKeywordMask: 
+        m_GlobalKeywordMask: 000001000200030004000500
+        m_NameIndices:
+          FOG_EXP: 0
+          FOG_EXP2: 1
+          FOG_LINEAR: 2
+          ORTO_CAMERA_ON: 3
+          WATER_DOWNSAMPLING: 4
+          WATER_DOWNSAMPLING_HARD: 5
         m_Type: 0
         m_State:
           serializedVersion: 2
@@ -5341,6 +5353,9 @@ Shader:
           culling:
             val: 0
             name: <noninit>
+          conservative:
+            val: 0
+            name: <noninit>
           offsetFactor:
             val: 0
             name: <noninit>
@@ -5432,14 +5447,70 @@ Shader:
         m_ProgramMask: 6
         progVertex:
           m_SubPrograms: []
+          m_CommonParameters:
+            m_VectorParams: []
+            m_MatrixParams: []
+            m_TextureParams: []
+            m_BufferParams: []
+            m_ConstantBuffers: []
+            m_ConstantBufferBindings: []
+            m_UAVParams: []
+            m_Samplers: []
         progFragment:
           m_SubPrograms: []
+          m_CommonParameters:
+            m_VectorParams: []
+            m_MatrixParams: []
+            m_TextureParams: []
+            m_BufferParams: []
+            m_ConstantBuffers: []
+            m_ConstantBufferBindings: []
+            m_UAVParams: []
+            m_Samplers: []
         progGeometry:
           m_SubPrograms: []
+          m_CommonParameters:
+            m_VectorParams: []
+            m_MatrixParams: []
+            m_TextureParams: []
+            m_BufferParams: []
+            m_ConstantBuffers: []
+            m_ConstantBufferBindings: []
+            m_UAVParams: []
+            m_Samplers: []
         progHull:
           m_SubPrograms: []
+          m_CommonParameters:
+            m_VectorParams: []
+            m_MatrixParams: []
+            m_TextureParams: []
+            m_BufferParams: []
+            m_ConstantBuffers: []
+            m_ConstantBufferBindings: []
+            m_UAVParams: []
+            m_Samplers: []
         progDomain:
           m_SubPrograms: []
+          m_CommonParameters:
+            m_VectorParams: []
+            m_MatrixParams: []
+            m_TextureParams: []
+            m_BufferParams: []
+            m_ConstantBuffers: []
+            m_ConstantBufferBindings: []
+            m_UAVParams: []
+            m_Samplers: []
+        progRayTracing:
+          m_SubPrograms: []
+          m_CommonParameters:
+            m_VectorParams: []
+            m_MatrixParams: []
+            m_TextureParams: []
+            m_BufferParams: []
+            m_ConstantBuffers: []
+            m_ConstantBufferBindings: []
+            m_UAVParams: []
+            m_Samplers: []
         m_HasInstancingVariant: 0
         m_HasProceduralInstancingVariant: 0
         m_UseName: 
@@ -5458,9 +5529,9 @@ Shader:
     m_Dependencies: []
     m_DisableNoSubshadersMessage: 0
   platforms: 
-  offsets: 
-  compressedLengths: 
-  decompressedLengths: 
+  offsets: []
+  compressedLengths: []
+  decompressedLengths: []
   compressedBlob: 
   m_Dependencies: []
   m_NonModifiableTextures: {}
@@ -5469,22 +5540,22 @@ Shader:
   m_CompileInfo:
     m_Snippets:
       18608:
-        serializedVersion: 2
+        serializedVersion: 3
         m_Code: "#line 1582 \"\"\n#ifdef DUMMY_PREPROCESSOR_TO_WORK_AROUND_HLSL_COMPILER_LINE_HANDLING\n#endif\n\n#include
           \"HLSLSupport.cginc\"\n#define UNITY_INSTANCED_LOD_FADE\n#define UNITY_INSTANCED_SH\n#define
           UNITY_INSTANCED_LIGHTMAPSTS\n#include \"UnityShaderVariables.cginc\"\n#include
           \"UnityShaderUtilities.cginc\"\n#line 1582 \"\"\n#ifdef DUMMY_PREPROCESSOR_TO_WORK_AROUND_HLSL_COMPILER_LINE_HANDLING\n#endif\n/*
-          UNITY: Original start of shader */\r\n\r\n            #pragma vertex vert\r\n
-          \           #pragma fragment frag\r\n            #pragma multi_compile_fog\r\n
-          \           #define USING_FOG (defined(FOG_LINEAR) || defined(FOG_EXP) ||
-          defined(FOG_EXP2))\r\n            \r\n#pragma target 2.0\r\n#define TILEMASKTYPE_TILE
-          1;\n#define GRAD_G 1;\n#define SKIP_FOAM_COAST_ALPHA_FAKE 1;\n#define REFR_MASK_A
-          1;\n#define RRSIMPLEBLEND 1;\n#define MAINTEXLERPBLEND 1;\n#define SKIP_FOAM
-          1;\n#define SKIP_SURFACE_FOAMS 1;\n#define SKIP_MAINTEXTURE 1;\n#define
-          USE_OUTPUT_SHADOWS 1;\n#define REFLECTION_MASK_A 1;\n#define DETILE_LQ 1;\n#define
-          SKIP_SHORE_BORDERS 1;\n#define SKIP_REFLECTION_BLUR_ZDEPENDS 1;\n#define
-          USE_SURFACE_GRADS 1;\n#define REFLECTION_BLUR_1 1;\n#define REFRACTION_BLUR_1
-          1;\n#define SHORE_WAVES 1;\n#define FIX_OVEREXPO 1;\n#define LIGHTING_BLEND_SIMPLE
+          UNITY: Original start of shader */\r\n\r\n            #pragma vertex vert\r\n          
+          #pragma fragment frag\r\n            #pragma multi_compile_fog\r\n          
+          #define USING_FOG (defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2))\r\n           
+          \r\n#pragma target 2.0\r\n#define TILEMASKTYPE_TILE 1;\n#define GRAD_G
+          1;\n#define SKIP_FOAM_COAST_ALPHA_FAKE 1;\n#define REFR_MASK_A 1;\n#define
+          RRSIMPLEBLEND 1;\n#define MAINTEXLERPBLEND 1;\n#define SKIP_FOAM 1;\n#define
+          SKIP_SURFACE_FOAMS 1;\n#define SKIP_MAINTEXTURE 1;\n#define USE_OUTPUT_SHADOWS
+          1;\n#define REFLECTION_MASK_A 1;\n#define DETILE_LQ 1;\n#define SKIP_SHORE_BORDERS
+          1;\n#define SKIP_REFLECTION_BLUR_ZDEPENDS 1;\n#define USE_SURFACE_GRADS
+          1;\n#define REFLECTION_BLUR_1 1;\n#define REFRACTION_BLUR_1 1;\n#define
+          SHORE_WAVES 1;\n#define FIX_OVEREXPO 1;\n#define LIGHTING_BLEND_SIMPLE
           1;\n#define GRAD_4 1;\n#define SHORE_UNWRAP_STRETCH_DOT 1;\n#define RIM_INVERSE
           1;\n#define REFLECTION_BLUR 1;\n#define WAW3D_NORMAL_CALCULATION 1;\n#define
           FIX_HL 1;\n#define MAIN_TEX_LowDistortion_1 1;\n#define SKIP_3DVERTEX_HEIGHT_COLORIZE
@@ -5498,15 +5569,15 @@ Shader:
           POST_OWN_TEXTURE 1;\n#define USE_OUTPUT_BLEND_3 1;\n#define SHORE_USE_LOW_DISTORTION_1
           1;\n#define BAKED_DEPTH_ONAWAKE 1;\n#define HAS_WAVES_DETILE 1;\n#define
           MAINTEX_HAS_MOVE 1;\n#define SKIP_LIGHTING 1;\n#define REFLECTION_JUST_COLOR
-          1;\n#define FOAM_ALPHA_FLAT 1;\n#define SKIP_AMBIENT_COLOR 1;\n#define WAVES_MAP_NORMAL
-          1;\n#define USE_FAKE_LIGHTING 1;\n#define USE_VERTEX_H_DISTORT 1;\n#define
-          USE_lerped_post 1;\n#define FORCE_OPAQUE 1;\n#define _ShoreWaves_SECOND_TEXTURE
+          1;\n#define FOAM_ALPHA_FLAT 1;\n#define SKIP_AMBIENT_COLOR 1;\n#define
+          WAVES_MAP_NORMAL 1;\n#define USE_FAKE_LIGHTING 1;\n#define USE_VERTEX_H_DISTORT
+          1;\n#define USE_lerped_post 1;\n#define FORCE_OPAQUE 1;\n#define _ShoreWaves_SECOND_TEXTURE
           1;\n#define SHORE_SHADDOW_1 1;\n#define SHORE_ANIM_XMOVEBLEND_1 1;\n#define
           SKIP_FLAT_SPECULAR_CLAMP 1;\n#define SIN_OFFSET 1;\n#define UFAST_SHORE_1
           1;\n#define SKIP_3DVERTEX_ANIMATION 1;\n#define SKIP_MAIN_TEXTURE 1;\n#define
-          REFRACTION_BAKED_ONAWAKE 1;\n\r\n#pragma fragmentoption ARB_precision_hint_fastest\r\n
-          \           #pragma multi_compile ORTO_CAMERA_ON _\r\n            #pragma
-          multi_compile WATER_DOWNSAMPLING WATER_DOWNSAMPLING_HARD _\r\n           \r\n\n\n\n\n\n#define
+          REFRACTION_BAKED_ONAWAKE 1;\n\r\n#pragma fragmentoption ARB_precision_hint_fastest\r\n          
+          #pragma multi_compile ORTO_CAMERA_ON _\r\n            #pragma multi_compile
+          WATER_DOWNSAMPLING WATER_DOWNSAMPLING_HARD _\r\n           \r\n\n\n\n\n\n#define
           MYFLOAT float\n#define MYFLOAT2 float2\n#define MYFLOAT3 float3\n#define
           MYFLOAT4 float4\n\n\n\n\n#if defined(MINIMUM_MODE) || defined(ULTRA_FAST_MODE)\n#define
           MYFIXED fixed\n#define MYFIXED2 fixed2\n#define MYFIXED3 fixed3\n#define
@@ -5514,20 +5585,21 @@ Shader:
           !defined(ULTRA_FAST_MODE) && !defined(MINIMUM_MODE)\n#endif\n#if  defined(REFLECTION_2D)
           || defined(REFLECTION_PLANAR)||defined(REFLECTION_PROBE_AND_INTENSITY)||defined(REFLECTION_PROBE_AND_INTENSITY)||defined(REFLECTION_PROBE)||
           defined(REFLECTION_USER) || defined(REFLECTION_JUST_COLOR)\n#define HAS_REFLECTION
-          = 1\n#endif\n\n\n\n\nuniform MYFIXED _ObjecAngle;\n#if !defined(ULTRA_FAST_MODE)
-          \ && !defined(MINIMUM_MODE)\n#endif\nMYFIXED _Frac2PITime;\nMYFIXED _Frac01Time;\nMYFIXED
+          = 1\n#endif\n\n\n\n\nuniform MYFIXED _ObjecAngle;\n#if !defined(ULTRA_FAST_MODE) 
+          && !defined(MINIMUM_MODE)\n#endif\nMYFIXED _Frac2PITime;\nMYFIXED _Frac01Time;\nMYFIXED
           _Frac01Time_d8_mBlendAnimSpeed;\nMYFIXED _Frac01Time_MAIN_TEX_BA_Speed;\nfloat2
           _FracWTime_m4_m3DWavesSpeed_dPI2;\nMYFIXED2 _Frac_UFSHORE_Tile_1Time_d10_m_UFSHORE_Speed1;\nMYFIXED2
           _Frac_UFSHORE_Tile_2Time_d10_m_UFSHORE_Speed2;\nMYFIXED _Frac01Time_m16_mMAIN_TEX_FoamGradWavesSpeed_1;\n\n\nfloat2
           _Frac_WaterTextureTilingTime_m_AnimMove;\nfloat4 _Frac_UVS_DIR;\n\nfloat2
           _FracMAIN_TEX_TileTime_mMAIN_TEX_Move;\nfloat2 _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_pMAIN_TEX_CA_Speed;\nfloat2
           _FracMAIN_TEX_TileTime_mMAIN_TEX_Move_sMAIN_TEX_CA_Speed;\n\n\n\nuniform
-          MYFIXED _LOW_DISTOR_Tile;\nuniform MYFIXED _LOW_DISTOR_Speed;\nuniform MYFIXED
-          _LOW_DISTOR_Amount;\n\n#ifdef WATER_DOWNSAMPLING\nuniform MYFIXED DOWNSAMPLING_SAMPLE_SIZE;\nfloat
-          _FrameRate;\nsampler2D _FrameBuffer;\n#endif\n#ifdef WATER_DOWNSAMPLING_HARD\nuniform
-          MYFIXED DOWNSAMPLING_SAMPLE_SIZE;\nfloat _FrameRate;\nsampler2D _FrameBuffer;\n#endif\n\n\n\nuniform
-          MYFIXED _BumpMixAmount;\nuniform MYFIXED _Z_BLACK_OFFSET_V;\n\n\n#if !defined(USING_FOG)
-          && !defined(SKIP_FOG)\n#define SKIP_FOG = 1\n#endif\n\n\n\n\n#if defined(REFRACTION_BAKED_FROM_TEXTURE)
+          MYFIXED _LOW_DISTOR_Tile;\nuniform MYFIXED _LOW_DISTOR_Speed;\nuniform
+          MYFIXED _LOW_DISTOR_Amount;\n\n#ifdef WATER_DOWNSAMPLING\nuniform MYFIXED
+          DOWNSAMPLING_SAMPLE_SIZE;\nfloat _FrameRate;\nsampler2D _FrameBuffer;\n#endif\n#ifdef
+          WATER_DOWNSAMPLING_HARD\nuniform MYFIXED DOWNSAMPLING_SAMPLE_SIZE;\nfloat
+          _FrameRate;\nsampler2D _FrameBuffer;\n#endif\n\n\n\nuniform MYFIXED _BumpMixAmount;\nuniform
+          MYFIXED _Z_BLACK_OFFSET_V;\n\n\n#if !defined(USING_FOG) && !defined(SKIP_FOG)\n#define
+          SKIP_FOG = 1\n#endif\n\n\n\n\n#if defined(REFRACTION_BAKED_FROM_TEXTURE)
           || defined(REFRACTION_BAKED_ONAWAKE) || defined(REFRACTION_BAKED_VIA_SCRIPT)\n#define
           HAS_BAKED_REFRACTION = 1\n#endif\n\n\n#if defined(SURFACE_FOG)\n#endif\n\n\n#if
           defined(REFRACTION_GRABPASS) || defined(HAS_BAKED_REFRACTION) || defined(REFRACTION_ONLYZCOLOR)\n#if
@@ -5552,18 +5624,19 @@ Shader:
           && !defined(SKIP_FOAM)\n#endif\n\n\n#if defined(HAS_BAKED_REFRACTION)\nuniform
           MYFIXED _RefractionBakeLayers;\n#endif\n#if defined(HAS_BAKED_DEPTH)\nuniform
           MYFIXED _ZDepthBakeLayers;\n#endif\n\n\n\n\n#if defined(HAS_REFRACTION)
-          && defined(REFR_MASK)\n#endif\n\n\n\n\n\n#if defined(UF_AMOUNTMASK) && !defined(_UF_NMASK_USE_MAINTEX)
-          || !defined(SKIP_UNWRAP_TEXTURE) && defined(_ShoreWaves_SECOND_TEXTURE)
+          && defined(REFR_MASK)\n#endif\n\n\n\n\n\n#if defined(UF_AMOUNTMASK) &&
+          !defined(_UF_NMASK_USE_MAINTEX) || !defined(SKIP_UNWRAP_TEXTURE) && defined(_ShoreWaves_SECOND_TEXTURE)
           || defined(POST_TEXTURE_TINT) && defined(POST_OWN_TEXTURE) || defined(POST_TEXTURE_TINT)
-          && defined(POST_SECOND_TEXTURE)\nsampler2D _UF_NMASK_Texture;\n#define HAS_SECOND_TEXTURE
-          = 1\n#endif\n\n#if defined(SHORE_WAVES) && defined(ADVANCE_PC) || defined(UFAST_SHORE_1)
-          && !defined(_ShoreWaves_SECOND_TEXTURE) && !defined(_ShoreWaves_USE_MAINTEX)
+          && defined(POST_SECOND_TEXTURE)\nsampler2D _UF_NMASK_Texture;\n#define
+          HAS_SECOND_TEXTURE = 1\n#endif\n\n#if defined(SHORE_WAVES) && defined(ADVANCE_PC)
+          || defined(UFAST_SHORE_1) && !defined(_ShoreWaves_SECOND_TEXTURE) && !defined(_ShoreWaves_USE_MAINTEX)
           && !defined(ADVANCE_PC)\n#endif\n\n\n\n#if defined(MINIMUM_MODE) || defined(ULTRA_FAST_MODE)\n\n\n\n\n\n\n#if
-          defined(UF_AMOUNTMASK)\nuniform half _UF_NMASK_Tile;\nuniform MYFIXED2 _UF_NMASK_offset;\nuniform
-          MYFIXED _UF_NMASK_Contrast;\nuniform MYFIXED _UF_NMASK_Brightnes;\n#endif\n#else\n#endif\n\n\n#if
-          defined(SIN_OFFSET)\nuniform MYFIXED _sinFriq;\nuniform MYFIXED _sinAmount;\n#endif\n\n\n#if
-          !defined(SKIP_LIGHTING) || !defined(SKIP_SPECULAR) || !defined(SKIP_FLAT_SPECULAR)\nuniform
-          MYFIXED _LightNormalsFactor;\n#if defined(USE_FAKE_LIGHTING)\nuniform MYFIXED3
+          defined(UF_AMOUNTMASK)\nuniform half _UF_NMASK_Tile;\nuniform MYFIXED2
+          _UF_NMASK_offset;\nuniform MYFIXED _UF_NMASK_Contrast;\nuniform MYFIXED
+          _UF_NMASK_Brightnes;\n#endif\n#else\n#endif\n\n\n#if defined(SIN_OFFSET)\nuniform
+          MYFIXED _sinFriq;\nuniform MYFIXED _sinAmount;\n#endif\n\n\n#if !defined(SKIP_LIGHTING)
+          || !defined(SKIP_SPECULAR) || !defined(SKIP_FLAT_SPECULAR)\nuniform MYFIXED
+          _LightNormalsFactor;\n#if defined(USE_FAKE_LIGHTING)\nuniform MYFIXED3
           _LightColor0Fake;\n#endif\n#if defined(LIGHTING_BLEND_COLOR)\n#endif\n#endif\n\n#if
           defined(HAS_BAKED_REFRACTION)\n#if defined(REFRACTION_BAKED_FROM_TEXTURE)\n#else\nuniform
           sampler2D _RefractionTex_temp;\n#endif\n#endif\n\n#if !defined(SKIP_REFRACTION_CALC_DEPTH_FACTOR)
@@ -5610,17 +5683,17 @@ Shader:
           !defined(SKIP_LIGHTING) ||  !defined(SKIP_SPECULAR) || !defined(SKIP_FLAT_SPECULAR)\nuniform
           MYFIXED3 _LightDir;\n\n#endif\n#if !defined(SKIP_LIGHTING)\n#endif\n#if
           !defined(SKIP_SPECULAR)\nuniform MYFIXED _SpecularAmount;\nuniform MYFIXED
-          _SpecularShininess;\nuniform MYFIXED _SpecularGlowAmount;\n#endif\n#if !defined(SKIP_FLAT_SPECULAR)\nuniform
-          MYFIXED _FlatSpecularAmount;\nuniform MYFIXED _FlatSpecularShininess;\nuniform
-          MYFIXED _FlatSpecularClamp;\nuniform MYFIXED _FlatFriqX;\nuniform MYFIXED
-          _FlatFriqY;\nuniform MYFIXED _Light_FlatSpecTopDir;\n\n#if defined(USE_FLAT_HQ)\n#endif\n\n#endif\n\n\n\n#if
-          !defined(SKIP_REFLECTION_MASK)\nuniform MYFIXED _ReflectionMask_Amount;\nuniform
-          MYFIXED _ReflectionMask_Offset;\nuniform MYFIXED _ReflectionMask_UpClamp;\nuniform
-          MYFIXED _ReflectionMask_Tiling;\nuniform MYFIXED2 _ReflectionMask_TexOffsetF;\n#endif\n\n\n#if
-          (defined(HAS_FOAM) || defined(SHORE_WAVES)) && !defined(ULTRA_FAST_MODE)
-          && !defined(MINIMUM_MODE)\n#endif\n\n\n\n#if !defined(SKIP_FOAM)\n#endif\n\n#if
-          !defined(SKIP_SURFACE_FOAMS) && defined(ADVANCE_PC)\n#endif\n\n#ifdef ORTO_CAMERA_ON\nuniform
-          MYFIXED _MyNearClipPlane;\nuniform MYFIXED _MyFarClipPlane;\n#endif\n\n\n#if
+          _SpecularShininess;\nuniform MYFIXED _SpecularGlowAmount;\n#endif\n#if
+          !defined(SKIP_FLAT_SPECULAR)\nuniform MYFIXED _FlatSpecularAmount;\nuniform
+          MYFIXED _FlatSpecularShininess;\nuniform MYFIXED _FlatSpecularClamp;\nuniform
+          MYFIXED _FlatFriqX;\nuniform MYFIXED _FlatFriqY;\nuniform MYFIXED _Light_FlatSpecTopDir;\n\n#if
+          defined(USE_FLAT_HQ)\n#endif\n\n#endif\n\n\n\n#if !defined(SKIP_REFLECTION_MASK)\nuniform
+          MYFIXED _ReflectionMask_Amount;\nuniform MYFIXED _ReflectionMask_Offset;\nuniform
+          MYFIXED _ReflectionMask_UpClamp;\nuniform MYFIXED _ReflectionMask_Tiling;\nuniform
+          MYFIXED2 _ReflectionMask_TexOffsetF;\n#endif\n\n\n#if (defined(HAS_FOAM)
+          || defined(SHORE_WAVES)) && !defined(ULTRA_FAST_MODE) && !defined(MINIMUM_MODE)\n#endif\n\n\n\n#if
+          !defined(SKIP_FOAM)\n#endif\n\n#if !defined(SKIP_SURFACE_FOAMS) && defined(ADVANCE_PC)\n#endif\n\n#ifdef
+          ORTO_CAMERA_ON\nuniform MYFIXED _MyNearClipPlane;\nuniform MYFIXED _MyFarClipPlane;\n#endif\n\n\n#if
           defined(DETILE_HQ) || defined(DETILE_LQ)\nuniform half _DetileAmount;\nuniform
           half _DetileFriq;\n#endif\n\n#if defined(HAS_REFRACTION) && !defined(REFRACTION_ONLYZCOLOR)\nuniform
           MYFIXED _RefrTextureFog;\n#endif\n\n\n#if(defined(APPLY_REFR_TO_SPECULAR)
@@ -5668,8 +5741,9 @@ Shader:
           serializedVersion: 2
           Hash: c7adc4ddc3158715e094a5b329d79e02
         m_FromOther: 0
+        m_ForceSyncCompilation: 0
         m_Language: 0
-        m_VariantsUser0:
+        m_VariantsUserGlobal0:
         - - ORTO_CAMERA_ON
           - _
         - - WATER_DOWNSAMPLING
@@ -5679,7 +5753,7 @@ Shader:
           - FOG_LINEAR
           - FOG_EXP
           - FOG_EXP2
-        m_VariantsUser1:
+        m_VariantsUserGlobal1:
         - - ORTO_CAMERA_ON
           - _
         - - WATER_DOWNSAMPLING
@@ -5689,16 +5763,25 @@ Shader:
           - FOG_LINEAR
           - FOG_EXP
           - FOG_EXP2
-        m_VariantsUser2: []
-        m_VariantsUser3: []
-        m_VariantsUser4: []
-        m_VariantsUser5: []
+        m_VariantsUserGlobal2: []
+        m_VariantsUserGlobal3: []
+        m_VariantsUserGlobal4: []
+        m_VariantsUserGlobal5: []
+        m_VariantsUserGlobal6: []
+        m_VariantsUserLocal0: []
+        m_VariantsUserLocal1: []
+        m_VariantsUserLocal2: []
+        m_VariantsUserLocal3: []
+        m_VariantsUserLocal4: []
+        m_VariantsUserLocal5: []
+        m_VariantsUserLocal6: []
         m_VariantsBuiltin0: []
         m_VariantsBuiltin1: []
         m_VariantsBuiltin2: []
         m_VariantsBuiltin3: []
         m_VariantsBuiltin4: []
         m_VariantsBuiltin5: []
+        m_VariantsBuiltin6: []
         m_BaseRequirements: 1
         m_KeywordTargetInfo:
         - keywordName: SHADOWS_SOFT
@@ -5725,3 +5808,4 @@ Shader:
     m_MeshComponentsFromSnippets: 15
     m_HasSurfaceShaders: 0
     m_HasFixedFunctionShaders: 0
+  m_CompileSmokeTestAfterImport: 0

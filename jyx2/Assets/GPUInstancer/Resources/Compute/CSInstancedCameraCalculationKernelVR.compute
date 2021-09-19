@@ -1,0 +1,60 @@
+﻿
+#include "Include/PlatformDefines.compute"
+
+#pragma kernel CSInstancedCameraCalculationKernel
+#pragma kernel CSInstancedCameraCalculationKernelCrossFade
+
+RWStructuredBuffer<uint4> gpuiInstanceLODData; // lodNo - shadowLodNo - cfLodNo - cfLevel 
+#include "Include/CullingVR.compute"
+#include "Include/Camera.compute"
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSInstancedCameraCalculationKernel(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    float dist = 0;
+    bool culled = false;
+    float size = 0;
+
+    uint4 lodData = uint4(9, 9, 9, 0);
+    float4x4 instanceMatrix = gpuiInstanceData[id.x];
+
+    CalculatDistanceAndSize(instanceMatrix, dist, size);
+    IsCulledVR(instanceMatrix, dist, culled);
+    CalculateLODNo(size, dist, culled, lodData.x, lodData.y);
+
+    gpuiInstanceLODData[id.x] = lodData;
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSInstancedCameraCalculationKernelCrossFade(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    float dist = 0;
+    bool culled = false;
+    float size = 0;
+    
+    uint4 lodData = uint4(9, 9, 9, 0);
+    float4x4 instanceMatrix = gpuiInstanceData[id.x];
+
+    CalculatDistanceAndSize(instanceMatrix, dist, size);
+    IsCulledVR(instanceMatrix, dist, culled);
+    CalculateLODNo(size, dist, culled, lodData.x, lodData.y);
+#if !SHADER_API_GLCORE && !SHADER_API_GLES3 && !SHADER_API_VULKAN
+    if (animateCrossFade)
+    {
+        uint4 previousLodData = gpuiInstanceLODData[id.x];
+        lodData.w = previousLodData.w;
+        lodData.z = previousLodData.z;
+        CalculateCFLODNoAnimate(previousLodData.x, lodData.x, lodData.z, lodData.w);
+    }
+    else
+        CalculateCFLODNo(size, lodData.x, lodData.z, lodData.w);
+#endif
+    
+    gpuiInstanceLODData[id.x] = lodData;
+}

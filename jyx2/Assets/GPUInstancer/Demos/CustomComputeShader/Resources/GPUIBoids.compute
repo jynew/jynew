@@ -1,0 +1,85 @@
+﻿// Inspired by https://github.com/keijiro/Boids
+
+#include "../../../Resources/Compute/Include/PlatformDefines.compute"
+
+#pragma kernel CSGPUIBoids
+
+RWStructuredBuffer<float4x4> boidsData;
+uniform uint bufferSize;
+
+uniform Texture2D<float4> noiseTexture;
+uniform SamplerState samplernoiseTexture;
+
+uniform float4x4 controllerTransform;
+uniform float controllerVelocity;
+uniform float controllerVelocityVariation;
+uniform float controllerRotationCoeff;
+uniform float controllerNeighborDist;
+uniform float time;
+uniform float deltaTime;
+
+#include "../../../Resources/Compute/Include/DataModel.compute"
+#include "../../../Resources/Compute/Include/Matrix.compute"
+
+float3 GetSeparationVector(float3 pos, float3 targetPos)
+{
+    float3 diff = pos - targetPos;
+    float diffLen = length(diff);
+    float scaler = clamp(1.0f - diffLen / controllerNeighborDist, 0, 1);
+    return diff * (scaler / diffLen);
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSGPUIBoids(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    float4x4 boid = boidsData[id.x];
+
+    float3 currentPosition = boid._14_24_34;
+    float3 currentDirection = boid._13_23_33;
+    
+    // Current velocity randomized with noise.
+    float4 noiseTxt = noiseTexture.SampleLevel(samplernoiseTexture, float2(time / 100.0, (float(id.x) / float(bufferSize))), 0);
+    float velocity = controllerVelocity * (1.0 + lerp(0, lerp(-1, 1, noiseTxt.r), controllerVelocityVariation));
+
+    // Initializes the vectors.
+    float3 separation = float3(0, 0, 0);
+    float3 alignment = float3(0, 0, 0);
+    float3 cohesion = controllerTransform._14_24_34;
+    uint nearbyCount = 1;
+
+    // Accumulates the vectors.
+    for (uint i = 0; i < bufferSize; i++)
+    {
+        if (i == id.x)
+            continue;
+        float4x4 checkBoid = boidsData[i];
+        float3 checkPos = checkBoid._14_24_34;
+        if (distance(currentPosition, checkPos) <= controllerNeighborDist)
+        {
+            separation += GetSeparationVector(currentPosition, checkPos);
+            alignment += checkBoid._13_23_33;
+            cohesion += checkPos;
+            nearbyCount++;
+        }
+    }
+
+    float avg = 1.0f / nearbyCount;
+    alignment *= avg;
+    cohesion *= avg;
+    cohesion = normalize(cohesion - currentPosition);
+
+    // Calculates a rotation from the vectors.
+    float3 direction = normalize(separation + alignment + cohesion);
+
+    // Applys the rotation with interpolation.
+    float ip = frac(exp(-controllerRotationCoeff * deltaTime) * controllerRotationCoeff / 100);
+    float4x4 newRotation = SetMatrixRotationWithQuaternion(identityMatrix, FromToRotation(float3(0, 0, 1), lerp(currentDirection, direction, ip)));
+
+    // Moves forward.
+    currentPosition = currentPosition + newRotation._13_23_33 * (velocity * deltaTime);
+
+    boidsData[id.x] = TRS(currentPosition, newRotation, vector3One);
+}

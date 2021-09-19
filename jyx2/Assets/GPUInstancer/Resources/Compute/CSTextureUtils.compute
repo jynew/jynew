@@ -1,0 +1,56 @@
+﻿
+#include "Include/PlatformDefines.compute"
+
+#pragma kernel CSCopyTexture
+#pragma kernel CSReduceTexture
+
+uniform Texture2D<float4> source;
+uniform SamplerState sampler_source;
+uniform RWTexture2D<float4> destination;
+uniform uint offsetX;
+uniform uint sourceSizeX;
+uniform uint sourceSizeY;
+uniform uint destinationSizeX;
+uniform uint destinationSizeY;
+uniform bool reverseZ;
+
+[numthreads(NUM_THREADS_2D, NUM_THREADS_2D, 1)]
+void CSCopyTexture(uint2 id : SV_DispatchThreadID)
+{
+    if (id.x >= sourceSizeX || id.y >= sourceSizeY)
+        return;
+
+    uint indexX = id.x + offsetX;
+    
+    float4 color = source[uint2(id.x, id.y)];
+
+#if SHADER_API_GLCORE || SHADER_API_GLES3
+    if (reverseZ)
+        color.r = 1 - color.r;
+#endif
+
+    destination[uint2(indexX, id.y)] = color;
+
+}
+
+[numthreads(NUM_THREADS_2D, NUM_THREADS_2D, 1)]
+void CSReduceTexture(uint2 id : SV_DispatchThreadID)
+{
+    if (id.x >= sourceSizeX || id.y >= sourceSizeY)
+        return;
+
+    uint indexX = id.x + offsetX;
+    float2 uv = float2((id.x + 0.5) / float(destinationSizeX), (id.y + 0.5) / float(destinationSizeY));
+    
+    float4 r;
+    r.x = source.SampleLevel(sampler_source, uv + float2(1.0 / sourceSizeX, 0), 0).r;
+    r.y = source.SampleLevel(sampler_source, uv + float2(-1.0 / sourceSizeX, 0), 0).r;
+    r.z = source.SampleLevel(sampler_source, uv + float2(0, 1.0 / sourceSizeY), 0).r;
+    r.w = source.SampleLevel(sampler_source, uv + float2(0, -1.0 / sourceSizeY), 0).r;
+
+    //float4 r = source.GatherRed(sampler_source, uv, int2(0, 0));
+    
+    float minimum = min(min(min(r.x, r.y), r.z), r.w);
+
+    destination[uint2(indexX, id.y)] = float4(minimum, 1.0, 1.0, 1.0);
+}

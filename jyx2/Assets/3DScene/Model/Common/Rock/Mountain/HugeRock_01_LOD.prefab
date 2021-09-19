@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3556272982607425577}
   - component: {fileID: 1039899709}
   - component: {fileID: 1719415257150870596}
+  - component: {fileID: 6313610121469316384}
   m_Layer: 18
   m_Name: HugeRock_01_LOD
   m_TagString: Untagged
@@ -57,6 +58,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -68,6 +71,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 0.3
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -80,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &1039899709
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -90,9 +95,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: f9f7af66f97e5914e9f6a86884ceb5b3, type: 3}
 --- !u!205 &1719415257150870596
 LODGroup:
@@ -117,6 +122,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1289194497315956821}
   m_Enabled: 1
+--- !u!114 &6313610121469316384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039899708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13f42112a552354988a63573e49f5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPrototype: {fileID: 11400000, guid: 5a8cb2cfde209fe4a97c0e25a5529e9d, type: 2}
 --- !u!1001 &1289194497313665077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,6 +145,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
       propertyPath: m_Name
       value: HugeRock_01_1_Low
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -141,6 +171,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -150,14 +184,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
@@ -171,14 +197,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 4b4f3598704d483488be746d16d5141b, type: 3}
       propertyPath: m_Materials.Array.data[0]
