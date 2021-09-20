@@ -151,10 +151,12 @@ public class BigMapZone : MonoBehaviour
 			if (!string.IsNullOrEmpty(currentMap.BigMapTriggerName))
 			{
 				mapKey += "&transport#" + currentMap.BigMapTriggerName;
+				var par=new LevelMaster.LevelLoadPara(){loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtTrigger,triggerName=currentMap.BigMapTriggerName};
+				LevelLoader.LoadGameMap(mapKey,par);
 			}
+		}else{
+			LevelLoader.LoadGameMap(mapKey);
 		}
-
-		LevelLoader.LoadGameMap(mapKey);
 	}
 
 	// transport Wei to other hotel when leave hotel if had talked to him
