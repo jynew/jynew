@@ -8,13 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Lajiao
-  m_Shader: {fileID: 52, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _DISSOLVE_OFF
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _DISSOLVE_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -168,7 +169,7 @@ Material:
     - _DetileAmount: 0.15
     - _DetileFriq: 5
     - _DissolveRatio: 0
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _FadingFactor: 0.5
     - _FastFresnelAmount: 10
     - _FastFresnelPow: 10
@@ -220,7 +221,7 @@ Material:
     - _GlobalWind: 0.5
     - _Gloss: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 1
     - _GlossyReflections: 1
     - _LOW_DISTOR_Amount: 1
     - _LOW_DISTOR_MAINTEX_Speed: 8
@@ -243,7 +244,7 @@ Material:
     - _MTDistortion: 0
     - _MainTexAngle: 0
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 3
     - _MultyOctaveNormals: 5
     - _MultyOctavesSpeedOffset: 0.89
     - _MyFarClipPlane: 1000
@@ -400,7 +401,7 @@ Material:
     - _WindMain: 2
     - _WorkDistance: 5
     - _ZDistanceCalcOffset: 0.25
-    - _ZWrite: 1
+    - _ZWrite: 0
     - _Z_BLACK_OFFSET_V: 0
     - __dirty: 0
     - _sinAmount: 0.1
@@ -489,3 +490,4 @@ Material:
     - _ZDepthBakeLayers: {r: 255, g: 255, b: 255, a: 255}
     - lerped_post_color1: {r: 1, g: 1, b: 1, a: 1}
     - lerped_post_color2: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

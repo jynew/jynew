@@ -25,7 +25,7 @@ Shader "GPUInstancer/Custom/Grass"
 		Cull off
 		CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../3rd/GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
 		#include "UnityShaderVariables.cginc"

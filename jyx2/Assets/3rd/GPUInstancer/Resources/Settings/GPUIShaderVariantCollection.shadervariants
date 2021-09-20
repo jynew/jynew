@@ -13,6 +13,12 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+      - keywords: _DISSOLVE_OFF
+        passType: 0
+      - keywords: _ALPHAPREMULTIPLY_ON _DISSOLVE_OFF
+        passType: 0
+      - keywords: _ALPHATEST_ON _DISSOLVE_OFF
+        passType: 0
       - keywords: _NORMALMAP
         passType: 0
       - keywords: _EMISSION _NORMALMAP
@@ -26,6 +32,15 @@ ShaderVariantCollection:
       - keywords: _ALPHAPREMULTIPLY_ON _DISSOLVE_OFF _NORMALMAP _SPECGLOSSMAP
         passType: 0
       - keywords: _ALPHATEST_ON _DISSOLVE_OFF _NORMALMAP _SPECGLOSSMAP
+        passType: 0
+      - keywords: _EMISSION _LIGHTMAPPING_DYNAMIC_LIGHTMAPS _LIGHTMAPPING_REALTIME
+          _NORMALMAP _UVSEC_UV1
+        passType: 0
+      - keywords: _DISSOLVE_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        passType: 0
+      - keywords: _ALPHAPREMULTIPLY_ON _DISSOLVE_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        passType: 0
+      - keywords: _ALPHATEST_ON _DISSOLVE_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
         passType: 0
       - keywords: _NORMALMAP _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
         passType: 0
@@ -42,6 +57,11 @@ ShaderVariantCollection:
       - keywords: _ALPHABLEND_ON _DISSOLVE_OFF _NORMALMAP _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
           _SPECGLOSSMAP
         passType: 0
+  - first: {fileID: 4800000, guid: a1fe6b00539636f49bae5f911c8ccc55, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
   - first: {fileID: 4800000, guid: d52a38c4e70daf4449eaab298ba27ce6, type: 3}
     second:
       variants: []
@@ -57,6 +77,30 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 2a1fda71c9e820e42b9cd64424f8452e, type: 3}
     second:
       variants: []
+  - first: {fileID: 4800000, guid: 8a4d727fcfc589e4bb076bd5279e5201, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _ALPHATEST_ON _LIGHTMAPPING_REALTIME _NORMALMAP _SPECGLOSSMAP _UNIFORMWIND_ON
+          _UVSEC_UV1
+        passType: 0
+      - keywords: _ALPHATEST_ON _EMISSION _LIGHTMAPPING_DYNAMIC_LIGHTMAPS _LIGHTMAPPING_REALTIME
+          _UNIFORMWIND_ON _UVSEC_UV1
+        passType: 0
+      - keywords: _ALPHATEST_ON _LIGHTMAPPING_DYNAMIC_LIGHTMAPS _LIGHTMAPPING_REALTIME
+          _NORMALMAP _SPECGLOSSMAP _UNIFORMWIND_ON _UVSEC_UV1
+        passType: 0
+  - first: {fileID: 4800000, guid: ea4018e98671dbf40b0d47588bb71400, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 8c09ceafd07c22648a98a34fdfcbe766, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
   - first: {fileID: 4800000, guid: 4020a1dd63b4f044ea0f3c46196db840, type: 3}
     second:
       variants:
@@ -68,11 +112,17 @@ ShaderVariantCollection:
         passType: 0
       - keywords: _ALPHAPREMULTIPLY_ON
         passType: 0
+      - keywords: _ALPHATEST_ON
+        passType: 0
+      - keywords: _ALPHATEST_ON _DISSOLVE_OFF
+        passType: 0
       - keywords: _NORMALMAP
         passType: 0
       - keywords: _DISSOLVE_OFF _NORMALMAP
         passType: 0
       - keywords: _DISSOLVE_OFF _NORMALMAP _SPECGLOSSMAP
+        passType: 0
+      - keywords: _METALLICGLOSSMAP _NORMALMAP
         passType: 0
       - keywords: _EMISSION _FRESNELONLIGHT_ON _FRESNELONSHADOW_ON _SHOWAOONAMBIENTLIGHT_ON
         passType: 0
@@ -107,6 +157,8 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+      - keywords: _ALPHAPREMULTIPLY_ON
+        passType: 0
   - first: {fileID: 4800000, guid: 7ec79a1c8f00a634ca3accfc0386ad86, type: 3}
     second:
       variants:
@@ -122,4 +174,9 @@ ShaderVariantCollection:
       - keywords: 
         passType: 0
       - keywords: _DISSOLVE_OFF
+        passType: 0
+  - first: {fileID: 4800000, guid: 10defe77b7079464485522f0f0fdd358, type: 3}
+    second:
+      variants:
+      - keywords: 
         passType: 0

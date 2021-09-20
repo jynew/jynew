@@ -35,7 +35,7 @@ Shader "GPUInstancer/Custom/StaticBakeObj"
 		Cull Front
 		CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../3rd/GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
 		#pragma target 3.0
@@ -135,7 +135,7 @@ Shader "GPUInstancer/Custom/StaticBakeObj"
 		Cull Back
 		CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../3rd/GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
 		#include "UnityShaderVariables.cginc"
@@ -260,7 +260,7 @@ Shader "GPUInstancer/Custom/StaticBakeObj"
 		Cull Back
 		CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../3rd/GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
 		#include "UnityShaderVariables.cginc"

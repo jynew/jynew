@@ -71,9 +71,10 @@ Shader "GPUInstancer/MK/Toon/Free"
 
 			CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
+#include "UnityCG.cginc"
 			#pragma target 3.0
 			#pragma vertex vertfwd
 			#pragma fragment fragfwd
@@ -104,9 +105,10 @@ Shader "GPUInstancer/MK/Toon/Free"
 
 			CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
+#include "UnityCG.cginc"
 			#pragma target 3.0
 
 			#pragma vertex vertfwd
@@ -135,9 +137,10 @@ Shader "GPUInstancer/MK/Toon/Free"
 
 			CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
+#include "UnityCG.cginc"
 			#pragma target 3.0
 			#pragma fragmentoption ARB_precision_hint_fastest
 			#pragma multi_compile_shadowcaster
@@ -164,9 +167,10 @@ Shader "GPUInstancer/MK/Toon/Free"
 
             CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
+#include "UnityCG.cginc"
             #pragma vertex vert_meta
             #pragma fragment frag_meta
 
@@ -195,9 +199,10 @@ Shader "GPUInstancer/MK/Toon/Free"
 
 			CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
-#pragma multi_compile_instancing 
+#pragma multi_compile_instancing
+#include "UnityCG.cginc"
 			#pragma target 3.0
 			#pragma vertex outlinevert 
 			#pragma fragment outlinefrag

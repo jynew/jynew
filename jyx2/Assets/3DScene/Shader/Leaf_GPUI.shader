@@ -36,9 +36,10 @@ Shader "GPUInstancer/Custom/Leaf"
 		Cull Off
 		CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../3rd/GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
+#include "UnityCG.cginc"
 		#include "UnityShaderVariables.cginc"
 		#pragma target 3.0
 		#pragma surface surf Lambert keepalpha addshadow fullforwardshadows exclude_path:deferred vertex:vertexDataFunc 
@@ -177,9 +178,10 @@ Shader "GPUInstancer/Custom/Leaf"
 		Cull Off
 		CGPROGRAM
 #include "UnityCG.cginc"
-#include "./../../GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
+#include "./../../3rd/GPUInstancer/Shaders/Include/GPUInstancerInclude.cginc"
 #pragma instancing_options procedural:setupGPUI
 #pragma multi_compile_instancing
+#include "UnityCG.cginc"
 		#include "UnityShaderVariables.cginc"
 		#pragma target 3.0
 		#pragma surface surf Lambert keepalpha addshadow fullforwardshadows exclude_path:deferred 
