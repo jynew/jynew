@@ -1,0 +1,49 @@
+﻿
+#include "Include/PlatformDefines.compute"
+
+#pragma kernel CSTreeInstantiationKernel
+
+// Result buffer
+RWStructuredBuffer<float4x4> gpuiInstanceData;
+
+// Input buffers
+RWStructuredBuffer<float4> treeData; // prototypeIndex - positionx3 - rotation - scalex2
+RWStructuredBuffer<float4> treeScales;
+RWStructuredBuffer<uint> counterBuffer;
+
+uniform uint bufferSize;
+//uniform float3 terrainSize;
+//uniform float3 terrainPosition;
+uniform uint prototypeIndex;
+uniform bool isApplyRotation;
+uniform bool isApplyTerrainHeight;
+
+#include "Include/DataModel.compute"
+#include "Include/Matrix.compute"
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSTreeInstantiationKernel(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= bufferSize)
+        return;
+
+    uint index = id.x * 2;
+    float4 treeData1 = treeData[index];
+    uint instancePI = uint(treeData1.x);
+
+    if (instancePI != prototypeIndex)
+        return;
+    
+    index++;
+    float4 treeData2 = treeData[index];
+    float4 treeScale = treeScales[prototypeIndex];
+    
+    float3 position = treeData1.yzw/* * terrainSize + terrainPosition*/;
+    float4x4 rotation = isApplyRotation ? MatrixRotate(vector3Up, treeData2.x) : identityMatrix;
+    float3 scale = (isApplyTerrainHeight ? treeData2.yzy : vector3One) * treeScale.xyz;
+
+    uint instanceIndex;
+    InterlockedAdd(counterBuffer[0], 1, instanceIndex);
+    // Add tree 
+    gpuiInstanceData[instanceIndex] = TRS(position, rotation, scale);
+}

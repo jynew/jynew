@@ -55,6 +55,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -66,6 +68,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -78,6 +81,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &3617254100633546613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94,12 +98,28 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
+    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5862751
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6473175
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5862752
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -114,6 +134,10 @@ PrefabInstance:
       value: 0.48096544
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.7071068
       objectReference: {fileID: 0}
@@ -126,14 +150,6 @@ PrefabInstance:
       value: -0.0000005066395
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90.00001
       objectReference: {fileID: 0}
@@ -144,18 +160,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90.30701
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5862751
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6473175
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5862752
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 419cbc256927b40449eefabdebb6138a, type: 3}

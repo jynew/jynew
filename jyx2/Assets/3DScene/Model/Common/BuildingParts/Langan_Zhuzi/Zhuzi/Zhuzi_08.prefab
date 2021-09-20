@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1396592355868753342}
   - component: {fileID: 7377173756017901225}
   - component: {fileID: 6742592597149806044}
+  - component: {fileID: 8395233331663616391}
   m_Layer: 0
   m_Name: Zhuzi_08
   m_TagString: Untagged
@@ -55,6 +56,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -66,6 +69,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -78,6 +82,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8395233331663616391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3128604962598422265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13f42112a552354988a63573e49f5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPrototype: {fileID: 11400000, guid: f7398c14016275a4996a94adaf3d528b, type: 2}
 --- !u!1001 &6748056731351226455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,6 +107,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Zhuzi_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.51781327
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5178135
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.9367166
       objectReference: {fileID: 0}
     - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
         type: 3}
@@ -107,6 +145,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -122,16 +165,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -144,21 +177,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.51781327
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5178135
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998610355713083601, guid: 2faca66997016d74ba454ba2c8b4c45d,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.9367166
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2faca66997016d74ba454ba2c8b4c45d, type: 3}

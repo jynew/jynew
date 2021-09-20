@@ -55,6 +55,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -66,6 +68,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -78,6 +81,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &2025490007335577784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85,10 +89,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9066062813808083629}
     m_Modifications:
-    - target: {fileID: 5482648602583818807, guid: 9786f3e19dee1044e9f221a348480aa6,
+    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
         type: 3}
-      propertyPath: m_Name
-      value: YWML2_Fire
+      propertyPath: ShapeModule.m_Scale.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482648602583818804, guid: 9786f3e19dee1044e9f221a348480aa6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5482648602583818804, guid: 9786f3e19dee1044e9f221a348480aa6,
         type: 3}
@@ -107,6 +136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5482648602583818804, guid: 9786f3e19dee1044e9f221a348480aa6,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.60982776
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482648602583818804, guid: 9786f3e19dee1044e9f221a348480aa6,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.60982776
       objectReference: {fileID: 0}
@@ -119,16 +153,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.3579247
-      objectReference: {fileID: 0}
-    - target: {fileID: 5482648602583818804, guid: 9786f3e19dee1044e9f221a348480aa6,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.60982776
-      objectReference: {fileID: 0}
-    - target: {fileID: 5482648602583818804, guid: 9786f3e19dee1044e9f221a348480aa6,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5482648602583818804, guid: 9786f3e19dee1044e9f221a348480aa6,
         type: 3}
@@ -145,30 +169,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
+    - target: {fileID: 5482648602583818807, guid: 9786f3e19dee1044e9f221a348480aa6,
         type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
-        type: 3}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
-        type: 3}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 5482648602583818794, guid: 9786f3e19dee1044e9f221a348480aa6,
-        type: 3}
-      propertyPath: ShapeModule.m_Scale.z
-      value: 0.05
+      propertyPath: m_Name
+      value: YWML2_Fire
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9786f3e19dee1044e9f221a348480aa6, type: 3}

@@ -1,0 +1,26 @@
+﻿
+#include "Include/PlatformDefines.compute"
+
+#pragma kernel CSInstancedBufferToTextureKernel
+
+RWStructuredBuffer<float4x4> gpuiInstanceData;
+ConsumeStructuredBuffer<uint> gpuiTransformationMatrix;
+RWTexture2D<float4> gpuiTransformationMatrixTexture;
+RWStructuredBuffer<uint> argsBuffer;
+uniform uint argsBufferIndex;
+uniform uint maxTextureSize;
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CSInstancedBufferToTextureKernel(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= argsBuffer[argsBufferIndex])
+        return;
+    uint indexX = id.x % maxTextureSize;
+    uint indexY = floor(id.x / float(maxTextureSize));
+
+    float4x4 transformData = gpuiInstanceData[gpuiTransformationMatrix.Consume()];
+    gpuiTransformationMatrixTexture[uint2(indexX, 0 + indexY * 4)] = transformData._11_12_13_14; // row0
+    gpuiTransformationMatrixTexture[uint2(indexX, 1 + indexY * 4)] = transformData._21_22_23_24; // row1
+    gpuiTransformationMatrixTexture[uint2(indexX, 2 + indexY * 4)] = transformData._31_32_33_34; // row2
+    gpuiTransformationMatrixTexture[uint2(indexX, 3 + indexY * 4)] = transformData._41_42_43_44; // row3
+}

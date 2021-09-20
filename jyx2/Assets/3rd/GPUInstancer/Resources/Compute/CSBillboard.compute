@@ -1,0 +1,84 @@
+﻿
+#include "Include/PlatformDefines.compute"
+
+#pragma kernel CSBillboardDilate
+
+RWTexture2D<float4> result;
+Texture2D<float4> billboardSource;
+uint2 billboardSize;
+uint frameCount;
+bool isLinearSpace;
+bool isNormal;
+
+inline float LinearToGammaExact(float value)
+{
+    if (value <= 0.0F)
+        return 0.0F;
+    else if (value <= 0.0031308F)
+        return 12.92F * value;
+    else if (value < 1.0F)
+        return 1.055F * pow(value, 0.4166667F) - 0.055F;
+    else
+        return pow(value, 0.45454545F);
+}
+
+inline half3 LinearToGamma(half3 linRGB)
+{
+    linRGB = max(linRGB, half3(0.h, 0.h, 0.h));
+
+	// Exact version of the LineatToGammeSpace from UnityCG.cginc:
+    return half3(LinearToGammaExact(linRGB.r), LinearToGammaExact(linRGB.g), LinearToGammaExact(linRGB.b));
+}
+
+[numthreads(NUM_THREADS_2D, NUM_THREADS_2D, 1)]
+void CSBillboardDilate(uint3 id : SV_DispatchThreadID)
+{
+    uint frameWidth = billboardSize.x / frameCount;
+
+    if (id.x > frameWidth)
+        return;
+
+    uint indexX = id.x + (id.z * frameWidth); // shift x by frames.
+
+    uint2 offsets[8] = { uint2(-1, 0), uint2(1, 0), uint2(0, 1), uint2(0, -1), uint2(-1, 1), uint2(1, 1), uint2(1, -1), uint2(-1, -1) };
+    
+    float4 color = billboardSource.Load(uint3(indexX, id.y, 0));
+
+    if (color.a < 1)
+    {
+        bool exit = false;
+
+        for (int s = 1; s < 64; s++)
+        {
+            for (int n = 0; n < 8; n++)
+            {
+                uint2 offset = offsets[n];
+                
+                uint3 neighbourCoord = uint3(indexX + (offset.x * s), id.y + (offset.y * s), 0);
+
+                if (neighbourCoord.x >= frameWidth * (id.z + 1) || neighbourCoord.x < frameWidth * id.z)
+                    continue;
+
+                float4 neighbourCol = billboardSource.Load(neighbourCoord);
+                
+                if (neighbourCol.a > 0)
+                {
+                    color.rgb = neighbourCol.rgb;
+
+                    // There will be a bright outline if the normal alpha is 0 at the edges.
+                    if (isNormal && color.a == 0)
+                        color.a = 1;
+                    
+                    exit = true;
+                    break;
+                }
+            }
+            if (exit)
+                break;
+        }
+
+
+    }
+
+    result[uint2(indexX, id.y)] = isLinearSpace ? half4(LinearToGamma(color.rgb), color.a) : color;
+}

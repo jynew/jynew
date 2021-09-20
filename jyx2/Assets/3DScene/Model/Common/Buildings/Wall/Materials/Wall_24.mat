@@ -8,13 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wall_24
-  m_Shader: {fileID: 54, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _DISSOLVE_OFF _NORMALMAP _SPECGLOSSMAP
+  m_Shader: {fileID: 4800000, guid: b018d5a5e2799dd469d0d9f2474d499c, type: 3}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _DISSOLVE_OFF _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -86,7 +87,7 @@ Material:
     - _DISSOLVE: 0
     - _DetailNormalMapScale: 1
     - _DissolveRatio: 0
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _FlashIntensity: 0.6
     - _FlashScale: 0.5
     - _FlashSpeedX: 0.5
@@ -97,7 +98,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 3
     - _OcclusionStrength: 1
     - _OutlineRandomFactor: 0
     - _Parallax: 0.02
@@ -113,7 +114,7 @@ Material:
     - _Visibility: 1
     - _WindMain: 2
     - _WorkDistance: 5
-    - _ZWrite: 1
+    - _ZWrite: 0
     - __dirty: 1
     m_Colors:
     - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 0}
