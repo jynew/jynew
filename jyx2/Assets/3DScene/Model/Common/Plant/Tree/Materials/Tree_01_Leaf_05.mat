@@ -5,15 +5,17 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Tree_01_Leaf_05
-  m_Shader: {fileID: 4800000, guid: 82e96482862eb17419415ffc7dd0660d, type: 3}
-  m_ShaderKeywords: _ALPHABASECUTOUT_ON _ALPHATEST_ON _SHOWAOONAMBIENTLIGHT_ON
+  m_Shader: {fileID: 4800000, guid: b018d5a5e2799dd469d0d9f2474d499c, type: 3}
+  m_ShaderKeywords: _ALPHABASECUTOUT_ON _ALPHATEST_ON _EMISSION _SHOWAOONAMBIENTLIGHT_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -38,6 +40,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -47,6 +53,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FReflection:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlashTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -100,14 +110,21 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _Cutout: 0.517
+    - _DISSOLVE: 0
     - _DetailNormalMapScale: 1
+    - _DissolveRatio: 0
     - _DstBlend: 0
     - _FReflectionIntensity: 0
+    - _FlashIntensity: 0
+    - _FlashScale: 0
+    - _FlashSpeedX: 0
+    - _FlashSpeedY: 0
     - _FresnelFill: 1
     - _FresnelIntensity: 0
     - _FresnelOnLight: 0
     - _FresnelOnShadow: 0
     - _FresnelVisibleOnDarkAmbientLight: 0
+    - _GlobalWind: 0.5
     - _GlossIntensity: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -120,6 +137,7 @@ Material:
     - _NormalIntensity: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _PulseFrequency: 3
     - _ReceiveShadowsIntensity: 1
     - _ReduceWhite: 0
     - _Saturation: 1
@@ -131,15 +149,21 @@ Material:
     - _SelfShadowatViewDirection: 0
     - _ShadowIntensity: 0.407
     - _ShadowPTextureIntensity: 0
+    - _ShadowStrength: 1
     - _ShowAOonAmbientLight: 1
     - _ShowAOonLight: 0
     - _SmoothnessTextureChannel: 0
     - _SoftGloss: 0
     - _SpecularHighlights: 1
     - _SpeedTurbulence: 0
+    - _SquashAmount: 1
     - _SrcBlend: 1
+    - _TranslucencyViewDependency: 0.7
     - _Turbulence: 1
     - _UVSec: 0
+    - _Visibility: 1
+    - _WindMain: 2
+    - _WorkDistance: 5
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
@@ -148,5 +172,11 @@ Material:
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlossColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 0}
+    - _OffsetScale: {r: 0, g: 0, b: 0, a: 0}
     - _SelfLitColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TheFlashColor: {r: 0, g: 0, b: 0, a: 0}
+    - _TranslucencyColor: {r: 0.73, g: 0.85, b: 0.40999997, a: 1}
+    - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
