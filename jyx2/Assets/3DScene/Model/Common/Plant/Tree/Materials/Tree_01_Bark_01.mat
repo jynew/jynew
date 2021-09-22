@@ -8,13 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Tree_01_Bark_01
-  m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
-  m_ShaderKeywords: _EMISSION
+  m_Shader: {fileID: 4800000, guid: b018d5a5e2799dd469d0d9f2474d499c, type: 3}
+  m_ShaderKeywords: _ALPHATEST_ON _EMISSION _NORMALMAP
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -92,7 +93,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AO: 2.4
     - _ASEOutlineWidth: 0
+    - _BaseLight: 0.35
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DISSOLVE: 0
@@ -124,7 +127,8 @@ Material:
     - _MKEditorShowSpecularBehavior: 1
     - _MKEditorShowTranslucentBehavior: 0
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 1
+    - _Occlusion: 7.5
     - _OcclusionStrength: 1
     - _Outline: 0.003
     - _OutlineRandomFactor: 0.05
@@ -163,3 +167,4 @@ Material:
     - _ShadowColor: {r: 0, g: 0.07252013, b: 0.3018868, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _TheFlashColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
