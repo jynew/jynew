@@ -55,7 +55,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         if (map != null)
         {
             MapName_Text.text = map.GetShowName();
-            bool isWorldMap = map.Tags.Contains("WORLDMAP");
+            bool isWorldMap = map.IsWorldMap;
             
             //BY CGGG：小地图不提供传送到大地图的功能 2021/6/13
             //MapButton_Button.gameObject.SetActive(!isWorldMap);
@@ -111,7 +111,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
     void OnMapBtnClick() 
     {
         var levelMaster = LevelMaster.Instance;
-        if (!levelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
+        if (!levelMaster.GetCurrentGameMap().IsWorldMap)
         {
             levelMaster.PlayLeaveMusic(levelMaster.GetCurrentGameMap());
             // return to entertrance

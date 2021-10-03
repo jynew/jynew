@@ -52,8 +52,20 @@ namespace Jyx2
         [XmlAttribute]
         public string Tags;
 
-        //获得开场地图
-        public static GameMap GetGameStartMap()
+		/// <summary>
+		/// 当前是否在大地图，统一判断方式
+		/// </summary>
+		public bool IsWorldMap { get { return m_isWorldMap; } }
+
+		public override void InitBind()
+		{
+			base.InitBind();
+
+            m_isWorldMap = Tags.Contains("WORLDMAP");
+        }
+
+		//获得开场地图
+		public static GameMap GetGameStartMap()
         {
             foreach(var map in ConfigTable.GetAll<GameMap>())
             {
@@ -108,5 +120,7 @@ namespace Jyx2
                 return string.Empty;
             }
         }
+
+        bool m_isWorldMap = false;
     }
 }

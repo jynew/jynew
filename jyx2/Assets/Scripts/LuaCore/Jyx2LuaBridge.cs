@@ -989,7 +989,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                if (LevelMaster.Instance.IsInBigMap)
+                if (LevelMaster.Instance.IsInWorldMap)
                 {
                     storyEngine.DisplayPopInfo("大地图中无法打开商店，需到客栈中使用");
 					return;

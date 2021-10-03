@@ -111,7 +111,7 @@ public class BigMapZone : MonoBehaviour
             LevelMaster.LastGameMap = LevelMaster.Instance.GetCurrentGameMap();
 
             //记录当前世界位置
-            if (LevelMaster.Instance.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
+            if (LevelMaster.Instance.GetCurrentGameMap().IsWorldMap)
             {
                 //GameRuntimeData.Instance.WorldPosition = UnityTools.Vector3ToString(LevelMaster.Instance.GetPlayerPosition());
                 Jyx2Player.GetPlayer().RecordWorldInfo();
