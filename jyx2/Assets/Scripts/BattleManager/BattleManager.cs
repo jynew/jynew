@@ -102,7 +102,13 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("StartBattle called");
         if (IsInBattle) return;
-        if (!BattleboxHelper.Instance.CanEnterBattle(_player.View.transform.position)) return;
+        var tempView = _player.View;
+        if (tempView == null)
+        {
+            tempView = customParams.roles[0].View;
+        }
+
+        if (!BattleboxHelper.Instance.CanEnterBattle(tempView.transform.position)) return;
 
         IsInBattle = true;
         m_battleParams = customParams;
@@ -120,7 +126,7 @@ public class BattleManager : MonoBehaviour
         //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         await UniTask.WaitForEndOfFrame();
 
-        BattleboxHelper.Instance.EnterBattle(_player.View.transform.position);
+        BattleboxHelper.Instance.EnterBattle(tempView.transform.position);
 
         //地图上所有单位进入战斗
         foreach (var role in m_battleParams.roles)
