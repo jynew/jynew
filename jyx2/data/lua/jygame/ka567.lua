@@ -1,5 +1,5 @@
 PlayAnimation(8, 6420, 6448);
-jyx2_ReplaceSceneObject("","NPC/鳄鱼7","1");
+jyx2_ReplaceSceneObject("","NPC/鳄鱼8","1");
 jyx2_PlayTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼", 0, false);
 Talk(0, "哇！鳄鱼！", "talkname0", 1);
 jyx2_StopTimeline("[Timeline]ka567_万鳄岛_遇到鳄鱼");

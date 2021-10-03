@@ -136,7 +136,7 @@ public class BattleLoader : MonoBehaviour
                     if (m_Roles[i].roleKey == roleId.ToString())
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
-                        if (roleInstance.Hp == 0) roleInstance.Hp = 1;
+                        if (roleInstance!=null && roleInstance.Hp == 0) roleInstance.Hp = 1;
                     }
                 }
             }
@@ -240,8 +240,8 @@ public class BattleLoader : MonoBehaviour
             roles.Add(roleInstance);
         }
 
-        LevelMaster.Instance.TryBindPlayer(); //尝试绑定角色
-        await UniTask.WaitForEndOfFrame();
+        //LevelMaster.Instance.TryBindPlayer(); //尝试绑定角色
+        //await UniTask.WaitForEndOfFrame();
         BattleStartParams startParam = new BattleStartParams()
         {
             roles = roles,
