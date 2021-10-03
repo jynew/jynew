@@ -114,6 +114,10 @@ public class LevelMaster : MonoBehaviour
         return gameMap;
     }
 
+    /// <summary>
+    /// 当前是否在大地图，统一判断方式
+    /// </summary>
+	public bool IsInBigMap { get { return m_CurrentType == MapType.BigMap; } }
 
     // Use this for initialization
     async void Start()
@@ -161,7 +165,7 @@ public class LevelMaster : MonoBehaviour
             //播放音乐
             PlayMusic(gameMap);
 
-            if (gameMap.Tags.Contains("BIGMAP"))
+            if (gameMap.Tags.Contains("WORLDMAP"))
             {
                 m_CurrentType = MapType.BigMap;
             }

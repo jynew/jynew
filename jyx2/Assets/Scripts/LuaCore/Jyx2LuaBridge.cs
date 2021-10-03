@@ -989,8 +989,21 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                //int shopId = Tools.GetRandomInt(0, 4);
-                Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
+                if (LevelMaster.Instance.IsInBigMap)
+                {
+                    storyEngine.DisplayPopInfo("大地图中无法打开商店，需到客栈中使用");
+					return;
+				}
+
+				string mapId = LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId;
+				var hasData = ConfigTable.Has<Jyx2Shop>(mapId); // mapId和shopId对应
+                if (!hasData)
+                {
+					storyEngine.DisplayPopInfo($"地图{mapId}没有配置商店，可在excel/JYX2小宝商店.xlsx中查看");
+					return;
+                }
+
+				Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
             });
 			Wait();
         }
