@@ -26,6 +26,7 @@ using XLua;
 using UnityEngine.Playables;
 using Sirenix.Utilities;
 using UnityEngine.Timeline;
+using Cysharp.Threading.Tasks;
 
 namespace Jyx2
 {
@@ -160,6 +161,15 @@ namespace Jyx2
 
                 //刷新当前场景中的事件
                 LevelMaster.Instance.RefreshGameEvents();
+                if (interactiveEventId == -1 && evt != null)
+                {
+                    async UniTask ExecuteCurEvent()
+                    {
+                        await evt.MarkChest();
+                    }
+
+                    ExecuteCurEvent().Forget();
+                }
 
                 //下一条指令
                 Next();

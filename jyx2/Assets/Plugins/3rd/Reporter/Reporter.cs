@@ -147,6 +147,9 @@ public class Reporter : MonoBehaviour
 	[HideInInspector]
 	//show hide In Game Logs
 	public bool show = false;
+
+	public bool isShowReporterGUI = false;
+	
 	//collapse logs
 	bool collapse;
 	//to decide if you want to clean logs for new loaded scene
@@ -1873,7 +1876,8 @@ public class Reporter : MonoBehaviour
 #endif
 
 		calculateStartIndex();
-		if (!show && isGestureDone()) {
+		//if (!show && isGestureDone()) {
+		if (!show && isShowReporterGUI) {
 			doShow();
 		}
 
