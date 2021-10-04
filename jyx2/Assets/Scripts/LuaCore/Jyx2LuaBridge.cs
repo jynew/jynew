@@ -161,7 +161,7 @@ namespace Jyx2
 
                 //刷新当前场景中的事件
                 LevelMaster.Instance.RefreshGameEvents();
-                if (interactiveEventId == -1)
+                if (interactiveEventId == -1 && evt != null)
                 {
                     async UniTask ExecuteCurEvent()
                     {
