@@ -28,6 +28,7 @@ public class JYX2ConsolePanel : MonoBehaviour
     public Button cmdListButton;
     public Button consoleButton;
     public Button copyButton;
+    public Button reporterButton;
 
     private void Start()
     {
@@ -37,6 +38,7 @@ public class JYX2ConsolePanel : MonoBehaviour
         cmdListButton.onClick.AddListener(OnCmdList);
         consoleButton.onClick.AddListener(OnConsole);
         copyButton.onClick.AddListener(OnCopy);
+        reporterButton.onClick.AddListener(OnReporter);
     }
 
     void OnHelp()
@@ -65,6 +67,13 @@ public class JYX2ConsolePanel : MonoBehaviour
             GUIUtility.systemCopyBuffer += m.Message + "\n";
         }
     }
+
+    void OnReporter()
+    {
+        var reporter = GameObject.Find("[Reporter]").GetComponent<Reporter>();
+        reporter.isShowReporterGUI = !reporter.isShowReporterGUI;
+    }
+    
     void OnConfirm()
     {
         string cmd = inputField.text.Trim();
