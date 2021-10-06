@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using HanSquirrel.ResourceManager;
+using Jyx2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -88,6 +89,7 @@ public class LoadingPanel : MonoBehaviour
                 callback();
 
             GameObject.Destroy(this.gameObject);
+            GameRuntimeData.Instance.CheckCompass();
         }
     }
 }
