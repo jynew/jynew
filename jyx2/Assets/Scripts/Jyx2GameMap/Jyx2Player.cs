@@ -304,6 +304,11 @@ public class Jyx2Player : MonoBehaviour
         _boat.transform.rotation = UnityTools.StringToQuaternion(runtime.BoatRotate);
     }
 
+    public Vector3 GetBoatPosition()
+    {
+        return _boat == null ? new Vector3() : _boat.transform.position;
+    }
+
     void PlayerSpawnAt(Vector3 spawnPos,Quaternion ori)
     {
         _navMeshAgent.enabled = false;
