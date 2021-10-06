@@ -608,7 +608,7 @@ namespace Jyx2
             if(gamemap != null)
             {
                 //大地图
-                if (gamemap.Tags == "WORLDMAP")
+                if (gamemap.IsWorldMap)
                     return 0;
 
                 //已经有地图打开的纪录
