@@ -31,7 +31,7 @@ public partial class BagUIPanel:Jyx2_UIBase
     protected override void OnCreate()
     {
         InitTrans();
-
+        IsBlockControl = true;
         BindListener(UseBtn_Button, OnUseBtnClick);
         BindListener(CloseBtn_Button, OnCloseBtnClick);
     }

@@ -169,6 +169,6 @@ public class GraphicSettingsPanel : Jyx2_UIBase
 
     protected override void OnCreate()
     {
-        
+        IsBlockControl = true;
     }
 }

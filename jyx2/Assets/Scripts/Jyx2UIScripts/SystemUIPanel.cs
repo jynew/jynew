@@ -30,7 +30,7 @@ public partial class SystemUIPanel:Jyx2_UIBase
     protected override void OnCreate()
     {
         InitTrans();
-
+        IsBlockControl = true;
         BindListener(MainMenuButton_Button, delegate 
         {
             Jyx2_UIManager.Instance.HideUI(nameof(SystemUIPanel));

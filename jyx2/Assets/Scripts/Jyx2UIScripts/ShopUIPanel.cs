@@ -31,6 +31,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
     protected override void OnCreate()
     {
         InitTrans();
+        IsBlockControl = true;
         childMgr = GameUtil.GetOrAddComponent<ChildGoComponent>(ItemRoot_RectTransform);
         childMgr.Init(ScrollItem_RectTransform, (trans) => 
         {
