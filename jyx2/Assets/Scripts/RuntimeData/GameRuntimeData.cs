@@ -639,6 +639,19 @@ namespace Jyx2
             SetKeyValues(key, value.ToString());
         }
 
+        private bool _isShowCompass;
+
+        public bool isShowCompass
+        {
+            get { return _isShowCompass; }
+            set { _isShowCompass = value; }
+        }
+
+        public void CheckCompass()
+        {
+            isShowCompass = LevelMaster.Instance.IsInWorldMap&&Jyx2LuaBridge.HaveItem(182);
+        }
+
         #endregion
     }
 }

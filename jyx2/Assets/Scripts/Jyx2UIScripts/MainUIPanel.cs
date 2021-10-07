@@ -31,6 +31,26 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         SystemButton_Button.onClick.AddListener(OnSystemBtnClick);
     }
 
+    public void Update()
+    {
+        if (GameRuntimeData.Instance.isShowCompass != Compass.gameObject.active)
+        {
+            Compass.gameObject.active = GameRuntimeData.Instance.isShowCompass;
+        }
+
+        if (Compass.gameObject.active)
+        {
+            var p = LevelMaster.Instance.GetPlayerPosition();
+            var pString = (p.x + 242).ToString("F0") + "," + (p.z + 435).ToString("F0");
+            if (!LevelMaster.Instance.GetPlayer().IsOnBoat)
+            {
+                var b = LevelMaster.Instance.GetPlayer().GetBoatPosition();
+                pString += "("+(b.x + 242).ToString("F0") + "," + (b.z + 435).ToString("F0")+")";
+            }
+            Compass.text = pString;
+        }
+    }
+
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
