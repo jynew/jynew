@@ -240,7 +240,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 //否则更新
                 else
                 {
-                    if (m_currentRole.GetWeapon() != null && m_currentRole.GetWeapon().User != -1)
+                    if (m_currentRole.GetWeapon() != null)
                     {
                         m_currentRole.GetWeapon().User = -1;
                     }
@@ -268,7 +268,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 }
                 else
                 {
-                    if (m_currentRole.GetArmor() != null && m_currentRole.GetArmor().User != -1)
+                    if (m_currentRole.GetArmor() != null)
                     {
                         m_currentRole.GetArmor().User = -1;
                     }
@@ -295,7 +295,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 }
                 else
                 {
-                    if (m_currentRole.GetXiulianItem() != null && m_currentRole.GetXiulianItem().User != -1)
+                    if (m_currentRole.GetXiulianItem() != null)
                     {
                         m_currentRole.GetXiulianItem().User = -1;
                     }
