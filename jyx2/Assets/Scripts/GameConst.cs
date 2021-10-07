@@ -40,6 +40,9 @@ public class ColorStringDefine
 	public const string Hp_posion="green";
 	public const string Hp_hurt_light="#FD726F";
 	public const string Hp_hurt_heavy="#F8413E";
+
+    public const string main_menu_normal = "7D0900";
+    public const string main_menu_selected = "EE2718";
 }
 
 public class GameConst

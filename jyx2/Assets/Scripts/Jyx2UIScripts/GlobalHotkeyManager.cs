@@ -59,7 +59,7 @@ public class GlobalHotkeyManager : SingletonMB<GlobalHotkeyManager, GlobalHotkey
 
     public void UnRegistHotkey(MonoBehaviour mono, KeyCode key)
     {
-        if(!_hotkeys.ContainsKey(key))
+        if(!_hotkeys.ContainsKey(key) || _hotkeys[key].Count==0)
             return;
 
         var stack = _hotkeys[key];
