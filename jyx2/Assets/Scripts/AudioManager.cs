@@ -53,4 +53,9 @@ public class AudioManager
         s_AudioSource.loop = true;
         return s_AudioSource;
     }
+
+    public static string GetCurrentMusic()
+    {
+        return _currentPlayMusic;
+    }
 }

@@ -338,7 +338,7 @@ public class BattleManager : MonoBehaviour
     /// 获取技能覆盖范围
     /// </summary>
     /// <returns></returns>
-    public List<BattleBlockVector> GetSkillCoverBlocks(BattleZhaoshiInstance skill, BattleBlockVector targetPos,
+    public IEnumerable<BattleBlockVector> GetSkillCoverBlocks(BattleZhaoshiInstance skill, BattleBlockVector targetPos,
         BattleBlockVector selfPos)
     {
         var coverSize = skill.GetCoverSize();
@@ -396,12 +396,12 @@ public class BattleManager : MonoBehaviour
     }
 
     //获取范围内的敌人或者友军
-    public List<RoleInstance> GetRoleInSkillRange(BattleZhaoshiInstance skill, List<BattleBlockVector> range, int team)
+    public List<RoleInstance> GetRoleInSkillRange(BattleZhaoshiInstance skill, IEnumerable<BattleBlockVector> range, int team)
     {
         List<RoleInstance> result = new List<RoleInstance>();
-        for (int i = 0; i < range.Count; i++)
+
+        foreach (var pos in range)
         {
-            BattleBlockVector pos = range[i];
             RoleInstance rolei = m_BattleModel.GetAliveRole(pos);
             if (rolei == null || rolei.IsDead()) continue;
             //打敌人的招式
@@ -409,7 +409,7 @@ public class BattleManager : MonoBehaviour
             if (!skill.IsCastToEnemy() && rolei.team != team) continue;
             result.Add(rolei);
         }
-
+        
         return result;
     }
 

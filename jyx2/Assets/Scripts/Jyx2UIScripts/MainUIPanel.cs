@@ -14,7 +14,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using HSFrameWork.ConfigTable;
-using Jyx2;
 using System;
 
 public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
@@ -108,8 +107,8 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             return;
         }
 
-        //can use item
-        if (item.ItemType != 3)
+        //剧情类和暗器不能使用
+        if (item.ItemType == 0 || item.ItemType == 4)
         {
             GameUtil.DisplayPopinfo("此道具不能在此使用");
             return;
@@ -121,9 +120,83 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
 
             if (selectRole.CanUseItem(id))
             {
-                selectRole.UseItem(item);
-                runtime.AddItem(id, -1);
+                //装备
+                if (item.ItemType == 1)
+                {
+                    //武器
+                    if (item.EquipmentType == 0)
+                    {
+                        if (item.User != -1)
+                        {
+                            RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
+                            roleInstance.UnequipItem(roleInstance.GetWeapon());
+                            roleInstance.Weapon = -1;
+                            item.User = -1;
+                        }
+
+                        if (selectRole.GetWeapon() != null)
+                        {
+                            selectRole.GetWeapon().User = -1;
+                        }
+                        selectRole.UnequipItem(selectRole.GetWeapon());
+                        selectRole.Weapon = id;
+                        selectRole.UseItem(selectRole.GetWeapon());
+                        item.User = selectRole.GetJyx2RoleId();
+                    }
+                    //防具
+                    else if (item.EquipmentType == 1)
+                    {
+                        if (item.User != -1)
+                        {
+                            RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
+                            roleInstance.UnequipItem(roleInstance.GetArmor());
+                            roleInstance.Armor = -1;
+                            item.User = -1;
+                        }
+
+                        if (selectRole.GetArmor() != null)
+                        {
+                            selectRole.GetArmor().User = -1;
+                        }
+                        selectRole.UnequipItem(selectRole.GetArmor());
+                        selectRole.Armor = id;
+                        selectRole.UseItem(selectRole.GetArmor());
+                        item.User = selectRole.GetJyx2RoleId();
+                    }
+                }
+                //修炼
+                else if (item.ItemType == 2)
+                {
+                    if (item.User != -1)
+                    {
+                        RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
+                        roleInstance.Xiulianwupin = -1;
+                        item.User = -1;
+                    }
+
+                    if (selectRole.GetXiulianItem() != null)
+                    {
+                        selectRole.GetXiulianItem().User = -1;
+                    }
+                    selectRole.Xiulianwupin = id;
+                    while (selectRole.CanFinishedItem())
+                    {
+                        selectRole.UseItem(selectRole.GetXiulianItem());
+                    }
+                    item.User = selectRole.GetJyx2RoleId();
+                }
+                //药品
+                else if (item.ItemType == 3)
+                {
+                    selectRole.UseItem(item);
+                    runtime.AddItem(id, -1);
+                }
                 GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+            }
+            else
+            {
+                GameUtil.DisplayPopinfo("该角色不满足使用条件");
+                return;
             }
         });
     }

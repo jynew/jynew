@@ -87,8 +87,7 @@ public class BattleLoader : MonoBehaviour
 
     //    InitBattle(null);
     //}
-
-
+    
     async UniTask LoadJyx2Battle(int id, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
@@ -120,7 +119,7 @@ public class BattleLoader : MonoBehaviour
             Debug.LogError("载入了未定义的战斗，id=" + id);
             return;
         }
-
+        
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
