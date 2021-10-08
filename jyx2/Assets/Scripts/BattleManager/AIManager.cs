@@ -449,7 +449,7 @@ public class AIManager
         //普通攻击
         if (magic.DamageType == 0)
         {
-            if (r1.Mp <= 10)
+            if (r1.Mp <= magic.MpCost) //已经不够内力释放了
             {
                 rst.damage = 1 + UnityEngine.Random.Range(0, 10);
                 return rst;
