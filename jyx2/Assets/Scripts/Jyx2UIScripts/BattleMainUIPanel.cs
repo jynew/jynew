@@ -87,9 +87,14 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         }
 
         var curRole = BattleStateMechine.Instance.CurrentRole;
+        
         if(active && curRole != null && curRole.team == 0)
         {
-            BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.AI);
+            var curState = BattleStateMechine.Instance.GetCurrentState();
+            if (curState != BattleManager.BattleViewStates.PlayingAction) //fix #429
+            {
+                BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.AI);    
+            }
         }         
     }
 

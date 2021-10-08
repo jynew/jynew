@@ -530,7 +530,7 @@ namespace Jyx2
         /// <param name="sy"></param>
         /// <param name="coversize"></param>
         /// <returns></returns>
-        public List<BattleBlockVector> GetSkillCoverBlocks(SkillCoverType covertype, int tx, int ty,
+        public IEnumerable<BattleBlockVector> GetSkillCoverBlocks(SkillCoverType covertype, int tx, int ty,
             int sx, int sy, int coversize)
         {
             var rst = new List<BattleBlockVector>();
@@ -586,7 +586,7 @@ namespace Jyx2
                     throw new ArgumentOutOfRangeException(nameof(covertype), covertype, null);
             }
 
-            return rst;
+            return rst.Distinct();
         }
     }
 
