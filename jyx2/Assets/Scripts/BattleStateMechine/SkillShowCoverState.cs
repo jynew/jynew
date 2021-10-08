@@ -42,7 +42,7 @@ public class SkillShowCoverState : IBattleState
         Jyx2_UIManager.Instance.ShowUI(nameof(BattleOKPanel), blockData.WorldPos, new Action(OnConfirm),new Action(OnCancel));
     }
 
-    void FillBeHitEnemeyGameObject(List<BattleBlockVector> rangeList) 
+    void FillBeHitEnemeyGameObject(IEnumerable<BattleBlockVector> rangeList) 
     {
         hitGoList.Clear();
         List<RoleInstance> result = BattleManager.Instance.GetRoleInSkillRange(zhaoshi, rangeList, role.team);
