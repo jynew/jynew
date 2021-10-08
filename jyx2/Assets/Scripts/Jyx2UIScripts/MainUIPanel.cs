@@ -134,6 +134,11 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                             item.User = -1;
                         }
 
+                        if (selectRole.GetWeapon() != null)
+                        {
+                            selectRole.GetWeapon().User = -1;
+                        }
+                        selectRole.UnequipItem(selectRole.GetWeapon());
                         selectRole.Weapon = id;
                         selectRole.UseItem(selectRole.GetWeapon());
                         item.User = selectRole.GetJyx2RoleId();
@@ -149,6 +154,11 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                             item.User = -1;
                         }
 
+                        if (selectRole.GetArmor() != null)
+                        {
+                            selectRole.GetArmor().User = -1;
+                        }
+                        selectRole.UnequipItem(selectRole.GetArmor());
                         selectRole.Armor = id;
                         selectRole.UseItem(selectRole.GetArmor());
                         item.User = selectRole.GetJyx2RoleId();
@@ -164,6 +174,10 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                         item.User = -1;
                     }
 
+                    if (selectRole.GetXiulianItem() != null)
+                    {
+                        selectRole.GetXiulianItem().User = -1;
+                    }
                     selectRole.Xiulianwupin = id;
                     while (selectRole.CanFinishedItem())
                     {
