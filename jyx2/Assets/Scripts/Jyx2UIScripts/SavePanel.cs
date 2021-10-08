@@ -32,6 +32,9 @@ public partial class SavePanel:Jyx2_UIBase
     public override UILayer Layer => UILayer.NormalUI;
 
     Action<int> m_selectCallback;
+
+    private Action closeCallback; 
+	    
     protected override void OnCreate()
     {
         InitTrans();
@@ -57,7 +60,11 @@ public partial class SavePanel:Jyx2_UIBase
 
         m_selectCallback = allParams[0] as Action<int>;
 		Main_Text.text=allParams[1] as string;
-		
+		if (allParams.Length > 2)
+		{
+			closeCallback = allParams[2] as Action;
+		}
+
 		var curScene=SceneManager.GetActiveScene().name;
 		var isHouse=(curScene!="0_GameStart" && curScene!="0_BigMap");
 		(ImButton_Button.gameObject).SetActive(!isHouse);
@@ -113,6 +120,7 @@ public partial class SavePanel:Jyx2_UIBase
     private void OnBackClick()
     {
         Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
+        closeCallback?.Invoke();
     }
 
     private void OnImportClick()

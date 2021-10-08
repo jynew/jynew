@@ -41,8 +41,8 @@ public class ColorStringDefine
 	public const string Hp_hurt_light="#FD726F";
 	public const string Hp_hurt_heavy="#F8413E";
 
-    public const string main_menu_normal = "7D0900";
-    public const string main_menu_selected = "EE2718";
+    public static Color main_menu_selected = new Color(238/255.0f,39/255.0f,24/255.0f,1.0f);
+    public static Color main_menu_normal = new Color(125/255.0f,9/255.0f,0.0f,1.0f);
 }
 
 public class GameConst
