@@ -557,9 +557,16 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
+    public void ForceSetEnable(bool forceDisable)
+    {
+        _forceDisable = forceDisable;
+    }
+
+    private bool _forceDisable = false;
+    
     void OnManualControlPlayer()
     {
-        if (!_CanController)//掉本调用自动寻路的时候 不能手动控制
+        if (!_CanController || _forceDisable)//掉本调用自动寻路的时候 不能手动控制
             return;
         
         if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
