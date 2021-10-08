@@ -9,6 +9,7 @@
  */
 
 using System;
+using Cysharp.Threading.Tasks;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Jyx2;
@@ -67,17 +68,20 @@ namespace Jyx2
 
             string sceneName = "Jyx2Battle_" + battle.MapId;
 
-            /*if(!Application.CanStreamedLevelBeLoaded(sceneName))
-            {
-                sceneName = "BattleScene_hufeiju";
-            }*/
+            //记住当前的音乐，战斗后还原
+            var formalMusic = AudioManager.GetCurrentMusic();
 
             LoadingPanel.Create(sceneName, ()=> {
 
                 GameObject obj = new GameObject("BattleLoader");
                 var battleLoader = obj.AddComponent<BattleLoader>();
                 battleLoader.m_BattleId = battleId;
-                battleLoader.Callback = callback;
+                battleLoader.Callback = (rst) =>
+                {
+                    AudioManager.PlayMusicAtPath(formalMusic).Forget();
+                    callback(rst);
+                };
+
             });
         }
     }
