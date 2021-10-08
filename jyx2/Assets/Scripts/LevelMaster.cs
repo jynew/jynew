@@ -258,9 +258,8 @@ public class LevelMaster : MonoBehaviour
 
     private void UpdateMobileControllerUI()
     {
-        //大地图或editor上都不显示
-        m_Joystick.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.WorldMap);
-        m_TouchPad.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.WorldMap);
+        m_Joystick.gameObject.SetActive(IsMobilePlatform());
+        m_TouchPad.gameObject.SetActive(IsMobilePlatform());
         
         //战斗中移动按钮隐藏
         if (BattleManager.Instance.IsInBattle)
