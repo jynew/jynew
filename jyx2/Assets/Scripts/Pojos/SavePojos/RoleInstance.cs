@@ -824,6 +824,7 @@ namespace Jyx2
 
             AddEffect(item, -1);
 
+            item.User = -1;
             this.Tili -= item.AddTili;
             this.SetHPAndRefreshHudBar(this.Hp - item.AddHp);
             this.MaxHp -= item.AddMaxHp;

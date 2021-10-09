@@ -199,7 +199,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             return;
         }
 
-        var eventLuaPath = HSFrameWork.ConfigTable.ConfigTable.Get<Jyx2Role>(m_currentRole.GetJyx2RoleId()).Dialogue;
+        var eventLuaPath = ConfigTable.Get<Jyx2Role>(m_currentRole.GetJyx2RoleId()).Dialogue;
         if (eventLuaPath != null && eventLuaPath != "")
         {
             Jyx2.LuaExecutor.Execute("jygame/ka" + eventLuaPath, new Action(() => { RefreshView(); }));
@@ -235,15 +235,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 {
                     m_currentRole.UnequipItem(m_currentRole.GetWeapon());
                     m_currentRole.Weapon = -1;
-                    item.User = -1;
                 }
                 //否则更新
                 else
                 {
-                    if (m_currentRole.GetWeapon() != null)
-                    {
-                        m_currentRole.GetWeapon().User = -1;
-                    }
                     m_currentRole.UnequipItem(m_currentRole.GetWeapon());
                     m_currentRole.Weapon = itemId;
                     m_currentRole.UseItem(m_currentRole.GetWeapon());
@@ -264,14 +259,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 {
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
                     m_currentRole.Armor = -1;
-                    item.User = -1;
                 }
                 else
                 {
-                    if (m_currentRole.GetArmor() != null)
-                    {
-                        m_currentRole.GetArmor().User = -1;
-                    }
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
                     m_currentRole.Armor = itemId;
                     m_currentRole.UseItem(m_currentRole.GetArmor());

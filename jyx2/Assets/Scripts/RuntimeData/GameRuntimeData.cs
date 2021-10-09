@@ -269,18 +269,18 @@ namespace Jyx2
             return true;
         }
 
-        public void LeaveTeam(int roleId) 
+        public bool LeaveTeam(int roleId) 
         {
             var role = GetRole(roleId);
             if (role == null)
             {
                 Debug.LogError("调用了不存在的role加入队伍，roleid =" + roleId);
-                return;
+                return false;
             }
             if (GetRoleInTeam(roleId) ==null) 
             {
                 Debug.LogError("role is not in main team，roleid =" + roleId);
-                return;
+                return false;
             }
             Team.Remove(role);
 			role.Recover();
@@ -289,8 +289,7 @@ namespace Jyx2
 					AllRoles[index]=role;
 				}
 			}
-			
-			StoryEngine.Instance.DisplayPopInfo(role.Name + "离队。");
+            return true;
         }
 
         public RoleInstance GetRoleInTeam(int roleId)

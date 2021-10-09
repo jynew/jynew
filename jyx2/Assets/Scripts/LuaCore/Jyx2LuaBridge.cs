@@ -295,7 +295,25 @@ namespace Jyx2
         public static void Leave(int roleId)
         {
             RunInMainThread(() => {
-                runtime.LeaveTeam(roleId);
+
+                if (runtime.LeaveTeam(roleId))
+                {
+                    RoleInstance role = runtime.GetRole(roleId);
+                    storyEngine.DisplayPopInfo(role.Name + "离队。");
+
+                    //卸下角色身上的装备
+                    role.UnequipItem(role.GetWeapon());
+                    role.UnequipItem(role.GetArmor());
+                    if (role.GetXiulianItem() != null)
+                    {
+                        role.GetXiulianItem().User = -1;
+                    }
+                    role.Weapon = -1;
+                    role.Armor = -1;
+                    role.Xiulianwupin = -1;
+
+                }
+                
                 Next();
             });
             Wait();
