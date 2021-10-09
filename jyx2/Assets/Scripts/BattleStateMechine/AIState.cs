@@ -10,6 +10,7 @@
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 //AI计算状态 专门给AI使用
@@ -28,16 +29,17 @@ public class AIState : IBattleState
             GameUtil.LogError("ai当前角色为空");
             return;
         }
-        AIManager.Instance.GetAIResult(BattleStateMechine.Instance.CurrentRole, (result) => 
+        
+        UniTask.Run(async () =>
         {
-            m_aiResult = result;
+            await UniTask.SwitchToMainThread();
+            var result = await AIManager.Instance.GetAIResult(BattleStateMechine.Instance.CurrentRole);
             BattleBlockVector MoveTo = new BattleBlockVector(result.MoveX, result.MoveY);
             BattleBlockVector SkillTo = new BattleBlockVector(result.AttackX, result.AttackY);
             BattleZhaoshiInstance Skill = result.Zhaoshi;
             Jyx2Item Item = result.Item;
             DoAIAction(MoveTo, SkillTo, Skill, Item);
-
-        }); 
+        });
     }
 
     void DoAIAction(BattleBlockVector MoveTo, BattleBlockVector SkillTo,BattleZhaoshiInstance Skill, Jyx2Item Item)
