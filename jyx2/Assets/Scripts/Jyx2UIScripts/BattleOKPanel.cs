@@ -51,10 +51,10 @@ public partial class BattleOKPanel:Jyx2_UIBase
 
     void ShowSkillDamage() 
     {
-        BattleZhaoshiInstance zhaoshi = BattleStateMechine.Instance.CurrentZhaoshi;
+        /*BattleZhaoshiInstance zhaoshi = BattleStateMechine.Instance.CurrentZhaoshi;
         RoleInstance role = BattleStateMechine.Instance.CurrentRole;
         if (zhaoshi == null || role == null)
-            return;
+            return;*/
         //int level_index = zhaoshi.Data.GetLevel();
         //int damage = role.Attack + zhaoshi.Data.GetSkillLevelInfo(level_index).Attack / 3;
         //if (role.Weapon >= 0)
@@ -67,7 +67,7 @@ public partial class BattleOKPanel:Jyx2_UIBase
         //    var i = ConfigTable.Get<Jyx2Item>(role.Armor);
         //    damage += i.Attack;
         //}
-        DamageText_Text.text = $"{zhaoshi.Data.Name} Lv.{zhaoshi.Data.GetLevel()}";
+        //DamageText_Text.text = $"{zhaoshi.Data.Name} Lv.{zhaoshi.Data.GetLevel()}";
     }
 
     void OnOKClick() 

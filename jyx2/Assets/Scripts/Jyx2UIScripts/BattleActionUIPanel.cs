@@ -194,58 +194,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         }
     }
 
-
-    void SetPanelState()
-    {
-        //if (m_currentState == BattleManager.BattleViewStates.SelectMove)
-        if(isSelectMove)
-        {
-            m_selectItem = null;
-            m_chooseBtn = false;
-        }
-        //else if (m_currentState == BattleManager.BattleViewStates.SelectSkill)
-        else
-        {
-            if (BattleStateMechine.Instance.CurrentZhaoshi == null)
-            {
-                if (m_curItemList.Count > 0)
-                {
-                    m_selectItem = m_curItemList[0];
-                    BattleStateMechine.Instance.BindSkill(m_selectItem.GetSkill());
-                }
-
-                m_chooseBtn = false;
-                UpdateSelect();
-                return;
-            }
-
-            for (int i = 0; i < m_curItemList.Count; i++)
-            {
-                if (m_curItemList[i].GetSkill().Key == BattleStateMechine.Instance.CurrentZhaoshi.Key)
-                {
-                    m_selectItem = m_curItemList[i];
-                    break;
-                }
-            }
-
-            m_chooseBtn = (m_selectItem == null);
-            if (m_chooseBtn && m_curItemList.Count > 0)
-                m_selectItem = m_curItemList[0];
-        }
-
-        UpdateSelect();
-    }
-
-    void UpdateSelect()
-    {
-        LeftActions_RectTransform.gameObject.SetActive(!m_chooseBtn);
-        Skills_RectTransform.gameObject.SetActive(!m_chooseBtn);
-        if (m_chooseBtn)
-            return;
-        if (m_selectItem)
-            m_selectItem.SetSelect(true);
-    }
-
     void OnItemClick(SkillUIItem item)
     {
         if (m_selectItem == item)
