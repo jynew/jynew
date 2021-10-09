@@ -12,11 +12,13 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using HSFrameWork.Common;
-using Jyx2;
 using UnityEngine;
 
 namespace Jyx2.Battle
 {
+    /// <summary>
+    /// 战斗主循环逻辑
+    /// </summary>
     public class BattleLoop
     {
         public BattleLoop(BattleManager manager)
@@ -35,6 +37,7 @@ namespace Jyx2.Battle
         {
             var model = _manager.GetModel();
 
+            //生成当前角色高亮环
             m_roleFocusRing = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/CurrentBattleRoleTag.prefab");
 
             //战斗逻辑的主循环
@@ -66,20 +69,22 @@ namespace Jyx2.Battle
                 //判断是AI还是人工
                 if (role.isAI)
                 {
-                    await RoleAIAction(role);
+                    await RoleAIAction(role); //AI行动
                 }
                 else
                 {
-                    await RoleManualAction(role);
+                    await RoleManualAction(role); //人工操作
                 }
 
                 //标记角色已经行动过
                 model.OnActioned(role);
             }
 
+            //销毁当前角色高亮环
             Jyx2ResourceHelper.ReleasePrefabInstance(m_roleFocusRing);
         }
 
+        //标记当前激活角色
         async UniTask SetCurrentRole(RoleInstance role)
         {
             //切换摄像机跟随角色
@@ -115,13 +120,17 @@ namespace Jyx2.Battle
         //AI角色行动
         async UniTask RoleAIAction(RoleInstance role)
         {
+            //获取AI计算结果
             var aiResult = await AIManager.Instance.GetAIResult(role);
+            
+            //先移动
             await RoleMove(role, new BattleBlockVector(aiResult.MoveX, aiResult.MoveY));
 
+            //再执行具体逻辑
             await ExecuteAIResult(role, aiResult);
         }
 
-        //计算AI结果
+        //执行具体逻辑
         async UniTask ExecuteAIResult(RoleInstance role, AIResult aiResult)
         {
             if (aiResult.Item != null)
@@ -141,6 +150,7 @@ namespace Jyx2.Battle
             }
         }
 
+        //角色移动
         async UniTask RoleMove(RoleInstance role, BattleBlockVector moveTo)
         {
             if (role == null || moveTo == null)
@@ -182,15 +192,15 @@ namespace Jyx2.Battle
                 return;
             }
 
-            var block = BattleboxHelper.Instance.GetBlockData(skillTo.X, skillTo.Y);
+            var block = BattleboxHelper.Instance.GetBlockData(skillTo.X, skillTo.Y); //获取攻击目标点
             role.View.LookAtBattleBlock(block); //先面向目标
             role.SwitchAnimationToSkill(skill.Data); //切换姿势
             skill.CastCD(); //技能CD
             skill.CastCost(role); //技能消耗（左右互搏之消耗一次）
 
-            await CastOnce(role, skill, skillTo);
-            if (Zuoyouhubo(role, skill))
-                await CastOnce(role, skill, skillTo);
+            await CastOnce(role, skill, skillTo); //攻击一次
+            if (Zuoyouhubo(role, skill)) //判断左右互搏
+                await CastOnce(role, skill, skillTo); //再攻击一次
         }
 
         //一次施展技能
@@ -348,7 +358,7 @@ namespace Jyx2.Battle
                     await RoleAIAction(role);
                     break;
                 }
-                else if (ret.aiResult != null) //具体执行
+                else if (ret.aiResult != null) //具体执行行动逻辑（攻击、道具、用毒、医疗等）
                 {
                     await ExecuteAIResult(role, ret.aiResult);
                     break;
@@ -356,6 +366,7 @@ namespace Jyx2.Battle
             }
         }
         
+        //手动控制操作结果
         public class ManualResult
         {
             public BattleBlockVector movePos = null;
@@ -365,10 +376,10 @@ namespace Jyx2.Battle
             public bool isAuto = false;
         }
         
+        //等待玩家输入
         async UniTask<ManualResult> WaitForPlayerInput(RoleInstance role, List<BattleBlockVector> moveRange, bool isSelectMove)
         {
             UniTaskCompletionSource<ManualResult> t = new UniTaskCompletionSource<ManualResult>();
-
             Action<ManualResult> callback = delegate(ManualResult result) { t.TrySetResult(result); };
             
             //显示技能动作面板，同时接受格子输入
