@@ -223,8 +223,8 @@ public class GameEventManager : MonoBehaviour
 
         async UniTask ExecuteCurEvent()
         {
-            if (curEvent != null)
-                await curEvent.MarkChest();
+            //if (curEvent != null)
+            //    await curEvent.MarkChest();
             
             //先判断是否有蓝图类
             //如果有则执行蓝图，否则执行lua

@@ -5049,7 +5049,7 @@ GameObject:
   - component: {fileID: 121889822}
   - component: {fileID: 121889821}
   - component: {fileID: 121889820}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5069,9 +5069,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
-  - Desktop
   - Mobile
-  shaderIndex: 1
+  shaderIndex: 0
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -5106,9 +5105,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.4339054, g: 0.36942515, b: 0.3049449, a: 0.85882354}
+  waterShallowColor: {r: 0.43392697, g: 0.36944672, b: 0.30496648, a: 0.85882354}
   depth: 15
-  waterColor: {r: 0.462264, g: 0.42948514, b: 0.41640216, a: 1}
+  waterColor: {r: 0.462264, g: 0.42950672, b: 0.41642374, a: 1}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.6320754, g: 0.5651325, b: 0.5277233, a: 0.35686275}
@@ -5198,7 +5197,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: bb7e956bb4dfc3d4280c659dc9144806, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 0
+  isMobilePlatform: 1
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
@@ -5230,9 +5229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
-  - Desktop
   - Mobile
-  shaderIndex: 1
+  shaderIndex: 0
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -5267,9 +5265,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.43390536, g: 0.36942512, b: 0.30494487, a: 0.85882354}
+  waterShallowColor: {r: 0.43392694, g: 0.3694467, b: 0.30496645, a: 0.85882354}
   depth: 15
-  waterColor: {r: 0.462264, g: 0.4294851, b: 0.41640213, a: 1}
+  waterColor: {r: 0.462264, g: 0.4295067, b: 0.4164237, a: 1}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.6320754, g: 0.5651325, b: 0.5277233, a: 0.35686275}
@@ -5396,7 +5394,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: bb7e956bb4dfc3d4280c659dc9144806, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 0
+  isMobilePlatform: 1
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
@@ -7091,7 +7089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &160852852
 Transform:
   m_ObjectHideFlags: 0
@@ -10279,7 +10277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &267046905
 Transform:
   m_ObjectHideFlags: 0
@@ -22251,7 +22249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &607655313
 Transform:
   m_ObjectHideFlags: 0
@@ -25741,6 +25739,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 722544491}
   m_PrefabAsset: {fileID: 0}
+--- !u!208 &722544494
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722544493}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &725768115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26663,7 +26677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &753057031
 Transform:
   m_ObjectHideFlags: 0
@@ -30222,7 +30236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &803884368
 Transform:
   m_ObjectHideFlags: 0
@@ -32840,7 +32854,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &886797089
 Transform:
   m_ObjectHideFlags: 0
@@ -46013,7 +46027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1246460702
 Transform:
   m_ObjectHideFlags: 0
@@ -46858,7 +46872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1273026396
 Transform:
   m_ObjectHideFlags: 0
@@ -64388,7 +64402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1809355657
 Transform:
   m_ObjectHideFlags: 0

@@ -210,6 +210,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Peach (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -5313,6 +5317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Peach (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -8983,9 +8991,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
-  - Desktop
   - Mobile
-  shaderIndex: 1
+  shaderIndex: 0
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -9020,9 +9027,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.3970347, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39701876, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.41154012, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.41152418, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -9149,7 +9156,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: 31cc54898a6ea2449a4c17acf45079b8, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 0
+  isMobilePlatform: 1
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
@@ -9420,6 +9427,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_Name
       value: Peach (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_RootOrder
@@ -12515,6 +12526,7 @@ GameObject:
   - component: {fileID: 1200638175}
   - component: {fileID: 1200638174}
   - component: {fileID: 1200638173}
+  - component: {fileID: 1200638176}
   m_Layer: 0
   m_Name: 3
   m_TagString: Entrance
@@ -12549,7 +12561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EventTargets:
-  - {fileID: 8363476460072535188}
+  - {fileID: 1805608143}
   m_InteractiveEventId: 73
   m_UseItemEventId: -1
   m_EnterEventId: -1
@@ -12576,6 +12588,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200638171}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1200638176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200638171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: ec05d9f7-6097-44ba-b7f9-42a8d4a91f7f
+  displayType: 0
+  isLock: 0
 --- !u!1 &1201221193
 GameObject:
   m_ObjectHideFlags: 0
@@ -14072,6 +14099,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_Name
       value: Peach (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_RootOrder
@@ -18910,6 +18941,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 698e7c9bab989854db3f550cf04e029f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+--- !u!1 &1805608143 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1805608142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1805608144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805608143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 08b7412a-a75c-461d-974f-347f635438eb
+  displayType: 0
+  isLock: 0
 --- !u!1 &1808305784
 GameObject:
   m_ObjectHideFlags: 0
@@ -19108,13 +19160,10 @@ MonoBehaviour:
   m_RoleKey: "\u4E3B\u89D2"
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
-  m_Behavior: 4
-  m_BehaviorParas: []
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
   IsInBattle: 0
-  m_FootStepTimespan: 0.4
 --- !u!136 &1809565865
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -20030,6 +20079,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Peach
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -20290,7 +20343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EventTargets:
-  - {fileID: 9022289771642247253}
+  - {fileID: 2141924315}
   m_InteractiveEventId: 73
   m_UseItemEventId: -1
   m_EnterEventId: -1
@@ -21974,6 +22027,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Peach (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -22414,6 +22471,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 698e7c9bab989854db3f550cf04e029f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+--- !u!1 &2141924315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2141924314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2141924316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141924315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b54d8a64162d45a65b78c57d1d182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 6d19d89e-dcd7-45d4-90aa-dbe69035d823
+  displayType: 0
+  isLock: 0
 --- !u!1001 &2142156491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22604,6 +22682,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_Name
       value: Peach (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1acd3c7bddcbbd3438cc7477d15d87f3, type: 3}
       propertyPath: m_RootOrder
@@ -23906,12 +23988,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8363476460072535186}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8363476460072535188 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1789801227, guid: b10ead270c4c100448205481e91a69fd,
-    type: 3}
-  m_PrefabInstance: {fileID: 8363476460072535186}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9022289771642247251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23988,12 +24064,6 @@ PrefabInstance:
 --- !u!4 &9022289771642247252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1789801226, guid: b10ead270c4c100448205481e91a69fd,
-    type: 3}
-  m_PrefabInstance: {fileID: 9022289771642247251}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &9022289771642247253 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1789801227, guid: b10ead270c4c100448205481e91a69fd,
     type: 3}
   m_PrefabInstance: {fileID: 9022289771642247251}
   m_PrefabAsset: {fileID: 0}

@@ -26,6 +26,7 @@ using XLua;
 using UnityEngine.Playables;
 using Sirenix.Utilities;
 using UnityEngine.Timeline;
+using Cysharp.Threading.Tasks;
 
 namespace Jyx2
 {
@@ -160,6 +161,15 @@ namespace Jyx2
 
                 //刷新当前场景中的事件
                 LevelMaster.Instance.RefreshGameEvents();
+                if (interactiveEventId == -1 && evt != null)
+                {
+                    async UniTask ExecuteCurEvent()
+                    {
+                        await evt.MarkChest();
+                    }
+
+                    ExecuteCurEvent().Forget();
+                }
 
                 //下一条指令
                 Next();
@@ -285,7 +295,25 @@ namespace Jyx2
         public static void Leave(int roleId)
         {
             RunInMainThread(() => {
-                runtime.LeaveTeam(roleId);
+
+                if (runtime.LeaveTeam(roleId))
+                {
+                    RoleInstance role = runtime.GetRole(roleId);
+                    storyEngine.DisplayPopInfo(role.Name + "离队。");
+
+                    //卸下角色身上的装备
+                    role.UnequipItem(role.GetWeapon());
+                    role.UnequipItem(role.GetArmor());
+                    if (role.GetXiulianItem() != null)
+                    {
+                        role.GetXiulianItem().User = -1;
+                    }
+                    role.Weapon = -1;
+                    role.Armor = -1;
+                    role.Xiulianwupin = -1;
+
+                }
+                
                 Next();
             });
             Wait();
@@ -989,8 +1017,21 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                //int shopId = Tools.GetRandomInt(0, 4);
-                Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
+                if (LevelMaster.Instance.IsInWorldMap)
+                {
+                    storyEngine.DisplayPopInfo("大地图中无法打开商店，需到客栈中使用");
+					return;
+				}
+
+				string mapId = LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId;
+				var hasData = ConfigTable.Has<Jyx2Shop>(mapId); // mapId和shopId对应
+                if (!hasData)
+                {
+					storyEngine.DisplayPopInfo($"地图{mapId}没有配置商店，可在excel/JYX2小宝商店.xlsx中查看");
+					return;
+                }
+
+				Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
             });
 			Wait();
         }

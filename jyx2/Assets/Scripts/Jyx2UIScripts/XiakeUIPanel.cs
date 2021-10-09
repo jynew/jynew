@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using HSFrameWork.ConfigTable;
 
 public partial class XiakeUIPanel : Jyx2_UIBase
 {
@@ -198,7 +199,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             return;
         }
 
-        var eventLuaPath = HSFrameWork.ConfigTable.ConfigTable.Get<Jyx2Role>(m_currentRole.GetJyx2RoleId()).Dialogue;
+        var eventLuaPath = ConfigTable.Get<Jyx2Role>(m_currentRole.GetJyx2RoleId()).Dialogue;
         if (eventLuaPath != null && eventLuaPath != "")
         {
             Jyx2.LuaExecutor.Execute("jygame/ka" + eventLuaPath, new Action(() => { RefreshView(); }));
@@ -223,34 +224,12 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         get { return GameRuntimeData.Instance; }
     }
 
-    //判断当前物品是否被其他人使用
-    bool JudgeFree(int itemId, int EquipmentType)
-    {
-        foreach (var roleInstance in m_roleList)
-        {
-            if (roleInstance == m_currentRole) continue;
-            switch (EquipmentType)
-            {
-                case 0:
-                    if (roleInstance.Weapon == itemId) return false;
-                    break;
-                case 1:
-                    if (roleInstance.Armor == itemId) return false;
-                    break;
-                case 2:
-                    if (roleInstance.Xiulianwupin == itemId) return false;
-                    break;
-            }
-        }
-
-        return true;
-    }
-
     void OnWeaponClick()
     {
         SelectFromBag(
             (itemId) =>
             {
+                var item = ConfigTable.Get<Jyx2Item>(itemId);
                 //选择了当前使用的装备，则卸下
                 if (m_currentRole.Weapon == itemId)
                 {
@@ -263,9 +242,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     m_currentRole.UnequipItem(m_currentRole.GetWeapon());
                     m_currentRole.Weapon = itemId;
                     m_currentRole.UseItem(m_currentRole.GetWeapon());
+                    item.User = m_currentRole.GetJyx2RoleId();
                 }
             },
-            (item) => { return item.EquipmentType == 0 && JudgeFree(int.Parse(item.Id), 0); },
+            (item) => { return item.EquipmentType == 0 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
             m_currentRole.Weapon);
     }
 
@@ -274,6 +254,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         SelectFromBag(
             (itemId) =>
             {
+                var item = ConfigTable.Get<Jyx2Item>(itemId);
                 if (m_currentRole.Armor == itemId)
                 {
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
@@ -284,9 +265,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
                     m_currentRole.Armor = itemId;
                     m_currentRole.UseItem(m_currentRole.GetArmor());
+                    item.User = m_currentRole.GetJyx2RoleId();
                 }
             },
-            (item) => { return item.EquipmentType == 1 && JudgeFree(int.Parse(item.Id), 1); },
+            (item) => { return item.EquipmentType == 1 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
             m_currentRole.Armor);
     }
 
@@ -295,20 +277,27 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         SelectFromBag(
             (itemId) =>
             {
+                var item = ConfigTable.Get<Jyx2Item>(itemId);
                 if (m_currentRole.Xiulianwupin == itemId)
                 {
                     m_currentRole.Xiulianwupin = -1;
+                    item.User = -1;
                 }
                 else
                 {
+                    if (m_currentRole.GetXiulianItem() != null)
+                    {
+                        m_currentRole.GetXiulianItem().User = -1;
+                    }
                     m_currentRole.Xiulianwupin = itemId;
                     while (m_currentRole.CanFinishedItem())
                     {
                         m_currentRole.UseItem(m_currentRole.GetXiulianItem());
                     }
+                    item.User = m_currentRole.GetJyx2RoleId();
                 }
             },
-            (item) => { return item.ItemType == 2 && JudgeFree(int.Parse(item.Id), 2); },
+            (item) => { return item.ItemType == 2 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
             m_currentRole.Xiulianwupin);
     }
 

@@ -10,6 +10,7 @@
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SelectMoveState : IBattleState
@@ -21,6 +22,9 @@ public class SelectMoveState : IBattleState
         role = BattleStateMechine.Instance.CurrentRole;
         battleModel = BattleManager.Instance.GetModel();
 
+        //绑定第一个招式作为使用技能
+        BattleStateMechine.Instance.BindSkill(role.GetZhaoshis(true).First());
+        
         //显示移动范围
         BattleboxHelper.Instance.ShowBlocks(BattleStateMechine.Instance.CurrentMoveList);
         //显示技能动作面板

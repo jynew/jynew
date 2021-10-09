@@ -145,7 +145,7 @@ public class BattleboxHelper : MonoBehaviour
         return true;
     }
 
-    public void ShowBlocks(List<BattleBlockVector> list, BattleBlockType type = BattleBlockType.MoveZone)
+    public void ShowBlocks(IEnumerable<BattleBlockVector> list, BattleBlockType type = BattleBlockType.MoveZone)
     {
         if (!GeneralPreJudge()) return;
         HideAllBlocks();

@@ -23,16 +23,20 @@ public class JYX2DebugPanel : MonoBehaviour
     List<GameMap> m_ChangeSceneMaps = new List<GameMap>();
     bool _debugPanelSwitchOff = false;
 
+    public bool IsDebugPanelSwitchOff()
+    {
+        return _debugPanelSwitchOff;
+    }
+
     //打开和关闭面板
     public void DebugPanelSwitch()
     {
-        if (_debugPanelSwitchOff)
+        transform.DOLocalMoveX(_debugPanelSwitchOff ? -1360f : -960f, 0.3f);
+        
+        LevelMaster lm = LevelMaster.Instance;
+        if (lm != null)
         {
-            transform.DOLocalMoveX(-1360f, 0.3f);
-        }
-        else
-        {
-            transform.DOLocalMoveX(-960f, 0.3f);
+            lm.ForceSetEnable(!_debugPanelSwitchOff);
         }
 
         _debugPanelSwitchOff = !_debugPanelSwitchOff;

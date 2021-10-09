@@ -57,7 +57,7 @@ public class LevelMaster : MonoBehaviour
 
     enum MapType
     {
-        BigMap,
+        WorldMap,
         Explore,
     }
 
@@ -114,6 +114,10 @@ public class LevelMaster : MonoBehaviour
         return gameMap;
     }
 
+    /// <summary>
+    /// 当前是否在大地图，统一判断方式
+    /// </summary>
+	public bool IsInWorldMap { get { return m_CurrentType == MapType.WorldMap; } }
 
     // Use this for initialization
     async void Start()
@@ -149,7 +153,7 @@ public class LevelMaster : MonoBehaviour
         var gameMap = GetCurrentGameMap();
         if (gameMap != null)
         {
-            if (gameMap.Tags.Contains("WORLDMAP"))//JYX2 临时测试
+            if (gameMap.IsWorldMap)//JYX2 临时测试
             {
                 var btn = transform.Find("UI/MainUI/BackButton");
                 if (btn != null)
@@ -161,9 +165,9 @@ public class LevelMaster : MonoBehaviour
             //播放音乐
             PlayMusic(gameMap);
 
-            if (gameMap.Tags.Contains("BIGMAP"))
+            if (gameMap.IsWorldMap)
             {
-                m_CurrentType = MapType.BigMap;
+                m_CurrentType = MapType.WorldMap;
             }
             else
             {
@@ -255,8 +259,8 @@ public class LevelMaster : MonoBehaviour
     private void UpdateMobileControllerUI()
     {
         //大地图或editor上都不显示
-        m_Joystick.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.BigMap);
-        m_TouchPad.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.BigMap);
+        m_Joystick.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.WorldMap);
+        m_TouchPad.gameObject.SetActive(IsMobilePlatform() && m_CurrentType != MapType.WorldMap);
         
         //战斗中移动按钮隐藏
         if (BattleManager.Instance.IsInBattle)
@@ -276,7 +280,7 @@ public class LevelMaster : MonoBehaviour
 
         if (loadPara.loadType == LevelLoadPara.LevelLoadType.Load)
         {
-            if (map.Tags.Contains("WORLDMAP"))
+            if (map.IsWorldMap)
             {
                 if (string.IsNullOrEmpty(runtime.WorldPosition))
                     return;
@@ -293,7 +297,7 @@ public class LevelMaster : MonoBehaviour
         }
         else if (loadPara.loadType == LevelLoadPara.LevelLoadType.Entrance)
         {
-            if (map.Tags.Contains("WORLDMAP")) //大地图
+            if (map.IsWorldMap) //大地图
             {
                 if (string.IsNullOrEmpty(runtime.WorldPosition))
                     return;
@@ -321,7 +325,11 @@ public class LevelMaster : MonoBehaviour
 
             var spawnPos = startTrigger.transform.position;
             PlayerSpawnAt(spawnPos);
-        }else if(loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtPos)
+
+            if(m_CurrentType == MapType.WorldMap)
+                GetPlayer().LoadBoat();
+        }
+        else if(loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtPos)
         {
             PlayerSpawnAt(UnityTools.StringToVector3(loadPara.CurrentPos));
 			PlayerSpawnAt(UnityTools.StringToQuaternion(loadPara.CurrentOri));
@@ -364,7 +372,7 @@ public class LevelMaster : MonoBehaviour
         
         SetPlayerSpeed(0);
         var gameMap = GetCurrentGameMap();
-        if (gameMap != null && gameMap.Tags.Contains("WORLDMAP"))
+        if (gameMap != null && gameMap.IsWorldMap)
         {
             _playerNavAgent.speed = 10; //大地图上放大一倍
         }
@@ -511,7 +519,7 @@ public class LevelMaster : MonoBehaviour
             return;
 
         //在editor上可以寻路
-        if (!Application.isMobilePlatform || m_CurrentType == MapType.BigMap)
+        if (!Application.isMobilePlatform || m_CurrentType == MapType.WorldMap)
         {
             //点击寻路
             if (Input.GetMouseButton(1) && !UnityTools.IsPointerOverUIObject())
@@ -549,9 +557,16 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
+    public void ForceSetEnable(bool forceDisable)
+    {
+        _forceDisable = forceDisable;
+    }
+
+    private bool _forceDisable = false;
+    
     void OnManualControlPlayer()
     {
-        if (!_CanController)//掉本调用自动寻路的时候 不能手动控制
+        if (!_CanController || _forceDisable)//掉本调用自动寻路的时候 不能手动控制
             return;
         
         if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
@@ -738,7 +753,7 @@ public class LevelMaster : MonoBehaviour
             return;
         }
 
-        if (GetCurrentGameMap().Tags.Contains("WORLDMAP"))
+        if (GetCurrentGameMap().IsWorldMap)
         {
             GetPlayer().RecordWorldInfo();
         }

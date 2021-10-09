@@ -87,8 +87,7 @@ public class BattleLoader : MonoBehaviour
 
     //    InitBattle(null);
     //}
-
-
+    
     async UniTask LoadJyx2Battle(int id, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
@@ -120,7 +119,7 @@ public class BattleLoader : MonoBehaviour
             Debug.LogError("载入了未定义的战斗，id=" + id);
             return;
         }
-
+        
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
@@ -136,7 +135,7 @@ public class BattleLoader : MonoBehaviour
                     if (m_Roles[i].roleKey == roleId.ToString())
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
-                        if (roleInstance.Hp == 0) roleInstance.Hp = 1;
+                        if (roleInstance!=null && roleInstance.Hp == 0) roleInstance.Hp = 1;
                     }
                 }
             }
@@ -240,8 +239,8 @@ public class BattleLoader : MonoBehaviour
             roles.Add(roleInstance);
         }
 
-        LevelMaster.Instance.TryBindPlayer(); //尝试绑定角色
-        await UniTask.WaitForEndOfFrame();
+        //LevelMaster.Instance.TryBindPlayer(); //尝试绑定角色
+        //await UniTask.WaitForEndOfFrame();
         BattleStartParams startParam = new BattleStartParams()
         {
             roles = roles,

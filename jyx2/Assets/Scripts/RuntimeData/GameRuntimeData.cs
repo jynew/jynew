@@ -269,18 +269,18 @@ namespace Jyx2
             return true;
         }
 
-        public void LeaveTeam(int roleId) 
+        public bool LeaveTeam(int roleId) 
         {
             var role = GetRole(roleId);
             if (role == null)
             {
                 Debug.LogError("调用了不存在的role加入队伍，roleid =" + roleId);
-                return;
+                return false;
             }
             if (GetRoleInTeam(roleId) ==null) 
             {
                 Debug.LogError("role is not in main team，roleid =" + roleId);
-                return;
+                return false;
             }
             Team.Remove(role);
 			role.Recover();
@@ -289,8 +289,7 @@ namespace Jyx2
 					AllRoles[index]=role;
 				}
 			}
-			
-			StoryEngine.Instance.DisplayPopInfo(role.Name + "离队。");
+            return true;
         }
 
         public RoleInstance GetRoleInTeam(int roleId)
@@ -608,7 +607,7 @@ namespace Jyx2
             if(gamemap != null)
             {
                 //大地图
-                if (gamemap.Tags == "WORLDMAP")
+                if (gamemap.IsWorldMap)
                     return 0;
 
                 //已经有地图打开的纪录
@@ -637,6 +636,19 @@ namespace Jyx2
         {
             string key = "SceneEntraceCondition_" + scene;
             SetKeyValues(key, value.ToString());
+        }
+
+        private bool _isShowCompass;
+
+        public bool isShowCompass
+        {
+            get { return _isShowCompass; }
+            set { _isShowCompass = value; }
+        }
+
+        public void CheckCompass()
+        {
+            isShowCompass = LevelMaster.Instance.IsInWorldMap&&Jyx2LuaBridge.HaveItem(182);
         }
 
         #endregion

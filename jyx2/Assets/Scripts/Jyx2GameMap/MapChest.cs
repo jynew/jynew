@@ -58,7 +58,10 @@ public class MapChest : MonoBehaviour
 		if(!isLock){
 			runtime.SetKeyValues(GetRuntimeKey(), "1");
 			//播放动画
-			await m_MapChestInteract.Open();
+            if (m_MapChestInteract != null)
+            {
+                await m_MapChestInteract.Open();
+            }
             RefreshOpenStates();
         }
     }

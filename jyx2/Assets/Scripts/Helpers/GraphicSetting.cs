@@ -136,8 +136,8 @@ public class GraphicSetting : MonoBehaviour
         QualitySettings.SetQualityLevel((int)QualityLevel, true);
         Shader.globalMaximumLOD = (int)ShaderLodLevel;
         QualitySettings.shadows = ShadowQuality;
-
-        /*RenderSettings.fog = HasFog == 1;
+        /*
+        RenderSettings.fog = HasFog == 1;
         var post = Camera.main.GetComponent<PostProcessLayer>();
         if (post != null) post.enabled = HasPost == 1;
 
