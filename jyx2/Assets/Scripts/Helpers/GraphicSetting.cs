@@ -33,6 +33,11 @@ public class GraphicSetting : MonoBehaviour
     public int HasWaterNormal { get; set; }
 
     /// <summary>
+    /// 是否开启抗锯齿，默认开启
+    /// </summary>
+    public int HasAntiAliasing { get; set; }
+
+    /// <summary>
     /// 阴影质量
     /// </summary>
     public ShadowQuality ShadowQuality { get; set; }
@@ -77,7 +82,7 @@ public class GraphicSetting : MonoBehaviour
         HasFog = 1;
         HasPost = 1;
         HasWaterNormal = 1;
-
+        HasAntiAliasing = 1;
 #if UNITY_EDITOR
 
         MaxFps = MaxFpsEnum.Fps200;
@@ -136,6 +141,8 @@ public class GraphicSetting : MonoBehaviour
         QualitySettings.SetQualityLevel((int)QualityLevel, true);
         Shader.globalMaximumLOD = (int)ShaderLodLevel;
         QualitySettings.shadows = ShadowQuality;
+
+        ExecuteAntiAliasing();
         /*
         RenderSettings.fog = HasFog == 1;
         var post = Camera.main.GetComponent<PostProcessLayer>();
@@ -200,6 +207,18 @@ public class GraphicSetting : MonoBehaviour
             {
                 material.DisableKeyword("_NORMAL_MAP_ON");
             }
+        }
+    }
+
+    public void ExecuteAntiAliasing()
+    {
+        if(HasAntiAliasing == 1)
+        {
+            QualitySettings.antiAliasing = 8;
+        }
+        else
+        {
+            QualitySettings.antiAliasing = 1;
         }
     }
 }
