@@ -71,8 +71,8 @@ public partial class SystemUIPanel:Jyx2_UIBase
     {
         InitTrans();
         IsBlockControl = true;
-        ActionList.Add(Load);
         ActionList.Add(Save);
+        ActionList.Add(Load);
         ActionList.Add(GraphicSetting);
         ActionList.Add(Quit2MainMenu);
         ActionList.Add(HidePanel);
