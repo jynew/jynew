@@ -29,6 +29,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     protected override void OnCreate()
     {
         InitTrans();
+        IsBlockControl = true;
         BindListener(BackButton_Button, OnBackClick);
         BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
 		BindListener(LeaveButton_Button, OnLeaveClick);

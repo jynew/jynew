@@ -21,6 +21,8 @@ using UnityEngine;
 /// </summary>
 public class GlobalHotkeyManager : SingletonMB<GlobalHotkeyManager, GlobalHotkeyManager>
 {
+    public bool isLock=false;
+    
     class HotkeyRegist
     {
         public MonoBehaviour mono;
@@ -40,6 +42,7 @@ public class GlobalHotkeyManager : SingletonMB<GlobalHotkeyManager, GlobalHotkey
 
     public bool RegistHotkey(MonoBehaviour mono, KeyCode key, Action callback)
     {
+        isLock = true;
         if(!_hotkeys.ContainsKey(key))
             _hotkeys.Add(key, new Stack<HotkeyRegist>());
 
@@ -54,14 +57,15 @@ public class GlobalHotkeyManager : SingletonMB<GlobalHotkeyManager, GlobalHotkey
         }
 
         stack.Push(new HotkeyRegist(mono, key, callback));
+        isLock = false;
         return true;
     }
 
     public void UnRegistHotkey(MonoBehaviour mono, KeyCode key)
     {
-        if(!_hotkeys.ContainsKey(key))
+        if(!_hotkeys.ContainsKey(key) || _hotkeys[key].Count==0)
             return;
-
+        isLock = true;
         var stack = _hotkeys[key];
         var node = stack.Peek();
         
@@ -82,18 +86,21 @@ public class GlobalHotkeyManager : SingletonMB<GlobalHotkeyManager, GlobalHotkey
 
             _hotkeys.Clear(); //只要出错，就全部清空
         }
+
+        isLock = false;
     }
 
     void Update()
     {
-        if (_hotkeys.Count == 0)
+        if (_hotkeys.Count == 0 || isLock)
             return;
         
-        foreach (var kv in _hotkeys)
+        List<KeyCode> key = new List<KeyCode>(_hotkeys.Keys);
+        for (int i=0;i< key.Count;i++)
         {
-            if (Input.GetKeyDown(kv.Key))
+            if (Input.GetKeyDown(key[i]))
             {
-                var stack = kv.Value;
+                var stack = _hotkeys[key[i]];
                 if (stack.Count == 0)
                     continue;
                 

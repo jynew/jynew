@@ -40,6 +40,13 @@ public class ColorStringDefine
 	public const string Hp_posion="green";
 	public const string Hp_hurt_light="#FD726F";
 	public const string Hp_hurt_heavy="#F8413E";
+
+    public static Color main_menu_selected = new Color(238/255.0f,39/255.0f,24/255.0f,1.0f);
+    public static Color main_menu_normal = new Color(125/255.0f,9/255.0f,0.0f,1.0f);
+    public static Color save_selected = new Color(164/255.0f,164/255.0f,164/255.0f,1.0f);
+    public static Color save_normal = new Color(1.0f,1.0f,1.0f);
+    public static Color system_item_selected = new Color(1.0f,223/255.0f,181/255.0f);
+    public static Color system_item_normal = new Color(1.0f,150/255.0f,16/255.0f,1.0f);
 }
 
 public class GameConst

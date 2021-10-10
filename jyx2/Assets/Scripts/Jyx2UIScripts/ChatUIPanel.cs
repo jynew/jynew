@@ -247,6 +247,17 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
                 callback?.Invoke(currentIndex);
             });
         }
+        
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Y, () =>
+        {
+            Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
+            callback?.Invoke(0);
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.N, () =>
+        {
+            Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
+            callback?.Invoke(1);
+        });
         SelectionPanel_RectTransform.gameObject.SetActive(true);
     }
 
@@ -261,6 +272,12 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
     public void DoHideAnimator()
     {
         
+    }
+
+    public void OnDisable()
+    {
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Y);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.N);
     }
 
     private void InitPanelTrigger()
