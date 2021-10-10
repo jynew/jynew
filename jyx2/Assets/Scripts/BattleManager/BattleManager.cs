@@ -17,6 +17,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Jyx2;
 using HSFrameWork.Common;
+using Jyx2.Battle;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -136,12 +137,19 @@ public class BattleManager : MonoBehaviour
         }
 
         m_BattleModel.InitBattleModel(); //战场初始化 行动顺序排序这些
-        BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
         Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
         Jyx2_UIManager.Instance.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
+        
+        
+        //OLD
+        //BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
+        
+        //NEW
+        await new BattleLoop(this).StartLoop();
     }
+    
 
-    void OnBattleEnd(BattleResult result)
+    public void OnBattleEnd(BattleResult result)
     {
         switch (result)
         {
