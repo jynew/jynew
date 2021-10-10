@@ -452,6 +452,13 @@ namespace Jyx2
             get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>("Items"); }
             set { SavePojo("Items", value); }
         }
+        
+        //物品使用人
+        public SaveableNumberDictionary<int> ItemUser
+        {
+            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(ItemUser)); }
+            set { SavePojo(nameof(ItemUser), value); }
+        }
 
         public bool HaveItemBool(int itemId)
         {
