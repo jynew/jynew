@@ -52,8 +52,21 @@ namespace Jyx2
         [XmlAttribute]
         public int AnqiAnimation; //暗器动画编号
 
-        [XmlAttribute]
-        public int User; //使用人
+
+        //使用人
+        public int User
+        {
+            get
+            {
+                if (!GameRuntimeData.Instance.ItemUser.ContainsKey(Id))
+                    return -1;
+                return GameRuntimeData.Instance.ItemUser[Id];
+            }
+            set
+            {
+                GameRuntimeData.Instance.ItemUser[Id] = value;
+            }
+        }
 
         [XmlAttribute]
         public int EquipmentType; //装备类型

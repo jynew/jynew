@@ -17,6 +17,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Jyx2;
 using HSFrameWork.Common;
+using Jyx2.Battle;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,22 +33,6 @@ public class BattleStartParams
 
 public class BattleManager : MonoBehaviour
 {
-    public enum BattleViewStates
-    {
-        None = -1,
-        WaitingForNextActiveBattleRole, //等待下一个行动角色
-        SelectMove, //选择移动，展现移动范围
-        SelectSkill, //选择技能
-        SelectSkillTarget, //选择技能攻击目标，展现施展范围
-        PreshowSkillCoverRange, //预展现技能覆盖范围
-        PlayingAction, //播放当前行动中
-        Move, //移动状态
-        AI,
-        UseItem, //使用物品的状态 主要播放使用物品动画
-        BuffSettlement, //buff结算状态 这里主要是用毒
-    }
-    
-
     public static BattleManager Instance
     {
         get
@@ -136,12 +121,19 @@ public class BattleManager : MonoBehaviour
         }
 
         m_BattleModel.InitBattleModel(); //战场初始化 行动顺序排序这些
-        BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
         Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
         Jyx2_UIManager.Instance.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
+        
+        
+        //OLD
+        //BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
+        
+        //NEW
+        await new BattleLoop(this).StartLoop();
     }
+    
 
-    void OnBattleEnd(BattleResult result)
+    public void OnBattleEnd(BattleResult result)
     {
         switch (result)
         {

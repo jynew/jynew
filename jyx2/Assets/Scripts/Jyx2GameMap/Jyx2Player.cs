@@ -296,12 +296,12 @@ public class Jyx2Player : MonoBehaviour
 
     public void LoadBoat()
     {
-        var runtime=GameRuntimeData.Instance;
-        if (runtime.BoatWorldPos != "")
-        {
-            _boat.transform.position = UnityTools.StringToVector3(runtime.BoatWorldPos);
-            _boat.transform.rotation = UnityTools.StringToQuaternion(runtime.BoatRotate);
-        }
+        var runtime = GameRuntimeData.Instance;
+        if (string.IsNullOrEmpty(runtime.BoatWorldPos))
+            return;
+
+        _boat.transform.position = UnityTools.StringToVector3(runtime.BoatWorldPos);
+        _boat.transform.rotation = UnityTools.StringToQuaternion(runtime.BoatRotate);
     }
 
     public Vector3 GetBoatPosition()

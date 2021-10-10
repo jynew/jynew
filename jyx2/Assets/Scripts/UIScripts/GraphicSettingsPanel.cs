@@ -22,6 +22,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     public Toggle m_FogToggle;
     public Toggle m_PostToggle;
     public Toggle m_WaterNormalToggle;
+    public Toggle m_AntiAliasingToggle;
 
     public Dropdown m_maxFpsDropdown;
     public Dropdown m_QualityLevelDropdown;
@@ -43,7 +44,8 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_FogToggle.onValueChanged.AddListener(SetFog);
         m_PostToggle.onValueChanged.AddListener(SetPostProcess);
         m_WaterNormalToggle.onValueChanged.AddListener(SetWaterNormal);
-        
+        m_AntiAliasingToggle.onValueChanged.AddListener(SetAntiAliasing);
+
         m_maxFpsDropdown.onValueChanged.AddListener(DropdownMaxFps);
         m_QualityLevelDropdown.onValueChanged.AddListener(DropdownQualityLevel);
         m_ShaderLodLevelropdown.onValueChanged.AddListener(DropdownShaderLodLevel);
@@ -66,7 +68,8 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_FogToggle.isOn = _graphicSetting.HasFog == 1;
         m_PostToggle.isOn = _graphicSetting.HasPost == 1;
         m_WaterNormalToggle.isOn = _graphicSetting.HasWaterNormal == 1;
-        
+        m_AntiAliasingToggle.isOn = _graphicSetting.HasAntiAliasing == 1;
+
         InitDropDown(m_maxFpsDropdown, _graphicSetting.MaxFps, "最大fps");
         InitDropDown(m_QualityLevelDropdown, _graphicSetting.QualityLevel, "图形品质");
         InitDropDown(m_ShaderLodLevelropdown, _graphicSetting.ShaderLodLevel, "Shader效果");
@@ -165,6 +168,10 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     public void SetWaterNormal(bool value)
     {
         _graphicSetting.HasWaterNormal = value ? 1 : 0;
+    }
+
+    public void SetAntiAliasing(bool value) {
+        _graphicSetting.HasAntiAliasing = value ? 1 : 0;
     }
 
     protected override void OnCreate()

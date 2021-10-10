@@ -131,13 +131,8 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                             RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
                             roleInstance.UnequipItem(roleInstance.GetWeapon());
                             roleInstance.Weapon = -1;
-                            item.User = -1;
                         }
 
-                        if (selectRole.GetWeapon() != null)
-                        {
-                            selectRole.GetWeapon().User = -1;
-                        }
                         selectRole.UnequipItem(selectRole.GetWeapon());
                         selectRole.Weapon = id;
                         selectRole.UseItem(selectRole.GetWeapon());
@@ -151,13 +146,8 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                             RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
                             roleInstance.UnequipItem(roleInstance.GetArmor());
                             roleInstance.Armor = -1;
-                            item.User = -1;
                         }
 
-                        if (selectRole.GetArmor() != null)
-                        {
-                            selectRole.GetArmor().User = -1;
-                        }
                         selectRole.UnequipItem(selectRole.GetArmor());
                         selectRole.Armor = id;
                         selectRole.UseItem(selectRole.GetArmor());

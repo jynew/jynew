@@ -9,6 +9,7 @@
  */
 using System;
 using Animancer;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Jyx2
@@ -102,7 +103,8 @@ namespace Jyx2
 
             PlayAnimation(clip);
         }
-
+        
+        
         public virtual void ShowDamage()
         {
             //DONOTHING
@@ -118,6 +120,16 @@ namespace Jyx2
             //DONOTHING
         }
 
+        public UniTask PlayAnimationAsync(AnimationClip clip, float fadeDuration = 0f)
+        {
+            UniTaskCompletionSource source = new UniTaskCompletionSource();
+            PlayAnimation(clip, () =>
+            {
+                source.TrySetResult();
+            }, fadeDuration);
+            return source.Task;
+        }
+        
         public void PlayAnimation(AnimationClip clip, Action callback = null, float fadeDuration = 0f)
         {
             if (clip == null)
