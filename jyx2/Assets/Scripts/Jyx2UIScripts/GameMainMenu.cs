@@ -287,7 +287,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
-        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+        //GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Return);
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Y);
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.N);

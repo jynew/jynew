@@ -33,12 +33,13 @@ public partial class SavePanel:Jyx2_UIBase
 
     Action<int> m_selectCallback;
 
-    private Action closeCallback; 
-	    
+    private Action closeCallback;
+
+    private int current_selection = -1;
+    
     protected override void OnCreate()
     {
         InitTrans();
-
         BindListener(BackButton_Button, OnBackClick);
 		BindListener(ImButton_Button, OnImportClick);
 		BindListener(ExButton_Button, OnExportClick);
@@ -47,17 +48,35 @@ public partial class SavePanel:Jyx2_UIBase
     private void OnEnable()
     {
 	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
+	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
+	    {
+		    if(current_selection>0) ChangeSelection(-1);
+	    });
+	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
+	    {
+		    if(current_selection<2) ChangeSelection(1);
+	    });
+	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
+	    {
+		    if (current_selection != -1)
+		    {
+			    OnSaveItemClick(current_selection);
+		    }
+	    });
     }
 
     private void OnDisable()
     {
+	    current_selection = -1;
 	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
+	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
+	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
     }
 
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
-
         m_selectCallback = allParams[0] as Action<int>;
 		Main_Text.text=allParams[1] as string;
 		if (allParams.Length > 2)
@@ -70,6 +89,20 @@ public partial class SavePanel:Jyx2_UIBase
 		(ImButton_Button.gameObject).SetActive(!isHouse);
 		(ExButton_Button.gameObject).SetActive(!isHouse);
         RefreshSave();
+        ChangeSelection(0);
+    }
+
+    void ChangeSelection(int num)
+    {
+	    current_selection += num;
+	    for (int i = 0; i < GameConst.SAVE_COUNT; i++)
+	    {
+		    var btn = SaveParent_RectTransform.gameObject.transform.GetChild(i).GetComponent<Button>();
+		    var text = btn.transform.Find("SummaryText").GetComponent<Text>();
+		    text.color= i == current_selection
+			    ? ColorStringDefine.save_selected
+			    : ColorStringDefine.save_normal;
+	    }
     }
 
     void RefreshSave() 
@@ -96,25 +129,24 @@ public partial class SavePanel:Jyx2_UIBase
                 txt.text = "空档位";
             }
 
-            BindListener(btn, () =>
+            BindListener(btn, new Action(() =>
             {
-                OnSaveItemClick(btn);
-            });
+                OnSaveItemClick(int.Parse(btn.name));
+            }));
         }
     }
 
     protected override void OnHidePanel()
     {
         base.OnHidePanel();
-
         HSUnityTools.DestroyChildren(SaveParent_RectTransform);
     }
 
-    void OnSaveItemClick(Button btn) 
+    void OnSaveItemClick(int index) 
     {
         Action<int> cb = m_selectCallback;
         Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
-        cb?.Invoke(int.Parse(btn.name));
+        cb?.Invoke(index);
     }
 
     private void OnBackClick()
