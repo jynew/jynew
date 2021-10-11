@@ -270,6 +270,7 @@ namespace Jyx2
             RunInMainThread(() => {
                 
                 //TODO..
+                Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
                 MessageBox.Create("GAME OVER", () =>
                 {
                     LevelMaster.Instance.QuitToMainMenu();
