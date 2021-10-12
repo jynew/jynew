@@ -65,7 +65,7 @@
 
 ## 引用项目
 
-[xlua](https://github.com/Tencent/xLua), [xNode](https://github.com/Siccity/xNode)
+[xlua](https://github.com/Tencent/xLua), [xNode](https://github.com/Siccity/xNode), [UniTask](https://github.com/Cysharp/UniTask)
 
 ## 参考项目
 
