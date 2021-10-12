@@ -230,6 +230,21 @@ namespace Jyx2
         [XmlAttribute]
         public int Count;
 
+        //是否获取过角色物品
+        public int IsAdd
+        {
+            get
+            {
+                if (!GameRuntimeData.Instance.IsAdd.ContainsKey(Id.ToString()))
+                    return -1;
+                return GameRuntimeData.Instance.IsAdd[Id.ToString()];
+            }
+            set
+            {
+                GameRuntimeData.Instance.IsAdd[Id.ToString()] = value;
+            }
+        }
+
         public Jyx2RoleItem Clone()
         {
             return new Jyx2RoleItem() { Id = this.Id, Count = this.Count };
