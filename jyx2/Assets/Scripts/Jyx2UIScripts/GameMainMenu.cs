@@ -200,11 +200,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
         //主角初始物品
         foreach (var item in player.Items)
         {
-            if(item.Id >= 0)
+            if(item.IsAdd != 1)
             {
                 if (item.Count == 0) item.Count = 1;
                 runtime.AddItem(item.Id, item.Count);
-                item.Id = -1;
+                item.IsAdd = 1;
                 item.Count = 0;
             }
         }

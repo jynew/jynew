@@ -497,6 +497,13 @@ namespace Jyx2
             AddItem(id.ToString(), count);
         }
 
+        //是否获取过角色物品
+        public SaveableNumberDictionary<int> IsAdd
+        {
+            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(IsAdd)); }
+            set { SavePojo(nameof(IsAdd), value); }
+        }
+
         public int GetItemCount(int id)
         {
             if (Items.ContainsKey(id.ToString()))
