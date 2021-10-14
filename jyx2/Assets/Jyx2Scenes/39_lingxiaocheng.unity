@@ -5636,6 +5636,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2022970762}
     m_Modifications:
+    - target: {fileID: 275932858, guid: ba185bf667a225941ae57fabda4a8090, type: 3}
+      propertyPath: m_Carve
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 275932858, guid: ba185bf667a225941ae57fabda4a8090, type: 3}
+      propertyPath: m_Shape
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 275932858, guid: ba185bf667a225941ae57fabda4a8090, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 275932858, guid: ba185bf667a225941ae57fabda4a8090, type: 3}
+      propertyPath: m_Extents.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2574321577795132750, guid: ba185bf667a225941ae57fabda4a8090,
         type: 3}
       propertyPath: m_Controller
@@ -8966,12 +8982,12 @@ NavMeshObstacle:
   m_GameObject: {fileID: 365947848}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.5, y: 1.5, z: 0.5}
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
 --- !u!1 &374993985
 GameObject:
@@ -10230,12 +10246,12 @@ NavMeshObstacle:
   m_GameObject: {fileID: 441622079}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.5, y: 1.5, z: 0.5}
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
 --- !u!1 &443830226
 GameObject:
@@ -34141,13 +34157,10 @@ MonoBehaviour:
   m_RoleKey: "\u4E3B\u89D2"
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
-  m_Behavior: 4
-  m_BehaviorParas: []
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
   IsInBattle: 0
-  m_FootStepTimespan: 0.4
 --- !u!136 &1809565865
 CapsuleCollider:
   m_ObjectHideFlags: 0
