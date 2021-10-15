@@ -255,7 +255,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
     private void OnCreateRoleNoClick()
     {
         RoleInstance role = GameRuntimeData.Instance.Player;
-        for (int i = 1; i <= 12; i++)
+        for (int i = 0; i <= 12; i++)
         {
 			GenerateRamdomPro(role, i);
         }
