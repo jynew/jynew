@@ -460,6 +460,13 @@ namespace Jyx2
             set { SavePojo(nameof(ItemUser), value); }
         }
 
+        //小宝商店物品，{ID，数量}
+        public SaveableNumberDictionary<int> ShopItems
+        {
+            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(ShopItems)); }
+            set { SavePojo(nameof(ShopItems), value); }
+        }
+
         public bool HaveItemBool(int itemId)
         {
             return Items.ContainsKey(itemId.ToString());

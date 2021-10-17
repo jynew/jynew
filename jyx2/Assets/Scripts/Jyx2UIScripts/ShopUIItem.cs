@@ -49,7 +49,7 @@ public class ShopUIItem : MonoBehaviour
         reduceBtn.onClick.AddListener(OnReduceBtnClick);
     }
 
-    public async UniTaskVoid Refresh(Jyx2ShopItem shopItem,int index,int hasBuyNum) 
+    public async UniTaskVoid Refresh(Jyx2ShopItem shopItem, int index, int hasNum, int hasBuyNum) 
     {
         this.index = index;
         this.shopItem = shopItem;
@@ -61,7 +61,7 @@ public class ShopUIItem : MonoBehaviour
         }
         
         desText.text = $"{item.Name}\n价格：{shopItem.Price}";
-        leftNum = shopItem.Count - hasBuyNum;
+        leftNum = shopItem.Count - hasNum - hasBuyNum;
         leftNum = Tools.Limit(leftNum,0,shopItem.Count);
         itemNum.text = leftNum.ToString();
         
