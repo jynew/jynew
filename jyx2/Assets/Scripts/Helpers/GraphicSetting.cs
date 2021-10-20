@@ -212,14 +212,7 @@ public class GraphicSetting : MonoBehaviour
 
     public void ExecuteAntiAliasing()
     {
-        if(HasAntiAliasing == 1)
-        {
-            QualitySettings.antiAliasing = 8;
-        }
-        else
-        {
-            QualitySettings.antiAliasing = 1;
-        }
+            QualitySettings.antiAliasing = HasAntiAliasing == 1? 8 : 1;
     }
 }
 
