@@ -86,16 +86,16 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
             role.isAI = active;
         }
 
-        var curRole = BattleStateMechine.Instance.CurrentRole;
-        
-        if(active && curRole != null && curRole.team == 0)
+
+        BattleActionUIPanel panel = FindObjectOfType<BattleActionUIPanel>();
+        if (panel != null )
         {
-            var curState = BattleStateMechine.Instance.GetCurrentState();
-            if (curState != BattleManager.BattleViewStates.PlayingAction) //fix #429
+            var role = panel.GetCurrentRole();
+            if (role != null && active && role.team == 0)
             {
-                BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.AI);    
+                panel.OnAutoClicked();
             }
-        }         
+        }
     }
 
     void OnHUDCreate(Transform hudTrans) 

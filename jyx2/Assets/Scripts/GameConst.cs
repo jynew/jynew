@@ -40,6 +40,13 @@ public class ColorStringDefine
 	public const string Hp_posion="green";
 	public const string Hp_hurt_light="#FD726F";
 	public const string Hp_hurt_heavy="#F8413E";
+
+    public static Color main_menu_selected = new Color(238/255.0f,39/255.0f,24/255.0f,1.0f);
+    public static Color main_menu_normal = new Color(125/255.0f,9/255.0f,0.0f,1.0f);
+    public static Color save_selected = new Color(164/255.0f,164/255.0f,164/255.0f,1.0f);
+    public static Color save_normal = new Color(1.0f,1.0f,1.0f);
+    public static Color system_item_selected = new Color(1.0f,223/255.0f,181/255.0f);
+    public static Color system_item_normal = new Color(1.0f,150/255.0f,16/255.0f,1.0f);
 }
 
 public class GameConst
@@ -133,6 +140,7 @@ public class GameConst
 
     public const string UI_PREFAB_PATH = "Assets/Prefabs/Jyx2UI/{0}.prefab";
     public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>() {
+        ["0"] = new PropertyItem(0, "MpType", "内力性质", 2, 0),
         ["1"] = new PropertyItem(1, "MaxMp", "内力",40,30),//创角用到 特殊
         ["2"] = new PropertyItem(2, "Attack", "武力",30,20),//创角用到 特殊
         ["3"] = new PropertyItem(3, "Qinggong", "轻功", 30, 20),

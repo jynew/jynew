@@ -49,7 +49,7 @@ public class ShopUIItem : MonoBehaviour
         reduceBtn.onClick.AddListener(OnReduceBtnClick);
     }
 
-    public async UniTaskVoid Refresh(Jyx2ShopItem shopItem,int index,int hasBuyNum) 
+    public async UniTaskVoid Refresh(Jyx2ShopItem shopItem, int index, int hasBuyNum) 
     {
         this.index = index;
         this.shopItem = shopItem;

@@ -237,11 +237,27 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                 OnSystemBtnClick();
             }
         });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.X, () =>
+        {
+            if (LevelMaster.Instance.IsPlayerCanControl())
+            {
+                OnXiakeBtnClick();
+            }
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.B, () =>
+        {
+            if (LevelMaster.Instance.IsPlayerCanControl())
+            {
+                OnBagBtnClick();
+            }
+        });
     }
 
     private void OnDisable()
     {
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.X);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.B);
     }
 
 }

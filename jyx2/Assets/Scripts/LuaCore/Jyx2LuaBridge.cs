@@ -243,11 +243,11 @@ namespace Jyx2
                     //同时获得对方身上的物品
                     foreach (var item in role.Items)
                     {
-                        if(item.Id >= 0)
+                        if(item.IsAdd != 1)
                         {
                             if (item.Count == 0) item.Count = 1;
                             AddItem(item.Id, item.Count);
-                            item.Id = -1;
+                            item.IsAdd = 1;
                             item.Count = 0;
                         }
                     }
@@ -270,6 +270,7 @@ namespace Jyx2
             RunInMainThread(() => {
                 
                 //TODO..
+                Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
                 MessageBox.Create("GAME OVER", () =>
                 {
                     LevelMaster.Instance.QuitToMainMenu();

@@ -11,6 +11,7 @@ using UnityEngine;
 using Jyx2;
 using System;
 using System.Collections;
+using UnityEngine.UI;
 using HSFrameWork.Common;
 
 public partial class GameMainMenu : Jyx2_UIBase {
@@ -19,12 +20,19 @@ public partial class GameMainMenu : Jyx2_UIBase {
     {
         Home,
         NewGamePage,
+        PropertyPage,
         LoadGamePage,
     }
     private RandomPropertyComponent m_randomProperty;
 
     private PanelType m_panelType;
 
+    private int main_menu_index=0;
+
+    private const int NewGameIndex = 0;
+    private const int LoadGameIndex = 1;
+    private const int QuitGameIndex = 2;
+    
     async void Start()
     {
         //显示loading
@@ -58,12 +66,78 @@ public partial class GameMainMenu : Jyx2_UIBase {
         m_randomProperty = this.StartNewRolePanel_RectTransform.GetComponent<RandomPropertyComponent>();
     }
 
+    private void ChangeSelection(int num)
+    {
+        if (homeBtnAndTxtPanel_RectTransform.gameObject.active && m_panelType==PanelType.Home)
+        {
+            main_menu_index += num;
+            NewGameButton_Button.gameObject.transform.GetChild(0).GetComponent<Text>().color = (main_menu_index == NewGameIndex)
+                ? ColorStringDefine.main_menu_selected
+                : ColorStringDefine.main_menu_normal;
+            LoadGameButton_Button.gameObject.transform.GetChild(0).GetComponent<Text>().color = (main_menu_index == LoadGameIndex)
+                ? ColorStringDefine.main_menu_selected
+                : ColorStringDefine.main_menu_normal;
+            QuitGameButton_Button.gameObject.transform.GetChild(0).GetComponent<Text>().color = (main_menu_index == QuitGameIndex)
+                ? ColorStringDefine.main_menu_selected
+                : ColorStringDefine.main_menu_normal;
+        }
+    }
+
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
         AudioManager.PlayMusic(16);
         m_panelType = PanelType.Home;
         Version_Text.text = allParams[0] as string;
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
+        {
+            if(main_menu_index<QuitGameIndex) ChangeSelection(1);
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
+        {
+            if(main_menu_index>NewGameIndex) ChangeSelection(-1);
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
+        {
+            if (main_menu_index == NewGameIndex)
+            {
+                OnNewGameClicked();
+            }else if (main_menu_index == LoadGameIndex)
+            {
+                OnLoadGameClicked();
+            }else if (main_menu_index == QuitGameIndex)
+            {
+                OnQuitGameClicked();
+            }
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
+        {
+            if (m_panelType == PanelType.NewGamePage || m_panelType==PanelType.LoadGamePage)//save/ load panel has its own logic to close/ hide themself
+            {
+                OnBackBtnClicked();
+            }
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Return, () =>
+        {
+            if (m_panelType == PanelType.NewGamePage)
+            {
+                OnCreateBtnClicked();
+            }
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Y, () =>
+        {
+            if (m_panelType == PanelType.PropertyPage)
+            {
+                OnCreateRoleYesClick();
+            }
+        });
+        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.N, () =>
+        {
+            if (m_panelType == PanelType.PropertyPage)
+            {
+                OnCreateRoleNoClick();
+            }
+        });
     }
     
     public void OnNewGameClicked()
@@ -75,12 +149,16 @@ public partial class GameMainMenu : Jyx2_UIBase {
     // modified by eaphone at 2021/05/21
     public void OnLoadGameClicked()
     {
+        m_panelType = PanelType.LoadGamePage;
         Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) =>
         {
-            if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.Home){
+            if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
                 OnNewGame();
             }
-        }),"选择读档位");
+        }),"选择读档位", new Action(() =>
+        {
+            m_panelType = PanelType.Home;
+        }));
     }
 
     public void OnQuitGameClicked()
@@ -94,6 +172,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
         //todo:去掉特殊符号
         if (newName.Equals(""))
             return;
+        m_panelType = PanelType.PropertyPage;
         //todo:给玩家提示
         RoleInstance role = GameRuntimeData.Instance.Player;
         role.Name = newName;
@@ -121,11 +200,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
         //主角初始物品
         foreach (var item in player.Items)
         {
-            if(item.Id >= 0)
+            if(item.IsAdd != 1)
             {
                 if (item.Count == 0) item.Count = 1;
                 runtime.AddItem(item.Id, item.Count);
-                item.Id = -1;
+                item.IsAdd = 1;
                 item.Count = 0;
             }
         }
@@ -140,6 +219,8 @@ public partial class GameMainMenu : Jyx2_UIBase {
 
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
         this.InputNamePanel_RectTransform.gameObject.SetActive(true);
+
+        NameInput_InputField.ActivateInputField();
     }
 
     private void RegisterEvent()
@@ -174,7 +255,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
     private void OnCreateRoleNoClick()
     {
         RoleInstance role = GameRuntimeData.Instance.Player;
-        for (int i = 1; i <= 12; i++)
+        for (int i = 0; i <= 12; i++)
         {
 			GenerateRamdomPro(role, i);
         }
@@ -193,7 +274,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
 	}
 	
 	private void OnBackBtnClicked()
-	{
+    {
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
         this.InputNamePanel_RectTransform.gameObject.SetActive(false);
 		m_panelType = PanelType.Home;
@@ -203,6 +284,13 @@ public partial class GameMainMenu : Jyx2_UIBase {
     {
         base.OnHidePanel();
         //释放资源
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
+        //GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Return);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Y);
+        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.N);
     }
 
     public void OnOpenURL(string url)

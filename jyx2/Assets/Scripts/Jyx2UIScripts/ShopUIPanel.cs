@@ -27,10 +27,15 @@ public partial class ShopUIPanel:Jyx2_UIBase
     ShopUIItem curSelectItem;
 	Action callback;
 
-    Dictionary<int, int> currentBuyCount = new Dictionary<int, int>();
+    private GameRuntimeData runtime
+    {
+        get { return GameRuntimeData.Instance; }
+    }
+
     protected override void OnCreate()
     {
         InitTrans();
+        IsBlockControl = true;
         childMgr = GameUtil.GetOrAddComponent<ChildGoComponent>(ItemRoot_RectTransform);
         childMgr.Init(ScrollItem_RectTransform, (trans) => 
         {
@@ -48,16 +53,16 @@ public partial class ShopUIPanel:Jyx2_UIBase
 
     int GetHasBuyNum(int id) 
     {
-        if (!currentBuyCount.ContainsKey(id))
+        if (!runtime.ShopItems.ContainsKey(id.ToString()))
             return 0;
-        return currentBuyCount[id];
+        return runtime.ShopItems[id.ToString()];
     }
 
     void AddBuyCount(int itemId, int num) 
     {
-        if (!currentBuyCount.ContainsKey(itemId))
-            currentBuyCount[itemId] = 0;
-        currentBuyCount[itemId] += num;
+        if (!runtime.ShopItems.ContainsKey(itemId.ToString()))
+            runtime.ShopItems[itemId.ToString()] = 0;
+        runtime.ShopItems[itemId.ToString()] += num;
     }
 
     protected override void OnShowPanel(params object[] allParams)
@@ -68,7 +73,6 @@ public partial class ShopUIPanel:Jyx2_UIBase
         curShopData = ConfigTable.Get<Jyx2Shop>(curShopId);
 
         curSelectIndex = 0;
-        currentBuyCount.Clear();
         RefreshChild();
         RefreshProperty();
         RefreshMoney();
@@ -85,7 +89,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
 
     void RefreshMoney() 
     {
-        int num = GameRuntimeData.Instance.GetMoney();
+        int num = runtime.GetMoney();
         MoneyNum_Text.text = $"持有银两:{num}";
     }
 
@@ -99,7 +103,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
             Jyx2ShopItem data = curShopData.ShopItems[i];
             ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
             int currentNum = GetHasBuyNum(data.Id);
-            uiItem.Refresh(data,i,currentNum);
+            uiItem.Refresh(data, i, currentNum);
             uiItem.SetSelect(curSelectIndex == i);
             if (curSelectIndex == i)
                 curSelectItem = uiItem;
@@ -150,15 +154,15 @@ public partial class ShopUIPanel:Jyx2_UIBase
         if (itemCfg == null)
             return;
         int moneyCost = count * item.Price;
-        if (GameRuntimeData.Instance.GetMoney() < moneyCost) 
+        if (runtime.GetMoney() < moneyCost) 
         {
             GameUtil.DisplayPopinfo("持有银两不足");
             return;
         }
-        GameRuntimeData.Instance.AddItem(item.Id, count);
+        runtime.AddItem(item.Id, count);
         AddBuyCount(item.Id, count);
         GameUtil.DisplayPopinfo($"购买{itemCfg.Name},数量{count}");
-        GameRuntimeData.Instance.AddItem(GameConst.MONEY_ID, -moneyCost);
+        runtime.AddItem(GameConst.MONEY_ID, -moneyCost);
 
         RefreshChild();
         RefreshMoney();

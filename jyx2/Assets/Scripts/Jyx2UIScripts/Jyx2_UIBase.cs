@@ -24,7 +24,10 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 {
     public virtual UILayer Layer { get; } = UILayer.NormalUI;
     public virtual bool IsOnly { get; } = false;//同一层只能单独存在
+    public virtual bool IsBlockControl { get; set; } = false;
+    private bool IsChangedBlockControl = false;
     protected abstract void OnCreate();
+
     protected virtual void OnShowPanel(params object[] allParams) { }
     protected virtual void OnHidePanel() { }
 
@@ -50,12 +53,23 @@ public abstract class Jyx2_UIBase : MonoBehaviour
         {
             (this as IUIAnimator).DoShowAnimator();
         }
+
+        if (IsBlockControl && !IsChangedBlockControl && !BattleManager.Instance.IsInBattle && LevelMaster.Instance.IsPlayerCanControl())
+        {
+            IsChangedBlockControl = true;
+            LevelMaster.Instance.SetPlayerCanController(false);
+        }
     }
 
     public void Hide() 
     {
         this.gameObject.SetActive(false);
         this.OnHidePanel();
+        if (IsBlockControl && IsChangedBlockControl)
+        {
+            IsChangedBlockControl = false;
+            LevelMaster.Instance.SetPlayerCanController(true);
+        }
     }
 
     public void BindListener(Button button, Action callback)

@@ -14,6 +14,7 @@ if AskJoin () == true then goto label0 end;
         Talk(44, "是．", "talkname44", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+        jyx2_ReplaceSceneObject("", "NPC/NanHaiEShen",""); 
         LightScence();
         Join(44);
 do return end;

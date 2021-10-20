@@ -53,11 +53,15 @@ public partial class InteractUIPanel : Jyx2_UIBase
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (LevelMaster.Instance?.IsPlayerCanControl() ?? true)
         {
-            if (LevelMaster.Instance.IsPlayerCanControl())
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 OnBtnClick(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Return))
+            {
+                OnBtnClick(1);
             }
         }
     }

@@ -167,7 +167,7 @@ namespace Jyx2
             InitNearBlocksCache();
         }
 
-        //返回附近六个格子之一
+        //返回附近四个格子之一
         public BattleBlockVector GetNearBlock(int x, int y, MoveDirection dir)
         {
             int newx = x;

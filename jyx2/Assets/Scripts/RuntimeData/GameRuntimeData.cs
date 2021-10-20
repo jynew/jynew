@@ -452,6 +452,20 @@ namespace Jyx2
             get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>("Items"); }
             set { SavePojo("Items", value); }
         }
+        
+        //物品使用人
+        public SaveableNumberDictionary<int> ItemUser
+        {
+            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(ItemUser)); }
+            set { SavePojo(nameof(ItemUser), value); }
+        }
+
+        //小宝商店物品，{ID，数量}
+        public SaveableNumberDictionary<int> ShopItems
+        {
+            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(ShopItems)); }
+            set { SavePojo(nameof(ShopItems), value); }
+        }
 
         public bool HaveItemBool(int itemId)
         {
@@ -488,6 +502,13 @@ namespace Jyx2
         public void AddItem(int id, int count)
         {
             AddItem(id.ToString(), count);
+        }
+
+        //是否获取过角色物品
+        public SaveableNumberDictionary<int> IsAdd
+        {
+            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(IsAdd)); }
+            set { SavePojo(nameof(IsAdd), value); }
         }
 
         public int GetItemCount(int id)

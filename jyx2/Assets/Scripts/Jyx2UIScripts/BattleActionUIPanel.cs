@@ -15,17 +15,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using Jyx2.Battle;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class BattleActionUIPanel:Jyx2_UIBase
+public partial class BattleActionUIPanel : Jyx2_UIBase
 {
+    public RoleInstance GetCurrentRole()
+    {
+        return m_currentRole;
+    }
+    
     RoleInstance m_currentRole;
-    BattleManager.BattleViewStates m_currentState;
+    //BattleManager.BattleViewStates m_currentState;
     SkillUIItem m_selectItem;
     bool m_chooseBtn = false;
     List<SkillUIItem> m_curItemList = new List<SkillUIItem>();
     ChildGoComponent childMgr;
+
+    private bool isSelectMove;
+    private Action<BattleLoop.ManualResult> callback;
+    private List<BattleBlockVector> moveRange;
+    private BattleFieldModel battleModel;
+    private BattleZhaoshiInstance currentZhaoshi;
+
     protected override void OnCreate()
     {
         InitTrans();
@@ -42,30 +56,111 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
         BindListener(Cancel_Button, OnCancelClick);
     }
 
+    //Jyx2_UIManager.Instance.ShowUI(nameof(BattleActionUIPanel),role, moveRange, moved, callback);
+    
+    
+    
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
         m_currentRole = allParams[0] as RoleInstance;
         if (m_currentRole == null)
             return;
-        if (allParams.Length > 1)
-            m_currentState = (BattleManager.BattleViewStates)allParams[1];
-        Cancel_Button.gameObject.SetActive(false);
+        /*if (allParams.Length > 1)
+            m_currentState = (BattleManager.BattleViewStates) allParams[1];*/
+
+        moveRange = (List<BattleBlockVector>) allParams[1];
+        isSelectMove = (bool) allParams[2];
+        callback = (Action<BattleLoop.ManualResult>) allParams[3];
+        battleModel = BattleManager.Instance.GetModel();
+
+        //Cancel_Button.gameObject.SetActive(false);
         SetActionBtnState();
         RefreshSkill();
-        SetPanelState();
+        //SetPanelState();
+        
+        if (isSelectMove)
+        {
+            BattleboxHelper.Instance.ShowBlocks(moveRange);
+        }
+        else
+        {
+            var zhaoshi = m_curItemList[0].GetSkill();
+            ShowAttackRangeSelector(zhaoshi);
+        }
+    }
+
+    //显示攻击范围选择指示器
+    void ShowAttackRangeSelector(BattleZhaoshiInstance zhaoshi)
+    {
+        currentZhaoshi = zhaoshi;
+
+        isSelectMove = false;
+        BattleboxHelper.Instance.HideAllBlocks();
+        var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, zhaoshi);
+        BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone);
+    }
+
+    void Update()
+    {
+        //寻找玩家点击的格子
+        var block = InputManager.Instance.GetMouseUpBattleBlock();
+        
+        //没有选择格子
+        if (block == null) return;
+        
+        //格子隐藏（原则上应该不会出现）
+        if (block.gameObject.activeSelf == false) return;
+        
+        //选择移动，但位置站人了
+        if (isSelectMove && battleModel.BlockHasRole(block.BattlePos.X, block.BattlePos.Y)) return;
+
+        //隐藏格子
+        BattleboxHelper.Instance.HideAllBlocks();
+        
+        //以下进行回调
+        
+        //移动
+        if (isSelectMove)
+        {
+            TryCallback(new BattleLoop.ManualResult() {movePos = block.BattlePos}); //移动
+        }
+        else  //选择攻击
+        {
+            AIResult rst = new AIResult();
+            rst.AttackX = block.BattlePos.X;
+            rst.AttackY = block.BattlePos.Y;
+            
+            rst.Zhaoshi = currentZhaoshi;
+
+            TryCallback(new BattleLoop.ManualResult() {aiResult = rst});
+        }
+    }
+
+    void TryCallback(BattleLoop.ManualResult ret)
+    {
+        callback?.Invoke(ret);
+    }
+
+    //点击了自动
+    public void OnAutoClicked()
+    {
+        TryCallback(new BattleLoop.ManualResult() {isAuto = true});
     }
 
     protected override void OnHidePanel()
     {
         base.OnHidePanel();
-        m_currentState = BattleManager.BattleViewStates.None;
+        //m_currentState = BattleManager.BattleViewStates.None;
         m_currentRole = null;
         m_selectItem = null;
         m_curItemList.Clear();
+        
+        //隐藏格子
+        BattleboxHelper.Instance.HideAllBlocks();
     }
 
-    void SetActionBtnState() 
+    void SetActionBtnState()
     {
         bool canPoison = m_currentRole.UsePoison > 0 && m_currentRole.Tili >= 30;
         UsePoison_Button.gameObject.SetActive(canPoison);
@@ -77,8 +172,8 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
         bool lastRole = BattleManager.Instance.GetModel().IsLastRole(m_currentRole);
         Wait_Button.gameObject.SetActive(!lastRole);
 
-        Cancel_Button.gameObject.SetActive(m_currentState == BattleManager.BattleViewStates.SelectMove
-            || m_currentState == BattleManager.BattleViewStates.SelectSkill);
+        /*Cancel_Button.gameObject.SetActive(m_currentState == BattleManager.BattleViewStates.SelectMove
+                                           || m_currentState == BattleManager.BattleViewStates.SelectSkill);*/
     }
 
     void RefreshSkill()
@@ -94,60 +189,12 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
             item.SetSelect(m_selectItem == item);
 
             Button btn = item.GetComponent<Button>();
-            BindListener(btn, () => 
-            {
-                OnItemClick(item);
-            });
+            BindListener(btn, () => { OnItemClick(item); });
             m_curItemList.Add(item);
         }
     }
 
-
-    void SetPanelState() 
-    {
-        if (m_currentState == BattleManager.BattleViewStates.SelectMove)
-        {
-            m_selectItem = null;
-            m_chooseBtn = false;
-        } else if (m_currentState == BattleManager.BattleViewStates.SelectSkill) 
-        {
-            if (BattleStateMechine.Instance.CurrentZhaoshi == null) 
-            {
-                if (m_curItemList.Count > 0)
-                {
-                    m_selectItem = m_curItemList[0];
-                    BattleStateMechine.Instance.BindSkill(m_selectItem.GetSkill());
-                }
-                m_chooseBtn = false;
-                UpdateSelect();
-                return;
-            }
-            for (int i = 0; i < m_curItemList.Count; i++)
-            {
-                if (m_curItemList[i].GetSkill().Key == BattleStateMechine.Instance.CurrentZhaoshi.Key) 
-                {
-                    m_selectItem = m_curItemList[i];
-                    break;
-                }
-            }
-            m_chooseBtn = (m_selectItem == null);
-            if (m_chooseBtn && m_curItemList.Count > 0)
-                m_selectItem = m_curItemList[0];
-        }
-        UpdateSelect();
-    }
-
-    void UpdateSelect() 
-    {
-        LeftActions_RectTransform.gameObject.SetActive(!m_chooseBtn);
-        Skills_RectTransform.gameObject.SetActive(!m_chooseBtn);
-        if (m_chooseBtn)
-            return;
-        if(m_selectItem)
-            m_selectItem.SetSelect(true);
-    }
-
-    void OnItemClick(SkillUIItem item) 
+    void OnItemClick(SkillUIItem item)
     {
         if (m_selectItem == item)
             return;
@@ -155,77 +202,40 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
             m_selectItem.SetSelect(false);
         m_selectItem = item;
         m_chooseBtn = false;
-        BattleStateMechine.Instance.BindSkill(m_selectItem.GetSkill());
 
         m_currentRole.SwitchAnimationToSkill(m_selectItem.GetSkill().Data);
-        CheckNeedChangeState();
+        ShowAttackRangeSelector(m_selectItem.GetSkill());
     }
 
-    void OnCancelClick() 
+    void OnCancelClick()
     {
-        if (m_currentState == BattleManager.BattleViewStates.SelectMove)
-        {
-            BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.SelectMove);
-            Debug.Log("cancel");
-        }
-        else if (m_currentState == BattleManager.BattleViewStates.SelectSkill) 
-        {
-            if (m_chooseBtn)
-            {
-                m_chooseBtn = false;
-                BattleStateMechine.Instance.BindSkill(m_selectItem.GetSkill());
-                UpdateSelect();
-                Debug.Log("cm");
-            }
-            else
-            {
-                BattleStateMechine.Instance.BindSkill(null);
-                BattleStateMechine.Instance.IsCanceling = true;
-                BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.SelectMove);
-                BattleStateMechine.Instance.ResetRolePos();//让角色回到原来位置
-            }
-        }
+        TryCallback(new BattleLoop.ManualResult() {isRevert = true});
     }
 
-    void OnMoveClick() 
+    void OnMoveClick()
     {
 
     }
 
-    void CheckNeedChangeState() 
-    {
-        if (m_currentState == BattleManager.BattleViewStates.SelectMove)
-        {
-            BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.SelectSkill);
-        }
-        else 
-        {
-            UpdateSelect();
-        }
-    }
-
-    void OnUsePoisonClick() 
+    void OnUsePoisonClick()
     {
         var zhaoshi = new PoisonZhaoshiInstance(m_currentRole.UsePoison);
         m_chooseBtn = true;
-        BattleStateMechine.Instance.BindSkill(zhaoshi);
-        CheckNeedChangeState();
+        ShowAttackRangeSelector(zhaoshi);
     }
 
-    void OnDepoisonClick() 
+    void OnDepoisonClick()
     {
         var zhaoshi = new DePoisonZhaoshiInstance(m_currentRole.DePoison);
         m_chooseBtn = true;
-        BattleStateMechine.Instance.BindSkill(zhaoshi);
-        CheckNeedChangeState();
+        ShowAttackRangeSelector(zhaoshi);
     }
 
-    void OnHealClick() 
+    void OnHealClick()
     {
         var zhaoshi = new HealZhaoshiInstance(m_currentRole.Heal);
         m_chooseBtn = true;
-        BattleStateMechine.Instance.BindSkill(zhaoshi);
-        CheckNeedChangeState();
+        ShowAttackRangeSelector(zhaoshi);
     }
 
     void OnUseItemClick()
@@ -243,31 +253,26 @@ public partial class BattleActionUIPanel:Jyx2_UIBase
             {
                 if (m_currentRole.CanUseItem(itemId))
                 {
-                    BattleStateMechine.Instance.BindItem(item);
-                    BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.UseItem);
+                    TryCallback(new BattleLoop.ManualResult(){aiResult = new AIResult(){Item = item}});
                 }
             }
             else if (item.ItemType == 4) //使用暗器逻辑
             {
                 var zhaoshi = new AnqiZhaoshiInstance(m_currentRole.Anqi, item);
                 m_chooseBtn = true;
-                BattleStateMechine.Instance.BindSkill(zhaoshi);
-                CheckNeedChangeState();
+                ShowAttackRangeSelector(zhaoshi);
             }
 
         }), (Func<Jyx2Item, bool>) Filter);
     }
 
-    void OnWaitClick() 
+    void OnWaitClick()
     {
-        BattleManager.Instance.GetModel().ActWait(m_currentRole);
-        BattleStateMechine.Instance.ResetRolePos();
-        BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.WaitingForNextActiveBattleRole);
+        TryCallback(new BattleLoop.ManualResult() {isWait = true});
     }
 
-    void OnRestClick() 
+    void OnRestClick()
     {
-        m_currentRole.OnRest();
-        BattleStateMechine.Instance.SwitchState(BattleManager.BattleViewStates.WaitingForNextActiveBattleRole);
+        TryCallback(new BattleLoop.ManualResult() {aiResult = new AIResult() {IsRest = true}});
     }
 }

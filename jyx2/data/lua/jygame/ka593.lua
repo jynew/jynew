@@ -11,6 +11,7 @@ if InTeam(76) == false then goto label0 end;
 ::label2::
             DarkScence();
             ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+            jyx2_ReplaceSceneObject("", "NPC/段誉", "");--段誉加入队伍
             LightScence();
             Join(53);
             do return end;
