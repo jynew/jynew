@@ -9,7 +9,7 @@ if UseItem(137) == true then goto label0 end;
         Talk(0, "苗大侠，我这就帮你敷上解药．", "talkname0", 1);
         DarkScence();
         ModifyEvent(-2, -2, -2, -2, 33, -1, -1, 5216, 5216, 5216, -2, -2, -2);--by fanyu 启动脚本33，改变贴图 场景24-编号8
-		jyx2_SwitchRoleAnimation("NPC/miaorenfeng1","Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
+		jyx2_SwitchRoleAnimation("NPC/miaorenfeng","Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
         ModifyEvent(-2, 9, 0, -2, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         LightScence();
         Talk(0, "苗大侠，你觉得怎么样．", "talkname0", 1);
