@@ -305,10 +305,7 @@ namespace Jyx2
                     //卸下角色身上的装备
                     role.UnequipItem(role.GetWeapon());
                     role.UnequipItem(role.GetArmor());
-                    if (role.GetXiulianItem() != null)
-                    {
-                        role.GetXiulianItem().User = -1;
-                    }
+                    role.UnequipItem(role.GetXiulianItem());
                     role.Weapon = -1;
                     role.Armor = -1;
                     role.Xiulianwupin = -1;
