@@ -749,6 +749,7 @@ namespace Jyx2
                 var item = makeItemList[index];
                 runtime.AddItem(item.Id, item.Count);
                 runtime.AddItem(practiseItem.GenerateItemNeedCost, -1);
+                ExpForMakeItem = 0;
                 return $"{GetXiulianItem().Name} 炼出 {ConfigTable.Get<Jyx2Item>(item.Id.ToString()).Name}×{item.Count}";
             }
 
@@ -849,22 +850,7 @@ namespace Jyx2
 
             this.Pinde -= item.AddPinde;
             this.AttackPoison -= item.AttackPoison;
-            if (item.ChangeMPType == 2)
-            {
-                this.MpType = 2;
-            }
-
-            if (item.AttackFreq == 1)
-            {
-                this.Zuoyouhubo = 1;
-            }
-
-            int need_item_exp = GetFinishedExpForItem(item);
-            if (this.ExpForItem >= need_item_exp)
-            {
-                this.LearnMagic(item.Wugong);
-                this.ExpForItem -= need_item_exp;
-            }
+            this.ExpForItem = 0;
 
             this.Limit();
         }
