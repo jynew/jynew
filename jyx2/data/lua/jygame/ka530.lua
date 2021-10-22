@@ -67,6 +67,7 @@ if InTeam(51) == false then goto label0 end;
 											jyx2_ReplaceSceneObject("", "NPC/王语嫣", "");--王语嫣离开
                                             ModifyEvent(52, 2, 1, 1, 495, -1, -1, 6298, 6298, 6298, -2, -2, -2);--by fanyu 启动495脚本，改变贴图(王语嫣) 场景52-2
                                             jyx2_ReplaceSceneObject("52", "NPC/王语嫣", "1");--王语嫣出现
+                                            LightScence();
                                             do return end;
 ::label9::
                                             Talk(53, "王姑娘，你别烦恼，我去劝劝你表哥，让他对你好一点．．．．．", "talkname53", 0);
