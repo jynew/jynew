@@ -60,7 +60,6 @@ namespace Jyx2
             _instance.SaveIndex = 100; // 不重要
             var runtime = _instance;
 
-            runtime.TeamLevel = 1;
             _instance.InitAllRole();
 
             var player = runtime.GetRole(0);
@@ -226,7 +225,7 @@ namespace Jyx2
                 mapName=LevelMaster.Instance.GetCurrentGameMap().GetShowName();
             }
 
-            return $"{TeamLevel}级,{mapName},队伍:{Team.Count}人";
+            return $"{Player.Level}级,{mapName},队伍:{Team.Count}人";
         }
 
         #endregion
