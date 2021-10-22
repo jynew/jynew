@@ -33,7 +33,6 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     public Button m_CloseButton;
 
     private GraphicSetting _graphicSetting;
-
     // Start is called before the first frame update
     void Start()
     {
