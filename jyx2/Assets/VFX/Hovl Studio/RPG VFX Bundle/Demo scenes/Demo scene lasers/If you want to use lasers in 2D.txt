@@ -1,0 +1,7 @@
+If you want to use lasers in 2D you need to chande 2 scripts. 
+
+The places need to be changed are marked with Ñaps in the scripts!
+Examle:
+RaycastHit hit; //DELETE THIS IF YOU WANT TO USE LASERS IN 2D
+//ADD THIS IF YOU WANT TO USE LASERS IN 2D: RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward, MaxLength);       
+if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, MaxLength))//CHANGE THIS IF YOU WANT TO USE LASERRS IN 2D: if (hit.collider != null)
