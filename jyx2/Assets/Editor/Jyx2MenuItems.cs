@@ -13,14 +13,14 @@ using UnityToolbarExtender.Examples;
 
 namespace Jyx2Editor
 {
-    public class Jyx2MenuItems 
+    public class Jyx2MenuItems
     {
         [MenuItem("项目快速导航/技能编辑器")]
         private static void OpenSkillEditor()
         {
             SceneHelper.StartScene("Assets/Jyx2BattleScene/Jyx2SkillEditor.unity");
         }
-        
+
         [MenuItem("项目快速导航/全模型预览")]
         private static void OpenAllModels()
         {
@@ -32,25 +32,25 @@ namespace Jyx2Editor
         {
             NavigateToPath("Assets/BuildSource/EventsGraph/README.txt");
         }
-        
+
         [MenuItem("项目快速导航/游戏事件脚本/lua脚本")]
         private static void OpenLuaMenu()
         {
             EditorUtility.RevealInFinder("data/lua/jygame");
         }
-        
+
         [MenuItem("项目快速导航/资源/角色头像")]
         private static void OpenRoleHeadsMenu()
         {
             NavigateToPath("Assets/BuildSource/head/0.png");
         }
-        
+
         [MenuItem("项目快速导航/资源/角色模型(FBX)")]
         private static void OpenRoleModelsMenu()
         {
             NavigateToPath("Assets/3D/Jyx2RoleModels/Models/README.txt");
         }
-        
+
         [MenuItem("项目快速导航/资源/角色预设(Prefabs)")]
         private static void OpenRolePrefabsMenu()
         {
@@ -62,25 +62,25 @@ namespace Jyx2Editor
         {
             NavigateToPath("Assets/BuildSource/Animations");
         }
-        
+
         [MenuItem("项目快速导航/资源/角色动作控制器(AnimationController)")]
         private static void OpenRoleAnimationControllers()
         {
             NavigateToPath("Assets/BuildSource/AnimationControllers");
         }
-        
+
         [MenuItem("项目快速导航/资源/道具图标")]
         private static void OpenItemsMenu()
         {
             NavigateToPath("Assets/BuildSource/Jyx2Items/0.png");
         }
-        
+
         [MenuItem("项目快速导航/资源/音乐")]
         private static void OpenMusicMenu()
         {
             NavigateToPath("Assets/BuildSource/Musics/0.mp3");
         }
-        
+
         [MenuItem("项目快速导航/资源/音效")]
         private static void OpenWaveMenu()
         {
@@ -101,14 +101,16 @@ namespace Jyx2Editor
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "jyx2Win64Build");
 
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneWindows64);
-        
+
 
             if (string.IsNullOrEmpty(path))
                 return;
             
+            RmStreamAssetFolder();
+
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
-            
+
             //强制GENDATA
             GenDataMenuCmd.GenerateDataForce();
 
@@ -129,9 +131,10 @@ namespace Jyx2Editor
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
-        
-        
-        static string[] GetScenePaths() {
+
+
+        static string[] GetScenePaths()
+        {
             /*string[] scenes = new string[EditorBuildSettings.scenes.Length];
             for(int i = 0; i < scenes.Length; i++) {
                 scenes[i] = EditorBuildSettings.scenes[i].path;
@@ -140,23 +143,25 @@ namespace Jyx2Editor
 
             return new string[] {"Assets/Jyx2Scenes/0_GameStart.unity"};
         }
-        
+
         [MenuItem("一键打包/Android")]
         private static void BuildAndroid()
         {
-            if (!EditorUtility.DisplayDialog("重要提示", 
+            if (!EditorUtility.DisplayDialog("重要提示",
                 "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
                 return;
-            
+
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
 
             try
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
-                
+
                 if (string.IsNullOrEmpty(path))
                     return;
+                
+                RmStreamAssetFolder();
 
                 //生成luaWrap
                 //Generator.ClearAll();
@@ -199,23 +204,25 @@ namespace Jyx2Editor
                 Debug.LogError(e.StackTrace);
             }
         }
-        
+
         [MenuItem("一键打包/MacOS")]
         private static void BuildMacOS()
         {
-            if (!EditorUtility.DisplayDialog("重要提示", 
+            if (!EditorUtility.DisplayDialog("重要提示",
                 "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
                 return;
-            
+
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
 
             try
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneOSX);
-                
+
                 if (string.IsNullOrEmpty(path))
                     return;
+                
+                RmStreamAssetFolder();
 
                 //生成luaWrap
                 //Generator.ClearAll();
@@ -249,6 +256,14 @@ namespace Jyx2Editor
             {
                 EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
                 Debug.LogError(e.StackTrace);
+            }
+        }
+
+        public static void RmStreamAssetFolder()
+        {
+            if (Directory.Exists(Application.streamingAssetsPath))
+            {
+                Directory.Delete(Application.streamingAssetsPath, true);
             }
         }
     }

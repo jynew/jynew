@@ -171,6 +171,8 @@ namespace Jyx2Editor.BuildTool
             }
 
             AssetDatabase.SaveAssets();
+            
+            Jyx2MenuItems.RmStreamAssetFolder();
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
