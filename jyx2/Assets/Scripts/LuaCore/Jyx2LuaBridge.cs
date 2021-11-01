@@ -481,9 +481,15 @@ namespace Jyx2
         }
 
         //增加道德
-        public static void AddEthics(int add)
+        public static void AddEthics(int value)
         {
-            runtime.Player.Pinde = HSFrameWork.Common.Tools.Limit(runtime.Player.Pinde + add, 0, 100);
+            RunInMainThread(() =>
+            {
+                runtime.Player.Pinde = HSFrameWork.Common.Tools.Limit(runtime.Player.Pinde + value, 0, 100);
+               /* storyEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "道德:" + Math.Abs(value));*/
+                Next();
+            });
+            Wait();
         }
 
         public static void ChangeScencePic(int p1,int p2,int p3,int p4)
