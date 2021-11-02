@@ -623,7 +623,7 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
                 r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
-                //storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
+                storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
             });
         }
 
@@ -636,11 +636,11 @@ namespace Jyx2
                 var v0 = r.MaxMp;
                 r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 r.Mp = HSFrameWork.Common.Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
-                //storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
+                storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
             });
         }
 
-        //攻击力
+        //武力（原始属性）
         public static void AddAttack(int roleId, int value)
         {
             RunInMainThread(() =>
@@ -648,11 +648,11 @@ namespace Jyx2
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
                 r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
-                //storyEngine.DisplayPopInfo(r.Name + "攻击力增加" + (r.Attack - v0));
+                storyEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
             });
         }
 
-        //生命值
+        //生命
         public static void AddHp(int roleId, int value)
         {
             RunInMainThread(() =>
@@ -661,7 +661,7 @@ namespace Jyx2
                 var v0 = r.MaxHp;
                 r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 r.Hp = HSFrameWork.Common.Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
-                //storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
+                storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
             });
         }
 
@@ -1010,7 +1010,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>{
                 runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
-                storyEngine.DisplayPopInfo("增加声望:" + value);
+            /*    storyEngine.DisplayPopInfo("增加声望:" + value);*/
                 Next();
             });
             Wait();
