@@ -624,7 +624,9 @@ namespace Jyx2
                 var v0 = r.Qinggong;
                 r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
+                Next();
             });
+            Wait();
         }
 
         //内力
@@ -637,7 +639,9 @@ namespace Jyx2
                 r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 r.Mp = HSFrameWork.Common.Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
+                Next();
             });
+            Wait();
         }
 
         //武力（原始属性）
@@ -649,7 +653,9 @@ namespace Jyx2
                 var v0 = r.Attack;
                 r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
+                Next();
             });
+            Wait();
         }
 
         //生命
@@ -662,7 +668,9 @@ namespace Jyx2
                 r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
                 r.Hp = HSFrameWork.Common.Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
+                Next();
             });
+            Wait();
         }
 
         //设置角色内力属性
