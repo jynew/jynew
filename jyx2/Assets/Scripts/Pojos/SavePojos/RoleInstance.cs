@@ -1202,7 +1202,6 @@ namespace Jyx2
             Tili = Tools.Limit(Tili + 5, 0, GameConst.MaxTili);
             int tmpHp = Hp;
             Hp = Tools.Limit((int) (Hp + MaxHp * 0.05), 0, MaxHp);
-            View?.MarkHpBarIsDirty();
 
             int tmpMp = Mp;
             Mp = Tools.Limit((int) (Mp + MaxMp * 0.05), 0, MaxMp);
