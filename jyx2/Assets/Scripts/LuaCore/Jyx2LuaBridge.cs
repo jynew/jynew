@@ -268,13 +268,7 @@ namespace Jyx2
         public static void Dead()
         {
             RunInMainThread(() => {
-                
-                //TODO..
-                Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
-                MessageBox.Create("GAME OVER", () =>
-                {
-                    LevelMaster.Instance.QuitToMainMenu();
-                });
+                Jyx2_UIManager.Instance.ShowUI(nameof(GameOver));
             });
         }
 
