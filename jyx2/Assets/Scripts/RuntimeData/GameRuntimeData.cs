@@ -66,7 +66,7 @@ namespace Jyx2
             //主角入当前队伍
             runtime.Team.Add(runtime.GetRole(0));
 
-#if JYX2_TEST
+#if UNITY_EDITOR
             //可自由实现新的语法
             var content = File.ReadAllLines("CreateTeamDebug.txt");
             
@@ -96,6 +96,24 @@ namespace Jyx2
                     {
                         int role = int.Parse(roleId);
                         GameRuntimeData.Instance.JoinRoleToTeam(role);
+                    }
+                }else if (line.StartsWith("items")) //初始物品
+                {
+                    var tmp = line.Replace("items=", "").Split('|');
+                    foreach (var item in tmp)
+                    {
+                        int itemId = int.Parse(item.Split(',')[0]);
+                        int count = int.Parse(item.Split(',')[1]);
+                        GameRuntimeData.Instance.AddItem(itemId, count);
+                    }
+                }else if (line.StartsWith("props")) //初始属性
+                {
+                    var tmp = line.Replace("props=", "").Split('|');
+                    foreach (var prop in tmp)
+                    {
+                        string name = prop.Split(',')[0];
+                        int value = int.Parse(prop.Split(',')[1]);
+                        player.GetType().GetProperty(name).SetValue(player, value);
                     }
                 }
             }

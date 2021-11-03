@@ -72,7 +72,7 @@ public class BigMapZone : MonoBehaviour
     //檢測是否可以進入地圖
     bool CheckCanEnterMap(string mapKey) 
     {
-#if JYX2_TEST
+#if UNITY_EDITOR
         return true;
 #endif
 

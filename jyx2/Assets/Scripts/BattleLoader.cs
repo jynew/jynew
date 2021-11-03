@@ -96,22 +96,6 @@ public class BattleLoader : MonoBehaviour
             GameRuntimeData.CreateNew();
         }
 
-
-#if JYX2_TEST
-        //临时用于测试
-        var player = runtime.Team[0];
-        player.MaxHp = 999;
-        player.MaxMp = 999;
-        player.Zuoyouhubo = 1;
-        player.Qinggong = 100;
-
-        player.Attack = 50;
-        player.Recover();
-
-        runtime.AddItem(3, 100);//小还丹
-#endif
-
-
         m_Roles = new List<BattlePosRole>();
         Jyx2Battle battle = ConfigTable.Get<Jyx2Battle>(id);
         if (battle == null)
