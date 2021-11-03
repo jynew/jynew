@@ -1193,6 +1193,7 @@ public class Reporter : MonoBehaviour
 
 			try {
 				gameObject.SendMessage("OnHideReporter");
+				isShowReporterGUI = false;
 			}
 			catch (System.Exception e) {
 				Debug.LogException(e);
@@ -1879,6 +1880,9 @@ public class Reporter : MonoBehaviour
 		//if (!show && isGestureDone()) {
 		if (!show && isShowReporterGUI) {
 			doShow();
+		}else if (show && !isShowReporterGUI)
+		{
+			show = false;
 		}
 
 
