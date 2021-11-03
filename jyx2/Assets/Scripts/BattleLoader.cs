@@ -97,7 +97,7 @@ public class BattleLoader : MonoBehaviour
         }
 
 
-#if JYX2_TEST
+#if UNITY_EDITOR
         //临时用于测试
         var player = runtime.Team[0];
         player.MaxHp = 999;
