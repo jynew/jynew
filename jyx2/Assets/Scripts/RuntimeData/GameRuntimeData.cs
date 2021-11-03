@@ -106,6 +106,15 @@ namespace Jyx2
                         int count = int.Parse(item.Split(',')[1]);
                         GameRuntimeData.Instance.AddItem(itemId, count);
                     }
+                }else if (line.StartsWith("props")) //初始属性
+                {
+                    var tmp = line.Replace("props=", "").Split('|');
+                    foreach (var prop in tmp)
+                    {
+                        string name = prop.Split(',')[0];
+                        int value = int.Parse(prop.Split(',')[1]);
+                        player.GetType().GetProperty(name).SetValue(player, value);
+                    }
                 }
             }
 
