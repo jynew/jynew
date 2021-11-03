@@ -261,6 +261,7 @@ namespace Jyx2Editor
 
         public static void RmStreamAssetFolder()
         {
+            return;
             if (Directory.Exists(Application.streamingAssetsPath))
             {
                 Directory.Delete(Application.streamingAssetsPath, true);
