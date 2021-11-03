@@ -672,5 +672,17 @@ namespace Jyx2
         }
 
         #endregion
+
+        private DateTime _startDate;
+        public DateTime startDate{
+            get {
+                if (_startDate.Year == 1)
+                {
+                    _startDate = DateTime.Now;
+                }
+                return _startDate;
+            }
+            set { _startDate = value; }
+        }
     }
 }

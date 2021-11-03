@@ -20,6 +20,8 @@ public partial class SavePanel
 	private Text Main_Text;
 	private Button ImButton_Button;
 	private Button ExButton_Button;
+	[Header("标识是否在死亡页面")] 
+	public bool IsInGameOverPage = false;
 
 	public void InitTrans()
 	{

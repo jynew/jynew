@@ -36,7 +36,7 @@ public partial class SavePanel:Jyx2_UIBase
     private Action closeCallback;
 
     private int current_selection = -1;
-    
+
     protected override void OnCreate()
     {
         InitTrans();
@@ -47,7 +47,11 @@ public partial class SavePanel:Jyx2_UIBase
     
     private void OnEnable()
     {
-	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
+	    if (!IsInGameOverPage)
+	    {
+		    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
+	    }
+
 	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
 	    {
 		    if(current_selection>0) ChangeSelection(-1);
@@ -72,6 +76,15 @@ public partial class SavePanel:Jyx2_UIBase
 	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
 	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
 	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
+    }
+
+    public void Show()
+    {
+	    InitTrans();
+	    this.OnShowPanel(new Action<int>((index) =>
+	    {
+		    StoryEngine.DoLoadGame(index);
+	    }),"");
     }
 
     protected override void OnShowPanel(params object[] allParams)
@@ -151,14 +164,19 @@ public partial class SavePanel:Jyx2_UIBase
 
     private void OnBackClick()
     {
-        Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
-        closeCallback?.Invoke();
+	    if (!IsInGameOverPage)
+	    {
+		    Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
+		    closeCallback?.Invoke();
+	    }
     }
 
     private void OnImportClick()
     {
-		#if UNITY_ANDROID
-			for(int i=0;i<3;i++){
+	    if (!IsInGameOverPage)
+	    {
+#if UNITY_ANDROID
+			for(int i = 0;i<3;i++){
 				string fileName = string.Format(GameRuntimeData.ARCHIVE_FILE_NAME, i);
 				string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR;
 				string sPath = sFolderPath + "/" + fileName;
@@ -175,39 +193,57 @@ public partial class SavePanel:Jyx2_UIBase
 			//	PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + SaveIndex, summaryInfo);
 			//	RefreshSave();
 			//});
-		#else
-			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory, delegate (bool didSelectPath, string savePath) {
-				if (didSelectPath) {
-					string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR+"/";
-					int SaveIndex=-1;
-					if (File.Exists(savePath)&&savePath.Contains("archive_")&&savePath.Contains(".dat"))
-					{
-						var lines=savePath.Split('\\');
-						File.Copy(savePath,sFolderPath+lines[lines.Length-1]);
-						try{
-							SaveIndex=int.Parse(savePath.Substring(savePath.Length-5,1));
-						}catch{}
-					}
-					if(SaveIndex>-1){
-						PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX +SaveIndex, "import  save data: "+SaveIndex);
-					}
-				}
-			});
-		#endif
-		RefreshSave();
+#else
+		    NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
+			    delegate(bool didSelectPath, string savePath)
+			    {
+				    if (didSelectPath)
+				    {
+					    string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR +
+					                         "/";
+					    int SaveIndex = -1;
+					    if (File.Exists(savePath) && savePath.Contains("archive_") && savePath.Contains(".dat"))
+					    {
+						    var lines = savePath.Split('\\');
+						    File.Copy(savePath, sFolderPath + lines[lines.Length - 1]);
+						    try
+						    {
+							    SaveIndex = int.Parse(savePath.Substring(savePath.Length - 5, 1));
+						    }
+						    catch
+						    {
+						    }
+					    }
+
+					    if (SaveIndex > -1)
+					    {
+						    PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + SaveIndex,
+							    "import  save data: " + SaveIndex);
+					    }
+				    }
+			    });
+#endif
+		    RefreshSave();
+	    }
     }
 	
     private void OnExportClick()
     {
-		#if UNITY_ANDROID
-			transform.Find("FileIO/Export/Text").GetComponent<Text>().text="暂不支持";
-		#else
-			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory, delegate (bool didSelectPath, string savePath) {
-				if (didSelectPath) {
-					ExportSaveData(savePath);
-				}
-			});
-		#endif
+	    if (!IsInGameOverPage)
+	    {
+#if UNITY_ANDROID
+			transform.Find("FileIO/Export/Text").GetComponent<Text>().text = "暂不支持";
+#else
+		    NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
+			    delegate(bool didSelectPath, string savePath)
+			    {
+				    if (didSelectPath)
+				    {
+					    ExportSaveData(savePath);
+				    }
+			    });
+#endif
+	    }
     }
 
 	private FileToSave GetFileToSave() 
