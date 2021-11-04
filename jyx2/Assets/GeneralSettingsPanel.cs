@@ -50,7 +50,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         Save();
         _graphicSetting.Save();
         _graphicSetting.Execute();
-        gameObject.SetActive(false);
         Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
     }
 
