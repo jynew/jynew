@@ -69,6 +69,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void InitResolutionDropdown()
     {
+#if !UNITY_ANDROID
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -98,17 +99,19 @@ public class GeneralSettingsPanel : Jyx2_UIBase
             resolutionDropdown.value = currentResolutionIndex;
         }
         resolutionDropdown.RefreshShownValue();
-
+#endif
     }
 
     public void InitWindowDropdown()
     {
+#if !UNITY_ANDROID
         if(PlayerPrefs.HasKey("fullscreen"))
         {
             Screen.fullScreen = PlayerPrefs.GetInt("fullscreen") == 1;
             windowDropdown.value = PlayerPrefs.GetInt("fullscreen");
             windowDropdown.RefreshShownValue();
         }
+#endif
     }
 
     public void InitDifficultyDropdown()
