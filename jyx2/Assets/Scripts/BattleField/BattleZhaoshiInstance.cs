@@ -95,6 +95,9 @@ namespace Jyx2
             }else if(damageType == 4)//医疗
             {
                 role.Tili = Tools.Limit(role.Tili - 5, 0, 100);
+            }else if(damageType == 5)//暗器
+            {
+                role.Tili = Tools.Limit(role.Tili - 5, 0, 100);
             }
             
             //暗器，扣除道具
