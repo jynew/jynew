@@ -525,7 +525,13 @@ public class AIManager
         }
         else if (magic.DamageType == 5) //暗器
         {
-            rst.damage = hiddenWeapon(r1, r2, skill);
+            var anqi = skill.Anqi;
+            rst.damage = hiddenWeapon(r1, r2, anqi);
+            //带毒
+            if(anqi.ChangePoisonLevel > 0)
+            {
+                rst.poison = usePoison(r1, r2);
+            }
             return rst;
         }
         return null;
@@ -572,9 +578,9 @@ public class AIManager
 
     //暗器
     //返回值为一正数
-    int hiddenWeapon(RoleInstance r1, RoleInstance r2, BattleZhaoshiInstance skill)
+    int hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2Item anqi)
     {
-        int v = r1.Anqi - skill.Anqi.AddHp;
+        int v = r1.Anqi - anqi.AddHp;
         int dis = r1.Pos.GetDistance(r2.Pos);
         v = (int)(v / Math.Exp((dis - 1) / 10));
         v += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
