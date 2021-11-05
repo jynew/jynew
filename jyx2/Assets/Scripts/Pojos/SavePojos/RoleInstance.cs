@@ -661,8 +661,8 @@ namespace Jyx2
                 }
 
                 //上面的判断未确定则进入下面的判断链
-                return testAttr(this.Attack, item.ConditionAttack)
-                       && testAttr(this.Qinggong, item.ConditionQinggong)
+                return testAttr(this.Attack - GetWeaponProperty("Attack") - GetArmorProperty("Attack"), item.ConditionAttack)
+                       && testAttr(this.Qinggong - GetWeaponProperty("Qinggong") - GetArmorProperty("Qinggong"), item.ConditionQinggong)
                        && testAttr(this.Heal, item.ConditionHeal)
                        && testAttr(this.UsePoison, item.ConditionPoison)
                        && testAttr(this.DePoison, item.ConditionDePoison)
@@ -851,8 +851,6 @@ namespace Jyx2
             this.Pinde -= item.AddPinde;
             this.AttackPoison -= item.AttackPoison;
             this.ExpForItem = 0;
-
-            this.Limit();
         }
 
         public bool CanFinishedItem()
@@ -1258,5 +1256,15 @@ namespace Jyx2
 		{
 			return Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
 		}
+
+        int GetWeaponProperty(string propertyName)
+        {
+            return Weapon != -1 ? (int)GetWeapon().GetType().GetField(propertyName).GetValue(GetWeapon()) : 0;
+        }
+
+        int GetArmorProperty(string propertyName)
+        {
+            return Armor != -1 ? (int)GetArmor().GetType().GetField(propertyName).GetValue(GetArmor()) : 0;
+        }
     }
 }
