@@ -160,13 +160,15 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                     if (item.User != -1)
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
-                        roleInstance.UnequipItem(roleInstance.GetXiulianItem());
+                        item.User = -1;
                         roleInstance.Xiulianwupin = -1;
                     }
 
-                    selectRole.UnequipItem(selectRole.GetXiulianItem());
+                    if (selectRole.GetXiulianItem() != null)
+                    {
+                        selectRole.GetXiulianItem().User = -1;
+                    }
                     selectRole.Xiulianwupin = id;
-                    selectRole.UseItem(selectRole.GetXiulianItem());
                     item.User = selectRole.GetJyx2RoleId();
                 }
                 //药品
