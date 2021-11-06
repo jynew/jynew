@@ -198,10 +198,7 @@ public class LevelMaster : MonoBehaviour
 
         //刷新界面控制器
         UpdateMobileControllerUI();
-
-        GraphicSetting.GlobalSetting.Execute();
-
-
+        
         //尝试绑定主角
         TryBindPlayer();
 
