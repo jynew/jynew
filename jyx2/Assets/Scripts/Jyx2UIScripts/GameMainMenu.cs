@@ -99,15 +99,20 @@ public partial class GameMainMenu : Jyx2_UIBase {
         });
         GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
         {
-            if (main_menu_index == NewGameIndex)
+            if (m_panelType == PanelType.Home)
             {
-                OnNewGameClicked();
-            }else if (main_menu_index == LoadGameIndex)
-            {
-                OnLoadGameClicked();
-            }else if (main_menu_index == QuitGameIndex)
-            {
-                OnQuitGameClicked();
+                if (main_menu_index == NewGameIndex)
+                {
+                    OnNewGameClicked();
+                }
+                else if (main_menu_index == LoadGameIndex)
+                {
+                    OnLoadGameClicked();
+                }
+                else if (main_menu_index == QuitGameIndex)
+                {
+                    OnQuitGameClicked();
+                }
             }
         });
         GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
