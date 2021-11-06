@@ -1440,7 +1440,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                List<string> selectionContent = new List<string>() { "是", "否" };
+                List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
                 storyEngine.BlockPlayerControl = true;
                 Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "主角", selectMessage, selectionContent, new Action<int>((index) =>
                 {
