@@ -38,7 +38,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     {
         _graphicSetting = GraphicSetting.GlobalSetting;
 
-        InitUi();
+        InitUI();
 
         m_FogToggle.onValueChanged.AddListener(SetFog);
         m_PostToggle.onValueChanged.AddListener(SetPostProcess);
@@ -52,6 +52,8 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_ShadowShowLevelDropdown.onValueChanged.AddListener(DropdownShadowShowLevel);
 
         m_CloseButton.onClick.AddListener(Close);
+        
+        
     }
 
     void Close()
@@ -61,7 +63,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
     }
     
-    public void InitUi()
+    public void InitUI()
     {
         m_FogToggle.isOn = _graphicSetting.HasFog == 1;
         m_PostToggle.isOn = _graphicSetting.HasPost == 1;

@@ -19,8 +19,10 @@ using HSFrameWork.ConfigTable;
 using HanSquirrel.ResourceManager;
 using UniRx;
 using System;
+using System.Windows.Forms;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
+using Application = UnityEngine.Application;
 
 public class LevelMaster : MonoBehaviour
 {
@@ -162,6 +164,7 @@ public class LevelMaster : MonoBehaviour
         }
         
 
+
         var gameMap = GetCurrentGameMap();
         if (gameMap != null)
         {
@@ -198,13 +201,17 @@ public class LevelMaster : MonoBehaviour
 
         //刷新界面控制器
         UpdateMobileControllerUI();
-
-        GraphicSetting.GlobalSetting.Execute();
-
-
+        
         //尝试绑定主角
         TryBindPlayer();
 
+        //大地图不能使用跟随相机（目前好像比较卡？）
+        if (gameMap != null && !gameMap.IsWorldMap)
+        {
+            //初始化跟随相机
+            GameViewPortManager.Instance.InitForLevel(_player);
+        }
+   
         //刷新游戏事件
         RefreshGameEvents();        
         
@@ -461,11 +468,19 @@ public class LevelMaster : MonoBehaviour
         if (_player == null)
             return;
 
-        //鼠标点击控制
-        OnClickControlPlayer();
+        if (GameViewPortManager.Instance.GetViewportType() == GameViewPortManager.ViewportType.Topdown || IsInWorldMap)
+        {
+            //鼠标点击控制
+            OnClickControlPlayer();
 
-        //手动操作
-        OnManualControlPlayer();
+            //手动操作
+            OnManualControlPlayer();
+        }
+        else
+        {
+            //手动操作跟随视角
+            OnManualControlPlayerFollowViewport();
+        }
     }
 
     bool _CanController = true;
@@ -603,10 +618,111 @@ public class LevelMaster : MonoBehaviour
         }
     }
 
+    
+    //手动控制跟随相机
+    void OnManualControlPlayerFollowViewport()
+    {
+        if (!_CanController || _forceDisable)//掉本调用自动寻路的时候 不能手动控制
+            return;
+
+        _playerNavAgent.updateRotation = false;
+        
+        if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+            OnManuelMove2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }
+        else if(m_Joystick.axisX.axisValue!=0 || m_Joystick.axisY.axisValue != 0)
+        {
+            OnManuelMove2(-m_Joystick.axisX.axisValue, m_Joystick.axisY.axisValue);
+        }
+        else
+        {
+            SetPlayerSpeed(0);
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            _player.transform.RotateAround(_player.transform.position, Vector3.up, -5);
+        }
+        
+        if (Input.GetKey(KeyCode.E))
+        {
+            _player.transform.RotateAround(_player.transform.position, Vector3.up, 5);
+        }
+
+        //鼠标滑屏
+        if ((Input.GetMouseButton(0) || Input.GetMouseButton(1)) && !UnityTools.IsPointerOverUIObject())
+        {
+            _player.transform.RotateAround(_player.transform.position, Vector3.up, 15 * Input.GetAxis("Mouse X"));
+        }
+        
+        //鼠标滚轮
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            var vcam = GameViewPortManager.Instance.GetFollowVCam();
+            if (vcam != null)
+            {
+                var c = vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+                c.ShoulderOffset = new Vector3(c.ShoulderOffset.x, c.ShoulderOffset.y, c.ShoulderOffset.z + Input.GetAxis("Mouse ScrollWheel") * 10);
+            }
+        }
+    }
+    
+    void OnManuelMove2(float h, float v)
+    {
+        _playerNavAgent.updateRotation = false;
+
+        Vector3 forward = Vector3.zero;
+        //尝试只使用摄像机的朝向来操作角色移动
+        forward = Camera.main.transform.forward;//m_Player.position - Camera.main.transform.position;
+        forward.y = 0;
+        forward.Normalize();
+
+        Vector3 right = RotateRound(forward, Vector3.zero, Vector3.up, 90);
+        right.y = 0;
+        right.Normalize();
+        
+        var dest = _player.position + right * h + forward * v;
+        if (_tempDestH == Vector3.zero) _tempDestH = right * h;
+        if (_tempDestV == Vector3.zero) _tempDestV = forward * v;
+        if (m_IsLockingDirection)
+        {
+            dest = _player.position + _tempDestH + _tempDestV;
+            Vector3 cur_dir = new Vector3(h, v, 0).normalized;
+            Vector3 old_dir = new Vector3(_tempH, _tempV, 0).normalized;
+            if (Vector3.Angle(cur_dir, old_dir) > unlockDegee)
+            {
+                m_IsLockingDirection = false;
+            }
+            //Debug.Log("LockingDirection");
+        }
+        else
+        {
+            _tempDestH = right * h;
+            _tempDestV = forward * v;
+            _tempH = h;
+            _tempV = v;
+            //Debug.Log("UnLockingDirection");
+        }
+        
+        var sourcePos = _player.transform.position;
+        var maxSpeed = _playerNavAgent.speed;
+
+        //设置位移
+        _player.transform.position = Vector3.Lerp(_player.transform.position, dest, Time.fixedDeltaTime * maxSpeed);
+
+        //计算当前速度
+        var speed = (_player.transform.position - sourcePos).magnitude / Time.fixedDeltaTime;
+        SetPlayerSpeed(speed);
+
+        if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
+        _playerNavAgent.isStopped = true;
+        _playerNavAgent.ResetPath();
+    }
+
     public bool m_IsLockingDirection = false;
     private Vector3 _tempDestH = Vector3.zero;
     private Vector3 _tempDestV = Vector3.zero;
-    //BY HW:用于记录被锁前操作的方向
     private float _tempH = 0;
     private float _tempV = 0;
     void OnManuelMove(float h, float v)
@@ -630,7 +746,6 @@ public class LevelMaster : MonoBehaviour
         if (m_IsLockingDirection)
         {
             dest = _player.position + _tempDestH + _tempDestV;
-            //BY HW:判断解锁方向的逻辑
             Vector3 cur_dir = new Vector3(h, v, 0).normalized;
             Vector3 old_dir = new Vector3(_tempH, _tempV, 0).normalized;
             if (Vector3.Angle(cur_dir, old_dir) > unlockDegee)
@@ -643,7 +758,6 @@ public class LevelMaster : MonoBehaviour
         {
             _tempDestH = right * h;
             _tempDestV = forward * v;
-            //BY HW:记录操作方向
             _tempH = h;
             _tempV = v;
             //Debug.Log("UnLockingDirection");
