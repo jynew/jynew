@@ -282,6 +282,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 if (m_currentRole.Xiulianwupin == itemId)
                 {
                     item.User = -1;
+                    m_currentRole.ExpForItem = 0;
                     m_currentRole.Xiulianwupin = -1;
                 }
                 else
@@ -289,6 +290,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     if (m_currentRole.GetXiulianItem() != null)
                     {
                         m_currentRole.GetXiulianItem().User = -1;
+                        m_currentRole.ExpForItem = 0;
                     }
                     m_currentRole.Xiulianwupin = itemId;
                     item.User = m_currentRole.GetJyx2RoleId();

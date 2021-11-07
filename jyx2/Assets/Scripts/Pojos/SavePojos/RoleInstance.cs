@@ -815,7 +815,7 @@ namespace Jyx2
         }
 
         /// <summary>
-        /// 卸下物品（装备,修炼）
+        /// 卸下物品（装备）
         /// </summary>
         /// <param name="item"></param>
         public void UnequipItem(Jyx2Item item)
@@ -850,7 +850,6 @@ namespace Jyx2
 
             this.Pinde -= item.AddPinde;
             this.AttackPoison -= item.AttackPoison;
-            this.ExpForItem = 0;
         }
 
         public bool CanFinishedItem()

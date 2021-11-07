@@ -118,6 +118,8 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         GameUtil.SelectRole(runtime.Team, (selectRole) => {
             if (selectRole == null) return;
 
+            if (selectRole.GetJyx2RoleId() == item.User) return;
+
             if (selectRole.CanUseItem(id))
             {
                 //装备
@@ -161,12 +163,14 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
                         item.User = -1;
+                        roleInstance.ExpForItem = 0;
                         roleInstance.Xiulianwupin = -1;
                     }
 
                     if (selectRole.GetXiulianItem() != null)
                     {
                         selectRole.GetXiulianItem().User = -1;
+                        selectRole.ExpForItem = 0;
                     }
                     selectRole.Xiulianwupin = id;
                     item.User = selectRole.GetJyx2RoleId();
