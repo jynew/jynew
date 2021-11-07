@@ -23,6 +23,11 @@ public class AudioManager
 
     public static async UniTask PlayMusicAtPath(string path)
     {
+        if (path == null)
+        {
+            return;
+        }
+
         if(_currentPlayMusic == path)
         {
             return;
