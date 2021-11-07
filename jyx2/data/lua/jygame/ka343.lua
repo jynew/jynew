@@ -5,7 +5,7 @@ Talk(43, "尊驾二位便是侠客岛的赏善罚恶使者吗？", "talkname43",
 Talk(42, "正是．不知那位是雪山派掌门人？我们奉侠客岛岛主之命，手持铜牌前来，邀请贵派掌门赴敝岛相叙，喝碗腊八粥．", "talkname42", 0);
 ScenceFromTo(28, 17, 28, 24);
 jyx2_CameraFollowPlayer();
-Talk(0, "＜搞不好侠客岛上有线索？  不是有本书与”侠”字有  关联吗？＞", "talkname0", 1);
+Talk(0, "＜搞不好侠客岛上有线索？不是有本书与”侠”字有关联吗？＞", "talkname0", 1);
 WalkFromTo(28, 24, 28, 19);
 jyx2_WalkFromTo(-1,2819);
 Talk(0, "铜牌给我好不好？", "talkname0", 1);
