@@ -85,8 +85,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         }
         else
         {
-            var zhaoshi = m_curItemList[0].GetSkill();
-            ShowAttackRangeSelector(zhaoshi);
+            if (m_curItemList.Count > 0)
+            {
+                var zhaoshi = m_curItemList[0].GetSkill();
+                ShowAttackRangeSelector(zhaoshi);
+            }
         }
     }
 
