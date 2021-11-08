@@ -506,7 +506,11 @@ namespace Jyx2
 
         public static bool JudgeAttack(int roleId,int low,int high)
         {
-            bool ret = JudgeRoleValue(roleId, (r) => { return r.Attack >= low && r.Attack <= high; });
+            bool ret = JudgeRoleValue(roleId, (r) => {
+                int originAttack = r.Attack - r.GetWeaponProperty("Attack") - r.GetArmorProperty("Attack");
+
+                return originAttack >= low && originAttack <= high;
+            });
             return ret;
         }
 

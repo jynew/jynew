@@ -750,7 +750,7 @@ namespace Jyx2
                 runtime.AddItem(item.Id, item.Count);
                 runtime.AddItem(practiseItem.GenerateItemNeedCost, -1);
                 ExpForMakeItem = 0;
-                return $"{GetXiulianItem().Name} 炼出 {ConfigTable.Get<Jyx2Item>(item.Id.ToString()).Name}×{item.Count}";
+                return $"{GetXiulianItem().Name} 炼出 {ConfigTable.Get<Jyx2Item>(item.Id.ToString()).Name}×{item.Count}\n";
             }
 
             return "";
@@ -794,19 +794,19 @@ namespace Jyx2
 
             this.Pinde += item.AddPinde;
             this.AttackPoison += item.AttackPoison;
-            if (item.ChangeMPType == 2)
-            {
-                this.MpType = 2;
-            }
-
-            if (item.AttackFreq == 1)
-            {
-                this.Zuoyouhubo = 1;
-            }
 
             int need_item_exp = GetFinishedExpForItem(item);
             if (this.ExpForItem >= need_item_exp)
             {
+                if (item.ChangeMPType == 2)
+                {
+                    this.MpType = 2;
+                }
+
+                if (item.AttackFreq == 1)
+                {
+                    this.Zuoyouhubo = 1;
+                }
                 this.LearnMagic(item.Wugong);
                 this.ExpForItem -= need_item_exp;
             }
@@ -1256,12 +1256,12 @@ namespace Jyx2
 			return Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
 		}
 
-        int GetWeaponProperty(string propertyName)
+        public int GetWeaponProperty(string propertyName)
         {
             return Weapon != -1 ? (int)GetWeapon().GetType().GetField(propertyName).GetValue(GetWeapon()) : 0;
         }
 
-        int GetArmorProperty(string propertyName)
+        public int GetArmorProperty(string propertyName)
         {
             return Armor != -1 ? (int)GetArmor().GetType().GetField(propertyName).GetValue(GetArmor()) : 0;
         }
