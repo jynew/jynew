@@ -23,6 +23,6 @@ public class Jyx2AddMPNode : Jyx2SimpleNode
 
 	protected override void DoExecute()
 	{
-		Jyx2LuaBridge.AddMaxMp(roleId, increment);
+		Jyx2LuaBridge.AddMp(roleId, increment);
 	}
 }

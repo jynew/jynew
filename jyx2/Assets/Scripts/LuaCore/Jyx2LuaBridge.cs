@@ -628,7 +628,7 @@ namespace Jyx2
         }
 
         //内力
-        public static void AddMaxMp(int roleId, int value)
+        public static void AddMp(int roleId, int value)
         {
             RunInMainThread(() =>
             {
