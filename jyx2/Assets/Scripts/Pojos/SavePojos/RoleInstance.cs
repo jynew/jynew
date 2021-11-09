@@ -74,12 +74,6 @@ namespace Jyx2
                 Wugongs.Add(new WugongInstance(_data.Wugongs[0]));
             }
 
-            //初始化属性增强
-            AddEffect(this.GetWeapon(), 1);
-            AddEffect(this.GetArmor(), 1);
-            AddEffect(this.GetXiulianItem(), 1);
-            getOrigin = false;
-
             //每次战斗前reset一次
             ResetForBattle();
         }
@@ -188,11 +182,9 @@ namespace Jyx2
             Hurt = 0;
             Poison = 0;
 
-            getOrigin = true;
             Attack += Tools.GetRandomInt(0, 7);
             Qinggong += Tools.GetRandomInt(0, 7);
             Defence += Tools.GetRandomInt(0, 7);
-            getOrigin = false;
 
             Heal = checkUp(Heal, 0, 3);
             DePoison = checkUp(DePoison, 0, 3);
@@ -203,12 +195,18 @@ namespace Jyx2
             Shuadao = checkUp(Shuadao, 10, 3);
             Qimen = checkUp(Qimen, 10, 3);
 
-            this.Limit();
+            this.Limit(1, 1);
 
             Debug.Log($"{this.Name}升到{this.Level}级！");
         }
 
-        void Limit()
+        /// <summary>
+        /// 限制属性范围
+        /// 
+        /// Attack、Defence、Qinggong为最终状态：原始属性 + 此刻使用的装备属性的总值
+        /// 
+        /// </summary>
+        void Limit(int defenceTime, int qinggongTime)
         {
             Exp = Tools.Limit(Exp, 0, GameConst.MAX_EXP);
             ExpForItem = Tools.Limit(ExpForItem, 0, GameConst.MAX_EXP);
@@ -219,11 +217,16 @@ namespace Jyx2
             Hp = Tools.Limit(Hp, 0, MaxHp);
             Mp = Tools.Limit(Mp, 0, MaxMp);
             Tili = Tools.Limit(Tili, 0, GameConst.MAX_ROLE_TILI);
-            //
-            // Attack = Tools.Limit(Attack, 0, GameConst.MAX_ROLE_ATTACK);
-            // Defence = Tools.Limit(Defence, 0, GameConst.MAX_ROLE_DEFENCE);
-            // Qinggong = Tools.Limit(Qinggong, 0, GameConst.MAX_ROLE_QINGGONG);
-            //
+
+            var equipAttack = GetWeaponProperty("Attack") + GetArmorProperty("Attack");
+            var equipDefence = GetWeaponProperty("Defence") + GetArmorProperty("Defence");
+            var equipQinggong = GetWeaponProperty("Qinggong") + GetArmorProperty("Qinggong");
+            Attack = Tools.Limit(Attack, 0, GameConst.MAX_ROLE_ATTACK + equipAttack);
+            // 装备防御可能为负 
+            Defence = Tools.Limit(Defence, 0, GameConst.MAX_ROLE_DEFENCE + equipDefence * defenceTime);
+            // 装备轻功可能为负
+            Qinggong = Tools.Limit(Qinggong, 0, GameConst.MAX_ROLE_QINGGONG + equipQinggong * qinggongTime);
+            
             UsePoison = Tools.Limit(UsePoison, 0, GameConst.MAX_USE_POISON);
             DePoison = Tools.Limit(DePoison, 0, GameConst.MAX_DEPOISON);
             Heal = Tools.Limit(Heal, 0, GameConst.MAX_HEAL);
@@ -348,7 +351,7 @@ namespace Jyx2
         {
             get
             {
-                return getOrigin ? Get("Attack", Data.Attack) : Tools.Limit(Get("Attack", Data.Attack), 0, MaxAttack);
+                return Get("Attack", Data.Attack);
             }
             set { Save("Attack", value); }
         }
@@ -357,9 +360,7 @@ namespace Jyx2
         {
             get
             {
-                return getOrigin
-                    ? Get("Qinggong", Data.Qinggong)
-                    : Tools.Limit(Get("Qinggong", Data.Qinggong), 0, MaxQinggong);
+                return Get("Qinggong", Data.Qinggong);
             }
             set { Save("Qinggong", value); }
         }
@@ -368,9 +369,7 @@ namespace Jyx2
         {
             get
             {
-                return getOrigin
-                    ? Get("Defence", Data.Defence)
-                    : Tools.Limit(Get("Defence", Data.Defence), 0, MaxDefence);
+                return Get("Defence", Data.Defence);
             }
             set { Save("Defence", value); }
         }
@@ -704,19 +703,6 @@ namespace Jyx2
             return true;
         }
 
-        //getOrigin的意思是获取源数据，即get方法不使用limit
-        private bool getOrigin;
-        private int MaxAttack = GameConst.MAX_ROLE_ATTACK;
-        private int MaxQinggong = GameConst.MAX_ROLE_QINGGONG;
-        private int MaxDefence = GameConst.MAX_ROLE_DEFENCE;
-
-        private void AddEffect(Jyx2Item item, int AddType)
-        {
-            if (item == null) return;
-            MaxAttack += item.Attack * AddType;
-            MaxDefence += item.Defence * AddType;
-            MaxQinggong += (item.Qinggong>0?item.Qinggong:0) * AddType;
-        }
 
         private GameRuntimeData runtime
         {
@@ -765,9 +751,6 @@ namespace Jyx2
             if (item == null)
                 return;
 
-            if (item.EquipmentType == 0 || item.EquipmentType == 1)
-                AddEffect(item, 1);
-
             this.Tili += item.AddTili;
             this.SetHPAndRefreshHudBar(this.Hp + item.AddHp);
             this.MaxHp += item.AddMaxHp;
@@ -779,13 +762,10 @@ namespace Jyx2
             this.AntiPoison += item.AntiPoison;
             this.UsePoison += item.UsePoison;
 
-            getOrigin = true;
             this.Attack += item.Attack;
             this.Defence += item.Defence;
             this.Qinggong += item.Qinggong;
             
-            getOrigin = false;
-
             this.Quanzhang += item.Quanzhang;
             this.Yujian += item.Yujian;
             this.Shuadao += item.Shuadao;
@@ -811,7 +791,7 @@ namespace Jyx2
                 this.ExpForItem -= need_item_exp;
             }
 
-            this.Limit();
+            this.Limit(1, 1);
         }
 
         /// <summary>
@@ -822,8 +802,6 @@ namespace Jyx2
         {
             if (item == null)
                 return;
-
-            AddEffect(item, -1);
 
             item.User = -1;
             this.Tili -= item.AddTili;
@@ -837,11 +815,9 @@ namespace Jyx2
             this.AntiPoison -= item.AntiPoison;
             this.UsePoison -= item.UsePoison;
 
-            getOrigin = true;
             this.Attack -= item.Attack;
             this.Defence -= item.Defence;
             this.Qinggong -= item.Qinggong;
-            getOrigin = false;
 
             this.Quanzhang -= item.Quanzhang;
             this.Yujian -= item.Yujian;
@@ -850,6 +826,10 @@ namespace Jyx2
 
             this.Pinde -= item.AddPinde;
             this.AttackPoison -= item.AttackPoison;
+
+            int defenceTime = item.Defence > 0 ? 1 : 0;
+            int qinggongTime = item.Qinggong > 0 ? 1 : 0;
+            this.Limit(defenceTime, qinggongTime);
         }
 
         public bool CanFinishedItem()
