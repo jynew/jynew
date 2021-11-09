@@ -7,7 +7,7 @@ if TeamIsFull() == false then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/xuzhu", "");--虚竹加入
     ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     LightScence();
-    AddMP(49, 300);
+    AddMp(49, 300);
     AddHp(49, 200);
     AddAttack(49, 30);
     AddSpeed(49, 20);
