@@ -84,6 +84,8 @@ public class UIHelper
             result.Add(3, item.ConditionQinggong);
         if (item.ConditionPoison > 0)
             result.Add(7, item.ConditionPoison);
+        if (item.ConditionHeal > 0)
+            result.Add(6, item.ConditionHeal);
         if (item.ConditionDePoison > 0)
             result.Add(8, item.ConditionDePoison);
         if (item.ConditionQuanzhang > 0)
@@ -94,6 +96,8 @@ public class UIHelper
             result.Add(11, item.ConditionShuadao);
         if (item.ConditionQimen > 0)
             result.Add(20, item.ConditionQimen);
+        if (item.ConditionAnqi > 0)
+            result.Add(12, item.ConditionAnqi);
         if (item.ConditionIQ > 0)
             result.Add(25, item.ConditionIQ);
 
