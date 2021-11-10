@@ -195,7 +195,7 @@ namespace Jyx2
             Shuadao = checkUp(Shuadao, 10, 3);
             Qimen = checkUp(Qimen, 10, 3);
 
-            this.Limit(1, 1);
+            this.Limit(1, 1, 1);
 
             Debug.Log($"{this.Name}升到{this.Level}级！");
         }
@@ -206,7 +206,7 @@ namespace Jyx2
         /// Attack、Defence、Qinggong为最终状态：原始属性 + 此刻使用的装备属性的总值
         /// 
         /// </summary>
-        void Limit(int defenceTime, int qinggongTime)
+        void Limit(int attackTime, int defenceTime, int qinggongTime)
         {
             Exp = Tools.Limit(Exp, 0, GameConst.MAX_EXP);
             ExpForItem = Tools.Limit(ExpForItem, 0, GameConst.MAX_EXP);
@@ -221,10 +221,8 @@ namespace Jyx2
             var equipAttack = GetWeaponProperty("Attack") + GetArmorProperty("Attack");
             var equipDefence = GetWeaponProperty("Defence") + GetArmorProperty("Defence");
             var equipQinggong = GetWeaponProperty("Qinggong") + GetArmorProperty("Qinggong");
-            Attack = Tools.Limit(Attack, 0, GameConst.MAX_ROLE_ATTACK + equipAttack);
-            // 装备防御可能为负 
+            Attack = Tools.Limit(Attack, 0, GameConst.MAX_ROLE_ATTACK + equipAttack * attackTime);
             Defence = Tools.Limit(Defence, 0, GameConst.MAX_ROLE_DEFENCE + equipDefence * defenceTime);
-            // 装备轻功可能为负
             Qinggong = Tools.Limit(Qinggong, 0, GameConst.MAX_ROLE_QINGGONG + equipQinggong * qinggongTime);
             
             UsePoison = Tools.Limit(UsePoison, 0, GameConst.MAX_USE_POISON);
@@ -791,7 +789,7 @@ namespace Jyx2
                 this.ExpForItem -= need_item_exp;
             }
 
-            this.Limit(1, 1);
+            this.Limit(1, 1, 1);
         }
 
         /// <summary>
@@ -827,9 +825,10 @@ namespace Jyx2
             this.Pinde -= item.AddPinde;
             this.AttackPoison -= item.AttackPoison;
 
-            int defenceTime = item.Defence > 0 ? 1 : 0;
-            int qinggongTime = item.Qinggong > 0 ? 1 : 0;
-            this.Limit(defenceTime, qinggongTime);
+            int defenceTime = item.Defence < 0 ? 0 : 1;
+            int qinggongTime = item.Qinggong < 0 ? 0 : 1;
+            // 装备攻击永远为正，防御、轻功可能为负
+            this.Limit(1, defenceTime, qinggongTime);
         }
 
         public bool CanFinishedItem()
