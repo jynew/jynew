@@ -118,10 +118,12 @@ namespace Jyx2Editor
             //AddScenesToBuildTool.AddScenesToBuild();
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
-            string exePath = path + $"/jyx2-{currentDate}.exe";
 
             //设置版本号
             PlayerSettings.bundleVersion = currentDate;
+            
+            //exe路径
+            string exePath = path + $"/jyxnew.exe";
 
             //打包
             BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.None);
