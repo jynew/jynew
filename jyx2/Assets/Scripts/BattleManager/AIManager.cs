@@ -75,9 +75,7 @@ public class AIManager
             if (zhaoshi.GetStatus() != BattleZhaoshiInstance.ZhaoshiStatus.OK)
                 continue;
 
-            GetMoveAndCastPos(role, zhaoshi, range);
-
-            BattleBlockVector[] tmp = m_GetMoveAndCastPosResult;
+            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, zhaoshi, range);
             if (tmp != null && tmp.Length == 2 && tmp[0] != null)
             {
                 BattleBlockVector movePos = tmp[0];
@@ -151,9 +149,8 @@ public class AIManager
                 if (anqizhaoshi.GetStatus() != BattleZhaoshiInstance.ZhaoshiStatus.OK)
                     continue;
 
-                GetMoveAndCastPos(role, anqizhaoshi, range);
-
-                BattleBlockVector[] tmp = m_GetMoveAndCastPosResult;
+                BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqizhaoshi, range);
+                
                 if (tmp != null && tmp.Length == 2 && tmp[0] != null)
                 {
                     BattleBlockVector movePos = tmp[0];
@@ -267,14 +264,10 @@ public class AIManager
         return rst;
     }
 
-    private BattleBlockVector[] m_GetMoveAndCastPosResult = new BattleBlockVector[2];
-
-    public void GetMoveAndCastPos(RoleInstance role, BattleZhaoshiInstance zhaoshi, List<BattleBlockVector> moveRange)
+    public async UniTask<BattleBlockVector[]> GetMoveAndCastPos(RoleInstance role, BattleZhaoshiInstance zhaoshi, List<BattleBlockVector> moveRange)
     {
-        //clear
-        m_GetMoveAndCastPosResult[0] = null;
-        m_GetMoveAndCastPosResult[1] = null;
-
+        BattleBlockVector[] rst = new BattleBlockVector[2];
+        
         //丢给自己的，随便乱跑一个地方丢
         if (zhaoshi.GetCoverType() == SkillCoverType.POINT && zhaoshi.GetCastSize() == 0 && zhaoshi.GetCoverSize() == 0)
         {
@@ -287,8 +280,10 @@ public class AIManager
             {
                 targetBlock = GetFarestEnemyBlock(role, moveRange); //生命小于50%后退
             }
-            m_GetMoveAndCastPosResult[0] = targetBlock;
-            m_GetMoveAndCastPosResult[1] = targetBlock;
+            
+            
+            rst[0] = targetBlock;
+            rst[1] = targetBlock;
         }
 
         bool isAttack = zhaoshi.IsCastToEnemy();
@@ -336,25 +331,28 @@ public class AIManager
                 {
                     maxScore = score;
 
-                    m_GetMoveAndCastPosResult[0] = new BattleBlockVector(moveBlock.X, moveBlock.Y);
-                    m_GetMoveAndCastPosResult[1] = new BattleBlockVector(castBlock.X, castBlock.Y);
+                    rst[0] = new BattleBlockVector(moveBlock.X, moveBlock.Y);
+                    rst[1] = new BattleBlockVector(castBlock.X, castBlock.Y);
                 }
             }
             if (splitFrame++ > 5)//分帧
             {
-                // yield return 0;
+                await UniTask.WaitForEndOfFrame();
                 splitFrame = 0;
             }
         }
+        
         if (maxScore > 0)
         {
 
         }
         else
         {
-            m_GetMoveAndCastPosResult[0] = null;
-            m_GetMoveAndCastPosResult[1] = null;
+            rst[0] = null;
+            rst[1] = null;
         }
+
+        return rst;
     }
 
     public RoleInstance GetNearestEnemy(RoleInstance role)
