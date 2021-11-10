@@ -123,7 +123,7 @@ namespace Jyx2Editor
             PlayerSettings.bundleVersion = currentDate;
             
             //exe路径
-            string exePath = path + $"/jyxnew.exe";
+            string exePath = path + $"/jynew.exe";
 
             //打包
             BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.None);
