@@ -441,20 +441,6 @@ namespace Jyx2
             set { Save("OnBoat", value); }
         }
 
-        //队伍经验
-        public int TeamExp
-        {
-            get { return Get("TeamExp", 1); }
-            set { Save("TeamExp", value); }
-        }
-
-        //队伍等级
-        public int TeamLevel
-        {
-            get { return Get("TeamLevel", 1); }
-            set { Save("TeamLevel", value); }
-        }
-        
 
         public int GetMoney()
         {
