@@ -489,35 +489,32 @@ namespace Jyx2
         /// <param name="zhaoshi"></param>
         /// <param name="source"></param>
         /// <returns></returns>
-        public List<BattleBlockVector> GetSkillCastBlocks(int x, int y, BattleZhaoshiInstance zhaoshi, RoleInstance source)
+        public IEnumerable<BattleBlockVector> GetSkillCastBlocks(int x, int y, BattleZhaoshiInstance zhaoshi, RoleInstance source)
         {
-            var rst = new List<BattleBlockVector>();
-
-            var castSize = 0;
-            //TODO:反击逻辑 by Cherubinxxx
-            //if (isFanji)
-            //    size = GetFanjiCastSize(zhaoshi, battleRole);
-            //else
-            castSize = GetCastSize(zhaoshi, source);
+            var castSize = GetCastSize(zhaoshi, source);
 
             var covertype = zhaoshi.GetCoverType();
             if (covertype == SkillCoverType.LINE )
             {
                 foreach (var loc in GetNearBlocks(x, y))
                 {
-                    rst.Add(new BattleBlockVector(loc.X, loc.Y));
+                    yield return new BattleBlockVector(loc.X, loc.Y);
                 }
-                return rst;
+
+                yield break;
             }
 
-            rst.Add(new BattleBlockVector(x, y));
-            if (castSize == 0) return rst;
+            yield return new BattleBlockVector(x, y);
+
+            if (castSize == 0)
+            {
+                yield break;
+            }
 
             foreach (var loc in GetNearBlocks(x, y, castSize))
             {
-                rst.Add(new BattleBlockVector(loc.X, loc.Y));
+                yield return new BattleBlockVector(loc.X, loc.Y);
             }
-            return rst;
         }
 
         /// <summary>

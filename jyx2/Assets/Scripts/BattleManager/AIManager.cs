@@ -94,6 +94,8 @@ public class AIManager
                         IsRest = false
                     };
                 }
+                
+                await UniTask.WaitForEndOfFrame();
             }
         }
 
@@ -284,11 +286,13 @@ public class AIManager
             
             rst[0] = targetBlock;
             rst[1] = targetBlock;
+            return rst;
         }
 
         bool isAttack = zhaoshi.IsCastToEnemy();
         double maxScore = 0;
 
+        Dictionary<int,float > cachedScore = new Dictionary<int, float>();
         //带攻击范围的，找最多人丢
         foreach (var moveBlock in moveRange)
         {
@@ -301,30 +305,39 @@ public class AIManager
             int splitFrame = 0;//分帧
             foreach (var castBlock in castBlocks)
             {
-                double score = 0;
-                var coverSize = zhaoshi.GetCoverSize();
-                var tx = castBlock.X;
-                var ty = castBlock.Y;
-                var coverBlocks = rangeLogic.GetSkillCoverBlocks(coverType, tx, ty, sx, sy, coverSize);
-
-                foreach (var coverBlock in coverBlocks)
+                float score = 0;
+                if (cachedScore.ContainsKey(castBlock.ToInt()))
                 {
-                    var targetSprite = BattleModel.GetAliveRole(coverBlock);
-                    //位置没人
-                    if (targetSprite == null) continue;
+                    score = cachedScore[castBlock.ToInt()];
+                }
+                else
+                {
+                    var coverSize = zhaoshi.GetCoverSize();
+                    var tx = castBlock.X;
+                    var ty = castBlock.Y;
+                    var coverBlocks = rangeLogic.GetSkillCoverBlocks(coverType, tx, ty, sx, sy, coverSize);
 
-                    //如果判断是施展给原来的自己，但自己已经不在原位置了,相当于没打中
-                    if (targetSprite == role && !(targetSprite.Pos.X == moveBlock.X && targetSprite.Pos.Y == moveBlock.Y)) continue;
-                    //如果是自己的新位置，则相当于施展给自己
-                    if (targetSprite.Pos.X == moveBlock.X && targetSprite.Pos.Y == moveBlock.Y)
+                    foreach (var coverBlock in coverBlocks)
                     {
-                        continue;
-                        //targetSprite = sprite;
+                        var targetSprite = BattleModel.GetAliveRole(coverBlock);
+                        //位置没人
+                        if (targetSprite == null) continue;
+
+                        //如果判断是施展给原来的自己，但自己已经不在原位置了,相当于没打中
+                        if (targetSprite == role && !(targetSprite.Pos.X == moveBlock.X && targetSprite.Pos.Y == moveBlock.Y)) continue;
+                        //如果是自己的新位置，则相当于施展给自己
+                        if (targetSprite.Pos.X == moveBlock.X && targetSprite.Pos.Y == moveBlock.Y)
+                        {
+                            continue;
+                            //targetSprite = sprite;
+                        }
+                        else if (targetSprite.team != role.team && targetSprite.Hp > 0)
+                        {
+                            score += 0.1f;
+                        }
                     }
-                    else if (targetSprite.team != role.team && targetSprite.Hp > 0)
-                    {
-                        score += 0.1;
-                    }
+
+                    cachedScore[castBlock.ToInt()] = score;
                 }
 
                 if (score > maxScore)
@@ -335,18 +348,16 @@ public class AIManager
                     rst[1] = new BattleBlockVector(castBlock.X, castBlock.Y);
                 }
             }
-            if (splitFrame++ > 5)//分帧
+
+            splitFrame++;
+            if (splitFrame > 5)//分帧
             {
-                await UniTask.WaitForEndOfFrame();
                 splitFrame = 0;
+                await UniTask.WaitForEndOfFrame();
             }
         }
         
-        if (maxScore > 0)
-        {
-
-        }
-        else
+        if (maxScore == 0)
         {
             rst[0] = null;
             rst[1] = null;

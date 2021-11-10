@@ -384,7 +384,7 @@ public class BattleManager : MonoBehaviour
 
         //绘制周围的攻击格子
         var blockList = rangeLogic.GetSkillCastBlocks(sx, sy, zhaoshi, role);
-        return blockList;
+        return blockList.ToList();
     }
 
     //获取范围内的敌人或者友军
