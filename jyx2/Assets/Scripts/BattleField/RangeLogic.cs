@@ -247,11 +247,11 @@ namespace Jyx2
         /// <param name="y"></param>
         /// <param name="maxdistance"></param>
         /// <returns></returns>
-        public List<BattleBlockVector> GetNearBlocks(int x, int y, int maxdistance)
+        public IEnumerable<BattleBlockVector> GetNearBlocks(int x, int y, int maxdistance)
         {
             if (maxdistance <= 1)
             {
-                return GetNearBlocks(x, y).ToList();
+                return GetNearBlocks(x, y);
             }
 
             if (maxdistance > MAX_COMPUTE_BLOCKS_SIZE)

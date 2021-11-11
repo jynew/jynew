@@ -276,5 +276,30 @@ namespace Jyx2
             RoleInstance nextRole = Roles[index];
             return nextRole.isActed;
         }
+        
+        
+        /// <summary>
+        /// 获取一方武学常识总和
+        ///
+        /// 计算方法参考：https://tiexuedanxin.net/thread-365140-1-1.html
+        ///
+        /// 计算我方所有人武学常识之和×2。
+        ///（武学常识<80 不算，生命<0  不算，已死亡的人不算）
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns></returns>
+        public int GetTotalWuXueChangShi(int team)
+        {
+            int total = 0;
+            foreach (var role in this.AliveRoles)
+            {
+                if (role.Wuxuechangshi < 80 || role.Hp < 0) continue;
+                if (role.team != team) continue;
+                total += role.Wuxuechangshi;
+            }
+
+            return total;
+        }
+
     }
 }
