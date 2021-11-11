@@ -296,7 +296,6 @@ public class AIManager
         //带攻击范围的，找最多人丢
         foreach (var moveBlock in moveRange)
         {
-            int castSize = zhaoshi.GetCastSize();
             var coverType = zhaoshi.GetCoverType();
             var sx = moveBlock.X;
             var sy = moveBlock.Y;
@@ -440,10 +439,27 @@ public class AIManager
         }
         return rst;
     }
-    
 
+
+    
+    /// <summary>
+    /// 战斗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <param name="skill"></param>
+    /// <param name="blockVector"></param>
+    /// <returns></returns>
     public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, BattleZhaoshiInstance skill, BattleBlockVector blockVector)
     {
+        //队伍1武学常识
+        int totalWuxue = BattleModel.GetTotalWuXueChangShi(r1.team);
+        
+        //队伍2武学常识
+        int totalWuxue2 = BattleModel.GetTotalWuXueChangShi(r2.team);
+        
         SkillCastResult rst = new SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
         var magic = skill.Data.GetSkill();
         int level_index = skill.Data.GetLevel()-1;//此方法返回的是显示的武功等级，1-10。用于calMaxLevelIndexByMP时需要先-1变为数组index再使用
@@ -456,8 +472,11 @@ public class AIManager
                 rst.damage = 1 + UnityEngine.Random.Range(0, 10);
                 return rst;
             }
-            int attack = r1.Attack + skill.Data.GetSkillLevelInfo(level_index).Attack / 3;
-            int defence = r2.Defence;
+            //总攻击力＝(人物攻击力×3 ＋ 武功当前等级攻击力)/2 ＋武器加攻击力 ＋ 防具加攻击力 ＋ 武器武功配合加攻击力 ＋我方武学常识之和
+            int attack = (r1.Attack * 3 + skill.Data.GetSkillLevelInfo(level_index).Attack) / 2 + totalWuxue;
+            
+            //总防御力 ＝ 人物防御力 ＋武器加防御力 ＋ 防具加防御力 ＋ 敌方武学常识之和
+            int defence = r2.Defence + totalWuxue2;
             if (r1.Weapon >= 0)
             {
                 var i = ConfigTable.Get<Jyx2Item>(r1.Weapon);
@@ -479,14 +498,53 @@ public class AIManager
                 defence += i.Defence;
             }
 
-            int v = attack - defence;
-            int dis = r1.Pos.GetDistance(r2.Pos);
-            v = (int)(v / Math.Exp((dis - 1) / 10));
-            v += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
-            if (v < 10)
+            //伤害 ＝ （总攻击力－总防御×3）×2 / 3 + RND(20) – RND(20)                  （公式1）
+            int v = (attack - defence * 3) * 2 / 3 + UnityEngine.Random.Range(0, 20) - UnityEngine.Random.Range(0, 20);
+            
+            //如果上面的伤害 < 0 则
+            //伤害 ＝  总攻击力 / 10 + RND(4) – RND(4)                                            （公式2）
+            if (v <= 0)
             {
-                v = 1 + UnityEngine.Random.Range(0, 10);
+                v = attack / 10 + UnityEngine.Random.Range(0, 4) - UnityEngine.Random.Range(0, 4);
             }
+
+            //7、如果伤害仍然 < 0 则    伤害 ＝ 0
+            if (v <= 0)
+            {
+                v = 0;
+            }
+            else
+            {
+                //8、if  伤害 > 0 then
+                //    伤害＝ 伤害 ＋ 我方体力/15  ＋ 敌人受伤点数/ 20
+                v = v + r1.Tili / 15 + r2.Hurt / 20;
+            }
+            
+            //点、线、十字的伤害，距离就是两人相差的格子数，最小为1。
+            //面攻击时，距离是两人相差的格子数＋敌人到攻击点的距离。
+            int dist = r1.Pos.GetDistance(r2.Pos);
+            if (skill.GetCoverType() == SkillCoverType.FACE)
+            {
+                dist += blockVector.GetDistance(r2.Pos);
+            }
+
+            //9、if 双方距离 <= 10 then
+            //    伤害 ＝ 伤害×（100 -  ( 距离–1 ) * 3 ）/ 100
+            //else
+            //    伤害 ＝ 伤害*2 /3
+            if (dist <= 10)
+            {
+                v = v * (100 - (dist - 1) * 3) / 100;
+            }
+            else
+            {
+                v = v * 2 / 3;
+            }
+
+            //10、if 伤害 < 1  伤害 ＝ 1
+            if (v < 1)
+                v = 1;
+            
             rst.damage = v;
             return rst;
         }
