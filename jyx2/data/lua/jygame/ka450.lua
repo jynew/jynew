@@ -11,7 +11,7 @@ if TryBattle(71) == true then goto label0 end;
     do return end;
 ::label0::
     ModifyEvent(-2, -2, -2, -2, 451, -1, -1, -2, -2, -2, -2, -2, -2);
-    ModifyEvent(-2, 16, -2, -2, -1, -1, 474, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 16, -2, -2, 474, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 17, -2, -2, 474, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 18, -2, -2, 474, -1, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
