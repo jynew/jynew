@@ -3,7 +3,7 @@ if AskJoin () == true then goto label0 end;
     Talk(0, "托王姑娘的福，一切还好．", "talkname0", 1);
     do return end;
 ::label0::
-    Talk(0, "还好，不过若有王姑娘在队　中指导我们攻击与防御，我　们会更好．", "talkname0", 1);
+    Talk(0, "还好，不过若有王姑娘在队中指导我们攻击与防御，我们会更好．", "talkname0", 1);
     if TeamIsFull() == false then goto label1 end;
         Talk(109, "你的队伍已满，我无法加入．", "talkname109", 0);
         do return end;
