@@ -163,6 +163,9 @@ public class LevelMasterBooster : MonoBehaviour
             }
             else if (kv.Value.StartsWith(CONTROLLER_SCENE_INFO_PRFIX)) //设置animatorController
             {
+                // 如果有animatorController则必须可见
+                obj.SetActive(true);
+
                 string animationControllerPath = kv.Value.Replace(CONTROLLER_SCENE_INFO_PRFIX, "");
                 
                 var animator = obj.GetComponent<Animator>();
