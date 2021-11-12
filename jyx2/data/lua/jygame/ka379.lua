@@ -1,4 +1,4 @@
-Talk(0, "又有一群大蜘蛛，我得小心点，免得当了蜘蛛的点心．　　　", "talkname0", 1);
+Talk(0, "又有一群大蜘蛛，我得小心点，免得当了蜘蛛的点心．", "talkname0", 1);
 if TryBattle(64) == true then goto label0 end;
     Dead();
     do return end;

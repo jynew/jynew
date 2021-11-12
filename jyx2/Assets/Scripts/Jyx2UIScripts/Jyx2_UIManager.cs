@@ -61,7 +61,8 @@ public class Jyx2_UIManager : MonoBehaviour
 
     public void GameStart() 
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(GameMainMenu), $"当前版本：{Application.version}");
+        Jyx2_UIManager.Instance.ShowUI(nameof(GameMainMenu));
+        Jyx2_UIManager.Instance.ShowUI(nameof(GameInfoPanel),$"当前版本：{Application.version}");
         GraphicSetting.GlobalSetting.Execute();
     }
 

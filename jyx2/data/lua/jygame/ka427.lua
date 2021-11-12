@@ -1,4 +1,4 @@
-Talk(65, "真希望锳姑赶快来杀我，解除我的罪孽．", "talkname65", 0);
+Talk(65, "真希望瑛姑赶快来杀我，解除我的罪孽．", "talkname65", 0);
 if AskBattle() == true then goto label0 end;
     Talk(0, "．．．．", "talkname0", 1);
     do return end;
@@ -14,5 +14,5 @@ if AskBattle() == true then goto label0 end;
         do return end;
 ::label1::
         LightScence();
-        Talk(65, "阁下还是回去请锳姑亲自来动手吧，我会在这等她的．", "talkname65", 0);
+        Talk(65, "阁下还是回去请瑛姑亲自来动手吧，我会在这等她的．", "talkname65", 0);
 do return end;

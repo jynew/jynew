@@ -298,7 +298,7 @@ namespace Jyx2
                 total += role.Wuxuechangshi;
             }
 
-            return total;
+            return total * 2;
         }
 
     }

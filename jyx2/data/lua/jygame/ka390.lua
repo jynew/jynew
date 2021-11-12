@@ -1,4 +1,4 @@
-Talk(0, "哇塞！雕蛇大战，精彩！．．．．咦！雕兄似乎快不行了，看我的！　　　　　　　　　　　", "talkname0", 1);
+Talk(0, "哇塞！雕蛇大战，精彩！．．．．咦！雕兄似乎快不行了，看我的！", "talkname0", 1);
 if TryBattle(66) == true then goto label0 end;
     Dead();
     do return end;
