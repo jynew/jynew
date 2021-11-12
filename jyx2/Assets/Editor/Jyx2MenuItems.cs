@@ -105,8 +105,6 @@ namespace Jyx2Editor
 
             if (string.IsNullOrEmpty(path))
                 return;
-            
-            RmStreamAssetFolder();
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
@@ -162,8 +160,6 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
-                
-                RmStreamAssetFolder();
 
                 //生成luaWrap
                 //Generator.ClearAll();
@@ -223,8 +219,6 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
-                
-                RmStreamAssetFolder();
 
                 //生成luaWrap
                 //Generator.ClearAll();
@@ -260,14 +254,6 @@ namespace Jyx2Editor
                 Debug.LogError(e.StackTrace);
             }
         }
-
-        public static void RmStreamAssetFolder()
-        {
-            return;
-            if (Directory.Exists(Application.streamingAssetsPath))
-            {
-                Directory.Delete(Application.streamingAssetsPath, true);
-            }
-        }
+        
     }
 }

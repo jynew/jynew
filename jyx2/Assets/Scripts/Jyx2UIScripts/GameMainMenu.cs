@@ -88,7 +88,6 @@ public partial class GameMainMenu : Jyx2_UIBase {
         base.OnShowPanel(allParams);
         AudioManager.PlayMusic(16);
         m_panelType = PanelType.Home;
-        Version_Text.text = allParams[0] as string;
         GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
         {
             if(main_menu_index<QuitGameIndex) ChangeSelection(1);

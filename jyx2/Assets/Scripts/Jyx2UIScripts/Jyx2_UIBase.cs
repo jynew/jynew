@@ -25,6 +25,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
     public virtual UILayer Layer { get; } = UILayer.NormalUI;
     public virtual bool IsOnly { get; } = false;//同一层只能单独存在
     public virtual bool IsBlockControl { get; set; } = false;
+    public virtual bool AlwaysDisplay { get; } = false;
     private bool IsChangedBlockControl = false;
     protected abstract void OnCreate();
 
@@ -61,8 +62,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
         }
     }
 
-    public void Hide() 
+    public void Hide()
     {
+        if (AlwaysDisplay) return;
         this.gameObject.SetActive(false);
         this.OnHidePanel();
         if (IsBlockControl && IsChangedBlockControl)
