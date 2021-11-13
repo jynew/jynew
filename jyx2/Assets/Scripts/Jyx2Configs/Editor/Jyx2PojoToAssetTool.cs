@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using Jyx2Configs;
@@ -10,7 +11,7 @@ using UnityEngine.AddressableAssets;
 
 public class Jyx2PojoToScriptTool : Editor
 {
-    [MenuItem("Tools/金庸/配置表转换")]
+    [MenuItem("Tools/金庸/配置表转换ALL")]
     public static void ConvertAllPojos()
     {
         ConfigTable.InitSync();
@@ -18,10 +19,56 @@ public class Jyx2PojoToScriptTool : Editor
         ConvertSkills();
         ConvertItems();
         ConvertCharacters();
+        AssetDatabase.SaveAssets();
+    }
+    
+    [MenuItem("Tools/金庸/配置表转换（技能）")]
+    public static void ConvertSkillPojos()
+    {
+        ConfigTable.InitSync();
+
+        ConvertSkills();
+        AssetDatabase.SaveAssets();
+    }
+    
+    [MenuItem("Tools/金庸/配置表转换（道具）")]
+    public static void ConvertItemsPojos()
+    {
+        ConfigTable.InitSync();
+
+        ConvertItems();
+        AssetDatabase.SaveAssets();
+    }
+    
+    [MenuItem("Tools/金庸/配置表转换（角色）")]
+    public static void ConvertCharacterPojos()
+    {
+        ConfigTable.InitSync();
+        ConvertCharacters();
+        AssetDatabase.SaveAssets();
+    }
+    
+    [MenuItem("Tools/金庸/配置表转换（地图）")]
+    public static void ConvertMapsPojos()
+    {
+        ConfigTable.InitSync();
+
+        ConvertMaps();
+        AssetDatabase.SaveAssets();
+    }
+    
+    [MenuItem("Tools/金庸/配置表转换（战斗）")]
+    public static void ConvertBattlePojos()
+    {
+        ConfigTable.InitSync();
+
+        ConvertBattles();
+        AssetDatabase.SaveAssets();
     }
 
     static void ConvertItems()
     {
+        //先生成所有的道具
         foreach (var i in ConfigTable.GetAll<Jyx2Item>())
         {
             var c = ScriptableObject.CreateInstance<Jyx2ConfigItem>();
@@ -65,24 +112,46 @@ public class Jyx2PojoToScriptTool : Editor
             c.NeedMPType = (Jyx2ConfigCharacter.MpTypeEnum) i.NeedMPType;
 
             c.ConditionMp = i.ConditionMp;
-            c.ConditionAttack = i.ConditionMp;
-            c.ConditionQinggong = i.ConditionMp;
-            c.ConditionPoison = i.ConditionMp;
-            c.ConditionHeal = i.ConditionMp;
-            c.ConditionDePoison = i.ConditionMp;
-            c.ConditionQuanzhang = i.ConditionMp;
-            c.ConditionYujian = i.ConditionMp;
-            c.ConditionShuadao = i.ConditionMp;
-            c.ConditionQimen = i.ConditionMp;
+            c.ConditionAttack = i.ConditionAttack;
+            c.ConditionQinggong = i.ConditionQinggong;
+            c.ConditionPoison = i.ConditionPoison;
+            c.ConditionHeal = i.ConditionHeal;
+            c.ConditionDePoison = i.ConditionDePoison;
+            c.ConditionQuanzhang = i.ConditionQuanzhang;
+            c.ConditionYujian = i.ConditionYujian;
+            c.ConditionShuadao = i.ConditionShuadao;
+            c.ConditionQimen = i.ConditionQimen;
             c.ConditionAnqi = i.ConditionAnqi;
             c.ConditionIQ = i.ConditionIQ;
             c.NeedExp = i.NeedExp;
             c.GenerateItemNeedExp = i.GenerateItemNeedExp;
-            c.GenerateItemNeedCost = i.GenerateItemNeedCost;
             
-                
-            
+
             AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Items/{c.Id}_{c.Name}.asset");
+        }
+        
+        AssetDatabase.SaveAssets();
+        
+        //然后生成道具的引用
+        foreach (var i in ConfigTable.GetAll<Jyx2Item>())
+        {
+            var c = GetItemAsset(int.Parse(i.Id));
+
+            //需材料
+            if (i.GenerateItemNeedCost >= 0)
+            {
+                c.GenerateItemNeedCost = GetItemAsset(i.GenerateItemNeedCost);    
+            }
+
+            c.GenerateItems = new List<Jyx2ConfigCharacterItem>();
+            foreach (var item in i.GenerateItems)
+            {
+                if (item.Count == 0 || item.Id < 0) continue;
+                Jyx2ConfigCharacterItem generateItem = new Jyx2ConfigCharacterItem();
+                generateItem.Item = GetItemAsset(item.Id);
+                generateItem.Count = item.Count;
+                c.GenerateItems.Add(generateItem);
+            }
         }
     }
     
@@ -178,17 +247,122 @@ public class Jyx2PojoToScriptTool : Editor
                 string path = $"Assets/BuildSource/Jyx2RoleModelAssets/{mapping.ModelAsset}.asset";
                 c.Model = AssetDatabase.LoadAssetAtPath<ModelAsset>(path);
             }
-            
+
+            //生成携带道具
+            c.Items = new List<Jyx2ConfigCharacterItem>();
+            foreach (var item in r.Items)
+            {
+                if (item.Count == 0 || item.Id < 0) continue;
+                Jyx2ConfigCharacterItem generateItem = new Jyx2ConfigCharacterItem();
+                generateItem.Item = GetItemAsset(item.Id);
+                generateItem.Count = item.Count;
+                c.Items.Add(generateItem);
+            }
             
             AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Characters/{r.Id}_{r.Name}.asset");
         }
     }
 
+    static void ConvertMaps()
+    {
+        foreach (var map in ConfigTable.GetAll<GameMap>())
+        {
+            if (string.IsNullOrEmpty(map.Jyx2MapId)) continue;
+
+            var jyx2Map = ConfigTable.Get<Jyx2Map>(map.Jyx2MapId);
+            Assert.IsNotNull(jyx2Map);
+            
+            var c = ScriptableObject.CreateInstance<Jyx2ConfigMap>();
+
+            c.Id = int.Parse(jyx2Map.Id);
+            c.Name = jyx2Map.Name; 
+                
+            //地图引用
+            var sceneAsset = AssetDatabase.GUIDFromAssetPath($"Assets/Jyx2Scenes/{map.Key}.unity");
+            Assert.IsNotNull(sceneAsset);
+            c.MapScene = new AssetReference(sceneAsset.ToString());
+             
+            //音乐引用
+            c.InMusic = GetAudioClip(jyx2Map.InMusic);
+            c.OutMusic = GetAudioClip(jyx2Map.OutMusic);
+
+            c.EnterCondition = jyx2Map.EnterCondition;
+            c.Tags = map.Tags;
+            
+            AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Maps/{c.Id}_{c.Name}.asset");
+        }
+    }
+
+    static void ConvertBattles()
+    {
+        foreach (var b in ConfigTable.GetAll<Jyx2Battle>())
+        {
+            var c = ScriptableObject.CreateInstance<Jyx2ConfigBattle>();
+
+            c.Id = int.Parse(b.Id);
+            c.Name = b.Name;
+            
+            //地图引用
+            var sceneAsset = AssetDatabase.GUIDFromAssetPath($"Assets/Jyx2BattleScene/Jyx2Battle_{b.MapId}.unity");
+            Assert.IsNotNull(sceneAsset);
+            c.MapScene = new AssetReference(sceneAsset.ToString());
+            
+            c.Music = GetAudioClip(b.Music);
+
+            c.Exp = b.Exp;
+
+            c.TeamMates = new List<Jyx2ConfigCharacter>();
+            foreach (var role in b.TeamMates)
+            {
+                if (role.Value == -1) continue;
+                var asset = GetCharacterAsset(role.Value);
+                Assert.IsNotNull(asset);
+                c.TeamMates.Add(asset);
+            }
+            
+            c.AudioTeamMates = new List<Jyx2ConfigCharacter>();
+            foreach (var role in b.AutoTeamMates)
+            {
+                if (role.Value == -1) continue;
+                var asset = GetCharacterAsset(role.Value);
+                Assert.IsNotNull(asset);
+                c.AudioTeamMates.Add(asset);
+            }
+            
+            AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Battles/{c.Id}_{c.Name}.asset");
+        }
+    }
+
+    
     static Jyx2ConfigSkill GetSkillAsset(int id)
     {
         var pojo = ConfigTable.Get<Jyx2Skill>(id);
         var asset = AssetDatabase.LoadAssetAtPath<Jyx2ConfigSkill>(
             $"Assets/BuildSource/Configs/Skills/{id}_{pojo.Name}.asset");
         return asset;
+    }
+
+    static Jyx2ConfigItem GetItemAsset(int id)
+    {
+        var pojo = ConfigTable.Get<Jyx2Item>(id);
+        var asset = AssetDatabase.LoadAssetAtPath<Jyx2ConfigItem>(
+            $"Assets/BuildSource/Configs/Items/{id}_{pojo.Name}.asset");
+        return asset;
+    }
+    
+    static Jyx2ConfigCharacter GetCharacterAsset(int id)
+    {
+        var pojo = ConfigTable.Get<Jyx2Role>(id);
+        var asset = AssetDatabase.LoadAssetAtPath<Jyx2ConfigCharacter>(
+            $"Assets/BuildSource/Configs/Characters/{id}_{pojo.Name}.asset");
+        return asset;
+    }
+
+    static AssetReferenceT<AudioClip> GetAudioClip(int id)
+    {
+        if (id == -1) return null;
+        var audioClip = AssetDatabase.GUIDFromAssetPath($"Assets/BuildSource/Musics/{id}.mp3");
+        Assert.IsNotNull(audioClip);
+        return new AssetReferenceT<AudioClip>(audioClip.ToString());
     }
 }

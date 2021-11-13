@@ -52,9 +52,9 @@ namespace Jyx2Configs
         public List<Jyx2ConfigCharacterSkill> Skills;
         
         /* ------- 分割线 --------*/
-        [InlineEditor]
-        [BoxGroup(CGroupItems)] [LabelText("携带道具")][SerializeReference]
+        [BoxGroup(CGroupItems)] [LabelText("携带道具")][TableList]
         public List<Jyx2ConfigCharacterItem> Items;
+
         
         /* ------- 分割线 --------*/
 
@@ -145,7 +145,7 @@ namespace Jyx2Configs
     [Serializable]
     public class Jyx2ConfigCharacterSkill
     {
-        [LabelText("武功")][SerializeReference]
+        [LabelText("武功")][SerializeReference][InlineEditor]
         public Jyx2ConfigSkill Skill;
 
         [LabelText("等级")] 
@@ -153,10 +153,10 @@ namespace Jyx2Configs
     }
     
     [Serializable]
-    public class Jyx2ConfigCharacterItem : ScriptableObject
+    public class Jyx2ConfigCharacterItem
     {
-        [LabelText("道具")] 
-        public Jyx2ConfigItem Skill;
+        [LabelText("道具")][SerializeReference][InlineEditor]
+        public Jyx2ConfigItem Item;
 
         [LabelText("数量")] 
         public int Count;

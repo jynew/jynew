@@ -182,12 +182,15 @@ namespace Jyx2Configs
         [BoxGroup(CONDITION_GROUP)][LabelText("需经验")]
         public int NeedExp;
 
+        [ShowIf(nameof(IsItemBook))]
         [BoxGroup(EFFECT_GROUP)][LabelText("练出物品需经验")]
         public int GenerateItemNeedExp;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("需材料")]
-        public int GenerateItemNeedCost;
+        [ShowIf(nameof(IsItemBook))]
+        [BoxGroup(EFFECT_GROUP)][LabelText("需材料")][SerializeReference]
+        public Jyx2ConfigItem GenerateItemNeedCost;
 
+        [ShowIf(nameof(IsItemBook))]
         [BoxGroup(EFFECT_GROUP)][LabelText("练出物品")]
         [TableList]
         public List<Jyx2ConfigCharacterItem> GenerateItems;
