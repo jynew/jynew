@@ -14,6 +14,7 @@ using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,7 @@ public class ShopUIItem : MonoBehaviour
     Text itemNum;
     Text totalCost;
 
-    Jyx2ShopItem shopItem;
+    Jyx2ConfigShopItem shopItem;
     int buyCount;
     int index;
     int leftNum;
@@ -49,23 +50,20 @@ public class ShopUIItem : MonoBehaviour
         reduceBtn.onClick.AddListener(OnReduceBtnClick);
     }
 
-    public async UniTaskVoid Refresh(Jyx2ShopItem shopItem, int index, int hasBuyNum) 
+    public async UniTaskVoid Refresh(Jyx2ConfigShopItem shopItem, int index, int hasBuyNum) 
     {
         this.index = index;
         this.shopItem = shopItem;
-        Jyx2Item item = ConfigTable.Get<Jyx2Item>(shopItem.Id);
-        if (item == null) 
-        {
-            GameUtil.LogError("查询不到物品配置，id =" + shopItem.Id);
-            return;
-        }
-        
+        Jyx2ConfigItem item = shopItem.Item;
+
         desText.text = $"{item.Name}\n价格：{shopItem.Price}";
         leftNum = shopItem.Count - hasBuyNum;
         leftNum = Tools.Limit(leftNum,0,shopItem.Count);
         itemNum.text = leftNum.ToString();
+
+        await iconImg.LoadAsync(item.Pic);
         
-        var sprite = await Jyx2ResourceHelper.LoadItemSprite(int.Parse(item.Id));
+        var sprite = await Jyx2ResourceHelper.LoadItemSprite(item.Id);
         if (sprite != null)
         {
             iconImg.sprite = sprite;

@@ -10,6 +10,7 @@
 using HSFrameWork.Common;
 using ProtoBuf;
 using System.Xml.Serialization;
+using Jyx2Configs;
 
 namespace Jyx2
 {
@@ -18,19 +19,16 @@ namespace Jyx2
     {
         #region 行为结果
         //移动到的位置
-        [ProtoMember(1)]
         [XmlAttribute]
         public int MoveX;
-
-        [ProtoMember(2)]
+        
         [XmlAttribute]
         public int MoveY;
 
         //使用的招式
         [XmlIgnore]
         public BattleZhaoshiInstance Zhaoshi;
-
-        [ProtoMember(3)]
+        
         [XmlAttribute("skill")]
         public string zhaoshiPK
         {
@@ -43,10 +41,9 @@ namespace Jyx2
         }
 
         //攻击坐标
-        [ProtoMember(4)]
         [XmlAttribute]
         public int AttackX;
-        [ProtoMember(5)]
+
         [XmlAttribute]
         public int AttackY;
 
@@ -55,9 +52,8 @@ namespace Jyx2
         public bool IsRest;
 
         //使用的道具
-        [ProtoMember(6)]
         [XmlAttribute]
-        public Jyx2Item Item;
+        public Jyx2ConfigItem Item;
         #endregion
 
 

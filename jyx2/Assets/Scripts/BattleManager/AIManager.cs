@@ -15,6 +15,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Jyx2Configs;
 using UnityEngine;
 
 //AI计算相关
@@ -102,7 +103,7 @@ public class AIManager
         //考虑吃药
         if (role.Items.Count > 0 && (role.Hp < 0.2 * role.MaxHp || role.Mp < 0.2 * role.MaxMp || role.Tili < 0.2 * GameConst.MAX_ROLE_TILI))
         {
-            List<Jyx2Item> items = GetAvailableItems(role, 3); //只使用药物
+            List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
             foreach(var item in items)
             {
                 double score = 0;
@@ -140,7 +141,7 @@ public class AIManager
             }
         }
 
-        List<Jyx2Item> anqis = GetAvailableItems(role, 4); //获取暗器
+        List<Jyx2ConfigItem> anqis = GetAvailableItems(role, 4); //获取暗器
         //使用暗器
         if(anqis.Count > 0)
         {
@@ -479,22 +480,22 @@ public class AIManager
             int defence = r2.Defence + totalWuxue2;
             if (r1.Weapon >= 0)
             {
-                var i = ConfigTable.Get<Jyx2Item>(r1.Weapon);
+                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r1.Weapon);
                 attack += i.Attack;
             }
             if (r1.Armor >= 0)
             {
-                var i = ConfigTable.Get<Jyx2Item>(r1.Armor);
+                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r1.Armor);
                 attack += i.Attack;
             }
             if (r2.Weapon >= 0)
             {
-                var i = ConfigTable.Get<Jyx2Item>(r2.Weapon);
+                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r2.Weapon);
                 defence += i.Defence;
             }
             if (r2.Armor >= 0)
             {
-                var i = ConfigTable.Get<Jyx2Item>(r2.Armor);
+                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r2.Armor);
                 defence += i.Defence;
             }
 
@@ -548,7 +549,7 @@ public class AIManager
             rst.damage = v;
             return rst;
         }
-        else if (magic.DamageType == 1) //吸内
+        else if ((int)magic.DamageType == 1) //吸内
         {
             var levelInfo = skill.Data.GetSkillLevelInfo();
             
@@ -575,22 +576,22 @@ public class AIManager
             
             return rst;
         }
-        else if (magic.DamageType == 2) //用毒 -GameUtil::usePoison
+        else if ((int)magic.DamageType == 2) //用毒 -GameUtil::usePoison
         {
             rst.poison = usePoison(r1, r2);
             return rst;
         }
-        else if (magic.DamageType == 3) //解毒
+        else if ((int)magic.DamageType == 3) //解毒
         {
             rst.depoison = detoxification(r1, r2);
             return rst;
         }
-        else if (magic.DamageType == 4) //治疗
+        else if ((int)magic.DamageType == 4) //治疗
         {
             rst.heal = medicine(r1, r2);
             return rst;
         }
-        else if (magic.DamageType == 5) //暗器
+        else if ((int)magic.DamageType == 5) //暗器
         {
             var anqi = skill.Anqi;
             rst.damage = hiddenWeapon(r1, r2, anqi);
@@ -604,13 +605,13 @@ public class AIManager
         return null;
     }
 
-    List<Jyx2Item> GetAvailableItems(RoleInstance role, int itemType)
+    List<Jyx2ConfigItem> GetAvailableItems(RoleInstance role, int itemType)
     {
-        List<Jyx2Item> items = new List<Jyx2Item>();
+        List<Jyx2ConfigItem> items = new List<Jyx2ConfigItem>();
         foreach (var item in role.Items)
         {
-            var tmp = ConfigTable.Get<Jyx2Item>(item.Id);
-            if (tmp.ItemType == itemType)
+            var tmp = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id);
+            if ((int)tmp.ItemType == itemType)
                 items.Add(tmp);
         }
         return items;
@@ -645,7 +646,7 @@ public class AIManager
 
     //暗器
     //返回值为一正数
-    int hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2Item anqi)
+    int hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2ConfigItem anqi)
     {
         int v = r1.Anqi - anqi.AddHp;
         int dis = r1.Pos.GetDistance(r2.Pos);

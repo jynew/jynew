@@ -65,7 +65,9 @@ public partial class BattleActionOrderPanel:Jyx2_UIBase
                 continue;
             Image icon = itemTrans.Find("Mask/MainIcon").GetComponent<Image>();
             Text qingong = itemTrans.Find("Qingong").GetComponent<Text>();
-            Jyx2ResourceHelper.GetRoleHeadSprite(role, icon);
+            
+            icon.LoadAsyncForget(role.Data.Pic);
+            
             qingong.text = string.Format($"轻功:{role.Qinggong}");
 
             Vector3 scale = i==0 ? new Vector3(1.2f,1.2f,1.0f):Vector3.one;

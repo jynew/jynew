@@ -15,6 +15,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using HSFrameWork.ConfigTable;
 using System;
+using Jyx2Configs;
 
 public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
 {
@@ -100,7 +101,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
     {
         if (id == -1) return;
 
-        var item = ConfigTable.Get<Jyx2Item>(id);
+        var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
         if (item == null)
         {
             Debug.LogError("use item error, id=" + id);
@@ -108,7 +109,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         }
 
         //剧情类和暗器不能使用
-        if (item.ItemType == 0 || item.ItemType == 4)
+        if ((int)item.ItemType == 0 || (int)item.ItemType == 4)
         {
             GameUtil.DisplayPopinfo("此道具不能在此使用");
             return;
@@ -123,10 +124,10 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             if (selectRole.CanUseItem(id))
             {
                 //装备
-                if (item.ItemType == 1)
+                if ((int)item.ItemType == 1)
                 {
                     //武器
-                    if (item.EquipmentType == 0)
+                    if ((int)item.EquipmentType == 0)
                     {
                         if (item.User != -1)
                         {
@@ -141,7 +142,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                         item.User = selectRole.GetJyx2RoleId();
                     }
                     //防具
-                    else if (item.EquipmentType == 1)
+                    else if ((int)item.EquipmentType == 1)
                     {
                         if (item.User != -1)
                         {
@@ -157,7 +158,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                     }
                 }
                 //修炼
-                else if (item.ItemType == 2)
+                else if ((int)item.ItemType == 2)
                 {
                     if (item.User != -1)
                     {
@@ -176,7 +177,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                     item.User = selectRole.GetJyx2RoleId();
                 }
                 //药品
-                else if (item.ItemType == 3)
+                else if ((int)item.ItemType == 3)
                 {
                     selectRole.UseItem(item);
                     runtime.AddItem(id, -1);

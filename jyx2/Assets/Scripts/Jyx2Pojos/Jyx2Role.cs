@@ -150,9 +150,6 @@ namespace Jyx2
         [XmlElement("Items")]
         public List<Jyx2RoleItem> Items; //道具
 
-		
-
-
         //待适配
         public string Tag = "";
     }

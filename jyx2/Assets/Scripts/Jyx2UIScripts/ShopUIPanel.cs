@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using System.Linq;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
 {
     ChildGoComponent childMgr;
     int curShopId;
-    Jyx2Shop curShopData;
+    Jyx2ConfigShop curShopData;
     int curSelectIndex = 0;
     ShopUIItem curSelectItem;
 	Action callback;
@@ -70,7 +71,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
         base.OnShowPanel(allParams);
         //curShopId = (int)allParams[0];
 		curShopId=int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
-        curShopData = ConfigTable.Get<Jyx2Shop>(curShopId);
+        curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
 
         curSelectIndex = 0;
         RefreshChild();
@@ -100,9 +101,9 @@ public partial class ShopUIPanel:Jyx2_UIBase
         for (int i = 0; i < childList.Count; i++)
         {
             Transform trans = childList[i];
-            Jyx2ShopItem data = curShopData.ShopItems[i];
+            var data = curShopData.ShopItems[i];
             ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
-            int currentNum = GetHasBuyNum(data.Id);
+            int currentNum = GetHasBuyNum(data.Item.Id);
             uiItem.Refresh(data, i, currentNum);
             uiItem.SetSelect(curSelectIndex == i);
             if (curSelectIndex == i)
@@ -118,7 +119,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
             return;
         }
         ItemDes_RectTransform.gameObject.SetActive(true);
-        string mainText = UIHelper.GetItemDesText(curShopData.ShopItems[curSelectIndex].Id);
+        string mainText = UIHelper.GetItemDesText(curShopData.ShopItems[curSelectIndex].Item);
         DesText_Text.text = mainText;
     }
 
@@ -149,8 +150,8 @@ public partial class ShopUIPanel:Jyx2_UIBase
         int count = curSelectItem.GetBuyCount();
         if (count <= 0)
             return;
-        Jyx2ShopItem item = curShopData.ShopItems[curSelectItem.GetIndex()];
-        Jyx2Item itemCfg = ConfigTable.Get<Jyx2Item>(item.Id);
+        Jyx2ConfigShopItem item = curShopData.ShopItems[curSelectItem.GetIndex()];
+        Jyx2ConfigItem itemCfg = item.Item;
         if (itemCfg == null)
             return;
         int moneyCost = count * item.Price;
@@ -159,8 +160,8 @@ public partial class ShopUIPanel:Jyx2_UIBase
             GameUtil.DisplayPopinfo("持有银两不足");
             return;
         }
-        runtime.AddItem(item.Id, count);
-        AddBuyCount(item.Id, count);
+        runtime.AddItem(itemCfg.Id, count);
+        AddBuyCount(itemCfg.Id, count);
         GameUtil.DisplayPopinfo($"购买{itemCfg.Name},数量{count}");
         runtime.AddItem(GameConst.MONEY_ID, -moneyCost);
 

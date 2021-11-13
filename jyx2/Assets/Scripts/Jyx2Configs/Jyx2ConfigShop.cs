@@ -11,7 +11,7 @@ namespace Jyx2Configs
     public class Jyx2ConfigShop : Jyx2ConfigBase
     {
         [LabelText("韦小宝触发器名")] 
-        public string Trigger;
+        public int Trigger;
 
         [LabelText("商品列表")][TableList] 
         public List<Jyx2ConfigShopItem> ShopItems;

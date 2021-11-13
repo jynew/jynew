@@ -88,7 +88,8 @@ public partial class SelectRolePanel:Jyx2_UIBase
 		}
         TitleText_Text.text = m_params.title;
         ShowBtns();
-        RefreshScroll();
+        
+        RefreshScroll().Forget();
     }
 
     void ShowBtns() 
@@ -96,7 +97,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
         CancelBtn_Button.gameObject.SetActive(m_params.canCancel);
     }
 
-    void RefreshScroll() 
+    async UniTask RefreshScroll() 
     {
         HSUnityTools.DestroyChildren(RoleParent_RectTransform);
         if (m_params.roleList == null || m_params.roleList.Count <= 0)
@@ -165,7 +166,7 @@ public partial class SelectRolePanel:Jyx2_UIBase
         SelectRoleParams param = m_params;
         if (m_params.callback == null) //说明不需要回调 直接刷新面板
         {
-            RefreshScroll();
+            RefreshScroll().Forget();
         }
         else 
         {

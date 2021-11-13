@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
+using Jyx2;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -33,13 +34,29 @@ namespace Jyx2Configs
         private const string CONDITION_GROUP = "使用条件";
         
         [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("图标")]
-        public AssetReferenceTexture2D Pic; 
+        public AssetReferenceTexture2D Pic;
+
+        private Sprite _sprite;
+        public async UniTask<Sprite> GetPic()
+        {
+            if (Pic == null) return null;
+            if (_sprite == null)
+            {
+                _sprite = await Addressables.LoadAssetAsync<Sprite>(Pic).Task;
+            }
+            return _sprite;
+        }
         
         [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("物品说明")]
         public string Desc; 
         
         [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("物品类型")][EnumPaging]
         public Jyx2ConfigItemType ItemType; 
+        
+        public Jyx2ItemType GetItemType()
+        {
+            return (Jyx2ItemType) ((int)ItemType);
+        }
         
         [ShowIf(nameof(ShowEquipmentType))]
         [BoxGroup(DEFAULT_GROUP_NAME)] [LabelText("装备类型")][EnumToggleButtons] 
@@ -197,6 +214,23 @@ namespace Jyx2Configs
         public override async UniTask WarmUp()
         {
             
+        }
+        
+        /// <summary>
+        /// 这个代码实现太丑陋，需要重构
+        /// </summary>
+        public int User
+        {
+            get
+            {
+                if (!GameRuntimeData.Instance.ItemUser.ContainsKey(Id.ToString()))
+                    return -1;
+                return GameRuntimeData.Instance.ItemUser[Id.ToString()];
+            }
+            set
+            {
+                GameRuntimeData.Instance.ItemUser[Id.ToString()] = value;
+            }
         }
     }
 }

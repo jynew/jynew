@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -32,4 +33,15 @@ public class GlobalAssetConfig : ScriptableObject
 
     [BoxGroup("游戏相机配置")] [LabelText("默认过肩视角相机")]
     public GameObject vcam3rdPrefab;
+
+    [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
+    [HideLabel]
+    public List<StoryIdNameFix> StoryIdNameFixes;
+}
+
+[Serializable]
+public class StoryIdNameFix
+{
+    [LabelText("ID")] public int Id;
+    [LabelText("姓名")] public string Name;
 }

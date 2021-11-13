@@ -37,8 +37,8 @@ public class Jyx2RoleHeadUI : MonoBehaviour
         _role = role;
         _clickCallback = clickCallback;
 
-        Jyx2ResourceHelper.GetRoleHeadSprite(role, headImage);
-
+        headImage.LoadAsyncForget(role.Data.Pic);
+        
         IsChecked = forceChecked;
     }
 

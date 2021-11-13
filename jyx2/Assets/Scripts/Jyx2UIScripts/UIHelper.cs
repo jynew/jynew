@@ -12,6 +12,7 @@ using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Jyx2Configs;
 using UnityEngine;
 
 public class UIHelper
@@ -21,7 +22,7 @@ public class UIHelper
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public static Dictionary<int, int> GetItemEffect(Jyx2Item item) 
+    public static Dictionary<int, int> GetItemEffect(Jyx2ConfigItem item) 
     {
         Dictionary<int, int> result = new Dictionary<int, int>();
         if (item.AddHp != 0)//加血
@@ -58,8 +59,8 @@ public class UIHelper
             result.Add(12, item.Anqi);
         if (item.Wuxuechangshi != 0)//武学常识
             result.Add(21, item.Wuxuechangshi);
-        if (item.AttackFreq != 0)//左右互搏
-            result.Add(24, item.AttackFreq);
+        if (item.Zuoyouhubo != 0)//左右互搏
+            result.Add(24, item.Zuoyouhubo);
         if (item.AttackPoison != 0)//攻击带毒
             result.Add(23, item.AttackPoison);
         if (item.ChangePoisonLevel != 0)//中毒解毒
@@ -73,7 +74,7 @@ public class UIHelper
     /// 获取使用物品的需求 //NeedMPType; 
     /// </summary>
     /// <param name="item"></param>
-    public static Dictionary<int, int> GetUseItemRequire(Jyx2Item item) 
+    public static Dictionary<int, int> GetUseItemRequire(Jyx2ConfigItem item) 
     {
         Dictionary<int, int> result = new Dictionary<int, int>();
         if (item.ConditionMp > 0)
@@ -106,7 +107,7 @@ public class UIHelper
     }
 
     //效果
-    static string GetEffectText(Jyx2Item item)
+    static string GetEffectText(Jyx2ConfigItem item)
     {
         Dictionary<int, int> effects = UIHelper.GetItemEffect(item);
         StringBuilder sb = new StringBuilder();
@@ -122,7 +123,7 @@ public class UIHelper
     }
 
     //使用要求
-    static string GetUseRquire(Jyx2Item item)
+    static string GetUseRquire(Jyx2ConfigItem item)
     {
         Dictionary<int, int> effects = UIHelper.GetUseItemRequire(item);
         StringBuilder sb = new StringBuilder();
@@ -141,16 +142,15 @@ public class UIHelper
     }
 
     //产出
-    static string GetOutPut(Jyx2Item item)
+    static string GetOutPut(Jyx2ConfigItem item)
     {
-        List<Jyx2RoleItem> items = item.GenerateItems;
-        if (items == null || items.Count <= 0)
+        if (item.GenerateItems == null)
             return "";
+        
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < items.Count; i++)
+        foreach (var tempItem in item.GenerateItems)
         {
-            Jyx2RoleItem tempItem = items[i];
-            Jyx2Item cfg = ConfigTable.Get<Jyx2Item>(tempItem.Id);
+            var cfg = tempItem.Item;
             if (cfg == null)
                 continue;
             sb.Append($"{cfg.Name}:  {tempItem.Count}\n");
@@ -160,24 +160,23 @@ public class UIHelper
     }
 
     //需要物品
-    static string GetNeedItem(Jyx2Item item)
+    static string GetNeedItem(Jyx2ConfigItem item)
     {
         StringBuilder sb = new StringBuilder();
         if (item.GenerateItemNeedExp > 0)
         {
             sb.Append($"练出物品需经验:  {item.GenerateItemNeedExp}\n");
         }
-        if (item.GenerateItemNeedCost > 0)
+        
+        if (item.GenerateItemNeedCost != null)
         {
-            Jyx2Item cfg = ConfigTable.Get<Jyx2Item>(item.GenerateItemNeedCost);
-            if (cfg != null)
-                sb.Append($"材料:  {cfg.Name}\n");
+            sb.Append($"材料:  {item.GenerateItemNeedCost.Name}\n");
         }
 
         return sb.ToString();
     }
 
-    static string GetItemDesText(Jyx2Item item)
+    public static string GetItemDesText(Jyx2ConfigItem item)
     {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.Append($"<size=35><color=#FFDB00>{item.Name}</color></size>\n");
@@ -216,17 +215,6 @@ public class UIHelper
         }
 
         return strBuilder.ToString();
-    }
-
-    public static string GetItemDesText(int itemId) 
-    {
-        Jyx2Item item = ConfigTable.Get<Jyx2Item>(itemId);
-        if (item == null) 
-        {
-            GameUtil.LogError("配置表错误，查询不到物品，itemid=" + itemId);
-            return "";
-        }
-        return GetItemDesText(item);
     }
 }
  

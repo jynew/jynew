@@ -443,11 +443,18 @@ public class MapRole : Jyx2AnimationBattleRole
     public async UniTask RefreshModel()
     {
         if (DataInstance == null) return;
+        
+        if (Application.isPlaying)
+        {
+            //销毁所有的孩子
+            HSUnityTools.DestroyChildren(transform);
+        }
 
-        if (string.IsNullOrEmpty(DataInstance.ModelAsset)) return;
+        if (modelAsset == null) return;
         
-        await RefreshModelByModelAvata(DataInstance.ModelAsset);
-        
+        ModelView = Instantiate(modelAsset.m_View, gameObject.transform, false);
+        ModelView.transform.localPosition = Vector3.zero;
+
         var animator = GetAnimator();
         if (animator != null)
         {
@@ -505,88 +512,22 @@ public class MapRole : Jyx2AnimationBattleRole
         
         m_CurrentWeapon.transform.localScale = Vector3.zero;
     }
-
-    private bool _isRefreshingModel = false;
-
+    
     private string modelId;
-    private ModelAsset modelAsset;
-    
-    async UniTask RefreshModelByModelAvata(string modelAvataCode)
+
+    private ModelAsset modelAsset
     {
-        if (_isRefreshingModel)
+        get
         {
-            //Debug.LogError("代码编写错误：重复调用了同一个RefreshModelByModelAvata");
-            return;
+            return DataInstance.Data.Model;
         }
-        _isRefreshingModel = true;
-        var tmp = modelAvataCode.Split('#');
-
-        string modelId = tmp[0];
-        string weaponId = "";
-        if(tmp.Length >= 2)
-        {
-            weaponId = tmp[1];
-        }
-
-        if (modelId == String.Empty)
-        {
-            _isRefreshingModel = false;
-            return;
-        }
-
-        //跟当前一致，不需要替换
-        if (this.modelId == modelId)
-        {
-            _isRefreshingModel = false;
-            return;
-        }
-
-        this.modelId = modelId;
-        await OnChange();
-        _isRefreshingModel = false;
     }
+
+    private GameObject ModelView;
     
-    async UniTask OnChange()
-    {
-        if (Application.isPlaying)
-        {
-            //销毁所有的孩子
-            HSUnityTools.DestroyChildren(transform);
-        }
-        else
-        {
-            int childCount = transform.childCount;
-            for (int i = childCount - 1; i >= 0; --i)
-            {
-                var go = transform.GetChild(i).gameObject;
-                go.SetActive(false);
-                DestroyImmediate(go);
-            }
-            transform.DetachChildren();
 
-            //适应老的代码。。清理残留的合并Mesh
-            var oldMesh = GetComponent<SkinnedMeshRenderer>();
-            if (oldMesh != null)
-            {
-                DestroyImmediate(oldMesh);
-            }
-        }
-
-        string path = $"Assets/BuildSource/Jyx2RoleModelAssets/{modelId}.asset";
-
-        var modelAsset = await Addressables.LoadAssetAsync<ModelAsset>(path).Task;
-        if (modelAsset == null) return;
-        var modelView = Instantiate(modelAsset.m_View);
-        modelView.transform.SetParent(gameObject.transform, false);
-        modelView.transform.localPosition = Vector3.zero;
-        DataInstance.Model = modelAsset;
-        
-        var animator = GetComponent<Animator>();
-        if(animator != null)
-            animator.enabled = false;
-
-        this.modelAsset = modelAsset;
-    }
+    
+    
     #region 角色残影
 
     GhostShadow m_ghostShadow;

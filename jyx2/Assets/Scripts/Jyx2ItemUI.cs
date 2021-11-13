@@ -13,6 +13,7 @@ using Cysharp.Threading.Tasks;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Jyx2;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,9 +36,9 @@ public class Jyx2ItemUI : MonoBehaviour
 
     private int _id;
 
-    public Jyx2Item GetItem()
+    public Jyx2ConfigItem GetItem()
     {
-        return ConfigTable.Get<Jyx2Item>(_id);
+        return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(_id);
     }
 
     private async UniTaskVoid Show(int id,int count)
@@ -45,9 +46,9 @@ public class Jyx2ItemUI : MonoBehaviour
         _id = id;
         var item = GetItem();//0-阴性内力，1-阳性内力，2-中性内力
         var color =
-            item.ItemType == 2
-                ? item.NeedMPType == 2 ? ColorStringDefine.Default :
-                item.NeedMPType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0
+            (int)item.ItemType == 2
+                ? (int)item.NeedMPType == 2 ? ColorStringDefine.Default :
+                (int)item.NeedMPType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0
                 : ColorStringDefine.Default;
         
         m_NameText.text = $"<color={color}>{item.Name}</color>";

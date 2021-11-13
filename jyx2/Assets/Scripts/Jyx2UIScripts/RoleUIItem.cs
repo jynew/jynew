@@ -12,6 +12,7 @@ using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,7 +52,7 @@ public class RoleUIItem : MonoBehaviour
 
         ShowProperty();
 
-        Jyx2ResourceHelper.GetRoleHeadSprite(role, m_roleHead);
+        m_roleHead.LoadAsyncForget(role.Data.Pic);
     }
 
     void ShowProperty() 

@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Jyx2Configs;
+using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 
 public enum ChatType 
@@ -84,19 +85,15 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
     private GameObject _interactivePanel = null;
 
 
-    private async UniTask ShowCharacter(int roleId)
+    private async UniTask ShowCharacter(int headId)
     {
-        ChangePosition(roleId);
+        ChangePosition(headId);
 
-        var role = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(roleId);
-
+        var url = $"Assets/BuildSource/head/{headId}.png";
+        
         RoleHeadImage_Image.gameObject.SetActive(false);
-        if (role != null && role.Pic != null)
-        {
-            RoleHeadImage_Image.gameObject.SetActive(false);
-            RoleHeadImage_Image.sprite = await role.LoadPic();
-            RoleHeadImage_Image.gameObject.SetActive(true);
-        }
+        RoleHeadImage_Image.sprite = await Addressables.LoadAssetAsync<Sprite>(url).Task;
+        RoleHeadImage_Image.gameObject.SetActive(true);
     }
 
     //根据对话框最大显示字符以及标点断句分段显示对话 by eaphone at 2021/6/12
@@ -138,7 +135,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 		MainContent_Text.text = finalS;
     }
 
-    public void Show(int roleId, string msg, int type, Action callback)
+    public void Show(int headId, string msg, int type, Action callback)
     {
         _currentText = $"{msg}";
         _callback = callback;
@@ -154,48 +151,63 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         }
         else
         {
-            ShowCharacter(roleId).Forget();
+            ShowCharacter(headId).Forget();
         }
         ShowText();
     }
+
+    string GetRoleName(int headId)
+    {
+        //主角名定制
+        if (headId == 0 && GameRuntimeData.Instance.Player != null)
+        {
+            return GameRuntimeData.Instance.Player.Name;
+        }
+        
+        //先找替换修正的
+        if (GlobalAssetConfig.Instance.StoryIdNameFixes != null)
+        {
+            var find = GlobalAssetConfig.Instance.StoryIdNameFixes.SingleOrDefault(p => p.Id == headId);
+            if (find != null)
+            {
+                return find.Name;
+            }
+        }
+
+        //再从人物库找
+        var role = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(headId);
+        return role.Name;
+    }
+    
     //根据角色ID修改左右位置
-    public void ChangePosition(int roleId, bool ShowName = true)
+    public void ChangePosition(int headId, bool ShowName = true)
     {
         Name_RectTransform.gameObject.SetActive(ShowName);
         kuang_RectTransform.gameObject.SetActive(ShowName);
         if (ShowName)
         {
-            var role = ConfigTable.Get<Jyx2RoleHeadMapping>(roleId);
-            if (roleId == 0 && GameRuntimeData.Instance.Player != null)
-            {
-                NameTxt_Text.text = GameRuntimeData.Instance.Player.Name;
-            }
-            else
-            {
-                NameTxt_Text.text = role.ModelAsset;
-            }
+            NameTxt_Text.text = GetRoleName(headId);
         }
 
-
-        Content_RectTransform.anchoredPosition = roleId == 0 || !ShowName ? Vector3.zero : new Vector3(450, 0, 0);
+        Content_RectTransform.anchoredPosition = headId == 0 || !ShowName ? Vector3.zero : new Vector3(450, 0, 0);
 
         Content_RectTransform.sizeDelta = ShowName ? new Vector2(-450, 280) : new Vector2(0, 280);
 
 
-        HeadAvataPre_RectTransform.anchorMax = roleId == 0 ? Vector2.right : Vector2.zero;
-        HeadAvataPre_RectTransform.anchorMin = roleId == 0 ? Vector2.right : Vector2.zero;
-        HeadAvataPre_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
+        HeadAvataPre_RectTransform.anchorMax = headId == 0 ? Vector2.right : Vector2.zero;
+        HeadAvataPre_RectTransform.anchorMin = headId == 0 ? Vector2.right : Vector2.zero;
+        HeadAvataPre_RectTransform.pivot = headId == 0 ? Vector2.right : Vector2.zero;
         HeadAvataPre_RectTransform.anchoredPosition = Vector3.zero;
 
-        kuang_RectTransform.anchorMax = roleId == 0 ? Vector2.right : Vector2.zero;
-        kuang_RectTransform.anchorMin = roleId == 0 ? Vector2.right : Vector2.zero;
-        kuang_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
+        kuang_RectTransform.anchorMax = headId == 0 ? Vector2.right : Vector2.zero;
+        kuang_RectTransform.anchorMin = headId == 0 ? Vector2.right : Vector2.zero;
+        kuang_RectTransform.pivot = headId == 0 ? Vector2.right : Vector2.zero;
         kuang_RectTransform.anchoredPosition = Vector3.zero;
 
-        Name_RectTransform.anchorMax = roleId == 0 ? Vector2.right : Vector2.zero;
-        Name_RectTransform.anchorMin = roleId == 0 ? Vector2.right : Vector2.zero;
-        Name_RectTransform.pivot = roleId == 0 ? Vector2.right : Vector2.zero;
-        Name_RectTransform.anchoredPosition = new Vector2(roleId == 0 ? -450 : 450 , 280); 
+        Name_RectTransform.anchorMax = headId == 0 ? Vector2.right : Vector2.zero;
+        Name_RectTransform.anchorMin = headId == 0 ? Vector2.right : Vector2.zero;
+        Name_RectTransform.pivot = headId == 0 ? Vector2.right : Vector2.zero;
+        Name_RectTransform.anchoredPosition = new Vector2(headId == 0 ? -450 : 450 , 280); 
     }
     
     public void ShowSelection(string roleId, string msg, List<string> selectionContent, Action<int> callback)

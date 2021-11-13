@@ -14,6 +14,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using HSFrameWork.ConfigTable;
@@ -49,6 +50,11 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
         /*var curMap=GameRuntimeData.Instance.CurrentMap;
 		(LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);*/
+        DoRefresh();
+    }
+
+    void DoRefresh()
+    {
         RefreshScrollView();
         RefreshCurrent();
     }
@@ -77,7 +83,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             return;
         }
 
-        Jyx2ResourceHelper.GetRoleHeadSprite(m_currentRole, PreImage_Image);
         NameText_Text.text = m_currentRole.Name;
 
         InfoText_Text.text = GetInfoText(m_currentRole);
@@ -88,6 +93,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         ButtonHeal_Button.gameObject.SetActive(canDepoison);
         bool canHeal = m_currentRole.Heal > 0 && m_currentRole.Tili >= 10;
         ButtonDetoxicate_Button.gameObject.SetActive(canHeal);
+        
+        PreImage_Image.LoadAsyncForget(m_currentRole.Data.Pic);
     }
 
     void RefreshScrollView()
@@ -229,8 +236,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         m_roleList.Remove(m_currentRole);
         m_currentRole = GameRuntimeData.Instance.Player;
-        RefreshScrollView();
-        RefreshCurrent();
+        DoRefresh();
     }
 
     GameRuntimeData runtime
@@ -243,7 +249,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         SelectFromBag(
             (itemId) =>
             {
-                var item = ConfigTable.Get<Jyx2Item>(itemId);
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+                
                 //选择了当前使用的装备，则卸下
                 if (m_currentRole.Weapon == itemId)
                 {
@@ -268,7 +275,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         SelectFromBag(
             (itemId) =>
             {
-                var item = ConfigTable.Get<Jyx2Item>(itemId);
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
                 if (m_currentRole.Armor == itemId)
                 {
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
@@ -282,7 +289,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     item.User = m_currentRole.GetJyx2RoleId();
                 }
             },
-            (item) => { return item.EquipmentType == 1 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
+            (item) => { return (int)item.EquipmentType == 1 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
             m_currentRole.Armor);
     }
 
@@ -291,7 +298,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         SelectFromBag(
             (itemId) =>
             {
-                var item = ConfigTable.Get<Jyx2Item>(itemId);
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
                 if (m_currentRole.Xiulianwupin == itemId)
                 {
                     item.User = -1;
@@ -309,11 +316,11 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     item.User = m_currentRole.GetJyx2RoleId();
                 }
             },
-            (item) => { return item.ItemType == 2 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
+            (item) => { return (int)item.ItemType == 2 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
             m_currentRole.Xiulianwupin);
     }
 
-    void SelectFromBag(Action<int> Callback, Func<Jyx2Item, bool> filter, int current_itemId)
+    void SelectFromBag(Action<int> Callback, Func<Jyx2ConfigItem, bool> filter, int current_itemId)
     {
         Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), runtime.Items, new Action<int>((itemId) =>
         {
@@ -358,8 +365,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 m_currentRole.Tili -= 2;
             }
 
-            RefreshScrollView();
-            RefreshCurrent();
+            DoRefresh();
         };
 
         Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectParams);
@@ -389,8 +395,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 m_currentRole.Tili -= 2;
             }
 
-            RefreshScrollView();
-            RefreshCurrent();
+            DoRefresh();
         };
 
         Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectParams);

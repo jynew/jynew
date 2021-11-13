@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Battle;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -243,7 +244,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
     void OnUseItemClick()
     {
-        bool Filter(Jyx2Item item) => item.ItemType == 3 || item.ItemType == 4;
+        bool Filter(Jyx2ConfigItem item) => (int)item.ItemType == 3 || (int)item.ItemType == 4;
 
         Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
@@ -251,22 +252,22 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
             if (itemId == -1)
                 return;
 
-            var item = ConfigTable.Get<Jyx2Item>(itemId);
-            if (item.ItemType == 3) //使用道具逻辑
+            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            if ((int)item.ItemType == 3) //使用道具逻辑
             {
                 if (m_currentRole.CanUseItem(itemId))
                 {
                     TryCallback(new BattleLoop.ManualResult(){aiResult = new AIResult(){Item = item}});
                 }
             }
-            else if (item.ItemType == 4) //使用暗器逻辑
+            else if ((int)item.ItemType == 4) //使用暗器逻辑
             {
                 var zhaoshi = new AnqiZhaoshiInstance(m_currentRole.Anqi, item);
                 m_chooseBtn = true;
                 ShowAttackRangeSelector(zhaoshi);
             }
 
-        }), (Func<Jyx2Item, bool>) Filter);
+        }), (Func<Jyx2ConfigItem, bool>) Filter);
     }
 
     void OnWaitClick()

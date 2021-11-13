@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jyx2Configs;
 
 namespace Jyx2
 {
@@ -44,7 +45,7 @@ namespace Jyx2
             set;
         }
 
-        public Jyx2Item Anqi;
+        public Jyx2ConfigItem Anqi;
 
         public string Key;
 
@@ -109,7 +110,7 @@ namespace Jyx2
                 }
                 else
                 {
-                    role.AddItem(int.Parse(Anqi.Id), -1);
+                    role.AddItem(Anqi.Id, -1);
                 }
             }
         }
@@ -188,7 +189,7 @@ namespace Jyx2
 
         public virtual int GetDamageType()
         {
-            return Data.GetSkill().DamageType;
+            return (int)Data.GetSkill().DamageType;
         }
     }
 
@@ -314,7 +315,7 @@ namespace Jyx2
     {
         private const int ANQI_MAGIC_ID = 97;
 
-        public AnqiZhaoshiInstance(int lv, Jyx2Item item)
+        public AnqiZhaoshiInstance(int lv, Jyx2ConfigItem item)
         {
             //Key = "暗器_" + item.Name;
             Key = "暗器";

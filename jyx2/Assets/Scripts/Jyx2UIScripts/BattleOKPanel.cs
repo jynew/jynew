@@ -59,12 +59,12 @@ public partial class BattleOKPanel:Jyx2_UIBase
         //int damage = role.Attack + zhaoshi.Data.GetSkillLevelInfo(level_index).Attack / 3;
         //if (role.Weapon >= 0)
         //{
-        //    var i = ConfigTable.Get<Jyx2Item>(role.Weapon);
+        //    var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(role.Weapon);
         //    damage += i.Attack;
         //}
         //if (role.Armor >= 0)
         //{
-        //    var i = ConfigTable.Get<Jyx2Item>(role.Armor);
+        //    var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(role.Armor);
         //    damage += i.Attack;
         //}
         //DamageText_Text.text = $"{zhaoshi.Data.Name} Lv.{zhaoshi.Data.GetLevel()}";

@@ -12,6 +12,7 @@ using Jyx2;
 using Jyx2.Middleware;
 using HSFrameWork.ConfigTable;
 using HSFrameWork.SPojo;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ public class BagPanel : MonoBehaviour
     /// <param name="parent"></param>
     /// <param name="items"></param>
     /// <param name="selectCallback">如果取消，则返回-1</param>
-    public static void Create(Transform parent, SaveableNumberDictionary<int> items, Action<int> selectCallback = null, Func<Jyx2Item, bool> filter = null)
+    public static void Create(Transform parent, SaveableNumberDictionary<int> items, Action<int> selectCallback = null, Func<Jyx2ConfigItem, bool> filter = null)
     {
         var prefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/BagPanel.prefab");
         var obj = Instantiate(prefab);
@@ -63,7 +64,7 @@ public class BagPanel : MonoBehaviour
             {
                 if (currentItem != null)
                 {
-                    callback(int.Parse(currentItem.Id));
+                    callback(currentItem.Id);
                 }   
                 else
                 {
@@ -75,9 +76,9 @@ public class BagPanel : MonoBehaviour
         m_InfoText.text = "";
     }
 
-    private Jyx2Item currentItem = null;
+    private Jyx2ConfigItem currentItem = null;
 
-    public void Show(SaveableNumberDictionary<int> items, Action<int> selectCallback = null, Func<Jyx2Item, bool> filter = null)
+    public void Show(SaveableNumberDictionary<int> items, Action<int> selectCallback = null, Func<Jyx2ConfigItem, bool> filter = null)
     {
         HSUnityTools.DestroyChildren(m_Container);
         callback = selectCallback;
@@ -85,8 +86,9 @@ public class BagPanel : MonoBehaviour
         {
             string id = kv.Key;
             int count = kv.Value;
-
-            var item = ConfigTable.Get<Jyx2Item>(id);
+            
+            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
+            
             if(item == null)
             {
                 Debug.LogError("调用了错误的物品，id=" + id);

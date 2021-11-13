@@ -10,9 +10,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2;
 using HSFrameWork.ConfigTable;
+using Jyx2Configs;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -187,11 +189,11 @@ public class BigMapZone : MonoBehaviour
 		var isTalkedToWei = false;
 		if (isWeiAtCurMap != null && isWeiAtCurMap.activeSelf)
 		{
-			var hotelList = new List<Jyx2Shop>(ConfigTable.GetAll<Jyx2Shop>());
+			var hotelList = GameConfigDatabase.Instance.GetAll<Jyx2ConfigShop>().ToList();
 			LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
 			var ran = new System.Random();
 			var index = ran.Next(0, hotelList.Count);
-			while (cur.Jyx2MapId == hotelList[index].Id)
+			while (cur.Jyx2MapId == hotelList[index].Id.ToString())
 			{
 				index = ran.Next(0, hotelList.Count);
 			}
@@ -215,12 +217,12 @@ public class BigMapZone : MonoBehaviour
 
 			if (isTalkedToWei)
 			{
-				var curTriggerId = ConfigTable.Get<Jyx2Shop>(int.Parse(cur.Jyx2MapId)).Trigger;
+				var curTriggerId = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(int.Parse(cur.Jyx2MapId)).Trigger;
 				Debug.Log("transport Wei to " + hotelList[index].Id);
 				level.ReplaceSceneObject(cur.Jyx2MapId, weiPath, "0");
-				level.ReplaceSceneObject(hotelList[index].Id, weiPath, "1");
+				level.ReplaceSceneObject(hotelList[index].Id.ToString(), weiPath, "1");
 				GameRuntimeData.Instance.ModifyEvent(int.Parse(cur.Jyx2MapId), curTriggerId, -1, -1, -1);
-				GameRuntimeData.Instance.ModifyEvent(int.Parse(hotelList[index].Id), hotelList[index].Trigger, 937, -1,
+				GameRuntimeData.Instance.ModifyEvent(hotelList[index].Id, hotelList[index].Trigger, 937, -1,
 					-1);
 				LevelMaster.Instance.RefreshGameEvents();
 			}

@@ -248,7 +248,7 @@ public class BattleManager : MonoBehaviour
             {
                 role.ExpForItem += role.ExpGot;
             }
-            else if (practiseItem != null && role.GetWugongLevel(practiseItem.Wugong) <= 10)
+            else if (practiseItem != null && practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id) <= 10)
             {
                 role.Exp += role.ExpGot / 2;
                 role.ExpForItem += role.ExpGot / 2;
@@ -279,11 +279,11 @@ public class BattleManager : MonoBehaviour
                 change = 0;
 
                 //修炼秘籍
-                while (role.CanFinishedItem() && role.GetWugongLevel(practiseItem.Wugong) <= 10)
+                while (role.CanFinishedItem() && practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id) <= 10)
                 {
                     role.UseItem(practiseItem);
                     change++;
-                    var level = role.GetWugongLevel(practiseItem.Wugong);
+                    var level = role.GetWugongLevel(practiseItem.Skill.Id);
                     rst += $"{role.Name} 修炼 {practiseItem.Name} 成功\n";
                     if (level > 1) rst += $"{practiseItem.Name} 升为 " + level.ToString() + " 级\n";
                 }

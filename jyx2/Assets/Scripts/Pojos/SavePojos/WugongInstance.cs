@@ -47,7 +47,7 @@ namespace Jyx2
             GetSkill();
         }
 
-        public WugongInstance(Jyx2Item item, int magicId)
+        public WugongInstance(Jyx2ConfigItem item, int magicId)
         {
             Key = magicId;
             Level = 0;
@@ -75,18 +75,18 @@ namespace Jyx2
             return Level / 100 + 1;
         }
 
-        public Jyx2SkillLevel GetSkillLevelInfo(int level = -1)
+        public Jyx2ConfigSkillLevel GetSkillLevelInfo(int level = -1)
         {
             if(level < 1)
             {
                 level = GetLevel();
             }
-            if(level > _skill.SkillLevels.Count)
+            if(level > _skill.Levels.Count)
             {
                 Debug.LogError("skill level error");
                 return null;
             }
-            return _skill.SkillLevels[level - 1];
+            return _skill.Levels[level - 1];
         }
 
         public string Name
@@ -97,17 +97,16 @@ namespace Jyx2
             }
         }
 
-        public Jyx2Skill GetSkill(Jyx2Item _anqi = null)
+        public Jyx2ConfigSkill GetSkill(Jyx2ConfigItem _anqi = null)
         {
-            var skillT = ConfigTable.Get<Jyx2Skill>(Key);
+            var skillT = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(Key);
 
 			//暗器
 			if (_anqi != null)
 			{
-				skillT.Animation = _anqi.AnqiAnimation;
-				skillT.Poison = _anqi.ChangePoisonLevel;
+                skillT.Poison = _anqi.ChangePoisonLevel;
                 
-				foreach (Jyx2SkillLevel sl in _skill.SkillLevels)
+				foreach (var sl in _skill.Levels)
 				{
 					sl.Attack = Mathf.Abs(_anqi.AddHp);
 				}
@@ -120,8 +119,8 @@ namespace Jyx2
             _skill = null;
         }
 
-		Jyx2Skill skill;
-        Jyx2Skill _skill{
+        Jyx2ConfigSkill skill;
+        Jyx2ConfigSkill _skill{
 			get {
 				if(skill==null) skill=GetSkill();
 				return skill;
@@ -135,7 +134,7 @@ namespace Jyx2
         {
             get
             {
-                switch (_skill.SkillCoverType)
+                switch ((int)_skill.SkillCoverType)
                 {
                     case 0:
                         return SkillCoverType.POINT;
@@ -156,10 +155,10 @@ namespace Jyx2
         {
             get
             {
-                if (_skill.SkillCoverType == 1) //直线
+                if ((int)_skill.SkillCoverType == 1) //直线
                     return 1;
 
-                if (_skill.SkillCoverType == 2) //中心星型
+                if ((int)_skill.SkillCoverType == 2) //中心星型
                     return 0;
 
                 return GetSkillLevelInfo().SelectRange;
@@ -170,7 +169,7 @@ namespace Jyx2
         {
             get
             {
-                if (_skill.SkillCoverType == 1 || _skill.SkillCoverType == 2)
+                if ((int)_skill.SkillCoverType == 1 || (int)_skill.SkillCoverType == 2)
                     return GetSkillLevelInfo().SelectRange;
                 return GetSkillLevelInfo().AttackRange + 1;
             }

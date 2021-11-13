@@ -24,6 +24,7 @@ public class Jyx2PojoToScriptTool : Editor
         ConvertCharacters();
         ConvertMapsPojos();
         ConvertBattlePojos();
+        ConvertShops();
         AssetDatabase.SaveAssets();
     }
     
@@ -70,6 +71,7 @@ public class Jyx2PojoToScriptTool : Editor
         ConvertBattles();
         AssetDatabase.SaveAssets();
     }
+    
 
     static void ConvertItems()
     {
@@ -298,6 +300,7 @@ public class Jyx2PojoToScriptTool : Editor
     {
         AssetDatabase.DeleteAsset("Assets/BuildSource/Configs/Maps");
         AssetDatabase.CreateFolder("Assets/BuildSource/Configs", "Maps");
+        generateMaps = new Dictionary<int, Jyx2ConfigMap>();
         foreach (var map in ConfigTable.GetAll<GameMap>())
         {
             if (string.IsNullOrEmpty(map.Jyx2MapId)) continue;
@@ -321,10 +324,12 @@ public class Jyx2PojoToScriptTool : Editor
 
             c.EnterCondition = jyx2Map.EnterCondition;
             c.Tags = map.Tags;
-            
+            generateMaps[c.Id] = c;
             AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Maps/{c.Id}_{c.Name}.asset");
         }
     }
+
+    static private Dictionary<int, Jyx2ConfigMap> generateMaps;
 
     static void ConvertBattles()
     {
@@ -368,6 +373,30 @@ public class Jyx2PojoToScriptTool : Editor
         }
     }
 
+    static void ConvertShops()
+    {
+        AssetDatabase.DeleteAsset("Assets/BuildSource/Configs/Shops");
+        AssetDatabase.CreateFolder("Assets/BuildSource/Configs", "Shops");
+
+        foreach (var b in ConfigTable.GetAll<Jyx2Shop>())
+        {
+            var c = ScriptableObject.CreateInstance<Jyx2ConfigShop>();
+            c.Id = int.Parse(b.Id);
+            c.Trigger = b.Trigger;
+            c.ShopItems = new List<Jyx2ConfigShopItem>();
+            
+            foreach (var item in b.ShopItems)
+            {
+                Jyx2ConfigShopItem genItem = new Jyx2ConfigShopItem();
+                genItem.Item = GetItemAsset(item.Id);
+                genItem.Count = item.Count;
+                genItem.Price = item.Price;
+                c.ShopItems.Add(genItem);
+            }
+            
+            AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Shops/{c.Id}_{generateMaps[c.Id].Name}.asset");
+        }
+    }
     
     static Jyx2ConfigSkill GetSkillAsset(int id)
     {

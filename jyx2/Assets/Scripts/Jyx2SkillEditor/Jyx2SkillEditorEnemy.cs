@@ -13,6 +13,7 @@ using Animancer;
 using HSFrameWork.ConfigTable;
 using UnityEngine;
 using Jyx2;
+using Jyx2Configs;
 
 
 public class Jyx2SkillEditorEnemy : Jyx2AnimationBattleRole
@@ -32,7 +33,7 @@ public class Jyx2SkillEditorEnemy : Jyx2AnimationBattleRole
         await BeforeSceneLoad.loadFinishTask;
         
         animator = GetComponent<Animator>();
-        Jyx2Skill skill = ConfigTable.Get<Jyx2Skill>(SkillId.ToString());
+        Jyx2ConfigSkill skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(SkillId.ToString());
         var wugong = new WugongInstance(SkillId);
 
         var display = wugong.GetDisplay();

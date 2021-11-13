@@ -15,6 +15,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +26,7 @@ public partial class BagUIPanel:Jyx2_UIBase
     Action<int> m_callback;
     SaveableNumberDictionary<int> m_itemDatas;
     Jyx2ItemUI m_selectItem;
-    Func<Jyx2Item, bool> m_filter = null;
+    Func<Jyx2ConfigItem, bool> m_filter = null;
     private bool castFromSelectPanel=false;
     private int current_item;
     protected override void OnCreate()
@@ -53,7 +54,7 @@ public partial class BagUIPanel:Jyx2_UIBase
         if(allParams.Length > 1)
             m_callback = (Action<int>)allParams[1];
         if (allParams.Length > 2)
-            m_filter = (Func<Jyx2Item, bool>)allParams[2];
+            m_filter = (Func<Jyx2ConfigItem, bool>)allParams[2];
         if (allParams.Length > 3)
         {
             castFromSelectPanel = true;
@@ -73,7 +74,7 @@ public partial class BagUIPanel:Jyx2_UIBase
             string id = kv.Key;
             int count = kv.Value;
 
-            var item = ConfigTable.Get<Jyx2Item>(id);
+            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
             if (item == null)
             {
                 Debug.LogError("cannot get item data, id=" + id);
@@ -117,7 +118,7 @@ public partial class BagUIPanel:Jyx2_UIBase
         ItemDes_RectTransform.gameObject.SetActive(true);
         UseBtn_Button.gameObject.SetActive(true);
         var item = m_selectItem.GetItem();
-        DesText_Text.text = UIHelper.GetItemDesText(Convert.ToInt32(item.Id));
+        DesText_Text.text = UIHelper.GetItemDesText(item);
     }
 
     void OnItemClick(Jyx2ItemUI itemUI) 
@@ -146,13 +147,12 @@ public partial class BagUIPanel:Jyx2_UIBase
             return;
         Action<int> call = m_callback;
         var item = m_selectItem.GetItem();
-        string selectId = item.Id;
-
+        
         //if (item.ItemType == 3) //使用未遂，不关闭bag
         //{
             Jyx2_UIManager.Instance.HideUI(nameof(BagUIPanel));
         //}
-        call(int.Parse(selectId));
+        call(item.Id);
     }
 
     protected override void OnHidePanel()
@@ -167,7 +167,7 @@ public partial class BagUIPanel:Jyx2_UIBase
     void setBtnText()
     {
         if (m_selectItem==null)return;
-        if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item.ToString())
+        if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item)
             UseBtn_Text.text = "卸 下";
         else
             UseBtn_Text.text = "使 用";

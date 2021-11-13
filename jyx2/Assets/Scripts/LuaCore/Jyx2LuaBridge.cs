@@ -27,6 +27,7 @@ using UnityEngine.Playables;
 using Sirenix.Utilities;
 using UnityEngine.Timeline;
 using Cysharp.Threading.Tasks;
+using Jyx2Configs;
 
 namespace Jyx2
 {
@@ -75,7 +76,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                var item = ConfigTable.Get<Jyx2Item>(itemId);
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
                 if (item == null)
                 {
                     Debug.LogError("调用了未定义的物品:" + itemId);
@@ -559,7 +560,7 @@ namespace Jyx2
                 //只有设置了显示，并且角色在队伍的时候才显示
                 if(noDisplay != 0 && runtime.IsRoleInTeam(roleId))
                 {
-                    var skill = ConfigTable.Get<Jyx2Skill>(magicId);
+                    var skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(magicId);
                     storyEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
                 }
                 Next();
@@ -1004,7 +1005,7 @@ namespace Jyx2
         public static void AddItem(int itemId, int count)
         {
             RunInMainThread(() => {
-                var item = ConfigTable.Get<Jyx2Item>(itemId);
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
                 if (item == null)
                 {
                     Debug.LogError("调用了未定义的物品:" + itemId);
@@ -1052,7 +1053,7 @@ namespace Jyx2
 				}
 
 				string mapId = LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId;
-				var hasData = ConfigTable.Has<Jyx2Shop>(mapId); // mapId和shopId对应
+				var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
                 if (!hasData)
                 {
 					storyEngine.DisplayPopInfo($"地图{mapId}没有配置商店，可在excel/JYX2小宝商店.xlsx中查看");

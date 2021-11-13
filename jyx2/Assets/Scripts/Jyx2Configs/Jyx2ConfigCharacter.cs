@@ -48,13 +48,18 @@ namespace Jyx2Configs
         public AssetReferenceTexture2D Pic;
 
         private Sprite _sprite;
-        public async UniTask<Sprite> LoadPic()
+        public async UniTask<Sprite> GetPic()
         {
             if (Pic == null) return null;
-            if (_sprite == null) //防重入
+            if (_sprite == null)
             {
-                var head = await Pic.LoadAssetAsync().Task;
-                _sprite = Sprite.Create(head, new Rect(0, 0, head.width, head.height), Vector2.zero);
+                _sprite = await Addressables.LoadAssetAsync<Sprite>(Pic).Task;
+                
+                //下面代码会可能重入导致出错：
+                //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/
+                
+                //var head = await Pic.LoadAssetAsync().Task;
+                //_sprite = Sprite.Create(head, new Rect(0, 0, head.width, head.height), Vector2.zero);
             }
             return _sprite;
         }
@@ -164,7 +169,7 @@ namespace Jyx2Configs
 
         public override async UniTask WarmUp()
         {
-            await LoadPic();
+            //await LoadPic();
         }
     }
 

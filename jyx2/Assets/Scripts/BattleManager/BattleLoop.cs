@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using HSFrameWork.Common;
+using Jyx2Configs;
 using UnityEngine;
 
 namespace Jyx2.Battle
@@ -254,7 +255,7 @@ namespace Jyx2.Battle
         }
 
         //使用道具
-        async UniTask RoleUseItem(RoleInstance role, Jyx2Item item)
+        async UniTask RoleUseItem(RoleInstance role, Jyx2ConfigItem item)
         {
             if (role == null || item == null)
             {
@@ -283,7 +284,7 @@ namespace Jyx2.Battle
             }
             else //否则从角色身上扣
             {
-                role.AddItem(Int16.Parse(item.Id), -1);
+                role.AddItem(item.Id, -1);
             }
 
             Dictionary<int, int> effects = UIHelper.GetItemEffect(item);

@@ -12,7 +12,7 @@ namespace Jyx2Configs
     [DisallowMultipleComponent]
     public class GameConfigDatabase : MonoBehaviour
     {
-        static public GameConfigDatabase Instance
+        public static GameConfigDatabase Instance
         {
             get;
             private set;
@@ -49,6 +49,11 @@ namespace Jyx2Configs
         public T Get<T>(string id) where T : Jyx2ConfigBase
         {
             return Get<T>(int.Parse(id));
+        }
+
+        public bool Has<T>(string id) where T : Jyx2ConfigBase
+        {
+            return Get<T>(id) != null;
         }
         
         public IEnumerable<T> GetAll<T>() where T : Jyx2ConfigBase
