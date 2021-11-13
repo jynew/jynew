@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -23,5 +24,10 @@ namespace Jyx2Configs
         
         [BoxGroup("战斗人物设置")] [LabelText("自动队友")] [SerializeReference]
         public List<Jyx2ConfigCharacter> AudioTeamMates;
+
+        public override async UniTask WarmUp()
+        {
+            
+        }
     }
 }

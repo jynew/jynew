@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -14,6 +15,11 @@ namespace Jyx2Configs
 
         [LabelText("商品列表")][TableList] 
         public List<Jyx2ConfigShopItem> ShopItems;
+
+        public override async UniTask WarmUp()
+        {
+            
+        }
     }
     
     [Serializable]

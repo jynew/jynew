@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -27,8 +28,6 @@ namespace Jyx2Configs
             暗器 = 4, 
         }
         
-        
-
         private const string EXTEND_GROUP = "扩展属性";
         private const string EFFECT_GROUP = "使用效果";
         private const string CONDITION_GROUP = "使用条件";
@@ -194,6 +193,10 @@ namespace Jyx2Configs
         [BoxGroup(EFFECT_GROUP)][LabelText("练出物品")]
         [TableList]
         public List<Jyx2ConfigCharacterItem> GenerateItems;
-        
+
+        public override async UniTask WarmUp()
+        {
+            
+        }
     }
 }

@@ -1,3 +1,4 @@
+#define JYX2_USE_HSFRAMEWORK
 #if JYX2_USE_HSFRAMEWORK
 using System.Collections;
 using System.Collections.Generic;
@@ -17,9 +18,12 @@ public class Jyx2PojoToScriptTool : Editor
     {
         ConfigTable.InitSync();
 
+        //顺序不能乱，因为有依赖关系
         ConvertSkills();
         ConvertItems();
         ConvertCharacters();
+        ConvertMapsPojos();
+        ConvertBattlePojos();
         AssetDatabase.SaveAssets();
     }
     
@@ -69,6 +73,8 @@ public class Jyx2PojoToScriptTool : Editor
 
     static void ConvertItems()
     {
+        AssetDatabase.DeleteAsset("Assets/BuildSource/Configs/Items");
+        AssetDatabase.CreateFolder("Assets/BuildSource/Configs", "Items");
         //先生成所有的道具
         foreach (var i in ConfigTable.GetAll<Jyx2Item>())
         {
@@ -127,7 +133,6 @@ public class Jyx2PojoToScriptTool : Editor
             c.NeedExp = i.NeedExp;
             c.GenerateItemNeedExp = i.GenerateItemNeedExp;
             
-
             AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Items/{c.Id}_{c.Name}.asset");
         }
         
@@ -158,6 +163,9 @@ public class Jyx2PojoToScriptTool : Editor
     
     static void ConvertSkills()
     {
+        AssetDatabase.DeleteAsset("Assets/BuildSource/Configs/Skills");
+        AssetDatabase.CreateFolder("Assets/BuildSource/Configs", "Skills");
+        AssetDatabase.SaveAssets();
         foreach (var s in ConfigTable.GetAll<Jyx2Skill>())
         {
             var c = ScriptableObject.CreateInstance<Jyx2ConfigSkill>();
@@ -191,6 +199,8 @@ public class Jyx2PojoToScriptTool : Editor
     
     static void ConvertCharacters()
     {
+        AssetDatabase.DeleteAsset("Assets/BuildSource/Configs/Characters");
+        AssetDatabase.CreateFolder("Assets/BuildSource/Configs", "Characters");
         int index = 0;
         foreach (var r in ConfigTable.GetAll<Jyx2Role>())
         {
@@ -237,18 +247,38 @@ public class Jyx2PojoToScriptTool : Editor
                 newS.Skill = asset;
                 c.Skills.Add(newS);
             }
-            
 
-            var headPicAsset = AssetDatabase.GUIDFromAssetPath($"Assets/BuildSource/head/{r.Head}.png");
-            c.Pic = new AssetReferenceTexture2D(headPicAsset.ToString());
-
-            var mapping = ConfigTable.Get<Jyx2RoleHeadMapping>(c.Id);
+            var mapping = ConfigTable.Get<Jyx2RoleHeadMapping>(r.Head);
             if (mapping != null)
             {
                 string path = $"Assets/BuildSource/Jyx2RoleModelAssets/{mapping.ModelAsset}.asset";
                 c.Model = AssetDatabase.LoadAssetAtPath<ModelAsset>(path);
+                
+                var headPicAsset = AssetDatabase.GUIDFromAssetPath($"Assets/BuildSource/head/{r.Head}.png");
+                c.Pic = new AssetReferenceTexture2D(headPicAsset.ToString());
+            }
+            else
+            {
+                Assert.Fail();
+                /*string path = $"Assets/BuildSource/Jyx2RoleModelAssets/{r.Name}.asset";
+                c.Model = AssetDatabase.LoadAssetAtPath<ModelAsset>(path);
+                
+                var headPicAsset = AssetDatabase.GUIDFromAssetPath($"Assets/BuildSource/head/{r.Head}.png");
+                c.Pic = new AssetReferenceTexture2D(headPicAsset.ToString());*/
             }
 
+            //武器
+            if (r.Weapon != -1)
+            {
+                c.Weapon = GetItemAsset(r.Weapon);
+            }
+
+            //防具
+            if (r.Armor != -1)
+            {
+                c.Armor = GetItemAsset(r.Armor);
+            }
+            
             //生成携带道具
             c.Items = new List<Jyx2ConfigCharacterItem>();
             foreach (var item in r.Items)
@@ -266,6 +296,8 @@ public class Jyx2PojoToScriptTool : Editor
 
     static void ConvertMaps()
     {
+        AssetDatabase.DeleteAsset("Assets/BuildSource/Configs/Maps");
+        AssetDatabase.CreateFolder("Assets/BuildSource/Configs", "Maps");
         foreach (var map in ConfigTable.GetAll<GameMap>())
         {
             if (string.IsNullOrEmpty(map.Jyx2MapId)) continue;
@@ -296,6 +328,8 @@ public class Jyx2PojoToScriptTool : Editor
 
     static void ConvertBattles()
     {
+        AssetDatabase.DeleteAsset("Assets/BuildSource/Configs/Battles");
+        AssetDatabase.CreateFolder("Assets/BuildSource/Configs", "Battles");
         foreach (var b in ConfigTable.GetAll<Jyx2Battle>())
         {
             var c = ScriptableObject.CreateInstance<Jyx2ConfigBattle>();

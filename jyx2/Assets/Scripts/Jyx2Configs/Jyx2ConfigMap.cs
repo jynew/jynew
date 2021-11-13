@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -23,5 +24,10 @@ namespace Jyx2Configs
 
         [LabelText("标签")] 
         public string Tags;
+
+        public override async UniTask WarmUp()
+        {
+            
+        }
     }
 }

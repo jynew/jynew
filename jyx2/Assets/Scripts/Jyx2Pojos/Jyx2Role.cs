@@ -17,9 +17,9 @@ using HSFrameWork.ConfigTable;
 
 namespace Jyx2
 {
-    [Obsolete]
+    //[Obsolete]
     [XmlType("jyx2role")]
-    public class Jyx2RoleDelete : BaseBean
+    public class Jyx2Role : BaseBean
     {
         public override string PK { get { return Id; } }
 

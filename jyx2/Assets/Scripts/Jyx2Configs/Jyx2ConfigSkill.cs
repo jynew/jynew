@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -51,6 +52,11 @@ namespace Jyx2Configs
 
         [InlineEditor] [BoxGroup("技能外观")] [SerializeReference]
         public Jyx2SkillDisplayAsset Display;
+
+        public override async UniTask WarmUp()
+        {
+            
+        }
     }
 
     [Serializable]

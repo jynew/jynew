@@ -6,6 +6,7 @@ using Jyx2;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Jyx2Configs
 {
@@ -50,12 +51,11 @@ namespace Jyx2Configs
         public async UniTask<Sprite> LoadPic()
         {
             if (Pic == null) return null;
-            if (_sprite == null)
+            if (_sprite == null) //防重入
             {
                 var head = await Pic.LoadAssetAsync().Task;
                 _sprite = Sprite.Create(head, new Rect(0, 0, head.width, head.height), Vector2.zero);
             }
-
             return _sprite;
         }
         
@@ -161,6 +161,11 @@ namespace Jyx2Configs
         
         [BoxGroup("模型配置")] [LabelText("模型配置")] [SerializeReference][InlineEditor]
         public ModelAsset Model;
+
+        public override async UniTask WarmUp()
+        {
+            await LoadPic();
+        }
     }
 
     [Serializable]
