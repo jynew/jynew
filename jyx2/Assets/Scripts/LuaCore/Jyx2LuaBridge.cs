@@ -137,7 +137,7 @@ namespace Jyx2
 					evt=GameEventManager.GetGameEventByID(eventId.ToString());
 				}
 				
-				if(isCurrentScene && evt!=null)//非当前场景事件如何获取
+				if(isCurrentScene && evt!=null)//当前场景事件如何获取
 				{
 					if(interactiveEventId==-2){
 						interactiveEventId=evt.m_InteractiveEventId;
@@ -151,6 +151,24 @@ namespace Jyx2
 						enterEventId=evt.m_EnterEventId;
 					}
 				}
+                // 非当前场景事件如何获取
+                else
+                {
+                    if (interactiveEventId == -2)
+                    {
+                        interactiveEventId = -1;
+                    }
+
+                    if (useItemEventId == -2)
+                    {
+                        useItemEventId = -1;
+                    }
+
+                    if (enterEventId == -2)
+                    {
+                        enterEventId = -1;
+                    }
+                }
 
                 //更新全局记录
                 runtime.ModifyEvent(scene, eventId, interactiveEventId, useItemEventId, enterEventId);
