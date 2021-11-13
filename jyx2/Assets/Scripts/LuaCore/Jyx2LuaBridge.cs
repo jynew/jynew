@@ -1427,6 +1427,16 @@ namespace Jyx2
 			return true;
 		}
 
+        public static void jyx2_ShowEndScene()
+        {
+            DarkScence();
+            RunInMainThread(() => {
+                Jyx2_UIManager.Instance.ShowUI(nameof(TheEnd));
+            });
+            jyx2_Wait(1);
+            LightScence();
+        }
+
         #endregion
 
 
