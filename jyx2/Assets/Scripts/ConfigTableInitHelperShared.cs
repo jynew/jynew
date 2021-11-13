@@ -32,7 +32,7 @@ namespace Jyx2.Crossplatform.BasePojo
                 typeof(System.Numerics.Vector2),
 
                 //jyx2
-                typeof(Jyx2Role),
+                //typeof(Jyx2Role),
                 typeof(Jyx2Map),
                 typeof(Jyx2Item),
                 typeof(Jyx2Skill),
@@ -54,7 +54,7 @@ namespace Jyx2.Crossplatform.BasePojo
             AddTypeNode<GameMap>("gamemap");
 
             //jyx2
-            AddTypeNode<Jyx2Role>("jyx2role");
+            //AddTypeNode<Jyx2Role>("jyx2role");
             AddTypeNode<Jyx2Map>("jyx2map");
             AddTypeNode<Jyx2Item>("jyx2item");
             AddTypeNode<Jyx2Skill>("jyx2skill");

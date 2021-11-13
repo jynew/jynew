@@ -15,6 +15,7 @@ using Cysharp.Threading.Tasks;
 using HSFrameWork.ConfigTable;
 using Jyx2;
 using Jyx2.Setup;
+using Jyx2Configs;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
     private string roleKey;
 
     private readonly List<Jyx2Skill> allSkills = new List<Jyx2Skill>();
-    private readonly List<Jyx2Role> allRole = new List<Jyx2Role>();
+    private readonly List<Jyx2ConfigCharacter> allRole = new List<Jyx2ConfigCharacter>();
 	protected override void OnCreate()
     {
         InitTrans();
@@ -59,7 +60,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         }
         dropSkillLevel_Dropdown.AddOptions(levels);
         
-        foreach(var role in ConfigTable.GetAll<Jyx2.Jyx2Role>())
+        foreach(var role in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
         {
             allRole.Add(role);
             roles.Add(role.Name);
@@ -80,7 +81,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
     private void OnSwitchdropModelId(int index)
     {
         var role = allRole[index];
-        roleKey =role.Id;
+        roleKey = role.Id.ToString();
         OnSwitchModel();
     }
 

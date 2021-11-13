@@ -18,6 +18,9 @@ using UnityEngine;
 using UniRx;
 using Jyx2;
 using HSFrameWork.ConfigTable;
+using Jyx2Configs;
+using NUnit.Framework;
+using UnityEditor.VersionControl;
 using Random = UnityEngine.Random;
 
 
@@ -44,35 +47,28 @@ namespace Jyx2
                 Key = "0";
             }
 
-            _data = ConfigTable.Get<Jyx2Role>(Key);
+            _data = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(Key);
 
             if (_data == null)
             {
-                Key = "10000"; //自动设置为空人物
-                _data = new Jyx2Role() {Id = "10000"};
-                _data.Wugongs = new List<Jyx2RoleWugong>();
-                _data.Items = new List<Jyx2RoleItem>();
+                Assert.Fail();
             }
-
-            _data.Exp = 0; //已经有初始等级。经验值应该抵消，设置为0.
-
+            
             //初始化武功列表
             //Wugongs.Clear();			
             if (Wugongs.Count == 0)
             {
-                foreach (var wugong in _data.Wugongs)
+                foreach (var wugong in _data.Skills)
                 {
-                    if (wugong.Id == 0)
-                        continue;
                     Wugongs.Add(new WugongInstance(wugong));
                 }
             }
 
             //没有设置武功，默认增加一个普通攻击
-            if (Wugongs.Count == 0 && _data.Wugongs != null && _data.Wugongs.Count > 0)
+            /*if (Wugongs.Count == 0 && _data.Wugongs != null && _data.Wugongs.Count > 0)
             {
                 Wugongs.Add(new WugongInstance(_data.Wugongs[0]));
-            }
+            }*/
 
             //每次战斗前reset一次
             ResetForBattle();
@@ -89,7 +85,7 @@ namespace Jyx2
             SetHPAndRefreshHudBar(MaxHp);
 
             Mp = MaxMp;
-            Tili = GameConst.MaxTili;
+            Tili = GameConst.MAX_ROLE_TILI;
 
             Hurt = 0;
             Poison = 0;
@@ -99,11 +95,7 @@ namespace Jyx2
         {
             get { return Data.HpInc; }
         }
-
-        public string Waihao
-        {
-            get { return Data.Waihao; }
-        } //外号
+        
 
         public string Key
         {
@@ -132,7 +124,7 @@ namespace Jyx2
 
         public int Sex
         {
-            get { return Get("Sex", Data.Sex); }
+            get { return Get("Sex", (int)Data.Sexual); }
             set { Save("Sex", value); }
         }
 
@@ -259,7 +251,7 @@ namespace Jyx2
 
         public int Exp //经验
         {
-            get { return Get("Exp", Data.Exp); }
+            get { return Get("Exp", 0); }
             set { Save("Exp", value); }
         }
 
@@ -269,7 +261,7 @@ namespace Jyx2
 
         public int Hp
         {
-            get { return Get("Hp", Data.Hp); }
+            get { return Get("Hp", Data.MaxHp); }
             set { Save("Hp", value); }
         }
 
@@ -281,31 +273,31 @@ namespace Jyx2
 
         public int Hurt //受伤程度
         {
-            get { return Get("Hurt", Data.DamageLevel); }
+            get { return Get("Hurt", 0); }
             set { Save("Hurt", value); }
         }
 
         public int Poison //中毒程度
         {
-            get { return Get("Poison", Data.PoisonLevel); }
+            get { return Get("Poison", 0); }
             set { Save("Poison", value); }
         }
 
         public int Tili //体力
         {
-            get { return Get("Tili", Data.Tili); }
+            get { return Get("Tili", GameConst.MAX_ROLE_TILI); }
             set { Save("Tili", value); }
         }
 
         public int ExpForMakeItem //物品修炼点
         {
-            get { return Get("ExpForMakeItem", Data.Xiulian); }
+            get { return Get("ExpForMakeItem", 0); }
             set { Save("ExpForMakeItem", value); }
         }
 
         public int Weapon //武器
         {
-            get { return Get("Weapon", Data.Weapon); }
+            get { return Get("Weapon", Data.Weapon != null ? Data.Weapon.Id : -1); }
             set { Save("Weapon", value); }
         }
 
@@ -317,7 +309,7 @@ namespace Jyx2
 
         public int Armor //防具
         {
-            get { return Get("Armor", Data.Armor); }
+            get { return Get("Armor", Data.Armor != null ? Data.Armor.Id : -1); }
             set { Save("Armor", value); }
         }
 
@@ -329,13 +321,13 @@ namespace Jyx2
 
         public int MpType //内力性质
         {
-            get { return Get("MpType", Data.MpType); }
+            get { return Get("MpType", (int)Data.MpType); }
             set { Save("MpType", value); }
         }
 
         public int Mp
         {
-            get { return Get("Mp", Data.Mp); }
+            get { return Get("Mp", Data.MaxMp); }
             set { Save("Mp", value); }
         }
 
@@ -452,7 +444,7 @@ namespace Jyx2
 
         public int Shengwang //声望
         {
-            get { return Get("Shengwang", Data.Shengwang); }
+            get { return Get("Shengwang", 0); }
             set { Save("Shengwang", value); }
         }
 
@@ -464,7 +456,7 @@ namespace Jyx2
 
         public int Xiulianwupin //修炼物品
         {
-            get { return Get("Xiulianwupin", Data.Xiulianwupin); }
+            get { return Get("Xiulianwupin", 0); }
             set { Save("Xiulianwupin", value); }
         }
 
@@ -476,7 +468,7 @@ namespace Jyx2
 
         public int ExpForItem //修炼点数
         {
-            get { return Get("ExpForItem", Data.XiulianPoint); }
+            get { return Get("ExpForItem", 0); }
             set { Save("ExpForItem", value); }
         }
 
@@ -544,8 +536,10 @@ namespace Jyx2
             //配置表中添加的物品
             foreach (var item in Data.Items)
             {
-                if (item.Id < 0) continue;
-                _items.Add(item.Clone()); //这里对于NPC来说，每场战斗都会补满道具
+                var generateItem = new Jyx2RoleItem();
+                generateItem.Id = item.Item.Id;
+                generateItem.Count = item.Count;
+                _items.Add(generateItem);//这里对于NPC来说，每场战斗都会补满道具
             }
         }
 
@@ -895,24 +889,17 @@ namespace Jyx2
 
             return 0;
         }
-
-        //捏脸数据
-        public string HeadAvata
-        {
-            get { return Get("HeadAvata", Data.GetHeadAvata()); }
-            set { Save("HeadAvata", value); }
-        }
-
+        
         //模型组成数据
         public string ModelAvata
         {
-            get { return Get("ModelAvata", Data.GetModel()); }
+            get { return Get("ModelAvata", GetModel()); }
             set { Save("ModelAvata", value); }
         }
 
         public string ModelAsset
         {
-            get { return Get(nameof(ModelAsset), Data.GetModelAsset()); }
+            get { return Get(nameof(ModelAsset), GetModelAsset()); }
             set { Save(nameof(ModelAsset), value); }
         }
 
@@ -920,10 +907,38 @@ namespace Jyx2
 
         public string GetBattleAnimator()
         {
-            return Data.GetBattleAnimator();
+            return GetBattleAnimatorString();
+        }
+        
+        //立绘
+        public string GetHeadAvata()
+        {
+            return ConfigTable.Get<Jyx2RoleHeadMapping>(Key).HeadAvata;
         }
 
-        public Jyx2Role Data
+        //模型配置
+        public string GetModelAsset()
+        {
+            return ConfigTable.Get<Jyx2RoleHeadMapping>(Key).ModelAsset;
+        }
+        
+        //模型
+        public string GetModel()
+        {
+            return ConfigTable.Get<Jyx2RoleHeadMapping>(Key).Model;
+        }
+
+        public string GetWeaponMount()
+        {
+            return ConfigTable.Get<Jyx2RoleHeadMapping>(Key).WeaponMount;
+        }
+
+        public string GetBattleAnimatorString()
+        {
+            return ConfigTable.Get<Jyx2RoleHeadMapping>(Key).BattleAnimator;
+        }
+
+        public Jyx2ConfigCharacter Data
         {
             get
             {
@@ -936,7 +951,7 @@ namespace Jyx2
             }
         }
 
-        private Jyx2Role _data;
+        private Jyx2ConfigCharacter _data;
 
         public MapRole View;
 
@@ -1175,7 +1190,7 @@ namespace Jyx2
         //JYX2的休息逻辑，对应kyscpp  BattleScene::actRest
         public void OnRest()
         {
-            Tili = Tools.Limit(Tili + 5, 0, GameConst.MaxTili);
+            Tili = Tools.Limit(Tili + 5, 0, GameConst.MAX_ROLE_TILI);
             int tmpHp = Hp;
             Hp = Tools.Limit((int) (Hp + MaxHp * 0.05), 0, MaxHp);
 

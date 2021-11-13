@@ -17,6 +17,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using HSFrameWork.ConfigTable;
+using Jyx2Configs;
 
 public partial class XiakeUIPanel : Jyx2_UIBase
 {
@@ -133,7 +134,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         var color1 = role.GetHPColor1();
         var color2 = role.GetHPColor2();
         sb.AppendLine($"等级 {role.Level}");
-        sb.AppendLine($"体力 {role.Tili}/{GameConst.MaxTili}");
+        sb.AppendLine($"体力 {role.Tili}/{GameConst.MAX_ROLE_TILI}");
         sb.AppendLine($"生命 <color={color1}>{role.Hp}</color>/<color={color2}>{role.MaxHp}</color>");
         sb.AppendLine($"内力 <color={color}>{role.Mp}/{role.MaxMp}</color>");
         sb.AppendLine($"经验 {role.Exp}/{role.GetLevelUpExp()}");
@@ -212,7 +213,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             return;
         }
 
-        var eventLuaPath = ConfigTable.Get<Jyx2Role>(m_currentRole.GetJyx2RoleId()).Dialogue;
+        var eventLuaPath = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(m_currentRole.GetJyx2RoleId()).LeaveStoryId;
         if (eventLuaPath != null && eventLuaPath != "")
         {
             Jyx2.LuaExecutor.Execute("jygame/ka" + eventLuaPath, new Action(() => { RefreshView(); }));

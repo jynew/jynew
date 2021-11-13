@@ -89,10 +89,9 @@ static public class Jyx2ResourceHelper
         //LeanPool.Despawn(obj);
     }
 
-    public static async UniTask<Sprite> GetRoleHeadSprite(string path)
+    public static async UniTask<Sprite> GetRoleHeadSprite(RoleInstance role)
     {
-        string p = "Assets/BuildSource/head/" + path + ".png";
-        return await Addressables.LoadAssetAsync<Sprite>(p).Task;
+        return await role.Data.LoadPic();
     }
 
     [Obsolete("待修改为tilemap")]
@@ -124,11 +123,11 @@ static public class Jyx2ResourceHelper
     {
         if (role.Key == GameRuntimeData.Instance.Player.Key)
         {
-            return GetRoleHeadSprite(GameRuntimeData.Instance.Player.HeadAvata);
+            return GetRoleHeadSprite(GameRuntimeData.Instance.Player);
         }
         else
         {
-            return GetRoleHeadSprite(role.HeadAvata);
+            return GetRoleHeadSprite(role);
         }
     }
 
@@ -140,8 +139,10 @@ static public class Jyx2ResourceHelper
 
     private static async UniTaskVoid DoGetRoleHeadSprite(RoleInstance role, Image setImage)
     {
+        setImage.gameObject.SetActive(false);
         var sprite = await GetSprite(role);
         setImage.sprite = sprite;
+        setImage.gameObject.SetActive(true);
     }
 
     public static async UniTask<Sprite> LoadItemSprite(int itemId)

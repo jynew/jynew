@@ -100,7 +100,7 @@ public class AIManager
         }
 
         //考虑吃药
-        if (role.Items.Count > 0 && (role.Hp < 0.2 * role.MaxHp || role.Mp < 0.2 * role.MaxMp || role.Tili < 0.2 * GameConst.MaxTili))
+        if (role.Items.Count > 0 && (role.Hp < 0.2 * role.MaxHp || role.Mp < 0.2 * role.MaxMp || role.Tili < 0.2 * GameConst.MAX_ROLE_TILI))
         {
             List<Jyx2Item> items = GetAvailableItems(role, 3); //只使用药物
             foreach(var item in items)
@@ -117,7 +117,7 @@ public class AIManager
                 }
                 if(item.AddTili > 0)
                 {
-                    score += Mathf.Min(item.AddTili, GameConst.MaxTili - role.Tili) - item.AddTili / 10;
+                    score += Mathf.Min(item.AddTili, GameConst.MAX_ROLE_TILI - role.Tili) - item.AddTili / 10;
                 }
 
                 if(score > 0)

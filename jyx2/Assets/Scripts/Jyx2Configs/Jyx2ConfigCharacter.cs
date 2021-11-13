@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Jyx2;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,6 +12,10 @@ namespace Jyx2Configs
     [CreateAssetMenu(menuName = "金庸重制版/配置文件/角色", fileName = "角色ID_角色名")]
     public class Jyx2ConfigCharacter : Jyx2ConfigBase
     {
+        
+        /// <summary>
+        /// 设置为中文仅用于odin显示，不要在代码中直接使用
+        /// </summary>
         public enum SexualType
         {
             男 = 0,
@@ -18,6 +23,9 @@ namespace Jyx2Configs
             太监 = 2,
         }
 
+        /// <summary>
+        /// 设置为中文仅用于odin显示，不要在代码中直接使用
+        /// </summary>
         //0:阴 1:阳 2:调和
         public enum MpTypeEnum
         {
@@ -37,6 +45,19 @@ namespace Jyx2Configs
         
         [BoxGroup(CGroup1)][LabelText("头像")]
         public AssetReferenceTexture2D Pic;
+
+        private Sprite _sprite;
+        public async UniTask<Sprite> LoadPic()
+        {
+            if (Pic == null) return null;
+            if (_sprite == null)
+            {
+                var head = await Pic.LoadAssetAsync().Task;
+                _sprite = Sprite.Create(head, new Rect(0, 0, head.width, head.height), Vector2.zero);
+            }
+
+            return _sprite;
+        }
         
         [BoxGroup(CGroup1)][LabelText("品德")] 
         public int Pinde; //品德

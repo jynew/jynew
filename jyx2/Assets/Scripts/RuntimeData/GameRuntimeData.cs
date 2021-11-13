@@ -19,6 +19,7 @@ using HSFrameWork.Common;
 using HSFrameWork.ConfigTable;
 using HSFrameWork.SPojo;
 using Jyx2;
+using Jyx2Configs;
 using UnityEngine;
 
 namespace Jyx2
@@ -125,9 +126,9 @@ namespace Jyx2
         void InitAllRole() 
         {
             //创建所有角色
-            foreach (var r in ConfigTable.GetAll<Jyx2Role>())
+            foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
             {
-                var role = new RoleInstance(r.Id);
+                var role = new RoleInstance(r.Id.ToString());
                 _instance.AllRoles.Add(role);
             }
         }

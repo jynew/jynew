@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using HSFrameWork.ConfigTable;
 using HSFrameWork.SPojo;
 using Jyx2;
+using Jyx2Configs;
 using UnityEngine;
 
 namespace Jyx2
@@ -31,6 +32,14 @@ namespace Jyx2
             Level = w.Level;
             GetSkill(); //初始化
         }
+        
+        
+        public WugongInstance(Jyx2ConfigCharacterSkill s)
+        {
+            Key = s.Skill.Id;
+            Level = s.Level;
+        }
+        
         public WugongInstance(int magicId)
         {
             Key = magicId;

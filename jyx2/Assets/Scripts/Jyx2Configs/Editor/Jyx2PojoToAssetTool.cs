@@ -1,3 +1,4 @@
+#if JYX2_USE_HSFRAMEWORK
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -366,3 +367,4 @@ public class Jyx2PojoToScriptTool : Editor
         return new AssetReferenceT<AudioClip>(audioClip.ToString());
     }
 }
+#endif

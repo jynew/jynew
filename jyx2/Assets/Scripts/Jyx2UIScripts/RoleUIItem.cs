@@ -71,7 +71,7 @@ public class RoleUIItem : MonoBehaviour
             }
             else if (proItem.PropertyName == "Tili")
             {
-                sb.Append($"{proItem.Name}:{m_role.Tili}/{GameConst.MaxTili}\n");
+                sb.Append($"{proItem.Name}:{m_role.Tili}/{GameConst.MAX_ROLE_TILI}\n");
             }
             else if (proItem.PropertyName == "Mp")
             {

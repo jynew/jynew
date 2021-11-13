@@ -194,13 +194,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
         int index = 999;
         var runtime = GameRuntimeData.Create(index);
         m_panelType = PanelType.NewGamePage;
+        
         //默认创建主角
-
         var player = runtime.AllRoles[0];
         player.Key = "主角";
-        player.HeadAvata = "0";
-        
-        
+
         //主角初始物品
         foreach (var item in player.Items)
         {

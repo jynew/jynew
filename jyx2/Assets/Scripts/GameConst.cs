@@ -64,6 +64,7 @@ public class GameConst
 
     public const int MAX_EXP = 9999999;
 
+    //JYX2最大体力上限
     public const int MAX_ROLE_TILI = 100;
 
     public const int MAX_POISON = 100;
@@ -108,10 +109,7 @@ public class GameConst
     
     //银两ID
     public const int MONEY_ID = 174; 
-
-    //JYX2最大体力上限
-    public const int MaxTili = 100;
-
+    
     //最大队伍人数
     public const int MAX_TEAMCOUNT = 6;
 

@@ -116,7 +116,7 @@ public partial class SystemUIPanel:Jyx2_UIBase
     {
         HidePanel();
         List<string> selectionContent = new List<string>() { "是", "否" };
-        Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "主角", "将丢失未保存进度，是否继续？", selectionContent, new Action<int>((index) =>
+        Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "0", "将丢失未保存进度，是否继续？", selectionContent, new Action<int>((index) =>
         {
             if(index == 0)
             {

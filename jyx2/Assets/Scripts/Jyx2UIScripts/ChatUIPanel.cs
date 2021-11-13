@@ -16,6 +16,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Jyx2Configs;
 using UnityEngine.EventSystems;
 
 public enum ChatType 
@@ -82,18 +83,18 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 
     private GameObject _interactivePanel = null;
 
-    private async UniTask ShowCharacter(string roleHeadPath,int roleId)
+
+    private async UniTask ShowCharacter(int roleId)
     {
         ChangePosition(roleId);
-        if (string.IsNullOrEmpty((roleHeadPath)))
+
+        var role = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(roleId);
+
+        RoleHeadImage_Image.gameObject.SetActive(false);
+        if (role != null && role.Pic != null)
         {
             RoleHeadImage_Image.gameObject.SetActive(false);
-        }
-        else
-        {
-            RoleHeadImage_Image.gameObject.SetActive(false);
-            var head = await Jyx2ResourceHelper.GetRoleHeadSprite(roleHeadPath);
-            RoleHeadImage_Image.sprite = head;
+            RoleHeadImage_Image.sprite = await role.LoadPic();
             RoleHeadImage_Image.gameObject.SetActive(true);
         }
     }
@@ -153,16 +154,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         }
         else
         {
-            var headMapping = ConfigTable.Get<Jyx2RoleHeadMapping>(roleId);
-            if (headMapping != null && !string.IsNullOrEmpty(headMapping.HeadAvata))
-            {
-                ShowCharacter(headMapping.HeadAvata, roleId).Forget();
-                //RoleHeadImage_Image.gameObject.SetActive(true);
-            }
-            else
-            {
-                RoleHeadImage_Image.gameObject.SetActive(false);
-            }
+            ShowCharacter(roleId).Forget();
         }
         ShowText();
     }
@@ -206,32 +198,10 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         Name_RectTransform.anchoredPosition = new Vector2(roleId == 0 ? -450 : 450 , 280); 
     }
     
-    public void ShowSelection(string roleName, string msg, List<string> selectionContent, Action<int> callback)
+    public void ShowSelection(string roleId, string msg, List<string> selectionContent, Action<int> callback)
     {
-
-        //没有Player
-        if (roleName == "主角" && GameRuntimeData.Instance.Player != null)
-        {
-            ShowCharacter(GameRuntimeData.Instance.Player.HeadAvata,0).Forget();
-            MainContent_Text.text = $"{msg}";
-        }
-        else
-        {
-            Jyx2Role role = ConfigTable.GetAll<Jyx2Role>().First(r => r.Name == roleName);
-            
-            //没有定义Role或者HeadAvata
-            if (role == null )
-            {
-                MainContent_Text.text = $"{roleName}：{msg}";
-                RoleHeadImage_Image.gameObject.SetActive(false);
-            }
-            else
-            {
-                var headMapping = ConfigTable.Get<Jyx2RoleHeadMapping>(role.Id);
-                ShowCharacter(headMapping.HeadAvata,1).Forget();
-                MainContent_Text.text = $"{role.Name}：{msg}";
-            }
-        }
+        ShowCharacter(int.Parse(roleId)).Forget();
+        MainContent_Text.text = $"{msg}";
 
         ClearChildren(Container_RectTransform.transform);
         for (int i = 0; i < selectionContent.Count; i++)
