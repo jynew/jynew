@@ -23,15 +23,6 @@ using UnityEngine.UI;
 
 public class BigMapZone : MonoBehaviour
 {
-	[Obsolete]
-	[LabelText("过期1, EnterMapKey")]
-	public string EnterMapKey;
-	
-	[Obsolete]
-	[LabelText("过期2, Command")]
-	public string Command;
-
-
 	[InfoBox("注：默认ID 1000为大地图")]
 	[LabelText("传送的地图ID")] 
 	public int TransportMapId = GameConst.WORLD_MAP_ID;

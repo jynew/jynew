@@ -14,6 +14,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2;
 using HSFrameWork.ConfigTable;
 using Jyx2;
+using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -97,7 +98,7 @@ public class BattleLoader : MonoBehaviour
         }
 
         m_Roles = new List<BattlePosRole>();
-        Jyx2Battle battle = ConfigTable.Get<Jyx2Battle>(id);
+        Jyx2ConfigBattle battle = Jyx2ConfigBattle.Get(id);
         if (battle == null)
         {
             Debug.LogError("载入了未定义的战斗，id=" + id);
@@ -107,11 +108,11 @@ public class BattleLoader : MonoBehaviour
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
-        if (battle.HasAutoTeamMates())
+        if (battle.AutoTeamMates.Count > 0)
         {
             foreach (var v in battle.AutoTeamMates)
             {
-                var roleId = v.Value;
+                var roleId = v.Id;
                 if (roleId == -1) continue;
                 AddRole(roleId, 0); //TODO IS AUTO
                 for (var i = 0; i < m_Roles.Count; i++)
@@ -131,7 +132,7 @@ public class BattleLoader : MonoBehaviour
             //必选人物
             bool MustRoleFunc(RoleInstance r)
             {
-                return battle.TeamMates.Exists(t => t.Value.ToString() == r.Key);
+                return battle.TeamMates.Exists(t => t.Id.ToString() == r.Key);
             }
 
 
@@ -149,7 +150,7 @@ public class BattleLoader : MonoBehaviour
         }
     }
 
-    UniTask LoadJyx2BattleStep2(Jyx2Battle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
+    UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     {
         if (selectRoles != null)
         {
@@ -162,12 +163,12 @@ public class BattleLoader : MonoBehaviour
         //预配置队友
         foreach (var v in battle.TeamMates)
         {
-            AddRole(v.Value, 0);
+            AddRole(v.Id, 0);
         }
 
         foreach (var v in battle.Enemies)
         {
-            AddRole(v.Value, 1);
+            AddRole(v.Id, 1);
         }
 
         return InitBattle(callback, battle);
@@ -198,7 +199,7 @@ public class BattleLoader : MonoBehaviour
     }
 
     //初始化战斗
-    async UniTask InitBattle(Action<BattleResult> callback, Jyx2Battle battleData)
+    async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
     {
         Debug.Log("-----------BattleLoader.InitBattle");
         List<RoleInstance> roles = new List<RoleInstance>();

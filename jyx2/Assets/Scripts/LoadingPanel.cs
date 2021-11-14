@@ -39,6 +39,7 @@ public class LoadingPanel : MonoBehaviour
     {
         Jyx2_UIManager.Instance.CloseAllUI();
         gameObject.SetActive(true);
+        await UniTask.DelayFrame(1);
         await UniTask.WaitForEndOfFrame(); //否则BattleHelper还没有初始化
         
         //返回主菜单

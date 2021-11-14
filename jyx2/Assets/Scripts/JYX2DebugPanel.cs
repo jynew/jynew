@@ -82,7 +82,7 @@ public class JYX2DebugPanel : MonoBehaviour
         if (value == 0) return;
 
         var id = m_ChangeSceneMaps[value - 1].Id;
-        LevelLoader.LoadGameMap(id.ToString());
+        LevelLoader.LoadGameMap(Jyx2ConfigMap.Get(id));
     }
 
     public void OnTransport(int value)

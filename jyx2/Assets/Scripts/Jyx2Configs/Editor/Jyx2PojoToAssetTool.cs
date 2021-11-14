@@ -360,13 +360,22 @@ public class Jyx2PojoToScriptTool : Editor
                 c.TeamMates.Add(asset);
             }
             
-            c.AudioTeamMates = new List<Jyx2ConfigCharacter>();
+            c.AutoTeamMates = new List<Jyx2ConfigCharacter>();
             foreach (var role in b.AutoTeamMates)
             {
                 if (role.Value == -1) continue;
                 var asset = GetCharacterAsset(role.Value);
                 Assert.IsNotNull(asset);
-                c.AudioTeamMates.Add(asset);
+                c.AutoTeamMates.Add(asset);
+            }
+
+            c.Enemies = new List<Jyx2ConfigCharacter>();
+            foreach (var role in b.Enemies)
+            {
+                if (role.Value == -1) continue;
+                var asset = GetCharacterAsset(role.Value);
+                Assert.IsNotNull(asset);
+                c.Enemies.Add(asset);
             }
             
             AssetDatabase.CreateAsset(c, $"Assets/BuildSource/Configs/Battles/{c.Id}_{c.Name}.asset");

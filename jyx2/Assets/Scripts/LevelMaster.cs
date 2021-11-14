@@ -42,9 +42,6 @@ public class LevelMaster : MonoBehaviour
         public string triggerName = "";
         public string CurrentPos;
         public string CurrentOri;
-
-        [Obsolete("待删除")]
-        public string Command;
     }
 
     static public LevelLoadPara loadPara = new LevelLoadPara();
@@ -904,11 +901,6 @@ public class LevelMaster : MonoBehaviour
         return player;
     }
 
-    public void QuitToMainMenu()
-    {
-        SceneManager.LoadScene("0_GameStart");
-    }
-
     //刷新本场景内的所有事件
     //事件执行和更改结果存储在runtime里，需要结合当前场景进行调整
     public void RefreshGameEvents()
@@ -918,6 +910,7 @@ public class LevelMaster : MonoBehaviour
 
         //调整所有的触发器
         GameObject eventsParent = GameObject.Find("Level/Triggers");
+        if (eventsParent == null) return;
         foreach(Transform obj in eventsParent.transform)
         {
             var evt = obj.GetComponent<GameEvent>();

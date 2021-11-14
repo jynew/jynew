@@ -18,6 +18,7 @@ using DG.Tweening;
 using Jyx2;
 using HSFrameWork.Common;
 using Jyx2.Battle;
+using Jyx2Configs;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,7 +27,7 @@ public class BattleStartParams
 {
     public Action<BattleResult> callback; //战斗结果
     public List<RoleInstance> roles; //参与战斗的角色
-    public Jyx2Battle battleData; //战斗地图数据
+    public Jyx2ConfigBattle battleData; //战斗地图数据
     public bool backToBigMap = true;
     public bool playerJoin = true;
 }
@@ -228,7 +229,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    string CalExpGot(Jyx2Battle battleData)
+    string CalExpGot(Jyx2ConfigBattle battleData)
     {
         List<RoleInstance> alive_teammate = m_BattleModel.Roles.Where(r => r.team == 0).ToList();
         string rst = "";

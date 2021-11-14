@@ -90,7 +90,7 @@ public class DebugTools : EditorWindow
 
     void ExecuteCommand(string cmd)
     {
-        StoryEngine.Instance.ExecuteCommand(cmd, null);        
+        Jyx2Console.RunConsoleCommand(cmd);
     }
 
     public static void SetSize(int index)

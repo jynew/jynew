@@ -50,49 +50,36 @@ namespace Jyx2
             await LoadingPanel.Create(map.MapScene);
             callback?.Invoke();
         }
-
-        [Obsolete]
-        /// <summary>
-        /// 加载地图
-        /// </summary>
-        /// <param name="levelKey"></param>
-        /// <param name="fromPosTag">是否从存档中取出生点</param>
-        public static void LoadGameMap(string levelKey, LevelMaster.LevelLoadPara para = null)
-        {
-            if (para == null)
-                para = new LevelMaster.LevelLoadPara(); //默认生成一份
-            var mapKey = levelKey.Contains("&") ? levelKey.Split('&')[0] : levelKey;
-            var command = levelKey.Contains("&") ? levelKey.Split('&')[1] : "";
-
-            para.Command = command;
-            
-            LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapKey), para);
-        }
-
+        
         //加载战斗
         public static void LoadBattle(int battleId, Action<BattleResult> callback)
         {
             var battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(battleId);
-            
-            //记住当前的音乐，战斗后还原
-            var formalMusic = AudioManager.GetCurrentMusic();
-            
-            UniTask.Run(async () =>
+            if (battle == null)
             {
-                UniTask.ReturnToMainThread();
-                await LoadingPanel.Create(battle.MapScene);
+                Debug.LogError($"战斗id={battleId}未定义");
+                return;
+            }
+            
+            DoloadBattle(battle, callback).Forget();
+        }
+
+        private static async UniTask DoloadBattle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
+        {
+            var formalMusic = AudioManager.GetCurrentMusic(); //记住当前的音乐，战斗后还原
+
+            await LoadingPanel.Create(battle.MapScene);
                 
-                GameObject obj = new GameObject("BattleLoader");
-                var battleLoader = obj.AddComponent<BattleLoader>();
-                battleLoader.m_BattleId = battleId;
+            GameObject obj = new GameObject("BattleLoader");
+            var battleLoader = obj.AddComponent<BattleLoader>();
+            battleLoader.m_BattleId = battle.Id;
                 
-                //播放之前的地图音乐
-                battleLoader.Callback = (rst) =>
-                {
-                    AudioManager.PlayMusic(formalMusic);
-                    callback(rst);
-                };
-            });
+            //播放之前的地图音乐
+            battleLoader.Callback = (rst) =>
+            {
+                AudioManager.PlayMusic(formalMusic);
+                callback(rst);
+            };
         }
         
         
