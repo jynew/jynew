@@ -20,7 +20,6 @@ using Jyx2;
 using HSFrameWork.ConfigTable;
 using Jyx2Configs;
 using NUnit.Framework;
-using UnityEditor.VersionControl;
 using Random = UnityEngine.Random;
 
 
