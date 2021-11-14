@@ -21,6 +21,33 @@ public class AudioManager
         PlayMusicAtPath("Assets/BuildSource/Musics/" + id + ".mp3").Forget();
     }
 
+    public static bool PlayMusic(AssetReference asset)
+    {
+        if (asset.Asset == null)
+            return false;
+        DoPlayMusic(asset).Forget();
+        return true;
+    }
+
+    private static async UniTask DoPlayMusic(AssetReference asset)
+    {
+        var audioClip = await Addressables.LoadAssetAsync<AudioClip>(asset);
+        if (audioClip != null)
+        {
+            PlayMusic(audioClip);
+        }
+    }
+
+    public static void PlayMusic(AudioClip audioClip)
+    {
+        var audioSource = GetAudioSource();
+        if (audioClip != audioSource.clip)
+        {
+            audioSource.clip = audioClip;
+            audioSource.Play();    
+        }
+    }
+
     public static async UniTask PlayMusicAtPath(string path)
     {
         if (path == null)
@@ -59,8 +86,9 @@ public class AudioManager
         return s_AudioSource;
     }
 
-    public static string GetCurrentMusic()
+    public static AudioClip GetCurrentMusic()
     {
-        return _currentPlayMusic;
+        var audioSource = GetAudioSource();
+        return audioSource.clip;
     }
 }

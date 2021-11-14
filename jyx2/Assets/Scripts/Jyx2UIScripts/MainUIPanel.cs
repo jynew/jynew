@@ -71,12 +71,11 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         RoleInstance role = GameRuntimeData.Instance.Player;
         Name_Text.text = role.Name;
         
-        GameMap map = LevelMaster.Instance.GetCurrentGameMap();
+        var map = LevelMaster.GetCurrentGameMap();
         if (map != null)
         {
             MapName_Text.text = map.GetShowName();
-            bool isWorldMap = map.IsWorldMap;
-            
+
             //BY CGGG：小地图不提供传送到大地图的功能 2021/6/13
             //MapButton_Button.gameObject.SetActive(!isWorldMap);
             MapButton_Button.gameObject.SetActive(false);
@@ -195,21 +194,18 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
     void OnMapBtnClick() 
     {
         var levelMaster = LevelMaster.Instance;
-        if (!levelMaster.GetCurrentGameMap().IsWorldMap)
+
+        if (levelMaster.IsInWorldMap)
+            return;
+        
+        //执行离开事件
+        foreach (var zone in FindObjectsOfType<BigMapZone>())
         {
-            levelMaster.PlayLeaveMusic(levelMaster.GetCurrentGameMap());
-            // return to entertrance
-			// modified by eaphone at 2021/05/30
-            //LevelLoader.LoadGameMap("0_BigMap");
-			// add transport Wei to other hotel when leave hotel after meet him
-			// added by eaphone at 2021/6/5
-			string[] targetHotel={"01_heluokezhan","03_youjiankezhan","40_yuelaikezhan","60_longmenkezhan","61_gaoshengkezhan"};
-			foreach(var i in targetHotel){
-				if(i == levelMaster.GetCurrentGameMap().Key){
-					BigMapZone.TransportWei();
-				}
-			}
-            levelMaster.QuitToBigMap();
+            if (zone.TransportMapId == GameConst.WORLD_MAP_ID)
+            {
+                zone.DoTransport();
+                break;
+            }
         }
     }
 

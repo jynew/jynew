@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -120,7 +121,7 @@ public partial class SystemUIPanel:Jyx2_UIBase
         {
             if(index == 0)
             {
-                LoadingPanel.Create("0_GameStart", () => { });
+                LoadingPanel.Create(null).Forget();
             }
         }));
     }

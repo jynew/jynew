@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using UnityEngine.UI;
 using HSFrameWork.Common;
+using Jyx2Configs;
 
 public partial class GameMainMenu : Jyx2_UIBase {
 
@@ -215,8 +216,8 @@ public partial class GameMainMenu : Jyx2_UIBase {
         runtime.Team.Add(player);
 
         //开场地图
-        var startMap = GameMap.GetGameStartMap();
-        runtime.CurrentMap = startMap.Key + "&transport#0";
+        var startMap = Jyx2ConfigMap.GetGameStartMap();
+        runtime.CurrentMap = startMap.Id + "&transport#0";
         runtime.CurrentPos = "";
 
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
@@ -244,9 +245,9 @@ public partial class GameMainMenu : Jyx2_UIBase {
         loadPara.triggerName = "Level/Triggers/0";
         GameRuntimeData.Instance.startDate = DateTime.Now;
         //加载地图
-        var startMap = GameMap.GetGameStartMap();
+        var startMap = Jyx2ConfigMap.GetGameStartMap();
         
-        LevelLoader.LoadGameMap(startMap, loadPara, "", () =>
+        LevelLoader.LoadGameMap(startMap, loadPara ,() =>
 		{
             //首次进入游戏音乐
             AudioManager.PlayMusic(GameConst.GAME_START_MUSIC_ID);

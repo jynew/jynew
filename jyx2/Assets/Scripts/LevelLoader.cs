@@ -13,6 +13,7 @@ using Cysharp.Threading.Tasks;
 using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using Jyx2;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -21,32 +22,36 @@ namespace Jyx2
     public class LevelLoader
     {
         //加载地图
-        public static void LoadGameMap(GameMap map, LevelMaster.LevelLoadPara para = null, string command = "", Action callback = null)
+        public static void LoadGameMap(Jyx2ConfigMap map, LevelMaster.LevelLoadPara para = null, Action callback = null)
         {
-            if (para == null)
-                para = new LevelMaster.LevelLoadPara(); //默认生成一份
+            LevelMaster.loadPara = para != null ? para : new LevelMaster.LevelLoadPara(); //默认生成一份
 
-            LevelMaster.loadPara = para;
-
+            var runtime = GameRuntimeData.Instance;
+            
             //存储结构
-            if (GameRuntimeData.Instance != null)
+            if (runtime != null)
             {
                 //存储上一个地图
-                GameRuntimeData.Instance.PrevMap = GameRuntimeData.Instance.CurrentMap;
+                runtime.PrevMap = runtime.CurrentMap;
 
                 //切换当前地图
                 if (map != null)
                 {
-                    GameRuntimeData.Instance.CurrentMap = map.Key;
+                    runtime.CurrentMap = map.Id.ToString();
                 }
             }
 
-            if (string.IsNullOrEmpty(command))
-                LoadingPanel.Create(map.Key, callback);
-            else
-                LoadingPanel.Create($"{map.Key}&{command}", callback);            
+            DoLoad(map, callback).Forget();
         }
 
+        static async UniTask DoLoad(Jyx2ConfigMap map, Action callback)
+        {
+            LevelMaster.SetCurrentMap(map);
+            await LoadingPanel.Create(map.MapScene);
+            callback?.Invoke();
+        }
+
+        [Obsolete]
         /// <summary>
         /// 加载地图
         /// </summary>
@@ -58,31 +63,38 @@ namespace Jyx2
                 para = new LevelMaster.LevelLoadPara(); //默认生成一份
             var mapKey = levelKey.Contains("&") ? levelKey.Split('&')[0] : levelKey;
             var command = levelKey.Contains("&") ? levelKey.Split('&')[1] : "";
-            LoadGameMap(ConfigTable.Get<GameMap>(mapKey), para, command);
+
+            para.Command = command;
+            
+            LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapKey), para);
         }
 
         //加载战斗
         public static void LoadBattle(int battleId, Action<BattleResult> callback)
         {
-            var battle = ConfigTable.Get<Jyx2Battle>(battleId);
-
-            string sceneName = "Jyx2Battle_" + battle.MapId;
-
+            var battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(battleId);
+            
             //记住当前的音乐，战斗后还原
             var formalMusic = AudioManager.GetCurrentMusic();
-
-            LoadingPanel.Create(sceneName, ()=> {
-
+            
+            UniTask.Run(async () =>
+            {
+                UniTask.ReturnToMainThread();
+                await LoadingPanel.Create(battle.MapScene);
+                
                 GameObject obj = new GameObject("BattleLoader");
                 var battleLoader = obj.AddComponent<BattleLoader>();
                 battleLoader.m_BattleId = battleId;
+                
+                //播放之前的地图音乐
                 battleLoader.Callback = (rst) =>
                 {
-                    AudioManager.PlayMusicAtPath(formalMusic).Forget();
+                    AudioManager.PlayMusic(formalMusic);
                     callback(rst);
                 };
-
             });
         }
+        
+        
     }
 }

@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using HanSquirrel.ResourceManager;
 using Jyx2;
 using UnityEngine;
@@ -20,76 +21,50 @@ using UnityEngine.UI;
 public class LoadingPanel : MonoBehaviour
 {
 
-    public static void Create(string level,Action callback)
+    /// <summary>
+    /// 载入场景
+    /// </summary>
+    /// <param name="sceneAsset">为null则返回主菜单</param>
+    /// <returns></returns>
+    public static async UniTask Create(AssetReference sceneAsset)
     {
         var loadingPanel = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/LoadingPanelCanvas.prefab").GetComponent<LoadingPanel>();
-        loadingPanel.LoadLevel(level, callback);
         GameObject.DontDestroyOnLoad(loadingPanel);
+        await loadingPanel.LoadLevel(sceneAsset);
     }
 
     public Text m_LoadingText;
 
-    public void LoadLevel(string levelKey, Action callback)
+    private async UniTask LoadLevel(AssetReference sceneAsset)
     {
         Jyx2_UIManager.Instance.CloseAllUI();
-        this.gameObject.SetActive(true);
-        StartCoroutine(DoLoadLevel(levelKey, callback));
-    }
-
-    IEnumerator DoLoadLevel(string levelKey, Action callback)
-    {
-        yield return 0; //否则BattleHelper还没有初始化
-
-        //如果是返回主菜单
-        if (levelKey.Equals(GameConst.DefaultMainMenuScene))
-        {
-            var loadAsync = SceneManager.LoadSceneAsync(levelKey);
-            
-            while (!loadAsync.isDone)
-            {
-                m_LoadingText.text = "载入中... " + (int)(loadAsync.progress * 100) + "%";
-                yield return 0;
-            }
-            if (callback != null)
-                callback();
-            GameObject.Destroy(this.gameObject);
-        }
-        else //否则动态载入场景
-        {
-            string level = levelKey.Contains("&") ? levelKey.Split('&')[0] : levelKey;
-            string command = levelKey.Contains("&") ? levelKey.Split('&')[1] : "";
-            //var async = SceneManager.LoadSceneAsync(level);
-
-            //苟且写法
-            string scenePath = "";
-            if (level.Contains("Battle"))
-            {
-                scenePath = $"Assets/Jyx2BattleScene/{level}.unity";
-            }
-            else
-            {
-                scenePath = $"Assets/Jyx2Scenes/{level}.unity";
-            }
+        gameObject.SetActive(true);
+        await UniTask.WaitForEndOfFrame(); //否则BattleHelper还没有初始化
         
-            var async = Addressables.LoadSceneAsync(scenePath);
+        //返回主菜单
+        if (sceneAsset == null)
+        {
+            var handle = SceneManager.LoadSceneAsync(GameConst.DefaultMainMenuScene);
+            while (!handle.isDone)
+            {
+                m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
+                await UniTask.WaitForEndOfFrame();
+            }
+        }
+        //切换场景
+        else 
+        {
+            var async = Addressables.LoadSceneAsync(sceneAsset);
         
             while (!async.IsDone)
             {
                 m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
-                yield return 0;
+                await UniTask.WaitForEndOfFrame();
             }
-            if (!string.IsNullOrEmpty(command))
-            {
-                StoryEngine.Instance.ExecuteCommand(command, null);
-            }
-            yield return 0;
 
-            //Jyx2_UIManager.Instance.ShowMainUI(levelKey);
-            if (callback != null)
-                callback();
-
-            GameObject.Destroy(this.gameObject);
-            GameRuntimeData.Instance.CheckCompass();
+            GameRuntimeData.Instance.CheckCompass(); //TODO，改成eventListener
         }
+        
+        Destroy(gameObject);
     }
 }

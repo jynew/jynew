@@ -70,7 +70,7 @@ public partial class ShopUIPanel:Jyx2_UIBase
     {
         base.OnShowPanel(allParams);
         //curShopId = (int)allParams[0];
-		curShopId=int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+		curShopId=LevelMaster.GetCurrentGameMap().Id;
         curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
 
         curSelectIndex = 0;

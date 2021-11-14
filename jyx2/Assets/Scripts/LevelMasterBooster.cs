@@ -99,7 +99,7 @@ public class LevelMasterBooster : MonoBehaviour
         if (string.IsNullOrEmpty(scene))
         {
             //sceneName = SceneManager.GetActiveScene().name;
-            sceneName = LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId.ToString();
+            sceneName = LevelMaster.GetCurrentGameMap().Id.ToString();
         }
         else
         {
@@ -132,11 +132,11 @@ public class LevelMasterBooster : MonoBehaviour
 
         if (LevelMaster.Instance == null) return;
 
-        var currentGameMap = LevelMaster.Instance.GetCurrentGameMap();
+        var currentGameMap = LevelMaster.GetCurrentGameMap();
         if (currentGameMap == null)
             return;
 
-        string sceneName = currentGameMap.Jyx2MapId.ToString();
+        string sceneName = currentGameMap.Id.ToString();
         var dict = runtime.GetSceneInfo(sceneName);
         if (dict == null)
             return;

@@ -241,7 +241,7 @@ namespace Jyx2
             if (!string.IsNullOrEmpty(CurrentMap))
             {
 				// modified by eaphone at 2021/05/22
-                mapName=LevelMaster.Instance.GetCurrentGameMap().GetShowName();
+                mapName=LevelMaster.GetCurrentGameMap().GetShowName();
             }
 
             return $"{Player.Level}级,{mapName},队伍:{Team.Count}人";
@@ -624,42 +624,32 @@ namespace Jyx2
         /// </summary>
         /// <param name="scene"></param>
         /// <returns></returns>
-        public int GetSceneEntranceCondition(string scene)
+        public int GetSceneEntranceCondition(int mapId)
         {
-            scene = scene.Split('&')[0]; //处理一些特殊格式的
-
-            var gamemap = ConfigTable.Get<GameMap>(scene);
-            if(gamemap != null)
-            {
-                //大地图
-                if (gamemap.IsWorldMap)
-                    return 0;
-
-                //已经有地图打开的纪录
-                string key = "SceneEntraceCondition_" + gamemap.Jyx2MapId;
-                if (KeyValues.ContainsKey(key))
-                {
-                    return int.Parse(GetKeyValues(key));
-                }
-
-                //否则取配置表初始值
-                var map = ConfigTable.Get<Jyx2Map>(gamemap.Jyx2MapId);
-                if (map != null)
-                {
-                    return map.EnterCondition;
-                }
-            }
+            var gameMap = Jyx2ConfigMap.Get(mapId);
+            if (gameMap == null) return -1;
             
-            return -1;
+            //大地图
+            if (gameMap.IsWorldMap())
+                return 0;
+
+            //已经有地图打开的纪录
+            string key = "SceneEntraceCondition_" + gameMap.Id;
+            if (KeyValues.ContainsKey(key))
+            {
+                return int.Parse(GetKeyValues(key));
+            }
+
+            //否则取配置表初始值
+            return gameMap.EnterCondition;
         }
 
         /// <summary>
         /// 设置场景进入条件码
         /// </summary>
-        /// <param name="scene"></param>
-        public void SetSceneEntraceCondition(string scene,int value)
+        public void SetSceneEntraceCondition(int mapId,int value)
         {
-            string key = "SceneEntraceCondition_" + scene;
+            string key = "SceneEntraceCondition_" + mapId;
             SetKeyValues(key, value.ToString());
         }
 

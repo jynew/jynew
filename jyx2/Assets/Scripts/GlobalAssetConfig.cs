@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 [CreateAssetMenu(fileName = "GlobalAssetConfig", menuName = "金庸重制版/全局资源配置文件")]
 public class GlobalAssetConfig : ScriptableObject
@@ -30,9 +31,11 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("游戏动作")] [LabelText("默认死亡动作")]
     public List<AnimationClip> defaultDieClips;
 
-
     [BoxGroup("游戏相机配置")] [LabelText("默认过肩视角相机")]
     public GameObject vcam3rdPrefab;
+
+    [BoxGroup("地图设置")] [LabelText("大地图")] 
+    public AssetReference BigMap;
 
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]

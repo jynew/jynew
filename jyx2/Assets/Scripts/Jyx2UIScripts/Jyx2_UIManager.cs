@@ -134,8 +134,7 @@ public class Jyx2_UIManager : MonoBehaviour
     //显示主界面 LoadingPanel中加载完场景调用 移到这里来 方便修改
     public void ShowMainUI()
     {
-        var levelMaster = LevelMaster.Instance;
-        var map = levelMaster.GetCurrentGameMap();
+        var map = LevelMaster.GetCurrentGameMap();
         if (map == null)
         {
             //this.HideUI("MainUIPanel");

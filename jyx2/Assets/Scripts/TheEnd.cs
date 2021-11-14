@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2;
+using UnityEngine.SceneManagement;
 
 public class TheEnd : Jyx2_UIBase
 {
@@ -39,10 +41,11 @@ public class TheEnd : Jyx2_UIBase
             else phase = 3;
         }else if (phase == 3)
         {
-            if (Input.GetButton("Fire1")||Input.GetKeyDown(KeyCode.Space)||(Input.touchCount>0&&Input.GetTouch(0).phase==TouchPhase.Began))
+            if (Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.Space) ||
+                (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
             {
-                LoadingPanel.Create("0_GameStart", () => { });
                 Jyx2_UIManager.Instance.HideUI(nameof(TheEnd));
+                SceneManager.LoadScene(GameConst.DefaultMainMenuScene);
             }
         }
     }

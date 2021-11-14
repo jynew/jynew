@@ -12,6 +12,7 @@ using Jyx2;
 using HSFrameWork.ConfigTable;
 using System.Collections;
 using System.Collections.Generic;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ public class JYX2DebugPanel : MonoBehaviour
     public Dropdown m_ChangeScene;
     public Dropdown m_TransportDropdown;
 
-    List<GameMap> m_ChangeSceneMaps = new List<GameMap>();
+    List<Jyx2ConfigMap> m_ChangeSceneMaps = new List<Jyx2ConfigMap>();
     bool _debugPanelSwitchOff = false;
 
     public bool IsDebugPanelSwitchOff()
@@ -49,7 +50,7 @@ public class JYX2DebugPanel : MonoBehaviour
         m_ChangeScene.ClearOptions();
         List<string> activeMaps = new List<string>();
         activeMaps.Add("选择场景");
-        foreach (var map in ConfigTable.GetAll<GameMap>())
+        foreach (var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
         {
             if (map.Tags.Contains("BATTLE")) continue;
             activeMaps.Add(map.GetShowName());
@@ -80,8 +81,8 @@ public class JYX2DebugPanel : MonoBehaviour
     {
         if (value == 0) return;
 
-        var levelKey = m_ChangeSceneMaps[value - 1].Key;
-        LevelLoader.LoadGameMap(levelKey);
+        var id = m_ChangeSceneMaps[value - 1].Id;
+        LevelLoader.LoadGameMap(id.ToString());
     }
 
     public void OnTransport(int value)

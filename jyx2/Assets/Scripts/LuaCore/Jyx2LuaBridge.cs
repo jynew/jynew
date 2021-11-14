@@ -119,7 +119,7 @@ namespace Jyx2
                 //场景ID
                 if(scene == -2) //当前场景
                 {
-                    scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+                    scene = LevelMaster.GetCurrentGameMap().Id;
 					isCurrentScene=true;
                 }
 
@@ -220,13 +220,18 @@ namespace Jyx2
                 var pos = LevelMaster.Instance.GetPlayerPosition();
                 string posStr = UnityTools.Vector3ToString(pos);
                 string posOri = UnityTools.QuaternionToString(LevelMaster.Instance.GetPlayerOrientation());
-                string currentScene = SceneManager.GetActiveScene().name;
-                LevelLoader.LoadBattle(battleId, (ret) => {
-                    LevelLoader.LoadGameMap(ConfigTable.Get<GameMap>(currentScene), new LevelMaster.LevelLoadPara() {
+
+                Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
+
+                LevelLoader.LoadBattle(battleId, (ret) =>
+                {
+                    LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
+                    {
                         loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
                         CurrentPos = posStr,
-						CurrentOri = posOri,
-                    }, "", ()=> {
+                        CurrentOri = posOri,
+                    }, () =>
+                    {
                         isWin = (ret == BattleResult.Win);
                         Next();
                     });
@@ -240,7 +245,7 @@ namespace Jyx2
         public static void ChangeMMapMusic(int musicId)
         {
             RunInMainThread(() => {
-                LevelMaster.Instance.GetCurrentGameMap().ForceSetLeaveMusicId = musicId;
+                LevelMaster.GetCurrentGameMap().ForceSetLeaveMusicId = musicId;
             });
         }
 
@@ -377,7 +382,7 @@ namespace Jyx2
                 //场景ID
                 if (scene == -2) //当前场景
                 {
-                    scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+                    scene = LevelMaster.GetCurrentGameMap().Id;
 					isCurrentScene=true;
                 }
 
@@ -444,7 +449,7 @@ namespace Jyx2
 				//场景ID
                 if (scene == -2) //当前场景
                 {
-                    scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+                    scene = LevelMaster.GetCurrentGameMap().Id;
                 }
 
                 //事件ID
@@ -737,14 +742,14 @@ namespace Jyx2
         //打开所有场景
         public static void OpenAllScene()
         {
-            foreach(var map in ConfigTable.GetAll<Jyx2Map>())
+            foreach(var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
             {
                 runtime.SetSceneEntraceCondition(map.Id, 0);
             }
-            runtime.SetSceneEntraceCondition("2", 2); //云鹤崖 需要轻功大于75
-            runtime.SetSceneEntraceCondition("38", 2); //摩天崖 需要轻功大于75
-            runtime.SetSceneEntraceCondition("75", 1); //桃花岛
-            runtime.SetSceneEntraceCondition("80", 1); //绝情谷底
+            runtime.SetSceneEntraceCondition(2, 2); //云鹤崖 需要轻功大于75
+            runtime.SetSceneEntraceCondition(38, 2); //摩天崖 需要轻功大于75
+            runtime.SetSceneEntraceCondition(75, 1); //桃花岛
+            runtime.SetSceneEntraceCondition(80, 1); //绝情谷底
         }
 
         //武林大会
@@ -848,7 +853,7 @@ namespace Jyx2
 				//场景ID
                 if(scene == -2) //当前场景
                 {
-                    scene = int.Parse(LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId);
+                    scene = LevelMaster.GetCurrentGameMap().Id;
                 }
 
                 //事件ID
@@ -899,7 +904,7 @@ namespace Jyx2
         //标记一个场景是否可以进入
         public static void OpenScene(int sceneId)
         {
-            runtime.SetSceneEntraceCondition(sceneId.ToString(), 0);
+            runtime.SetSceneEntraceCondition(sceneId, 0);
         }
 
 		// modify by eaphone at 2021/6/5
@@ -1052,7 +1057,7 @@ namespace Jyx2
 					return;
 				}
 
-				string mapId = LevelMaster.Instance.GetCurrentGameMap().Jyx2MapId;
+				string mapId = LevelMaster.GetCurrentGameMap().Id.ToString();
 				var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
                 if (!hasData)
                 {
