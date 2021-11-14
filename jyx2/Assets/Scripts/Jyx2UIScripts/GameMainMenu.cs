@@ -38,11 +38,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
     {
         //显示loading
         var c = StartCoroutine(ShowLoading());
-        
-        if (BeforeSceneLoad.loadFinishTask != null)
-        {
-            await BeforeSceneLoad.loadFinishTask;
-        }
+        await BeforeSceneLoad.loadFinishTask;
 
         StopCoroutine(c);
         LoadingText.gameObject.SetActive(false);
@@ -200,7 +196,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
         var player = runtime.AllRoles[0];
         player.Key = "主角";
 
-        if (!player.AlreadyJoinedTeam)
+        if (player.AlreadyJoinedTeam == 0)
         {
             //主角初始物品
             foreach (var item in player.Items)
@@ -209,7 +205,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
                 runtime.AddItem(item.Item.Id, item.Count);
                 item.Count = 0;
             }
-            player.AlreadyJoinedTeam = true;
+            player.AlreadyJoinedTeam = 1;
         }
         
 

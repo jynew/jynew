@@ -66,7 +66,7 @@ public partial class BattleActionOrderPanel:Jyx2_UIBase
             Image icon = itemTrans.Find("Mask/MainIcon").GetComponent<Image>();
             Text qingong = itemTrans.Find("Qingong").GetComponent<Text>();
             
-            icon.LoadAsyncForget(role.Data.Pic);
+            icon.LoadAsyncForget(role.Data.GetPic());
             
             qingong.text = string.Format($"轻功:{role.Qinggong}");
 

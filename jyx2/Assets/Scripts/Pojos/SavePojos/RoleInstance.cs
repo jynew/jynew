@@ -471,9 +471,9 @@ namespace Jyx2
             set { Save("ExpForItem", value); }
         }
 
-        public bool AlreadyJoinedTeam
+        public int AlreadyJoinedTeam
         {
-            get { return Get(nameof(AlreadyJoinedTeam), false); }
+            get { return Get(nameof(AlreadyJoinedTeam), 0); }
             set { Save(nameof(AlreadyJoinedTeam), value); }
         }
 

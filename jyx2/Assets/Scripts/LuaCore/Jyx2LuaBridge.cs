@@ -264,7 +264,7 @@ namespace Jyx2
                     RoleInstance role = runtime.GetRole(roleId);
                     storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
 
-                    if (!role.AlreadyJoinedTeam)
+                    if (role.AlreadyJoinedTeam == 0)
                     {
                         //同时获得对方身上的物品
                         foreach (var item in role.Items)
@@ -273,7 +273,7 @@ namespace Jyx2
                             AddItem(item.Item.Id, item.Count);
                             item.Count = 0;
                         }
-                        role.AlreadyJoinedTeam = true;
+                        role.AlreadyJoinedTeam = 1;
                     }
 
                     //清空角色身上的装备

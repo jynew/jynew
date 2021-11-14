@@ -24,6 +24,18 @@ namespace Jyx2
 {
     public static class ImageLoadHelper
     {
+        public static void LoadAsyncForget(this Image image, UniTask<Sprite> task)
+        {   
+            LoadAsync(image,task).Forget();
+        }
+        
+        public static async UniTask LoadAsync(this Image image, UniTask<Sprite> task)
+        {
+            image.gameObject.SetActive(false);
+            image.sprite = await task;
+            image.gameObject.SetActive(true);
+        }
+        
         public static void LoadAsyncForget(this Image image, AssetReference reference)
         {
             LoadAsync(image, reference).Forget();
@@ -78,14 +90,14 @@ public static class Jyx2ResourceHelper
         }
 
         //技能池
-        var task = await Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null).Task;
+        var task = await Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null);
         if (task != null)
         {
             Jyx2SkillDisplayAsset.All = task;
         }
 
         //全局配置表
-        var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset").Task;
+        var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
         if (t != null)
         {
             GlobalAssetConfig.Instance = t;
@@ -115,11 +127,6 @@ public static class Jyx2ResourceHelper
         //LeanPool.Despawn(obj);
     }
 
-    public static async UniTask<Sprite> GetRoleHeadSprite(RoleInstance role)
-    {
-        return await role.Data.GetPic();
-    }
-
     [Obsolete("待修改为tilemap")]
     public static void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
     {
@@ -143,12 +150,6 @@ public static class Jyx2ResourceHelper
             var obj = r.Result.bytes.Deserialize<BattleboxDataset>();
             callback(obj);
         };
-    }
-
-    public static async UniTask<Sprite> LoadItemSprite(int itemId)
-    {
-        string p = ("Assets/BuildSource/Jyx2Items/" + itemId + ".png");
-        return await Addressables.LoadAssetAsync<Sprite>(p).Task;
     }
 
     public static void SpawnPrefab(string path, Action<GameObject> callback)

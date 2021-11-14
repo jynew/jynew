@@ -61,13 +61,7 @@ public class ShopUIItem : MonoBehaviour
         leftNum = Tools.Limit(leftNum,0,shopItem.Count);
         itemNum.text = leftNum.ToString();
 
-        await iconImg.LoadAsync(item.Pic);
-        
-        var sprite = await Jyx2ResourceHelper.LoadItemSprite(item.Id);
-        if (sprite != null)
-        {
-            iconImg.sprite = sprite;
-        }
+        iconImg.LoadAsyncForget(item.GetPic());
     }
 
     void RefreshCount() 

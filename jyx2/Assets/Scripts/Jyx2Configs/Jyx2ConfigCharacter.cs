@@ -50,7 +50,8 @@ namespace Jyx2Configs
         private Sprite _sprite;
         public async UniTask<Sprite> GetPic()
         {
-            if (Pic == null) return null;
+            if (Pic == null|| string.IsNullOrEmpty(Pic.AssetGUID)) return null;
+            
             if (_sprite == null)
             {
                 _sprite = await Addressables.LoadAssetAsync<Sprite>(Pic).Task;
@@ -169,7 +170,7 @@ namespace Jyx2Configs
 
         public override async UniTask WarmUp()
         {
-            //await LoadPic();
+            GetPic().Forget();
         }
     }
 

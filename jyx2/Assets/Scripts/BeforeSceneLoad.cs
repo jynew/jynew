@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Jyx2.Setup;
 using HSFrameWork.ConfigTable;
 using Jyx2;
@@ -27,7 +28,7 @@ namespace Jyx2
         public static void ColdBind()
         {
             CrossplatformSetupHelper.ColdBind();
-            ConfigTable.InitSync();
+            //ConfigTable.InitSync();
             DebugInfoManager.Init();
             LuaManager.Init();
             loadFinishTask = Jyx2ResourceHelper.Init();

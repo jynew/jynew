@@ -94,7 +94,7 @@ namespace Jyx2Configs
                     Debug.Log($"ID重复，覆盖写入: {asset.Name}-->{db[asset.Id].Name}");
                 }
                 db[asset.Id] = asset;
-                await asset.WarmUp();
+                asset.WarmUp().Forget();
             }
 
             return db.Count;

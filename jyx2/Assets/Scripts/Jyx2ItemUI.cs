@@ -54,13 +54,8 @@ public class Jyx2ItemUI : MonoBehaviour
         m_NameText.text = $"<color={color}>{item.Name}</color>";
         m_CountText.text = (count > 1 ? count.ToString() : "");
 
-        m_Image.gameObject.SetActive(false);
-        var sprite = await Jyx2ResourceHelper.LoadItemSprite(id);
-        if (sprite != null)
-        {
-            m_Image.sprite = sprite;
-            m_Image.gameObject.SetActive(true);
-        }
+        m_Image.LoadAsyncForget(item.GetPic());
+        
     }
 
     public void Select(bool active) 

@@ -73,7 +73,7 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
 		var color2=m_currentRole.Poison>0?ColorStringDefine.Hp_posion:ColorStringDefine.Default;
         DetailText_Text.text = ($"体力 {m_currentRole.Tili}/100\n生命 <color={color1}>{m_currentRole.Hp}</color>/<color={color2}>{m_currentRole.MaxHp}</color>\n内力 {m_currentRole.Mp}/{m_currentRole.MaxMp}");
 
-        PreImage_Image.LoadAsyncForget(m_currentRole.Data.Pic);
+        PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
     }
 
     void OnAutoBattleValueChange(bool active) 

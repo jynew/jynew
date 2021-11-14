@@ -94,7 +94,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         bool canHeal = m_currentRole.Heal > 0 && m_currentRole.Tili >= 10;
         ButtonDetoxicate_Button.gameObject.SetActive(canHeal);
         
-        PreImage_Image.LoadAsyncForget(m_currentRole.Data.Pic);
+        PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
     }
 
     void RefreshScrollView()

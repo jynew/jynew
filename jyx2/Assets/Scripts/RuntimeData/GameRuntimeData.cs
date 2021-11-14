@@ -663,6 +663,8 @@ namespace Jyx2
 
         public void CheckCompass()
         {
+            if (LevelMaster.Instance == null) return;
+            
             isShowCompass = LevelMaster.Instance.IsInWorldMap&&Jyx2LuaBridge.HaveItem(182);
         }
 

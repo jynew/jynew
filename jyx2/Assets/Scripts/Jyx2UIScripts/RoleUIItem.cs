@@ -52,7 +52,7 @@ public class RoleUIItem : MonoBehaviour
 
         ShowProperty();
 
-        m_roleHead.LoadAsyncForget(role.Data.Pic);
+        m_roleHead.LoadAsyncForget(role.Data.GetPic());
     }
 
     void ShowProperty() 
