@@ -43,7 +43,7 @@ namespace UnityToolbarExtender.Examples
 			{
 #if UNITY_EDITOR
 				GPDC.OnProjectLoadedInEditor();
-                Container.TryResolve<IXLsReloader>()?.Do(); //自动重载配置表
+                //Container.TryResolve<IXLsReloader>()?.Do(); //自动重载配置表
 #endif
                 SceneHelper.StartScene("Assets/Jyx2Scenes/0_GameStart.unity");
             }

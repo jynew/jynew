@@ -10,13 +10,13 @@ namespace Jyx2.Editor
 {
     public class DesignToolMenu : HSSingleton<DesignToolMenu>, IXLsReloader
     {
-        [MenuItem("配置表/[重载策划配置]", true)]
+        //[MenuItem("配置表/[重载策划配置]", true)]
         public static bool CanNewModeBeUsed()
         {
             return EditorApplication.isPlaying || EditorApplication.isPaused;
         }
 
-        [MenuItem("配置表/[重载策划配置]", false, 0)]
+        //[MenuItem("配置表/[重载策划配置]", false, 0)]
         public static void UpdateAll()
         {
             MenuHelper.SafeWrapMenuAction("★重载策划配置★", UpdateAllInner);

@@ -48,7 +48,7 @@ namespace Jyx2.Editor
             MenuHelper.SafeWrapMenuAction("打包IOS港澳台", title => PackAllDataInner(true, title, false, "CHT"));
         }
 
-        [MenuItem("配置表/[当前平台打包]")]
+        //[MenuItem("配置表/[当前平台打包]")]
         static void Pack4Current()
         {
             MenuHelper.SafeWrapMenuAction("当前平台打包", title => PackAllDataInner(false, title, false, null));
@@ -92,7 +92,7 @@ namespace Jyx2.Editor
             MD5Menu.GenerateStreamingAssetsMD5Summary();
         }
 
-        [MenuItem("配置表/[!!清空所有配置表缓存!!]", false)]
+        //[MenuItem("配置表/[!!清空所有配置表缓存!!]", false)]
         static void ClearAllCache()
         {
             if (MenuHelper.SafeDisplayDialog("请确认", "是否需要删除所有和XML、filter、lua相关的所有中间和目标文件？", "是", "取消"))

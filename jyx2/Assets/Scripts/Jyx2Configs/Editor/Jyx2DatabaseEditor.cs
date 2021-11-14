@@ -31,6 +31,7 @@ public class Jyx2DatabaseEditor : OdinMenuEditorWindow
         CreateAssetsMenu<Jyx2ConfigItem>(tree, "道具", "Assets/BuildSource/Configs/Items");
         CreateAssetsMenu<Jyx2ConfigMap>(tree, "场景", "Assets/BuildSource/Configs/Maps");
         CreateAssetsMenu<Jyx2ConfigShop>(tree, "商店", "Assets/BuildSource/Configs/Shops");
+        CreateAssetsMenu<Jyx2ConfigBattle>(tree, "战斗", "Assets/BuildSource/Configs/Battles");
 
         tree.MarkDirty();
         return tree;

@@ -11,14 +11,14 @@ namespace Jyx2.Editor
     ///所有生成数据的菜单命令的入口
     public class GenDataMenuCmd
     {
-        [MenuItem("配置表/[GEN DATA]")]
+        //[MenuItem("配置表/[GEN DATA]")]
         public static void GenerateData()
         {
             using (HSUtils.ExeTimer("菜单：[GEN DATA]"))
                 MenuHelper.SafeWrapMenuAction("GENERATE DATA", title => GenerateDataWithEnding(title, false, false));
         }
 
-        [MenuItem("配置表/[GEN DATA (强制更新)]")]
+        //[MenuItem("配置表/[GEN DATA (强制更新)]")]
         public static void GenerateDataForce()
         {
             using (HSUtils.ExeTimer("菜单：[GEN DATA (强制更新)]"))
