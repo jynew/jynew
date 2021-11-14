@@ -264,23 +264,23 @@ namespace Jyx2
                     RoleInstance role = runtime.GetRole(roleId);
                     storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
 
-                    //同时获得对方身上的物品
-                    foreach (var item in role.Items)
+                    if (!role.AlreadyJoinedTeam)
                     {
-                        if(item.IsAdd != 1)
+                        //同时获得对方身上的物品
+                        foreach (var item in role.Items)
                         {
                             if (item.Count == 0) item.Count = 1;
-                            AddItem(item.Id, item.Count);
-                            item.IsAdd = 1;
+                            AddItem(item.Item.Id, item.Count);
                             item.Count = 0;
                         }
+                        role.AlreadyJoinedTeam = true;
                     }
-                    
+
                     //清空角色身上的装备
                     role.Weapon = -1;
                     role.Armor = -1;
                     role.Xiulianwupin = -1;
-                    
+
                     role.Items.Clear();    
                 }
                 

@@ -26,6 +26,7 @@ namespace Jyx2.Crossplatform.BasePojo
         /// 服务端和客户端共同需要二进制序列化的类
         /// </summary>
         protected static readonly List<Type> _SharedTypes = new List<Type>(){
+#if JYX2_USE_HSFRAMEWORK
                 //client
                 typeof(GameMap),
                 typeof(System.Numerics.Vector3),
@@ -44,6 +45,7 @@ namespace Jyx2.Crossplatform.BasePojo
                 typeof(Jyx2IntWrap),
                 typeof(Jyx2Shop),
                 typeof(Jyx2ShopItem),
+#endif
             };
 
         /// <summary>
@@ -51,6 +53,7 @@ namespace Jyx2.Crossplatform.BasePojo
         /// </summary>
         protected override void BuildTypeNodes()
         {
+#if JYX2_USE_HSFRAMEWORK
             AddTypeNode<GameMap>("gamemap");
 
             //jyx2
@@ -61,6 +64,7 @@ namespace Jyx2.Crossplatform.BasePojo
             AddTypeNode<Jyx2RoleHeadMapping>("jyx2role_headMapping");
             AddTypeNode<Jyx2Battle>("jyx2battle");
             AddTypeNode<Jyx2Shop>("jyx2shop");
+#endif
         }
     }
 }

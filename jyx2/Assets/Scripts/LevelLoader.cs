@@ -68,6 +68,7 @@ namespace Jyx2
         {
             var formalMusic = AudioManager.GetCurrentMusic(); //记住当前的音乐，战斗后还原
 
+            LevelMaster.IsInBattle = true;
             await LoadingPanel.Create(battle.MapScene);
                 
             GameObject obj = new GameObject("BattleLoader");
@@ -77,6 +78,7 @@ namespace Jyx2
             //播放之前的地图音乐
             battleLoader.Callback = (rst) =>
             {
+                LevelMaster.IsInBattle = false;
                 AudioManager.PlayMusic(formalMusic);
                 callback(rst);
             };

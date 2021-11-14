@@ -19,15 +19,8 @@ using UnityEngine;
 
 namespace Jyx2
 {
-    public enum Jyx2ItemType
-    {
-        TaskItem = 0, //道具
-        Equipment = 1, //装备
-        Book = 2, //经书
-        Costa = 3, //消耗品
-        Anqi = 4, //暗器
-    }
-    
+
+#if JYX2_USE_HSFRAMEWORK
     
     [XmlType("jyx2item")]
     public class Jyx2Item : BaseBean
@@ -204,6 +197,7 @@ namespace Jyx2
 
         [XmlElement]
         public List<Jyx2RoleItem> GenerateItems; //练出物品
-
+        
     }
+#endif
 }

@@ -191,6 +191,7 @@ namespace Jyx2Configs
 
         [LabelText("数量")] 
         public int Count;
+        
     }
 }
 

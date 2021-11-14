@@ -1,4 +1,4 @@
-#define JYX2_USE_HSFRAMEWORK
+//#define JYX2_USE_HSFRAMEWORK
 #if JYX2_USE_HSFRAMEWORK
 using System.Collections;
 using System.Collections.Generic;

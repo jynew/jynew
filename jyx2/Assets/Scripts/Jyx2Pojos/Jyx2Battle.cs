@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using HSFrameWork.ConfigTable;
 
+#if JYX2_USE_HSFRAMEWORK
+
 namespace Jyx2
 {
     [XmlType("jyx2battle")]
@@ -59,3 +61,4 @@ namespace Jyx2
         public int Value;
     }
 }
+#endif

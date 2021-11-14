@@ -26,13 +26,6 @@ namespace Jyx2
     public class WugongInstance : SaveablePojo
     {
         public WugongInstance() { }
-        public WugongInstance(Jyx2RoleWugong w)
-        {
-            Key = w.Id;
-            Level = w.Level;
-            GetSkill(); //初始化
-        }
-        
         
         public WugongInstance(Jyx2ConfigCharacterSkill s)
         {

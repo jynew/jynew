@@ -161,7 +161,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         m_curItemList.Clear();
         
         //隐藏格子
-        BattleboxHelper.Instance.HideAllBlocks();
+        BattleboxHelper.Instance?.HideAllBlocks();
     }
 
     void SetActionBtnState()

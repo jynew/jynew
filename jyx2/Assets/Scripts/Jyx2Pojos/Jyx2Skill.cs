@@ -7,6 +7,8 @@
  *
  * 金庸老先生千古！
  */
+
+#if JYX2_USE_HSFRAMEWORK
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,3 +89,4 @@ namespace Jyx2
         public int KillMp; //杀伤内力
     }
 }
+#endif

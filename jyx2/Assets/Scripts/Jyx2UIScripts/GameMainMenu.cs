@@ -200,26 +200,22 @@ public partial class GameMainMenu : Jyx2_UIBase {
         var player = runtime.AllRoles[0];
         player.Key = "主角";
 
-        //主角初始物品
-        foreach (var item in player.Items)
+        if (!player.AlreadyJoinedTeam)
         {
-            if(item.IsAdd != 1)
+            //主角初始物品
+            foreach (var item in player.Items)
             {
                 if (item.Count == 0) item.Count = 1;
-                runtime.AddItem(item.Id, item.Count);
-                item.IsAdd = 1;
+                runtime.AddItem(item.Item.Id, item.Count);
                 item.Count = 0;
             }
+            player.AlreadyJoinedTeam = true;
         }
+        
 
         player.BindKey();
         runtime.Team.Add(player);
-
-        //开场地图
-        var startMap = Jyx2ConfigMap.GetGameStartMap();
-        runtime.CurrentMap = startMap.Id + "&transport#0";
-        runtime.CurrentPos = "";
-
+        
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
         this.InputNamePanel_RectTransform.gameObject.SetActive(true);
 

@@ -17,6 +17,8 @@ using HanSquirrel.ResourceManager;
 using HSFrameWork.ConfigTable;
 using UnityEngine;
 
+#if JYX2_USE_HSFRAMEWORK
+
 namespace Jyx2
 {
     [XmlType("jyx2shop")]
@@ -52,3 +54,4 @@ namespace Jyx2
         }
     }
 }
+#endif

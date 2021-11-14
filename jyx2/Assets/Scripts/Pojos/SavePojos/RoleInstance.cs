@@ -471,6 +471,12 @@ namespace Jyx2
             set { Save("ExpForItem", value); }
         }
 
+        public bool AlreadyJoinedTeam
+        {
+            get { return Get(nameof(AlreadyJoinedTeam), false); }
+            set { Save(nameof(AlreadyJoinedTeam), value); }
+        }
+
         //武功
         public List<WugongInstance> Wugongs
         {
@@ -530,20 +536,21 @@ namespace Jyx2
         //重置身上的物品
         public void ResetItems()
         {
-            _items = new List<Jyx2RoleItem>();
+            _items = new List<Jyx2ConfigCharacterItem>();
 
             //配置表中添加的物品
             foreach (var item in Data.Items)
             {
-                var generateItem = new Jyx2RoleItem();
-                generateItem.Id = item.Item.Id;
+                var generateItem = new Jyx2ConfigCharacterItem();
+                generateItem.Item = item.Item;
                 generateItem.Count = item.Count;
                 _items.Add(generateItem);//这里对于NPC来说，每场战斗都会补满道具
             }
         }
 
+        
         //身上携带的道具
-        public List<Jyx2RoleItem> Items
+        public List<Jyx2ConfigCharacterItem> Items
         {
             get
             {
@@ -557,12 +564,12 @@ namespace Jyx2
             set { _items = value; }
         }
 
-        private List<Jyx2RoleItem> _items;
+        private List<Jyx2ConfigCharacterItem> _items;
 
 
         public bool HaveItemBool(int itemId)
         {
-            return Items.FindIndex(it => it.Id == itemId) != -1;
+            return Items.FindIndex(it => it.Item.Id == itemId) != -1;
         }
 
         /// <summary>
@@ -572,7 +579,7 @@ namespace Jyx2
         /// <param name="count"></param>
         public void AddItem(int itemId, int count)
         {
-            var item = Items.Find(it => it.Id == itemId);
+            var item = Items.Find(it => it.Item.Id == itemId);
             if (count < 0)
             {
                 Items.Remove(item);
@@ -584,7 +591,11 @@ namespace Jyx2
             }
             else
             {
-                Items.Add(new Jyx2RoleItem() {Id = itemId, Count = count});
+                Items.Add(new Jyx2ConfigCharacterItem()
+                {
+                    Item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId),
+                    Count = count
+                });
             }
         }
 

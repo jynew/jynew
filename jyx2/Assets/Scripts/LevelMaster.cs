@@ -126,6 +126,11 @@ public class LevelMaster : MonoBehaviour
     }
 
     /// <summary>
+    /// 当前是否在战斗中
+    /// </summary>
+    public static bool IsInBattle = false;
+
+    /// <summary>
     /// 当前是否在大地图，统一判断方式
     /// </summary>
     public bool IsInWorldMap
@@ -164,7 +169,7 @@ public class LevelMaster : MonoBehaviour
         }
 
         var gameMap = GetCurrentGameMap();
-        if (gameMap != null)
+        if (gameMap != null && !IsInBattle)
         {
             if (gameMap.IsWorldMap())//JYX2 临时测试
             {

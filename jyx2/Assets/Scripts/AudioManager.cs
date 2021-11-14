@@ -23,7 +23,7 @@ public class AudioManager
 
     public static bool PlayMusic(AssetReference asset)
     {
-        if (asset.Asset == null)
+        if (string.IsNullOrEmpty(asset.AssetGUID))
             return false;
         DoPlayMusic(asset).Forget();
         return true;

@@ -610,7 +610,7 @@ public class AIManager
         List<Jyx2ConfigItem> items = new List<Jyx2ConfigItem>();
         foreach (var item in role.Items)
         {
-            var tmp = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id);
+            var tmp = item.Item;
             if ((int)tmp.ItemType == itemType)
                 items.Add(tmp);
         }

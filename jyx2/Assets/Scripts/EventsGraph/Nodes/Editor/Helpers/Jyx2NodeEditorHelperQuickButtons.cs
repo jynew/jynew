@@ -6,6 +6,7 @@ using System.Net;
 using GLib;
 using HSFrameWork.ConfigTable;
 using Jyx2;
+using Jyx2Configs;
 using Jyx2Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -55,15 +56,16 @@ static public class Jyx2NodeEditorHelperQuickButtons
 
     private static string GetSceneAssetPath(int sceneId)
     {
-        var jyx2Map = ConfigTable.GetAll<GameMap>()
-            .SingleOrDefault(map => map.Jyx2MapId.Equals(sceneId.ToString()));
+        var jyx2Map = GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>()
+            .SingleOrDefault(map => map.Id.Equals(sceneId.ToString()));
 
         if (jyx2Map == null)
         {
             return null;
         }
-        
-        return $"Assets/Jyx2Scenes/{jyx2Map.Key}.unity";
+
+        return AssetDatabase.GetAssetPath(jyx2Map.MapScene.editorAsset);
+        //return $"Assets/Jyx2Scenes/{jyx2Map.Key}.unity";
     }
     
     /// <summary>

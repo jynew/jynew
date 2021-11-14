@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using HSFrameWork.ConfigTable;
 
+#if JYX2_USE_HSFRAMEWORK
 namespace Jyx2
 {
     //[Obsolete]
@@ -223,3 +224,4 @@ namespace Jyx2
         }
     }
 }
+#endif

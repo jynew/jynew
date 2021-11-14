@@ -10,6 +10,15 @@ using UnityEngine.AddressableAssets;
 
 namespace Jyx2Configs
 {
+    public enum Jyx2ItemType
+    {
+        TaskItem = 0, //道具
+        Equipment = 1, //装备
+        Book = 2, //经书
+        Costa = 3, //消耗品
+        Anqi = 4, //暗器
+    }
+
     [CreateAssetMenu(menuName = "金庸重制版/配置文件/道具", fileName = "道具ID_道具名")]
     public class Jyx2ConfigItem : Jyx2ConfigBase
     {

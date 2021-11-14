@@ -1,3 +1,4 @@
+#if JYX2_USE_HSFRAMEWORK
 /*
  * 金庸群侠传3D重制版
  * https://github.com/jynew/jynew
@@ -128,3 +129,4 @@ namespace Jyx2
         bool m_isWorldMap = false;
     }
 }
+#endif
