@@ -192,9 +192,12 @@ namespace Jyx2
             {
                 if (bone.humanName == "RightHand")
                 {
-                    m_SwordWeapon.m_BindBone = bone.boneName;
-                    m_KnifeWeapon.m_BindBone = bone.boneName;
-                    m_SpearWeapon.m_BindBone = bone.boneName;
+                    if(m_SwordWeapon.m_BindBone==null)
+                        m_SwordWeapon.m_BindBone = bone.boneName;
+                    if(m_KnifeWeapon.m_BindBone==null)
+                        m_KnifeWeapon.m_BindBone = bone.boneName;
+                    if(m_SpearWeapon.m_BindBone==null)
+                        m_SpearWeapon.m_BindBone = bone.boneName;
                     break;
                 }
             }
