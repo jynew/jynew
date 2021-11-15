@@ -31,6 +31,7 @@ public partial class GameMainMenu
 	private RectTransform PropertyItem_RectTransform;
 	private RectTransform PropertyRoot_RectTransform;
 	private Text LoadingText;
+	private ReleaseNotePanel ReleaseNote_Panel;
 
 	public void InitTrans()
 	{
@@ -53,5 +54,6 @@ public partial class GameMainMenu
 		PropertyItem_RectTransform = transform.Find("StartNewRolePanel/PropertyItem").GetComponent<RectTransform>();
 		PropertyRoot_RectTransform = transform.Find("StartNewRolePanel/PropertyRoot").GetComponent<RectTransform>();
 		LoadingText = transform.Find("mainPanel/LoadingText").GetComponent<Text>();
+		ReleaseNote_Panel = transform.Find("ReleaseNotePanel").GetComponent<ReleaseNotePanel>();
 	}
 }

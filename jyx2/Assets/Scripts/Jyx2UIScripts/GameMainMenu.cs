@@ -11,6 +11,7 @@ using UnityEngine;
 using Jyx2;
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
 using HSFrameWork.Common;
 using Jyx2Configs;
@@ -43,8 +44,22 @@ public partial class GameMainMenu : Jyx2_UIBase {
         StopCoroutine(c);
         LoadingText.gameObject.SetActive(false);
         homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
+
+        JudgeShowReleaseNotePanel();
     }
 
+    void JudgeShowReleaseNotePanel()
+    {
+        //每个更新显示一次
+        string key = "RELEASENOTE_" + Application.version;
+        if (!PlayerPrefs.HasKey(key))
+        {
+            ReleaseNote_Panel.gameObject.SetActive(true);
+            PlayerPrefs.SetInt(key, 1);
+            PlayerPrefs.Save();
+        }
+    }
+    
     IEnumerator ShowLoading()
     {
         while (true)
