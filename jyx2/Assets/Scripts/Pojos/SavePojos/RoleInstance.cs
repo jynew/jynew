@@ -455,7 +455,7 @@ namespace Jyx2
 
         public int Xiulianwupin //修炼物品
         {
-            get { return Get("Xiulianwupin", 0); }
+            get { return Get("Xiulianwupin", -1); }
             set { Save("Xiulianwupin", value); }
         }
 
