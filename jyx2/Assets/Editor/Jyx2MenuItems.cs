@@ -110,7 +110,7 @@ namespace Jyx2Editor
             AddressableAssetSettings.BuildPlayerContent();
 
             //强制GENDATA
-            GenDataMenuCmd.GenerateDataForce();
+            //GenDataMenuCmd.GenerateDataForce();
 
             // 处理场景文件
             //AddScenesToBuildTool.AddScenesToBuild();
@@ -169,7 +169,7 @@ namespace Jyx2Editor
                 AddressableAssetSettings.BuildPlayerContent();
 
                 //强制GENDATA
-                GenDataMenuCmd.GenerateDataForce();
+                //GenDataMenuCmd.GenerateDataForce();
 
                 // 处理场景文件
                 //AddScenesToBuildTool.AddScenesToBuild();
@@ -228,7 +228,7 @@ namespace Jyx2Editor
                 AddressableAssetSettings.BuildPlayerContent();
 
                 //强制GENDATA
-                GenDataMenuCmd.GenerateDataForce();
+                //GenDataMenuCmd.GenerateDataForce();
 
                 // 处理场景文件
                 //AddScenesToBuildTool.AddScenesToBuild();
