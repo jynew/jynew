@@ -318,22 +318,13 @@ public class LevelMaster : MonoBehaviour
                 var entranceObj = GameObject.FindGameObjectWithTag("Entrance"); //找入口
                 if (entranceObj != null)
                 {
-                    var spawnPos = entranceObj.transform.position;
-                    PlayerSpawnAt(spawnPos);
+                    PlayerSpawnAt(entranceObj.transform.position);
                 }
             }
         }
         else if (loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtTrigger)
         {
-            GameObject startTrigger = GameObject.Find(loadPara.triggerName);
-            if(startTrigger == null)
-            {
-                Debug.LogError($"地图{map.Name}的指定载入trigger:{loadPara.triggerName} 未定义");
-                return;
-            }
-
-            var spawnPos = startTrigger.transform.position;
-            PlayerSpawnAt(spawnPos);
+            Transport(loadPara.triggerName);
 
             if(_currentMap.IsWorldMap())
                 GetPlayer().LoadBoat();

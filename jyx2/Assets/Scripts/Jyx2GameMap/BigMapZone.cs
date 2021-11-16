@@ -132,10 +132,16 @@ public class BigMapZone : MonoBehaviour
 		}
 
 		LevelMaster.LevelLoadPara para = new LevelMaster.LevelLoadPara();
+		para.loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtTrigger;
 		if (!string.IsNullOrEmpty(TransportTriggerName))
 		{
-			para.loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtTrigger;
 			para.triggerName = TransportTriggerName;
+		}else if (curMap.IsWorldMap())
+		{
+			para.triggerName = "Leave";
+		}else if (nextMap.IsWorldMap())
+		{
+			para.triggerName = curMap.Name;
 		}
 
 		//额外触发指令
