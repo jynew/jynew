@@ -324,8 +324,9 @@ public class LevelMaster : MonoBehaviour
         }
         else if (loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtTrigger)
         {
+            _playerNavAgent.enabled = false;
             Transport(loadPara.triggerName);
-
+            _playerNavAgent.enabled = true;
             if(_currentMap.IsWorldMap())
                 GetPlayer().LoadBoat();
         }
