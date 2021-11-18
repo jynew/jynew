@@ -30,7 +30,7 @@ namespace Jyx2
             CrossplatformSetupHelper.ColdBind();
             //ConfigTable.InitSync();
             DebugInfoManager.Init();
-            LuaManager.Init();
+
             loadFinishTask = Jyx2ResourceHelper.Init();
         }
 

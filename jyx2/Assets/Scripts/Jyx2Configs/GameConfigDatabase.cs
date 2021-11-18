@@ -104,8 +104,6 @@ namespace Jyx2Configs
         {
             DontDestroyOnLoad(gameObject);
             Instance = this;
-            
-            Init().Forget();
         }
     }
     

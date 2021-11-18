@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -102,6 +103,18 @@ public static class Jyx2ResourceHelper
         {
             GlobalAssetConfig.Instance = t;
         }
+        
+        //基础配置表
+        if (GameConfigDatabase.Instance == null)
+        {
+            GameObject obj = new GameObject("[GameConfigDatabase]");
+            var db = obj.AddComponent<GameConfigDatabase>();
+            await db.Init();
+        }
+        
+        //lua
+        await LuaManager.InitLuaMapper();
+        LuaManager.Init();
     }
 
     public static GameObject GetCachedPrefab(string path)

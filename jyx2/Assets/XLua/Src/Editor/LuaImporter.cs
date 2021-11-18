@@ -1,3 +1,4 @@
+#if false //不使用XLUA的importer
 #if UNITY_2018_1_OR_NEWER
 
 using System;
@@ -185,4 +186,5 @@ public class LuaAssetEditor :  UnityEditor.Editor
     }
 }
 
+#endif
 #endif

@@ -68,7 +68,6 @@ namespace Jyx2.Editor
                 HSCTC.ActiveLanguage = language;
                 try
                 {
-                    GenDataMenuCmd.GenPackDataAllTheWay(title, force, true, false); //支持启动前和运行中取消
                     MoveAndGenMD5(isBuildForIOS, title);
                     Debug.LogWarning("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                     Debug.LogWarning("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ [{0}] 语言包 [{1}] 全部完成，恭喜。".EatWithTID(title, HSCTC.DisplayActiveLanguage).PadRight(60, '▬'));
@@ -90,16 +89,6 @@ namespace Jyx2.Editor
 
             MenuHelper.SafeDisplayProgressBar(title, "GenerateABMd5", 0.9f);
             MD5Menu.GenerateStreamingAssetsMD5Summary();
-        }
-
-        //[MenuItem("配置表/[!!清空所有配置表缓存!!]", false)]
-        static void ClearAllCache()
-        {
-            if (MenuHelper.SafeDisplayDialog("请确认", "是否需要删除所有和XML、filter、lua相关的所有中间和目标文件？", "是", "取消"))
-            {
-                GenDataHelper.ClearAllCache();
-                AssetDatabase.Refresh();
-            }
         }
     }
 }
