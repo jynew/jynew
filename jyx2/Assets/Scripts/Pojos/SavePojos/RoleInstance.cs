@@ -780,7 +780,12 @@ namespace Jyx2
                 {
                     this.Zuoyouhubo = 1;
                 }
-                this.LearnMagic(item.Skill.Id);
+
+                if (item.Skill != null)
+                {
+                    this.LearnMagic(item.Skill.Id);
+                }
+
                 this.ExpForItem -= need_item_exp;
             }
 
