@@ -291,6 +291,8 @@ namespace Jyx2
         
         public static void Dead()
         {
+            //防止死亡后传送到enterTrigger再次触发事件。临时处理办法
+            ModifyEvent(-2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
             RunInMainThread(() => {
                 Jyx2_UIManager.Instance.ShowUI(nameof(GameOver));
             });
