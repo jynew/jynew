@@ -88,9 +88,11 @@ namespace Jyx2
         public int damage; //伤害
         public int damageMp;
         public int addMp; //增加内力
+        public int addMaxMp;
         public int poison;
         public int depoison;
         public int heal;
+        public int hurt;
 
         public double GetTotalScore()
         {
@@ -155,6 +157,7 @@ namespace Jyx2
                 //吸取内力逻辑
                 if (rst.addMp > 0)
                 {
+                    r1.MaxMp = Tools.Limit(r1.MaxMp + rst.addMaxMp, 0, GameConst.MAX_HPMP);
                     int finalMp = Tools.Limit(r1.Mp + rst.addMp, 0, r1.MaxMp);
                     int deltaMp = finalMp - r1.Mp;
                     if (deltaMp >= 0)
@@ -202,6 +205,9 @@ namespace Jyx2
 
                 r1.ExpGot += rst.heal;
             }
+
+            r2.Hurt += rst.hurt;
+            r2.Hurt = Tools.Limit(r2.Hurt, 0, GameConst.MAX_HURT);
         }
     }
 }
