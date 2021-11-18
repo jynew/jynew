@@ -62,7 +62,6 @@ public class LevelMaster : MonoBehaviour
         Explore,
     }
 
-    public bool RuntimeDataSimulate = true;
     public bool MobileSimulate = false;
     public GameObject m_MobileRotateSlider;
     public bl_HUDText HUDRoot;
@@ -156,7 +155,7 @@ public class LevelMaster : MonoBehaviour
             }
         }
 
-        if (RuntimeDataSimulate && runtime == null)
+        if (runtime == null)
         {
             //测试存档位
             var r = GameRuntimeData.CreateNew();  //选一个没有用过的id
