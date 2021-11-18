@@ -249,7 +249,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
         this.StartNewRolePanel_RectTransform.gameObject.SetActive(false);
         var loadPara = new LevelMaster.LevelLoadPara();
         loadPara.loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtTrigger;
-        loadPara.triggerName = "Level/Triggers/0";
+        loadPara.triggerName = "0";
         GameRuntimeData.Instance.startDate = DateTime.Now;
         //加载地图
         var startMap = Jyx2ConfigMap.GetGameStartMap();

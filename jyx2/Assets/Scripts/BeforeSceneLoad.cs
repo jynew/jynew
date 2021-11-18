@@ -31,6 +31,7 @@ namespace Jyx2
             //ConfigTable.InitSync();
             DebugInfoManager.Init();
             LuaManager.Init();
+            
             loadFinishTask = Jyx2ResourceHelper.Init();
         }
 
