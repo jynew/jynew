@@ -111,6 +111,10 @@ public static class Jyx2ResourceHelper
             var db = obj.AddComponent<GameConfigDatabase>();
             await db.Init();
         }
+        
+        //lua
+        await LuaManager.InitLuaMapper();
+        LuaManager.Init();
     }
 
     public static GameObject GetCachedPrefab(string path)

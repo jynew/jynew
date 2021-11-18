@@ -98,7 +98,7 @@ public static class Jyx2Console
 			default:
 				Debug.Log("没有识别的指令，将执行lua替代：" + cmd);
 				string luaContent = cmd;
-				Jyx2.LuaExecutor.ExecuteLua(luaContent);
+				Jyx2.LuaExecutor.ExecuteLuaAsync(luaContent);
 				break;
 		}
 	}

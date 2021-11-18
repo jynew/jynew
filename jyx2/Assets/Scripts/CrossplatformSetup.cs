@@ -32,13 +32,13 @@ namespace Jyx2.Setup
                 Debug.Log("↓↓↓↓↓↓↓↓↓ Game.ColdBind ↓↓↓↓↓↓↓↓↓↓↓");
                 HSBootApp.IceBind();
                 IceBind();
-                HSBootApp.ColdBind(ConStr.GLOBAL_DESKEY,
+                /*HSBootApp.ColdBind(ConStr.GLOBAL_DESKEY,
 #if UNITY_EDITOR
                     null,
 #else
                     HSConfigTableInitHelperPhone.Create(),
 #endif
-                    ConStr.PrefabPoolConfig);
+                    ConStr.PrefabPoolConfig);*/
                 Debug.Log("↑↑↑↑↑↑↑↑↑ Game.ColdBind ↑↑↑↑↑↑↑↑↑↑↑");
                 HSLogManager.GetLogger("Booter").Info("ColdBind完成。");
 

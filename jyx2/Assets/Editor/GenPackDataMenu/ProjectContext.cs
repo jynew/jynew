@@ -56,8 +56,8 @@ namespace Jyx2.Editor
         [InitializeOnLoadMethod]
         public static void OnProjectLoadedInEditor()
         {
-            HSBootEditor.ColdBind(ConStr.GLOBAL_DESKEY, HSConfigTableInitHelperEditor.Create(), ConStr.NLogConfigAssetPath);
-            Container.Register<IXLsReloader>(x => DesignToolMenu.Instance, ReuseScope.Container);
+            //HSBootEditor.ColdBind(ConStr.GLOBAL_DESKEY, HSConfigTableInitHelperEditor.Create(), ConStr.NLogConfigAssetPath);
+            /*Container.Register<IXLsReloader>(x => DesignToolMenu.Instance, ReuseScope.Container);
 
             Directory.CreateDirectory(CachePath);
             EditorPlayMode.PlayModeChanged += OnPlayModeChanged;
@@ -67,7 +67,7 @@ namespace Jyx2.Editor
                 Debug.Log("首次打开项目自动GenData");
                 GenDataMenuCmd.GenerateData();
                 IsFirstOpenProj = false;
-            }
+            }*/
         }
 
         private static void OnPlayModeChanged(PlayModeState currentState, PlayModeState changedState)
