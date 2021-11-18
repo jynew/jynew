@@ -243,12 +243,13 @@ public class BattleManager : MonoBehaviour
         foreach (var role in alive_teammate)
         {
             var practiseItem = role.GetXiulianItem();
-
+            var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
+            
             if (role.Level >= GameConst.MAX_ROLE_LEVEL)
             {
                 role.ExpForItem += role.ExpGot;
             }
-            else if (practiseItem != null && practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id) <= 10)
+            else if (isWugongCanUpgrade)
             {
                 role.Exp += role.ExpGot / 2;
                 role.ExpForItem += role.ExpGot / 2;
@@ -279,13 +280,19 @@ public class BattleManager : MonoBehaviour
                 change = 0;
 
                 //修炼秘籍
-                while (role.CanFinishedItem() && practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id) <= 10)
+                while (role.CanFinishedItem() && isWugongCanUpgrade)
                 {
                     role.UseItem(practiseItem);
                     change++;
-                    var level = role.GetWugongLevel(practiseItem.Skill.Id);
                     rst += $"{role.Name} 修炼 {practiseItem.Name} 成功\n";
-                    if (level > 1) rst += $"{practiseItem.Name} 升为 " + level.ToString() + " 级\n";
+                    if (practiseItem.Skill != null)
+                    {
+                        var level = role.GetWugongLevel(practiseItem.Skill.Id);
+                        if (level > 1)
+                        {
+                            rst += $"{practiseItem.Skill.Name} 升为 " + level.ToString() + " 级\n";
+                        }
+                    }
                 }
 
                 //炼制物品
