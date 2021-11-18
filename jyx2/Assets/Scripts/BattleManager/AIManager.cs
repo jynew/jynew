@@ -443,24 +443,8 @@ public class AIManager
 
 
     
-    /// <summary>
-    /// 战斗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
-    ///
-    /// 
-    /// </summary>
-    /// <param name="r1"></param>
-    /// <param name="r2"></param>
-    /// <param name="skill"></param>
-    /// <param name="blockVector"></param>
-    /// <returns></returns>
     public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, BattleZhaoshiInstance skill, BattleBlockVector blockVector)
-    {
-        //队伍1武学常识
-        int totalWuxue = BattleModel.GetTotalWuXueChangShi(r1.team);
-        
-        //队伍2武学常识
-        int totalWuxue2 = BattleModel.GetTotalWuXueChangShi(r2.team);
-        
+    {        
         SkillCastResult rst = new SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
         var magic = skill.Data.GetSkill();
         int level_index = skill.Data.GetLevel()-1;//此方法返回的是显示的武功等级，1-10。用于calMaxLevelIndexByMP时需要先-1变为数组index再使用
@@ -468,36 +452,22 @@ public class AIManager
         //普通攻击
         if (magic.DamageType == 0)
         {
+            //队伍1武学常识
+            int totalWuxue = BattleModel.GetTotalWuXueChangShi(r1.team);
+
+            //队伍2武学常识
+            int totalWuxue2 = BattleModel.GetTotalWuXueChangShi(r2.team);
+
             if (r1.Mp <= magic.MpCost) //已经不够内力释放了
             {
                 rst.damage = 1 + UnityEngine.Random.Range(0, 10);
                 return rst;
             }
             //总攻击力＝(人物攻击力×3 ＋ 武功当前等级攻击力)/2 ＋武器加攻击力 ＋ 防具加攻击力 ＋ 武器武功配合加攻击力 ＋我方武学常识之和
-            int attack = (r1.Attack * 3 + skill.Data.GetSkillLevelInfo(level_index).Attack) / 2 + totalWuxue;
+            int attack = ((r1.Attack - r1.GetWeaponProperty("Attack") - r1.GetArmorProperty("Attack")) * 3 + skill.Data.GetSkillLevelInfo(level_index).Attack) / 2 + r1.GetWeaponProperty("Attack") + r1.GetArmorProperty("Attack") + totalWuxue;
             
             //总防御力 ＝ 人物防御力 ＋武器加防御力 ＋ 防具加防御力 ＋ 敌方武学常识之和
             int defence = r2.Defence + totalWuxue2;
-            if (r1.Weapon >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r1.Weapon);
-                attack += i.Attack;
-            }
-            if (r1.Armor >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r1.Armor);
-                attack += i.Attack;
-            }
-            if (r2.Weapon >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r2.Weapon);
-                defence += i.Defence;
-            }
-            if (r2.Armor >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r2.Armor);
-                defence += i.Defence;
-            }
 
             //伤害 ＝ （总攻击力－总防御×3）×2 / 3 + RND(20) – RND(20)                  （公式1）
             int v = (attack - defence * 3) * 2 / 3 + UnityEngine.Random.Range(0, 20) - UnityEngine.Random.Range(0, 20);
@@ -545,8 +515,25 @@ public class AIManager
             //10、if 伤害 < 1  伤害 ＝ 1
             if (v < 1)
                 v = 1;
-            
+
             rst.damage = v;
+
+            //敌人受伤程度
+            rst.hurt = v / 10;
+
+            //攻击带毒
+            //中毒程度＝武功等级×武功中毒点数＋人物攻击带毒
+            int add = level_index * skill.Data.GetSkill().Poison + r1.AttackPoison;
+            //if 敌人抗毒> 中毒程度 或 敌人抗毒> 90 则不中毒
+            //敌人中毒=敌人已中毒＋ 中毒程度/15
+            //if 敌人中毒> 100 then 敌人中毒 ＝100
+            //if 敌人中毒<0 then 敌人中毒=0
+            if (r2.AntiPoison <= add && r2.AntiPoison <= 90)
+            {
+                int poison = Tools.Limit(add / 15, 0, GameConst.MAX_ROLE_ATK_POISON);
+                rst.poison = poison;
+            }
+  
             return rst;
         }
         else if ((int)magic.DamageType == 1) //吸内
@@ -555,22 +542,15 @@ public class AIManager
             
             //杀伤内力逻辑
             int v = levelInfo.KillMp;
-            v += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
-            if (v < 10)
-            {
-                v = 1 + UnityEngine.Random.Range(0, 10);
-            }
+            v += UnityEngine.Random.Range(0, 3) - UnityEngine.Random.Range(0, 3);
             rst.damageMp = v;
 
             //吸取内力逻辑
             int addMp = levelInfo.AddMp;
             if (addMp > 0)
             {
-                addMp += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
-                if (addMp < 10)
-                {
-                    addMp = 1 + UnityEngine.Random.Range(0, 10);
-                }
+                rst.addMaxMp = UnityEngine.Random.Range(0, addMp / 2);
+                addMp += UnityEngine.Random.Range(0, 3) - UnityEngine.Random.Range(0, 3);
                 rst.addMp = addMp;    
             }
             
@@ -588,18 +568,18 @@ public class AIManager
         }
         else if ((int)magic.DamageType == 4) //治疗
         {
-            rst.heal = medicine(r1, r2);
+            var _rst = medicine(r1, r2);
+            rst.heal = _rst.heal;
+            rst.hurt = _rst.hurt;
             return rst;
         }
         else if ((int)magic.DamageType == 5) //暗器
         {
             var anqi = skill.Anqi;
-            rst.damage = hiddenWeapon(r1, r2, anqi);
-            //带毒
-            if(anqi.ChangePoisonLevel > 0)
-            {
-                rst.poison = usePoison(r1, r2);
-            }
+            var _rst = hiddenWeapon(r1, r2, anqi);
+            rst.damage = _rst.damage;
+            rst.hurt = _rst.hurt;
+            rst.poison = _rst.poison;
             return rst;
         }
         return null;
@@ -617,45 +597,106 @@ public class AIManager
         return items;
     }
 
-    //对应kys-cpp:BattleScene::calMagicHurt
 
     //用毒
+    /// 中毒计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <returns></returns>
     int usePoison(RoleInstance r1, RoleInstance r2)
     {
-        int add = r1.UsePoison / 3;
-        int rst = Tools.Limit(r2.Poison + add, 0, 100);
-        return rst - r2.Poison;
+        //中毒程度 ＝（用毒能力－抗毒能力）/ 4
+        int poison = (r1.UsePoison - r2.AntiPoison) / 4;
+        //小于0则为0
+        if (poison < 0)
+            poison = 0;
+        return poison;
     }
 
-    //医疗的效果
-    int medicine(RoleInstance r1, RoleInstance r2)
+    //医疗
+    /// 医疗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <returns></returns>
+    SkillCastResult medicine(RoleInstance r1, RoleInstance r2)
     {
-        int add = r1.Heal;
-        int rst = Tools.Limit(r2.Hp + add, 0, r2.MaxHp);
-        return rst - r2.Hp;
+        SkillCastResult rst = new SkillCastResult();
+        if (r2.Hurt > r1.Heal + 20)
+        {
+            rst.heal = 0;
+            return rst;
+        }
+        //增加生命 = 医疗能力 * a + random(5);
+        //当受伤程度 > 75, a = 1 / 2;
+        //当50 < 受伤程度 <= 75, a = 2 / 3;
+        //当25 < 受伤程度 <= 50, a = 3 / 4;
+        //当受伤程度 <= 25, a = 4 / 5;
+        int a = (int)Math.Ceiling((double)r2.Hurt / 25);
+        int addHp = r1.Heal * (5 - a) / (6 - a) + UnityEngine.Random.Range(0, 5);
+        rst.heal = addHp;
+        //减低受伤程度 = 医疗能力.
+        rst.hurt = -addHp;
+        return rst;
     }
 
     //解毒
-    //注意这个返回值通常应为负
+    /// 解毒计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <returns></returns>
     int detoxification(RoleInstance r1, RoleInstance r2)
     {
-        int mius = r1.DePoison / 3;
-        int rst = Tools.Limit(r2.Poison - mius, 0, 100);
-        return r2.Poison - rst;
+        if (r2.Poison > r1.DePoison + 20)
+            return 0;
+        int add = (r1.DePoison / 3) + UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
+        int depoison = Tools.Limit(add, 0, r2.Poison);
+        return depoison;
     }
 
     //暗器
     //返回值为一正数
-    int hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2ConfigItem anqi)
+    /// 暗器计算公式可以参考：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <param name="anqi"></param>
+    /// <returns></returns>
+    SkillCastResult hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2ConfigItem anqi)
     {
-        int v = r1.Anqi - anqi.AddHp;
-        int dis = r1.Pos.GetDistance(r2.Pos);
-        v = (int)(v / Math.Exp((dis - 1) / 10));
-        v += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
-        if (v < 1)
+        SkillCastResult rst = new SkillCastResult();
+        //增加生命 = (暗器增加生命/a-random(5)-暗器能力*2)/3;
+        //式中暗器增加生命为负值.
+        //当受伤程度 > 66, a = 1;
+        //当33 < 受伤程度 <= 66, a = 2;
+        //当0 < 受伤程度 <= 33, a = 3;
+        //当受伤程度 = 0, a = 4;
+        int a = (int)Math.Ceiling((double)r2.Hurt / 33);
+        int v = (anqi.AddHp / (4 - a) - UnityEngine.Random.Range(0, 5) - r1.Anqi * 2) / 3;
+        rst.damage = -v;
+        //敌人受伤程度
+        rst.hurt = -v / 4; //此处v为负值
+        //当暗器带毒 > 0,
+        //增加中毒程度 = [(暗器带毒 + 暗器技巧) / 2 - 抗毒能力] / 2;
+        //当抗毒 = 100, 增加中毒程度 = 0.
+        if (anqi.ChangePoisonLevel > 0)
         {
-            v = 1;
+            int add = ((anqi.ChangePoisonLevel + r1.Anqi) / 2 - r2.AntiPoison) / 2;
+            if (r2.AntiPoison == 100)
+                add = 0;
+            int poison = Tools.Limit(add, 0, GameConst.MAX_USE_POISON);
+            rst.poison = poison;
         }
-        return v;
+        return rst;
     }
 }
