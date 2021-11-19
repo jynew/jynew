@@ -102,13 +102,18 @@ namespace Jyx2.Battle
         }
 
         //中毒
+        /// </summary>
+        /// 中毒掉血计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
+        ///
+        /// 
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
         async UniTask RunPosionLogic(RoleInstance role)
         {
             if (role.Poison <= 0) return;
             int tmp = role.Hp;
-            role.Poison -= role.AntiPoison;
-            role.Poison = Tools.Limit(role.Poison, 0, 100);
-            role.Hp -= role.Poison / 3;
+            role.Hp -= role.Poison / 10;
             if (role.Hp < 1)
                 role.Hp = 1;
 
