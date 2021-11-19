@@ -115,20 +115,19 @@ namespace Jyx2.Battle
             int poisonEffect = role.Poison / 10;
             role.Hp -= hurtEffect;
             role.Hp -= poisonEffect;
-            if (role.Hp < 1)
-                role.Hp = 1;
-
             role.View?.MarkHpBarIsDirty();
             int hurtEffectRst = Tools.Limit(hurtEffect, 0, role.Hp);
             int poisonEffectRst = Tools.Limit(poisonEffect, 0, role.Hp);
-            if (hurtEffectRst > 1)
+            if (hurtEffectRst > 0)
             {
-                role.View.ShowAttackInfo($"<color=white>受伤-{hurtEffectRst}</color>");
+                role.View?.ShowAttackInfo($"<color=white>-{hurtEffectRst}</color>");
             }
-            if (poisonEffectRst > 1)
+            if (poisonEffectRst > 0)
             {
-                role.View.ShowAttackInfo($"<color=green>毒发-{poisonEffectRst}</color>");
+                role.View?.ShowAttackInfo($"<color=green>-{poisonEffectRst}</color>");
             }
+            if (role.Hp < 1)
+                role.Hp = 1;
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.8));
         }
