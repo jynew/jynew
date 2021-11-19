@@ -7,15 +7,9 @@
  *
  * 金庸老先生千古！
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using Jyx2.Setup;
-using HSFrameWork.ConfigTable;
-using Jyx2;
 using UnityEngine;
 
 namespace Jyx2
@@ -28,7 +22,6 @@ namespace Jyx2
         public static void ColdBind()
         {
             CrossplatformSetupHelper.ColdBind();
-            //ConfigTable.InitSync();
             DebugInfoManager.Init();
 
             loadFinishTask = Jyx2ResourceHelper.Init();

@@ -240,7 +240,6 @@ namespace Jyx2
             string mapName = "";
             if (!string.IsNullOrEmpty(CurrentMap))
             {
-				// modified by eaphone at 2021/05/22
                 mapName=LevelMaster.GetCurrentGameMap().GetShowName();
             }
 

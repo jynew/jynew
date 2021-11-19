@@ -4,6 +4,11 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
+
 namespace Jyx2Configs
 {
     [CreateAssetMenu(menuName = "金庸重制版/配置文件/地图", fileName = "地图ID_地图名")]
@@ -11,6 +16,7 @@ namespace Jyx2Configs
     {
         public static Jyx2ConfigMap Get(int id)
         {
+            
             return GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(id);
         }
         
@@ -64,5 +70,50 @@ namespace Jyx2Configs
         public bool IsWorldMap() { return _isWorldMap;}
         private bool _isWorldMap;
 
+#if UNITY_EDITOR
+
+
+        static Jyx2ConfigMap LoadInEditor(int id)
+        {
+            string path = "Assets/BuildSource/Configs/Maps";
+            var asset = AssetDatabase.FindAssets($"{id}_*", new string[] {path});
+            var loadPath = AssetDatabase.GUIDToAssetPath(asset[0]);
+            return AssetDatabase.LoadAssetAtPath<Jyx2ConfigMap>(loadPath);
+        }
+        
+        [Button("自动设置地图连接点")]
+        public async UniTask OnAutoSetTransport()
+        {
+            var map = MapScene;
+
+            EditorSceneManager.OpenScene($"Assets/Jyx2Scenes/{map.editorAsset.name}.unity");
+
+            
+            
+            Debug.Log("processing...");
+            //await GameConfigDatabase.Instance.Init();
+
+            var levelMasterbooster = FindObjectOfType<LevelMasterBooster>();
+            if (levelMasterbooster.m_GameMap == null)
+            {
+                levelMasterbooster.m_GameMap = this;
+                levelMasterbooster.m_IsBattleMap = false;
+            }
+            
+            foreach (var zone in FindObjectsOfType<MapTeleportor>())
+            {
+                if (zone.m_GameMap == null)
+                {
+                    //zone.m_GameMap = Jyx2ConfigMap.LoadInEditor(zone.TransportMapId);
+                }
+            }
+
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
+            
+            
+            Debug.Log("ok");
+        }
+#endif
     }
 }

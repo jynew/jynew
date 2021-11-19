@@ -105,13 +105,8 @@ public static class Jyx2ResourceHelper
         }
         
         //基础配置表
-        if (GameConfigDatabase.Instance == null)
-        {
-            GameObject obj = new GameObject("[GameConfigDatabase]");
-            var db = obj.AddComponent<GameConfigDatabase>();
-            await db.Init();
-        }
-        
+        await GameConfigDatabase.Instance.Init();
+
         //lua
         await LuaManager.InitLuaMapper();
         LuaManager.Init();

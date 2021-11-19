@@ -1,0 +1,49 @@
+﻿using System;
+using UnityEngine;
+
+namespace ES3Types
+{
+	[UnityEngine.Scripting.Preserve]
+	[ES3PropertiesAttribute([propertyNames])]
+	public class ES3UserType_[es3TypeSuffix] : ES3Type
+	{
+		public static ES3Type Instance = null;
+
+		public ES3UserType_[es3TypeSuffix]() : base(typeof([fullType])){ Instance = this; priority = 1;}
+
+
+		public override void Write(object obj, ES3Writer writer)
+		{
+			var instance = ([fullType])obj;
+			[writes]
+		}
+
+		public override object Read<T>(ES3Reader reader)
+		{
+			var instance = new [fullType]();
+			string propertyName;
+			while((propertyName = reader.ReadPropertyName()) != null)
+			{
+				switch(propertyName)
+				{
+					[reads]
+					default:
+						reader.Skip();
+						break;
+				}
+			}
+			return instance;
+		}
+	}
+
+
+	public class ES3UserType_[es3TypeSuffix]Array : ES3ArrayType
+	{
+		public static ES3Type Instance;
+
+		public ES3UserType_[es3TypeSuffix]Array() : base(typeof([fullType][]), ES3UserType_[es3TypeSuffix].Instance)
+		{
+			Instance = this;
+		}
+	}
+}
