@@ -8,18 +8,12 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2;
-using HSFrameWork.ConfigTable;
 using Jyx2Configs;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
-using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MapTeleportor : MonoBehaviour
 {	
