@@ -160,31 +160,43 @@ namespace Jyx2
         }
 
 
+        /// <summary>
+        /// 升级属性计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
+        ///
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public void LevelUp()
         {
             Exp -= GameConst._levelUpExpList[this.Level - 1];
             Level++;
             Tili = GameConst.MAX_ROLE_TILI;
-            MaxHp += Data.HpInc * 3 + Tools.GetRandomInt(0, 6);
+            MaxHp += (Data.HpInc + Tools.GetRandomInt(0, 3)) * 3;
             SetHPAndRefreshHudBar(this.MaxHp);
-            MaxMp += 20 + Tools.GetRandomInt(0, 6);
+            //当0 <= 资质 < 30, a = 2;
+            //当30 <= 资质 < 50, a = 3;
+            //当50 <= 资质 < 70, a = 4;
+            //当70 <= 资质 < 90, a = 5;
+            //当90 <= 资质 < 100, a = 6;
+            int a = (int)Math.Ceiling((double)(IQ - 10) / 20) + 1;
+            MaxMp += (9 - a) * 4;
             Mp = MaxMp;
 
             Hurt = 0;
             Poison = 0;
 
-            Attack += Tools.GetRandomInt(0, 7);
-            Qinggong += Tools.GetRandomInt(0, 7);
-            Defence += Tools.GetRandomInt(0, 7);
+            Attack += a;
+            Qinggong += a;
+            Defence += a;
 
             Heal = checkUp(Heal, 0, 3);
             DePoison = checkUp(DePoison, 0, 3);
             UsePoison = checkUp(UsePoison, 0, 3);
 
-            Quanzhang = checkUp(Quanzhang, 10, 3);
-            Yujian = checkUp(Yujian, 10, 3);
-            Shuadao = checkUp(Shuadao, 10, 3);
-            Qimen = checkUp(Qimen, 10, 3);
+            Quanzhang = checkUp(Quanzhang, 0, 3);
+            Yujian = checkUp(Yujian, 0, 3);
+            Shuadao = checkUp(Shuadao, 0, 3);
+            Qimen = checkUp(Qimen, 0, 3);
 
             this.Limit(1, 1, 1);
 
@@ -713,14 +725,15 @@ namespace Jyx2
 
         /// <summary>
         /// 炼制物品
+        /// 计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
         /// </summary>
         /// <param name="item"></param>
         public string LianZhiItem(Jyx2ConfigItem practiseItem)
         {
             if (practiseItem == null)
                 return "";
-            
-            if (practiseItem.GenerateItems != null && practiseItem.GenerateItemNeedCost != null && ExpForMakeItem >= practiseItem.GenerateItemNeedExp &&
+            int GenerateItemNeedExp = (7 - IQ / 15) * practiseItem.GenerateItemNeedExp;
+            if (practiseItem.GenerateItems != null && practiseItem.GenerateItemNeedCost != null && ExpForMakeItem >= GenerateItemNeedExp &&
                 runtime.HaveItemBool(practiseItem.GenerateItemNeedCost.Id))
             {
                 
@@ -878,6 +891,10 @@ namespace Jyx2
                 {
                     multiple *= magic_level_index;
                 }
+            }
+            else
+            {
+                multiple *= 2;
             }
 
             return item.NeedExp * multiple;
@@ -1193,21 +1210,21 @@ namespace Jyx2
             ResetZhaoshis();
             return 0;
         }
-		
-		public string GetMPColor()
-		{
-			return MpType == 2 ? ColorStringDefine.Default : MpType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0;
-		}
-		
-		public string GetHPColor1()
-		{
-			return Hurt > 20 ? ColorStringDefine.Hp_hurt_heavy : Hurt > 0 ? ColorStringDefine.Hp_hurt_light : ColorStringDefine.Default;
-		}
-		
-		public string GetHPColor2()
-		{
-			return Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
-		}
+        
+        public string GetMPColor()
+        {
+            return MpType == 2 ? ColorStringDefine.Default : MpType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0;
+        }
+        
+        public string GetHPColor1()
+        {
+            return Hurt > 20 ? ColorStringDefine.Hp_hurt_heavy : Hurt > 0 ? ColorStringDefine.Hp_hurt_light : ColorStringDefine.Default;
+        }
+        
+        public string GetHPColor2()
+        {
+            return Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
+        }
 
         public int GetWeaponProperty(string propertyName)
         {

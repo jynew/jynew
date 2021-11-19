@@ -441,8 +441,16 @@ public class AIManager
         return rst;
     }
 
-
-    
+    /// </summary>
+    /// 战斗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <param name="skill"></param>
+    /// <param name="blockVector"></param>
+    /// <returns></returns>
     public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, BattleZhaoshiInstance skill, BattleBlockVector blockVector)
     {        
         SkillCastResult rst = new SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
@@ -599,6 +607,7 @@ public class AIManager
 
 
     //用毒
+    /// </summary>
     /// 中毒计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
     ///
     /// 
@@ -617,6 +626,7 @@ public class AIManager
     }
 
     //医疗
+    /// </summary>
     /// 医疗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
     ///
     /// 
@@ -646,6 +656,7 @@ public class AIManager
     }
 
     //解毒
+    /// </summary>
     /// 解毒计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
     ///
     /// 
@@ -664,6 +675,7 @@ public class AIManager
 
     //暗器
     //返回值为一正数
+    /// </summary>
     /// 暗器计算公式可以参考：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
     ///
     /// 
