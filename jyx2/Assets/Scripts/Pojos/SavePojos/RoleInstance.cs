@@ -1086,6 +1086,7 @@ namespace Jyx2
         //}
 
         //获得行动力
+        //参考：https://github.com/ZhanruiLiang/jinyong-legend
         public int GetMoveAbility()
         {
             if (Tili < 10)
@@ -1102,7 +1103,13 @@ namespace Jyx2
                 speed += this.GetArmor().Qinggong;
             }
 
-            return speed / 15 + 1;
+            speed = speed / 15 - this.Hurt / 40;
+
+            if (speed < 0)
+            {
+                speed = 0;
+            }
+            return speed;
         }
 
         //是否是AI控制
