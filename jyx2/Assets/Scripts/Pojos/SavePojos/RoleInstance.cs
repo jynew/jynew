@@ -758,11 +758,19 @@ namespace Jyx2
                 return;
 
             this.Tili += item.AddTili;
-            this.SetHPAndRefreshHudBar(this.Hp + item.AddHp);
+            //吃药机制
+            //参考：https://github.com/ZhanruiLiang/jinyong-legend
+            int add = item.Heal - this.Hurt / 2 + Random.Range(0, 10);
+            if (add <= 0)
+            {
+                add = 5 + Random.Range(0, 5);
+            }
+            this.Hurt -= item.Heal / 4;
+            this.SetHPAndRefreshHudBar(this.Hp + add);
             this.MaxHp += item.AddMaxHp;
             this.Mp += item.AddMp;
             this.MaxMp += item.AddMaxMp;
-            this.Poison += item.ChangePoisonLevel;
+            this.Poison += item.ChangePoisonLevel / 2;
             this.Heal += item.Heal;
             this.DePoison += item.DePoison;
             this.AntiPoison += item.AntiPoison;
