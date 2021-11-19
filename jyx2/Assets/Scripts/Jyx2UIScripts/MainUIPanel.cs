@@ -199,9 +199,9 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             return;
         
         //执行离开事件
-        foreach (var zone in FindObjectsOfType<BigMapZone>())
+        foreach (var zone in FindObjectsOfType<MapTeleportor>())
         {
-            if (zone.TransportMapId == GameConst.WORLD_MAP_ID)
+            if (zone.m_GameMap.Id == GameConst.WORLD_MAP_ID)
             {
                 zone.DoTransport();
                 break;

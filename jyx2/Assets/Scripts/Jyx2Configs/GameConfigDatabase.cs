@@ -9,20 +9,41 @@ using UnityEngine.AddressableAssets;
 
 namespace Jyx2Configs
 {
-    [DisallowMultipleComponent]
-    public class GameConfigDatabase : MonoBehaviour
+    public class GameConfigDatabase 
     {
+        #region Singleton
         public static GameConfigDatabase Instance
         {
-            get;
-            private set;
-        } 
-        
+            get
+            {
+                if (_instance == null)
+                    _instance = new GameConfigDatabase();
+                return _instance;
+            }
+            private set
+            {
+                _instance = value;
+            }
+        }
+
+        private static GameConfigDatabase _instance;
+
+        private GameConfigDatabase()
+        {
+        }
+    #endregion
+
         private readonly Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> _dataBase =
             new Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>();
 
+        private bool _isInited = false;
+        
         public async UniTask Init()
         {
+            if (_isInited)
+                return;
+            
+            _isInited = true;
             int total = 0;
             total += await Init<Jyx2ConfigCharacter>();
             total += await Init<Jyx2ConfigItem>();
@@ -98,12 +119,6 @@ namespace Jyx2Configs
             }
 
             return db.Count;
-        }
-
-        void Start()
-        {
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
         }
     }
     

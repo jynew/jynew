@@ -28,7 +28,6 @@ namespace Jyx2
         public static void ColdBind()
         {
             CrossplatformSetupHelper.ColdBind();
-            //ConfigTable.InitSync();
             DebugInfoManager.Init();
 
             loadFinishTask = Jyx2ResourceHelper.Init();
