@@ -5069,9 +5069,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
-  - Desktop
   - Mobile
-  shaderIndex: 1
+  shaderIndex: 0
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -5106,9 +5105,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.43392748, g: 0.36944723, b: 0.304967, a: 0.85882354}
+  waterShallowColor: {r: 0.43392548, g: 0.36944523, b: 0.304965, a: 0.85882354}
   depth: 15
-  waterColor: {r: 0.462264, g: 0.42950723, b: 0.41642424, a: 1}
+  waterColor: {r: 0.462264, g: 0.42950523, b: 0.41642225, a: 1}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.6320754, g: 0.5651325, b: 0.5277233, a: 0.35686275}
@@ -5198,7 +5197,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: bb7e956bb4dfc3d4280c659dc9144806, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 0
+  isMobilePlatform: 1
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
@@ -5230,9 +5229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
-  - Desktop
   - Mobile
-  shaderIndex: 1
+  shaderIndex: 0
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -5267,9 +5265,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.43392745, g: 0.3694472, b: 0.30496696, a: 0.85882354}
+  waterShallowColor: {r: 0.43392545, g: 0.3694452, b: 0.30496496, a: 0.85882354}
   depth: 15
-  waterColor: {r: 0.462264, g: 0.4295072, b: 0.4164242, a: 1}
+  waterColor: {r: 0.462264, g: 0.4295052, b: 0.41642222, a: 1}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.6320754, g: 0.5651325, b: 0.5277233, a: 0.35686275}
@@ -5396,7 +5394,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: bb7e956bb4dfc3d4280c659dc9144806, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 0
+  isMobilePlatform: 1
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
@@ -12236,13 +12234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e95f9b5bac0984585ce4150cb9d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TestLevel: 5
-  m_TestTeammate:
-  - "\u6843\u82B1\u4ED9\u5B50"
-  - "\u9646\u6E38"
-  - "\u8F9B\u5F03\u75BE"
-  m_RuntimeDataSimulate: 1
   m_MobileSimulate: 0
+  m_GameMap: {fileID: 11400000, guid: 8d9cf0da0d799ea449a4edbc61977f11, type: 2}
+  m_IsBattleMap: 0
 --- !u!4 &339691458
 Transform:
   m_ObjectHideFlags: 0
@@ -20302,8 +20296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ff8b67996ae6c419a86e052dfcd6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnterMapKey: jyx2_BigMap
-  Command: 
+  TransportMapId: 1000
+  TransportTriggerName: 
+  ExtraCommand: 
   ButtonText: "\u79BB\u5F00"
   m_EventTargets: []
 --- !u!65 &548203717

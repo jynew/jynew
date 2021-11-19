@@ -3219,6 +3219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: fb707b86-f0c9-4eae-8f04-7e2678b7be17
   displayType: 1
+  isLock: 0
 --- !u!1 &315061327
 GameObject:
   m_ObjectHideFlags: 0
@@ -3459,13 +3460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e95f9b5bac0984585ce4150cb9d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TestLevel: 5
-  m_TestTeammate:
-  - "\u6843\u82B1\u4ED9\u5B50"
-  - "\u9646\u6E38"
-  - "\u8F9B\u5F03\u75BE"
-  m_RuntimeDataSimulate: 1
   m_MobileSimulate: 0
+  m_GameMap: {fileID: 11400000, guid: 48afe2a27e1028b40ae576af1e4d0c55, type: 2}
+  m_IsBattleMap: 0
 --- !u!4 &339691458
 Transform:
   m_ObjectHideFlags: 0
@@ -4993,8 +4990,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ff8b67996ae6c419a86e052dfcd6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnterMapKey: jyx2_BigMap
-  Command: 
+  TransportMapId: 1000
+  TransportTriggerName: 
+  ExtraCommand: 
   ButtonText: "\u79BB\u5F00"
   m_EventTargets: []
 --- !u!65 &548203717
@@ -7973,8 +7971,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 0, y: 0, z: 0}
-    lastRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastScale: {x: 1, y: 1, z: 1}
+    lastRotation: {x: 0, y: 0, z: 0, w: 1}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -9817,6 +9815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: dd10cb9d-8520-4485-addb-2e5ff9633b6d
   displayType: 1
+  isLock: 0
 --- !u!1001 &931077044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17976,13 +17975,10 @@ MonoBehaviour:
   m_RoleKey: "\u4E3B\u89D2"
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
-  m_Behavior: 4
-  m_BehaviorParas: []
   m_IsKeyRole: 0
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
   IsInBattle: 0
-  m_FootStepTimespan: 0.4
 --- !u!136 &1809565865
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -19203,8 +19199,8 @@ Transform:
   - {fileID: 422418135}
   - {fileID: 679508223}
   - {fileID: 608797470}
-  - {fileID: 1926966150}
   - {fileID: 306438816}
+  - {fileID: 1926966150}
   - {fileID: 924209242}
   - {fileID: 8815858254248648599}
   - {fileID: 859433742}
