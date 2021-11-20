@@ -441,8 +441,16 @@ public class AIManager
         return rst;
     }
 
-
-    
+    /// </summary>
+    /// 战斗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <param name="skill"></param>
+    /// <param name="blockVector"></param>
+    /// <returns></returns>
     public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, BattleZhaoshiInstance skill, BattleBlockVector blockVector)
     {        
         SkillCastResult rst = new SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
@@ -599,8 +607,9 @@ public class AIManager
 
 
     //用毒
+    /// </summary>
     /// 中毒计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
-    ///
+    /// 也参考War_PoisonHurt：https://github.com/ZhanruiLiang/jinyong-legend
     /// 
     /// </summary>
     /// <param name="r1"></param>
@@ -617,8 +626,9 @@ public class AIManager
     }
 
     //医疗
-    /// 医疗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
-    ///
+    /// </summary>
+    /// 医疗计算公式可以参考：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
+    /// 也参考ExecDoctor：https://github.com/ZhanruiLiang/jinyong-legend
     /// 
     /// </summary>
     /// <param name="r1"></param>
@@ -627,6 +637,11 @@ public class AIManager
     SkillCastResult medicine(RoleInstance r1, RoleInstance r2)
     {
         SkillCastResult rst = new SkillCastResult();
+        if (r1.Tili < 50)
+        {
+            rst.heal = 0;
+            return rst;
+        }
         if (r2.Hurt > r1.Heal + 20)
         {
             rst.heal = 0;
@@ -646,7 +661,8 @@ public class AIManager
     }
 
     //解毒
-    /// 解毒计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
+    /// </summary>
+    /// 解毒计算公式可以参考ExecDecPoison：https://github.com/ZhanruiLiang/jinyong-legend
     ///
     /// 
     /// </summary>
@@ -664,7 +680,8 @@ public class AIManager
 
     //暗器
     //返回值为一正数
-    /// 暗器计算公式可以参考：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
+    /// </summary>
+    /// 暗器计算公式可以参考War_AnqiHurt：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
     ///
     /// 
     /// </summary>

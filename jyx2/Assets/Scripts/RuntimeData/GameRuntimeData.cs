@@ -300,7 +300,7 @@ namespace Jyx2
                 return false;
             }
             Team.Remove(role);
-			role.Recover();
+			role.Recover(true);
 			for(var index=0;index< AllRoles.Count;index++){
 				if(AllRoles[index].Key==role.Key){
 					AllRoles[index]=role;

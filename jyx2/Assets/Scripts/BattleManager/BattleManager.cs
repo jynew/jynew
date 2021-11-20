@@ -239,30 +239,22 @@ public class BattleManager : MonoBehaviour
             rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
         }
 
+        /// <summary>
+        /// 分配经验计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
+        /// </summary>
         //分配经验
         foreach (var role in alive_teammate)
         {
             var practiseItem = role.GetXiulianItem();
             var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
-            
-            if (role.Level >= GameConst.MAX_ROLE_LEVEL)
-            {
-                role.ExpForItem += role.ExpGot;
-            }
-            else if (isWugongCanUpgrade)
-            {
-                role.Exp += role.ExpGot / 2;
-                role.ExpForItem += role.ExpGot / 2;
-            }
-            else
-            {
-                role.Exp += role.ExpGot;
-            }
 
-            role.ExpForMakeItem += role.ExpGot;
+            role.Exp += role.ExpGot;
+            role.ExpForItem += role.ExpGot * 8 / 10;
+            role.ExpForMakeItem += role.ExpGot * 8 / 10;
             //避免越界
             role.Exp = Tools.Limit(role.Exp, 0, GameConst.MAX_EXP);
             role.ExpForItem = Tools.Limit(role.ExpForItem, 0, GameConst.MAX_EXP);
+            role.ExpForMakeItem = Tools.Limit(role.ExpForMakeItem, 0, GameConst.MAX_EXP);
 
             //升级
             int change = 0;
