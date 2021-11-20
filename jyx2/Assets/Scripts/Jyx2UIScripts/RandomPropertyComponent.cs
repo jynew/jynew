@@ -77,7 +77,7 @@ public class RandomPropertyComponent : MonoBehaviour
             label.color = color;
             BG.gameObject.SetActive(showBg);
         }
-        role.Recover();
+        role.Recover(true);
     }
 
 }

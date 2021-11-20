@@ -35,7 +35,7 @@ namespace Jyx2
         {
             Key = roleKey;
             BindKey();
-            Recover();
+            Recover(true);
         }
 
         public void BindKey()
@@ -79,15 +79,18 @@ namespace Jyx2
             ResetItems();
         }
 
-        public void Recover()
+        public void Recover(bool condition)
         {
-            SetHPAndRefreshHudBar(MaxHp);
+            if (condition)
+            {
+                SetHPAndRefreshHudBar(MaxHp);
 
-            Mp = MaxMp;
-            Tili = GameConst.MAX_ROLE_TILI;
+                Mp = MaxMp;
+                Tili = GameConst.MAX_ROLE_TILI;
 
-            Hurt = 0;
-            Poison = 0;
+                Hurt = 0;
+                Poison = 0;
+            }
         }
 
         public int HpInc
@@ -1178,20 +1181,21 @@ namespace Jyx2
 
         #endregion
 
-        //JYX2的休息逻辑，对应kyscpp  BattleScene::actRest
+        //JYX2的休息逻辑，对应jinyong-legend  War_RestMenu
         public void OnRest()
         {
-            Tili = Tools.Limit(Tili + 5, 0, GameConst.MAX_ROLE_TILI);
-            int tmpHp = Hp;
-            Hp = Tools.Limit((int) (Hp + MaxHp * 0.05), 0, MaxHp);
-
-            int tmpMp = Mp;
-            Mp = Tools.Limit((int) (Mp + MaxMp * 0.05), 0, MaxMp);
-
-            if (Hp > tmpHp)
-                this.View.ShowAttackInfo($"<color=green>+{Hp - tmpHp}</color>");
-            if (Mp > tmpMp)
-                this.View.ShowAttackInfo($"<color=blue>+{Mp - tmpMp}</color>");
+            int addTili = 3 + Random.Range(0, 3);
+            Tili = Tools.Limit(Tili + addTili, 0, GameConst.MAX_ROLE_TILI);
+            if (Tili > 30)
+            {
+                int addHpMp = 3 + Random.Range(0, Tili / 10 - 2);
+                Hp = Tools.Limit(Hp + addHpMp, 0, MaxHp);
+                Mp = Tools.Limit(Mp + addHpMp, 0, MaxMp);
+                if (addHpMp > 0)
+                    this.View?.ShowAttackInfo($"<color=white>+{addHpMp}</color>");
+                if (addHpMp > 0)
+                    this.View?.ShowAttackInfo($"<color=blue>+{addHpMp}</color>");
+            }
         }
 
         //学习武学逻辑，对应kyscpp int Role::learnMagic(int magic_id)

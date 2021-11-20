@@ -40,11 +40,11 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
-		
-		if(childMgr==null){
-			childMgr = GameUtil.GetOrAddComponent<ChildGoComponent>(BattleHpRoot_RectTransform);
-			childMgr.Init(HUDItem_RectTransform, OnHUDCreate);
-		}
+        
+        if(childMgr==null){
+            childMgr = GameUtil.GetOrAddComponent<ChildGoComponent>(BattleHpRoot_RectTransform);
+            childMgr.Init(HUDItem_RectTransform, OnHUDCreate);
+        }
         BattleMainUIState state = (BattleMainUIState)allParams[0];
         if (state == BattleMainUIState.ShowRole)
         {
@@ -69,8 +69,8 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         AutoBattle_Toggle.gameObject.SetActive(true);
         CurrentRole_RectTransform.gameObject.SetActive(true);
         NameText_Text.text = m_currentRole.Name;
-		var color1=m_currentRole.Hurt>20?ColorStringDefine.Hp_hurt_heavy:m_currentRole.Hurt>0?ColorStringDefine.Hp_hurt_light:ColorStringDefine.Default;
-		var color2=m_currentRole.Poison>0?ColorStringDefine.Hp_posion:ColorStringDefine.Default;
+        var color1=m_currentRole.Hurt>20?ColorStringDefine.Hp_hurt_heavy:m_currentRole.Hurt>0?ColorStringDefine.Hp_hurt_light:ColorStringDefine.Default;
+        var color2=m_currentRole.Poison>0?ColorStringDefine.Hp_posion:ColorStringDefine.Default;
         DetailText_Text.text = ($"体力 {m_currentRole.Tili}/100\n生命 <color={color1}>{m_currentRole.Hp}</color>/<color={color2}>{m_currentRole.MaxHp}</color>\n内力 {m_currentRole.Mp}/{m_currentRole.MaxMp}");
 
         PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
@@ -119,13 +119,13 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
             item.BindRole(role);
         }
     }
-	
-	protected override void OnHidePanel()
+    
+    protected override void OnHidePanel()
     {
         base.OnHidePanel();
         AutoBattle_Toggle.isOn = false;
         AutoBattle_Toggle.gameObject.SetActive(false);
-		childMgr=null;
-		m_currentRole=null;
-	}
+        childMgr=null;
+        m_currentRole=null;
+    }
 }

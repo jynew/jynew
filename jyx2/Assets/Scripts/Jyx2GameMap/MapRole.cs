@@ -178,6 +178,8 @@ public class MapRole : Jyx2AnimationBattleRole
             damageText = $"-{Math.Max(_showDamage, 1)}";
         else
             damageText = "MISS";
+        //显示后重置
+        _showDamage = 0;
         HUDTextInfo info = new HUDTextInfo(transform, $"{damageText}")
         {
             Color = Color.white,
