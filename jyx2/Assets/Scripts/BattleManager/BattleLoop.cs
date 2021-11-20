@@ -311,9 +311,14 @@ namespace Jyx2.Battle
                 {
                     role.View.ShowBattleText($"{pro.Name}+{effect.Value}", Color.blue);
                 }
-                else if (effect.Key == 6 || effect.Key == 8 || effect.Key == 13 || effect.Key == 16 || effect.Key == 26)
+                else if (effect.Key == 6 || effect.Key == 8 || effect.Key == 26)
                 {
-                    role.View.ShowBattleText($"{pro.Name}+{effect.Value}", Color.green);
+                    string valueText = effect.Value > 0 ? $"+{effect.Value}" : effect.Value.ToString();
+                    role.View.ShowBattleText($"{pro.Name}{valueText}", Color.green);
+                }
+                else if (effect.Key == 13 || effect.Key == 16)
+                {
+                    role.View.ShowBattleText($"{pro.Name}+{effect.Value}", Color.white);
                 }
             }
 
