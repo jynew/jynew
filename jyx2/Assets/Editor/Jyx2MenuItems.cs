@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.OSXStandalone;
 using UnityToolbarExtender.Examples;
 
 namespace Jyx2Editor
@@ -186,6 +187,9 @@ namespace Jyx2Editor
             try
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneOSX);
+                
+                //支持m1芯片
+                UnityEditor.OSXStandalone.UserBuildSettings.architecture = MacOSArchitecture.x64ARM64;
 
                 if (string.IsNullOrEmpty(path))
                     return;
@@ -200,7 +204,7 @@ namespace Jyx2Editor
                 PlayerSettings.bundleVersion = currentDate;
 
                 //打包
-                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX, BuildOptions.None);
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,BuildOptions.None);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
 
@@ -212,6 +216,5 @@ namespace Jyx2Editor
                 Debug.LogError(e.StackTrace);
             }
         }
-        
     }
 }
