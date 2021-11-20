@@ -33,13 +33,13 @@ public class ColorStringDefine
 {
     public const string Red = "#EE2616";
     public const string Yellow = "#EFCB28";
-	
-	public const string Default="white";
-	public const string Mp_type1="orange";
-	public const string Mp_type0="#A564DB";
-	public const string Hp_posion="green";
-	public const string Hp_hurt_light="#FD726F";
-	public const string Hp_hurt_heavy="#F8413E";
+    
+    public const string Default="white";
+    public const string Mp_type1="orange";
+    public const string Mp_type0="#A564DB";
+    public const string Hp_posion="green";
+    public const string Hp_hurt_light="#FD726F";
+    public const string Hp_hurt_heavy="#F8413E";
 
     public static Color main_menu_selected = new Color(238/255.0f,39/255.0f,24/255.0f,1.0f);
     public static Color main_menu_normal = new Color(125/255.0f,9/255.0f,0.0f,1.0f);
@@ -128,17 +128,17 @@ public class GameConst
         
     //最大战斗上场人数
     public const int MAX_BATTLE_TEAMMATE_COUNT = 6;
-	
-	//对话框最大可以显示字符
-	public const int MAX_CHAT_CHART_NUM=156;
-	
-	//战斗胜利结果最大显示行数
-	public const int MAX_BATTLE_RESULT_LINE_NUM=7;
+    
+    //对话框最大可以显示字符
+    public const int MAX_CHAT_CHART_NUM=156;
+    
+    //战斗胜利结果最大显示行数
+    public const int MAX_BATTLE_RESULT_LINE_NUM=7;
     
     //世界地图ID
     public const int WORLD_MAP_ID = 1000;
-	
-    public static readonly int[] _levelUpExpList = new int[] { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 2400, 1500, 3150, 3300, 3450, 3650, 3700, 3900, 4050, 4200, 4350, 4500, 4600, 4800, 5000, 5100, 5200, 5300, 5500, 5600, 5800, 6000, 6200, 6400, 6600, 6800, 7000, 7200, 7400, 7600, 7800, 8000, 8200, 8400, 8600, 8800, 9200, 9600, 10000, 20000, 30000 };
+    
+    public static readonly int[] _levelUpExpList = new int[] { 50, 150, 300, 500, 750, 1050, 1400, 1800, 2250, 2750, 3850, 5050, 6350, 7750, 9250, 10850, 12550, 14350, 16750, 18250, 21400, 24700, 28150, 31750, 35500, 39400, 43450, 47650, 52000, 60000 };
 
     public const string UI_PREFAB_PATH = "Assets/Prefabs/Jyx2UI/{0}.prefab";
     public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>() {
