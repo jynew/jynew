@@ -9,7 +9,9 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
+#if UNITY_STANDALONE_OSX
 using UnityEditor.OSXStandalone;
+#endif
 using UnityToolbarExtender.Examples;
 
 namespace Jyx2Editor
@@ -187,9 +189,11 @@ namespace Jyx2Editor
             try
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneOSX);
-                
+
+#if UNITY_STANDALONE_OSX
                 //支持m1芯片
                 UnityEditor.OSXStandalone.UserBuildSettings.architecture = MacOSArchitecture.x64ARM64;
+#endif
 
                 if (string.IsNullOrEmpty(path))
                     return;
