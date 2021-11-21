@@ -249,12 +249,10 @@ public class BattleManager : MonoBehaviour
             var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
 
             role.Exp += role.ExpGot;
-            role.ExpForItem += role.ExpGot * 8 / 10;
-            role.ExpForMakeItem += role.ExpGot * 8 / 10;
+
             //避免越界
             role.Exp = Tools.Limit(role.Exp, 0, GameConst.MAX_EXP);
-            role.ExpForItem = Tools.Limit(role.ExpForItem, 0, GameConst.MAX_EXP);
-            role.ExpForMakeItem = Tools.Limit(role.ExpForMakeItem, 0, GameConst.MAX_EXP);
+      
 
             //升级
             int change = 0;
@@ -269,6 +267,12 @@ public class BattleManager : MonoBehaviour
 
             if (practiseItem != null)
             {
+                role.ExpForItem += role.ExpGot * 8 / 10;
+                role.ExpForMakeItem += role.ExpGot * 8 / 10;
+
+                role.ExpForItem = Tools.Limit(role.ExpForItem, 0, GameConst.MAX_EXP);
+                role.ExpForMakeItem = Tools.Limit(role.ExpForMakeItem, 0, GameConst.MAX_EXP);
+
                 change = 0;
 
                 //修炼秘籍
