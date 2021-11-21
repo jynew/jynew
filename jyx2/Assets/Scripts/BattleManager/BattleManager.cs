@@ -163,7 +163,7 @@ public class BattleManager : MonoBehaviour
         }
         
         //所有人至少有1HP
-        foreach (var role in GameRuntimeData.Instance.Team)
+        foreach (var role in GameRuntimeData.Instance.GetTeam())
         {
             if (role.Hp == 0)
                 role.Hp = 1;

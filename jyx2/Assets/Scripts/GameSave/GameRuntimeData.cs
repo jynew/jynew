@@ -9,16 +9,10 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ES3Types;
 using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
-using HSFrameWork.SPojo;
-using Jyx2;
 using Jyx2Configs;
 using UnityEngine;
 
@@ -28,7 +22,8 @@ namespace Jyx2
     /// 这里是整个游戏的存档数据结构根节点
     ///
     /// </summary>
-    public class GameRuntimeData : SaveablePojo
+    [Serializable]
+    public class GameRuntimeData 
     {
         #region 单例
         public static GameRuntimeData Instance {
@@ -42,30 +37,41 @@ namespace Jyx2
             }
         }
         private static GameRuntimeData _instance;
-        public static GameRuntimeData Create(int index)
-        {
-            _instance = Saveable.Facade.CreateRoot<GameRuntimeData>();
-            _instance.SaveIndex = index;
-            _instance.InitAllRole();
-            return _instance;
-        }
+
         #endregion
 
-
+        #region 存档数据定义
+        //JYX2，所有的角色都放到存档里
+        [SerializeField] public Dictionary<int,RoleInstance> AllRoles = new Dictionary<int,RoleInstance>();
+        
+        //当前玩家队伍
+        [SerializeField] private List<int> TeamId = new List<int>();
+        [SerializeField] public SubMapSaveData SubMapData; //当前所处子地图存储数据
+        [SerializeField] public WorldMapSaveData WorldData; //世界地图信息
+        
+        [SerializeField] public Dictionary<string, string> KeyValues = new Dictionary<string, string>(); //主键值对数据
+        [SerializeField] public Dictionary<string, int> Items = new Dictionary<string, int>(); //JYX2物品，{ID，数量}
+        [SerializeField] public Dictionary<string, int> ItemUser= new Dictionary<string, int>(); //物品使用人
+        [SerializeField] public Dictionary<string, int> ShopItems= new Dictionary<string, int>(); //小宝商店物品，{ID，数量}
+        [SerializeField] public Dictionary<string, int> EventCounter = new Dictionary<string, int>();
+        [SerializeField] public Dictionary<string, int> MapPic = new Dictionary<string, int>();
+        [SerializeField] public Dictionary<string, int> IsAdd; //是否获取过角色物品
+        #endregion
+        
         #region JYX2
 
         //新建一个存档
         public static GameRuntimeData CreateNew()
         {
-            _instance = Saveable.Facade.CreateRoot<GameRuntimeData>();
-            _instance.SaveIndex = 100; // 不重要
+            _instance = new GameRuntimeData();
             var runtime = _instance;
 
             _instance.InitAllRole();
 
             var player = runtime.GetRole(0);
+            
             //主角入当前队伍
-            runtime.Team.Add(runtime.GetRole(0));
+            runtime.JoinRoleToTeam(0);
 
 #if UNITY_EDITOR
             //可自由实现新的语法
@@ -114,7 +120,7 @@ namespace Jyx2
                     {
                         string name = prop.Split(',')[0];
                         int value = int.Parse(prop.Split(',')[1]);
-                        player.GetType().GetProperty(name).SetValue(player, value);
+                        player.GetType().GetField(name).SetValue(player, value);
                     }
                 }
             }
@@ -128,8 +134,8 @@ namespace Jyx2
             //创建所有角色
             foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
             {
-                var role = new RoleInstance(r.Id.ToString());
-                _instance.AllRoles.Add(role);
+                var role = new RoleInstance(r.Id);
+                _instance.AllRoles.Add(r.Id, role);
             }
         }
 
@@ -137,113 +143,39 @@ namespace Jyx2
 
         #region 游戏保存和读取
 
-        public int SaveIndex = 0;
 
         public const string ARCHIVE_FILE_NAME = "archive_{0}.dat";
         public const string ARCHIVE_FILE_DIR = "Save";
-        public const string ARCHIVE_SUMMARY_PREFIX = "save_summaryinfo_";
+        public const string ARCHIVE_SUMMARY_PREFIX = "save_summaryinfo_new_";
 
         public void GameSave(int index = -1)
         {
-            if (index != -1)
-                SaveIndex = index;
-
-            Debug.Log("存档中.. index = " + SaveIndex);
-            SaveToFile(SaveIndex);
+            Debug.Log("存档中.. index = " + index);
+            SaveToFile(index);
             Debug.Log("存档结束");
 
             var summaryInfo = GenerateSaveSummaryInfo();
-            PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + SaveIndex, summaryInfo);
+            PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + index, summaryInfo);
         }
 
         public void SaveToFile(int fileIndex)
         {
-            string fileName = string.Format(ARCHIVE_FILE_NAME, fileIndex);
-            string sFolderPath = Application.persistentDataPath + "/" + ARCHIVE_FILE_DIR;
-            if (!Directory.Exists(sFolderPath))
-            {
-                Directory.CreateDirectory(sFolderPath);
-            }
-            string sPath = sFolderPath + "/" + fileName;
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                //写入存档内容
-                TDES tdesTool = new TDES();
-                tdesTool.Init(ConStr.DES_KEY);
-
-                Hashtable hsData = Save();
-                byte[] strBuffer = System.Text.Encoding.Default.GetBytes(hsData.toJson());
-                byte[] encryptDatas = tdesTool.Encrypt(strBuffer);
-                ms.Write(BitConverter.GetBytes(encryptDatas.Length), 0, sizeof(int));
-                ms.Write(encryptDatas, 0, encryptDatas.Length);
-
-                File.WriteAllBytes(sPath, ms.GetBuffer());
-            }
+            string path = string.Format(ARCHIVE_FILE_NAME, fileIndex);
+            ES3.Save(nameof(GameRuntimeData), this, path);
         }
 
-        static string GetArchiveFilePath(int fileIndex)
-        {
-            string fileName = string.Format(ARCHIVE_FILE_NAME, fileIndex);
-            string sFolderPath = Application.persistentDataPath + "/" + ARCHIVE_FILE_DIR;
-            string sPath = sFolderPath + "/" + fileName;
-            return sPath;
-        }
-
-		// fix load empty savedata will init all role with internal data
-		// modified by eaphone at 2021/06/01
         public static GameRuntimeData LoadArchive(int fileIndex)
-        {	
-            try
-            {
-                GameRuntimeData tagArchive = null;
-				var summaryInfoKey = ARCHIVE_SUMMARY_PREFIX + fileIndex;
-				if (PlayerPrefs.HasKey(summaryInfoKey))
-				{
-					string sPath = GetArchiveFilePath(fileIndex);
-					if (File.Exists(sPath))
-					{
-						using (FileStream fs = File.OpenRead(sPath))
-						{
-							byte[] buffer1 = new byte[sizeof(int)];
-							fs.Read(buffer1, 0, sizeof(int));
-							int dataLen = BitConverter.ToInt32(buffer1, 0);
-							byte[] archiveData = new byte[dataLen];
-							fs.Read(archiveData, 0, dataLen);
-
-							TDES tdesTool = new TDES();
-							tdesTool.Init(ConStr.DES_KEY);
-
-							byte[] decryptData = tdesTool.Decrypt(archiveData);
-							string txtData = System.Text.Encoding.Default.GetString(decryptData, 0, decryptData.Length);
-							Hashtable hsData = txtData.hashtableFromJson();
-							tagArchive = Saveable.Facade.LoadRoot<GameRuntimeData>(hsData);
-
-							fs.Close();
-						}
-					}
-					_instance = tagArchive;//记录单例
-					_instance.SaveIndex = fileIndex;
-					_instance.InitAllRole();
-                }
-                return tagArchive;
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e);
-                return null;
-            }
+        {
+            string path = string.Format(ARCHIVE_FILE_NAME, fileIndex);
+            var runtime =  ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
+            _instance = runtime;
+            return runtime;
         }
 
         private string GenerateSaveSummaryInfo()
         {
-            string mapName = "";
-            if (!string.IsNullOrEmpty(CurrentMap))
-            {
-                mapName=LevelMaster.GetCurrentGameMap().GetShowName();
-            }
-
-            return $"{Player.Level}级,{mapName},队伍:{Team.Count}人";
+            string mapName = LevelMaster.GetCurrentGameMap().GetShowName();
+            return $"{Player.Level}级,{mapName},队伍:{GetTeamMembersCount()}人";
         }
 
         #endregion
@@ -253,21 +185,26 @@ namespace Jyx2
         //主角
         public RoleInstance Player
         {
-            get
+            get { return GetRole(0); }
+        }
+
+
+        //获取队伍所有角色
+        public IEnumerable<RoleInstance> GetTeam()
+        {
+            foreach (var id in TeamId)
             {
-                if (Team != null && Team.Count > 0) return Team[0];
-                return null;
+                yield return AllRoles[id];
             }
         }
 
-        //主角队伍
-        public List<RoleInstance> Team
+        //获取队伍人数
+        public int GetTeamMembersCount()
         {
-            get { return GetList<RoleInstance>("Team"); }
-            set { SaveList("Team", value); }
+            return TeamId.Count;
         }
 
-        public bool JoinRoleToTeam(int roleId)
+        public bool JoinRoleToTeam(int roleId,bool showGetItem = false)
         {
             if (GetRoleInTeam(roleId) != null)
             {
@@ -282,7 +219,31 @@ namespace Jyx2
                 return false;
             }
             
-            Team.Add(role);
+            //获得角色身上的道具
+            if (role.AlreadyJoinedTeam == 0)
+            {
+                //初始物品
+                foreach (var item in role.Items)
+                {
+                    if (item.Count == 0) item.Count = 1;
+                    AddItem(item.Item.Id, item.Count);
+                    if (item.Count > 0 && showGetItem)
+                    {
+                        StoryEngine.Instance.DisplayPopInfo("得到物品:" + item.Item.Name + "×" + Math.Abs(item.Count));
+                    }
+                    item.Count = 0;
+                }
+                role.AlreadyJoinedTeam = 1;
+            }
+            
+            //清空角色身上的装备
+            role.Weapon = -1;
+            role.Armor = -1;
+            role.Xiulianwupin = -1;
+
+            role.Items.Clear();   
+            
+            TeamId.Add(roleId);
             return true;
         }
 
@@ -299,58 +260,34 @@ namespace Jyx2
                 Debug.LogError("role is not in main team，roleid =" + roleId);
                 return false;
             }
-            Team.Remove(role);
-			role.Recover(true);
-			for(var index=0;index< AllRoles.Count;index++){
-				if(AllRoles[index].Key==role.Key){
-					AllRoles[index]=role;
-				}
-			}
+
+            TeamId.Remove(roleId);
+            role.Recover(true);
             return true;
         }
 
         public RoleInstance GetRoleInTeam(int roleId)
         {
-            return Team.Find(r => r.Key == roleId.ToString());
+            if (TeamId.Contains(roleId))
+            {
+                return AllRoles[roleId];
+            }
+
+            return null;
         }
 
         public bool IsRoleInTeam(int roleId)
         {
-            return GetRoleInTeam(roleId) != null;
+            return TeamId.Contains(roleId);
         }
 
-        //JYX2，所有的角色都放到存档里
-        public List<RoleInstance> AllRoles
-        {
-            get { return GetList<RoleInstance>("AllRoles"); }
-            set { SaveList("AllRoles", value); }
-        }
+
 
         public RoleInstance GetRole(int roleId)
         {
-            return AllRoles.Find(r => r.Key == roleId.ToString());
+            return AllRoles[roleId];
         }
 
-        //当前队伍
-        public List<RoleInstance> CurrentTeam
-        {
-            get {
-               var list = GetList<RoleInstance>("CurrentTeam");
-                if(list.Count == 0)
-                {
-                    list.Add(Team[0]);
-                }
-                return list;
-            }
-            set { SaveList("CurrentTeam", value); }
-        }
-
-        //主键值对数据
-        public SaveableStrDictionary KeyValues
-        {
-            get { return GetPojoAutoCreate<SaveableStrDictionary>("KeyValues"); }
-            set { SavePojo("KeyValues", value); }
-        }
 
 
         #region KeyValues
@@ -379,68 +316,6 @@ namespace Jyx2
         #endregion
 
 
-        //之前所在的地图
-        public string PrevMap
-        {
-            get { return Get("PrevMap", string.Empty); }
-            set { Save("PrevMap", value); }
-        }
-
-        //当前所处地图
-        public string CurrentMap
-        {
-            get { return Get("CurrentMap", string.Empty); }
-            set { Save("CurrentMap", value); }
-        }
-
-        //当前位置
-        public string CurrentPos
-        {
-            get { return Get("CurrentPos", string.Empty); }
-            set { Save("CurrentPos", value); }
-        }
-		
-        //当前位置
-        public string CurrentOri
-        {
-            get { return Get("CurrentOri", string.Empty); }
-            set { Save("CurrentOri", value); }
-        }
-
-        //世界位置
-        public string WorldPosition
-        {
-            get { return Get("WorldPosition", string.Empty); }
-            set { Save("WorldPosition", value); }
-        }
-        public string WorldRotation
-        {
-            get { return Get("WorldRotation", string.Empty); }
-            set { Save("WorldRotation", value); }
-        }
-
-
-        //船的世界位置
-        public string BoatWorldPos
-        {
-            get { return Get("BoatWorldPos", string.Empty); }
-            set { Save("BoatWorldPos", value); }
-        }
-
-        //船的朝向
-        public string BoatRotate
-        {
-            get { return Get("BoatRotate", string.Empty); }
-            set { Save("BoatRotate", value); }
-        }
-
-        //是否在船上
-        public int OnBoat
-        {
-            get { return Get("OnBoat", 0); }
-            set { Save("OnBoat", value); }
-        }
-
 
         public int GetMoney()
         {
@@ -448,27 +323,6 @@ namespace Jyx2
         }
         
 
-
-        //JYX2物品，{ID，数量}
-        public SaveableNumberDictionary<int> Items
-        {
-            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>("Items"); }
-            set { SavePojo("Items", value); }
-        }
-        
-        //物品使用人
-        public SaveableNumberDictionary<int> ItemUser
-        {
-            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(ItemUser)); }
-            set { SavePojo(nameof(ItemUser), value); }
-        }
-
-        //小宝商店物品，{ID，数量}
-        public SaveableNumberDictionary<int> ShopItems
-        {
-            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(ShopItems)); }
-            set { SavePojo(nameof(ShopItems), value); }
-        }
 
         public bool HaveItemBool(int itemId)
         {
@@ -507,12 +361,6 @@ namespace Jyx2
             AddItem(id.ToString(), count);
         }
 
-        //是否获取过角色物品
-        public SaveableNumberDictionary<int> IsAdd
-        {
-            get { return GetPojoAutoCreate<SaveableNumberDictionary<int>>(nameof(IsAdd)); }
-            set { SavePojo(nameof(IsAdd), value); }
-        }
 
         public int GetItemCount(int id)
         {
@@ -545,13 +393,9 @@ namespace Jyx2
             return null;
         }
 
-		public SaveableNumberDictionary<int> EventCounter
-		{
-			get {return GetPojoAutoCreate<SaveableNumberDictionary<int>>("EventCounter");}
-			set {SavePojo("EventCounter", value);}
-		}
 
-		public void AddEventCount(int scene, int eventId, int eventName, int num)
+
+        public void AddEventCount(int scene, int eventId, int eventName, int num)
 		{
 			string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
 			if(EventCounter.ContainsKey(key)){
@@ -569,14 +413,9 @@ namespace Jyx2
 			}
 			return 0;
 		}
-		
-		public SaveableNumberDictionary<int> MapPic
-		{
-			get {return GetPojoAutoCreate<SaveableNumberDictionary<int>>("MapPic");}
-			set {SavePojo("MapPic", value);}
-		}
 
-		public void SetMapPic(int scene, int eventId, int pic)
+
+        public void SetMapPic(int scene, int eventId, int pic)
 		{
 			string key=(string.Format("{0}_{1}", scene, eventId));
 			if(MapPic.ContainsKey(key) && pic==-1){

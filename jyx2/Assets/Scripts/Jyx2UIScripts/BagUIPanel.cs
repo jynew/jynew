@@ -24,7 +24,7 @@ public partial class BagUIPanel:Jyx2_UIBase
     public override UILayer Layer => UILayer.NormalUI;
 
     Action<int> m_callback;
-    SaveableNumberDictionary<int> m_itemDatas;
+    Dictionary<string,int> m_itemDatas;
     Jyx2ItemUI m_selectItem;
     Func<Jyx2ConfigItem, bool> m_filter = null;
     private bool castFromSelectPanel=false;
@@ -50,7 +50,7 @@ public partial class BagUIPanel:Jyx2_UIBase
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
-        m_itemDatas = (SaveableNumberDictionary<int>)allParams[0];
+        m_itemDatas = (Dictionary<string,int>)allParams[0];
         if(allParams.Length > 1)
             m_callback = (Action<int>)allParams[1];
         if (allParams.Length > 2)

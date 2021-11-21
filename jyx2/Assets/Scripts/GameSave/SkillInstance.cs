@@ -8,13 +8,6 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HSFrameWork.ConfigTable;
-using HSFrameWork.SPojo;
-using Jyx2;
 using Jyx2Configs;
 using UnityEngine;
 
@@ -23,44 +16,32 @@ namespace Jyx2
     /// <summary>
     /// JYX2的武功实例
     /// </summary>
-    public class WugongInstance : SaveablePojo
+    [Serializable]
+    public class SkillInstance
     {
-        public WugongInstance() { }
+        #region 存档数据定义
+        [SerializeField] public int Key;
+        [SerializeField] public int Level;
+        #endregion
         
-        public WugongInstance(Jyx2ConfigCharacterSkill s)
+        public SkillInstance(Jyx2ConfigCharacterSkill s)
         {
             Key = s.Skill.Id;
             Level = s.Level;
         }
         
-        public WugongInstance(int magicId)
+        public SkillInstance(int magicId)
         {
             Key = magicId;
             Level = 0;
             GetSkill();
         }
 
-        public WugongInstance(Jyx2ConfigItem item, int magicId)
+        public SkillInstance(Jyx2ConfigItem item, int magicId)
         {
             Key = magicId;
             Level = 0;
             GetSkill(item);
-        }
-
-        public int Key
-        {
-            get { return Get("Key", 0); }
-            set {
-                Save("Key", value);
-                _skill = null;
-                //GetSkill();
-            }
-        }
-
-        public int Level
-        {
-            get { return Get("Level", 0); }
-            set { Save("Level", value); }
         }
 
         public int GetLevel()

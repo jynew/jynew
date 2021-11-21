@@ -11,6 +11,7 @@ using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class GameUtil
     /// </summary>
     /// <param name="roles"></param>
     /// <param name="callback">如果放弃，则返回null</param>
-    static public void SelectRole(List<RoleInstance> roles, Action<RoleInstance> callback)
+    static public void SelectRole(IEnumerable<RoleInstance> roles, Action<RoleInstance> callback)
     {
         //选择使用物品的人
         List<string> selectionContent = new List<string>();
@@ -38,7 +39,7 @@ public class GameUtil
         storyEngine.BlockPlayerControl = true;
         
         SelectRoleParams selectParams = new SelectRoleParams();
-        selectParams.roleList = roles;
+        selectParams.roleList = roles.ToList();
         selectParams.title = "选择使用的人";
 		selectParams.isDefaultSelect=false;
         selectParams.callback = (cbParam) => 

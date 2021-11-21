@@ -217,19 +217,20 @@ namespace Jyx2
 
             bool isWin = false;
             RunInMainThread(() => {
-                var pos = LevelMaster.Instance.GetPlayerPosition();
-                string posStr = UnityTools.Vector3ToString(pos);
-                string posOri = UnityTools.QuaternionToString(LevelMaster.Instance.GetPlayerOrientation());
-
+                
+                //记录当前地图和位置
                 Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
-
+                var pos = LevelMaster.Instance.GetPlayerPosition();
+                var rotate = LevelMaster.Instance.GetPlayerOrientation();
+                
                 LevelLoader.LoadBattle(battleId, (ret) =>
                 {
                     LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
                     {
+                        //还原当前地图和位置
                         loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
-                        CurrentPos = posStr,
-                        CurrentOri = posOri,
+                        Pos = pos,
+                        Rotate = rotate,
                     }, () =>
                     {
                         isWin = (ret == BattleResult.Win);
@@ -259,29 +260,10 @@ namespace Jyx2
         {
             RunInMainThread(() => {
                 
-                if (runtime.JoinRoleToTeam(roleId))
+                if (runtime.JoinRoleToTeam(roleId, true))
                 {
                     RoleInstance role = runtime.GetRole(roleId);
                     storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
-
-                    if (role.AlreadyJoinedTeam == 0)
-                    {
-                        //同时获得对方身上的物品
-                        foreach (var item in role.Items)
-                        {
-                            if (item.Count == 0) item.Count = 1;
-                            AddItem(item.Item.Id, item.Count);
-                            item.Count = 0;
-                        }
-                        role.AlreadyJoinedTeam = 1;
-                    }
-
-                    //清空角色身上的装备
-                    role.Weapon = -1;
-                    role.Armor = -1;
-                    role.Xiulianwupin = -1;
-
-                    role.Items.Clear();    
                 }
                 
                 Next();
@@ -340,7 +322,7 @@ namespace Jyx2
         public static void ZeroAllMP()
         {
             RunInMainThread(() => {
-                foreach (var r in runtime.Team)
+                foreach (var r in runtime.GetTeam())
                 {
                     r.Mp = 0;
                 }
@@ -475,14 +457,14 @@ namespace Jyx2
 
         public static bool InTeam(int roleId)
         {
-            return runtime.Team.Exists(r => r.Key == roleId.ToString());
+            return runtime.GetRoleInTeam(roleId) != null;
         }
 
         // modify the logicc, when count>=6, team is full
         // by eaphone at 2021/6/5
         public static bool TeamIsFull()
         {
-            return runtime.Team.Count > GameConst.MAX_TEAMCOUNT-1;
+            return runtime.GetTeamMembersCount() > GameConst.MAX_TEAMCOUNT - 1;
         }
 
         /// <summary>
@@ -626,7 +608,7 @@ namespace Jyx2
         //判断队伍中是否有女性
         public static bool JudgeFemaleInTeam()
         {
-            foreach(var r in runtime.Team)
+            foreach(var r in runtime.GetTeam())
             {
                 if (r.Sex == 1)
                     return true;
@@ -839,9 +821,15 @@ namespace Jyx2
         {
             RunInMainThread(() => {
                 Debug.Log("call AllLeave()");
-                Debug.Log(runtime.Team.Count);
-                runtime.Team.ForEach(r => Debug.Log(r.Key));
-                runtime.Team.RemoveAll(role => role.Key != "0");
+                Debug.Log(runtime.GetTeamMembersCount());
+
+                foreach (var role in runtime.GetTeam())
+                {
+                    if (role.Key != 0)
+                    {
+                        runtime.LeaveTeam(role.Key);
+                    }
+                }
                 Next();
             });
             Wait();
@@ -969,7 +957,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                foreach (var role in runtime.Team)
+                foreach (var role in runtime.GetTeam())
                 {
                     role.Recover(role.Hurt < 33 && role.Poison <= 0);
                 }
@@ -980,7 +968,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                foreach (var role in runtime.Team)
+                foreach (var role in runtime.GetTeam())
                 {
                     role.Recover(role.Hurt < 50 && role.Poison <= 0);
                 }

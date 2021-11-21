@@ -68,7 +68,8 @@ public class RandomPropertyComponent : MonoBehaviour
             if (!GameConst.ProItemDic.ContainsKey(trans.name))
                 continue;
             PropertyItem item = GameConst.ProItemDic[trans.name];
-            var proValue = (int)role.GetType().GetProperty(item.PropertyName).GetValue(role,null);
+
+            var proValue = (int)role.GetType().GetField(item.PropertyName).GetValue(role);
             string text = string.Format("{0}：{1}", item.Name, proValue);
             label.text = text;
 

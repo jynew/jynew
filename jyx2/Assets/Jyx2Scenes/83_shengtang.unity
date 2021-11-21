@@ -5105,7 +5105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ff8b67996ae6c419a86e052dfcd6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransportMapId: 76
   m_GameMap: {fileID: 11400000, guid: 7608c9cfe4ee2394290067475d68175d, type: 2}
   TransportTriggerName: 6
   ExtraCommand: 
@@ -7436,8 +7435,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 0, y: 0, z: 0}
-    lastRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastScale: {x: 1, y: 1, z: 1}
+    lastRotation: {x: 0, y: 0, z: 0, w: 1}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -12526,8 +12525,6 @@ GameObject:
   - component: {fileID: 1327654969}
   - component: {fileID: 1327654975}
   - component: {fileID: 1327654973}
-  - component: {fileID: 1327654972}
-  - component: {fileID: 1327654971}
   m_Layer: 16
   m_Name: nanxian
   m_TagString: Untagged
@@ -12551,39 +12548,6 @@ Transform:
   m_Father: {fileID: 751018329}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1327654971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3773400928023178548, guid: a1df7b93e705c2b47a50a7c117c04d19,
-    type: 3}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327654968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1327654972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3773400928023178443, guid: a1df7b93e705c2b47a50a7c117c04d19,
-    type: 3}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327654968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RoleKey: 
-  m_NpcWords: []
-  m_HasWeaponNotInBattle: 0
-  m_IsKeyRole: 0
-  IsPlayingMovingAnimation: 0
-  m_IsWaitingForActive: 1
-  IsInBattle: 0
 --- !u!136 &1327654973
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15560,8 +15524,6 @@ GameObject:
   - component: {fileID: 1630110093}
   - component: {fileID: 1630110099}
   - component: {fileID: 1630110097}
-  - component: {fileID: 1630110096}
-  - component: {fileID: 1630110095}
   m_Layer: 16
   m_Name: kongbala
   m_TagString: Untagged
@@ -15585,39 +15547,6 @@ Transform:
   m_Father: {fileID: 751018329}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 89.559, z: 0}
---- !u!114 &1630110095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3773400928023178548, guid: a1df7b93e705c2b47a50a7c117c04d19,
-    type: 3}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630110092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1630110096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3773400928023178443, guid: a1df7b93e705c2b47a50a7c117c04d19,
-    type: 3}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630110092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RoleKey: 
-  m_NpcWords: []
-  m_HasWeaponNotInBattle: 0
-  m_IsKeyRole: 0
-  IsPlayingMovingAnimation: 0
-  m_IsWaitingForActive: 1
-  IsInBattle: 0
 --- !u!136 &1630110097
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17779,7 +17708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RoleKey: "\u4E3B\u89D2"
+  m_RoleKey: 0
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
   m_IsKeyRole: 0

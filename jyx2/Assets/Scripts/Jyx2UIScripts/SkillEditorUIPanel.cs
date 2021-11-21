@@ -29,7 +29,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
 
     private int skillId;
     private int skillLevel;
-    private string roleKey;
+    private int roleKey;
 
     private readonly List<Jyx2ConfigSkill> allSkills = new List<Jyx2ConfigSkill>();
     private readonly List<Jyx2ConfigCharacter> allRole = new List<Jyx2ConfigCharacter>();
@@ -38,7 +38,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         InitTrans();
         skillId = 1;
         skillLevel = 1;
-        roleKey = "主角";
+        roleKey = 0;
         
         dropSkillId_Dropdown.ClearOptions();
         dropSkillLevel_Dropdown.ClearOptions();
@@ -81,7 +81,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
     private void OnSwitchdropModelId(int index)
     {
         var role = allRole[index];
-        roleKey = role.Id.ToString();
+        roleKey = role.Id;
         OnSwitchModel();
     }
 
@@ -138,7 +138,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
 
     void TryDisplaySkill()
     { 
-        var wugong = new WugongInstance(skillId);
+        var wugong = new SkillInstance(skillId);
 
         SkillCastHelper helper = new SkillCastHelper();
         helper.Source = player;
@@ -189,7 +189,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
     /// </summary>
     void SwitchSkillPose()
     {
-        var wugong = new WugongInstance(skillId);
+        var wugong = new SkillInstance(skillId);
         //切换武器和动作
 
         player.SwitchSkillTo(wugong);

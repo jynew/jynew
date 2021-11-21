@@ -9,15 +9,10 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using HSFrameWork.Common;
-using HSFrameWork.SPojo;
 using UnityEngine;
 using UniRx;
-using Jyx2;
-using HSFrameWork.ConfigTable;
 using Jyx2Configs;
 using NUnit.Framework;
 using Random = UnityEngine.Random;
@@ -25,27 +20,70 @@ using Random = UnityEngine.Random;
 
 namespace Jyx2
 {
-    public class RoleInstance : SaveablePojo, IComparable<RoleInstance>
+    [Serializable]
+    public class RoleInstance : IComparable<RoleInstance>
     {
+        #region 存档数据定义
+        [SerializeField] public int Key; //ID
+        [SerializeField] public string Name; //姓名
+
+        [SerializeField] public int Sex; //性别
+        [SerializeField] public int Level = 1; //等级
+        [SerializeField] public int Exp; //经验
+        
+        [SerializeField] public int Attack; //攻击力
+        [SerializeField] public int Qinggong; //轻功
+        [SerializeField] public int Defence; //防御力
+        [SerializeField] public int Heal; //医疗
+        [SerializeField] public int UsePoison; //用毒
+        [SerializeField] public int DePoison; //解毒
+        [SerializeField] public int AntiPoison; //抗毒
+        [SerializeField] public int Quanzhang; //拳掌
+        [SerializeField] public int Yujian; //御剑
+        [SerializeField] public int Shuadao; //耍刀
+        [SerializeField] public int Qimen; //特殊兵器
+        [SerializeField] public int Anqi; //暗器技巧
+        [SerializeField] public int Wuxuechangshi; //武学常识
+        [SerializeField] public int Pinde; //品德
+        [SerializeField] public int AttackPoison; //攻击带毒
+        [SerializeField] public int Zuoyouhubo; //左右互搏
+        [SerializeField] public int Shengwang; //声望
+        [SerializeField] public int IQ; //资质
+
+
+        [SerializeField] public int ExpForItem; //修炼点数
+        [SerializeField] public int AlreadyJoinedTeam;
+        [SerializeField] public List<SkillInstance> Wugongs = new List<SkillInstance>(); //武功
+        
+        [SerializeField] public int Mp;
+        [SerializeField] public int MaxMp;
+        [SerializeField] public int MpType; //内力性质
+        [SerializeField] public int Hp;
+        [SerializeField] public int MaxHp;
+        [SerializeField] public int Hurt; //受伤程度
+        [SerializeField] public int Poison; //中毒程度
+        [SerializeField] public int Tili; //体力
+        [SerializeField] public int ExpForMakeItem; //物品修炼点
+        
+        [SerializeField] public int Weapon; //武器
+        [SerializeField] public int Armor; //防具
+        [SerializeField] public int Xiulianwupin = -1; //修炼物品
+        #endregion
+
         public RoleInstance()
         {
-        } //手动调用的话，需要调用BindKey
+        }
 
-        public RoleInstance(string roleKey)
+        public RoleInstance(int roleId)
         {
-            Key = roleKey;
+            Key = roleId;
             BindKey();
+            InitData();
             Recover(true);
         }
 
         public void BindKey()
         {
-            //for jyx2,自动适配为小虾米
-            if (Key == "主角")
-            {
-                Key = "0";
-            }
-
             _data = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(Key);
 
             if (_data == null)
@@ -59,18 +97,46 @@ namespace Jyx2
             {
                 foreach (var wugong in _data.Skills)
                 {
-                    Wugongs.Add(new WugongInstance(wugong));
+                    Wugongs.Add(new SkillInstance(wugong));
                 }
             }
 
-            //没有设置武功，默认增加一个普通攻击
-            /*if (Wugongs.Count == 0 && _data.Wugongs != null && _data.Wugongs.Count > 0)
-            {
-                Wugongs.Add(new WugongInstance(_data.Wugongs[0]));
-            }*/
-
             //每次战斗前reset一次
             ResetForBattle();
+        }
+
+
+        void InitData()
+        {
+            //CG 初始化
+            Name = Data.Name;
+            Sex = (int)Data.Sexual;
+            Level = Data.Level;
+            Hp = Data.MaxHp;
+            MaxHp = Data.MaxHp;
+            Mp = Data.MaxMp;
+            MaxMp = Data.MaxMp;
+            Tili = GameConst.MAX_ROLE_TILI;
+            Weapon = Data.Weapon != null ? Data.Weapon.Id : -1;
+            Armor = Data.Armor != null ? Data.Armor.Id : -1;
+            MpType = (int)Data.MpType;
+            Attack = Data.Attack;
+            Qinggong = Data.Qinggong;
+            Defence = Data.Defence;
+            Heal = Data.Heal;
+            UsePoison = Data.UsePoison;
+            DePoison = Data.DePoison;
+            AntiPoison = Data.AntiPoison;
+            Quanzhang = Data.Quanzhang;
+            Yujian = Data.Yujian;
+            Shuadao = Data.Shuadao;
+            Qimen = Data.Qimen;
+            Anqi = Data.Anqi;
+            Wuxuechangshi = Data.Wuxuechangshi;
+            Pinde = Data.Pinde;
+            AttackPoison = Data.AttackPoison;
+            Zuoyouhubo = Data.Zuoyouhubo;
+            IQ = Data.IQ;
         }
 
         public void ResetForBattle()
@@ -97,46 +163,18 @@ namespace Jyx2
         {
             get { return Data.HpInc; }
         }
-        
 
-        public string Key
-        {
-            get { return Get("Key"); }
-            set { Save("Key", value); }
-        }
+
+
 
         public int GetJyx2RoleId()
         {
-            try
-            {
-                return int.Parse(Key);
-            }
-            catch
-            {
-                Debug.LogError("错误的JYX2人物ID：" + Key);
-                return -1;
-            }
-        }
-
-        public string Name
-        {
-            get { return Get("Name", Data.Name); }
-            set { Save("Name", value); }
-        }
-
-        public int Sex
-        {
-            get { return Get("Sex", (int)Data.Sexual); }
-            set { Save("Sex", value); }
+            return Key;
         }
 
         #region JYX2等级相关
 
-        public int Level //等级
-        {
-            get { return Get("Level", Data.Level); }
-            set { Save("Level", value); }
-        }
+
 
         //JYX2
         public bool CanLevelUp()
@@ -263,68 +301,15 @@ namespace Jyx2
             return value;
         }
 
-        public int Exp //经验
-        {
-            get { return Get("Exp", 0); }
-            set { Save("Exp", value); }
-        }
 
         public int ExpGot; //战斗中获得的经验
 
         #endregion
 
-        public int Hp
-        {
-            get { return Get("Hp", Data.MaxHp); }
-            set { Save("Hp", value); }
-        }
-
-        public int MaxHp
-        {
-            get { return Get("MaxHp", Data.MaxHp); }
-            set { Save("MaxHp", value); }
-        }
-
-        public int Hurt //受伤程度
-        {
-            get { return Get("Hurt", 0); }
-            set { Save("Hurt", value); }
-        }
-
-        public int Poison //中毒程度
-        {
-            get { return Get("Poison", 0); }
-            set { Save("Poison", value); }
-        }
-
-        public int Tili //体力
-        {
-            get { return Get("Tili", GameConst.MAX_ROLE_TILI); }
-            set { Save("Tili", value); }
-        }
-
-        public int ExpForMakeItem //物品修炼点
-        {
-            get { return Get("ExpForMakeItem", 0); }
-            set { Save("ExpForMakeItem", value); }
-        }
-
-        public int Weapon //武器
-        {
-            get { return Get("Weapon", Data.Weapon != null ? Data.Weapon.Id : -1); }
-            set { Save("Weapon", value); }
-        }
-
         public Jyx2ConfigItem GetWeapon()
         {
             if (Weapon == -1) return null;
             return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(Weapon);
-        }
-
-        public int Armor //防具
-        {
-            get { return Get("Armor", Data.Armor != null ? Data.Armor.Id : -1); }
-            set { Save("Armor", value); }
         }
 
         public Jyx2ConfigItem GetArmor()
@@ -333,146 +318,6 @@ namespace Jyx2
             return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(Armor);
         }
 
-        public int MpType //内力性质
-        {
-            get { return Get("MpType", (int)Data.MpType); }
-            set { Save("MpType", value); }
-        }
-
-        public int Mp
-        {
-            get { return Get("Mp", Data.MaxMp); }
-            set { Save("Mp", value); }
-        }
-
-        public int MaxMp
-        {
-            get { return Get("MaxMp", Data.MaxMp); }
-            set { Save("MaxMp", value); }
-        }
-
-        public int Attack //攻击力
-        {
-            get
-            {
-                return Get("Attack", Data.Attack);
-            }
-            set { Save("Attack", value); }
-        }
-
-        public int Qinggong //轻功
-        {
-            get
-            {
-                return Get("Qinggong", Data.Qinggong);
-            }
-            set { Save("Qinggong", value); }
-        }
-
-        public int Defence //防御力
-        {
-            get
-            {
-                return Get("Defence", Data.Defence);
-            }
-            set { Save("Defence", value); }
-        }
-
-        public int Heal //医疗
-        {
-            get { return Get("Heal", Data.Heal); }
-            set { Save("Heal", value); }
-        }
-
-        public int UsePoison //用毒
-        {
-            get { return Get("UsePoison", Data.UsePoison); }
-            set { Save("UsePoison", value); }
-        }
-
-        public int DePoison //解毒
-        {
-            get { return Get("DePoison", Data.DePoison); }
-            set { Save("DePoison", value); }
-        }
-
-        public int AntiPoison //抗毒
-        {
-            get { return Get("AntiPoison", Data.AntiPoison); }
-            set { Save("AntiPoison", value); }
-        }
-
-        public int Quanzhang //拳掌
-        {
-            get { return Get("Quanzhang", Data.Quanzhang); }
-            set { Save("Quanzhang", value); }
-        }
-
-        public int Yujian //御剑
-        {
-            get { return Get("Yujian", Data.Yujian); }
-            set { Save("Yujian", value); }
-        }
-
-        public int Shuadao //耍刀
-        {
-            get { return Get("Shuadao", Data.Shuadao); }
-            set { Save("Shuadao", value); }
-        }
-
-        public int Qimen //特殊兵器
-        {
-            get { return Get("Qimen", Data.Qimen); }
-            set { Save("Qimen", value); }
-        }
-
-        public int Anqi //暗器技巧
-        {
-            get { return Get("Anqi", Data.Anqi); }
-            set { Save("Anqi", value); }
-        }
-
-        public int Wuxuechangshi //武学常识
-        {
-            get { return Get("Wuxuechangshi", Data.Wuxuechangshi); }
-            set { Save("Wuxuechangshi", value); }
-        }
-
-        public int Pinde //品德
-        {
-            get { return Get("Pinde", Data.Pinde); }
-            set { Save("Pinde", value); }
-        }
-
-        public int AttackPoison //攻击带毒
-        {
-            get { return Get("AttackPoison", Data.AttackPoison); }
-            set { Save("AttackPoison", value); }
-        }
-
-        public int Zuoyouhubo //左右互搏
-        {
-            get { return Get("Zuoyouhubo", Data.Zuoyouhubo); }
-            set { Save("Zuoyouhubo", value); }
-        }
-
-        public int Shengwang //声望
-        {
-            get { return Get("Shengwang", 0); }
-            set { Save("Shengwang", value); }
-        }
-
-        public int IQ //资质
-        {
-            get { return Get("IQ", Data.IQ); }
-            set { Save("IQ", value); }
-        }
-
-        public int Xiulianwupin //修炼物品
-        {
-            get { return Get("Xiulianwupin", -1); }
-            set { Save("Xiulianwupin", value); }
-        }
 
         public Jyx2ConfigItem GetXiulianItem()
         {
@@ -480,24 +325,6 @@ namespace Jyx2
             return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(Xiulianwupin);
         }
 
-        public int ExpForItem //修炼点数
-        {
-            get { return Get("ExpForItem", 0); }
-            set { Save("ExpForItem", value); }
-        }
-
-        public int AlreadyJoinedTeam
-        {
-            get { return Get(nameof(AlreadyJoinedTeam), 0); }
-            set { Save(nameof(AlreadyJoinedTeam), value); }
-        }
-
-        //武功
-        public List<WugongInstance> Wugongs
-        {
-            get { return GetList<WugongInstance>("Wugongs"); }
-            set { SaveList("Wugongs", value); }
-        }
 
         /// <summary>
         /// 战斗中使用的招式
@@ -642,7 +469,7 @@ namespace Jyx2
                     //有仅适合人物，直接判断
                     if (item.OnlySuitableRole >= 0)
                     {
-                        return item.OnlySuitableRole == int.Parse(this.Key);
+                        return item.OnlySuitableRole == this.Key;
                     }
 
                     //内力属性判断
@@ -1005,9 +832,9 @@ namespace Jyx2
             View?.MarkHpBarIsDirty();
         }
 
-        private WugongInstance _currentSkill = null;
+        private SkillInstance _currentSkill = null;
 
-        public void SwitchAnimationToSkill(WugongInstance skill)
+        public void SwitchAnimationToSkill(SkillInstance skill)
         {
             if (skill == null || _currentSkill == skill) return;
 
@@ -1224,7 +1051,7 @@ namespace Jyx2
                 return -3; //武学已满
 
 
-            WugongInstance w = new WugongInstance(magicId);
+            SkillInstance w = new SkillInstance(magicId);
             Wugongs.Add(w);
             ResetZhaoshis();
             return 0;

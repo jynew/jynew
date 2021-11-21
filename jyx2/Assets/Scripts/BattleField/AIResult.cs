@@ -35,7 +35,7 @@ namespace Jyx2
             get
             {
                 if (Zhaoshi == null) return string.Empty;
-                return Zhaoshi.Data.PK;
+                return Zhaoshi.Data.Key.ToString();
             }
             set { }
         }

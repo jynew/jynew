@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2;
 using HSFrameWork.ConfigTable;
@@ -38,7 +39,7 @@ public class BattleLoader : MonoBehaviour
 
         public int team;
 
-        public string roleKey;
+        public int roleKey;
     }
 
     public List<BattlePosRole> m_Roles;
@@ -117,7 +118,7 @@ public class BattleLoader : MonoBehaviour
                 AddRole(roleId, 0); //TODO IS AUTO
                 for (var i = 0; i < m_Roles.Count; i++)
                 {
-                    if (m_Roles[i].roleKey == roleId.ToString())
+                    if (m_Roles[i].roleKey == roleId)
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
                         if (roleInstance!=null && roleInstance.Hp == 0) roleInstance.Hp = 1;
@@ -132,13 +133,13 @@ public class BattleLoader : MonoBehaviour
             //必选人物
             bool MustRoleFunc(RoleInstance r)
             {
-                return battle.TeamMates.Exists(t => t.Id.ToString() == r.Key);
+                return battle.TeamMates.Exists(t => t.Id == r.Key);
             }
 
 
 
             SelectRoleParams selectPram = new SelectRoleParams();
-            selectPram.roleList = runtime.Team;
+            selectPram.roleList = runtime.GetTeam().ToList();
             selectPram.mustSelect = MustRoleFunc;
             selectPram.title = "选择上场角色";
             selectPram.maxCount = GameConst.MAX_BATTLE_TEAMMATE_COUNT; //TODO 最大上场人数
@@ -183,7 +184,7 @@ public class BattleLoader : MonoBehaviour
             return;
 
         //已经添加过了
-        if (m_Roles.Exists(r => r.roleKey == id.ToString() && r.team == team))
+        if (m_Roles.Exists(r => r.roleKey == id && r.team == team))
             return;
 
         if (!teamRoleIndex.ContainsKey(team))
@@ -195,7 +196,7 @@ public class BattleLoader : MonoBehaviour
         string posKey = $"battle{m_BattleId}/{team}_{teamRoleIndex[team]}";
         teamRoleIndex[team]++;
 
-        m_Roles.Add(new BattlePosRole() {pos = posKey, team = team, roleKey = id.ToString()});
+        m_Roles.Add(new BattlePosRole() {pos = posKey, team = team, roleKey = id});
     }
 
     //初始化战斗
@@ -205,7 +206,7 @@ public class BattleLoader : MonoBehaviour
         List<RoleInstance> roles = new List<RoleInstance>();
         foreach (var r in m_Roles)
         {
-            RoleInstance roleInstance = runtime.GetRoleInTeam(int.Parse(r.roleKey));
+            RoleInstance roleInstance = runtime.GetRoleInTeam(r.roleKey);
             if (roleInstance == null)
             {
                 roleInstance = new RoleInstance(r.roleKey);

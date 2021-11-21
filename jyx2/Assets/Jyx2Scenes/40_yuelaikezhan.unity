@@ -6607,8 +6607,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
+  - Desktop
   - Mobile
-  shaderIndex: 0
+  shaderIndex: 1
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -6643,9 +6644,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.39701188, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39700863, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.4115173, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.41151404, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -6772,7 +6773,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: 31cc54898a6ea2449a4c17acf45079b8, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 1
+  isMobilePlatform: 0
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
@@ -17036,7 +17037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ff8b67996ae6c419a86e052dfcd6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransportMapId: 1000
   m_GameMap: {fileID: 11400000, guid: 4ef96da88193b30409035561dc1273c2, type: 2}
   TransportTriggerName: 
   ExtraCommand: TransportWei
@@ -23767,8 +23767,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 0, y: 0, z: 0}
-    lastRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastScale: {x: 1, y: 1, z: 1}
+    lastRotation: {x: 0, y: 0, z: 0, w: 1}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -51278,8 +51278,6 @@ GameObject:
   - component: {fileID: 1789275689}
   - component: {fileID: 1789275688}
   - component: {fileID: 1789275687}
-  - component: {fileID: 1789275686}
-  - component: {fileID: 1789275685}
   m_Layer: 16
   m_Name: "\u5C0F\u4E8C"
   m_TagString: Untagged
@@ -51303,39 +51301,6 @@ Transform:
   m_Father: {fileID: 1875094411}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1789275685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3773400928023178548, guid: a1df7b93e705c2b47a50a7c117c04d19,
-    type: 3}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789275682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1789275686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3773400928023178443, guid: a1df7b93e705c2b47a50a7c117c04d19,
-    type: 3}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789275682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RoleKey: 
-  m_NpcWords: []
-  m_HasWeaponNotInBattle: 0
-  m_IsKeyRole: 0
-  IsPlayingMovingAnimation: 0
-  m_IsWaitingForActive: 1
-  IsInBattle: 0
 --- !u!136 &1789275687
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -51825,7 +51790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RoleKey: "\u4E3B\u89D2"
+  m_RoleKey: 0
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
   m_IsKeyRole: 0

@@ -26,21 +26,6 @@ namespace Jyx2
         {
             LevelMaster.loadPara = para != null ? para : new LevelMaster.LevelLoadPara(); //默认生成一份
 
-            var runtime = GameRuntimeData.Instance;
-            
-            //存储结构
-            if (runtime != null)
-            {
-                //存储上一个地图
-                runtime.PrevMap = runtime.CurrentMap;
-
-                //切换当前地图
-                if (map != null)
-                {
-                    runtime.CurrentMap = map.Id.ToString();
-                }
-            }
-
             DoLoad(map, callback).Forget();
         }
 
