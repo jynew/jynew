@@ -34,7 +34,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         IsBlockControl = true;
         BindListener(BackButton_Button, OnBackClick);
         BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
-		BindListener(LeaveButton_Button, OnLeaveClick);
+        BindListener(LeaveButton_Button, OnLeaveClick);
         BindListener(ButtonSelectArmor_Button, OnArmorClick);
         BindListener(ButtonSelectBook_Button, OnXiulianClick);
         BindListener(ButtonHeal_Button, OnHealClick);
@@ -49,7 +49,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             m_roleList = allParams[1] as List<RoleInstance>;
 
         /*var curMap=GameRuntimeData.Instance.CurrentMap;
-		(LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);*/
+        (LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);*/
         DoRefresh();
     }
 
@@ -358,7 +358,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             result.Run();
             if (result.heal > 0)
             {
-                m_currentRole.Tili -= 2;
+                m_currentRole.Tili -= 5;
             }
 
             DoRefresh();
@@ -388,7 +388,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             result.Run();
             if (result.depoison < 0)
             {
-                m_currentRole.Tili -= 2;
+                m_currentRole.Tili -= 5;
             }
 
             DoRefresh();
