@@ -13,6 +13,7 @@ using UnityEngine;
 using System.Collections;
 using HSFrameWork.Common;
 
+
 namespace Jyx2.Middleware
 {
     public class Tools : ToolsShared

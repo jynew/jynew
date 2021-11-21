@@ -11,7 +11,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using System;
 using System.Globalization;

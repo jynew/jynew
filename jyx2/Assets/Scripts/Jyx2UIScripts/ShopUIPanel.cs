@@ -8,7 +8,7 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;

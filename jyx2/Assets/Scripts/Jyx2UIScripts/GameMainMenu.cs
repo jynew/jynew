@@ -12,8 +12,9 @@ using Jyx2;
 using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
-using UnityEngine.UI;
 using HSFrameWork.Common;
+using UnityEngine.UI;
+
 using Jyx2Configs;
 
 public partial class GameMainMenu : Jyx2_UIBase {

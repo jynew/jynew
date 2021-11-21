@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading;
 using CSObjectWrapEditor;
 using DG.DemiLib;
-using Jyx2.Editor;
+
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AddressableAssets;

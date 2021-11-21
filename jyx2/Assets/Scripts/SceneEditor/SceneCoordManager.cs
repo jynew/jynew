@@ -10,11 +10,9 @@
 #if UNITY_EDITOR
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using ch.sycoforge.Decal;
 using Jyx2;
-using ServiceStack;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;

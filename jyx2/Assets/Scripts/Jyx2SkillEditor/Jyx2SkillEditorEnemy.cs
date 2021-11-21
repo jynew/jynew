@@ -10,7 +10,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Animancer;
-using HSFrameWork.ConfigTable;
+
 using UnityEngine;
 using Jyx2;
 using Jyx2Configs;

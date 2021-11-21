@@ -14,10 +14,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ch.sycoforge.Decal;
-using HanSquirrel.ResourceManager;
+
 using Jyx2;
-using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
+using ProtoBuf;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -105,7 +104,13 @@ public class BattleboxManager : MonoBehaviour
         if (m_Dataset == null) return;
 
         var filePath = GetFilePath();
-        var bs = m_Dataset.Serialize();
+        byte[] bs;
+        using (var memory = new MemoryStream())
+        {
+            Serializer.Serialize(memory, m_Dataset);
+            bs = memory.ToArray();
+        }
+        
         Directory.CreateDirectory(ConStr.BattleboxDatasetPath);
         File.WriteAllBytes(filePath, bs);
 

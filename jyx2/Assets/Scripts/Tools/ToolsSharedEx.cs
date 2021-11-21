@@ -10,6 +10,7 @@
 using System;
 using HSFrameWork.Common;
 
+
 namespace Jyx2.Crossplatform.BasePojo
 {
     public static class ToolsSharedEx

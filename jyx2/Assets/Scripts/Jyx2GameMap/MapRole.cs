@@ -9,22 +9,14 @@
  */
 using System;
 using System.Collections.Generic;
-using HanSquirrel.ResourceManager;
 using Jyx2;
-using HSFrameWork.Common;
 using SkillEffect;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
-using DG.Tweening;
 using Random = UnityEngine.Random;
-using Lean.Pool;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Animancer;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
-using UnityEngine.AddressableAssets;
 
 public class MapRole : Jyx2AnimationBattleRole
 {

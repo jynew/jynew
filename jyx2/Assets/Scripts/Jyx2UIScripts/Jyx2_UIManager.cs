@@ -7,7 +7,7 @@
  *
  * 金庸老先生千古！
  */
-using HanSquirrel.ResourceManager;
+
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;

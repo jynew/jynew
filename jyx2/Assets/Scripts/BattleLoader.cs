@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using Jyx2Configs;
 using Sirenix.OdinInspector;

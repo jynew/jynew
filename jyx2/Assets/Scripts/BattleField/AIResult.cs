@@ -7,9 +7,10 @@
  *
  * 金庸老先生千古！
  */
-using HSFrameWork.Common;
+
 using ProtoBuf;
 using System.Xml.Serialization;
+using HSFrameWork.Common;
 using Jyx2Configs;
 
 namespace Jyx2

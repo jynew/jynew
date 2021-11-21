@@ -8,7 +8,7 @@
  * 金庸老先生千古！
  */
 using Cinemachine;
-using HanSquirrel.ResourceManager;
+
 using Jyx2;
 using System;
 using System.Collections;

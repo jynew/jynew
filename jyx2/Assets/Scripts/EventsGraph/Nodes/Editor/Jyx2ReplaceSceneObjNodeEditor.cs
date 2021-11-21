@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using MK.Toon;
 using UnityEditor;

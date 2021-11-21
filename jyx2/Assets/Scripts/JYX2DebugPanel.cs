@@ -9,7 +9,7 @@
  */
 using DG.Tweening;
 using Jyx2;
-using HSFrameWork.ConfigTable;
+
 using System.Collections;
 using System.Collections.Generic;
 using Jyx2Configs;

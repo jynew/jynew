@@ -15,8 +15,9 @@ using System.Linq;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Jyx2;
 using HSFrameWork.Common;
+using Jyx2;
+
 using Jyx2.Battle;
 using Jyx2Configs;
 using UnityEngine;

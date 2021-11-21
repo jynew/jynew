@@ -8,17 +8,13 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
-using Jyx2.Setup;
 using Jyx2Configs;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public partial class SkillEditorUIPanel:Jyx2_UIBase
 {

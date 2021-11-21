@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 using Cinemachine;
 using DG.Tweening;
 using Hanjiasongshu;
-using HanSquirrel.ResourceManager;
+
 using Jyx2;
-using HSFrameWork.ConfigTable;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;

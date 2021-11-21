@@ -8,18 +8,10 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using HanSquirrel.ResourceManager;
-using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
 using ProtoBuf;
-using ServiceStack;
-using UnityEngine;
+
 
 namespace Jyx2
 {
@@ -76,8 +68,12 @@ namespace Jyx2
         public void SaveToFile()
         {
             var filePath = $"{ConStr.BattleBlockDatasetPath}{SceneName}_coord_dataset.bytes";
-            var bs = this.Serialize();
-            File.WriteAllBytes(filePath, bs);
+            
+            using (var memory = new MemoryStream())
+            {
+                Serializer.Serialize(memory, this);
+                File.WriteAllBytes(filePath, memory.ToArray());
+            }
         }
 
         public static void CreateBySceneName(string name, Action<SceneCoordDataSet> callback)
