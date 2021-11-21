@@ -639,12 +639,12 @@ public class AIManager
         SkillCastResult rst = new SkillCastResult();
         if (r1.Tili < 50)
         {
-            rst.heal = 0;
+            GameUtil.DisplayPopinfo("体力小于50无法医疗");
             return rst;
         }
         if (r2.Hurt > r1.Heal + 20)
         {
-            rst.heal = 0;
+            GameUtil.DisplayPopinfo("受伤太重无法医疗");
             return rst;
         }
         //增加生命 = 医疗能力 * a + random(5);
@@ -672,7 +672,10 @@ public class AIManager
     int detoxification(RoleInstance r1, RoleInstance r2)
     {
         if (r2.Poison > r1.DePoison + 20)
+        {
+            GameUtil.DisplayPopinfo("中毒太重无法医疗");
             return 0;
+        }
         int add = (r1.DePoison / 3) + UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
         int depoison = Tools.Limit(add, 0, r2.Poison);
         return depoison;

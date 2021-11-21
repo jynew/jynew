@@ -265,7 +265,7 @@ namespace Jyx2.Battle
         //判断是否可以左右互搏
         bool Zuoyouhubo(RoleInstance role, BattleZhaoshiInstance skill)
         {
-            return (role.Zuoyouhubo > 0 && skill.Data.GetSkill().DamageType == 0 || (int)skill.Data.GetSkill().DamageType == 1);
+            return (role.Zuoyouhubo > 0 && (skill.Data.GetSkill().DamageType == 0 || (int)skill.Data.GetSkill().DamageType == 1));
         }
 
         //使用道具

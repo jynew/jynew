@@ -34,7 +34,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         IsBlockControl = true;
         BindListener(BackButton_Button, OnBackClick);
         BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
-		BindListener(LeaveButton_Button, OnLeaveClick);
+        BindListener(LeaveButton_Button, OnLeaveClick);
         BindListener(ButtonSelectArmor_Button, OnArmorClick);
         BindListener(ButtonSelectBook_Button, OnXiulianClick);
         BindListener(ButtonHeal_Button, OnHealClick);
@@ -49,7 +49,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             m_roleList = allParams[1] as List<RoleInstance>;
 
         /*var curMap=GameRuntimeData.Instance.CurrentMap;
-		(LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);*/
+        (LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);*/
         DoRefresh();
     }
 
@@ -90,9 +90,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         ItemsText_Text.text = GetItemsText(m_currentRole);
 
         bool canDepoison = m_currentRole.DePoison > 0 && m_currentRole.Tili >= 30;
-        ButtonHeal_Button.gameObject.SetActive(canDepoison);
+        ButtonDetoxicate_Button.gameObject.SetActive(canDepoison);
         bool canHeal = m_currentRole.Heal > 0 && m_currentRole.Tili >= 10;
-        ButtonDetoxicate_Button.gameObject.SetActive(canHeal);
+        ButtonHeal_Button.gameObject.SetActive(canHeal);
         
         PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
     }
@@ -358,7 +358,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             result.Run();
             if (result.heal > 0)
             {
-                m_currentRole.Tili -= 2;
+                m_currentRole.Tili -= 5;
             }
 
             DoRefresh();
@@ -388,7 +388,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             result.Run();
             if (result.depoison < 0)
             {
-                m_currentRole.Tili -= 2;
+                m_currentRole.Tili -= 5;
             }
 
             DoRefresh();
