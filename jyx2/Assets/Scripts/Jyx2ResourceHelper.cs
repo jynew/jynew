@@ -13,10 +13,12 @@ using Jyx2;
 using Lean.Pool;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using HSFrameWork.Common;
+
 using Jyx2Configs;
+using ProtoBuf;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -144,8 +146,12 @@ public static class Jyx2ResourceHelper
         {
             if (r.Result == null)
                 callback(null);
-            var obj = r.Result.bytes.Deserialize<SceneCoordDataSet>();
-            callback(obj);
+
+            using (var memory = new MemoryStream(r.Result.bytes))
+            {
+                var obj = Serializer.Deserialize<SceneCoordDataSet>(memory);
+                callback(obj);
+            }
         };
     }
 
@@ -156,8 +162,11 @@ public static class Jyx2ResourceHelper
         {
             if (r.Result == null)
                 callback(null);
-            var obj = r.Result.bytes.Deserialize<BattleboxDataset>();
-            callback(obj);
+            using (var memory = new MemoryStream(r.Result.bytes))
+            {
+                var obj = Serializer.Deserialize<BattleboxDataset>(memory);
+                callback(obj);
+            }
         };
     }
 

@@ -12,7 +12,7 @@ using Jyx2;
 using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
-using HSFrameWork.Common;
+using Jyx2.Middleware;
 using UnityEngine.UI;
 
 using Jyx2Configs;

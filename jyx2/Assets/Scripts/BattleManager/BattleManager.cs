@@ -15,10 +15,11 @@ using System.Linq;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using HSFrameWork.Common;
+
 using Jyx2;
 
 using Jyx2.Battle;
+using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 using Random = UnityEngine.Random;

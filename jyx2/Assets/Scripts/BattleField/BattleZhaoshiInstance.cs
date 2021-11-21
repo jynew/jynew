@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HSFrameWork.Common;
+using Jyx2.Middleware;
 using Jyx2Configs;
 
 namespace Jyx2

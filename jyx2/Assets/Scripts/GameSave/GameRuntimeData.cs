@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using ES3Types;
-using HSFrameWork.Common;
+
 using Jyx2Configs;
 using UnityEngine;
 
@@ -443,7 +443,6 @@ namespace Jyx2
             if (KeyValues.ContainsKey(key))
             {
                 string str = KeyValues[key];
-                //return JsonUtility.FromJson<Dictionary<string, string>>(str);
                 var rst = ES3.Deserialize<Dictionary<string, string>>(Encoding.UTF8.GetBytes(str));
                 return rst;
             }
@@ -458,7 +457,6 @@ namespace Jyx2
             string key = "scene_" + scene;
 
             var str = Encoding.UTF8.GetString(ES3.Serialize(info));
-            //string str = JsonUtility.ToJson(info);
             KeyValues[key] = str;
         }
 

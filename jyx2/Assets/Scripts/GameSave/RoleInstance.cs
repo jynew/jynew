@@ -10,7 +10,7 @@
 
 using System;
 using System.Collections.Generic;
-using HSFrameWork.Common;
+using Jyx2.Middleware;
 using UnityEngine;
 using UniRx;
 using Jyx2Configs;

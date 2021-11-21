@@ -10,7 +10,7 @@
 
 using ProtoBuf;
 using System.Xml.Serialization;
-using HSFrameWork.Common;
+using Jyx2.Middleware;
 using Jyx2Configs;
 
 namespace Jyx2

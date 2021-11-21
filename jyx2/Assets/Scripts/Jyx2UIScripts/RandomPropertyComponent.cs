@@ -7,12 +7,10 @@
  *
  * 金庸老先生千古！
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2;
-using Hanjiasongshu;
 
 public class RandomPropertyComponent : MonoBehaviour
 {

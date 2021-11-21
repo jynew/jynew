@@ -10,24 +10,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Cinemachine;
 using DG.Tweening;
-using Hanjiasongshu;
-
-using Jyx2;
-
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using XLua;
 using UnityEngine.Playables;
 using Sirenix.Utilities;
-using UnityEngine.Timeline;
 using Cysharp.Threading.Tasks;
 using Jyx2Configs;
+using Jyx2.Middleware;
 
 namespace Jyx2
 {
@@ -487,7 +480,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                runtime.Player.Pinde = HSFrameWork.Common.Tools.Limit(runtime.Player.Pinde + value, 0, 100);
+                runtime.Player.Pinde = Tools.Limit(runtime.Player.Pinde + value, 0, 100);
                /* storyEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "道德:" + Math.Abs(value));*/
                 Next();
             });
@@ -563,7 +556,7 @@ namespace Jyx2
             RunInMainThread(() =>
             {
                 var role = runtime.GetRole(roleId);
-                role.IQ = HSFrameWork.Common.Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
+                role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
                 storyEngine.DisplayPopInfo(role.Name + "资质增加" + v);
                 Next();
             });
@@ -628,7 +621,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
-                r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Qinggong = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
                 Next();
             });
@@ -642,8 +635,8 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
-                r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                r.Mp = HSFrameWork.Common.Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
+                r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
+                r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
                 Next();
             });
@@ -657,7 +650,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
-                r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Attack = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
                 Next();
             });
@@ -671,8 +664,8 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
-                r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                r.Hp = HSFrameWork.Common.Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
+                r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
+                r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
                 Next();
             });
@@ -1040,7 +1033,7 @@ namespace Jyx2
         public static void AddRepute(int value)
         {
             RunInMainThread(() =>{
-                runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
+                runtime.Player.Shengwang = Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
             /*    storyEngine.DisplayPopInfo("增加声望:" + value);*/
                 Next();
             });
