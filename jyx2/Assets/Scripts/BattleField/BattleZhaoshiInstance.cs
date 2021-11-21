@@ -89,16 +89,13 @@ namespace Jyx2
 
             }else if(damageType ==2)//用毒
             {
-                role.Tili = Tools.Limit(role.Tili - 3, 0, 100);
+                role.Tili = Tools.Limit(role.Tili - 2, 0, 100);
             }else if(damageType == 3)//解毒
             {
-                role.Tili = Tools.Limit(role.Tili - 5, 0, 100);
+                role.Tili = Tools.Limit(role.Tili - 2, 0, 100);
             }else if(damageType == 4)//医疗
             {
-                role.Tili = Tools.Limit(role.Tili - 5, 0, 100);
-            }else if(damageType == 5)//暗器
-            {
-                role.Tili = Tools.Limit(role.Tili - 5, 0, 100);
+                role.Tili = Tools.Limit(role.Tili - 4, 0, 100);
             }
             
             //暗器，扣除道具

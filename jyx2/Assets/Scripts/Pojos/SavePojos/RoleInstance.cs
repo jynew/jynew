@@ -511,8 +511,8 @@ namespace Jyx2
         /// <returns></returns>
         public IEnumerable<BattleZhaoshiInstance> GetZhaoshis(bool forceAttackZhaoshi)
         {
-            //金庸DOS版逻辑，体力大于20才可以使用技能
-            if (this.Tili >= 20)
+            //金庸DOS版逻辑，体力大于10才可以使用技能
+            if (this.Tili >= 10)
             {
                 foreach (var zhaoshi in Zhaoshis)
                 {
@@ -524,9 +524,9 @@ namespace Jyx2
                 yield break;
 
             //金庸DOS版逻辑，用毒、解毒、医疗
-            if (this.UsePoison > 0 && this.Tili >= 3) yield return new PoisonZhaoshiInstance(this.UsePoison);
-            if (this.DePoison > 0 && this.Tili >= 5) yield return new DePoisonZhaoshiInstance(this.DePoison);
-            if (this.Heal > 0 && this.Tili >= 5) yield return new HealZhaoshiInstance(this.Heal);
+            if (this.UsePoison > 20 && this.Tili >= 2) yield return new PoisonZhaoshiInstance(this.UsePoison);
+            if (this.DePoison > 20 && this.Tili >= 2) yield return new DePoisonZhaoshiInstance(this.DePoison);
+            if (this.Heal > 20 && this.Tili >= 4) yield return new HealZhaoshiInstance(this.Heal);
         }
 
         public void ResetZhaoshis()
@@ -1092,8 +1092,8 @@ namespace Jyx2
         //参考：https://github.com/ZhanruiLiang/jinyong-legend
         public int GetMoveAbility()
         {
-            if (Tili < 10)
-                return 0; //金庸DOS版逻辑，体力小于10无法移动
+            if (Tili < 5)
+                return 0; //金庸DOS版逻辑，体力小于5无法移动
             int speed = this.Qinggong;
 
             if (this.Weapon >= 0)

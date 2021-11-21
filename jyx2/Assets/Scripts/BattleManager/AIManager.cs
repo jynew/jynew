@@ -637,11 +637,6 @@ public class AIManager
     SkillCastResult medicine(RoleInstance r1, RoleInstance r2)
     {
         SkillCastResult rst = new SkillCastResult();
-        if (r1.Tili < 50)
-        {
-            GameUtil.DisplayPopinfo("体力小于50无法医疗");
-            return rst;
-        }
         if (r2.Hurt > r1.Heal + 20)
         {
             GameUtil.DisplayPopinfo("受伤太重无法医疗");

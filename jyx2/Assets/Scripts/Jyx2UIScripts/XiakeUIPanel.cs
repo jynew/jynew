@@ -89,9 +89,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         SkillText_Text.text = GetSkillText(m_currentRole);
         ItemsText_Text.text = GetItemsText(m_currentRole);
 
-        bool canDepoison = m_currentRole.DePoison > 0 && m_currentRole.Tili >= 30;
+        bool canDepoison = m_currentRole.DePoison > 20 && m_currentRole.Tili >= 10;
         ButtonDetoxicate_Button.gameObject.SetActive(canDepoison);
-        bool canHeal = m_currentRole.Heal > 0 && m_currentRole.Tili >= 10;
+        bool canHeal = m_currentRole.Heal > 20 && m_currentRole.Tili >= 50;
         ButtonHeal_Button.gameObject.SetActive(canHeal);
         
         PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
@@ -358,7 +358,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             result.Run();
             if (result.heal > 0)
             {
-                m_currentRole.Tili -= 5;
+                m_currentRole.Tili -= 2;
             }
 
             DoRefresh();
@@ -388,7 +388,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             result.Run();
             if (result.depoison < 0)
             {
-                m_currentRole.Tili -= 5;
+                m_currentRole.Tili -= 2;
             }
 
             DoRefresh();
