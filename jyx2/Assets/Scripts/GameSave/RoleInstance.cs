@@ -52,8 +52,8 @@ namespace Jyx2
 
 
         [SerializeField] public int ExpForItem; //修炼点数
-        [SerializeField] public int AlreadyJoinedTeam;
         [SerializeField] public List<SkillInstance> Wugongs = new List<SkillInstance>(); //武功
+        [SerializeField] public List<Jyx2ConfigCharacterItem> Items = new List<Jyx2ConfigCharacterItem>(); //道具
         
         [SerializeField] public int Mp;
         [SerializeField] public int MaxMp;
@@ -137,6 +137,8 @@ namespace Jyx2
             AttackPoison = Data.AttackPoison;
             Zuoyouhubo = Data.Zuoyouhubo;
             IQ = Data.IQ;
+
+            ResetItems();
         }
 
         public void ResetForBattle()
@@ -378,36 +380,16 @@ namespace Jyx2
         //重置身上的物品
         public void ResetItems()
         {
-            _items = new List<Jyx2ConfigCharacterItem>();
-
+            Items.Clear();
             //配置表中添加的物品
             foreach (var item in Data.Items)
             {
                 var generateItem = new Jyx2ConfigCharacterItem();
                 generateItem.Item = item.Item;
                 generateItem.Count = item.Count;
-                _items.Add(generateItem);//这里对于NPC来说，每场战斗都会补满道具
+                Items.Add(generateItem);
             }
         }
-
-        
-        //身上携带的道具
-        public List<Jyx2ConfigCharacterItem> Items
-        {
-            get
-            {
-                if (_items == null)
-                {
-                    ResetItems();
-                }
-
-                return _items;
-            }
-            set { _items = value; }
-        }
-
-        private List<Jyx2ConfigCharacterItem> _items;
-
 
         public bool HaveItemBool(int itemId)
         {

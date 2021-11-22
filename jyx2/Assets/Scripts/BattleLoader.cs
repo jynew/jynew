@@ -136,8 +136,6 @@ public class BattleLoader : MonoBehaviour
                 return battle.TeamMates.Exists(t => t.Id == r.Key);
             }
 
-
-
             SelectRoleParams selectPram = new SelectRoleParams();
             selectPram.roleList = runtime.GetTeam().ToList();
             selectPram.mustSelect = MustRoleFunc;
@@ -206,12 +204,14 @@ public class BattleLoader : MonoBehaviour
         List<RoleInstance> roles = new List<RoleInstance>();
         foreach (var r in m_Roles)
         {
+            //队友取队伍实例，敌人新生成
             RoleInstance roleInstance = runtime.GetRoleInTeam(r.roleKey);
             if (roleInstance == null)
             {
-                roleInstance = new RoleInstance(r.roleKey);
+                roleInstance = new RoleInstance(r.roleKey); 
             }
 
+            //开始位置
             var pos = FindSpawnPosition(r.pos, r.team);
             if (pos == null)
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("Key", "Name", "Sex", "Level", "Exp", "Attack", "Qinggong", "Defence", "Heal", "UsePoison", "DePoison", "AntiPoison", "Quanzhang", "Yujian", "Shuadao", "Qimen", "Anqi", "Wuxuechangshi", "Pinde", "AttackPoison", "Zuoyouhubo", "Shengwang", "IQ", "ExpForItem", "AlreadyJoinedTeam", "Mp", "MaxMp", "MpType", "Hp", "MaxHp", "Hurt", "Poison", "Tili", "ExpForMakeItem", "Weapon", "Armor", "Xiulianwupin", "ExpGot", "_items", "_data", "View", "BattleModel", "_isInBattle", "team", "sp", "isAI", "_pos", "isActed", "isWaiting", "_isStun")]
+	[ES3PropertiesAttribute("Key", "Name", "Sex", "Level", "Exp", "Attack", "Qinggong", "Defence", "Heal", "UsePoison", "DePoison", "AntiPoison", "Quanzhang", "Yujian", "Shuadao", "Qimen", "Anqi", "Wuxuechangshi", "Pinde", "AttackPoison", "Zuoyouhubo", "Shengwang", "IQ", "ExpForItem", "Items", "Mp", "MaxMp", "MpType", "Hp", "MaxHp", "Hurt", "Poison", "Tili", "ExpForMakeItem", "Weapon", "Armor", "Xiulianwupin", "ExpGot", "_data", "View", "BattleModel", "_isInBattle", "team", "sp", "isAI", "_pos", "isActed", "isWaiting", "_isStun")]
 	public class ES3UserType_RoleInstance : ES3ObjectType
 	{
 		public static ES3Type Instance = null;
@@ -40,7 +40,7 @@ namespace ES3Types
 			writer.WriteProperty("Shengwang", instance.Shengwang, ES3Type_int.Instance);
 			writer.WriteProperty("IQ", instance.IQ, ES3Type_int.Instance);
 			writer.WriteProperty("ExpForItem", instance.ExpForItem, ES3Type_int.Instance);
-			writer.WriteProperty("AlreadyJoinedTeam", instance.AlreadyJoinedTeam, ES3Type_int.Instance);
+			writer.WriteProperty("Items", instance.Items, ES3Internal.ES3TypeMgr.GetES3Type(typeof(System.Collections.Generic.List<Jyx2Configs.Jyx2ConfigCharacterItem>)));
 			writer.WriteProperty("Mp", instance.Mp, ES3Type_int.Instance);
 			writer.WriteProperty("MaxMp", instance.MaxMp, ES3Type_int.Instance);
 			writer.WriteProperty("MpType", instance.MpType, ES3Type_int.Instance);
@@ -54,7 +54,6 @@ namespace ES3Types
 			writer.WriteProperty("Armor", instance.Armor, ES3Type_int.Instance);
 			writer.WriteProperty("Xiulianwupin", instance.Xiulianwupin, ES3Type_int.Instance);
 			writer.WriteProperty("ExpGot", instance.ExpGot, ES3Type_int.Instance);
-			writer.WritePrivateField("_items", instance);
 			writer.WritePrivateFieldByRef("_data", instance);
 			writer.WritePropertyByRef("View", instance.View);
 			writer.WriteProperty("BattleModel", instance.BattleModel, ES3Internal.ES3TypeMgr.GetES3Type(typeof(Jyx2.BattleFieldModel)));
@@ -148,8 +147,8 @@ namespace ES3Types
 					case "ExpForItem":
 						instance.ExpForItem = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
-					case "AlreadyJoinedTeam":
-						instance.AlreadyJoinedTeam = reader.Read<System.Int32>(ES3Type_int.Instance);
+					case "Items":
+						instance.Items = reader.Read<System.Collections.Generic.List<Jyx2Configs.Jyx2ConfigCharacterItem>>();
 						break;
 					case "Mp":
 						instance.Mp = reader.Read<System.Int32>(ES3Type_int.Instance);
@@ -190,9 +189,6 @@ namespace ES3Types
 					case "ExpGot":
 						instance.ExpGot = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
-					case "_items":
-					reader.SetPrivateField("_items", reader.Read<System.Collections.Generic.List<Jyx2Configs.Jyx2ConfigCharacterItem>>(), instance);
-					break;
 					case "_data":
 					reader.SetPrivateField("_data", reader.Read<Jyx2Configs.Jyx2ConfigCharacter>(), instance);
 					break;
