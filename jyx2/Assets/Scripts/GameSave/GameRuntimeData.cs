@@ -221,22 +221,17 @@ namespace Jyx2
             }
             
             //获得角色身上的道具
-            if (role.AlreadyJoinedTeam == 0)
+            foreach (var item in role.Items)
             {
-                //初始物品
-                foreach (var item in role.Items)
+                if (item.Count == 0) item.Count = 1;
+                AddItem(item.Item.Id, item.Count);
+                if (item.Count > 0 && showGetItem)
                 {
-                    if (item.Count == 0) item.Count = 1;
-                    AddItem(item.Item.Id, item.Count);
-                    if (item.Count > 0 && showGetItem)
-                    {
-                        StoryEngine.Instance.DisplayPopInfo("得到物品:" + item.Item.Name + "×" + Math.Abs(item.Count));
-                    }
-                    item.Count = 0;
+                    StoryEngine.Instance.DisplayPopInfo("得到物品:" + item.Item.Name + "×" + Math.Abs(item.Count));
                 }
-                role.AlreadyJoinedTeam = 1;
+                item.Count = 0;
             }
-            
+
             //清空角色身上的装备
             role.Weapon = -1;
             role.Armor = -1;
