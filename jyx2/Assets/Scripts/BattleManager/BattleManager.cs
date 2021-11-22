@@ -15,9 +15,11 @@ using System.Linq;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+
 using Jyx2;
-using HSFrameWork.Common;
+
 using Jyx2.Battle;
+using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -163,7 +165,7 @@ public class BattleManager : MonoBehaviour
         }
         
         //所有人至少有1HP
-        foreach (var role in GameRuntimeData.Instance.Team)
+        foreach (var role in GameRuntimeData.Instance.GetTeam())
         {
             if (role.Hp == 0)
                 role.Hp = 1;

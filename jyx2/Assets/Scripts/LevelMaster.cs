@@ -7,17 +7,10 @@
  *
  * 金庸老先生千古！
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using Jyx2;
-using HSFrameWork.ConfigTable;
-using HanSquirrel.ResourceManager;
-using UniRx;
 using System;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -40,11 +33,11 @@ public class LevelMaster : MonoBehaviour
 
         public LevelLoadType loadType = LevelLoadType.Entrance;
         public string triggerName = "";
-        public string CurrentPos;
-        public string CurrentOri;
+        public Vector3 Pos;
+        public Quaternion Rotate;
     }
 
-    static public LevelLoadPara loadPara = new LevelLoadPara();
+    public static LevelLoadPara loadPara = new LevelLoadPara();
 
     public static LevelMaster Instance
     {
@@ -181,14 +174,16 @@ public class LevelMaster : MonoBehaviour
 
             //播放音乐
             PlayMusic(gameMap);
-
-            //显示当前地图名，大地图不用显示
-            if(!gameMap.IsWorldMap())
-            {
-                Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName());
-            }
             
-            runtime.CurrentMap = gameMap.Id.ToString();
+            if(gameMap.IsWorldMap())
+            {
+                
+            }
+            else
+            {
+                //显示当前地图名，大地图不用显示
+                Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName()); 
+            }
         }
 
         navPointer = Instantiate(navPointerPrefab);
@@ -290,26 +285,18 @@ public class LevelMaster : MonoBehaviour
         {
             if (map.IsWorldMap())
             {
-                if (string.IsNullOrEmpty(runtime.WorldPosition))
-                    return;
-
                 GetPlayer().LoadWorldInfo();
             }
             else
             {
-                var pos = UnityTools.StringToVector3(runtime.CurrentPos); //从指定位置读取
-                PlayerSpawnAt(pos);
-				PlayerSpawnAt(UnityTools.StringToQuaternion(runtime.CurrentOri));
+                PlayerSpawnAt(loadPara.Pos);
+                PlayerSpawnAt(loadPara.Rotate);
             }
-
         }
         else if (loadPara.loadType == LevelLoadPara.LevelLoadType.Entrance)
         {
             if (map.IsWorldMap()) //大地图
             {
-                if (string.IsNullOrEmpty(runtime.WorldPosition))
-                    return;
-
                 GetPlayer().LoadWorldInfo();
             }
             else
@@ -323,16 +310,15 @@ public class LevelMaster : MonoBehaviour
         }
         else if (loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtTrigger)
         {
-            _playerNavAgent.enabled = false;
             Transport(loadPara.triggerName);
-            _playerNavAgent.enabled = true;
+            
             if(_currentMap.IsWorldMap())
                 GetPlayer().LoadBoat();
         }
         else if(loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtPos)
         {
-            PlayerSpawnAt(UnityTools.StringToVector3(loadPara.CurrentPos));
-			PlayerSpawnAt(UnityTools.StringToQuaternion(loadPara.CurrentOri));
+            PlayerSpawnAt(loadPara.Pos);
+			PlayerSpawnAt(loadPara.Rotate);
         }
     }
 
@@ -345,8 +331,10 @@ public class LevelMaster : MonoBehaviour
     }
     void PlayerSpawnAt(Quaternion ori)
     {
+        _playerNavAgent.enabled = false;
         Debug.Log("load ori = " + ori);
         _player.rotation = ori;
+        _playerNavAgent.enabled = true;
     }
 
 
@@ -799,12 +787,12 @@ public class LevelMaster : MonoBehaviour
     #endregion
 
 
-
-
     //传送
     public void Transport(string transportName)
     {
+        _playerNavAgent.enabled = false;
         TransportToTransform("Level/Triggers",transportName,"");
+        _playerNavAgent.enabled = true;
     }
 	
 	public void TransportToTransform(string path, string name, string target)
@@ -864,13 +852,12 @@ public class LevelMaster : MonoBehaviour
         {
             GetPlayer().RecordWorldInfo();
         }
-        else
-        {
-            runtime.CurrentPos = UnityTools.Vector3ToString(_player.position);
-			runtime.CurrentOri = UnityTools.QuaternionToString(_player.rotation);
-        }
-
-        Debug.Log("set current pos = " + runtime.CurrentPos);
+        
+        runtime.SubMapData = new SubMapSaveData(GetCurrentGameMap().Id);
+        runtime.SubMapData.CurrentPos = _player.position;
+		runtime.SubMapData.CurrentOri = _player.rotation;
+    
+        
         runtime.GameSave(index);
         StoryEngine.Instance.DisplayPopInfo("存档成功！");
     }

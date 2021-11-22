@@ -13,11 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Cysharp.Threading.Tasks;
-using GLib;
-using HanSquirrel;
-using HanSquirrel.ResourceManager;
-using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using XLua;
@@ -235,16 +230,7 @@ namespace Jyx2
         private static readonly string[] files = new string[]{
             "main.lua",
         };
-
-        /// <summary> 保证LUA资源及时释放，主动胜过被动，被动胜过不做。@George </summary>
-        private static readonly PassiveResourceDisposer _passiveResourceDisposer = PassiveResourceDisposer.Create(delegate
-        {
-            if (LuaManager.IsInited() && HSUnityEnv.NeedElegantDispose)
-            {   //因为是在析构函数里面调用的缘故，好像有了这个代码后Untiy有时候在重新编译的时候会死机。
-                //这个仅仅是在游戏没有运行的时候，LUA被无意初始化后才会发生，因此智能释放的概率本身很低，故此暂时先这么写代码。
-                LuaManager.Clear();
-            }
-        });
+        
         
         private static bool _inited = false;
         private static LuaEnv luaEnv;

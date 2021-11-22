@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using HanSquirrel.ResourceManager;
-using HSFrameWork.ConfigTable;
+
+
 using Jyx2;
 using UnityEngine;
 using XNode;

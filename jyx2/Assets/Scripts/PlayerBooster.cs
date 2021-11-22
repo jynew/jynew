@@ -7,7 +7,7 @@
  *
  * 金庸老先生千古！
  */
-using HanSquirrel.ResourceManager;
+
 using UnityEngine;
 
 public class PlayerBooster : MonoBehaviour

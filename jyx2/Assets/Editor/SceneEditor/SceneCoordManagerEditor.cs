@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using ch.sycoforge.Decal;
-using ServiceStack;
+﻿using ch.sycoforge.Decal;
+
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CustomEditor(typeof(SceneCoordManager))]
 public class SceneCoordManagerEditor : Editor

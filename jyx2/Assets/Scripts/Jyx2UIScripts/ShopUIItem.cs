@@ -8,12 +8,8 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
-using Jyx2;
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;

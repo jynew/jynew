@@ -7,24 +7,14 @@
  *
  * 金庸老先生千古！
  */
-using System;
+
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
-using GLib;
-using HanSquirrel.ResourceManager;
-using HSFrameWork.ConfigTable;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Debug = UnityEngine.Debug;
 
 namespace Jyx2
 {
@@ -71,14 +61,14 @@ namespace Jyx2
                 OpenSceneMode.Additive);
 
             var gameObjects = scene.GetRootGameObjects();
-            gameObjects.ForEachG(delegate(GameObject o)
+            foreach (var o in gameObjects)
             {
                 if (o.name == m_View.name)
                 {
                     DestroyImmediate(o);
                 }
-            });
-
+            }
+            
             viewWithWeapon = (GameObject) PrefabUtility.InstantiatePrefab(m_View, scene);
             viewWithWeapon.transform.SetAsLastSibling();
             PrefabUtility.UnpackPrefabInstance(viewWithWeapon, PrefabUnpackMode.Completely,

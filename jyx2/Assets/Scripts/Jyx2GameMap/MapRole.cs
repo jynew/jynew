@@ -9,22 +9,14 @@
  */
 using System;
 using System.Collections.Generic;
-using HanSquirrel.ResourceManager;
 using Jyx2;
-using HSFrameWork.Common;
 using SkillEffect;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
-using DG.Tweening;
 using Random = UnityEngine.Random;
-using Lean.Pool;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Animancer;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
-using UnityEngine.AddressableAssets;
 
 public class MapRole : Jyx2AnimationBattleRole
 {
@@ -33,9 +25,6 @@ public class MapRole : Jyx2AnimationBattleRole
     {
         get
         {
-            if (string.IsNullOrEmpty(m_RoleKey))
-                return null;
-
             if (_dataInstance == null) this.CreateRoleInstance(m_RoleKey);
             return _dataInstance;
         }
@@ -46,7 +35,7 @@ public class MapRole : Jyx2AnimationBattleRole
     }
     private RoleInstance _dataInstance;
 
-    public string m_RoleKey;
+    public int m_RoleKey;
 
     public string[] m_NpcWords;
 
@@ -297,7 +286,7 @@ public class MapRole : Jyx2AnimationBattleRole
     }
 
     //切换武学
-    public void SwitchSkillTo(WugongInstance skill)
+    public void SwitchSkillTo(SkillInstance skill)
     {
         var display = skill.GetDisplay();
         //切换对应武器
@@ -417,9 +406,6 @@ public class MapRole : Jyx2AnimationBattleRole
     {
         await BeforeSceneLoad.loadFinishTask;
         
-        if (string.IsNullOrEmpty(m_RoleKey))
-            return;
-
         //场景没有LevelMaster
         if (LevelMaster.Instance == null && DataInstance == null) this.CreateRoleInstance(m_RoleKey);
         
@@ -431,7 +417,7 @@ public class MapRole : Jyx2AnimationBattleRole
         //        PlayFootStepSoundEffect(_distFromPlayer);
         //    });
         
-        if (!m_IsWaitingForActive && m_RoleKey != "testman" && m_RoleKey != "主角")
+        if (m_IsWaitingForActive)
         {
             m_IsWaitingForActive = false;
             await RefreshModel();

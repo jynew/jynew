@@ -11,6 +11,7 @@ using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -270,38 +271,43 @@ public class Jyx2Player : MonoBehaviour
     public void RecordWorldInfo()
     {
         var runtime = GameRuntimeData.Instance;
-        runtime.WorldPosition = UnityTools.Vector3ToString(this.transform.position);
-		runtime.WorldRotation = UnityTools.QuaternionToString(this.transform.rotation);
-        runtime.BoatWorldPos = UnityTools.Vector3ToString(_boat.transform.position);
-        runtime.BoatRotate = UnityTools.QuaternionToString(_boat.transform.rotation);
-        runtime.OnBoat = IsOnBoat ? 1 : 0;
+
+        if (runtime.WorldData == null)
+        {
+            runtime.WorldData = new WorldMapSaveData();
+        }
+
+        WorldMapSaveData worldData = runtime.WorldData;
+        worldData.WorldPosition = this.transform.position;
+        worldData.WorldRotation = this.transform.rotation;
+        worldData.BoatWorldPos = _boat.transform.position;
+        worldData.BoatRotate = _boat.transform.rotation;
+        worldData.OnBoat = IsOnBoat ? 1 : 0;
     }
 
     public void LoadWorldInfo()
     {
         var runtime = GameRuntimeData.Instance;
-        var pos = UnityTools.StringToVector3(runtime.WorldPosition); //大地图读取当前位置
-        PlayerSpawnAt(pos,UnityTools.StringToQuaternion(runtime.WorldRotation));
+        if (runtime.WorldData == null) return;
+        
+        PlayerSpawnAt(runtime.WorldData.WorldPosition, runtime.WorldData.WorldRotation);
 
-        if (!string.IsNullOrEmpty(runtime.BoatWorldPos))
+        LoadBoat();
+
+        if (runtime.WorldData.OnBoat == 1)
         {
-            LoadBoat();
-
-            if (runtime.OnBoat == 1)
-            {
-                _boat.GetInBoat();
-            }
+            _boat.GetInBoat();
         }
     }
 
     public void LoadBoat()
     {
         var runtime = GameRuntimeData.Instance;
-        if (string.IsNullOrEmpty(runtime.BoatWorldPos))
-            return;
-
-        _boat.transform.position = UnityTools.StringToVector3(runtime.BoatWorldPos);
-        _boat.transform.rotation = UnityTools.StringToQuaternion(runtime.BoatRotate);
+        if (runtime.WorldData == null)
+            return; //首次进入
+        
+        _boat.transform.position = runtime.WorldData.BoatWorldPos;
+        _boat.transform.rotation = runtime.WorldData.BoatRotate;
     }
 
     public Vector3 GetBoatPosition()

@@ -9,7 +9,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
-using HanSquirrel.ResourceManager;
+
 using UnityEngine;
 using UnityEngine.UI;
 

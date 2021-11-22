@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using HanSquirrel.ResourceManager;
+
 using Jyx2;
 using Jyx2.Middleware;
 using Jyx2Configs;

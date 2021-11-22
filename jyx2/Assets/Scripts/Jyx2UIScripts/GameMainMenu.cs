@@ -12,8 +12,9 @@ using Jyx2;
 using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
+using Jyx2.Middleware;
 using UnityEngine.UI;
-using HSFrameWork.Common;
+
 using Jyx2Configs;
 
 public partial class GameMainMenu : Jyx2_UIBase {
@@ -203,33 +204,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
     
     void OnNewGame()
     {
-        int index = 999;
-        var runtime = GameRuntimeData.Create(index);
+        var runtime = GameRuntimeData.CreateNew();
+
         m_panelType = PanelType.NewGamePage;
-        
-        //默认创建主角
-        var player = runtime.AllRoles[0];
-        player.Key = "主角";
-
-        if (player.AlreadyJoinedTeam == 0)
-        {
-            //主角初始物品
-            foreach (var item in player.Items)
-            {
-                if (item.Count == 0) item.Count = 1;
-                runtime.AddItem(item.Item.Id, item.Count);
-                item.Count = 0;
-            }
-            player.AlreadyJoinedTeam = 1;
-        }
-        
-
-        player.BindKey();
-        runtime.Team.Add(player);
-        
         this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
         this.InputNamePanel_RectTransform.gameObject.SetActive(true);
-
         NameInput_InputField.ActivateInputField();
     }
 
@@ -279,7 +258,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
 		if (GameConst.ProItemDic.ContainsKey(key)){
 			PropertyItem item = GameConst.ProItemDic[key];
 			int value = Tools.GetRandomInt(item.DefaulMin, item.DefaulMax);
-			role.GetType().GetProperty(item.PropertyName).SetValue(role, value);
+			role.GetType().GetField(item.PropertyName).SetValue(role, value);
 		}
 	}
 	

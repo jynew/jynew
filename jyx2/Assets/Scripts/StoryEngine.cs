@@ -11,7 +11,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using System;
 using System.Globalization;
@@ -61,35 +61,26 @@ public class StoryEngine : MonoBehaviour
         }
 
         //初始化角色
-        foreach (var role in r.Team)
+        foreach (var role in r.AllRoles.Values)
         {
             role.BindKey();
-
-            //因为更改了存储的数据结构，需要检查存档的数据
-            if (!runtime.HaveItemBool(role.Weapon) && role.Weapon != -1) runtime.AddItem(role.Weapon, 1);
-            if (!runtime.HaveItemBool(role.Armor) && role.Armor != -1) runtime.AddItem(role.Armor, 1);
-            if (!runtime.HaveItemBool(role.Xiulianwupin) && role.Xiulianwupin != -1)
-                runtime.AddItem(role.Xiulianwupin, 1);
-        }
-
-        //CGGG: 2021/9/11 修复老的存档主角没有绑定0号角色主角，导致的增加属性数值指令无效的问题
-        if (r.Player != r.AllRoles[0])
-        {
-            r.AllRoles[0] = r.Player;
         }
 
         var loadPara = new LevelMaster.LevelLoadPara() {loadType = LevelMaster.LevelLoadPara.LevelLoadType.Load};
 
         //加载地图
-        // fix load game from Main menu will not transport player to last time indoor position 
-        // modified by eaphone at 2021/06/01
-
         int mapId = -1;
-        
-        //修复老存档
-        if (!int.TryParse(r.CurrentMap, out mapId))
+        if (r.SubMapData == null)
         {
             mapId = GameConst.WORLD_MAP_ID;
+            loadPara.Pos = r.WorldData.WorldPosition;
+            loadPara.Rotate = r.WorldData.WorldRotation;
+        }
+        else
+        {
+            mapId = r.SubMapData.MapId;
+            loadPara.Pos = r.SubMapData.CurrentPos;
+            loadPara.Rotate = r.SubMapData.CurrentOri;
         }
 
         LevelLoader.LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId), loadPara,

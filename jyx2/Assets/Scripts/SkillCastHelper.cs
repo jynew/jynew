@@ -14,9 +14,9 @@ using System.Linq;
 using Animancer;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using HanSquirrel.ResourceManager;
+
 using Jyx2.Middleware;
-using HSFrameWork.Common;
+
 using SkillEffect;
 using UniRx;
 using UnityEditor;

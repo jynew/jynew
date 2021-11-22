@@ -9,7 +9,6 @@
  */
 
 using System.Threading.Tasks;
-using Jyx2.Setup;
 using UnityEngine;
 
 namespace Jyx2
@@ -21,7 +20,6 @@ namespace Jyx2
 #endif
         public static void ColdBind()
         {
-            CrossplatformSetupHelper.ColdBind();
             DebugInfoManager.Init();
 
             loadFinishTask = Jyx2ResourceHelper.Init();

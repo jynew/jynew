@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.013685681, g: 0.06394314, b: 0.17137997, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17156,7 +17156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ff8b67996ae6c419a86e052dfcd6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransportMapId: 1000
   m_GameMap: {fileID: 11400000, guid: 4ef96da88193b30409035561dc1273c2, type: 2}
   TransportTriggerName: 
   ExtraCommand: 
@@ -18134,8 +18133,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 0, y: 0, z: 0}
-    lastRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastScale: {x: 1, y: 1, z: 1}
+    lastRotation: {x: 0, y: 0, z: 0, w: 1}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -46027,8 +46026,6 @@ GameObject:
   - component: {fileID: 1809565866}
   - component: {fileID: 1809565865}
   - component: {fileID: 1809565864}
-  - component: {fileID: 1809565863}
-  - component: {fileID: 1809565862}
   - component: {fileID: 1809565861}
   m_Layer: 10
   m_Name: Player
@@ -46141,30 +46138,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0000041127205, y: 0.9326334, z: 0.04842645}
     m_Extent: {x: 0.56766415, y: 0.96115494, z: 0.27869517}
   m_DirtyAABB: 0
---- !u!114 &1809565862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1809565859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbb03d26d1a32949a6c91dfaaa94858, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1809565863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1809565859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d618f9023229d4d99249c37ba1214a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1809565864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46177,7 +46150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RoleKey: "\u4E3B\u89D2"
+  m_RoleKey: 0
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
   m_IsKeyRole: 0

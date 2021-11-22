@@ -17,7 +17,7 @@ using System.Text;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using HSFrameWork.ConfigTable;
+
 using Jyx2Configs;
 
 public partial class XiakeUIPanel : Jyx2_UIBase

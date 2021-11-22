@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using Jyx2Configs;
 using NUnit.Framework;

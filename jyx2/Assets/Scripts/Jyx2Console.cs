@@ -60,7 +60,7 @@ public static class Jyx2Console
 			case "set_attack":
 			{
 				int attack = int.Parse(paras[1]);
-				GameRuntimeData.Instance.Team[0].Attack = attack;
+				GameRuntimeData.Instance.Player.Attack = attack;
 				break;
 			}
 			case "quickbattle":

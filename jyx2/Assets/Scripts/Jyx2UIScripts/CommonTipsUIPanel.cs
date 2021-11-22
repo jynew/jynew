@@ -10,8 +10,8 @@
 
 using System;
 using DG.Tweening;
-using HanSquirrel.ResourceManager;
-using HSFrameWork.Common;
+
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;

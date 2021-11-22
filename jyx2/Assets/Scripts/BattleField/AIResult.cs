@@ -7,9 +7,10 @@
  *
  * 金庸老先生千古！
  */
-using HSFrameWork.Common;
+
 using ProtoBuf;
 using System.Xml.Serialization;
+using Jyx2.Middleware;
 using Jyx2Configs;
 
 namespace Jyx2
@@ -35,7 +36,7 @@ namespace Jyx2
             get
             {
                 if (Zhaoshi == null) return string.Empty;
-                return Zhaoshi.Data.PK;
+                return Zhaoshi.Data.Key.ToString();
             }
             set { }
         }

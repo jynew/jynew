@@ -7,7 +7,7 @@
  *
  * 金庸老先生千古！
  */
-using HanSquirrel.ResourceManager;
+
 using Jyx2;
 using System;
 using Cysharp.Threading.Tasks;
@@ -43,7 +43,7 @@ public static class RoleHelper
         role.View = roleView;
         roleView.DataInstance = role;
         roleView.m_RoleKey = role.Key;
-        roleView.name = role.Key;
+        roleView.name = role.Key.ToString();
         roleView.tag = tag;
         return roleView;
     }
@@ -53,7 +53,7 @@ public static class RoleHelper
     /// </summary>
     /// <param name="roleKey"></param>
     /// <param name="roleView"></param>
-    public static void CreateRoleInstance(this MapRole roleView, string roleKey)
+    public static void CreateRoleInstance(this MapRole roleView, int roleKey)
     {
         roleView.BindRoleInstance(new RoleInstance(roleKey)).Forget();
         roleView.DataInstance.Hp = roleView.DataInstance.MaxHp; //默认满血
@@ -76,12 +76,6 @@ public static class RoleHelper
         role.View = roleView;
         roleView.ForceSetAnimator(null);
         roleView.DataInstance = role;
-
-        //JYX2 不刷新临时NPC外观
-        if(roleView.m_RoleKey != "testman")
-        {
-            await roleView.RefreshModel();
-        }
     }
 }
 

@@ -7,13 +7,14 @@
  *
  * 金庸老先生千古！
  */
-using HSFrameWork.Common;
+
 using Jyx2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jyx2.Middleware;
 using Jyx2Configs;
 
 namespace Jyx2
@@ -26,11 +27,11 @@ namespace Jyx2
         {
         }
 
-        public BattleZhaoshiInstance(WugongInstance wugong)
+        public BattleZhaoshiInstance(SkillInstance skill)
         {
-            Data = wugong;
-            level = wugong.GetLevel();
-            Key = wugong.Key.ToString();
+            Data = skill;
+            level = skill.GetLevel();
+            Key = skill.Key.ToString();
         }
 
         public enum ZhaoshiStatus
@@ -39,7 +40,7 @@ namespace Jyx2
             CD, //CD中
         }
 
-        public WugongInstance Data
+        public SkillInstance Data
         {
             get; 
             set;
@@ -198,7 +199,7 @@ namespace Jyx2
         public PoisonZhaoshiInstance(int lv)
         {
             _level = lv;
-            Data = new WugongInstance(93);
+            Data = new SkillInstance(93);
         }
 
         int _level;
@@ -233,7 +234,7 @@ namespace Jyx2
         public DePoisonZhaoshiInstance(int lv)
         {
             _level = lv;
-            Data = new WugongInstance(94);
+            Data = new SkillInstance(94);
         }
 
         int _level;
@@ -273,7 +274,7 @@ namespace Jyx2
         public HealZhaoshiInstance(int lv)
         {
             _level = lv;
-            Data = new WugongInstance(95);
+            Data = new SkillInstance(95);
         }
 
         int _level;
@@ -318,7 +319,7 @@ namespace Jyx2
             Key = "暗器";
             _level = lv;
             Anqi = item;
-            Data = new WugongInstance(item, ANQI_MAGIC_ID);
+            Data = new SkillInstance(item, ANQI_MAGIC_ID);
         }
 
         int _level;

@@ -8,7 +8,8 @@
  * 金庸老先生千古！
  */
 using System;
-using HSFrameWork.Common;
+using Jyx2.Middleware;
+
 
 namespace Jyx2.Crossplatform.BasePojo
 {
@@ -39,7 +40,7 @@ namespace Jyx2.Crossplatform.BasePojo
             int rate = 4; //高概率部分爆率为低概率的1/(2 * 5 ) = 1/ 10
 
             double diff = b - a;
-            double num = ToolsShared.GetRandom(a, a + rate * diff);
+            double num = Tools.GetRandom(a, a + rate * diff);
             if (num >= a && num <= a + (rate - 1) * diff)
             {
                 num = a + (num - a) / (double)((rate - 1) * 2);

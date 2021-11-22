@@ -7,17 +7,9 @@
  *
  * 金庸老先生千古！
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using HSFrameWork;
 using Jyx2;
-using HSFrameWork.ConfigTable;
-using System.IO;
-using System.Threading;
-using HSFrameWork.Common;
-using Jyx2.Middleware;
-using Jyx2.Setup;
 
 public class Jyx2SkillEditor : MonoBehaviour
 {

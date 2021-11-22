@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using UnityEngine;
 
@@ -10,11 +10,7 @@ static public class Jyx2EventsGraphStatic
 {
     static Jyx2EventsGraphStatic()
     {
-        if (!ConfigTable.IsInited())
-        {
-            ConfigTable.InitSync();
-        }
-            
+
         var tmp = new List<string>();
         /*foreach (var role in ConfigTable.GetAll<Jyx2Role>())
         {

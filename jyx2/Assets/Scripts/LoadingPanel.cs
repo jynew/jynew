@@ -11,7 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using HanSquirrel.ResourceManager;
+
 using Jyx2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

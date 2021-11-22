@@ -7,7 +7,7 @@
  *
  * 金庸老先生千古！
  */
-using HanSquirrel.ResourceManager;
+
 using Jyx2;
 using Jyx2.Middleware;
 using System;
