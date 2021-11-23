@@ -49,12 +49,6 @@ public class LevelMaster : MonoBehaviour
     }
     private static LevelMaster _instance;
 
-    enum MapType
-    {
-        WorldMap,
-        Explore,
-    }
-
     public bool MobileSimulate = false;
     public GameObject m_MobileRotateSlider;
     public bl_HUDText HUDRoot;
