@@ -129,7 +129,7 @@ namespace Jyx2Editor
 
         static string[] GetScenePaths()
         {
-            return new string[] {"Assets/Jyx2Scenes/0_GameStart.unity"};
+            return new string[] {"Assets/0_GameStart.unity", "Assets/0_MainMenu.unity"};
         }
 
         [MenuItem("一键打包/Android")]
