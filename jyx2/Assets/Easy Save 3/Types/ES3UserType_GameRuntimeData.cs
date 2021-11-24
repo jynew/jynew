@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("AllRoles", "TeamId", "SubMapData", "WorldData", "KeyValues", "Items", "ItemUser", "ShopItems", "EventCounter", "MapPic", "IsAdd", "_isShowCompass", "_startDate")]
+	[ES3PropertiesAttribute("AllRoles", "TeamId", "SubMapData", "WorldData", "KeyValues", "Items", "ItemUser", "ShopItems", "EventCounter", "MapPic", "ItemAdded", "_isShowCompass", "_startDate")]
 	public class ES3UserType_GameRuntimeData : ES3ObjectType
 	{
 		public static ES3Type Instance = null;
@@ -26,7 +26,7 @@ namespace ES3Types
 			writer.WriteProperty("ShopItems", instance.ShopItems, ES3Internal.ES3TypeMgr.GetES3Type(typeof(System.Collections.Generic.Dictionary<System.String, System.Int32>)));
 			writer.WriteProperty("EventCounter", instance.EventCounter, ES3Internal.ES3TypeMgr.GetES3Type(typeof(System.Collections.Generic.Dictionary<System.String, System.Int32>)));
 			writer.WriteProperty("MapPic", instance.MapPic, ES3Internal.ES3TypeMgr.GetES3Type(typeof(System.Collections.Generic.Dictionary<System.String, System.Int32>)));
-			writer.WriteProperty("IsAdd", instance.IsAdd, ES3Internal.ES3TypeMgr.GetES3Type(typeof(System.Collections.Generic.Dictionary<System.String, System.Int32>)));
+			writer.WritePrivateField("ItemAdded", instance);
 			writer.WritePrivateField("_isShowCompass", instance);
 			writer.WritePrivateField("_startDate", instance);
 		}
@@ -69,8 +69,8 @@ namespace ES3Types
 					case "MapPic":
 						instance.MapPic = reader.Read<System.Collections.Generic.Dictionary<System.String, System.Int32>>();
 						break;
-					case "IsAdd":
-						instance.IsAdd = reader.Read<System.Collections.Generic.Dictionary<System.String, System.Int32>>();
+					case "ItemAdded":
+						reader.SetPrivateField("ItemAdded", reader.Read<System.Collections.Generic.List<System.Int32>>(), instance);
 						break;
 					case "_isShowCompass":
 					reader.SetPrivateField("_isShowCompass", reader.Read<System.Boolean>(), instance);
