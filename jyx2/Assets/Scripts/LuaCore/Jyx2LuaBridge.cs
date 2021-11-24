@@ -381,6 +381,7 @@ namespace Jyx2
                     if (evt == null)
                     {
                         Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
                         return;
                     }
                     eventId = int.Parse(evt.name); //当前事件
@@ -447,6 +448,7 @@ namespace Jyx2
                     if (evt == null)
                     {
                         Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
                         return;
                     }
                     eventId = int.Parse(evt.name); //当前事件
@@ -545,6 +547,7 @@ namespace Jyx2
                 if (role == null)
                 {
                     Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    Next();
                     return;
                 }
 
@@ -588,12 +591,14 @@ namespace Jyx2
                 if (role == null)
                 {
                     Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    Next();
                     return;
                 }
 
                 if(magicIndexRole >= role.Wugongs.Count)
                 {
                     Debug.LogError("SetOneMagic调用错误，index越界");
+                    Next();
                     return;
                 }
 
@@ -1059,6 +1064,7 @@ namespace Jyx2
                 if (LevelMaster.Instance.IsInWorldMap)
                 {
                     storyEngine.DisplayPopInfo("大地图中无法打开商店，需到客栈中使用");
+                    Next();
                     return;
                 }
 
@@ -1067,6 +1073,7 @@ namespace Jyx2
                 if (!hasData)
                 {
                     storyEngine.DisplayPopInfo($"地图{mapId}没有配置商店，可在excel/JYX2小宝商店.xlsx中查看");
+                    Next();
                     return;
                 }
 
