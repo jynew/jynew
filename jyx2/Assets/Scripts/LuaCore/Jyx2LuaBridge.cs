@@ -229,7 +229,7 @@ namespace Jyx2
                     LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
                     {
                         //还原当前地图和位置
-                        loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
+                        loadType = LevelMaster.LevelLoadPara.LevelLoadType.ReturnFromBattle,
                         Pos = pos,
                         Rotate = rotate,
                     }, () =>

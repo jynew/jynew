@@ -28,7 +28,7 @@ public class LevelMaster : MonoBehaviour
             Load, //读档
             Entrance, //从外部进入
             StartAtTrigger, //从指定Trigger开始
-            StartAtPos,
+            ReturnFromBattle,
         }
 
         public LevelLoadType loadType = LevelLoadType.Entrance;
@@ -303,8 +303,12 @@ public class LevelMaster : MonoBehaviour
             if(_currentMap.IsWorldMap())
                 GetPlayer().LoadBoat();
         }
-        else if(loadPara.loadType == LevelLoadPara.LevelLoadType.StartAtPos)
+        else if(loadPara.loadType == LevelLoadPara.LevelLoadType.ReturnFromBattle)
         {
+            //从战斗回来的，先不能触发对话逻辑
+            SetPlayerCanController(false);
+            StopPlayerNavigation();
+            
             PlayerSpawnAt(loadPara.Pos);
 			PlayerSpawnAt(loadPara.Rotate);
         }

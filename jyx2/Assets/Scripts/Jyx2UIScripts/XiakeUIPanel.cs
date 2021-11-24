@@ -217,9 +217,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         }
 
         var eventLuaPath = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(m_currentRole.GetJyx2RoleId()).LeaveStoryId;
-        if (eventLuaPath != null && eventLuaPath != "")
+        if (!string.IsNullOrEmpty(eventLuaPath))
         {
-            Jyx2.LuaExecutor.Execute("jygame/ka" + eventLuaPath, new Action(() => { RefreshView(); }));
+            Jyx2.LuaExecutor.Execute("jygame/ka" + eventLuaPath, RefreshView);
         }
         else
         {
