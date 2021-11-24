@@ -56,9 +56,9 @@ namespace Jyx2
         [SerializeField] public Dictionary<string, int> ShopItems= new Dictionary<string, int>(); //小宝商店物品，{ID，数量}
         [SerializeField] public Dictionary<string, int> EventCounter = new Dictionary<string, int>();
         [SerializeField] public Dictionary<string, int> MapPic = new Dictionary<string, int>();
-        [SerializeField] public Dictionary<string, int> IsAdd; //是否获取过角色物品
+        [SerializeField] private List<int> ItemAdded = new List<int>(); //已经添加的角色物品
         #endregion
-        
+
         #region JYX2
 
         //新建一个存档
@@ -223,13 +223,17 @@ namespace Jyx2
             //获得角色身上的道具
             foreach (var item in role.Items)
             {
-                if (item.Count == 0) item.Count = 1;
-                AddItem(item.Item.Id, item.Count);
-                if (item.Count > 0 && showGetItem)
+                if (!ItemAdded.Contains(item.Item.Id))
                 {
-                    StoryEngine.Instance.DisplayPopInfo("得到物品:" + item.Item.Name + "×" + Math.Abs(item.Count));
+                    if (item.Count == 0) item.Count = 1;
+                    AddItem(item.Item.Id, item.Count);
+                    ItemAdded.Add(item.Item.Id);
+                    if (item.Count > 0 && showGetItem)
+                    {
+                        StoryEngine.Instance.DisplayPopInfo("得到物品:" + item.Item.Name + "×" + Math.Abs(item.Count));
+                    }
+                    item.Count = 0;
                 }
-                item.Count = 0;
             }
 
             //清空角色身上的装备
@@ -392,43 +396,43 @@ namespace Jyx2
 
 
         public void AddEventCount(int scene, int eventId, int eventName, int num)
-		{
-			string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
-			if(EventCounter.ContainsKey(key)){
-				EventCounter[key]+=num;
-			}else{
-				EventCounter[key]=num;
-			}
-		}
-		
-		public int GetEventCount(int scene, int eventId, int eventName)
-		{
-			string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
-			if(EventCounter.ContainsKey(key)){
-				return EventCounter[key];
-			}
-			return 0;
-		}
+        {
+            string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
+            if(EventCounter.ContainsKey(key)){
+                EventCounter[key]+=num;
+            }else{
+                EventCounter[key]=num;
+            }
+        }
+        
+        public int GetEventCount(int scene, int eventId, int eventName)
+        {
+            string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
+            if(EventCounter.ContainsKey(key)){
+                return EventCounter[key];
+            }
+            return 0;
+        }
 
 
         public void SetMapPic(int scene, int eventId, int pic)
-		{
-			string key=(string.Format("{0}_{1}", scene, eventId));
-			if(MapPic.ContainsKey(key) && pic==-1){
-				MapPic.Remove(key);
-			}else{
-				MapPic[key]=pic;
-			}
-		}
-		
-		public int GetMapPic(int scene, int eventId)
-		{
-			string key=(string.Format("{0}_{1}", scene, eventId));
-			if(MapPic.ContainsKey(key)){
-				return MapPic[key];
-			}
-			return -1;
-		}
+        {
+            string key=(string.Format("{0}_{1}", scene, eventId));
+            if(MapPic.ContainsKey(key) && pic==-1){
+                MapPic.Remove(key);
+            }else{
+                MapPic[key]=pic;
+            }
+        }
+        
+        public int GetMapPic(int scene, int eventId)
+        {
+            string key=(string.Format("{0}_{1}", scene, eventId));
+            if(MapPic.ContainsKey(key)){
+                return MapPic[key];
+            }
+            return -1;
+        }
 
 
         //JYX2场景相关记录
