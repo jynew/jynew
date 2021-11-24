@@ -170,7 +170,7 @@ namespace Jyx2Configs
 
         public override async UniTask WarmUp()
         {
-            GetPic().Forget();
+            //GetPic().Forget();
         }
     }
 

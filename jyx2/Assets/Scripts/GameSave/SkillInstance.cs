@@ -23,7 +23,11 @@ namespace Jyx2
         [SerializeField] public int Key;
         [SerializeField] public int Level;
         #endregion
-        
+
+        public SkillInstance()
+        {
+        }
+
         public SkillInstance(Jyx2ConfigCharacterSkill s)
         {
             Key = s.Skill.Id;

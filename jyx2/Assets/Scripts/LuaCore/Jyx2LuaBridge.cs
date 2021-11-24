@@ -104,21 +104,22 @@ namespace Jyx2
             int interactiveEventId,
             int useItemEventId,
             int enterEventId,
-            int p7,int p8,int p9,int p10,int p11,int p12)
+            int p7, int p8, int p9, int p10, int p11, int p12)
         {
-            RunInMainThread(() => {
+            RunInMainThread(() =>
+            {
 
-                bool isCurrentScene=false;
+                bool isCurrentScene = false;
                 //场景ID
-                if(scene == -2) //当前场景
+                if (scene == -2) //当前场景
                 {
                     scene = LevelMaster.GetCurrentGameMap().Id;
-                    isCurrentScene=true;
+                    isCurrentScene = true;
                 }
 
                 var evt = GameEvent.GetCurrentGameEvent();
                 //事件ID
-                if(eventId == -2)
+                if (eventId == -2)
                 {
                     if (evt == null)
                     {
@@ -126,23 +127,29 @@ namespace Jyx2
                         Next();
                         return;
                     }
+
                     eventId = int.Parse(evt.name); //当前事件
-                }else{
-                    evt=GameEventManager.GetGameEventByID(eventId.ToString());
                 }
-                
-                if(isCurrentScene && evt!=null)//当前场景事件如何获取
+                else
                 {
-                    if(interactiveEventId==-2){
-                        interactiveEventId=evt.m_InteractiveEventId;
+                    evt = GameEventManager.GetGameEventByID(eventId.ToString());
+                }
+
+                if (isCurrentScene && evt != null) //当前场景事件如何获取
+                {
+                    if (interactiveEventId == -2)
+                    {
+                        interactiveEventId = evt.m_InteractiveEventId;
                     }
-                    
-                    if(useItemEventId==-2){
-                        useItemEventId=evt.m_UseItemEventId;
+
+                    if (useItemEventId == -2)
+                    {
+                        useItemEventId = evt.m_UseItemEventId;
                     }
-                    
-                    if(enterEventId==-2){
-                        enterEventId=evt.m_EnterEventId;
+
+                    if (enterEventId == -2)
+                    {
+                        enterEventId = evt.m_EnterEventId;
                     }
                 }
                 // 非当前场景事件如何获取
@@ -166,9 +173,10 @@ namespace Jyx2
 
                 //更新全局记录
                 runtime.ModifyEvent(scene, eventId, interactiveEventId, useItemEventId, enterEventId);
-                
-                if(p7!=-2){
-                    runtime.SetMapPic(scene,eventId,p7);
+
+                if (p7 != -2)
+                {
+                    runtime.SetMapPic(scene, eventId, p7);
                 }
 
                 //刷新当前场景中的事件

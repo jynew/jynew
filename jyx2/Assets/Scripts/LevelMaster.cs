@@ -142,12 +142,6 @@ public class LevelMaster : MonoBehaviour
             }
         }
 
-        if (runtime == null)
-        {
-            //测试存档位
-            var r = GameRuntimeData.CreateNew();  //选一个没有用过的id
-        }
-
         var brain = Camera.main.GetComponent<CinemachineBrain>();
         if (brain != null)
         {
