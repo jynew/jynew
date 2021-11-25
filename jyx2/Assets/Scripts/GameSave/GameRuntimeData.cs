@@ -19,6 +19,9 @@ using UnityEngine;
 
 namespace Jyx2
 {
+    
+    
+    
     /// <summary>
     /// 这里是整个游戏的存档数据结构根节点
     ///
@@ -146,7 +149,10 @@ namespace Jyx2
 
 
         public const string ARCHIVE_FILE_NAME = "archive_{0}.dat";
+        public const string ARCHIVE_SUMMARY_FILE_NAME = "archive_summary_{0}.dat";
         public const string ARCHIVE_FILE_DIR = "Save";
+        
+        [Obsolete("待删除")]
         public const string ARCHIVE_SUMMARY_PREFIX = "save_summaryinfo_new_";
 
         public void GameSave(int index = -1)
@@ -156,7 +162,27 @@ namespace Jyx2
             Debug.Log("存档结束");
 
             var summaryInfo = GenerateSaveSummaryInfo();
-            PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + index, summaryInfo);
+            ES3.Save("summary", summaryInfo, string.Format(ARCHIVE_SUMMARY_FILE_NAME, index));
+            //PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + index, summaryInfo);
+        }
+
+        public static string GetSaveSummary(int index)
+        {
+            string summaryInfo = "";
+            var summaryInfoFilePath = string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);
+            if (ES3.FileExists(summaryInfoFilePath))
+            {
+                summaryInfo = ES3.Load<string>("summary", summaryInfoFilePath);
+            }else //CGGG：否则使用老的方式进行载入，适配老存档，此处待删除
+            {
+                var summaryInfoKey = ARCHIVE_SUMMARY_PREFIX + index;
+                if (PlayerPrefs.HasKey(summaryInfoKey))
+                {
+                    summaryInfo = PlayerPrefs.GetString(summaryInfoKey);
+                }
+            }
+
+            return summaryInfo;
         }
 
         public void SaveToFile(int fileIndex)

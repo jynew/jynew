@@ -132,16 +132,11 @@ public partial class SavePanel:Jyx2_UIBase
             title.text = "存档" + GameConst.GetUPNumber(i+1);
 
             var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
-            var summaryInfoKey = GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + i;
-            if (PlayerPrefs.HasKey(summaryInfoKey))
-            {
-                txt.text = PlayerPrefs.GetString(summaryInfoKey);
-            }
-            else
-            {
-                txt.text = "空档位";
-            }
 
+            string summaryInfo = GameRuntimeData.GetSaveSummary(i);
+            
+            txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
+            
             BindListener(btn, new Action(() =>
             {
                 OnSaveItemClick(int.Parse(btn.name));
