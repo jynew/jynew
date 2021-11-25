@@ -1081,12 +1081,8 @@ namespace Jyx2
         /// <returns></returns>
         public int GetExtraAttack(Jyx2ConfigSkill wugong)
         {
-            foreach(var ExtraAttackEntry in GameConst.ExtraAttackDic)
-            {
-                var ExtraAttackItem = ExtraAttackEntry.Value;
-                if (Weapon == ExtraAttackItem.Weapon && wugong.Id == ExtraAttackItem.Wugong)
-                    return ExtraAttackItem.ExtraAttack;
-            }
+            if (Weapon != -1 && this.GetWeapon().PairedWugong != null && this.GetWeapon().PairedWugong.Id == wugong.Id)
+                return this.GetWeapon().ExtraAttack;
             return 0;
 
         }
