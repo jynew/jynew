@@ -215,6 +215,18 @@ public class LevelMaster : MonoBehaviour
             }
         }
 
+        if (!gameMap.IsWorldMap())
+        {
+            //调整摄像机高度
+            var vcamObj = GameObject.Find("CameraGroup/CM vcam1");
+            if (vcamObj != null)
+            {
+                var vcam = vcamObj.GetComponent<CinemachineVirtualCamera>();
+                var body = vcam.GetCinemachineComponent<CinemachineTransposer>();
+                body.m_FollowOffset = GlobalAssetConfig.Instance.defaultVcamOffset;
+            }
+        }
+
         IsInited = true;
     }
 
@@ -388,8 +400,6 @@ public class LevelMaster : MonoBehaviour
         {
             //设置主角
             SetPlayer(playerObj).Forget();
-            //添加队友
-            //CreateTeammates(gameMap, playerObj.transform);
 
             var gameMap = GetCurrentGameMap();
             if (gameMap != null && gameMap.Tags.Contains("POINTLIGHT")) //点光源

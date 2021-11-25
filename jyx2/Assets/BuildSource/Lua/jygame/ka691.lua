@@ -17,7 +17,7 @@ jyx2_Wait(5);
 Talk(0, "奇了奇了，这儿也不是我家呀？难不成我被绑架了？还是平日ＲＰＧ玩太多了，做起白日梦了？", "talkname0", 1);
 Talk(114, "非常恭喜你！", "talkname114", 0);
 -- SetRoleFace(0); --改为用timeline转身
-PlayWave(24);
+PlayWave(0);
 PlayAnimation(1, 6820, 6860);
 jyx2_PlayTimeline("[Timeline]ka691_小虾米居_转身", 0, false);
 jyx2_PlayTimeline("[Timeline]ka691_小虾米居_软体娃娃跳起", 0, false, "Bake/Static/Others/Doll_1");
