@@ -149,7 +149,7 @@ namespace Jyx2
             {
                 if ((int)_skill.SkillCoverType == 1 || (int)_skill.SkillCoverType == 2)
                     return GetSkillLevelInfo().SelectRange;
-                return GetSkillLevelInfo().AttackRange + 1;
+                return GetSkillLevelInfo().AttackRange;
             }
         }
 

@@ -129,7 +129,7 @@ public class UIHelper
         StringBuilder sb = new StringBuilder();
         if (item.NeedExp > 0)
         {
-            sb.Append($"经验:  {item.NeedExp}\n");
+            //sb.Append($"经验:  {item.NeedExp}\n");
         }
         foreach (var effect in effects)
         {

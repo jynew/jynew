@@ -576,7 +576,11 @@ namespace Jyx2
                 }
                 case SkillCoverType.FACE:
                     rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                    rst.AddRange(GetNearBlocks(tx, ty, coversize));
+
+                    if (coversize > 0)
+                    {
+                        rst.AddRange(GetNearBlocks(tx, ty, coversize));
+                    }
                     break;
 
                 default:
