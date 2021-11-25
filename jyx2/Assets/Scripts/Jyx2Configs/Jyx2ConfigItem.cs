@@ -41,7 +41,22 @@ namespace Jyx2Configs
         private const string EXTEND_GROUP = "扩展属性";
         private const string EFFECT_GROUP = "使用效果";
         private const string CONDITION_GROUP = "使用条件";
-        
+
+        [ShowIf(nameof(IsWeapon))]
+        [BoxGroup(EXTEND_GROUP)][LabelText("武器武功配合加攻击力")]
+        public int ExtraAttack;
+
+        [ShowIf(nameof(IsWeapon))]
+        [BoxGroup(EXTEND_GROUP)][LabelText("配合武功")][SerializeReference]
+        public Jyx2ConfigSkill PairedWugong;
+
+        bool IsWeapon()
+        {
+            return (int)this.EquipmentType == 0;
+        }
+
+
+
         [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("图标")]
         public AssetReferenceTexture2D Pic;
 

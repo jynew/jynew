@@ -189,29 +189,4 @@ public class GameConst
                 return "";
         }
     }
-
-    public struct ExtraAttackItem
-    {
-        public int Weapon;
-        public int Wugong;
-        public int ExtraAttack;
-
-        public ExtraAttackItem(int Weapon, int Wugong, int ExtraAttack)
-        {
-            this.Weapon = Weapon;
-            this.Wugong = Wugong;
-            this.ExtraAttack = ExtraAttack;
-        }
-    }
-
-    public static Dictionary<int, ExtraAttackItem> ExtraAttackDic = new Dictionary<int, ExtraAttackItem>()
-    {
-        [0] = new ExtraAttackItem(106, 57, 100),
-        [1] = new ExtraAttackItem(107, 49, 50),
-        [2] = new ExtraAttackItem(108, 49, 50),
-        [3] = new ExtraAttackItem(110, 54, 80),
-        [4] = new ExtraAttackItem(115, 63, 50),
-        [5] = new ExtraAttackItem(116, 67, 70),
-        [6] = new ExtraAttackItem(119, 68, 100)
-    };
 }
