@@ -29,9 +29,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
     }
     
     RoleInstance m_currentRole;
-    //BattleManager.BattleViewStates m_currentState;
-    SkillUIItem m_selectItem;
-    bool m_chooseBtn = false;
+    
     List<SkillUIItem> m_curItemList = new List<SkillUIItem>();
     ChildGoComponent childMgr;
 
@@ -57,24 +55,19 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         BindListener(Cancel_Button, OnCancelClick);
     }
 
-    //Jyx2_UIManager.Instance.ShowUI(nameof(BattleActionUIPanel),role, moveRange, moved, callback);
-    
-    
-    
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
         m_currentRole = allParams[0] as RoleInstance;
         if (m_currentRole == null)
             return;
-        /*if (allParams.Length > 1)
-            m_currentState = (BattleManager.BattleViewStates) allParams[1];*/
 
         moveRange = (List<BattleBlockVector>) allParams[1];
         isSelectMove = (bool) allParams[2];
         callback = (Action<BattleLoop.ManualResult>) allParams[3];
         battleModel = BattleManager.Instance.GetModel();
-
+        
+        
         //Cancel_Button.gameObject.SetActive(false);
         SetActionBtnState();
         RefreshSkill();
@@ -88,7 +81,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         {
             if (m_curItemList.Count > 0)
             {
-                var zhaoshi = m_curItemList[0].GetSkill();
+                var zhaoshi = m_curItemList[m_currentRole.CurrentSkill].GetSkill();
                 ShowAttackRangeSelector(zhaoshi);
             }
         }
@@ -155,9 +148,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
     protected override void OnHidePanel()
     {
         base.OnHidePanel();
-        //m_currentState = BattleManager.BattleViewStates.None;
         m_currentRole = null;
-        m_selectItem = null;
         m_curItemList.Clear();
         
         //隐藏格子
@@ -175,9 +166,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
         bool lastRole = BattleManager.Instance.GetModel().IsLastRole(m_currentRole);
         Wait_Button.gameObject.SetActive(!lastRole);
-
-        /*Cancel_Button.gameObject.SetActive(m_currentState == BattleManager.BattleViewStates.SelectMove
-                                           || m_currentState == BattleManager.BattleViewStates.SelectSkill);*/
     }
 
     void RefreshSkill()
@@ -188,27 +176,23 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         List<Transform> childTransList = childMgr.GetUsingTransList();
         for (int i = 0; i < zhaoshis.Count; i++)
         {
+            int index = i;
             SkillUIItem item = GameUtil.GetOrAddComponent<SkillUIItem>(childTransList[i]);
             item.RefreshSkill(zhaoshis[i]);
-            item.SetSelect(m_selectItem == item);
+            item.SetSelect(i == m_currentRole.CurrentSkill);
 
             Button btn = item.GetComponent<Button>();
-            BindListener(btn, () => { OnItemClick(item); });
+            BindListener(btn, () => { OnItemClick(item,index); });
             m_curItemList.Add(item);
         }
     }
 
-    void OnItemClick(SkillUIItem item)
+    void OnItemClick(SkillUIItem item,int index)
     {
-        if (m_selectItem == item)
-            return;
-        if (m_selectItem != null)
-            m_selectItem.SetSelect(false);
-        m_selectItem = item;
-        m_chooseBtn = false;
-
-        m_currentRole.SwitchAnimationToSkill(m_selectItem.GetSkill().Data);
-        ShowAttackRangeSelector(m_selectItem.GetSkill());
+        m_currentRole.CurrentSkill = index;
+        RefreshSkill();
+        m_currentRole.SwitchAnimationToSkill(item.GetSkill().Data);
+        ShowAttackRangeSelector(item.GetSkill());
     }
 
     void OnCancelClick()
@@ -224,21 +208,18 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
     void OnUsePoisonClick()
     {
         var zhaoshi = new PoisonZhaoshiInstance(m_currentRole.UsePoison);
-        m_chooseBtn = true;
         ShowAttackRangeSelector(zhaoshi);
     }
 
     void OnDepoisonClick()
     {
         var zhaoshi = new DePoisonZhaoshiInstance(m_currentRole.DePoison);
-        m_chooseBtn = true;
         ShowAttackRangeSelector(zhaoshi);
     }
 
     void OnHealClick()
     {
         var zhaoshi = new HealZhaoshiInstance(m_currentRole.Heal);
-        m_chooseBtn = true;
         ShowAttackRangeSelector(zhaoshi);
     }
 
@@ -263,7 +244,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
             else if ((int)item.ItemType == 4) //使用暗器逻辑
             {
                 var zhaoshi = new AnqiZhaoshiInstance(m_currentRole.Anqi, item);
-                m_chooseBtn = true;
                 ShowAttackRangeSelector(zhaoshi);
             }
 

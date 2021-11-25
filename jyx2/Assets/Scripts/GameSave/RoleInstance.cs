@@ -68,6 +68,9 @@ namespace Jyx2
         [SerializeField] public int Weapon; //武器
         [SerializeField] public int Armor; //防具
         [SerializeField] public int Xiulianwupin = -1; //修炼物品
+
+
+        [SerializeField] public int CurrentSkill = 0; //当前技能
         #endregion
 
         public RoleInstance()
@@ -797,15 +800,16 @@ namespace Jyx2
             if (_isInBattle) return;
             
             _isInBattle = true;
-            _currentSkill = null;
+            
+            //修复当前武功
+            if (CurrentSkill >= Wugongs.Count)
+            {
+                CurrentSkill = 0;
+            }
+            _currentSkill = Wugongs[CurrentSkill];
+            SwitchAnimationToSkill(_currentSkill, true);
 
             View.LazyInitAnimator();
-
-            if (Wugongs.Count > 0)
-            {
-                //默认使用第一个武功
-                SwitchAnimationToSkill(Wugongs[0]);    
-            }
         }
 
         public void SetHPAndRefreshHudBar(int hp)
@@ -816,13 +820,10 @@ namespace Jyx2
 
         private SkillInstance _currentSkill = null;
 
-        public void SwitchAnimationToSkill(SkillInstance skill)
+        public void SwitchAnimationToSkill(SkillInstance skill, bool force = false)
         {
-            if (skill == null || _currentSkill == skill) return;
-
-            //切换武功
-            //View.ChangeWeaponTo(skill.GetWeaponCode(), Sex);
-
+            if (skill == null || (_currentSkill == skill && !force)) return;
+            
             //切换武学待机动作
             View.SwitchSkillTo(skill);
 
@@ -845,57 +846,6 @@ namespace Jyx2
         {
             sp += this.Qinggong / 4; //1f;
         }
-
-        //public void BattleAction()
-        //{
-        //    Loom.QueueOnMainThread((o) => { DoBattleAction(); }, null);
-        //}
-
-        ////本角色行动
-        //void DoBattleAction()
-        //{
-        //    sp = 0;//清零集气槽
-        //    BattleHelper.Instance.SetCurrentRole(this);
-        //    BattleHelper.Instance.poisonEffect(this);
-
-        //    this.ExpGot += 1;
-
-        //    if (IsAI())
-        //    {
-        //        //隐藏所有格子
-        //        BattleboxHelper.Instance.HideAllBlocks();
-        //        BattleHelper.Instance.GetBattleActionFromAI(this, rst => { ExecuteAction(rst); });
-        //        BattleHelper.Instance.SwitchStatesTo(BattleHelper.BattleViewStates.AI);
-        //        BattleHelper.Instance.CreateAIAction(this, action =>
-        //        {
-        //            if (action.MoveTo != null)
-        //            {
-        //                BattleHelper.Instance.AIMove(this, action.MoveTo, delegate
-        //                {
-        //                    if (action.Skill != null && action.SkillTo != null)
-        //                        BattleHelper.Instance.AIAttack(this, action.Skill, action.SkillTo);
-        //                    else
-        //                        BattleHelper.Instance.OnRestButtonClicked();
-        //                });
-        //            }
-        //            else
-        //            {
-        //                BattleHelper.Instance.OnRestButtonClicked();
-        //            }
-        //        });
-        //    }
-        //    else
-        //    {
-        //        BattleHelper.Instance.GetBattleActionFromPlayer(this, rst => { ExecuteAction(rst); });
-        //    }
-        //}
-
-        ////执行指令
-        //void ExecuteAction(BattleAction action)
-        //{
-        //    //坐标位置改变
-        //    this.Pos = action.MoveTo;
-        //}
 
         //获得行动力
         //参考：https://github.com/ZhanruiLiang/jinyong-legend

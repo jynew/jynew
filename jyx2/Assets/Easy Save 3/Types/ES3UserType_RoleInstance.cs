@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("Key", "Name", "Sex", "Level", "Exp", "Attack", "Qinggong", "Defence", "Heal", "UsePoison", "DePoison", "AntiPoison", "Quanzhang", "Yujian", "Shuadao", "Qimen", "Anqi", "Wuxuechangshi", "Pinde", "AttackPoison", "Zuoyouhubo", "Shengwang", "IQ", "ExpForItem", "Wugongs", "Items", "Mp", "MaxMp", "MpType", "Hp", "MaxHp", "Hurt", "Poison", "Tili", "ExpForMakeItem", "Weapon", "Armor", "Xiulianwupin", "ExpGot", "_data", "View", "BattleModel", "_isInBattle", "team", "sp", "isAI", "_pos", "isActed", "isWaiting", "_isStun")]
+	[ES3PropertiesAttribute("Key", "Name", "Sex", "Level", "Exp", "Attack", "Qinggong", "Defence", "Heal", "UsePoison", "DePoison", "AntiPoison", "Quanzhang", "Yujian", "Shuadao", "Qimen", "Anqi", "Wuxuechangshi", "Pinde", "AttackPoison", "Zuoyouhubo", "Shengwang", "IQ", "ExpForItem", "Wugongs", "Items", "Mp", "MaxMp", "MpType", "Hp", "MaxHp", "Hurt", "Poison", "Tili", "ExpForMakeItem", "Weapon", "Armor", "Xiulianwupin", "CurrentSkill", "ExpGot", "_data", "View", "BattleModel", "_isInBattle", "team", "sp", "isAI", "_pos", "isActed", "isWaiting", "_isStun")]
 	public class ES3UserType_RoleInstance : ES3ObjectType
 	{
 		public static ES3Type Instance = null;
@@ -54,6 +54,7 @@ namespace ES3Types
 			writer.WriteProperty("Weapon", instance.Weapon, ES3Type_int.Instance);
 			writer.WriteProperty("Armor", instance.Armor, ES3Type_int.Instance);
 			writer.WriteProperty("Xiulianwupin", instance.Xiulianwupin, ES3Type_int.Instance);
+			writer.WriteProperty("CurrentSkill", instance.CurrentSkill, ES3Type_int.Instance);
 			writer.WriteProperty("ExpGot", instance.ExpGot, ES3Type_int.Instance);
 			writer.WritePrivateFieldByRef("_data", instance);
 			writer.WritePropertyByRef("View", instance.View);
@@ -189,6 +190,9 @@ namespace ES3Types
 						break;
 					case "Xiulianwupin":
 						instance.Xiulianwupin = reader.Read<System.Int32>(ES3Type_int.Instance);
+						break;
+					case "CurrentSkill":
+						instance.CurrentSkill = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
 					case "ExpGot":
 						instance.ExpGot = reader.Read<System.Int32>(ES3Type_int.Instance);

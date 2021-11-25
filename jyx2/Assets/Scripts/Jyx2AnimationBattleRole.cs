@@ -48,7 +48,7 @@ namespace Jyx2
         
         public virtual void Idle()
         {
-            if (this == null)
+            if (this == null || CurDisplay == null)
                 return;
 
             PlayAnimation(CurDisplay.LoadAnimation(Jyx2SkillDisplayAsset.Jyx2RoleAnimationType.Idle));
