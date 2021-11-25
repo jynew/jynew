@@ -1063,5 +1063,32 @@ namespace Jyx2
         {
             return Armor != -1 ? (int)GetArmor().GetType().GetField(propertyName).GetValue(GetArmor()) : 0;
         }
+
+        /// <summary>
+        /// 获取武器武功配合加攻击力
+        ///
+        /// 计算方法参考：https://github.com/ZhanruiLiang/jinyong-legend
+        ///
+        /// 玄铁剑+玄铁剑法 攻击+100
+        /// 君子剑+玉女素心剑 攻击+50
+        /// 淑女剑+玉女素心剑 攻击+50
+        /// 血刀+血刀大法 攻击+50
+        /// 冷月宝刀+胡家刀法 攻击+70
+        /// 金蛇剑+金蛇剑法 攻击力+80
+        /// 霹雳狂刀+霹雳刀法 攻击+100
+        /// </summary>
+        /// <param name="wugong"></param>
+        /// <returns></returns>
+        public int GetExtraAttack(Jyx2ConfigSkill wugong)
+        {
+            foreach(var ExtraAttackEntry in GameConst.ExtraAttackDic)
+            {
+                var ExtraAttackItem = ExtraAttackEntry.Value;
+                if (Weapon == ExtraAttackItem.Weapon && wugong.Id == ExtraAttackItem.Wugong)
+                    return ExtraAttackItem.ExtraAttack;
+            }
+            return 0;
+
+        }
     }
 }

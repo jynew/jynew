@@ -52,12 +52,12 @@ public class ColorStringDefine
 public class GameConst
 {
     public const string DefaultMainMenuScene = "0_MainMenu";
-    
+
     public const float MapSpeed = 5;
     public const float MapAngularSpeed = 360;
     public const float MapAcceleration = 15;
 
-    
+
     public const bool SEMI_REAL = false;//游戏是否是半即时制
     public const int ACTION_SP = 1000;//半即时制的情况下 行动一次的花费
     public const int MAX_ROLE_LEVEL = 30;
@@ -107,10 +107,10 @@ public class GameConst
     /// 角色的最大武功学习数量
     /// </summary>
     public const int MAX_ROLE_WUGONG_COUNT = 10;
-    
+
     //银两ID
-    public const int MONEY_ID = 174; 
-    
+    public const int MONEY_ID = 174;
+
     //最大队伍人数
     public const int MAX_TEAMCOUNT = 6;
 
@@ -125,29 +125,30 @@ public class GameConst
 
     //最大生命和内力
     public const int MAX_HPMP = 999;
-        
+
     //最大战斗上场人数
     public const int MAX_BATTLE_TEAMMATE_COUNT = 6;
-    
+
     //对话框最大可以显示字符
-    public const int MAX_CHAT_CHART_NUM=156;
-    
+    public const int MAX_CHAT_CHART_NUM = 156;
+
     //战斗胜利结果最大显示行数
-    public const int MAX_BATTLE_RESULT_LINE_NUM=7;
-    
+    public const int MAX_BATTLE_RESULT_LINE_NUM = 7;
+
     //世界地图ID
     public const int WORLD_MAP_ID = 1000;
-    
+
     public static readonly int[] _levelUpExpList = new int[] { 50, 150, 300, 500, 750, 1050, 1400, 1800, 2250, 2750, 3850, 5050, 6350, 7750, 9250, 10850, 12550, 14350, 16750, 18250, 21400, 24700, 28150, 31750, 35500, 39400, 43450, 47650, 52000, 60000 };
 
     public const string UI_PREFAB_PATH = "Assets/Prefabs/Jyx2UI/{0}.prefab";
-    public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>() {
+    public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>()
+    {
         ["0"] = new PropertyItem(0, "MpType", "内力性质", 2, 0),
-        ["1"] = new PropertyItem(1, "MaxMp", "内力",40,30),//创角用到 特殊
-        ["2"] = new PropertyItem(2, "Attack", "武力",30,20),//创角用到 特殊
+        ["1"] = new PropertyItem(1, "MaxMp", "内力", 40, 30),//创角用到 特殊
+        ["2"] = new PropertyItem(2, "Attack", "武力", 30, 20),//创角用到 特殊
         ["3"] = new PropertyItem(3, "Qinggong", "轻功", 30, 20),
         ["4"] = new PropertyItem(4, "Defence", "防御", 30, 20),
-        ["5"] = new PropertyItem(5, "MaxHp", "生命",50,30),//创角用到 特殊
+        ["5"] = new PropertyItem(5, "MaxHp", "生命", 50, 30),//创角用到 特殊
         ["6"] = new PropertyItem(6, "Heal", "医疗", 30, 20),
         ["7"] = new PropertyItem(7, "UsePoison", "使毒", 30, 20),
         ["8"] = new PropertyItem(8, "DePoison", "解毒", 30, 20),
@@ -174,9 +175,9 @@ public class GameConst
 
     //存档的数量
     public const int SAVE_COUNT = 3;
-    public static string GetUPNumber(int index) 
+    public static string GetUPNumber(int index)
     {
-        switch (index) 
+        switch (index)
         {
             case 1:
                 return "一";
@@ -188,4 +189,29 @@ public class GameConst
                 return "";
         }
     }
+
+    public struct ExtraAttackItem
+    {
+        public int Weapon;
+        public int Wugong;
+        public int ExtraAttack;
+
+        public ExtraAttackItem(int Weapon, int Wugong, int ExtraAttack)
+        {
+            this.Weapon = Weapon;
+            this.Wugong = Wugong;
+            this.ExtraAttack = ExtraAttack;
+        }
+    }
+
+    public static Dictionary<int, ExtraAttackItem> ExtraAttackDic = new Dictionary<int, ExtraAttackItem>()
+    {
+        [0] = new ExtraAttackItem(106, 57, 100),
+        [1] = new ExtraAttackItem(107, 49, 50),
+        [2] = new ExtraAttackItem(108, 49, 50),
+        [3] = new ExtraAttackItem(110, 54, 80),
+        [4] = new ExtraAttackItem(115, 63, 50),
+        [5] = new ExtraAttackItem(116, 67, 70),
+        [6] = new ExtraAttackItem(119, 68, 100)
+    };
 }
