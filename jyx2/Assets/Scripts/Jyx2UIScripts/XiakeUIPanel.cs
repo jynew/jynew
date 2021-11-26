@@ -308,11 +308,15 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                         m_currentRole.GetXiulianItem().User = -1;
                         m_currentRole.ExpForItem = 0;
                     }
+
                     m_currentRole.Xiulianwupin = itemId;
                     item.User = m_currentRole.GetJyx2RoleId();
                 }
             },
-            (item) => { return (int)item.ItemType == 2 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
+            (item) =>
+            {
+                return (int) item.ItemType == 2 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1);
+            },
             m_currentRole.Xiulianwupin);
     }
 
