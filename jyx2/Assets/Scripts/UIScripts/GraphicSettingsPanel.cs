@@ -52,8 +52,6 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_ShadowShowLevelDropdown.onValueChanged.AddListener(DropdownShadowShowLevel);
 
         m_CloseButton.onClick.AddListener(Close);
-        
-        
     }
 
     void Close()
