@@ -832,7 +832,8 @@ namespace Jyx2
                 Debug.Log("call AllLeave()");
                 Debug.Log(runtime.GetTeamMembersCount());
 
-                foreach (var role in runtime.GetTeam())
+                var roleList = runtime.GetTeam().ToList();
+                foreach (var role in roleList)
                 {
                     if (role.Key != 0)
                     {

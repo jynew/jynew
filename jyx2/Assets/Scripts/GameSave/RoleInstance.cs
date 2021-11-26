@@ -951,9 +951,16 @@ namespace Jyx2
                 Hp = Tools.Limit(Hp + addHpMp, 0, MaxHp);
                 Mp = Tools.Limit(Mp + addHpMp, 0, MaxMp);
                 if (addHpMp > 0)
+                {
                     this.View?.ShowAttackInfo($"<color=white>+{addHpMp}</color>");
+                    this.View.MarkHpBarIsDirty();
+                }
+
                 if (addHpMp > 0)
+                {
                     this.View?.ShowAttackInfo($"<color=blue>+{addHpMp}</color>");
+                    this.View.MarkHpBarIsDirty();
+                }
             }
         }
 
