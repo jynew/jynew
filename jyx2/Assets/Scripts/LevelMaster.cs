@@ -215,7 +215,7 @@ public class LevelMaster : MonoBehaviour
             }
         }
 
-        if (!gameMap.IsWorldMap())
+        if (gameMap !=null && !gameMap.IsWorldMap())
         {
             //调整摄像机高度
             var vcamObj = GameObject.Find("CameraGroup/CM vcam1");
@@ -276,7 +276,7 @@ public class LevelMaster : MonoBehaviour
     {
         if (runtime == null || _player == null)
             return;
-		
+        
         var map = GetCurrentGameMap();
         if (map == null)
             return;
@@ -322,7 +322,7 @@ public class LevelMaster : MonoBehaviour
             StopPlayerNavigation();
             
             PlayerSpawnAt(loadPara.Pos);
-			PlayerSpawnAt(loadPara.Rotate);
+            PlayerSpawnAt(loadPara.Rotate);
         }
     }
 
@@ -356,8 +356,8 @@ public class LevelMaster : MonoBehaviour
 
     private async UniTask SetPlayer(MapRole playerRoleView)
     {
-		// reverting this change. to fix "reference on null object" error when enter/ exit scene
-		// modified by eaphone at 2021/05/30
+        // reverting this change. to fix "reference on null object" error when enter/ exit scene
+        // modified by eaphone at 2021/05/30
         _playerView = playerRoleView;
         _player = playerRoleView.transform;
         _playerNavAgent = playerRoleView.GetComponent<NavMeshAgent>();
@@ -387,8 +387,8 @@ public class LevelMaster : MonoBehaviour
         LoadSpawnPosition();
     }
 
-	// fix bind player failed error when select player before start battle
-	// modified by eaphone at 2021/05/31
+    // fix bind player failed error when select player before start battle
+    // modified by eaphone at 2021/05/31
     public void TryBindPlayer()
     {
         if (_player != null)
@@ -537,9 +537,9 @@ public class LevelMaster : MonoBehaviour
                     else //和NPC聊天
                     {
                         var mapRole = hitInfo.transform.GetComponent<MapRole>();
-						if(mapRole!=null){
-							mapRole.DoNpcChat();
-						}
+                        if(mapRole!=null){
+                            mapRole.DoNpcChat();
+                        }
                     }
                 }
                 //BY CG: MASK：15:Ground层
@@ -796,35 +796,35 @@ public class LevelMaster : MonoBehaviour
         TransportToTransform("Level/Triggers",transportName,"");
         _playerNavAgent.enabled = true;
     }
-	
-	public void TransportToTransform(string path, string name, string target)
-	{
-		var rootObj = GameObject.Find(path);
+    
+    public void TransportToTransform(string path, string name, string target)
+    {
+        var rootObj = GameObject.Find(path);
         var trans = rootObj.transform.Find(name);
 
-		if(trans == null)
-		{
-			rootObj = GameObject.Find("Level/Dynamic");
-			trans=rootObj.transform.Find(name);
-		}
+        if(trans == null)
+        {
+            rootObj = GameObject.Find("Level/Dynamic");
+            trans=rootObj.transform.Find(name);
+        }
         if(trans != null)
         {
-			if(target==""){
-				Transport(trans.position);
-				//增加传送时设置朝向。rotation为0时不作调整，需要朝向0时候，可以使用360.
-				if(trans.rotation!=Quaternion.identity){
-					_player.rotation=trans.rotation;
-				}
-			}else{
-				var t=GameObject.Find(target).transform;
-				t.position=trans.position;
-			}
+            if(target==""){
+                Transport(trans.position);
+                //增加传送时设置朝向。rotation为0时不作调整，需要朝向0时候，可以使用360.
+                if(trans.rotation!=Quaternion.identity){
+                    _player.rotation=trans.rotation;
+                }
+            }else{
+                var t=GameObject.Find(target).transform;
+                t.position=trans.position;
+            }
         }
         else
         {
             Debug.LogError("找不到传送点：" + name);
         }
-	}
+    }
 
     //传送
     public void Transport(Vector3 position)
@@ -832,13 +832,13 @@ public class LevelMaster : MonoBehaviour
         _playerNavAgent.Warp(position);
         _player.position = position;
     }
-	
-	// implement change player facing. 0:top-right, 1:down-right, 2:top-left, 3:down-left
-	// modify by eaphone at 2021/6/5
-	public void SetRotation(int ro){
-		int[] roationSet={-90,0,180,90};
-		_player.rotation = Quaternion.Euler(Vector3.up*roationSet[ro]);
-	}
+    
+    // implement change player facing. 0:top-right, 1:down-right, 2:top-left, 3:down-left
+    // modify by eaphone at 2021/6/5
+    public void SetRotation(int ro){
+        int[] roationSet={-90,0,180,90};
+        _player.rotation = Quaternion.Euler(Vector3.up*roationSet[ro]);
+    }
 
     //手动存档
     public void OnManuelSave(int index = -1)
@@ -857,7 +857,7 @@ public class LevelMaster : MonoBehaviour
         
         runtime.SubMapData = new SubMapSaveData(GetCurrentGameMap().Id);
         runtime.SubMapData.CurrentPos = _player.position;
-		runtime.SubMapData.CurrentOri = _player.rotation;
+        runtime.SubMapData.CurrentOri = _player.rotation;
     
         
         runtime.GameSave(index);
@@ -873,11 +873,11 @@ public class LevelMaster : MonoBehaviour
         return _player.rotation;
     }
 
-	// handle player null exception
-	// modified by eaphone at 2021/05/31
+    // handle player null exception
+    // modified by eaphone at 2021/05/31
     public Jyx2Player GetPlayer()
     {
-		var player=_player.GetComponent<Jyx2Player>();
+        var player=_player.GetComponent<Jyx2Player>();
         if (player == null)
         {
             player = _player.gameObject.AddComponent<Jyx2Player>();
