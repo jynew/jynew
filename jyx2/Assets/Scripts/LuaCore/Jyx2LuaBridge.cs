@@ -304,18 +304,6 @@ namespace Jyx2
                 {
                     RoleInstance role = runtime.GetRole(roleId);
                     storyEngine.DisplayPopInfo(role.Name + "离队。");
-
-                    //卸下角色身上的装备，清空修炼
-                    role.UnequipItem(role.GetWeapon());
-                    role.UnequipItem(role.GetArmor());
-                    if (role.GetXiulianItem() != null)
-                    {
-                        role.GetXiulianItem().User = -1;
-                        role.ExpForItem = 0;
-                    }
-                    role.Weapon = -1;
-                    role.Armor = -1;
-                    role.Xiulianwupin = -1;
                 }
                 
                 Next();
