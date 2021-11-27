@@ -287,6 +287,18 @@ namespace Jyx2
                 return false;
             }
 
+            //卸下角色身上的装备，清空修炼
+            role.UnequipItem(role.GetWeapon());
+            role.UnequipItem(role.GetArmor());
+            if (role.GetXiulianItem() != null)
+            {
+                role.GetXiulianItem().User = -1;
+                role.ExpForItem = 0;
+            }
+            role.Weapon = -1;
+            role.Armor = -1;
+            role.Xiulianwupin = -1;
+
             TeamId.Remove(roleId);
             role.Recover(true);
             return true;
