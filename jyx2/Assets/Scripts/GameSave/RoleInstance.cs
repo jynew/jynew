@@ -235,14 +235,14 @@ namespace Jyx2
             Qinggong += a;
             Defence += a;
 
-            Heal = checkUp(Heal, 0, 3);
-            DePoison = checkUp(DePoison, 0, 3);
-            UsePoison = checkUp(UsePoison, 0, 3);
+            Heal = checkUp(Heal, 20, 3);
+            DePoison = checkUp(DePoison, 20, 3);
+            UsePoison = checkUp(UsePoison, 20, 3);
 
-            Quanzhang = checkUp(Quanzhang, 0, 3);
-            Yujian = checkUp(Yujian, 0, 3);
-            Shuadao = checkUp(Shuadao, 0, 3);
-            Qimen = checkUp(Qimen, 0, 3);
+            Quanzhang = checkUp(Quanzhang, 20, 3);
+            Yujian = checkUp(Yujian, 20, 3);
+            Shuadao = checkUp(Shuadao, 20, 3);
+            Qimen = checkUp(Qimen, 20, 3);
 
             this.Limit(1, 1, 1);
 
@@ -298,9 +298,9 @@ namespace Jyx2
 
         int checkUp(int value, int limit, int max_inc)
         {
-            if (value > limit)
+            if (value >= limit)
             {
-                value += 1 + Tools.GetRandomInt(0, max_inc);
+                value += Tools.GetRandomInt(0, max_inc);
             }
 
             return value;
