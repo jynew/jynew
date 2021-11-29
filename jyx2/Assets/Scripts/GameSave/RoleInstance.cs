@@ -214,7 +214,6 @@ namespace Jyx2
         /// <returns></returns>
         public void LevelUp()
         {
-            Exp -= GameConst._levelUpExpList[this.Level - 1];
             Level++;
             Tili = GameConst.MAX_ROLE_TILI;
             MaxHp += (Data.HpInc + Tools.GetRandomInt(0, 3)) * 3;
