@@ -621,7 +621,7 @@ namespace Jyx2
                     this.LearnMagic(item.Skill.Id);
                 }
 
-                this.ExpForItem -= need_item_exp;
+                this.ExpForItem = 0;
             }
 
             this.Limit(1, 1, 1);
