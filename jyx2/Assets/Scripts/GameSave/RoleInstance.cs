@@ -242,7 +242,7 @@ namespace Jyx2
             Quanzhang = checkUp(Quanzhang, 20, 3);
             Yujian = checkUp(Yujian, 20, 3);
             Shuadao = checkUp(Shuadao, 20, 3);
-            Qimen = checkUp(Qimen, 20, 3);
+            Anqi = checkUp(Anqi, 20, 3);
 
             this.Limit(1, 1, 1);
 
