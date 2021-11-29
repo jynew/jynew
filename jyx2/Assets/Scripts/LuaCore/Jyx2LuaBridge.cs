@@ -202,7 +202,7 @@ namespace Jyx2
         //询问是否战斗
         public static bool AskBattle()
         {
-            return ShowYesOrNoSelectPanel("是否与之战斗?");
+            return ShowYesOrNoSelectPanel("是否与之过招?");
         }
 
         private static bool _battleResult = false;
