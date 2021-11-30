@@ -30,6 +30,7 @@ if InTeam(58) == false then goto label0 end;
     SetScenceMap(18, 1, 44, 30, 0);
     jyx2_FixMapObject("古墓开门",1);
     ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+    ModifyEvent(80, 1, -2, -2, -2, -1, -1, -6068, -2, -2, -2, -2, -2);--小龙女贴图设置（用负代表消失）
     jyx2_ReplaceSceneObject("", "NPC/杨过", "");--杨过离开
     jyx2_ReplaceSceneObject("", "NPC/小龙女", "");--小龙女离开
     ModifyEvent(18, 1, 1, 1, 438, -1, -1, 6188, 6188, 6188, -2, -2, -2);
