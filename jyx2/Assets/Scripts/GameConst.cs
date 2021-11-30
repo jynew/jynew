@@ -143,7 +143,7 @@ public class GameConst
     public const string UI_PREFAB_PATH = "Assets/Prefabs/Jyx2UI/{0}.prefab";
     public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>()
     {
-        ["0"] = new PropertyItem(0, "MpType", "内力性质", 2, 0),
+        ["0"] = new PropertyItem(0, "MpType", "内力性质", 1, 0),
         ["1"] = new PropertyItem(1, "MaxMp", "内力", 40, 30),//创角用到 特殊
         ["2"] = new PropertyItem(2, "Attack", "武力", 30, 20),//创角用到 特殊
         ["3"] = new PropertyItem(3, "Qinggong", "轻功", 30, 20),

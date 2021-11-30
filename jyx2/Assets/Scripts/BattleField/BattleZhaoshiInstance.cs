@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jyx2.Middleware;
 using Jyx2Configs;
+using Random = UnityEngine.Random;
 
 namespace Jyx2
 {
@@ -62,19 +63,17 @@ namespace Jyx2
         }
 
         /// <summary>
-        /// JYX2使用技能消耗的逻辑
+        /// JYX2使用技能消耗的内力
         /// </summary>
-        public void CastCost(RoleInstance role)
+        public void CastMP(RoleInstance role)
         {
             int damageType = GetDamageType();
-            if(damageType == 0 || damageType == 1)//普通攻击、吸内
+            if (damageType == 0 || damageType == 1)//普通攻击、吸内
             {
                 int level_index = this.level;
-                role.Tili = Tools.Limit(role.Tili - 3, 0, 100);
                 role.Mp = Tools.Limit(role.Mp - this.calNeedMP(level_index), 0, role.MaxMp);
 
-                int levelAdd = Tools.Limit(1 + Tools.GetRandomInt(0, 2), 0, 100 * 10);
-                //levelAdd += Tools.GetRandomInt(50, 100);//for test
+                int levelAdd = Tools.Limit(1 + Random.Range(0, 2), 0, 100 * 10);
 
                 //空挥升级
                 //己方队员，并且武功等级提升了
@@ -83,11 +82,22 @@ namespace Jyx2
                     StoryEngine.Instance.DisplayPopInfo(
                         $"{role.Name}的{this.Data.Name}升到{((Data.Level + levelAdd) / 100) + 1}级!");
                 }
-                
+
                 //JYX2:最多10级，每级100
                 this.Data.Level += levelAdd;
                 this.Data.Level = Tools.Limit(this.Data.Level, 0, GameConst.MAX_SKILL_LEVEL);
+            }
+        }
 
+        /// <summary>
+        /// JYX2使用技能消耗的逻辑（体力、道具）
+        /// </summary>
+        public void CastCost(RoleInstance role)
+        {
+            int damageType = GetDamageType();
+            if(damageType == 0 || damageType == 1)//普通攻击、吸内
+            {
+                role.Tili = Tools.Limit(role.Tili - 3, 0, 100);
             }else if(damageType ==2)//用毒
             {
                 role.Tili = Tools.Limit(role.Tili - 2, 0, 100);
