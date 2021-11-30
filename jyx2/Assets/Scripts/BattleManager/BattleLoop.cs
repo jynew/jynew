@@ -217,11 +217,15 @@ namespace Jyx2.Battle
             role.View.LookAtBattleBlock(block); //先面向目标
             role.SwitchAnimationToSkill(skill.Data); //切换姿势
             skill.CastCD(); //技能CD
-            skill.CastCost(role); //技能消耗（左右互搏之消耗一次）
+            skill.CastCost(role); //技能消耗（左右互搏体力消耗一次，内力消耗两次）
+            skill.CastMP(role);
 
             await CastOnce(role, skill, skillTo); //攻击一次
-            if (Zuoyouhubo(role, skill)) //判断左右互搏
+            if (Zuoyouhubo(role, skill))
+            {
+                skill.CastMP(role);
                 await CastOnce(role, skill, skillTo); //再攻击一次
+            }
         }
 
         //一次施展技能
