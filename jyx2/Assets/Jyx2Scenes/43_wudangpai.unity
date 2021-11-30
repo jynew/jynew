@@ -17248,7 +17248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ff8b67996ae6c419a86e052dfcd6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransportMapId: 1000
   m_GameMap: {fileID: 11400000, guid: 4ef96da88193b30409035561dc1273c2, type: 2}
   TransportTriggerName: 
   ExtraCommand: 
@@ -23801,8 +23800,8 @@ MonoBehaviour:
   deferredFlags: -1
   transformObserver:
     lastPosition: {x: 0, y: 0, z: 0}
-    lastScale: {x: 0, y: 0, z: 0}
-    lastRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastScale: {x: 1, y: 1, z: 1}
+    lastRotation: {x: 0, y: 0, z: 0, w: 1}
     transform: {fileID: 812541910}
 --- !u!4 &812541910
 Transform:
@@ -42525,6 +42524,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1487807993}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1487807996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487807995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4c361dd5a388a41b638b1d55ed2b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 1487807998}
+  _Clip: {fileID: 7400000, guid: cf6a3db4b6671954397899ed9bf66461, type: 2}
+  _Speed: 1
+  _FootIK: 0
+--- !u!95 &1487807998 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3790419852029693263, guid: dd77412e3c0402e498be6eeea647d9df,
+    type: 3}
+  m_PrefabInstance: {fileID: 1487807993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1490706139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51815,7 +51836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RoleKey: "\u4E3B\u89D2"
+  m_RoleKey: 0
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
   m_IsKeyRole: 0
