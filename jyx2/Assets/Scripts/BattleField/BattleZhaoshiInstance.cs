@@ -76,8 +76,7 @@ namespace Jyx2
                 int levelAdd = Tools.Limit(1 + Random.Range(0, 2), 0, 100 * 10);
 
                 //空挥升级
-                //己方队员，并且武功等级提升了
-                if (role.team == 0 && (Data.Level / 100) < ((Data.Level + levelAdd) / 100))
+                if ((Data.Level / 100) < ((Data.Level + levelAdd) / 100))
                 {
                     StoryEngine.Instance.DisplayPopInfo(
                         $"{role.Name}的{this.Data.Name}升到{((Data.Level + levelAdd) / 100) + 1}级!");
