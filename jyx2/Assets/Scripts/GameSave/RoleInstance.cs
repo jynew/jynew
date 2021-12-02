@@ -499,7 +499,7 @@ namespace Jyx2
                        && testAttr(this.Shuadao, item.ConditionShuadao)
                        && testAttr(this.Qimen, item.ConditionQimen)
                        && testAttr(this.Anqi, item.ConditionAnqi)
-                       && testAttr(this.Mp, item.ConditionMp)
+                       && testAttr(this.MaxMp, item.ConditionMp)
                        && testAttr(this.IQ, item.ConditionIQ);
             }
             else if ((int)item.ItemType == 3)
