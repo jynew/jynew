@@ -10,19 +10,8 @@
 ![star](https://img.shields.io/github/stars/jynew/jynew?style=social)
 
 
+[项目主页](http://www.jy-new.com) | [B站主页](https://space.bilibili.com/1092529660) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](http://www.jy-new.com/redmine/projects/public/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
 
-# ------------------这非常重要!!!!!!!!!!!!!------------------
-
-* # 项目必看 [项目Wiki](https://github.com/jynew/jynew/wiki)
-
-# ------------------这非常重要!!!!!!!!!!!!!------------------  
-
-
-
-* 项目主页 http://www.jy-new.com
-* B站主页 https://space.bilibili.com/1092529660
-* 联系我们 jy_remastered@163.com
-* 开发者Q群 749167552 （入群密码是本代码仓库名称）
 
 金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。
 
@@ -31,16 +20,45 @@
 ## 项目目标
 
 * 使用Unity引擎重制并致敬经典游戏《金庸群侠传》DOS版；
-* 后续支持重制《金群》的一系列MOD，或二次开发；
+* 后续支持重制《金群》的一系列MOD或二次开发；
 * 提供开放的能力给社区，有兴趣贡献力量的朋友可以让这个作品更加完善；
 * 提供一个完备的单机游戏结构供有兴趣学习开发游戏的朋友进行参考；
 
-## 开发中画面
+## 游戏画面截图
 
-![image](https://user-images.githubusercontent.com/7448857/118384457-aa81f700-b638-11eb-972b-810a88040939.png)
-![image](https://user-images.githubusercontent.com/7448857/118384458-b2419b80-b638-11eb-8411-8822289759b4.png)
-![image](https://user-images.githubusercontent.com/7448857/118384459-b53c8c00-b638-11eb-8a83-80228747067f.png)
-![image](https://user-images.githubusercontent.com/7448857/118384466-b968a980-b638-11eb-89b3-11aec9ee8bd2.png)
+![1 (1)](https://user-images.githubusercontent.com/7448857/144630410-bc1676eb-b548-41ea-ae54-90c72e9d066d.png)
+![2 (1)](https://user-images.githubusercontent.com/7448857/144630415-c2c3b37e-6008-49d9-a690-fc25d995f21c.png)
+![3 (1)](https://user-images.githubusercontent.com/7448857/144630418-38aa752d-332a-4e2e-a297-959b921c9316.png)
+![4 (1)](https://user-images.githubusercontent.com/7448857/144630403-e35a6772-2442-465c-8a23-c1f5ae0037bc.png)
+![5 (1)](https://user-images.githubusercontent.com/7448857/144630913-bb59a38f-4cb2-4312-b5e4-6051d38c3a84.png)
+![6 (1)](https://user-images.githubusercontent.com/7448857/144630919-b21370e1-0783-417e-99c3-763e9563d06a.png)
+
+## 开发计划
+
+- [x] 素材实现，包括角色立绘、道具图标、模型、动作、场景、特效等
+- [x] 风格化的画面渲染效果实现
+- [x] 基础系统实现，包括地图、道具、角色、战斗等
+- [x] 支持剧情脚本指令系统，支持可视化的剧情脚本编辑系统
+- [x] 完整复刻实现金庸群侠传游戏流程，可正常通关
+- [x] 支持多端输出，一键打包
+- [x] 所有代码和资源全部开源，不依赖闭源库（标准第三方库除外）
+- [ ] 优化游戏运行性能和代码质量（考虑使用URP渲染管线）
+- [ ] 提供MOD启动器，提供金群MOD开发环境和样例
+- [ ] 提供联机战斗对战、联机RPG样例和DEMO
+
+## 技术实现简介
+
+* 核心流程使用脚本驱动，目前支持lua和可视化图编辑两种模式，很方便编程扩展指令
+* 逻辑配置数据使用ScriptableObject存储，并提供基于ODIN的可视化编辑环境，配置数据在Editor运行时可以所见即所得编辑，不需要重启游戏
+* 为战棋模式，本框架提供一套简单的基于贪心算法的AI，易于扩展
+* 每个地图为一个场景，地图间可以串接
+* 游戏存档使用EasySave3插件
+* UI方案使用Unity原生的UGUI
+* 渲染管线为默认渲染管线，渲染风格为含光照卡通渲染（考虑升级到URP管线，尚未完成）
+* 动作管理部分大量使用Animancer插件，亦使用unity原生AnimatorController方案
+* 资源打包和加载使用Addressable
+* 游戏中大量使用基于UniTask的异步编程方案来进行逻辑串接，以及防止大量回调嵌套
+* 技能特效使用了不少assetstore上的第三方库，如想使用，还请自行购买
 
 
 ## 项目文档导航
@@ -65,7 +83,7 @@
 
 ## 引用项目
 
-[xlua](https://github.com/Tencent/xLua), [xNode](https://github.com/Siccity/xNode), [UniTask](https://github.com/Cysharp/UniTask)
+[xlua](https://github.com/Tencent/xLua), [xNode](https://github.com/Siccity/xNode), [UniTask](https://github.com/Cysharp/UniTask), [EasySave3](https://docs.moodkie.com/product/easy-save-3/)
 
 ## 参考项目
 
@@ -75,3 +93,8 @@
 
 以下插件仅供学习使用，若希望使用它还请自行购买重新导入：<br>
 [Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
+
+## 社区
+
+* 开发者Q群 749167552 （入群密码是本代码仓库名称）
+* 玩家Q群 480072818
