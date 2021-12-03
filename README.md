@@ -10,7 +10,7 @@
 ![star](https://img.shields.io/github/stars/jynew/jynew?style=social)
 
 
-[项目主页](http://www.jy-new.com) | [B站主页](https://space.bilibili.com/1092529660) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](http://www.jy-new.com/redmine/projects/public/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
+[包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [项目主页](http://www.jy-new.com) | [B站主页](https://space.bilibili.com/1092529660) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](http://www.jy-new.com/redmine/projects/public/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
 
 
 金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。
