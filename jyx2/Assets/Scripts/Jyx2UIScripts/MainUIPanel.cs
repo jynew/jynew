@@ -76,8 +76,8 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             //MapButton_Button.gameObject.SetActive(!isWorldMap);
             MapButton_Button.gameObject.SetActive(false);
             
-			
-			//var rt = Image_Right.GetComponent<RectTransform>();
+            
+            //var rt = Image_Right.GetComponent<RectTransform>();
 　　		//rt.sizeDelta = new Vector2(isWorldMap?480:640, 100);
         }
     }
@@ -135,6 +135,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                         selectRole.Weapon = id;
                         selectRole.UseItem(selectRole.GetWeapon());
                         item.User = selectRole.GetJyx2RoleId();
+                        GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                     }
                     //防具
                     else if ((int)item.EquipmentType == 1)
@@ -150,34 +151,59 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                         selectRole.Armor = id;
                         selectRole.UseItem(selectRole.GetArmor());
                         item.User = selectRole.GetJyx2RoleId();
+                        GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                     }
                 }
                 //修炼
                 else if ((int)item.ItemType == 2)
                 {
-                    if (item.User != -1)
+                    if (item.NeedCastration == 1)//辟邪剑谱和葵花宝典
                     {
-                        RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
-                        item.User = -1;
-                        roleInstance.ExpForItem = 0;
-                        roleInstance.Xiulianwupin = -1;
+                        GameUtil.ShowYesOrNoCastrate(selectRole, () =>
+                        {
+                            if (item.User != -1)
+                            {
+                                RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
+                                item.User = -1;
+                                roleInstance.ExpForItem = 0;
+                                roleInstance.Xiulianwupin = -1;
+                            }
+                            if (selectRole.GetXiulianItem() != null)
+                            {
+                                selectRole.GetXiulianItem().User = -1;
+                                selectRole.ExpForItem = 0;
+                            }
+                            selectRole.Xiulianwupin = id;
+                            item.User = selectRole.GetJyx2RoleId();
+                            GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+                        });
                     }
-
-                    if (selectRole.GetXiulianItem() != null)
+                    else
                     {
-                        selectRole.GetXiulianItem().User = -1;
-                        selectRole.ExpForItem = 0;
+                        if (item.User != -1)
+                        {
+                            RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
+                            item.User = -1;
+                            roleInstance.ExpForItem = 0;
+                            roleInstance.Xiulianwupin = -1;
+                        }
+                        if (selectRole.GetXiulianItem() != null)
+                        {
+                            selectRole.GetXiulianItem().User = -1;
+                            selectRole.ExpForItem = 0;
+                        }
+                        selectRole.Xiulianwupin = id;
+                        item.User = selectRole.GetJyx2RoleId();
+                        GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                     }
-                    selectRole.Xiulianwupin = id;
-                    item.User = selectRole.GetJyx2RoleId();
                 }
                 //药品
                 else if ((int)item.ItemType == 3)
                 {
                     selectRole.UseItem(item);
                     runtime.AddItem(id, -1);
+                    GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                 }
-                GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
             }
             else
             {
