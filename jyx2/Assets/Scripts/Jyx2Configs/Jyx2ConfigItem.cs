@@ -223,7 +223,7 @@ namespace Jyx2Configs
         public int NeedExp;
 
         [BoxGroup(CONDITION_GROUP)][LabelText("需自宫")]
-        public int NeedCastration;
+        public bool NeedCastration;
 
         [ShowIf(nameof(IsItemBook))]
         [BoxGroup(EFFECT_GROUP)][LabelText("练出物品需经验")]

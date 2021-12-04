@@ -303,7 +303,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 }
                 else
                 {
-                    if (item.NeedCastration == 1)//辟邪剑谱和葵花宝典
+                    if (item.NeedCastration)//辟邪剑谱和葵花宝典
                     {
                         GameUtil.ShowYesOrNoCastrate(m_currentRole, () =>
                         {
