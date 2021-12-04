@@ -97,8 +97,8 @@ namespace Jyx2Configs
         [BoxGroup(CGroup2)][LabelText("开场等级")]
         public int Level;
         
-        /*[BoxGroup(CGroup2)][LabelText("经验")]
-        public int Exp;*/
+        [BoxGroup(CGroup2)][LabelText("经验")]
+        public int Exp;
 
         [BoxGroup(CGroup2)][LabelText("内力性质")][EnumToggleButtons]
         public MpTypeEnum MpType; //内力性质 ,0:阴 1:阳 2:调和

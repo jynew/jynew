@@ -115,6 +115,7 @@ namespace Jyx2
             Name = Data.Name;
             Sex = (int)Data.Sexual;
             Level = Data.Level;
+            Exp = Data.Exp;
             Hp = Data.MaxHp;
             MaxHp = Data.MaxHp;
             Mp = Data.MaxMp;
