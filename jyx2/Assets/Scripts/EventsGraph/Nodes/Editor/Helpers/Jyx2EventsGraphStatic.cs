@@ -3,39 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Jyx2;
+using Sirenix.Utilities;
+using UnityEditor;
 using UnityEngine;
 
-[Obsolete]
+
 static public class Jyx2EventsGraphStatic 
 {
     static Jyx2EventsGraphStatic()
     {
-
         var tmp = new List<string>();
-        /*foreach (var role in ConfigTable.GetAll<Jyx2Role>())
+
+        var roles = AssetDatabase.LoadAllAssetsAtPath("Assets/BuildSource/Configs/Characters");
+        foreach (var r in roles)
         {
-            tmp.Add(role.Name);
+            tmp.Add(r.name);
         }
-        s_roleList = tmp.ToArray();*/
+        s_roleList = tmp.ToArray();
+        tmp.Clear();
+        
+        foreach (var item in AssetDatabase.LoadAllAssetsAtPath("Assets/BuildSource/Configs/Items"))
+        {
+            tmp.Add(item.name);
+        }
+        s_itemList = tmp.ToArray();
 
         tmp.Clear();
-        /*foreach (var item in ConfigTable.GetAll<Jyx2Item>())
+        
+        foreach (var item in AssetDatabase.LoadAllAssetsAtPath("Assets/BuildSource/Configs/Skills"))
         {
-            tmp.Add(item.Name);
+            tmp.Add(item.name);
         }
-        s_itemList = tmp.ToArray();*/
-
+        s_skillList = tmp.ToArray();
         tmp.Clear();
-        /*foreach (var item in ConfigTable.GetAll<Jyx2Skill>())
+        foreach (var item in AssetDatabase.LoadAllAssetsAtPath("Assets/BuildSource/Configs/Maps"))
         {
-            tmp.Add(item.Name);
+            tmp.Add(item.name);
         }
-        s_skillList = tmp.ToArray();*/
-        tmp.Clear();
-        /*foreach (var item in ConfigTable.GetAll<Jyx2Map>())
-        {
-            tmp.Add(item.Name);
-        }*/
         s_sceneList = tmp.ToArray();
     }
 
