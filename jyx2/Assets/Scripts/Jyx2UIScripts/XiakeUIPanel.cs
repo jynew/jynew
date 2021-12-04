@@ -303,14 +303,33 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 }
                 else
                 {
-                    if (m_currentRole.GetXiulianItem() != null)
+                    if (item.NeedCastration == 1)//辟邪剑谱和葵花宝典
                     {
-                        m_currentRole.GetXiulianItem().User = -1;
-                        m_currentRole.ExpForItem = 0;
-                    }
+                        GameUtil.ShowYesOrNoCastrate(m_currentRole, () =>
+                        {
+                            if (m_currentRole.GetXiulianItem() != null)
+                            {
+                                m_currentRole.GetXiulianItem().User = -1;
+                                m_currentRole.ExpForItem = 0;
+                            }
 
-                    m_currentRole.Xiulianwupin = itemId;
-                    item.User = m_currentRole.GetJyx2RoleId();
+                            m_currentRole.Xiulianwupin = itemId;
+                            item.User = m_currentRole.GetJyx2RoleId();
+
+                            RefreshCurrent();
+                        });
+                    }
+                    else
+                    {
+                        if (m_currentRole.GetXiulianItem() != null)
+                        {
+                            m_currentRole.GetXiulianItem().User = -1;
+                            m_currentRole.ExpForItem = 0;
+                        }
+
+                        m_currentRole.Xiulianwupin = itemId;
+                        item.User = m_currentRole.GetJyx2RoleId();
+                    }
                 }
             },
             (item) =>

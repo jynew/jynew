@@ -222,6 +222,9 @@ namespace Jyx2Configs
         [BoxGroup(CONDITION_GROUP)][LabelText("需经验")]
         public int NeedExp;
 
+        [BoxGroup(CONDITION_GROUP)][LabelText("需自宫")]
+        public int NeedCastration;
+
         [ShowIf(nameof(IsItemBook))]
         [BoxGroup(EFFECT_GROUP)][LabelText("练出物品需经验")]
         public int GenerateItemNeedExp;

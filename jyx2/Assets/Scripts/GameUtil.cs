@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
 /// JYX工具类
@@ -41,7 +43,7 @@ public class GameUtil
         SelectRoleParams selectParams = new SelectRoleParams();
         selectParams.roleList = roles.ToList();
         selectParams.title = "选择使用的人";
-		selectParams.isDefaultSelect=false;
+        selectParams.isDefaultSelect=false;
         selectParams.callback = (cbParam) => 
         {
             storyEngine.BlockPlayerControl = false;
@@ -122,6 +124,58 @@ public class GameUtil
         Observable.Timer(TimeSpan.FromSeconds(time)).Subscribe(ms =>
         {
             action();
+        });
+    }
+
+    static public void ShowYesOrNoCastrate(RoleInstance role, Action action)
+    {
+        if (role.Sex == 0)//男
+        {
+            string msg = "修炼此书必须先行挥剑自宫，你是否仍要修炼？";
+            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
+            {
+                if (index == 0)
+                {
+                    ChangeScence();
+                    role.Sex = 2;
+                    action();
+                }
+            }));
+        }
+        else if (role.Sex == 1)//女
+        {
+            DisplayPopinfo("此人不适合修炼此物品");
+            return;
+        }
+        else if (role.Sex == 2)//太监
+        {
+            action();
+        }
+    }
+
+    static public void ChangeScence()
+    {
+        //惨叫
+        string path = "Assets/BuildSource/sound/nancanjiao.wav";
+        Jyx2ResourceHelper.LoadAsset<AudioClip>(path, clip =>
+        {
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+        });
+
+        //血色
+        var blackCover = LevelMaster.Instance.transform.Find("UI/BlackCover");
+        if (blackCover == null)
+        {
+            Debug.LogError("DarkScence error，找不到LevelMaster/UI/BlackCover");
+            return;
+        }
+
+        blackCover.gameObject.SetActive(true);
+        var img = blackCover.GetComponent<Image>();
+        img.DOColor(Color.red, 2).OnComplete(() =>
+        {
+            blackCover.gameObject.SetActive(false);
         });
     }
 }
