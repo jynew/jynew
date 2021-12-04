@@ -452,6 +452,28 @@ namespace Jyx2
             {
                 if ((int)item.ItemType == 2)
                 {
+
+                    //若有相关武学，满级则为假，未满级为真
+                    //若已经学满武学，则为真
+                    //此处注意，如果有可制成物品的秘籍，则武学满级之后不会再制药了，请尽量避免这样的设置
+                    if (item.Skill != null)
+                    {
+                        int level = GetWugongLevel(item.Skill.Id);
+                        //if (level >= 0 && level < GameConst.MAX_WUGONG_LEVEL)
+                        //{
+                        //    return true;
+                        //}
+                        if (level < 0 && this.Wugongs.Count >= GameConst.MAX_ROLE_WUGONG_COUNT)
+                        {
+                            return false;
+                        }
+
+                        if (level == GameConst.MAX_WUGONG_LEVEL)
+                        {
+                            return true;
+                        }
+                    }
+
                     //有仅适合人物，直接判断
                     if (item.OnlySuitableRole >= 0)
                     {
@@ -465,27 +487,6 @@ namespace Jyx2
                         {
                             return false;
                         }
-                    }
-                }
-
-                //若有相关武学，满级则为假，未满级为真
-                //若已经学满武学，则为真
-                //此处注意，如果有可制成物品的秘籍，则武学满级之后不会再制药了，请尽量避免这样的设置
-                if (item.Skill != null)
-                {
-                    int level = GetWugongLevel(item.Skill.Id);
-                    //if (level >= 0 && level < GameConst.MAX_WUGONG_LEVEL)
-                    //{
-                    //    return true;
-                    //}
-                    if (level < 0 && this.Wugongs.Count >= GameConst.MAX_ROLE_WUGONG_COUNT)
-                    {
-                        return false;
-                    }
-
-                    if (level == GameConst.MAX_WUGONG_LEVEL)
-                    {
-                        return true;
                     }
                 }
 
