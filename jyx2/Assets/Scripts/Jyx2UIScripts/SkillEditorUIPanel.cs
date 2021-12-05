@@ -147,7 +147,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         Transform[] blocks = null;
         switch (wugong.CoverType)
         {
-            case SkillCoverType.FACE:
+            case SkillCoverType.RECT:
                 blocks = skillEditor.faceTrans;
                 break;
             case SkillCoverType.LINE:

@@ -121,7 +121,7 @@ namespace Jyx2
                     case 2:
                         return SkillCoverType.CROSS;
                     case 3:
-                        return SkillCoverType.FACE;
+                        return SkillCoverType.RECT;
                     default:
                         Debug.LogError("invalid skill cover type:" + _skill.SkillCoverType);
                         return SkillCoverType.INVALID;

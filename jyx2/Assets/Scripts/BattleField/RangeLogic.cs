@@ -574,7 +574,7 @@ namespace Jyx2
                     }
                     break;
                 }
-                case SkillCoverType.FACE:
+                case SkillCoverType.RECT:
                     rst.Add(new BattleBlockVector() { X = tx, Y = ty });
 
                     if (coversize > 0)

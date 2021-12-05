@@ -503,7 +503,7 @@ public class AIManager
             //点、线、十字的伤害，距离就是两人相差的格子数，最小为1。
             //面攻击时，距离是两人相差的格子数＋敌人到攻击点的距离。
             int dist = r1.Pos.GetDistance(r2.Pos);
-            if (skill.GetCoverType() == SkillCoverType.FACE)
+            if (skill.GetCoverType() == SkillCoverType.RECT)
             {
                 dist += blockVector.GetDistance(r2.Pos);
             }
