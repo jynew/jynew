@@ -638,7 +638,7 @@ namespace Jyx2
             if (item == null)
                 return;
 
-            item.User = -1;
+            runtime.SetItemUser(item.Id, -1);
             this.Tili -= item.AddTili;
             this.SetHPAndRefreshHudBar(this.Hp - item.AddHp);
             this.MaxHp -= item.AddMaxHp;

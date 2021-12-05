@@ -259,10 +259,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     m_currentRole.UnequipItem(m_currentRole.GetWeapon());
                     m_currentRole.Weapon = itemId;
                     m_currentRole.UseItem(m_currentRole.GetWeapon());
-                    item.User = m_currentRole.GetJyx2RoleId();
+                    runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
                 }
             },
-            (item) => { return item.EquipmentType == 0 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
+            (item) => { return item.EquipmentType == 0 && (runtime.GetItemUser(item.Id) == m_currentRole.GetJyx2RoleId() || runtime.GetItemUser(item.Id) == -1); },
             m_currentRole.Weapon);
     }
 
@@ -282,10 +282,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     m_currentRole.UnequipItem(m_currentRole.GetArmor());
                     m_currentRole.Armor = itemId;
                     m_currentRole.UseItem(m_currentRole.GetArmor());
-                    item.User = m_currentRole.GetJyx2RoleId();
+                    runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
                 }
             },
-            (item) => { return (int)item.EquipmentType == 1 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1); },
+            (item) => { return (int)item.EquipmentType == 1 && (runtime.GetItemUser(item.Id) == m_currentRole.GetJyx2RoleId() || runtime.GetItemUser(item.Id) == -1); },
             m_currentRole.Armor);
     }
 
@@ -297,7 +297,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                 var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
                 if (m_currentRole.Xiulianwupin == itemId)
                 {
-                    item.User = -1;
+                    runtime.SetItemUser(item.Id, -1);
                     m_currentRole.ExpForItem = 0;
                     m_currentRole.Xiulianwupin = -1;
                 }
@@ -309,12 +309,12 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                         {
                             if (m_currentRole.GetXiulianItem() != null)
                             {
-                                m_currentRole.GetXiulianItem().User = -1;
+                                runtime.SetItemUser(m_currentRole.Xiulianwupin, -1);
                                 m_currentRole.ExpForItem = 0;
                             }
 
                             m_currentRole.Xiulianwupin = itemId;
-                            item.User = m_currentRole.GetJyx2RoleId();
+                            runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
 
                             RefreshCurrent();
                         });
@@ -323,18 +323,18 @@ public partial class XiakeUIPanel : Jyx2_UIBase
                     {
                         if (m_currentRole.GetXiulianItem() != null)
                         {
-                            m_currentRole.GetXiulianItem().User = -1;
+                            runtime.SetItemUser(m_currentRole.Xiulianwupin, -1);
                             m_currentRole.ExpForItem = 0;
                         }
 
                         m_currentRole.Xiulianwupin = itemId;
-                        item.User = m_currentRole.GetJyx2RoleId();
+                        runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
                     }
                 }
             },
             (item) =>
             {
-                return (int) item.ItemType == 2 && (item.User == m_currentRole.GetJyx2RoleId() || item.User == -1);
+                return (int) item.ItemType == 2 && (runtime.GetItemUser(item.Id) == m_currentRole.GetJyx2RoleId() || runtime.GetItemUser(item.Id) == -1);
             },
             m_currentRole.Xiulianwupin);
     }

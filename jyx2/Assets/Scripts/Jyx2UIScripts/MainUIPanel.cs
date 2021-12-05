@@ -114,7 +114,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         GameUtil.SelectRole(runtime.GetTeam(), (selectRole) => {
             if (selectRole == null) return;
 
-            if (selectRole.GetJyx2RoleId() == item.User) return;
+            if (selectRole.GetJyx2RoleId() == runtime.GetItemUser(item.Id)) return;
 
             if (selectRole.CanUseItem(id))
             {
@@ -124,9 +124,9 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                     //武器
                     if ((int)item.EquipmentType == 0)
                     {
-                        if (item.User != -1)
+                        if (runtime.GetItemUser(item.Id) != -1)
                         {
-                            RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
+                            RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
                             roleInstance.UnequipItem(roleInstance.GetWeapon());
                             roleInstance.Weapon = -1;
                         }
@@ -134,15 +134,15 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                         selectRole.UnequipItem(selectRole.GetWeapon());
                         selectRole.Weapon = id;
                         selectRole.UseItem(selectRole.GetWeapon());
-                        item.User = selectRole.GetJyx2RoleId();
+                        runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
                         GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                     }
                     //防具
                     else if ((int)item.EquipmentType == 1)
                     {
-                        if (item.User != -1)
+                        if (runtime.GetItemUser(item.Id) != -1)
                         {
-                            RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
+                            RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
                             roleInstance.UnequipItem(roleInstance.GetArmor());
                             roleInstance.Armor = -1;
                         }
@@ -150,7 +150,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                         selectRole.UnequipItem(selectRole.GetArmor());
                         selectRole.Armor = id;
                         selectRole.UseItem(selectRole.GetArmor());
-                        item.User = selectRole.GetJyx2RoleId();
+                        runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
                         GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                     }
                 }
@@ -161,39 +161,39 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                     {
                         GameUtil.ShowYesOrNoCastrate(selectRole, () =>
                         {
-                            if (item.User != -1)
+                            if (runtime.GetItemUser(item.Id) != -1)
                             {
-                                RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
-                                item.User = -1;
+                                RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+                                runtime.SetItemUser(item.Id, -1);
                                 roleInstance.ExpForItem = 0;
                                 roleInstance.Xiulianwupin = -1;
                             }
                             if (selectRole.GetXiulianItem() != null)
                             {
-                                selectRole.GetXiulianItem().User = -1;
+                                runtime.SetItemUser(selectRole.Xiulianwupin, -1);
                                 selectRole.ExpForItem = 0;
                             }
                             selectRole.Xiulianwupin = id;
-                            item.User = selectRole.GetJyx2RoleId();
+                            runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
                             GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                         });
                     }
                     else
                     {
-                        if (item.User != -1)
+                        if (runtime.GetItemUser(item.Id) != -1)
                         {
-                            RoleInstance roleInstance = runtime.GetRoleInTeam(item.User);
-                            item.User = -1;
+                            RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+                            runtime.SetItemUser(item.Id, -1);
                             roleInstance.ExpForItem = 0;
                             roleInstance.Xiulianwupin = -1;
                         }
                         if (selectRole.GetXiulianItem() != null)
                         {
-                            selectRole.GetXiulianItem().User = -1;
+                            runtime.SetItemUser(selectRole.Xiulianwupin, -1);
                             selectRole.ExpForItem = 0;
                         }
                         selectRole.Xiulianwupin = id;
-                        item.User = selectRole.GetJyx2RoleId();
+                        runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
                         GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                     }
                 }
