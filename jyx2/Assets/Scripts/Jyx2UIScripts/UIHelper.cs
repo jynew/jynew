@@ -106,6 +106,20 @@ public class UIHelper
 
     }
 
+    //使用人
+    static string GetItemUser(Jyx2ConfigItem item)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        RoleInstance user = GameRuntimeData.Instance.GetRoleInTeam(GameRuntimeData.Instance.GetItemUser(item.Id));
+        if (user != null)
+        {
+            sb.Append($"{user.Name}\n");
+        }
+
+        return sb.ToString();
+    }
+
     //效果
     static string GetEffectText(Jyx2ConfigItem item)
     {
@@ -182,6 +196,13 @@ public class UIHelper
         strBuilder.Append($"<size=35><color=#FFDB00>{item.Name}</color></size>\n");
         strBuilder.Append($"{item.Desc}");
 
+        string user = GetItemUser(item);
+        if (!string.IsNullOrEmpty(user))
+        {
+            strBuilder.Append($"\n\n");
+            strBuilder.Append("<size=28><color=#FFDB00>使用人</color></size>\n");
+            strBuilder.Append(user);
+        }
         string effect = GetEffectText(item);
         if (!string.IsNullOrEmpty(effect))
         {
