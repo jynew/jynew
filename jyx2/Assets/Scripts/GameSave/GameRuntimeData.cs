@@ -55,7 +55,7 @@ namespace Jyx2
         
         [SerializeField] public Dictionary<string, string> KeyValues = new Dictionary<string, string>(); //主键值对数据
         [SerializeField] public Dictionary<string, int> Items = new Dictionary<string, int>(); //JYX2物品，{ID，数量}
-        [SerializeField] public Dictionary<string, int> ItemUser= new Dictionary<string, int>(); //物品使用人
+        [SerializeField] public Dictionary<string, int> ItemUser= new Dictionary<string, int>(); //物品使用人，{物品ID，人物ID}
         [SerializeField] public Dictionary<string, int> ShopItems= new Dictionary<string, int>(); //小宝商店物品，{ID，数量}
         [SerializeField] public Dictionary<string, int> EventCounter = new Dictionary<string, int>();
         [SerializeField] public Dictionary<string, int> MapPic = new Dictionary<string, int>();
@@ -292,7 +292,7 @@ namespace Jyx2
             role.UnequipItem(role.GetArmor());
             if (role.GetXiulianItem() != null)
             {
-                role.GetXiulianItem().User = -1;
+                SetItemUser(role.Xiulianwupin, -1);
                 role.ExpForItem = 0;
             }
             role.Weapon = -1;
@@ -416,6 +416,21 @@ namespace Jyx2
                 teamRole.AddItem(itemId, count);
             }
         }
+
+        //设置物品使用人
+        public void SetItemUser(int itemId, int roleId)
+        {
+            ItemUser[itemId.ToString()] = roleId;
+        }
+
+        //获取物品使用人
+        public int GetItemUser(int id)
+        {
+            if (ItemUser.ContainsKey(id.ToString()))
+                return ItemUser[id.ToString()];
+            return -1;
+        }
+
 
         public void ModifyEvent(int scene, int eventId, int interactiveEventId, int useItemEventId, int enterEventId)
         {

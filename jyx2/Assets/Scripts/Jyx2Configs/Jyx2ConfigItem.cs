@@ -242,22 +242,5 @@ namespace Jyx2Configs
         {
             //GetPic().Forget();
         }
-        
-        /// <summary>
-        /// 这个代码实现太丑陋，需要重构
-        /// </summary>
-        public int User
-        {
-            get
-            {
-                if (!GameRuntimeData.Instance.ItemUser.ContainsKey(Id.ToString()))
-                    return -1;
-                return GameRuntimeData.Instance.ItemUser[Id.ToString()];
-            }
-            set
-            {
-                GameRuntimeData.Instance.ItemUser[Id.ToString()] = value;
-            }
-        }
     }
 }
