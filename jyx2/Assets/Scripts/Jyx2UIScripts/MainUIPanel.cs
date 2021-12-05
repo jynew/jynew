@@ -207,7 +207,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             }
             else
             {
-                GameUtil.DisplayPopinfo("该角色不满足使用条件");
+                GameUtil.DisplayPopinfo("此人不适合修炼此物品");
                 return;
             }
         });
