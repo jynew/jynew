@@ -290,6 +290,7 @@ namespace Jyx2
             Pinde = Tools.Limit(Pinde, 0, GameConst.MAX_ROLE_PINDE);
             Shengwang = Tools.Limit(Shengwang, 0, GameConst.MAX_ROLE_SHENGWANG);
             AttackPoison = Tools.Limit(AttackPoison, 0, GameConst.MAX_ROLE_ATK_POISON);
+            Hurt = Tools.Limit(Hurt, 0, GameConst.MAX_HURT);
 
             foreach (var wugong in Wugongs)
             {
@@ -865,7 +866,7 @@ namespace Jyx2
             {
                 speed += this.GetArmor().Qinggong;
             }
-
+            
             speed = speed / 15 - this.Hurt / 40;
 
             if (speed < 0)
