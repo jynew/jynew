@@ -574,16 +574,26 @@ namespace Jyx2
                     }
                     break;
                 }
-                case SkillCoverType.RECT:
+                /*case SkillCoverType.RECT:
                     rst.Add(new BattleBlockVector() { X = tx, Y = ty });
+                    
 
                     if (coversize > 0)
                     {
                         int actualSize = (int)Math.Ceiling(coversize / Math.Sqrt(2)); //尝试修复距离不对？
                         rst.AddRange(GetNearBlocks(tx, ty, actualSize));
                     }
+                    break;*/
+                case SkillCoverType.RECT:
+                    for (int i = tx - coversize; i <= tx + coversize; ++i)
+                    {
+                        for (int j = ty - coversize; j <= ty + coversize; ++j)
+                        {
+                            if (i < 0 || j < 0) continue;
+                            rst.Add(new BattleBlockVector(i, j));
+                        }
+                    }
                     break;
-
                 default:
                     throw new ArgumentOutOfRangeException(nameof(covertype), covertype, null);
             }
