@@ -793,6 +793,9 @@ namespace Jyx2
             View.SetPosition(posData.WorldPos);
         }
 
+        //移动过的格子数
+        public int movedStep = 0;
+
         //是否已经行动
         public bool isActed = false;
         public bool isWaiting = false; //正在等待
@@ -853,20 +856,12 @@ namespace Jyx2
         //参考：https://github.com/ZhanruiLiang/jinyong-legend
         public int GetMoveAbility()
         {
-            if (Tili < 5)
+            if (Tili <= 5)
                 return 0; //金庸DOS版逻辑，体力小于5无法移动
             int speed = this.Qinggong;
-
-            if (this.Weapon >= 0)
-            {
-                speed += this.GetWeapon().Qinggong;
-            }
-
-            if (this.Armor >= 0)
-            {
-                speed += this.GetArmor().Qinggong;
-            }
             
+            speed += GetWeaponProperty("Qinggong") + GetArmorProperty("Qinggong");
+
             speed = speed / 15 - this.Hurt / 40;
 
             if (speed < 0)
