@@ -207,7 +207,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             }
             else
             {
-                GameUtil.DisplayPopinfo("此人不适合修炼此物品");
+                GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
                 return;
             }
         });
