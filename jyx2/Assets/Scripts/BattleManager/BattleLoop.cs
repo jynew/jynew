@@ -362,8 +362,8 @@ namespace Jyx2.Battle
             bool isSelectMove = true;
             var originalPos = role.Pos;
             //原始的移动范围
-            var moveRange = BattleManager.Instance.GetMoveRange(role);
-            
+            var moveRange = BattleManager.Instance.GetMoveRange(role, role.movedStep);
+
             while (true)
             {
                 var ret = await WaitForPlayerInput(role, moveRange, isSelectMove);
@@ -371,15 +371,16 @@ namespace Jyx2.Battle
                 if (ret.isRevert) //点击取消
                 {
                     isSelectMove = true;
+                    role.movedStep = 0;
                     role.Pos = originalPos;
                 }
                 else if (ret.movePos != null && isSelectMove) //移动
                 {
                     isSelectMove = false;
+                    role.movedStep += originalPos.GetDistance(ret.movePos);
                     await RoleMove(role, ret.movePos);
                 }else if (ret.isWait) //等待
                 {
-                    role.Pos = originalPos;
                     _manager.GetModel().ActWait(role);
                     break;
                 }else if (ret.isAuto) //托管给AI
@@ -390,6 +391,7 @@ namespace Jyx2.Battle
                 }
                 else if (ret.aiResult != null) //具体执行行动逻辑（攻击、道具、用毒、医疗等）
                 {
+                    role.movedStep = 0;
                     await ExecuteAIResult(role, ret.aiResult);
                     break;
                 }

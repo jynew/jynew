@@ -345,8 +345,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         {
             if (itemId != -1 && !m_currentRole.CanUseItem(itemId))
             {
-                //MessageBox.Create("该角色不满足使用条件", null);
-                GameUtil.DisplayPopinfo("此人不适合修炼此物品");
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+                GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
                 return;
             }
 

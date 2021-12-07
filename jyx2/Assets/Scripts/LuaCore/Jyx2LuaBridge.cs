@@ -700,7 +700,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                MessageBox.Create("你现在的声望指数为" + runtime.Player.Shengwang, Next);
+                MessageBox.Create("你现在的个人声望指数为" + runtime.Player.Shengwang, Next);
             });
             Wait();
         }
