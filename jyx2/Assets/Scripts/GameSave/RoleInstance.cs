@@ -606,19 +606,18 @@ namespace Jyx2
             this.Pinde += item.AddPinde;
             this.AttackPoison += item.AttackPoison;
 
-            int need_item_exp = GetFinishedExpForItem(item);
-            if (this.ExpForItem >= need_item_exp)
+            if (item.ChangeMPType == 2)
             {
-                if (item.ChangeMPType == 2)
-                {
-                    this.MpType = 2;
-                }
+                this.MpType = 2;
+            }
 
-                if (item.Zuoyouhubo == 1)
-                {
-                    this.Zuoyouhubo = 1;
-                }
+            if (item.Zuoyouhubo == 1)
+            {
+                this.Zuoyouhubo = 1;
+            }
 
+            if (CanFinishedItem())
+            {
                 if (item.Skill != null)
                 {
                     this.LearnMagic(item.Skill.Id);
