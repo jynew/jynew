@@ -5,7 +5,7 @@ using UnityEngine;
 using XNode;
 
 [CreateNodeMenu("战斗")]
-[NodeWidth(256)]
+[NodeWidth(170)]
 public class Jyx2TryBattleNode : Jyx2BaseNode
 {
     [Output] public Node win;
@@ -13,7 +13,10 @@ public class Jyx2TryBattleNode : Jyx2BaseNode
 
     [Header("战斗ID")]
     public int BattleId;
-    
+
+    [Header("失败直接GAME OVER")]
+    public bool loseGameOver;
+
     private void Reset() {
         name = "战斗";
     }
