@@ -858,8 +858,6 @@ namespace Jyx2
             if (Tili <= 5)
                 return 0; //金庸DOS版逻辑，体力小于5无法移动
             int speed = this.Qinggong;
-            
-            speed += GetWeaponProperty("Qinggong") + GetArmorProperty("Qinggong");
 
             speed = speed / 15 - this.Hurt / 40;
 
