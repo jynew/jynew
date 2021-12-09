@@ -28,6 +28,19 @@ public partial class BagUIPanel:Jyx2_UIBase
     Func<Jyx2ConfigItem, bool> m_filter = null;
     private bool castFromSelectPanel=false;
     private int current_item;
+
+    enum BagFilter
+    {
+        All = 0,
+        Item,
+        Cost,
+        Equipment,
+        Book,
+        Anqi
+    }
+
+    private BagFilter _filter = BagFilter.All;
+    
     protected override void OnCreate()
     {
         InitTrans();
@@ -61,6 +74,23 @@ public partial class BagUIPanel:Jyx2_UIBase
         }
         else castFromSelectPanel = false;
 
+        //道具类型过滤器
+        int index = 0;
+        foreach (var btn in m_Filters)
+        {
+            btn.onClick.RemoveAllListeners();
+            var index1 = index;
+            btn.onClick.AddListener(() =>
+            {
+                _filter = (BagFilter) (index1);
+                RefreshFocusFilter();
+                RefreshScroll();
+            });
+            index++;
+        }
+
+        _filter = BagFilter.All;
+        RefreshFocusFilter();
         RefreshScroll();
     }
 
@@ -82,6 +112,13 @@ public partial class BagUIPanel:Jyx2_UIBase
             //item filter
             if (m_filter != null && m_filter(item) == false)
                 continue;
+
+            if (_filter == BagFilter.Item && item.GetItemType() != Jyx2ItemType.TaskItem) continue;
+            if (_filter == BagFilter.Anqi && item.GetItemType() != Jyx2ItemType.Anqi) continue;
+            if (_filter == BagFilter.Book && item.GetItemType() != Jyx2ItemType.Book) continue;
+            if (_filter == BagFilter.Cost && item.GetItemType() != Jyx2ItemType.Costa) continue;
+            if (_filter == BagFilter.Equipment && item.GetItemType() != Jyx2ItemType.Equipment) continue;
+            
 
             var itemUI = Jyx2ItemUI.Create(int.Parse(id), count);
             itemUI.transform.SetParent(ItemRoot_RectTransform);
@@ -171,4 +208,19 @@ public partial class BagUIPanel:Jyx2_UIBase
         else
             UseBtn_Text.text = "使 用";
     }
+
+
+    void RefreshFocusFilter()
+    {
+        foreach (var btn in m_Filters)
+        {
+            btn.GetComponent<Image>().color = Color.white;
+        }
+
+        int index = (int) _filter;
+        
+        //高亮的边框颜色等于文字颜色
+        m_Filters[index].GetComponent<Image>().color = m_Filters[index].GetComponentInChildren<Text>().color; 
+    }
+
 }
