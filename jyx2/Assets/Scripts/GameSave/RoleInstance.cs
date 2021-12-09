@@ -223,9 +223,9 @@ namespace Jyx2
             //当30 <= 资质 < 50, a = 3;
             //当50 <= 资质 < 70, a = 4;
             //当70 <= 资质 < 90, a = 5;
-            //当90 <= 资质 < 100, a = 6;
+            //当90 <= 资质 <= 100, a = 6;
             //a = random(a) + 1;
-            int a = Random.Range(0, (int)Math.Ceiling((double)(IQ - 10) / 20)) + 1;
+            int a = Random.Range(0, (int)Math.Floor((double)(IQ - 10) / 20) + 2) + 1;
             MaxMp += (9 - a) * 4;
             Mp = MaxMp;
 
