@@ -121,7 +121,7 @@ public class BattleLoader : MonoBehaviour
                     if (m_Roles[i].roleKey == roleId)
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
-                        if (roleInstance!=null && roleInstance.Hp == 0) roleInstance.Hp = 1;
+                        if (roleInstance!=null && roleInstance.Hp <= 0) roleInstance.Hp = 1;
                     }
                 }
             }
