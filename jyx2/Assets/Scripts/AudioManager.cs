@@ -74,7 +74,7 @@ public class AudioManager
 
     static AudioSource s_AudioSource = null;
 
-    private static AudioSource GetAudioSource()
+    public static AudioSource GetAudioSource()
     {
         if (s_AudioSource != null)
             return s_AudioSource;
@@ -83,6 +83,11 @@ public class AudioManager
         GameObject.DontDestroyOnLoad(obj);
         s_AudioSource = obj.AddComponent<AudioSource>();
         s_AudioSource.loop = true;
+
+        GameSetting.InitVolume();
+
+        Debug.Log("AudioManager >> create ");
+        
         return s_AudioSource;
     }
 

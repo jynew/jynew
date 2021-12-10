@@ -27,6 +27,7 @@ namespace Jyx2
 
         static async Task StartTasks()
         {
+            GameSetting.Init();
             await Jyx2ResourceHelper.Init();
         }
 

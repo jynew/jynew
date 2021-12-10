@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 public class GeneralSettingsPanel : Jyx2_UIBase
 {
@@ -32,6 +33,21 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     private GraphicSetting _graphicSetting;
     Resolution[] resolutions;
 
+    private UnityEvent<float> OnVolumeChange;
+    
+    private Dictionary<GameSetting.Catalog, UnityEvent<object>> _gameSettingEvents;
+
+    private Dictionary<GameSetting.Catalog, UnityEvent<object>> gameSettingEvents
+    {
+        get
+        {
+            return _gameSettingEvents ??= GameSetting.GetEventsMap();
+        }
+    }
+
+    private Dictionary<GameSetting.Catalog, object> _gameSetting;
+    private Dictionary<GameSetting.Catalog, object> gameSetting => _gameSetting ??= GameSetting.GetSettings();
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +59,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitResolutionDropdown();
         InitVolumeSlider();
         InitViewportSetting();
-
+        
         m_CloseButton.onClick.AddListener(Close);
     }
 
@@ -88,31 +104,22 @@ public class GeneralSettingsPanel : Jyx2_UIBase
                 currentResolutionIndex = i;
             }
         }
-
+        
         resolutionDropdown.AddOptions(options);
-        if (PlayerPrefs.HasKey("resolution"))
-        {
-            resolutionDropdown.value = PlayerPrefs.GetInt("resolution");
-            Resolution resol = resolutions[resolutionDropdown.value];
-            Screen.SetResolution(resol.width, resol.height, Screen.fullScreen);
-        }
-        else
-        {
-            resolutionDropdown.value = currentResolutionIndex;
-        }
+
+        var setting = (int) gameSetting[GameSetting.Catalog.Resolution];
+        resolutionDropdown.value = setting >= 0 ? setting : currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 #endif
     }
 
-    public void InitWindowDropdown()
+    private void InitWindowDropdown()
     {
 #if !UNITY_ANDROID
-        if(PlayerPrefs.HasKey("fullscreen"))
-        {
-            Screen.fullScreen = PlayerPrefs.GetInt("fullscreen") == 1;
-            windowDropdown.value = PlayerPrefs.GetInt("fullscreen");
-            windowDropdown.RefreshShownValue();
-        }
+        var setting = (int) gameSetting[GameSetting.Catalog.Fullscreen];
+        Debug.Log("InitWindowDropdown " + setting);
+        windowDropdown.value = setting;
+        windowDropdown.RefreshShownValue();
 #endif
     }
 
@@ -140,27 +147,23 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void SetResolution(int index)
     {
-        Resolution resolution = resolutions[index];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        gameSettingEvents?[GameSetting.Catalog.Resolution]?.Invoke(index);
     }
 
     public void SetVolume(float volume)
     {
-        if(audioManager != null)
-        {
-            audiosource.volume = volume;
-        }
+        gameSettingEvents?[GameSetting.Catalog.Volume]?.Invoke(volume);
     }
 
     /*音效，暂未实现*/
     public void SetSoundEffect(float volume)
     {
-        
+        gameSettingEvents?[GameSetting.Catalog.SoundEffect]?.Invoke(volume);
     }
 
     public void SetFullscreen(int index)
     {
-        Screen.fullScreen = index == 1;
+        gameSettingEvents?[GameSetting.Catalog.Fullscreen]?.Invoke(index);
     }
 
     public void SetViewport(int index)
