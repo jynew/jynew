@@ -152,11 +152,11 @@ public class BattleboxHelper : MonoBehaviour
 
         if (type == BattleBlockType.MoveZone)
         {
-            _currentBattlebox.SetAllBlockColor(new Color(1, 1, 1, 0.6f));
+            _currentBattlebox.SetAllBlockColor(new Color(1, 1, 1, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA));
         }
         else if (type == BattleBlockType.AttackZone)
         {
-            _currentBattlebox.SetAllBlockColor(new Color(1, 0, 0, 0.6f));
+            _currentBattlebox.SetAllBlockColor(new Color(1, 0, 0, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA));
         }
 
         foreach (var vector in list)
@@ -166,12 +166,30 @@ public class BattleboxHelper : MonoBehaviour
         }
     }
 
-    public void HideAllBlocks()
+    public void ShowRangeBlocks(IEnumerable<BattleBlockVector> list)
+    {
+        if (!GeneralPreJudge()) return;
+        _currentBattlebox.HideAllRangeBlocks();
+
+        foreach (var vector in list)
+        {
+            var block = _currentBattlebox.GetRangelockData(vector.X, vector.Y);
+            if (block != null && block.BoxBlock.IsValid) block.Show();
+        }
+    }
+
+    public void HideAllBlocks(bool hideRangeBlock = false)
     {
         if (!GeneralPreJudge()) return;
 
         _currentBattlebox.HideAllBlocks();
+        if (hideRangeBlock)
+        {
+            _currentBattlebox.HideAllRangeBlocks();
+        }
     }
+    
+    
 
     public void ShowAllBlocks()
     {

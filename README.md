@@ -1,5 +1,8 @@
 # 金庸群侠传3D重制版
 
+![主宣传图-616-353](https://user-images.githubusercontent.com/7448857/145429032-4cb357f9-077d-4450-acb2-bea62e9910d6.jpg)
+
+
 [![license](https://img.shields.io/badge/license-MIT%2B%E9%87%91%E7%BE%A43D%E9%87%8D%E5%88%B6%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
 [![release](https://img.shields.io/badge/release-v0.1%20inner-brightgreen)](https://github.com/jynew/jynew/releases)
 [![Unity Version](https://img.shields.io/badge/unity-2020.3.23.f1c1-blue)](https://unity.cn/releases/lts/2020) 

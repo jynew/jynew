@@ -167,7 +167,7 @@ public class BattleManager : MonoBehaviour
         //所有人至少有1HP
         foreach (var role in GameRuntimeData.Instance.GetTeam())
         {
-            if (role.Hp == 0)
+            if (role.Hp <= 0)
                 role.Hp = 1;
         }
     }
@@ -370,12 +370,13 @@ public class BattleManager : MonoBehaviour
     /// 获取角色的移动范围
     /// </summary>
     /// <param name="role"></param>
-    public List<BattleBlockVector> GetMoveRange(RoleInstance role)
+    /// <param name="movedStep">移动过的格子数</param>
+    public List<BattleBlockVector> GetMoveRange(RoleInstance role, int movedStep)
     {
         //获得角色移动能力
         int moveAbility = role.GetMoveAbility();
         //绘制周围的移动格子
-        var blockList = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility);
+        var blockList = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - movedStep);
         return blockList;
     }
 

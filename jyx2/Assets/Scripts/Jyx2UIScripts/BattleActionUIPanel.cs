@@ -87,19 +87,35 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         }
     }
 
+    
     //显示攻击范围选择指示器
     void ShowAttackRangeSelector(BattleZhaoshiInstance zhaoshi)
     {
         currentZhaoshi = zhaoshi;
 
         isSelectMove = false;
+
         BattleboxHelper.Instance.HideAllBlocks();
         var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, zhaoshi);
         BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone);
     }
 
+    private BattleBlockData _lastMouseOverBlock = null;
+    
     void Update()
     {
+        //显示当前攻击范围
+        if (isSelectMove == false)
+        {
+            var mouseOverBlock = InputManager.Instance.GetMouseOverBattleBlock();
+            if (mouseOverBlock != null && mouseOverBlock != _lastMouseOverBlock)
+            {
+                _lastMouseOverBlock = mouseOverBlock;
+                var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, mouseOverBlock.BattlePos, m_currentRole.Pos);
+                BattleboxHelper.Instance.ShowRangeBlocks(range);
+            }
+        }
+        
         //寻找玩家点击的格子
         var block = InputManager.Instance.GetMouseUpBattleBlock();
         
@@ -112,9 +128,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         //选择移动，但位置站人了
         if (isSelectMove && battleModel.BlockHasRole(block.BattlePos.X, block.BattlePos.Y)) return;
 
-        //隐藏格子
-        BattleboxHelper.Instance.HideAllBlocks();
-        
+
         //以下进行回调
         
         //移动
@@ -136,6 +150,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
     void TryCallback(BattleLoop.ManualResult ret)
     {
+        BattleboxHelper.Instance.HideAllBlocks(true);
         callback?.Invoke(ret);
     }
 
