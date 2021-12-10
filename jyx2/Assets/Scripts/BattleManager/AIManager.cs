@@ -693,11 +693,13 @@ public class AIManager
         SkillCastResult rst = new SkillCastResult();
         //增加生命 = (暗器增加生命/a-random(5)-暗器能力*2)/3;
         //式中暗器增加生命为负值.
-        //当受伤程度 > 66, a = 1;
+        //当受伤程度 = 100，a = 1;
+        //当66 < 受伤程度 <= 99, a = 1;
         //当33 < 受伤程度 <= 66, a = 2;
         //当0 < 受伤程度 <= 33, a = 3;
         //当受伤程度 = 0, a = 4;
         int a = (int)Math.Ceiling((double)r2.Hurt / 33);
+        if (a == 4) a = 3;
         int v = (anqi.AddHp / (4 - a) - UnityEngine.Random.Range(0, 5) - r1.Anqi * 2) / 3;
         rst.damage = -v;
         //敌人受伤程度
