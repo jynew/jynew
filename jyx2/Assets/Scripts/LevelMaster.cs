@@ -366,7 +366,7 @@ public class LevelMaster : MonoBehaviour
         var gameMap = GetCurrentGameMap();
         if (gameMap != null && gameMap.IsWorldMap())
         {
-            _playerNavAgent.speed = GameConst.MapSpeed * 2; //大地图上放大一倍
+            _playerNavAgent.speed = GameConst.MapSpeed * 4; //大地图上放大4倍
         }
         else
         {
