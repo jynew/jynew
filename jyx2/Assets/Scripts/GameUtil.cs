@@ -97,7 +97,7 @@ public class GameUtil
         return com;
     }
 
-    static public T GetOrAddComponent<T>(Transform trans) where T:Component 
+    public static T GetOrAddComponent<T>(Transform trans) where T:Component 
     {
         T com = trans.GetComponent<T>();
         if (com == null)
@@ -105,6 +105,11 @@ public class GameUtil
             com = trans.gameObject.AddComponent<T>();
         }
         return com;
+    }
+    
+    public static T GetOrAddComponent<T>(GameObject go) where T:Component
+    {
+        return GetOrAddComponent<T>(go.transform);
     }
 
     static public void LogError(string str) 

@@ -878,7 +878,7 @@ public class LevelMaster : MonoBehaviour
     // modified by eaphone at 2021/05/31
     public Jyx2Player GetPlayer()
     {
-        var player=_player.GetComponent<Jyx2Player>();
+        var player= _player.GetComponent<Jyx2Player>();
         if (player == null)
         {
             player = _player.gameObject.AddComponent<Jyx2Player>();

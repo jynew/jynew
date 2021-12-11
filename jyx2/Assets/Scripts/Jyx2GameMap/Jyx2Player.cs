@@ -11,7 +11,9 @@ using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Animancer;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -163,6 +165,8 @@ public class Jyx2Player : MonoBehaviour
 
         if (!canControl)
             return;
+
+        BigMapIdleJudge();
         
         //判断交互范围
         Debug.DrawRay(transform.position, transform.forward, Color.yellow);
@@ -179,6 +183,66 @@ public class Jyx2Player : MonoBehaviour
             evtManager.OnTriggerEvent(gameEvent);
         }
     }
+
+
+    private float _bigmapIdleTimeCount = 0;
+    private const float BIG_MAP_IDLE_TIME = 5f;
+    private bool _playingbigMapIdle = false;
+
+    private Animator _playerAnimator;
+    private HybridAnimancerComponent _playerAnimancer;
+
+    private Animator GetPlayerAnimator()
+    {
+        if (_playerAnimator == null)
+            _playerAnimator = this.transform.GetChild(0).GetComponent<Animator>();
+        return _playerAnimator;
+    }
+    
+    private HybridAnimancerComponent GetPlayerAnimancer()
+    {
+        if (_playerAnimancer == null)
+            _playerAnimancer = GameUtil.GetOrAddComponent<HybridAnimancerComponent>(this.transform.GetChild(0));
+        return _playerAnimancer;
+    }
+    
+    //在大地图上判断是否需要展示待机动作
+    void BigMapIdleJudge()
+    {
+        if(_boat == null) return; //暂实现：判断是否是大地图，有船才是大地图
+
+        if (_playingbigMapIdle)
+        {
+            //判断是否有移动速度，有的话立刻打断目前IDLE动作
+            if (GetPlayerAnimator().GetFloat("speed") > 0)
+            {
+                var animancer = GetPlayerAnimancer();
+                animancer.Stop();
+                animancer.PlayController();
+                _playingbigMapIdle = false;
+            }
+            return;
+        }
+
+        //一旦开始移动，则重新计时
+        if (GetPlayerAnimator().GetFloat("speed") > 0)
+        {
+            _bigmapIdleTimeCount = 0;
+            return;
+        }
+        
+        _bigmapIdleTimeCount += Time.deltaTime;
+        if (_bigmapIdleTimeCount > BIG_MAP_IDLE_TIME)
+        {
+            //展示IDLE动作
+            _bigmapIdleTimeCount = 0;
+            var animancer = GetPlayerAnimancer();
+            var clip = Jyx2.Middleware.Tools.GetRandomElement(GlobalAssetConfig.Instance.bigMapIdleClips);
+            animancer.Play(clip, 0.25f);
+            _playingbigMapIdle = true;
+        }
+    }
+    
     #region 事件交互
     
     private Collider[] targets = new Collider[10];
@@ -267,6 +331,7 @@ public class Jyx2Player : MonoBehaviour
 
 
     #endregion
+    
     //保存世界信息
     public void RecordWorldInfo()
     {

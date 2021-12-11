@@ -32,6 +32,9 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("游戏动作")] [LabelText("默认死亡动作")]
     public List<AnimationClip> defaultDieClips;
 
+    [BoxGroup("游戏动作")] [LabelText("大地图主角待机动作")]
+    public List<AnimationClip> bigMapIdleClips;
+
     [BoxGroup("游戏相机配置")] [LabelText("默认过肩视角相机")]
     public GameObject vcam3rdPrefab;
 
@@ -50,6 +53,9 @@ public class GlobalAssetConfig : ScriptableObject
     public List<GameObject> CachedPrefabs;
 
     public readonly Dictionary<string, GameObject> CachePrefabDict = new Dictionary<string, GameObject>();
+    
+    
+    
 
     public void OnLoad()
     {
