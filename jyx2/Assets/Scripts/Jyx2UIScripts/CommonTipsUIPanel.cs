@@ -58,7 +58,7 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
     async UniTaskVoid ShowInfo(string msg, float duration) 
     {
         //初始化
-        var popinfoItem = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/Popinfo.prefab");
+        var popinfoItem = Jyx2ResourceHelper.CreatePrefabInstance("Popinfo");
         popinfoItem.transform.SetParent(PopInfoParent_RectTransform, false);
         popinfoItem.GetComponentInChildren<Text>().text = msg;
         Text mainText = popinfoItem.GetComponentInChildren<Text>();

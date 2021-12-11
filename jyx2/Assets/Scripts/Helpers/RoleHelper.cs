@@ -38,7 +38,7 @@ public static class RoleHelper
     /// <param name="role"></param>
     public static MapRole CreateRoleView(this RoleInstance role, string tag = "NPC")
     {
-        var roleViewPre = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/MapRole.prefab");
+        var roleViewPre = Jyx2ResourceHelper.GetCachedPrefab("MapRole");
         var roleView = GameObject.Instantiate(roleViewPre).GetComponent<MapRole>();
         role.View = roleView;
         roleView.DataInstance = role;

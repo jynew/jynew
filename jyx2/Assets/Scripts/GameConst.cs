@@ -7,6 +7,8 @@
  *
  * 金庸老先生千古！
  */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -140,6 +142,7 @@ public class GameConst
 
     public static readonly int[] _levelUpExpList = new int[] { 50, 150, 300, 500, 750, 1050, 1400, 1800, 2250, 2750, 3850, 5050, 6350, 7750, 9250, 10850, 12550, 14350, 16750, 18250, 21400, 24700, 28150, 31750, 35500, 39400, 43450, 47650, 52000, 60000 };
 
+    [Obsolete]
     public const string UI_PREFAB_PATH = "Assets/Prefabs/Jyx2UI/{0}.prefab";
     public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>()
     {

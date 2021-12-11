@@ -39,7 +39,7 @@ namespace Jyx2.Battle
             var model = _manager.GetModel();
 
             //生成当前角色高亮环
-            m_roleFocusRing = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/CurrentBattleRoleTag.prefab");
+            m_roleFocusRing = Jyx2ResourceHelper.CreatePrefabInstance("CurrentBattleRoleTag");
 
             //战斗逻辑的主循环
             while (true)

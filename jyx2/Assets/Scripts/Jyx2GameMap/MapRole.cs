@@ -184,7 +184,7 @@ public class MapRole : Jyx2AnimationBattleRole
             ExtraFloatSpeed = -11
         };
 
-        info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2/AttackInfoText.prefab");
+        info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("AttackInfoText");
         hudRoot.NewText(info);
     }
 
@@ -220,7 +220,7 @@ public class MapRole : Jyx2AnimationBattleRole
         };
         info.Color = textColor;
 
-        info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2/AttackInfoText.prefab");
+        info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("AttackInfoText");
         hudRoot.NewText(info);
     }
 
@@ -243,7 +243,7 @@ public class MapRole : Jyx2AnimationBattleRole
             ExtraFloatSpeed = -11
         };
 
-        info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2/AttackInfoText.prefab");
+        info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("AttackInfoText");
         hudRoot.NewText(info);
     }
 

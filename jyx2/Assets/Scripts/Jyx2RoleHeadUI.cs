@@ -20,7 +20,7 @@ public class Jyx2RoleHeadUI : MonoBehaviour
 
     public static Jyx2RoleHeadUI Create(RoleInstance role, bool forceChecked, Action clickCallback)
     {
-        var prefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2RoleHeadUI.prefab");
+        var prefab = Jyx2ResourceHelper.GetCachedPrefab("Jyx2RoleHeadUI");
 
         var obj = Instantiate(prefab);
         var itemUI = obj.GetComponent<Jyx2RoleHeadUI>();

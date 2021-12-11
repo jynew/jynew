@@ -20,7 +20,7 @@ public class RoleUIItem : MonoBehaviour
 {
     public static RoleUIItem Create()
     {
-        var obj = Jyx2ResourceHelper.CreatePrefabInstance(string.Format(GameConst.UI_PREFAB_PATH, "RoleItem"));
+        var obj = Jyx2ResourceHelper.CreatePrefabInstance("RoleItem");
         var roleItem = obj.GetComponent<RoleUIItem>();
         roleItem.InitTrans();
         return roleItem;

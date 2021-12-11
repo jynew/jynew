@@ -23,7 +23,7 @@ public class Jyx2ItemUI : MonoBehaviour
     public Text m_NameText;
     public Text m_CountText;
 
-    private const string ITEM_UI_PREFAB = "Assets/Prefabs/Jyx2ItemUI.prefab";
+    private const string ITEM_UI_PREFAB = "Jyx2ItemUI";
     
     public static Jyx2ItemUI Create(int id,int count)
     {
