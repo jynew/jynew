@@ -82,6 +82,7 @@ public static class Jyx2ResourceHelper
         if (t != null)
         {
             GlobalAssetConfig.Instance = t;
+            t.OnLoad();
         }
 
         //技能池
@@ -101,14 +102,11 @@ public static class Jyx2ResourceHelper
 
     public static GameObject GetCachedPrefab(string path)
     {
-        var prefabName = path.Split('/').Last();
-        var cachedPrefabs = GlobalAssetConfig.Instance.CachedPrefabs;
-
-        var prefab = cachedPrefabs.Find(p => p.name == prefabName);
-
-        if (prefab != null)
+        if(GlobalAssetConfig.Instance.CachePrefabDict.TryGetValue(path, out var prefab))
+        {
             return prefab;
-
+        }
+        
         Debug.LogError($"载入缓存的Prefab失败：{path}(是否没填入GlobalAssetConfig.CachedPrefabs?)");
         return null;
     }
@@ -117,13 +115,11 @@ public static class Jyx2ResourceHelper
     {
         var obj = GetCachedPrefab(path);
         return Object.Instantiate(obj);
-        //return LeanPool.Spawn(obj);
     }
 
     public static void ReleasePrefabInstance(GameObject obj)
     {
         Object.Destroy(obj);
-        //LeanPool.Despawn(obj);
     }
 
     [Obsolete("待修改为tilemap")]
