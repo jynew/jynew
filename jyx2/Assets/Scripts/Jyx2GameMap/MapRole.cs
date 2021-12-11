@@ -353,7 +353,7 @@ public class MapRole : Jyx2AnimationBattleRole
         //人型骨骼，播放死亡动作
         if (this._animator.runtimeAnimatorController == globalConfig.defaultAnimatorController)
         {
-            var clip = Hanjiasongshu.Tools.GetRandomElement(globalConfig.defaultDieClips);
+            var clip = Jyx2.Middleware.Tools.GetRandomElement(globalConfig.defaultDieClips);
             PlayAnimation(clip, () => { Destroy(gameObject); });
         }
         else

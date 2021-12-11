@@ -159,7 +159,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
             case SkillCoverType.POINT:
                 
                 //任选一个敌人受击
-                blocks = new Transform[1] {Hanjiasongshu.Tools.GetRandomElement(enemys).transform};
+                blocks = new Transform[1] {Jyx2.Middleware.Tools.GetRandomElement(enemys).transform};
                 
                 //直接在每个敌人身上受击
                 /*blocks = new Transform[enemys.Length];

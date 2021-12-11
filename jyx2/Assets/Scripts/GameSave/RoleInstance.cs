@@ -554,7 +554,7 @@ namespace Jyx2
                 runtime.HaveItemBool(practiseItem.GenerateItemNeedCost.Id))
             {
                 
-                var pickItem = Hanjiasongshu.Tools.GetRandomElement(practiseItem.GenerateItems);
+                var pickItem = Jyx2.Middleware.Tools.GetRandomElement(practiseItem.GenerateItems);
 
                 runtime.AddItem(pickItem.Item.Id, pickItem.Count);
                 runtime.AddItem(practiseItem.GenerateItemNeedCost.Id, -1);
