@@ -22,8 +22,6 @@ namespace Jyx2
     
     public class BattleFieldModel
     {
-        //战斗结果
-
         //行动集气
         const float ActionSp = 1000f;
 

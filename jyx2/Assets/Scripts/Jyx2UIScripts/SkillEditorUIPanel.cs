@@ -113,7 +113,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
 
     private void OnDisplaySkill()
     {
-        TryDisplaySkill();
+        TryDisplaySkill().Forget();
     }
 
     async UniTask DoSwitchRoleModel()
@@ -132,7 +132,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         player.Run();
     }
 
-    void TryDisplaySkill()
+    async UniTask TryDisplaySkill()
     { 
         var wugong = new SkillInstance(skillId);
 
@@ -177,7 +177,11 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         helper.CoverBlocks = blocks; 
         
 
-        helper.Play().Forget();
+        await helper.Play();
+        if (skillEditor.TestZuoyouhubo) //测试左右互搏
+        {
+            await helper.Play();
+        }
     }
 
     /// <summary>

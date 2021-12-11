@@ -244,7 +244,6 @@ public class BattleManager : MonoBehaviour
         /// <summary>
         /// 分配经验计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
         /// </summary>
-        //分配经验
         foreach (var role in alive_teammate)
         {
             var practiseItem = role.GetXiulianItem();

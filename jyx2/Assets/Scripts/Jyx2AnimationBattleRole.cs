@@ -140,6 +140,7 @@ namespace Jyx2
             }
             
             var animancer = GetAnimancer();
+            animancer.Stop();
 
             //检查动作配置是否正确
             if (clip.isLooping && callback != null)
