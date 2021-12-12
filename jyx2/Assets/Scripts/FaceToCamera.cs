@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class FaceToCamera : MonoBehaviour
 {
+    private Transform mainCameraTrans;
+    void Start()
+    {
+        mainCameraTrans = Camera.main.transform;
+    }
     
     // Update is called once per frame
     void Update()
     {
-        this.transform.forward = Camera.main.transform.forward;
+        this.transform.forward = mainCameraTrans.forward;
     }
 }
