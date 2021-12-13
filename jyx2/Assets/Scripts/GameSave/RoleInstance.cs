@@ -469,12 +469,17 @@ namespace Jyx2
                         }
                     }
                 }
-
-                //若有相关武学，满级则为假，未满级为真
-                //若已经学满武学，则为真
+                //若有相关武学，则为真
+                //若已经学满武学，则为假
+                //满级则为真
                 //此处注意，如果有可制成物品的秘籍，则武学满级之后不会再制药了，请尽量避免这样的设置
                 if (item.Skill != null)
                 {
+                    foreach (var wugong in Wugongs)
+                    {
+                        if (wugong.Key == item.Skill.Id)
+                            return true;
+                    }
                     int level = GetWugongLevel(item.Skill.Id);
                     //if (level >= 0 && level < GameConst.MAX_WUGONG_LEVEL)
                     //{
