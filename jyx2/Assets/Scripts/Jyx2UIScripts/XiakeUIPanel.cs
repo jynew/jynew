@@ -369,6 +369,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         selectParams.callback = (cbParam) =>
         {
             StoryEngine.Instance.BlockPlayerControl = false;
+            if (cbParam.isCancelClick == true)
+            {
+                return;
+            }
             if (cbParam.selectList.Count <= 0)
             {
                 return;
@@ -399,6 +403,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         selectParams.callback = (cbParam) =>
         {
             StoryEngine.Instance.BlockPlayerControl = false;
+            if (cbParam.isCancelClick == true)
+            {
+                return;
+            }
             if (cbParam.selectList.Count <= 0)
             {
                 return;
