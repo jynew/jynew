@@ -172,11 +172,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
     void SetActionBtnState()
     {
-        bool canPoison = m_currentRole.UsePoison > 20 && m_currentRole.Tili >= 10;
+        bool canPoison = m_currentRole.UsePoison >= 20 && m_currentRole.Tili >= 10;
         UsePoison_Button.gameObject.SetActive(canPoison);
-        bool canDepoison = m_currentRole.DePoison > 20 && m_currentRole.Tili >= 10;
+        bool canDepoison = m_currentRole.DePoison >= 20 && m_currentRole.Tili >= 10;
         Depoison_Button.gameObject.SetActive(canDepoison);
-        bool canHeal = m_currentRole.Heal > 20 && m_currentRole.Tili >= 50;
+        bool canHeal = m_currentRole.Heal >= 20 && m_currentRole.Tili >= 50;
         Heal_Button.gameObject.SetActive(canHeal);
 
         bool lastRole = BattleManager.Instance.GetModel().IsLastRole(m_currentRole);

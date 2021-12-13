@@ -345,12 +345,13 @@ namespace Jyx2
         /// <returns></returns>
         public IEnumerable<BattleZhaoshiInstance> GetZhaoshis(bool forceAttackZhaoshi)
         {
-            //金庸DOS版逻辑，体力大于10才可以使用技能
+            //金庸DOS版逻辑，体力大于等于10且有武功最低等级所需内力值才可以使用技能
             if (this.Tili >= 10)
             {
                 foreach (var zhaoshi in Zhaoshis)
                 {
-                    yield return zhaoshi;
+                    if (this.Mp >= zhaoshi.Data.GetSkill().MpCost)
+                        yield return zhaoshi;
                 }
             }
 
@@ -358,9 +359,9 @@ namespace Jyx2
                 yield break;
 
             //金庸DOS版逻辑，用毒、解毒、医疗
-            if (this.UsePoison > 20 && this.Tili >= 2) yield return new PoisonZhaoshiInstance(this.UsePoison);
-            if (this.DePoison > 20 && this.Tili >= 2) yield return new DePoisonZhaoshiInstance(this.DePoison);
-            if (this.Heal > 20 && this.Tili >= 4) yield return new HealZhaoshiInstance(this.Heal);
+            if (this.UsePoison >= 20 && this.Tili >= 10) yield return new PoisonZhaoshiInstance(this.UsePoison);
+            if (this.DePoison >= 20 && this.Tili >= 10) yield return new DePoisonZhaoshiInstance(this.DePoison);
+            if (this.Heal >= 20 && this.Tili >= 50) yield return new HealZhaoshiInstance(this.Heal);
         }
 
         public void ResetZhaoshis()
@@ -856,7 +857,7 @@ namespace Jyx2
         public int GetMoveAbility()
         {
             if (Tili <= 5)
-                return 0; //金庸DOS版逻辑，体力小于5无法移动
+                return 0; //金庸DOS版逻辑，体力小于等于5无法移动
             int speed = this.Qinggong;
 
             speed = speed / 15 - this.Hurt / 40;

@@ -70,7 +70,7 @@ namespace Jyx2
             int damageType = GetDamageType();
             if (damageType == 0 || damageType == 1)//普通攻击、吸内
             {
-                int level_index = this.level;
+                int level_index = this.Data.GetLevel();
                 role.Mp = Tools.Limit(role.Mp - this.calNeedMP(level_index), 0, role.MaxMp);
 
                 int levelAdd = Tools.Limit(1 + Random.Range(0, 2), 0, 100 * 10);
@@ -123,11 +123,11 @@ namespace Jyx2
         }
 
         /// <summary>
-        /// JYX2:Magic int calNeedMP(int level_index) { return NeedMP * ((level_index + 2) / 2); }
+        /// JYX2:Magic int calNeedMP(int level_index) { return NeedMP * ((level_index + 1) / 2); }
         /// </summary>
         /// <param name="level_index"></param>
         /// <returns></returns>
-        int calNeedMP(int level_index) { return Data.GetSkill().MpCost * ((level_index + 2) / 2); }
+        public int calNeedMP(int level_index) { return Data.GetSkill().MpCost * ((level_index + 1) / 2); }
 
         public void TimeRun()
         {
