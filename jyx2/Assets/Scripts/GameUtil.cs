@@ -16,6 +16,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Jyx2Configs;
 
 /// <summary>
 /// JYX工具类
@@ -182,5 +183,26 @@ public class GameUtil
         {
             blackCover.gameObject.SetActive(false);
         });
+    }
+
+    static public void ShowYesOrNoUseItem(Jyx2ConfigItem item, Action action)
+    {
+        if (GameRuntimeData.Instance.GetItemUser(item.Id) != -1)
+        {
+            string msg = (int)item.ItemType == 1 ? "此物品已经有人配备，是否换人配备？" : "此物品已经有人修炼，是否换人修炼？";
+            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
+            {
+                if (index == 0)
+                {
+                    action();
+                }
+            }));
+        }
+        else
+        {
+            action();
+        }
+
     }
 }
