@@ -35,22 +35,14 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     private UnityEvent<float> OnVolumeChange;
     
-    private Dictionary<GameSetting.Catalog, UnityEvent<object>> _gameSettingEvents;
+    private Dictionary<GameSettingManager.Catalog, UnityEvent<object>> _gameSettingEvents;
 
-    private Dictionary<GameSetting.Catalog, UnityEvent<object>> gameSettingEvents
-    {
-        get
-        {
-            return _gameSettingEvents ??= GameSetting.GetEventsMap();
-        }
-    }
-
-    private Dictionary<GameSetting.Catalog, object> _gameSetting;
-    private Dictionary<GameSetting.Catalog, object> gameSetting => _gameSetting ??= GameSetting.GetSettings();
+    private Dictionary<GameSettingManager.Catalog, object> gameSetting => GameSettingManager.settings;
     
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("GeneralSettingsPanel Start()");
         _graphicSetting = GraphicSetting.GlobalSetting;
         audioManager = GameObject.Find("[AudioManager]");
         audiosource = audioManager?.GetComponent<AudioSource>();
@@ -61,6 +53,8 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitViewportSetting();
         
         m_CloseButton.onClick.AddListener(Close);
+        
+        Debug.Log("GeneralSettingsPanel Start() END");
     }
 
     public void Close()
@@ -73,16 +67,16 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void Save()
     {
-        PlayerPrefs.SetFloat("volume", audiosource.volume);
-        PlayerPrefs.SetInt("resolution", resolutionDropdown.value);
-        if (Screen.fullScreen)
-        {
-            PlayerPrefs.SetInt("fullscreen", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("fullscreen", 0);
-        }
+        // PlayerPrefs.SetFloat("volume", audiosource.volume);
+        // PlayerPrefs.SetInt("resolution", resolutionDropdown.value);
+        // if (Screen.fullScreen)
+        // {
+        //     PlayerPrefs.SetInt("fullscreen", 1);
+        // }
+        // else
+        // {
+        //     PlayerPrefs.SetInt("fullscreen", 0);
+        // }
     }
 
     public void InitResolutionDropdown()
@@ -107,7 +101,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         
         resolutionDropdown.AddOptions(options);
 
-        var setting = (int) gameSetting[GameSetting.Catalog.Resolution];
+        var setting = (int) gameSetting[GameSettingManager.Catalog.Resolution];
         resolutionDropdown.value = setting >= 0 ? setting : currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 #endif
@@ -116,7 +110,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     private void InitWindowDropdown()
     {
 #if !UNITY_ANDROID
-        var setting = (int) gameSetting[GameSetting.Catalog.Fullscreen];
+        var setting = (int) gameSetting[GameSettingManager.Catalog.Fullscreen];
         Debug.Log("InitWindowDropdown " + setting);
         windowDropdown.value = setting;
         windowDropdown.RefreshShownValue();
@@ -129,14 +123,10 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     void InitVolumeSlider()
     {
-        if (PlayerPrefs.HasKey("volume"))
+        var volume = gameSetting[GameSettingManager.Catalog.Volume];
+        if (volume is float value)
         {
-            if (audiosource != null)
-            {
-                audiosource.volume = PlayerPrefs.GetFloat("volume");    
-            }
-            
-            volumeSlider.value = PlayerPrefs.GetFloat("volume");
+            volumeSlider.value = value;
         }
     }
 
@@ -147,29 +137,28 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void SetResolution(int index)
     {
-        gameSettingEvents?[GameSetting.Catalog.Resolution]?.Invoke(index);
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, index);
     }
 
     public void SetVolume(float volume)
     {
-        gameSettingEvents?[GameSetting.Catalog.Volume]?.Invoke(volume);
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Volume, volume);
     }
 
     /*音效，暂未实现*/
     public void SetSoundEffect(float volume)
     {
-        gameSettingEvents?[GameSetting.Catalog.SoundEffect]?.Invoke(volume);
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.SoundEffect, volume);
     }
 
     public void SetFullscreen(int index)
     {
-        gameSettingEvents?[GameSetting.Catalog.Fullscreen]?.Invoke(index);
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Fullscreen, index);
     }
 
     public void SetViewport(int index)
     {
-        PlayerPrefs.SetInt("viewport_type", viewportDropdown.value);
-        GameViewPortManager.Instance.SetViewport((GameViewPortManager.ViewportType)(viewportDropdown.value));
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Viewport, index);
     }
 
     void InitViewportSetting()
