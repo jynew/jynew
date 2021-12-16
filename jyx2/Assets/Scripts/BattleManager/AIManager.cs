@@ -63,7 +63,7 @@ public class AIManager
         int moveAbility = role.GetMoveAbility();
 
         //行动范围
-        var range = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility);
+        var range = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - role.movedStep);
 
         //可使用招式
         var zhaoshis = role.GetZhaoshis(false);
