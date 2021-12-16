@@ -160,7 +160,7 @@ public class GameUtil
         string path = "Assets/BuildSource/sound/nancanjiao.wav";
         Jyx2ResourceHelper.LoadAsset<AudioClip>(path, clip =>
         {
-            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+            AudioManager.PlayClipAtPoint(clip, Camera.main.transform.position);
         });
 
         //血色

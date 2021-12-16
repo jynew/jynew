@@ -16,7 +16,6 @@ using UnityEngine.Events;
 
 public class GeneralSettingsPanel : Jyx2_UIBase
 {
-
     public Dropdown resolutionDropdown;
     public Dropdown windowDropdown;
     public Dropdown difficultyDropdown;
@@ -26,9 +25,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     public Slider soundEffectSlider;
 
     public Button m_CloseButton;
-
-    private GameObject audioManager;
-    private AudioSource audiosource;
 
     private GraphicSetting _graphicSetting;
     Resolution[] resolutions;
@@ -44,12 +40,11 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     {
         Debug.Log("GeneralSettingsPanel Start()");
         _graphicSetting = GraphicSetting.GlobalSetting;
-        audioManager = GameObject.Find("[AudioManager]");
-        audiosource = audioManager?.GetComponent<AudioSource>();
 
         InitWindowDropdown();
         InitResolutionDropdown();
         InitVolumeSlider();
+        InitSoundEffectSlider();
         InitViewportSetting();
         
         windowDropdown.onValueChanged.AddListener(SetFullscreen);
@@ -65,24 +60,9 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void Close()
     {
-        Save();
         _graphicSetting.Save();
         _graphicSetting.Execute();
         Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
-    }
-
-    public void Save()
-    {
-        // PlayerPrefs.SetFloat("volume", audiosource.volume);
-        // PlayerPrefs.SetInt("resolution", resolutionDropdown.value);
-        // if (Screen.fullScreen)
-        // {
-        //     PlayerPrefs.SetInt("fullscreen", 1);
-        // }
-        // else
-        // {
-        //     PlayerPrefs.SetInt("fullscreen", 0);
-        // }
     }
 
     public void InitResolutionDropdown()
@@ -117,7 +97,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     {
 #if !UNITY_ANDROID
         var setting = (int) gameSetting[GameSettingManager.Catalog.Fullscreen];
-        Debug.Log("InitWindowDropdown " + setting);
         windowDropdown.value = setting;
         windowDropdown.RefreshShownValue();
 #endif
@@ -138,43 +117,46 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void InitSoundEffectSlider()
     {
-
+        var volume = gameSetting[GameSettingManager.Catalog.SoundEffect];
+        if (volume is float value)
+        {
+            soundEffectSlider.value = value;
+        }
+    }
+    
+   private void InitViewportSetting()
+    {
+        var setting = gameSetting[GameSettingManager.Catalog.Viewport];
+        if (setting is int value)
+        {
+            viewportDropdown.value = value;
+        }
     }
 
-    public void SetResolution(int index)
+
+    private void SetResolution(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, index);
     }
 
-    public void SetVolume(float volume)
+    private void SetVolume(float volume)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Volume, volume);
     }
 
-    /*音效，暂未实现*/
-    public void SetSoundEffect(float volume)
+    private void SetSoundEffect(float volume)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.SoundEffect, volume);
     }
 
-    public void SetFullscreen(int index)
+    private void SetFullscreen(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Fullscreen, index);
     }
 
-    public void SetViewport(int index)
+    private void SetViewport(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Viewport, index);
-    }
-
-    void InitViewportSetting()
-    {
-        int setting = 0;
-        if (PlayerPrefs.HasKey("viewport_type"))
-        {
-            setting = PlayerPrefs.GetInt("viewport_type");    
-        }
-        viewportDropdown.value = setting;
     }
 
     /*游戏难度，暂未实现*/

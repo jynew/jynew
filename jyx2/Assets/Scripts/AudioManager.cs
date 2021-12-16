@@ -18,11 +18,13 @@ public class AudioManager
     //JYX2
     public static void PlayMusic(int id)
     {
+        Init();
         PlayMusicAtPath("Assets/BuildSource/Musics/" + id + ".mp3").Forget();
     }
 
     public static bool PlayMusic(AssetReference asset)
     {
+        Init();
         if (string.IsNullOrEmpty(asset.AssetGUID))
             return false;
         DoPlayMusic(asset).Forget();
@@ -40,16 +42,17 @@ public class AudioManager
 
     public static void PlayMusic(AudioClip audioClip)
     {
-        var audioSource = GetAudioSource();
-        if (audioClip != audioSource.clip)
+        Init();
+        if (audioClip != bgmAudioSource.clip)
         {
-            audioSource.clip = audioClip;
-            audioSource.Play();    
+            bgmAudioSource.clip = audioClip;
+            bgmAudioSource.Play();    
         }
     }
 
     public static async UniTask PlayMusicAtPath(string path)
     {
+        Init();
         if (path == null)
         {
             return;
@@ -63,37 +66,59 @@ public class AudioManager
         var audioClip = await Addressables.LoadAssetAsync<AudioClip>(path).Task;
         if (audioClip != null)
         {
-            var audioSource = GetAudioSource();
-            audioSource.clip = audioClip;
-            audioSource.Play();
+            bgmAudioSource.clip = audioClip;
+            bgmAudioSource.Play();
             _currentPlayMusic = path;
         }
     }
 
-    static string _currentPlayMusic;
+    private static string _currentPlayMusic;
 
-    static AudioSource s_AudioSource = null;
+    private static AudioSource _bgmAudioSource = null;
 
-    public static AudioSource GetAudioSource()
+    private static AudioSource bgmAudioSource
     {
-        if (s_AudioSource != null)
-            return s_AudioSource;
+        get
+        {
+            if (_bgmAudioSource == null)
+            {
+                GameObject obj = new GameObject("[AudioManager]");
+                GameObject.DontDestroyOnLoad(obj);
+                _bgmAudioSource = obj.AddComponent<AudioSource>();
+                _bgmAudioSource.loop = true;
+            }
 
-        GameObject obj = new GameObject("[AudioManager]");
-        GameObject.DontDestroyOnLoad(obj);
-        s_AudioSource = obj.AddComponent<AudioSource>();
-        s_AudioSource.loop = true;
+            return _bgmAudioSource;
+        }
+    }
 
-        GameSetting.InitVolume();
+    private static bool _hasInitialized = false;
 
-        Debug.Log("AudioManager >> create ");
+    private static void Init()
+    {
+        if (_hasInitialized)
+            return;
         
-        return s_AudioSource;
+        GameSettingManager.SubscribeEnforceEvent(
+            GameSettingManager.Catalog.Volume, (volume) =>
+            {
+                bgmAudioSource.volume = (float)volume; 
+            }, 
+            true);
+        
+        _hasInitialized = true;
     }
 
     public static AudioClip GetCurrentMusic()
     {
-        var audioSource = GetAudioSource();
-        return audioSource.clip;
+        Init();
+        return bgmAudioSource.clip;
+    }
+
+    public static void PlayClipAtPoint(AudioClip clip, Vector3 position)
+    {
+        Init();
+        var soundEffectVolume = GameSettingManager.settings[GameSettingManager.Catalog.SoundEffect];
+        AudioSource.PlayClipAtPoint(clip, position, (float)soundEffectVolume);
     }
 }

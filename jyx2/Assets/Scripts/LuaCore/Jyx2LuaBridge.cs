@@ -921,7 +921,7 @@ namespace Jyx2
 
                 Jyx2ResourceHelper.LoadAsset<AudioClip>(path, clip =>
                 {
-                    AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+                    AudioManager.PlayClipAtPoint(clip, Camera.main.transform.position);
                 });
             });
         }

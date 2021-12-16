@@ -60,8 +60,8 @@ public static class GameSettingManager
 
         // 由GameSettingManager管理的设置生效委托: Resolution, Fullscreen
         // 注册委托，且立刻生效。
-        SubscribeSetupEvent(Catalog.Resolution, SetResolution, true);
-        SubscribeSetupEvent(Catalog.Fullscreen, SetFullScreen, true);
+        SubscribeEnforceEvent(Catalog.Resolution, SetResolution, true);
+        SubscribeEnforceEvent(Catalog.Fullscreen, SetFullScreen, true);
 
         _hasInitialized = true;
         
@@ -119,7 +119,7 @@ public static class GameSettingManager
     /// <param name="setting">设置类别</param>
     /// <param name="action">生效逻辑</param>
     /// <param name="enforceImmediately">是否立刻生效。这个设置的manager初始化时，此参数应该为true。</param>
-    public static void SubscribeSetupEvent(Catalog setting, UnityAction<object> action, bool enforceImmediately)
+    public static void SubscribeEnforceEvent(Catalog setting, UnityAction<object> action, bool enforceImmediately)
     {
         if (!enforceEvents.ContainsKey(setting))
         {
@@ -145,7 +145,7 @@ public static class GameSettingManager
     /// </summary>
     /// <param name="setting">设置类别</param>
     /// <param name="action">生效逻辑</param>
-    public static void UnsubscribeSetupEvent(Catalog setting, UnityAction<object> action)
+    public static void UnsubscribeEnforceEvent(Catalog setting, UnityAction<object> action)
     {
         if (enforceEvents.ContainsKey(setting))
         {
@@ -163,9 +163,9 @@ public static class GameSettingManager
         // 记录
         UpdateSettingRecord(setting, value);
 
+        // 某些设置在修改后无需执行委托，例如音效。
         if (!enforceEvents.ContainsKey(setting))
         {
-            Debug.LogError($"游戏设置：{Enum.GetName(typeof(Catalog), setting)}无法生效。 没有注册相应委托，或者此设置尚未实现。");
             return;
         }
         
@@ -200,7 +200,7 @@ public static class GameSettingManager
                 PlayerPrefs.SetFloat(GameConst.PLAYER_PREF_VOLUME, (float)value);
                 break;
             case Catalog.Viewport:
-                PlayerPrefs.SetFloat(GameConst.PLAYER_PREF_VIEWPORT_TYPE, (int)value);
+                PlayerPrefs.SetInt(GameConst.PLAYER_PREF_VIEWPORT_TYPE, (int)value);
                 break;
         }
         Debug.Log($"Update validation：{Enum.GetName(typeof(Catalog), setting)}, value {GetSettings()[setting]}。");
