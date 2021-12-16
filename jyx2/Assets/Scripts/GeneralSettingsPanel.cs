@@ -52,6 +52,12 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitVolumeSlider();
         InitViewportSetting();
         
+        windowDropdown.onValueChanged.AddListener(SetFullscreen);
+        resolutionDropdown.onValueChanged.AddListener(SetResolution);
+        volumeSlider.onValueChanged.AddListener(SetVolume);
+        soundEffectSlider.onValueChanged.AddListener(SetSoundEffect);
+        viewportDropdown.onValueChanged.AddListener(SetViewport);
+        
         m_CloseButton.onClick.AddListener(Close);
         
         Debug.Log("GeneralSettingsPanel Start() END");
