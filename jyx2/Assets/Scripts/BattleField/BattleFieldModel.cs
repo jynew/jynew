@@ -168,6 +168,7 @@ namespace Jyx2
             {
                 item.isActed = false;
                 item.sp = 0;
+                item.movedStep = 0;
             }
         }
 
