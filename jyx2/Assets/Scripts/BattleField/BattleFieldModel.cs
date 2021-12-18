@@ -219,8 +219,10 @@ namespace Jyx2
                 {
                     GameObject.Destroy(role.View.gameObject);
                 }
-                Roles.RemoveAt(0);
-                role = Roles[0];
+                int index = Roles.IndexOf(role);
+                index++;
+                if (index < Roles.Count)
+                    role = Roles[index];
             }
 
             if (role.isActed) //全部都行动过了
