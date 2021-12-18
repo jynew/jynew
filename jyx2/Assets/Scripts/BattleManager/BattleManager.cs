@@ -232,20 +232,23 @@ public class BattleManager : MonoBehaviour
 
     string CalExpGot(Jyx2ConfigBattle battleData)
     {
-        List<RoleInstance> alive_teammate = m_BattleModel.Roles.Where(r => r.team == 0).ToList();
+        List<RoleInstance> teammates = m_BattleModel.Teammates.ToList();
+        List<RoleInstance> alive_teammate = teammates.Where(r => !r.IsDead()).ToList();
         string rst = "";
         foreach (var role in alive_teammate)
         {
             int expAdd = battleData.Exp / alive_teammate.Count();
             role.ExpGot += expAdd;
-            rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
         }
 
         /// <summary>
         /// 分配经验计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
         /// </summary>
-        foreach (var role in alive_teammate)
+        foreach (var role in teammates)
         {
+            if (role.ExpGot > 0)
+                rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
+
             var practiseItem = role.GetXiulianItem();
             var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
 
