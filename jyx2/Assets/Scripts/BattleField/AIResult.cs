@@ -148,6 +148,8 @@ namespace Jyx2
                 {
                     r2.Hp = r2.MaxHp;
                 }
+
+                r1.ExpGot += 2;
             }
 
             if (rst.damageMp > 0)
