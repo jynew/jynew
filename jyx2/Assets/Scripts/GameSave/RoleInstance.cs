@@ -810,7 +810,9 @@ namespace Jyx2
             if (_isInBattle) return;
             
             _isInBattle = true;
-            
+
+            View.LazyInitAnimator();
+
             //修复当前武功
             if (CurrentSkill >= Wugongs.Count)
             {
@@ -818,8 +820,6 @@ namespace Jyx2
             }
             _currentSkill = Wugongs[CurrentSkill];
             SwitchAnimationToSkill(_currentSkill, true);
-
-            View.LazyInitAnimator();
         }
 
         public void SetHPAndRefreshHudBar(int hp)
