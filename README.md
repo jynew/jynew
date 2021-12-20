@@ -111,7 +111,3 @@
 * 开发者Q群 749167552 （入群密码是本代码仓库名称）
 * 玩家Q群 480072818
 
-
-## 项目捐款
-![image](https://github.com/sujizhang/images-library-/blob/main/WhatsApp%20Image%202021-12-19%20at%207.36.47%20PM.jpeg)
-![image](https://github.com/sujizhang/images-library-/blob/main/WhatsApp%20Image%202021-12-19%20at%207.39.12%20PM.jpeg)
