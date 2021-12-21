@@ -23,7 +23,7 @@ Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle
 
 > 我们承诺：本项目除了爱好者的自愿捐款以外，不会在任何渠道取得收入。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 > 
-> We promise: this project will not earn revenue in any channel except voluntary contributions from enthusiasts. The code, assets, and package are for learning purposes only, please do not use them for any commercial purpose. All re-commercial use is not allowed and authorized by this project, if there is any violation of your rights, please feel free to contact us.
+> We promise: this project is a non-profit project. We only accept voluntary contributions from enthusiasts. The code, assets, and package are for learning purposes only, please do not use them for any commercial purpose. All re-commercial use is not allowed nor authorized by this project, if there is any violation of your rights, please feel free to contact us.
 
 ## 项目目标(Project Objectives)
 
@@ -36,8 +36,8 @@ Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle
 
 * To remastered and pay tribute to the DOS version of the classic game "Legends of Kim-Yong" using the Unity engine.
 * To support mods or secondary development for the remaster of Legends of Kim-Yong.
-* To provide open capabilities to the community, and those interested in contributing can make this work even better.
-* provide a complete single-player game structure for those interested in learning to develop games for reference.
+* To provide a open community, and those who are interested in this project can contribute and make it better.
+* To provide a full version of single-player game structure, those who are interested in learning how to develop games could use it for reference.
 
 
 ## 游戏画面截图(Screenshots)
@@ -88,11 +88,11 @@ Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle
 
 ## 项目文档导航(Documents guide)
 
-* 查看[开发环境和搭建](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)来将你本地的游戏环境运行起来！
-* 你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。
-* 可通过查看[金庸群侠传3d重制版视频操作教程](https://github.com/jynew/jynew/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A03d%E9%87%8D%E5%88%B6%E7%89%88%E8%A7%86%E9%A2%91%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B)来学习如何搭建游戏场景、添加和配置技能动作等。
-* 本项目非常欢迎社区进行贡献，请阅读[社区贡献指南](https://github.com/jynew/jynew/blob/main/CONTRIBUTING.md)查看具体规则和流程。
-* 本项目美术原始文件位于[jynew/jynew_art](https://github.com/jynew/jynew_art)，你可以下载3DMAX等原始文件查看。但请注意：此项目内容同样遵守社区协议。
+* 查看[开发环境和搭建](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)来将你本地的游戏环境运行起来！(How to build up your local developement enviroment)
+* 你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。(Details in developing this project, including how to configure and star the game, lua file modification and programming, etc)
+* 可通过查看[金庸群侠传3d重制版视频操作教程](https://github.com/jynew/jynew/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A03d%E9%87%8D%E5%88%B6%E7%89%88%E8%A7%86%E9%A2%91%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B)来学习如何搭建游戏场景、添加和配置技能动作等。(learning how to build the scenes in the game, add and configure the moves for each character)
+* 本项目非常欢迎社区进行贡献，请阅读[社区贡献指南](https://github.com/jynew/jynew/blob/main/CONTRIBUTING.md)查看具体规则和流程。(You're more than welcomed to contribute to this project, "Contribution guideline" for you reference)
+* 本项目美术原始文件位于[jynew/jynew_art](https://github.com/jynew/jynew_art)，你可以下载3DMAX等原始文件查看。但请注意：此项目内容同样遵守社区协议。(All the assets of this project is in this link. Please note that all the files in this link can not be used or re-mastered for any commercial purpose.)
 
 ## 授权声明(Authorization Statement)
 

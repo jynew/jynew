@@ -73,6 +73,8 @@ namespace Jyx2
                 int level_index = this.Data.GetLevel();
                 role.Mp = Tools.Limit(role.Mp - this.calNeedMP(level_index), 0, role.MaxMp);
 
+                role.ExpGot += 2;
+
                 int levelAdd = Tools.Limit(1 + Random.Range(0, 2), 0, 100 * 10);
 
                 //空挥升级
