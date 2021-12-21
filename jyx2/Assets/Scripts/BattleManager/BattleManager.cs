@@ -232,8 +232,9 @@ public class BattleManager : MonoBehaviour
 
     string CalExpGot(Jyx2ConfigBattle battleData)
     {
-        List<RoleInstance> teammates = m_BattleModel.Teammates.ToList();
-        List<RoleInstance> alive_teammate = teammates.Where(r => !r.IsDead()).ToList();
+        List<RoleInstance> alive_teammate = m_BattleModel.Teammates;
+        List<RoleInstance> dead_teammates = m_BattleModel.Dead.Where(r => r.team == 0).ToList();
+        List<RoleInstance> teammates = alive_teammate.Union(dead_teammates).ToList();
         string rst = "";
         foreach (var role in alive_teammate)
         {
