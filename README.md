@@ -17,9 +17,9 @@
 
 [Builds](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [Videos](https://space.bilibili.com/1092529660) | [Contact me](mailto://jy_remastered@163.com) | [Wiki](https://github.com/jynew/jynew/wiki) | [Donate](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [Shame List](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
 
-金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。
+金庸群侠传3D重制版是一个回合制战棋战斗开放世界RPG游戏。它是一个非盈利游戏项目，项目目标为重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。你可以在PC、MAC或移动手机平台(或其他支持平台)游玩。
 
-Heros of Jin Yong 3D Remastered is a non-profit game project that remaster the classic game [Legends of Kim-Yong](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3) and supply a framework for MODs and secondary development.
+Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle system. It is a non-profit game project that remaster the classic game [Legends of Kim-Yong](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3) and it supply a framework for MODs and secondary development. You can play it on PC, Mac, mobile platform(or other supported platform).
 
 > 我们承诺：本项目除了爱好者的自愿捐款以外，不会在任何渠道取得收入。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 > 
@@ -31,6 +31,8 @@ Heros of Jin Yong 3D Remastered is a non-profit game project that remaster the c
 * 后续支持重制《金群》的一系列MOD或二次开发；
 * 提供开放的能力给社区，有兴趣贡献力量的朋友可以让这个作品更加完善；
 * 提供一个完备的单机游戏结构供有兴趣学习开发游戏的朋友进行参考；
+
+------
 
 * To remastered and pay tribute to the DOS version of the classic game "Legends of Kim-Yong" using the Unity engine.
 * To support mods or secondary development for the remaster of Legends of Kim-Yong.
