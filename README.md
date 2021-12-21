@@ -37,7 +37,7 @@ Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle
 * To remastered and pay tribute to the DOS version of the classic game "Legends of Kim-Yong" using the Unity engine.
 * To support mods or secondary development for the remaster of Legends of Kim-Yong.
 * To provide a open community, and those who are interested in this project can contribute and make it better.
-* provide a full revision of single-player game structure, those who are interested in learning how to develop games could use it for reference.
+* To provide a full version of single-player game structure, those who are interested in learning how to develop games could use it for reference.
 
 
 ## 游戏画面截图(Screenshots)
