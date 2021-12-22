@@ -236,16 +236,34 @@ public static class GameSettingManager
     }
 
     /// <summary>
-    /// Return current resolution index.
+    /// 返回当前的分辨率设置。如果没有储存分辨率设置，返回符合当前窗口尺寸的分辨率。
     /// </summary>
     /// <returns>Return -1 if no pref key</returns>
     private static int GetResolution()
     {
         var result = PlayerPrefs.HasKey(GameConst.PLAYER_PREF_RESOLUTION)
             ? PlayerPrefs.GetInt(GameConst.PLAYER_PREF_RESOLUTION)
-            : -1;
+            : GetDefaultResolution();
 
         return result;
+    }
+
+    /// <summary>
+    /// 返回符合当前窗口尺寸的分辨率。
+    /// </summary>
+    /// <returns></returns>
+    private static int GetDefaultResolution()
+    {
+        for (var i = 0; i < resolutions.Length; i++)
+        {
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
+            {
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     #endregion

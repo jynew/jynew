@@ -72,23 +72,16 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
 
-        int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
         }
         
         resolutionDropdown.AddOptions(options);
 
         var setting = (int) gameSetting[GameSettingManager.Catalog.Resolution];
-        resolutionDropdown.value = setting >= 0 ? setting : currentResolutionIndex;
+        resolutionDropdown.value = setting;
         resolutionDropdown.RefreshShownValue();
 #endif
     }
