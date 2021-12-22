@@ -75,6 +75,10 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
     [BoxGroup("动作")] [LabelText("攻击")]
     [AssetSelector(Paths = "Assets/BuildSource/Animations")]
     public AnimationClip attackClip;
+    
+    [BoxGroup("动作")] [LabelText("眩晕")]
+    [AssetSelector(Paths = "Assets/BuildSource/Animations")]
+    public AnimationClip stunClip;
 
     [SuffixLabel("秒", Overlay = true)]
     [BoxGroup("技能详细配置")] [LabelText("出招动作延迟")] [PropertyRange(0, 1)]
@@ -179,6 +183,8 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
                 return moveClip == null ? GlobalAssetConfig.Instance.defaultMoveClip : moveClip;
             case Jyx2RoleAnimationType.Attack:
                 return attackClip;
+            case Jyx2RoleAnimationType.Stun:
+                return stunClip == null ? GlobalAssetConfig.Instance.defaultStunClip : stunClip;
             default:
                 Debug.LogError("invalid Jyx2RoleAnimationType:" + type);
                 return null;
@@ -190,7 +196,8 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
         Idle,
         Move,
         Behit,
-        Attack
+        Attack,
+        Stun
     }
 }
 

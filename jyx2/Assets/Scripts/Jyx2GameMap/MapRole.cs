@@ -20,7 +20,9 @@ using Jyx2.Middleware;
 
 public class MapRole : Jyx2AnimationBattleRole
 {
-    //数据实例
+    /// <summary>
+    /// 数据实例，人物各项信息
+    /// </summary>
     public RoleInstance DataInstance
     {
         get
@@ -34,19 +36,27 @@ public class MapRole : Jyx2AnimationBattleRole
         }
     }
     private RoleInstance _dataInstance;
-
+    
+    /// <summary>
+    /// 人物Key索引
+    /// </summary>
     public int m_RoleKey;
 
+    /// <summary>
+    /// 人物模型
+    /// </summary>
+    private Transform m_RoleModel;
+    
+    /// <summary>
+    /// NPC说的话
+    /// </summary>
     public string[] m_NpcWords;
 
-    //在非战斗模式下拿武器
-    public bool m_HasWeaponNotInBattle = false;
-    
-    //是否关键角色（战斗中晕眩，战斗后恢复）
+    /// <summary>
+    /// 是否关键角色
+    /// 如果是关键角色则死亡后只会眩晕？(如果这样的话眩晕还存在逻辑问题，目前角色死亡会立刻判定死亡)
+    /// </summary>
     public bool m_IsKeyRole = false; //主角+队友+面板打勾的
-
-    [HideInInspector]
-    public bool IsPlayingMovingAnimation = false; //跑步动作切换的标记
 
     [HideInInspector]
     public bool m_IsWaitingForActive = true; //GameObject Active时触发的标记
@@ -249,34 +259,6 @@ public class MapRole : Jyx2AnimationBattleRole
 
     #region 战斗原型相关
     //播放动画指令
-    public void PlayAnimationCmd(string cmd)
-    {
-        foreach (var c in cmd.Split(','))
-        {
-            string para = c.Split(':')[0];
-            string value = c.Split(':')[1];
-            if (para == "trigger")
-            {
-                GetAnimator().SetTrigger(value);
-            }
-            else
-            {
-                if (para.StartsWith("f"))
-                {
-                    GetAnimator().SetFloat(para, float.Parse(value));
-                }
-                else
-                {
-                    GetAnimator().SetInteger(para, int.Parse(value));
-                }
-            }
-
-            if (para == "WeaponType")
-            {
-                GetAnimator().SetInteger(para, int.Parse(value));
-            }
-        }
-    }
 
     private bool _lazyInitBattleAnimator = true;
     
@@ -316,13 +298,7 @@ public class MapRole : Jyx2AnimationBattleRole
         if (anim == null)
             return;
 
-        //当前已经是该Controller了，不需要再修改
-        if (controller == anim.runtimeAnimatorController)
-        {
-            callback();
-            return;
-        }
-        
+        //无论如何重新绑定Controller
         anim.runtimeAnimatorController = controller;
         callback();
     }
@@ -361,37 +337,39 @@ public class MapRole : Jyx2AnimationBattleRole
             Destroy(gameObject);  
         }
         
-        
-        //简单粗暴，直接删除GameObject，回头有空再实现死亡动作
-        //GameObject.Destroy(this.gameObject);
-
-        //默认播放随机死亡动作
-        //if (deathCode == -1) deathCode = ToolsShared.GetRandomInt(0, 2);
-        //GetAnimator().SetTrigger("Death");
-        //GetAnimator().SetInteger("DeathType", (int)deathCode);
         m_Health = MapRoleHealth.Death;
     }
 
     public void ShowStun()
     {
-        GetAnimator().SetTrigger("Stun");
-        _navMeshAgent.enabled = false;
+        //重写眩晕
+        AnimationClip clip = null;
+        clip = (CurDisplay == null)?GlobalAssetConfig.Instance.defaultStunClip:CurDisplay.LoadAnimation(Jyx2SkillDisplayAsset.Jyx2RoleAnimationType.Stun);
+        PlayAnimation(clip);
+        
+        if(_navMeshAgent)//TODO:这里之所以加这一行是因为如果在Skill测试场景中没有寻路，建议后期去掉
+            _navMeshAgent.enabled = false;
         if (m_Health == MapRoleHealth.Normal) m_Health = MapRoleHealth.Stun;
     }
 
     public void StopStun(bool isInBattle)
     {
-        GetAnimator().ResetTrigger("Stun");
         if (isInBattle)
         {
-            _navMeshAgent.enabled = false;
-            GetAnimator().SetTrigger("Idle");
+            if(_navMeshAgent)//TODO:这里之所以加这一行是因为如果在Skill测试场景中没有寻路，建议后期去掉
+                _navMeshAgent.enabled = false;
         }
         else
         {
-            _navMeshAgent.enabled = true;
-            GetAnimator().SetTrigger("LeaveBattle");
+            if(_navMeshAgent)//TODO:这里之所以加这一行是因为如果在Skill测试场景中没有寻路，建议后期去掉
+                _navMeshAgent.enabled = true;
         }
+        
+        //重写解除眩晕并且简化逻辑
+        AnimationClip clip = null;
+        clip = CurDisplay == null?GlobalAssetConfig.Instance.defaultIdleClip:CurDisplay.LoadAnimation(Jyx2SkillDisplayAsset.Jyx2RoleAnimationType.Idle);
+        PlayAnimation(clip);
+        
         if (m_Health != MapRoleHealth.Death) m_Health = MapRoleHealth.Stun;
     }
     #endregion
@@ -400,6 +378,7 @@ public class MapRole : Jyx2AnimationBattleRole
     {
         // _outLooking = GetComponent<CustomOutlooking>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        //m_RoleModel = get
     }
 
     private async void Start()
@@ -443,12 +422,7 @@ public class MapRole : Jyx2AnimationBattleRole
         ModelView = Instantiate(modelAsset.m_View, gameObject.transform, false);
         ModelView.transform.localPosition = Vector3.zero;
 
-        var animator = GetAnimator();
-        if (animator != null)
-        {
-            animator.SetBool("InBattle", IsInBattle);
-        }
-        
+        //如果在战斗中
         if (IsInBattle)
         {
             //直接用第一个武功的姿势
@@ -456,7 +430,8 @@ public class MapRole : Jyx2AnimationBattleRole
         }
         else
         {
-            animator.SetTrigger("move");
+            //TODO:不在战斗中则原地休息，原版是move，不知道对不对
+            Run();
         }
     }
     
