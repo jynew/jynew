@@ -430,8 +430,8 @@ public class MapRole : Jyx2AnimationBattleRole
         }
         else
         {
-            //TODO:不在战斗中则原地休息，原版是move，不知道对不对
-            Run();
+            //默认是休息状态
+            Idle();
         }
     }
     
