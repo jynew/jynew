@@ -334,30 +334,10 @@ public static class GameSettingManager
         return result;
     }
     
-    // TODO: Register by AudioManager
-    public static void SetSoundEffect(float volume)
-    {
-    }
-    
     #endregion
 
     #region Viewport
-
-    // TODO: Register by GameViewPortManager
-    private static void SetViewport(object index)
-    {
-        if (index is int value)
-        {
-            const string key = GameConst.PLAYER_PREF_VIEWPORT_TYPE;
-            GameViewPortManager.Instance.SetViewport((GameViewPortManager.ViewportType) (value));
-            PlayerPrefs.SetInt(key, value);
-        }
-        else
-        {
-            Debug.LogError("SetViewport: 参数必须是int.");
-        }
-    }
-
+    
     private static int GetViewportType()
     {
         const string key = GameConst.PLAYER_PREF_VIEWPORT_TYPE;
