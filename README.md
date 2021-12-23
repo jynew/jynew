@@ -19,7 +19,7 @@
 
 金庸群侠传3D重制版是一个回合制战棋战斗开放世界RPG游戏。它是一个非盈利游戏项目，项目目标为重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。你可以在PC、MAC或移动手机平台(或其他支持平台)游玩。
 
-Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle system. It is a non-profit game project which remastered the classic game [Legends of Kim-Yong](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3). This project supplys a framework for MODs and secondary development. You can play it on PC, Mac, mobile platform(or other supported platform).
+Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle system. It is a non-profit game project which remastered the classic game [Legends of Kim-Yong](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3). This project supplies a framework for MODs and secondary development. You can play it on PC, Mac, mobile platform(or other supported platform).
 
 > 我们承诺：本项目除了爱好者的自愿捐款以外，不会在任何渠道取得收入。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 > 
@@ -51,25 +51,25 @@ Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle
 
 ## 开发计划(Roadmap)
 
-- [ ] 素材资产实现
-  - [x] 按照新的风格绘制原版所有的角色立绘
-  - [x] remix原版所有的音乐
-  - [x] 制作所有角色的模型
-  - [x] 制作所有武功动作   
-  - [x] 所有场景制作，包括RPG部分和战斗部分 
-  - [ ] 依据重制版的风格绘制新的道具图标
-  - [ ] 原版开场动画重新实现
-  - [x] 结局原画绘制
-  - [x] 武功特效调制 
-- [x] 风格化的画面渲染效果实现
-- [x] 基础系统实现，包括地图、道具、角色、战斗等
-- [x] 支持剧情脚本指令系统，支持可视化的剧情脚本编辑系统
-- [x] 完整复刻实现金庸群侠传游戏流程，可正常通关
-- [x] 支持多端输出，一键打包
-- [x] 所有代码和资源全部开源，不依赖闭源库（标准第三方库除外）
-- [ ] 优化游戏运行性能和代码质量（考虑使用URP渲染管线）
-- [ ] 提供MOD启动器，提供金群MOD开发环境和样例
-- [ ] 提供联机战斗对战、ONLINE网络游戏模式的样例和DEMO
+- [ ] 素材资产实现(Assets management)
+  - [x] 按照新的风格绘制原版所有的角色立绘(Update all original character’s painting with new style)
+  - [x] remix原版所有的音乐(Remix all original BGM)
+  - [x] 制作所有角色的模型(Create 3D model for each character)
+  - [x] 制作所有武功动作(Create 3D model for each martial arts moves)   
+  - [x] 所有场景制作，包括RPG部分和战斗部分 (Create all scenes, including RPG and combat scenes)
+  - [ ] 依据重制版的风格绘制新的道具图标(Update all icons for items with our new style)
+  - [ ] 原版开场动画重新实现(Reproduce the animation for the opening scene)
+  - [x] 结局原画绘制(Paint the final scene drawing)
+  - [x] 武功特效调制 (Martial arts Effects Animation modification)
+- [x] 风格化的画面渲染效果实现(Stylish shading effect implementation)
+- [x] 基础系统实现，包括地图、道具、角色、战斗等(Basic system implementation , including map, items, character and combat, etc. )
+- [x] 支持剧情脚本指令系统，支持可视化的剧情脚本编辑系统(Support script instruction system, support visual script editor system)
+- [x] 完整复刻实现金庸群侠传游戏流程，可正常通关(Completed remastered of the original game )
+- [x] 支持多端输出，一键打包(Export asset bundle in multi format )
+- [x] 所有代码和资源全部开源，不依赖闭源库（标准第三方库除外）(Completely free and open-source)
+- [ ] 优化游戏运行性能和代码质量（考虑使用URP渲染管线）(Optimize the game operation performance and code quality(consider adopt URP)）
+- [ ] 提供MOD启动器，提供金群MOD开发环境和样例（Provide MOD development environment and example）
+- [ ] 提供联机战斗对战、ONLINE网络游戏模式的样例和DEMO（Provide multiplayer combat mode,  online game examples and demo）
 
 ## 技术实现简介(Details of implement)
 
@@ -86,7 +86,7 @@ Heros of Jin Yong 3D Remastered is an open world RPG game with turn-based battle
 * 技能特效使用了不少assetstore上的第三方库，如想使用，还请自行购买
 
 
-## 项目文档导航(Documents guide)
+## 项目文档导航(Documents Guide/Tutorial)
 
 * 查看[开发环境和搭建](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)来将你本地的游戏环境运行起来！(How to build up your local developement enviroment)
 * 你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。(Details in developing this project, including how to configure and star the game, lua file modification and programming, etc)
