@@ -13,12 +13,15 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// TODO:不确定RoleHelper是否可以和MapRole直接合并，或者也没必要
+/// </summary>
 public static class RoleHelper
 {
     /// <summary>
     /// 寻找主角
     /// </summary>
-    /// <returns></returns>
+    /// <returns>MapRole角色</returns>
     public static MapRole FindPlayer()
     {
         var obj = GameObject.Find("Level/Player");
@@ -34,6 +37,7 @@ public static class RoleHelper
 
     /// <summary>
     /// 通过已有数据实例在地图中创建角色
+    /// TODO:这一段没改，因为不太清楚缓存这个
     /// </summary>
     /// <param name="role"></param>
     public static MapRole CreateRoleView(this RoleInstance role, string tag = "NPC")
@@ -51,8 +55,8 @@ public static class RoleHelper
     /// <summary>
     /// 地图角色绑定新的数据实例
     /// </summary>
-    /// <param name="roleKey"></param>
-    /// <param name="roleView"></param>
+    /// <param name="roleKey">角色Key</param>
+    /// <param name="roleView">角色模型</param>
     public static void CreateRoleInstance(this MapRole roleView, int roleKey)
     {
         roleView.BindRoleInstance(new RoleInstance(roleKey)).Forget();
@@ -62,8 +66,8 @@ public static class RoleHelper
     /// <summary>
     /// 地图角色绑定已有数据实例
     /// </summary>
-    /// <param name="roleView"></param>
-    /// <param name="role"></param>
+    /// <param name="roleView">角色模型（展示在地图上的）</param>
+    /// <param name="role">角色数据/param>
     public static async UniTask BindRoleInstance(this MapRole roleView, RoleInstance role)
     {
         if (role == null || roleView == null)
@@ -74,7 +78,6 @@ public static class RoleHelper
             return;
         
         role.View = roleView;
-        roleView.ForceSetAnimator(null);
         roleView.DataInstance = role;
     }
 }
