@@ -4,7 +4,7 @@ using Jyx2;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("游戏数据/增加道德")]
+[CreateNodeMenu("游戏数据/增加品德")]
 [NodeWidth(150)]
 public class Jyx2AddEthicsNode : Jyx2SimpleNode
 {
@@ -12,7 +12,7 @@ public class Jyx2AddEthicsNode : Jyx2SimpleNode
     public int addValue;
     
     private void Reset() {
-        name = "增加道德";
+        name = "增加品德";
     }
 
     protected override void DoExecute()

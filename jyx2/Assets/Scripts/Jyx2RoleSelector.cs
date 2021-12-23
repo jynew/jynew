@@ -21,7 +21,7 @@ public class Jyx2RoleSelector : MonoBehaviour
 
     public static Jyx2RoleSelector Create(IEnumerable<RoleInstance> roles, Func<RoleInstance, bool> mustRoles, Action<List<RoleInstance>> callback)
     {
-        var prefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/Jyx2RoleSelector.prefab");
+        var prefab = Jyx2ResourceHelper.GetCachedPrefab("Jyx2RoleSelector");
         var obj = Instantiate(prefab);
         var parent = GameObject.Find("MainUI").transform;
         obj.transform.SetParent(parent);

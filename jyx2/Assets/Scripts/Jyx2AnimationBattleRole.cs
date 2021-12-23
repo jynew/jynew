@@ -24,13 +24,11 @@ namespace Jyx2
         private HybridAnimancerComponent _animancer;
         public HybridAnimancerComponent GetAnimancer()
         {
-            if (_animancer == null)
-            {
-                var animator = GetAnimator();
-                _animancer = GameUtil.GetOrAddComponent<HybridAnimancerComponent>(animator.transform);
-                _animancer.Animator = animator;
-                _animancer.Controller = animator.runtimeAnimatorController;
-            }
+            //TODO:判断是否销毁了_animacer，替换模型_animacer不会立即消失……,所以直接每次都get一次
+            var animator = GetAnimator();
+            _animancer = GameUtil.GetOrAddComponent<HybridAnimancerComponent>(animator.transform);
+            _animancer.Animator = animator;
+            _animancer.Controller = animator.runtimeAnimatorController;
             return _animancer;
         }
         
@@ -140,6 +138,7 @@ namespace Jyx2
             }
             
             var animancer = GetAnimancer();
+            animancer.Stop();
 
             //检查动作配置是否正确
             if (clip.isLooping && callback != null)

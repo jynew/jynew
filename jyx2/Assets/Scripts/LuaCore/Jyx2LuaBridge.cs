@@ -476,13 +476,13 @@ namespace Jyx2
             
         }
 
-        //增加道德
+        //增加品德
         public static void AddEthics(int value)
         {
             RunInMainThread(() =>
             {
                 runtime.Player.Pinde = Tools.Limit(runtime.Player.Pinde + value, 0, 100);
-               /* storyEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "道德:" + Math.Abs(value));*/
+               /* storyEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "品德:" + Math.Abs(value));*/
                 Next();
             });
             Wait();
@@ -691,7 +691,7 @@ namespace Jyx2
         public static void ShowEthics()
         {
             RunInMainThread(() => {
-                MessageBox.Create("你的道德指数为" + runtime.Player.Pinde, Next);
+                MessageBox.Create("你现在的品德指数为" + runtime.Player.Pinde, Next);
             });
             Wait();
         }
@@ -700,7 +700,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                MessageBox.Create("你的声望指数为" + runtime.Player.Shengwang, Next);
+                MessageBox.Create("你现在的个人声望指数为" + runtime.Player.Shengwang, Next);
             });
             Wait();
         }
@@ -929,7 +929,7 @@ namespace Jyx2
      
         public static bool AskRest()
         {
-            return ShowYesOrNoSelectPanel("是否休息?");
+            return ShowYesOrNoSelectPanel("是否休息?<color=red>（温馨提示：受伤太重或中毒不回复）</color>");
         }
 
         public static void DarkScence()

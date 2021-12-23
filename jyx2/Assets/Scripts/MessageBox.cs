@@ -29,7 +29,7 @@ public class MessageBox : MonoBehaviour
             parent = go.transform;
         }
 
-        var obj = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/MessageBox.prefab");
+        var obj = Jyx2ResourceHelper.CreatePrefabInstance("MessageBox");
         obj.transform.SetParent(parent);
 
         var rt = obj.GetComponent<RectTransform>();

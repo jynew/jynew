@@ -46,7 +46,7 @@ namespace Jyx2.Battle
             gridsPivotX = yPivot;
             float firstPivotX = gridsPivotX - xCount / 2 * cellWidth;
             float firstPivotY = gridsPivotY - yCount / 2 * cellHeight;
-            var prefab = Jyx2ResourceHelper.GetCachedPrefab("Assets/Prefabs/NewBattleObject/BattleGridCeil.prefab");
+            var prefab = Jyx2ResourceHelper.GetCachedPrefab("BattleGridCeil");
             for (int i = 0; i < gridsCountX; i++)
             {
                 for (int j = 0; j < gridsCountY; j++)

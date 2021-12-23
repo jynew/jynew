@@ -89,9 +89,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         SkillText_Text.text = GetSkillText(m_currentRole);
         ItemsText_Text.text = GetItemsText(m_currentRole);
 
-        bool canDepoison = m_currentRole.DePoison > 20 && m_currentRole.Tili >= 10;
+        bool canDepoison = m_currentRole.DePoison >= 20 && m_currentRole.Tili >= 10;
         ButtonDetoxicate_Button.gameObject.SetActive(canDepoison);
-        bool canHeal = m_currentRole.Heal > 20 && m_currentRole.Tili >= 50;
+        bool canHeal = m_currentRole.Heal >= 20 && m_currentRole.Tili >= 50;
         ButtonHeal_Button.gameObject.SetActive(canHeal);
         
         PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
@@ -345,8 +345,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         {
             if (itemId != -1 && !m_currentRole.CanUseItem(itemId))
             {
-                //MessageBox.Create("该角色不满足使用条件", null);
-                GameUtil.DisplayPopinfo("此人不适合修炼此物品");
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+                GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
                 return;
             }
 
@@ -369,6 +369,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         selectParams.callback = (cbParam) =>
         {
             StoryEngine.Instance.BlockPlayerControl = false;
+            if (cbParam.isCancelClick == true)
+            {
+                return;
+            }
             if (cbParam.selectList.Count <= 0)
             {
                 return;
@@ -399,6 +403,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         selectParams.callback = (cbParam) =>
         {
             StoryEngine.Instance.BlockPlayerControl = false;
+            if (cbParam.isCancelClick == true)
+            {
+                return;
+            }
             if (cbParam.selectList.Count <= 0)
             {
                 return;

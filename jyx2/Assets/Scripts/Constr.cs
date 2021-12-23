@@ -10,12 +10,11 @@
 
 public class ConStr
 {
-    public const string ConfigPath = "Assets/BuildSource/Configs/";
     public const string BattleBlockDatasetPath = "Assets/BuildSource/BattleBlockDataset/";
     public const string BattleboxDatasetPath = "Assets/BuildSource/BattleboxDataset/";
-    public const string LevelMaster = "Assets/Prefabs/LevelMaster.prefab";
-    public const string Player = "Assets/Prefabs/Player.prefab";
-    public const string PlayerPointLight = "Assets/Prefabs/PlayerPointLight.prefab";
+    public const string LevelMaster = "LevelMaster";
+    public const string Player = "Player";
+    public const string PlayerPointLight = "PlayerPointLight";
 
     public const string DefaultSword = "Assets/BuildSource/ModelWeapons/W_Right_SinSword.prefab";
     public const string DefaultKnife = "Assets/BuildSource/ModelWeapons/W_Right_SinKnif.prefab";

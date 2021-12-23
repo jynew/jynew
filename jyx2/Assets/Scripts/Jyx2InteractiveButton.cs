@@ -17,9 +17,9 @@ using UnityEngine.UI;
 
 namespace Jyx2
 {
-    public class Jyx2InteractiveButton
+    public static class Jyx2InteractiveButton
     {
-        static public void Show(string text, Action callback)
+        public static void Show(string text, Action callback)
         {
             var btn = GetInteractiveButton();
             if(btn != null)
@@ -32,7 +32,7 @@ namespace Jyx2
             }
         }
 
-        static public void Hide()
+        public static void Hide()
         {
             var btn = GetInteractiveButton();
             if(btn != null)

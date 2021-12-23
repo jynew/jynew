@@ -14,6 +14,7 @@ using Lean.Pool;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 
@@ -64,33 +65,24 @@ namespace Jyx2
 
 public static class Jyx2ResourceHelper
 {
-    private static Dictionary<string, GameObject> cachedPrefabs;
-
+    private static bool _isInited = false;
+    
     public static async Task Init()
     {
         //已经初始化过了
-        if (cachedPrefabs != null)
+        if (_isInited)
         {
             return;
         }
 
-        //所有需要预加载的资源
-        var handler = await Addressables.LoadAssetAsync<TextAsset>("Assets/BuildSource/PreCachedPrefabs.txt").Task;
+        _isInited = true;
         
-        cachedPrefabs = new Dictionary<string, GameObject>();
-
-        foreach (var path in handler.text.Split('\n'))
+        //全局配置表
+        var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
+        if (t != null)
         {
-            if (string.IsNullOrEmpty(path)) continue;
-
-            var p = path.Replace("\r", "");
-            var h = Addressables.LoadAssetAsync<GameObject>(p).Task;
-            await h;
-            if (h.Result != null)
-            {
-                cachedPrefabs[p] = h.Result;
-                Debug.Log("cached prefab:" + p);
-            }
+            GlobalAssetConfig.Instance = t;
+            t.OnLoad();
         }
 
         //技能池
@@ -100,13 +92,6 @@ public static class Jyx2ResourceHelper
             Jyx2SkillDisplayAsset.All = task;
         }
 
-        //全局配置表
-        var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
-        if (t != null)
-        {
-            GlobalAssetConfig.Instance = t;
-        }
-        
         //基础配置表
         await GameConfigDatabase.Instance.Init();
 
@@ -117,11 +102,12 @@ public static class Jyx2ResourceHelper
 
     public static GameObject GetCachedPrefab(string path)
     {
-        if (cachedPrefabs.ContainsKey(path))
-            return cachedPrefabs[path];
-
-        Debug.LogError($"载入缓存的Prefab失败：{path}(是否没写入Assets/BuildSource/PreCachedPrefabs.txt?)");
-
+        if(GlobalAssetConfig.Instance.CachePrefabDict.TryGetValue(path, out var prefab))
+        {
+            return prefab;
+        }
+        
+        Debug.LogError($"载入缓存的Prefab失败：{path}(是否没填入GlobalAssetConfig.CachedPrefabs?)");
         return null;
     }
 
@@ -129,13 +115,11 @@ public static class Jyx2ResourceHelper
     {
         var obj = GetCachedPrefab(path);
         return Object.Instantiate(obj);
-        //return LeanPool.Spawn(obj);
     }
 
     public static void ReleasePrefabInstance(GameObject obj)
     {
         Object.Destroy(obj);
-        //LeanPool.Despawn(obj);
     }
 
     [Obsolete("待修改为tilemap")]

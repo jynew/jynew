@@ -28,7 +28,7 @@ public class LoadingPanel : MonoBehaviour
     /// <returns></returns>
     public static async UniTask Create(AssetReference sceneAsset)
     {
-        var loadingPanel = Jyx2ResourceHelper.CreatePrefabInstance("Assets/Prefabs/LoadingPanelCanvas.prefab").GetComponent<LoadingPanel>();
+        var loadingPanel = Jyx2ResourceHelper.CreatePrefabInstance("LoadingPanelCanvas").GetComponent<LoadingPanel>();
         GameObject.DontDestroyOnLoad(loadingPanel);
         await loadingPanel.LoadLevel(sceneAsset);
     }

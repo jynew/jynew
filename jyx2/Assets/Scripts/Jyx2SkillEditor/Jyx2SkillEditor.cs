@@ -10,6 +10,7 @@
 
 using UnityEngine;
 using Jyx2;
+using Sirenix.OdinInspector;
 
 public class Jyx2SkillEditor : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class Jyx2SkillEditor : MonoBehaviour
     public Transform[] faceTrans;
     public Transform[] lineTrans;
     public Transform[] crossTrans;
+
+    [LabelText("是否测试左右互搏")]
+    public bool TestZuoyouhubo = false;
     // Start is called before the first frame update
     async void Start()
     {

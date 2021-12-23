@@ -127,10 +127,6 @@ public class BattleManager : MonoBehaviour
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
         
-        //OLD
-        //BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
-        
-        //NEW
         await new BattleLoop(this).StartLoop();
     }
     
@@ -167,7 +163,7 @@ public class BattleManager : MonoBehaviour
         //所有人至少有1HP
         foreach (var role in GameRuntimeData.Instance.GetTeam())
         {
-            if (role.Hp == 0)
+            if (role.Hp <= 0)
                 role.Hp = 1;
         }
     }
@@ -232,21 +228,24 @@ public class BattleManager : MonoBehaviour
 
     string CalExpGot(Jyx2ConfigBattle battleData)
     {
-        List<RoleInstance> alive_teammate = m_BattleModel.Roles.Where(r => r.team == 0).ToList();
+        List<RoleInstance> alive_teammate = m_BattleModel.Teammates;
+        List<RoleInstance> dead_teammates = m_BattleModel.Dead.Where(r => r.team == 0).ToList();
+        List<RoleInstance> teammates = alive_teammate.Union(dead_teammates).ToList();
         string rst = "";
         foreach (var role in alive_teammate)
         {
             int expAdd = battleData.Exp / alive_teammate.Count();
             role.ExpGot += expAdd;
-            rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
         }
 
         /// <summary>
         /// 分配经验计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
         /// </summary>
-        //分配经验
-        foreach (var role in alive_teammate)
+        foreach (var role in teammates)
         {
+            if (role.ExpGot > 0)
+                rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
+
             var practiseItem = role.GetXiulianItem();
             var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
 
@@ -370,12 +369,13 @@ public class BattleManager : MonoBehaviour
     /// 获取角色的移动范围
     /// </summary>
     /// <param name="role"></param>
-    public List<BattleBlockVector> GetMoveRange(RoleInstance role)
+    /// <param name="movedStep">移动过的格子数</param>
+    public List<BattleBlockVector> GetMoveRange(RoleInstance role, int movedStep)
     {
         //获得角色移动能力
         int moveAbility = role.GetMoveAbility();
         //绘制周围的移动格子
-        var blockList = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility);
+        var blockList = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - movedStep);
         return blockList;
     }
 

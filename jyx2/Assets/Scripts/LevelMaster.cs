@@ -290,7 +290,7 @@ public class LevelMaster : MonoBehaviour
             else
             {
                 PlayerSpawnAt(loadPara.Pos);
-                PlayerSpawnAt(loadPara.Rotate);
+                PlayerSpawnRotate(loadPara.Rotate);
             }
         }
         else if (loadPara.loadType == LevelLoadPara.LevelLoadType.Entrance)
@@ -322,7 +322,7 @@ public class LevelMaster : MonoBehaviour
             StopPlayerNavigation();
             
             PlayerSpawnAt(loadPara.Pos);
-            PlayerSpawnAt(loadPara.Rotate);
+            PlayerSpawnRotate(loadPara.Rotate);
         }
     }
 
@@ -333,7 +333,7 @@ public class LevelMaster : MonoBehaviour
         _player.position = spawnPos;
         _playerNavAgent.enabled = true;
     }
-    void PlayerSpawnAt(Quaternion ori)
+    void PlayerSpawnRotate(Quaternion ori)
     {
         _playerNavAgent.enabled = false;
         Debug.Log("load ori = " + ori);
@@ -366,7 +366,7 @@ public class LevelMaster : MonoBehaviour
         var gameMap = GetCurrentGameMap();
         if (gameMap != null && gameMap.IsWorldMap())
         {
-            _playerNavAgent.speed = 10; //大地图上放大一倍
+            _playerNavAgent.speed = GameConst.MapSpeed * 4; //大地图上放大4倍
         }
         else
         {
@@ -375,6 +375,7 @@ public class LevelMaster : MonoBehaviour
         
         _playerNavAgent.angularSpeed = GameConst.MapAngularSpeed;
         _playerNavAgent.acceleration = GameConst.MapAcceleration;
+        _playerNavAgent.autoBraking = false;
 
         var playerCom = _player.GetComponent<Jyx2Player>();
         if(playerCom == null)
@@ -877,7 +878,7 @@ public class LevelMaster : MonoBehaviour
     // modified by eaphone at 2021/05/31
     public Jyx2Player GetPlayer()
     {
-        var player=_player.GetComponent<Jyx2Player>();
+        var player= _player.GetComponent<Jyx2Player>();
         if (player == null)
         {
             player = _player.gameObject.AddComponent<Jyx2Player>();

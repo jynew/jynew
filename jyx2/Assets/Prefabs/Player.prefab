@@ -45,17 +45,17 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 8
+  m_Speed: 10
+  m_Acceleration: 50
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 500
   m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 7
   m_ObstacleAvoidanceType: 4
 --- !u!136 &3279224452319450221
 CapsuleCollider:
@@ -99,16 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b39f53383fa924f90f4d80803cb2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RoleKey: "\u4E3B\u89D2"
+  m_RoleKey: 0
   m_NpcWords: []
   m_HasWeaponNotInBattle: 0
-  m_Behavior: 4
-  m_BehaviorParas: []
   m_IsKeyRole: 1
   IsPlayingMovingAnimation: 0
   m_IsWaitingForActive: 1
   IsInBattle: 0
-  m_FootStepTimespan: 0.4
 --- !u!1 &23421823382699224
 GameObject:
   m_ObjectHideFlags: 0

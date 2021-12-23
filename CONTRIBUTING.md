@@ -27,3 +27,4 @@ github环境安装和搭建：
 - 资源提交符合当前项目标准
 - 长期参与代码贡献的开发者可以被添加直接Write（免PullRequest）权限
 - Commit如果是解决Issues里的问题的话，请关联问题编号（在Commit记录里使用#{问题ID}的语法）
+- 如果您更新了功能性的内容，请尽可能的按格式填写更新日志([Assets/BuildSource/RELEASE_NOTE.txt](https://github.com/jynew/jynew/blob/main/jyx2/Assets/BuildSource/RELEASE_NOTE.txt))，以便于玩家在之后的更新中能够看到

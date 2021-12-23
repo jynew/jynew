@@ -111,55 +111,76 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         }
 
         var runtime = GameRuntimeData.Instance;
-        GameUtil.SelectRole(runtime.GetTeam(), (selectRole) => {
-            if (selectRole == null) return;
+        GameUtil.ShowYesOrNoUseItem(item, () =>
+        {
+            GameUtil.SelectRole(runtime.GetTeam(), (selectRole) => {
+                if (selectRole == null) return;
 
-            if (selectRole.GetJyx2RoleId() == runtime.GetItemUser(item.Id)) return;
+                if (selectRole.GetJyx2RoleId() == runtime.GetItemUser(item.Id)) return;
 
-            if (selectRole.CanUseItem(id))
-            {
-                //装备
-                if ((int)item.ItemType == 1)
+                if (selectRole.CanUseItem(id))
                 {
-                    //武器
-                    if ((int)item.EquipmentType == 0)
+                    //装备
+                    if ((int)item.ItemType == 1)
                     {
-                        if (runtime.GetItemUser(item.Id) != -1)
+                        //武器
+                        if ((int)item.EquipmentType == 0)
                         {
-                            RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
-                            roleInstance.UnequipItem(roleInstance.GetWeapon());
-                            roleInstance.Weapon = -1;
-                        }
+                            if (runtime.GetItemUser(item.Id) != -1)
+                            {
+                                RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+                                roleInstance.UnequipItem(roleInstance.GetWeapon());
+                                roleInstance.Weapon = -1;
+                            }
 
-                        selectRole.UnequipItem(selectRole.GetWeapon());
-                        selectRole.Weapon = id;
-                        selectRole.UseItem(selectRole.GetWeapon());
-                        runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
-                        GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
-                    }
-                    //防具
-                    else if ((int)item.EquipmentType == 1)
-                    {
-                        if (runtime.GetItemUser(item.Id) != -1)
+                            selectRole.UnequipItem(selectRole.GetWeapon());
+                            selectRole.Weapon = id;
+                            selectRole.UseItem(selectRole.GetWeapon());
+                            runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+                            GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+                        }
+                        //防具
+                        else if ((int)item.EquipmentType == 1)
                         {
-                            RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
-                            roleInstance.UnequipItem(roleInstance.GetArmor());
-                            roleInstance.Armor = -1;
-                        }
+                            if (runtime.GetItemUser(item.Id) != -1)
+                            {
+                                RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+                                roleInstance.UnequipItem(roleInstance.GetArmor());
+                                roleInstance.Armor = -1;
+                            }
 
-                        selectRole.UnequipItem(selectRole.GetArmor());
-                        selectRole.Armor = id;
-                        selectRole.UseItem(selectRole.GetArmor());
-                        runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
-                        GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+                            selectRole.UnequipItem(selectRole.GetArmor());
+                            selectRole.Armor = id;
+                            selectRole.UseItem(selectRole.GetArmor());
+                            runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+                            GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+                        }
                     }
-                }
-                //修炼
-                else if ((int)item.ItemType == 2)
-                {
-                    if (item.NeedCastration)//辟邪剑谱和葵花宝典
+                    //修炼
+                    else if ((int)item.ItemType == 2)
                     {
-                        GameUtil.ShowYesOrNoCastrate(selectRole, () =>
+                        if (item.NeedCastration)//辟邪剑谱和葵花宝典
+                        {
+                            GameUtil.ShowYesOrNoCastrate(selectRole, () =>
+                            {
+                                if (runtime.GetItemUser(item.Id) != -1)
+                                {
+                                    RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+                                    runtime.SetItemUser(item.Id, -1);
+                                    roleInstance.ExpForItem = 0;
+                                    roleInstance.Xiulianwupin = -1;
+                                }
+                                if (selectRole.GetXiulianItem() != null)
+                                {
+                                    runtime.SetItemUser(selectRole.Xiulianwupin, -1);
+                                    selectRole.ExpForItem = 0;
+                                }
+                                selectRole.Xiulianwupin = id;
+                                runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+                                GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+                            });
+                        }
+                        else
                         {
                             if (runtime.GetItemUser(item.Id) != -1)
                             {
@@ -176,41 +197,24 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                             selectRole.Xiulianwupin = id;
                             runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
                             GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
-                        });
+                        }
                     }
-                    else
+                    //药品
+                    else if ((int)item.ItemType == 3)
                     {
-                        if (runtime.GetItemUser(item.Id) != -1)
-                        {
-                            RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
-                            runtime.SetItemUser(item.Id, -1);
-                            roleInstance.ExpForItem = 0;
-                            roleInstance.Xiulianwupin = -1;
-                        }
-                        if (selectRole.GetXiulianItem() != null)
-                        {
-                            runtime.SetItemUser(selectRole.Xiulianwupin, -1);
-                            selectRole.ExpForItem = 0;
-                        }
-                        selectRole.Xiulianwupin = id;
-                        runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+                        selectRole.UseItem(item);
+                        runtime.AddItem(id, -1);
                         GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                     }
                 }
-                //药品
-                else if ((int)item.ItemType == 3)
+                else
                 {
-                    selectRole.UseItem(item);
-                    runtime.AddItem(id, -1);
-                    GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+                    GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
+                    return;
                 }
-            }
-            else
-            {
-                GameUtil.DisplayPopinfo("此人不适合修炼此物品");
-                return;
-            }
+            });
         });
+
     }
 
     void OnMapBtnClick() 
