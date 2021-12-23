@@ -122,8 +122,6 @@ namespace Jyx2
         /// <summary>
         /// 具体执行改逻辑
         /// 战斗经验计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
-        ///
-        /// 
         /// </summary>
         /// <returns></returns>
         public void Run()
@@ -135,7 +133,7 @@ namespace Jyx2
 
                 if (r2.View != null)
                 {
-                    r2.View.SetDamage(rst.damage, r2.Hp);
+                    r2.View.SetDamage(rst.damage);
                 }
 
                 r1.ExpGot += 2 + rst.damage / 5;

@@ -16,6 +16,12 @@ public class GlobalAssetConfig : ScriptableObject
     
     [BoxGroup("游戏动作")] [LabelText("默认移动动作")]
     public AnimationClip defaultMoveClip;
+    
+    [BoxGroup("游戏动作")] [LabelText("默认待机动作")]
+    public AnimationClip defaultIdleClip;
+    
+    [BoxGroup("游戏动作")] [LabelText("默认眩晕动作")]
+    public AnimationClip defaultStunClip;
 
     [BoxGroup("游戏动作")] [LabelText("使用暗器的动作")]
     public AnimationClip anqiClip;

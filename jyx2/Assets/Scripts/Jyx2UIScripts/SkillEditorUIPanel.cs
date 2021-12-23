@@ -99,7 +99,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         base.OnShowPanel(allParams);
         player = allParams[0] as MapRole;
         enemys = allParams[1] as Jyx2SkillEditorEnemy[];
-        DoSwitchRoleModel().Forget();
+        //DoSwitchRoleModel().Forget();//这里也去掉，防止多次加载模型
     }
 
     private void OnSwitchModel()
@@ -123,10 +123,12 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         await player.BindRoleInstance(role);
         await player.RefreshModel();//添加这一行刷新模型
         
-        //下面两行中当前游戏使用的animator都是相同的，也许后期有其他替换animator需求？如果没有其他需求，此行应该可以不用替换？
-        var animator = player.GetAnimator();
-        animator.runtimeAnimatorController = player.GetComponent<Animator>().runtimeAnimatorController; //force set animator
-        SwitchSkillPose();
+        //不必要的指定
+        //var animator = player.GetAnimator();
+        //animator.runtimeAnimatorController = player.GetComponent<Animator>().runtimeAnimatorController; //force set animator
+        
+        //不必要切换姿势
+        //SwitchSkillPose();
     }
 
     void DoSwitchMove()
