@@ -127,10 +127,6 @@ public class BattleManager : MonoBehaviour
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
         
-        //OLD
-        //BattleStateMechine.Instance.StartStateMechine(OnBattleEnd); //交给战场状态机接管 状态机完成会回调回来
-        
-        //NEW
         await new BattleLoop(this).StartLoop();
     }
     

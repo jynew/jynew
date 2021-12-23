@@ -373,6 +373,7 @@ public class MapRole : Jyx2AnimationBattleRole
                         return;
                     case "Attack":
                         Attack();
+                        return;
                 }
             }
             //替换武器
