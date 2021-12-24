@@ -242,7 +242,7 @@ namespace Jyx2
             if (soundEffect == null)
                 return;
 
-            AudioSource.PlayClipAtPoint(soundEffect, Camera.main.transform.position, 1);
+            AudioManager.PlayClipAtPoint(soundEffect, Camera.main.transform.position);
         }
     }
 }

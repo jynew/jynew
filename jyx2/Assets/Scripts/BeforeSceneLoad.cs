@@ -22,7 +22,13 @@ namespace Jyx2
         {
             DebugInfoManager.Init();
 
-            loadFinishTask = Jyx2ResourceHelper.Init();
+            loadFinishTask = StartTasks();
+        }
+
+        static async Task StartTasks()
+        {
+            GameSettingManager.Init();
+            await Jyx2ResourceHelper.Init();
         }
 
         public static Task loadFinishTask = null;
