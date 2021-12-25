@@ -26,7 +26,6 @@ if TryBattle(87) == true then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/星宿弟子8", "");
     jyx2_ReplaceSceneObject("", "NPC/星宿弟子9", "");
     ModifyEvent(-2, 4, -2, -2, -2, -1, -1, 6378, 6378, 6378, -2, 35, 24);
-	jyx2_SwitchRoleAnimation("NPC/youtanzhi","");
     SetScencePosition2(37, 25);
 	jyx2_MovePlayer("战斗后","Level/Dynamic");
     LightScence();
