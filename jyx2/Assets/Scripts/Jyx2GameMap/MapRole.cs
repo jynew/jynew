@@ -586,6 +586,8 @@ public class MapRole : Jyx2AnimationBattleRole
     /// </summary>
     public override void DeadOrIdle()
     {
+        if (this._animator == null) return;
+
         if (DataInstance.IsDead())
         {
             ShowDeath();
