@@ -532,7 +532,9 @@ public class MapRole : Jyx2AnimationBattleRole
     public void ShowDeath(int deathCode = -1)
     {
         var globalConfig = GlobalAssetConfig.Instance;
-        
+
+        if (this._animator == null) return;
+
         //人型骨骼，播放死亡动作
         if (this._animator.runtimeAnimatorController == globalConfig.defaultAnimatorController)
         {
@@ -586,8 +588,6 @@ public class MapRole : Jyx2AnimationBattleRole
     /// </summary>
     public override void DeadOrIdle()
     {
-        if (this._animator == null) return;
-
         if (DataInstance.IsDead())
         {
             ShowDeath();
