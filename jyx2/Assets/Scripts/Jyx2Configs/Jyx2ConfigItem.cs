@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using Jyx2;
+using Jyx2.MOD;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -66,7 +67,7 @@ namespace Jyx2Configs
             if (Pic == null || string.IsNullOrEmpty(Pic.AssetGUID)) return null;
             if (_sprite == null)
             {
-                _sprite = await Addressables.LoadAssetAsync<Sprite>(Pic).Task;
+                _sprite = await MODLoader.LoadSprite(Jyx2ResourceHelper.GetAssetRefAddress(Pic));
             }
             return _sprite;
         }
@@ -241,6 +242,12 @@ namespace Jyx2Configs
         public override async UniTask WarmUp()
         {
             //GetPic().Forget();
+            
+            //清理缓存
+            if (Application.isEditor)
+            {
+                _sprite = null;
+            }
         }
     }
 }

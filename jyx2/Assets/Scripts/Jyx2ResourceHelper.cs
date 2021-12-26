@@ -17,7 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-
+using Jyx2.MOD;
 using Jyx2Configs;
 using ProtoBuf;
 using UnityEngine;
@@ -76,6 +76,8 @@ public static class Jyx2ResourceHelper
         }
 
         _isInited = true;
+
+        await MODLoader.Init();
         
         //全局配置表
         var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
@@ -174,5 +176,22 @@ public static class Jyx2ResourceHelper
         }
 
         return await Addressables.LoadAssetAsync<Jyx2NodeGraph>(url).Task;
+    }
+    
+    //根据Addressable的Ref查找他实际存储的路径
+    public static string GetAssetRefAddress(AssetReference reference)
+    {
+        foreach (var locator in Addressables.ResourceLocators)
+        {
+            if (locator.Locate(reference.AssetGUID, typeof(Texture2D), out var locs))
+            {
+                foreach (var loc in locs)
+                {
+                    return loc.ToString();
+                }
+            }
+        }
+
+        return "";
     }
 }

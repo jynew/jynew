@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Jyx2;
+using Jyx2.MOD;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Jyx2Configs
@@ -54,7 +56,11 @@ namespace Jyx2Configs
             
             if (_sprite == null)
             {
-                _sprite = await Addressables.LoadAssetAsync<Sprite>(Pic).Task;
+
+                //_sprite = await Addressables.LoadAssetAsync<Sprite>(PicUri).Task;
+
+                var path = Jyx2ResourceHelper.GetAssetRefAddress(Pic); //先转换到URL
+                _sprite = await MODLoader.LoadSprite(path); //在MOD列表中过滤
                 
                 //下面代码会可能重入导致出错：
                 //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/
@@ -171,6 +177,12 @@ namespace Jyx2Configs
         public override async UniTask WarmUp()
         {
             //GetPic().Forget();
+            
+            //清理缓存
+            if (Application.isEditor)
+            {
+                _sprite = null;
+            }
         }
     }
 
