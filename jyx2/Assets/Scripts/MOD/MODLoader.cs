@@ -1,3 +1,22 @@
+/*
+ * 金庸群侠传3D重制版
+ * https://github.com/jynew/jynew
+ *
+ * 这是本开源项目文件头，所有代码均使用MIT协议。
+ * 但游戏内资源和第三方插件、dll等请仔细阅读LICENSE相关授权协议文档。
+ *
+ * 金庸老先生千古！
+ */
+
+//TODO：MOD载入框架尚未完成
+// - 配置表的载入
+// - 场景、战斗场景载入
+// - lua的载入
+// - UI的载入
+// - 其他相关资源的载入
+// - MOD配置相关UI界面
+// - 各种MODSample
+
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -7,13 +26,19 @@ namespace Jyx2.MOD
 {
     public static class MODLoader
     {
-        public static List<string> ModList = new List<string>();// {"D:/jynew/MOD/replace_sprite"};
+        /// <summary>
+        /// TODO：添加界面可配置和可导入
+        /// </summary>
+        public static readonly List<string> ModList = new List<string>();// {"D:/jynew/MOD/replace_sprite"};
 
-        public static Dictionary<string, Object> reloadRes = new Dictionary<string, Object>();
+        /// <summary>
+        /// 存储所有的重载资源
+        /// </summary>
+        private static readonly Dictionary<string, Object> _remapResources = new Dictionary<string, Object>();
         
         public static async UniTask Init()
         {
-            reloadRes.Clear();//for test
+            _remapResources.Clear();//for test
             
             foreach (var modUri in ModList)
             {
@@ -37,11 +62,11 @@ namespace Jyx2.MOD
                     if (obj is Texture2D)
                     {
                         Texture2D t = obj as Texture2D;
-                        reloadRes[overrideAddr] = Sprite.Create(t, new Rect(0, 0, t.width, t.height), Vector2.zero);
+                        _remapResources[overrideAddr] = Sprite.Create(t, new Rect(0, 0, t.width, t.height), Vector2.zero);
                     }
                     else
                     {
-                        reloadRes[overrideAddr] = obj;    
+                        _remapResources[overrideAddr] = obj;    
                     }
                 }
             }
@@ -50,9 +75,9 @@ namespace Jyx2.MOD
 #region 复合MOD加载资源的接口
         public static async UniTask<Sprite> LoadSprite(string uri)
         {
-            if (reloadRes.ContainsKey(uri.ToLower()))
+            if (_remapResources.ContainsKey(uri.ToLower()))
             {
-                var obj = reloadRes[uri.ToLower()];
+                var obj = _remapResources[uri.ToLower()];
                 if (obj is Sprite)
                 {
                     return obj as Sprite;
