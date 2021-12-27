@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("Key", "Name", "Sex", "Level", "Exp", "Attack", "Qinggong", "Defence", "Heal", "UsePoison", "DePoison", "AntiPoison", "Quanzhang", "Yujian", "Shuadao", "Qimen", "Anqi", "Wuxuechangshi", "Pinde", "AttackPoison", "Zuoyouhubo", "Shengwang", "IQ", "ExpForItem", "Wugongs", "Items", "Mp", "MaxMp", "MpType", "Hp", "MaxHp", "Hurt", "Poison", "Tili", "ExpForMakeItem", "Weapon", "Armor", "Xiulianwupin", "CurrentSkill", "ExpGot", "_data", "View", "BattleModel", "_isInBattle", "team", "sp", "isAI", "_pos", "isActed", "isWaiting", "_isStun")]
+	[ES3PropertiesAttribute("Key", "Name", "Sex", "Level", "Exp", "Attack", "Qinggong", "Defence", "Heal", "UsePoison", "DePoison", "AntiPoison", "Quanzhang", "Yujian", "Shuadao", "Qimen", "Anqi", "Wuxuechangshi", "Pinde", "AttackPoison", "Zuoyouhubo", "Shengwang", "IQ", "ExpForItem", "Wugongs", "Items", "Mp", "MaxMp", "MpType", "Hp", "MaxHp", "Hurt", "Poison", "Tili", "ExpForMakeItem", "Weapon", "Armor", "Xiulianwupin", "CurrentSkill")]
 	public class ES3UserType_RoleInstance : ES3ObjectType
 	{
 		public static ES3Type Instance = null;
@@ -55,18 +55,6 @@ namespace ES3Types
 			writer.WriteProperty("Armor", instance.Armor, ES3Type_int.Instance);
 			writer.WriteProperty("Xiulianwupin", instance.Xiulianwupin, ES3Type_int.Instance);
 			writer.WriteProperty("CurrentSkill", instance.CurrentSkill, ES3Type_int.Instance);
-			writer.WriteProperty("ExpGot", instance.ExpGot, ES3Type_int.Instance);
-			writer.WritePrivateFieldByRef("_data", instance);
-			writer.WritePropertyByRef("View", instance.View);
-			writer.WriteProperty("BattleModel", instance.BattleModel, ES3Internal.ES3TypeMgr.GetES3Type(typeof(Jyx2.BattleFieldModel)));
-			writer.WritePrivateField("_isInBattle", instance);
-			writer.WriteProperty("team", instance.team, ES3Type_int.Instance);
-			writer.WriteProperty("sp", instance.sp, ES3Type_float.Instance);
-			writer.WriteProperty("isAI", instance.isAI, ES3Type_bool.Instance);
-			writer.WritePrivateField("_pos", instance);
-			writer.WriteProperty("isActed", instance.isActed, ES3Type_bool.Instance);
-			writer.WriteProperty("isWaiting", instance.isWaiting, ES3Type_bool.Instance);
-			writer.WritePrivateField("_isStun", instance);
 		}
 
 		protected override void ReadObject<T>(ES3Reader reader, object obj)
@@ -194,42 +182,6 @@ namespace ES3Types
 					case "CurrentSkill":
 						instance.CurrentSkill = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
-					case "ExpGot":
-						instance.ExpGot = reader.Read<System.Int32>(ES3Type_int.Instance);
-						break;
-					case "_data":
-					reader.SetPrivateField("_data", reader.Read<Jyx2Configs.Jyx2ConfigCharacter>(), instance);
-					break;
-					case "View":
-						instance.View = reader.Read<MapRole>();
-						break;
-					case "BattleModel":
-						instance.BattleModel = reader.Read<Jyx2.BattleFieldModel>();
-						break;
-					case "_isInBattle":
-					reader.SetPrivateField("_isInBattle", reader.Read<System.Boolean>(), instance);
-					break;
-					case "team":
-						instance.team = reader.Read<System.Int32>(ES3Type_int.Instance);
-						break;
-					case "sp":
-						instance.sp = reader.Read<System.Single>(ES3Type_float.Instance);
-						break;
-					case "isAI":
-						instance.isAI = reader.Read<System.Boolean>(ES3Type_bool.Instance);
-						break;
-					case "_pos":
-					reader.SetPrivateField("_pos", reader.Read<Jyx2.BattleBlockVector>(), instance);
-					break;
-					case "isActed":
-						instance.isActed = reader.Read<System.Boolean>(ES3Type_bool.Instance);
-						break;
-					case "isWaiting":
-						instance.isWaiting = reader.Read<System.Boolean>(ES3Type_bool.Instance);
-						break;
-					case "_isStun":
-					reader.SetPrivateField("_isStun", reader.Read<System.Boolean>(), instance);
-					break;
 					default:
 						reader.Skip();
 						break;
