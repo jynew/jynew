@@ -29,17 +29,23 @@ namespace Jyx2.MOD
         /// <summary>
         /// TODO：添加界面可配置和可导入
         /// </summary>
-        public static readonly List<string> ModList = new List<string>();// {"D:/jynew/MOD/replace_sprite","D:/jynew/MOD/replace_audio"};
+        public static readonly List<string> ModList = new List<string>();// { "D:/jynew/MOD/replace_sprite", "D:/jynew/MOD/replace_audio" };
+
+        public struct AssetBundleItem
+        {
+            public string name;
+            public AssetBundle ab;
+        }
 
         /// <summary>
         /// 存储所有的重载资源
         /// </summary>
-        private static readonly Dictionary<string, Object> _remapResources = new Dictionary<string, Object>();
-        
+        private static readonly Dictionary<string, AssetBundleItem> _remap = new Dictionary<string, AssetBundleItem>();
+
         public static async UniTask Init()
         {
-            _remapResources.Clear();//for test
-            
+            _remap.Clear();//for test
+
             foreach (var modUri in ModList)
             {
                 var ab = await AssetBundle.LoadFromFileAsync(modUri);
@@ -49,32 +55,14 @@ namespace Jyx2.MOD
                     continue;
                 }
 
-                Jyx2ModInstance modInstance = new Jyx2ModInstance()
-                    {uri = modUri, assetBundle = ab};
-                
+                Jyx2ModInstance modInstance = new Jyx2ModInstance() { uri = modUri, assetBundle = ab };
+
                 //记录和复写所有的MOD重载资源
                 foreach (var name in ab.GetAllAssetNames())
                 {
                     Debug.Log($"mod file:{name}");
-                    var obj = ab.LoadAsset(name);
                     string overrideAddr = "assets/" + name.Substring(name.IndexOf("buildsource"));
-
-                    //UI
-                    if (obj is Texture2D)
-                    {
-                        Texture2D t = obj as Texture2D;
-                        _remapResources[overrideAddr] = Sprite.Create(t, new Rect(0, 0, t.width, t.height), Vector2.zero);
-                    }
-                    //声音
-                    else if (obj is AudioClip)
-                    {
-                        AudioClip t = obj as AudioClip;
-                        _remapResources[overrideAddr] = t;
-                    }
-                    else
-                    {
-                        _remapResources[overrideAddr] = obj;    
-                    }
+                    _remap[overrideAddr] = new AssetBundleItem() { name = name, ab = ab };
                 }
             }
         }
@@ -82,13 +70,10 @@ namespace Jyx2.MOD
 #region 复合MOD加载资源的接口
         public static async UniTask<T> LoadAsset<T>(string uri) where T : Object
         {
-            if (_remapResources.ContainsKey(uri.ToLower()))
+            if (_remap.ContainsKey(uri.ToLower()))
             {
-                var obj = _remapResources[uri.ToLower()];
-                if (obj is T)
-                {
-                    return obj as T;
-                }
+                var assetBundleItem = _remap[uri.ToLower()];
+                return assetBundleItem.ab.LoadAsset<T>(assetBundleItem.name);
             }
             return await Addressables.LoadAssetAsync<T>(uri);
         }
