@@ -60,7 +60,7 @@ namespace Jyx2Configs
                 //_sprite = await Addressables.LoadAssetAsync<Sprite>(PicUri).Task;
 
                 var path = Jyx2ResourceHelper.GetAssetRefAddress(Pic); //先转换到URL
-                _sprite = await MODLoader.LoadSprite(path); //在MOD列表中过滤
+                _sprite = await MODLoader.LoadAsset<Sprite>(path); //在MOD列表中过滤
                 
                 //下面代码会可能重入导致出错：
                 //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/

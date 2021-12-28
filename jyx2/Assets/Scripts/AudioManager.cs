@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Jyx2.MOD;
 
 public class AudioManager
 {
@@ -63,7 +64,10 @@ public class AudioManager
             return;
         }
 
-        var audioClip = await Addressables.LoadAssetAsync<AudioClip>(path).Task;
+  /*      var audioClip = await Addressables.LoadAssetAsync<AudioClip>(path).Task;*/
+
+        var audioClip = await MODLoader.LoadAsset<AudioClip>(path);
+
         if (audioClip != null)
         {
             bgmAudioSource.clip = audioClip;

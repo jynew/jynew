@@ -29,7 +29,7 @@ namespace Jyx2.MOD
         /// <summary>
         /// TODO：添加界面可配置和可导入
         /// </summary>
-        public static readonly List<string> ModList = new List<string>();// {"D:/jynew/MOD/replace_sprite"};
+        public static readonly List<string> ModList = new List<string>();// {"D:/jynew/MOD/replace_sprite","D:/jynew/MOD/replace_audio"};
 
         /// <summary>
         /// 存储所有的重载资源
@@ -59,10 +59,17 @@ namespace Jyx2.MOD
                     var obj = ab.LoadAsset(name);
                     string overrideAddr = "assets/" + name.Substring(name.IndexOf("buildsource"));
 
+                    //UI
                     if (obj is Texture2D)
                     {
                         Texture2D t = obj as Texture2D;
                         _remapResources[overrideAddr] = Sprite.Create(t, new Rect(0, 0, t.width, t.height), Vector2.zero);
+                    }
+                    //声音
+                    else if (obj is AudioClip)
+                    {
+                        AudioClip t = obj as AudioClip;
+                        _remapResources[overrideAddr] = t;
                     }
                     else
                     {
@@ -73,17 +80,17 @@ namespace Jyx2.MOD
         }
 
 #region 复合MOD加载资源的接口
-        public static async UniTask<Sprite> LoadSprite(string uri)
+        public static async UniTask<T> LoadAsset<T>(string uri) where T : Object
         {
             if (_remapResources.ContainsKey(uri.ToLower()))
             {
                 var obj = _remapResources[uri.ToLower()];
-                if (obj is Sprite)
+                if (obj is T)
                 {
-                    return obj as Sprite;
+                    return obj as T;
                 }
             }
-            return await Addressables.LoadAssetAsync<Sprite>(uri);
+            return await Addressables.LoadAssetAsync<T>(uri);
         }
 #endregion
     }
