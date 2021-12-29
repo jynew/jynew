@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -164,10 +165,7 @@ public class GameUtil
     {
         //惨叫
         string path = "Assets/BuildSource/sound/nancanjiao.wav";
-        Jyx2ResourceHelper.LoadAsset<AudioClip>(path, clip =>
-        {
-            AudioManager.PlayClipAtPoint(clip, Camera.main.transform.position);
-        });
+        AudioManager.PlayClipAtPoint(path, Camera.main.transform.position).Forget();
 
         //血色
         var blackCover = LevelMaster.Instance.transform.Find("UI/BlackCover");

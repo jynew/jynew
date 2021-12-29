@@ -916,13 +916,8 @@ namespace Jyx2
         {
             RunInMainThread(()=>
             {
-                string path = "Assets/BuildSource/sound/e" +
-                    (waveIndex < 10 ? ("0" + waveIndex.ToString()) : waveIndex.ToString()) + ".wav";
-
-                Jyx2ResourceHelper.LoadAsset<AudioClip>(path, clip =>
-                {
-                    AudioManager.PlayClipAtPoint(clip, Camera.main.transform.position);
-                });
+                string path = "Assets/BuildSource/sound/e" + (waveIndex < 10 ? ("0" + waveIndex.ToString()) : waveIndex.ToString()) + ".wav";
+                AudioManager.PlayClipAtPoint(path, Camera.main.transform.position).Forget();
             });
         }
 
