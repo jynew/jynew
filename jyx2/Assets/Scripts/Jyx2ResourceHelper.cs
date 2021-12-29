@@ -58,7 +58,8 @@ namespace Jyx2
             //注：不Release的话，Addressable会进行缓存
             //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/
 
-            return await Addressables.LoadAssetAsync<Sprite>(refernce);
+            /*            return await Addressables.LoadAssetAsync<Sprite>(refernce);*/
+            return await MODLoader.LoadAsset<Sprite>(Jyx2ResourceHelper.GetAssetRefAddress(refernce));
         }
     }
 }

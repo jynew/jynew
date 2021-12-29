@@ -19,6 +19,7 @@ using DG.Tweening;
 using Jyx2Configs;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
+using Jyx2.MOD;
 
 public enum ChatType 
 {
@@ -92,7 +93,7 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
         var url = $"Assets/BuildSource/head/{headId}.png";
         
         RoleHeadImage_Image.gameObject.SetActive(false);
-        RoleHeadImage_Image.sprite = await Addressables.LoadAssetAsync<Sprite>(url).Task;
+        RoleHeadImage_Image.sprite = await MODLoader.LoadAsset<Sprite>(url);
         RoleHeadImage_Image.gameObject.SetActive(true);
     }
 
@@ -113,26 +114,26 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
             
             return;
         }
-		var finalS=_currentText;
-		if(_currentText.Length>GameConst.MAX_CHAT_CHART_NUM){
-			int preIndex = _currentShowIndex;
-			string[] sList=_currentText.Substring(preIndex,_currentText.Length - preIndex).Split(new char[]{'！','？','，','　'},StringSplitOptions.RemoveEmptyEntries);//暂时不对,'．'进行分割，不然对话中...都会被去除掉
-			var tempIndex=0;
-			foreach(var i in sList){
-				var tempNum=i.Length+1;//包含分隔符
-				if(tempIndex+tempNum<GameConst.MAX_CHAT_CHART_NUM){
-					tempIndex+=tempNum;
-					_currentShowIndex+=tempNum;
-					continue;
-				}
-				break;
-			}
-			_currentShowIndex = Mathf.Clamp(_currentShowIndex, 0, _currentText.Length);
-			finalS=_currentText.Substring(preIndex, _currentShowIndex - preIndex);
-		}else{
-			_currentShowIndex = _currentText.Length;
-		}
-		MainContent_Text.text = finalS;
+        var finalS=_currentText;
+        if(_currentText.Length>GameConst.MAX_CHAT_CHART_NUM){
+            int preIndex = _currentShowIndex;
+            string[] sList=_currentText.Substring(preIndex,_currentText.Length - preIndex).Split(new char[]{'！','？','，','　'},StringSplitOptions.RemoveEmptyEntries);//暂时不对,'．'进行分割，不然对话中...都会被去除掉
+            var tempIndex=0;
+            foreach(var i in sList){
+                var tempNum=i.Length+1;//包含分隔符
+                if(tempIndex+tempNum<GameConst.MAX_CHAT_CHART_NUM){
+                    tempIndex+=tempNum;
+                    _currentShowIndex+=tempNum;
+                    continue;
+                }
+                break;
+            }
+            _currentShowIndex = Mathf.Clamp(_currentShowIndex, 0, _currentText.Length);
+            finalS=_currentText.Substring(preIndex, _currentShowIndex - preIndex);
+        }else{
+            _currentShowIndex = _currentText.Length;
+        }
+        MainContent_Text.text = finalS;
     }
 
     public void Show(int headId, string msg, int type, Action callback)

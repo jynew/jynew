@@ -125,4 +125,11 @@ public class AudioManager
         var soundEffectVolume = GameSettingManager.settings[GameSettingManager.Catalog.SoundEffect];
         AudioSource.PlayClipAtPoint(clip, position, (float)soundEffectVolume);
     }
+    public static async UniTask PlayClipAtPoint(string path, Vector3 position)
+    {
+        Init();
+        var soundEffectVolume = GameSettingManager.settings[GameSettingManager.Catalog.SoundEffect];
+        var clip = await MODLoader.LoadAsset<AudioClip>(path);
+        AudioSource.PlayClipAtPoint(clip, position, (float)soundEffectVolume);
+    }
 }
