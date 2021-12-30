@@ -77,6 +77,25 @@ namespace Jyx2.MOD
             }
             return await Addressables.LoadAssetAsync<T>(uri);
         }
+
+        public static async UniTask<List<T>> LoadAssets<T>(List<string> uris) where T : Object
+        {
+            var assets = new List<T>();
+            var allAssets = await Addressables.LoadAssetsAsync<T>(uris, null, Addressables.MergeMode.Union).Task;
+            for (int i = 0; i < uris.Count; i++)
+            {
+                if(_remap.ContainsKey(uris[i].ToLower()))
+                {
+                    var assetBundleItem = _remap[uris[i].ToLower()];
+                    assets.Add(assetBundleItem.ab.LoadAsset<T>(assetBundleItem.name));
+                }
+                else
+                {
+                    assets.Add(allAssets[i]);
+                }
+            }
+            return assets;
+        }
 #endregion
     }
 
