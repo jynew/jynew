@@ -217,26 +217,22 @@ namespace Jyx2
         {
             /*            if (Application.isEditor) //编辑器模式下不需要缓存，直接读取文件
                             return;*/
+            var paths = new List<string>();
+            var overridePaths = new List<string>();
+            FileTools.GetAllFilePath("Assets/BuildSource/Lua", paths, new List<string>() { ".lua" });
 
-            /*            var assets = await Addressables
-                            .LoadAssetsAsync<TextAsset>(new List<object>() {"lua"}, null,
-                                Addressables.MergeMode.Union).Task;
-
-                        __luaMapper = new Dictionary<string, byte[]>();
-                        foreach (var a in assets)
-                        {
-                            __luaMapper[a.name] = Encoding.UTF8.GetBytes(a.text);
-                        }*/
-            List<string> paths = new List<string>();
-            List<string> filter = new List<string>() { ".lua" };
-            FileTools.GetAllFilePath("Assets/BuildSource/Lua", paths, filter);
-
-            __luaMapper = new Dictionary<string, byte[]>();
             foreach (var path in paths)
             {
                 var overridePath = path.Substring(path.IndexOf("Assets"));
-                var asset = await MODLoader.LoadAsset<TextAsset>(overridePath);
-                __luaMapper[asset.name] = Encoding.UTF8.GetBytes(asset.text);
+                overridePaths.Add(overridePath);
+            }
+
+            var assets = await MODLoader.LoadAssets<TextAsset>(overridePaths);
+
+            __luaMapper = new Dictionary<string, byte[]>();
+            foreach (var a in assets)
+            {
+                __luaMapper[a.name] = Encoding.UTF8.GetBytes(a.text);
             }
         }
         
