@@ -226,6 +226,14 @@ public static class GameSettingManager
     {
         if (index is int value)
         {
+            // 如果存储的游戏设置分辨率索引值超出了当前设备所支持的分辨率的数组范围，使用当前设备上的默认分辨率。
+            // 这个问题通常发生在开发中更换显示设备的情况下。实际应用中应该不会出现。除非日后有用户设置迁移功能。
+            if (value >= resolutions.Length)
+            {
+                value = GetDefaultResolution();
+                Debug.Log("[Dev]存储分辨率与当前显示设备不兼容。适用当前显示设备的默认分辨率："+resolutions[value]);
+            }
+            
             Resolution resolution = resolutions[value];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
