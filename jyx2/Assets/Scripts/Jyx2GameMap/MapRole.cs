@@ -613,7 +613,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
         if (modelAsset == null) return;
         
-        ModelView = Instantiate(modelAsset.m_View, gameObject.transform, false);
+        ModelView = Instantiate(await modelAsset.GetView(), gameObject.transform, false);
         ModelView.transform.localPosition = Vector3.zero;
 
         //如果在战斗中

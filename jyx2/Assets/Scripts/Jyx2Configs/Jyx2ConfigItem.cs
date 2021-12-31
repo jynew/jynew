@@ -67,7 +67,7 @@ namespace Jyx2Configs
             if (Pic == null || string.IsNullOrEmpty(Pic.AssetGUID)) return null;
             if (_sprite == null)
             {
-                _sprite = await MODLoader.LoadAsset<Sprite>(Jyx2ResourceHelper.GetAssetRefAddress(Pic));
+                _sprite = await MODLoader.LoadAsset<Sprite>(Jyx2ResourceHelper.GetAssetRefAddress(Pic, typeof(Texture2D)));
             }
             return _sprite;
         }
