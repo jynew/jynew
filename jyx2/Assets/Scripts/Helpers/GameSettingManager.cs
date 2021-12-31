@@ -224,6 +224,7 @@ public static class GameSettingManager
 
     private static void SetResolution(object index)
     {
+#if !UNITY_ANDROID
         if (index is int value)
         {
             // 如果存储的游戏设置分辨率索引值超出了当前设备所支持的分辨率的数组范围，使用当前设备上的默认分辨率。
@@ -241,6 +242,7 @@ public static class GameSettingManager
         {
             Debug.LogError("SetResolution: 参数必须是float.");
         }
+#endif
     }
 
     /// <summary>
@@ -302,6 +304,7 @@ public static class GameSettingManager
 
     private static void SetFullScreen(object mode)
     {
+#if !UNITY_ANDROID
         if (mode is int value)
         {
             Screen.fullScreen = value == 1;
@@ -310,6 +313,7 @@ public static class GameSettingManager
         {
             Debug.LogError("SetWindowMode: 参数必须是int.");
         }
+#endif
     }
 
     #endregion
