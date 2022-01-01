@@ -26,6 +26,7 @@ namespace Jyx2
     {
         [BoxGroup("数据", false)]
         public AssetReferenceT<GameObject> View;
+        
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         [OnValueChanged("AutoBindModelData")]
 
@@ -34,10 +35,8 @@ namespace Jyx2
         public async UniTask<GameObject> GetView()
         {
             if (View == null || string.IsNullOrEmpty(View.AssetGUID)) return m_View;
-
-            m_View = await MODLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
-
-            return m_View;
+            
+            return await MODLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
         }
 
         [BoxGroup("数据")] [Header("剑")] [SerializeReference]

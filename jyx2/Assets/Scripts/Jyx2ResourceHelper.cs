@@ -40,27 +40,6 @@ namespace Jyx2
             image.sprite = await task;
             image.gameObject.SetActive(true);
         }
-        
-        public static void LoadAsyncForget(this Image image, AssetReference reference)
-        {
-            LoadAsync(image, reference).Forget();
-        }
-    
-        public static async UniTask LoadAsync(this Image image, AssetReference reference)
-        {
-            image.gameObject.SetActive(false);
-            image.sprite = await LoadSprite(reference);
-            image.gameObject.SetActive(true);
-        }
-        
-        public static async UniTask<Sprite> LoadSprite(AssetReference refernce)
-        {
-            //注：不Release的话，Addressable会进行缓存
-            //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/
-
-            /*            return await Addressables.LoadAssetAsync<Sprite>(refernce);*/
-            return await MODLoader.LoadAsset<Sprite>(Jyx2ResourceHelper.GetAssetRefAddress(refernce, typeof(Texture2D)));
-        }
     }
 }
 
