@@ -47,7 +47,7 @@ public class AudioManager
         if (audioClip != bgmAudioSource.clip)
         {
             bgmAudioSource.clip = audioClip;
-            bgmAudioSource.Play();    
+            bgmAudioSource.Play();
         }
     }
 
@@ -59,12 +59,7 @@ public class AudioManager
             return;
         }
 
-        if(_currentPlayMusic == path)
-        {
-            return;
-        }
-
-  /*      var audioClip = await Addressables.LoadAssetAsync<AudioClip>(path).Task;*/
+        /*      var audioClip = await Addressables.LoadAssetAsync<AudioClip>(path).Task;*/
 
         var audioClip = await MODLoader.LoadAsset<AudioClip>(path);
 
@@ -72,11 +67,8 @@ public class AudioManager
         {
             bgmAudioSource.clip = audioClip;
             bgmAudioSource.Play();
-            _currentPlayMusic = path;
         }
     }
-
-    private static string _currentPlayMusic;
 
     private static AudioSource _bgmAudioSource = null;
 
@@ -102,14 +94,11 @@ public class AudioManager
     {
         if (_hasInitialized)
             return;
-        
+
         GameSettingManager.SubscribeEnforceEvent(
-            GameSettingManager.Catalog.Volume, (volume) =>
-            {
-                bgmAudioSource.volume = (float)volume; 
-            }, 
+            GameSettingManager.Catalog.Volume, (volume) => { bgmAudioSource.volume = (float)volume; },
             true);
-        
+
         _hasInitialized = true;
     }
 
@@ -125,6 +114,7 @@ public class AudioManager
         var soundEffectVolume = GameSettingManager.settings[GameSettingManager.Catalog.SoundEffect];
         AudioSource.PlayClipAtPoint(clip, position, (float)soundEffectVolume);
     }
+
     public static async UniTask PlayClipAtPoint(string path, Vector3 position)
     {
         Init();
