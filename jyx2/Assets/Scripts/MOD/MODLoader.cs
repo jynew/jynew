@@ -33,8 +33,8 @@ namespace Jyx2.MOD
 
         public struct AssetBundleItem
         {
-            public string name;
-            public AssetBundle ab;
+            public string Name;
+            public AssetBundle Ab;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Jyx2.MOD
                 {
                     Debug.Log($"mod file:{name}");
                     string overrideAddr = "assets/" + name.Substring(name.IndexOf("buildsource"));
-                    _remap[overrideAddr] = new AssetBundleItem() { name = name, ab = ab };
+                    _remap[overrideAddr] = new AssetBundleItem() { Name = name, Ab = ab };
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace Jyx2.MOD
             if (_remap.ContainsKey(uri.ToLower()))
             {
                 var assetBundleItem = _remap[uri.ToLower()];
-                return assetBundleItem.ab.LoadAsset<T>(assetBundleItem.name);
+                return assetBundleItem.Ab.LoadAsset<T>(assetBundleItem.Name);
             }
             return await Addressables.LoadAssetAsync<T>(uri);
         }
@@ -87,7 +87,7 @@ namespace Jyx2.MOD
                 if(_remap.ContainsKey(uris[i].ToLower()))
                 {
                     var assetBundleItem = _remap[uris[i].ToLower()];
-                    assets.Add(assetBundleItem.ab.LoadAsset<T>(assetBundleItem.name));
+                    assets.Add(assetBundleItem.Ab.LoadAsset<T>(assetBundleItem.Name));
                 }
                 else
                 {

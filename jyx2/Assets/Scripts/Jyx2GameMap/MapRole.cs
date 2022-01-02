@@ -605,6 +605,8 @@ public class MapRole : Jyx2AnimationBattleRole
     {
         if (DataInstance == null) return;
         
+        var view = await modelAsset.GetView();
+        
         if (Application.isPlaying)
         {
             //销毁所有的孩子
@@ -613,7 +615,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
         if (modelAsset == null) return;
         
-        ModelView = Instantiate(modelAsset.m_View, gameObject.transform, false);
+        ModelView = Instantiate(view, transform);
         ModelView.transform.localPosition = Vector3.zero;
 
         //如果在战斗中

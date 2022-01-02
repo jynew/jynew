@@ -15,6 +15,9 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using Cysharp.Threading.Tasks;
+using Jyx2.MOD;
 
 namespace Jyx2
 {
@@ -22,9 +25,18 @@ namespace Jyx2
     public class ModelAsset : ScriptableObject
     {
         [BoxGroup("数据", false)]
+        public AssetReferenceT<GameObject> View;
+        [BoxGroup("数据")] [Header("模型")]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         [OnValueChanged("AutoBindModelData")]
         public GameObject m_View;
+
+        public async UniTask<GameObject> GetView()
+        {
+            if (View == null || string.IsNullOrEmpty(View.AssetGUID)) return null;
+            
+            return await MODLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
+        }
 
         [BoxGroup("数据")] [Header("剑")] [SerializeReference]
         public SwordPart m_SwordWeapon;
