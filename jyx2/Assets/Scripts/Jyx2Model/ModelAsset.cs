@@ -26,15 +26,14 @@ namespace Jyx2
     {
         [BoxGroup("数据", false)]
         public AssetReferenceT<GameObject> View;
-        
+        [BoxGroup("数据")] [Header("模型")]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         [OnValueChanged("AutoBindModelData")]
-
         public GameObject m_View;
 
         public async UniTask<GameObject> GetView()
         {
-            if (View == null || string.IsNullOrEmpty(View.AssetGUID)) return m_View;
+            if (View == null || string.IsNullOrEmpty(View.AssetGUID)) return null;
             
             return await MODLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
         }
