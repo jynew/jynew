@@ -6,6 +6,8 @@ using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Jyx2.MOD;
+using Jyx2.Middleware;
 
 namespace Jyx2Configs
 {
@@ -45,12 +47,12 @@ namespace Jyx2Configs
             
             _isInited = true;
             int total = 0;
-            total += await Init<Jyx2ConfigCharacter>();
-            total += await Init<Jyx2ConfigItem>();
-            total += await Init<Jyx2ConfigSkill>();
-            total += await Init<Jyx2ConfigShop>();
-            total += await Init<Jyx2ConfigMap>();
-            total += await Init<Jyx2ConfigBattle>();
+            total += await Init<Jyx2ConfigCharacter>("Assets/BuildSource/Configs/Characters");
+            total += await Init<Jyx2ConfigItem>("Assets/BuildSource/Configs/Items");
+            total += await Init<Jyx2ConfigSkill>("Assets/BuildSource/Configs/Skills");
+            total += await Init<Jyx2ConfigShop>("Assets/BuildSource/Configs/Shops");
+            total += await Init<Jyx2ConfigMap>("Assets/BuildSource/Configs/Maps");
+            total += await Init<Jyx2ConfigBattle>("Assets/BuildSource/Configs/Battles");
             
             Debug.Log($"载入完成，总数{total}个配置asset");
         }
@@ -93,18 +95,27 @@ namespace Jyx2Configs
         /// 初始化指定类型配置
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async UniTask<int> Init<T>() where T : Jyx2ConfigBase
+        public async UniTask<int> Init<T>(string path) where T : Jyx2ConfigBase
         {
             if (_dataBase.ContainsKey(typeof(T)))
             {
                 throw new Exception("类型" + typeof(T) + "已经创建过了，不允许重复创建！");
             }
+            
+            var filePaths = new List<string>();
+            var overridePaths = new List<string>();
+            FileTools.GetAllFilePath(path, filePaths, new List<string>() { ".asset" });
 
-            var assets = await Addressables
-                .LoadAssetsAsync<T>(new List<object>() {"configs"}, null,
-                    Addressables.MergeMode.Union).Task;
+            foreach (var filePath in filePaths)
+            {
+                var overridePath = filePath.Substring(filePath.IndexOf("Assets"));
+                overridePaths.Add(overridePath);
+            }
+            
+            var assets = await MODLoader.LoadAssets<T>(overridePaths);
 
             var db = new Dictionary<int, Jyx2ConfigBase>();
             _dataBase[typeof(T)] = db;

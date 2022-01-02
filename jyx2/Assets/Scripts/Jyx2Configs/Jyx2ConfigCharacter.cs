@@ -56,9 +56,6 @@ namespace Jyx2Configs
             
             if (_sprite == null)
             {
-
-                //_sprite = await Addressables.LoadAssetAsync<Sprite>(PicUri).Task;
-
                 var path = Jyx2ResourceHelper.GetAssetRefAddress(Pic, typeof(Texture2D)); //先转换到URL
                 _sprite = await MODLoader.LoadAsset<Sprite>(path); //在MOD列表中过滤
                 
