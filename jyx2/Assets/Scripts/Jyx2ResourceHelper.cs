@@ -18,6 +18,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Jyx2.MOD;
+using Jyx2.Middleware;
 using Jyx2Configs;
 using ProtoBuf;
 using UnityEngine;
@@ -60,7 +61,7 @@ public static class Jyx2ResourceHelper
         await MODLoader.Init();
         
         //全局配置表
-        var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
+        var t = await MODLoader.LoadAsset<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
         if (t != null)
         {
             GlobalAssetConfig.Instance = t;
@@ -68,7 +69,16 @@ public static class Jyx2ResourceHelper
         }
 
         //技能池
-        var task = await Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null);
+        var filePaths = new List<string>();
+        var overridePaths = new List<string>();
+        FileTools.GetAllFilePath("Assets/BuildSource/Skills", filePaths, new List<string>() { ".asset" });
+
+        foreach (var filePath in filePaths)
+        {
+            var overridePath = filePath.Substring(filePath.IndexOf("Assets"));
+            overridePaths.Add(overridePath);
+        }
+        var task = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
         if (task != null)
         {
             Jyx2SkillDisplayAsset.All = task;
