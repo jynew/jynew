@@ -34,7 +34,7 @@ public class AudioManager
 
     private static async UniTask DoPlayMusic(AssetReference asset)
     {
-        var audioClip = await Addressables.LoadAssetAsync<AudioClip>(asset);
+        var audioClip = await MODLoader.LoadAsset<AudioClip>(Jyx2ResourceHelper.GetAssetRefAddress(asset, typeof(AudioClip)));
         if (audioClip != null)
         {
             PlayMusic(audioClip);
