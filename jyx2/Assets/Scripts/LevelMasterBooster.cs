@@ -13,6 +13,7 @@ using Cysharp.Threading.Tasks;
 
 using Jyx2;
 using Jyx2.Middleware;
+using Jyx2.MOD;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -132,7 +133,7 @@ public class LevelMasterBooster : MonoBehaviour
         return battleLoader != null;
     }
 
-    public void RefreshSceneObjects()
+    public async UniTask RefreshSceneObjects()
     {
         if (IsBattle())
             return;
@@ -184,8 +185,8 @@ public class LevelMasterBooster : MonoBehaviour
 
                 try
                 {
-                    Jyx2ResourceHelper.LoadAsset<RuntimeAnimatorController>(animationControllerPath,
-                        rst => { animator.runtimeAnimatorController = rst; });
+                    animator.runtimeAnimatorController =
+                        await MODLoader.LoadAsset<RuntimeAnimatorController>(animationControllerPath);
                 }
                 catch
                 {
