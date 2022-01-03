@@ -44,10 +44,10 @@ public class MapTeleportor : MonoBehaviour
 
 	private bool triggerEnabled = false;
 
-	void OnTriggerEnter(Collider other)
+	async void OnTriggerEnter(Collider other)
 	{
 		if (!triggerEnabled) return;
-		ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText);
+		await ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText);
 		UnityTools.HighLightObjects(m_EventTargets, Color.red);
 	}
 
@@ -83,7 +83,7 @@ public class MapTeleportor : MonoBehaviour
 		return false;
 	}
 
-	void ShowEnterButton(int transportMapId, string transportTriggerName, string showText)
+	async UniTask ShowEnterButton(int transportMapId, string transportTriggerName, string showText)
 	{
 		if (!CheckCanEnterMap(transportMapId))
 		{
@@ -96,7 +96,7 @@ public class MapTeleportor : MonoBehaviour
 			showText = "进入";
 		}
 
-		Jyx2_UIManager.Instance.ShowUI(nameof(InteractUIPanel), showText, new Action(() =>
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), showText, new Action(() =>
 		{
 			DoTransport();
 		}));

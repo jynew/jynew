@@ -240,9 +240,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         get { return GameRuntimeData.Instance; }
     }
 
-    void OnWeaponClick()
+    async void OnWeaponClick()
     {
-        SelectFromBag(
+        await SelectFromBag(
             (itemId) =>
             {
                 var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
@@ -266,9 +266,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             m_currentRole.Weapon);
     }
 
-    void OnArmorClick()
+    async void OnArmorClick()
     {
-        SelectFromBag(
+        await SelectFromBag(
             (itemId) =>
             {
                 var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
@@ -289,37 +289,22 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             m_currentRole.Armor);
     }
 
-    void OnXiulianClick()
+    async void OnXiulianClick()
     {
-        SelectFromBag(
-            (itemId) =>
+        async void Callback(int itemId)
+        {
+            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            if (m_currentRole.Xiulianwupin == itemId)
             {
-                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
-                if (m_currentRole.Xiulianwupin == itemId)
+                runtime.SetItemUser(item.Id, -1);
+                m_currentRole.ExpForItem = 0;
+                m_currentRole.Xiulianwupin = -1;
+            }
+            else
+            {
+                if (item.NeedCastration) //辟邪剑谱和葵花宝典
                 {
-                    runtime.SetItemUser(item.Id, -1);
-                    m_currentRole.ExpForItem = 0;
-                    m_currentRole.Xiulianwupin = -1;
-                }
-                else
-                {
-                    if (item.NeedCastration)//辟邪剑谱和葵花宝典
-                    {
-                        GameUtil.ShowYesOrNoCastrate(m_currentRole, () =>
-                        {
-                            if (m_currentRole.GetXiulianItem() != null)
-                            {
-                                runtime.SetItemUser(m_currentRole.Xiulianwupin, -1);
-                                m_currentRole.ExpForItem = 0;
-                            }
-
-                            m_currentRole.Xiulianwupin = itemId;
-                            runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
-
-                            RefreshCurrent();
-                        });
-                    }
-                    else
+                    await GameUtil.ShowYesOrNoCastrate(m_currentRole, () =>
                     {
                         if (m_currentRole.GetXiulianItem() != null)
                         {
@@ -329,9 +314,26 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
                         m_currentRole.Xiulianwupin = itemId;
                         runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
-                    }
+
+                        RefreshCurrent();
+                    });
                 }
-            },
+                else
+                {
+                    if (m_currentRole.GetXiulianItem() != null)
+                    {
+                        runtime.SetItemUser(m_currentRole.Xiulianwupin, -1);
+                        m_currentRole.ExpForItem = 0;
+                    }
+
+                    m_currentRole.Xiulianwupin = itemId;
+                    runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
+                }
+            }
+        }
+
+        await SelectFromBag(
+            Callback,
             (item) =>
             {
                 return (int) item.ItemType == 2 && (runtime.GetItemUser(item.Id) == m_currentRole.GetJyx2RoleId() || runtime.GetItemUser(item.Id) == -1);
@@ -339,9 +341,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             m_currentRole.Xiulianwupin);
     }
 
-    void SelectFromBag(Action<int> Callback, Func<Jyx2ConfigItem, bool> filter, int current_itemId)
+    async UniTask SelectFromBag(Action<int> Callback, Func<Jyx2ConfigItem, bool> filter, int current_itemId)
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), runtime.Items, new Action<int>((itemId) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), runtime.Items, new Action<int>((itemId) =>
         {
             if (itemId != -1 && !m_currentRole.CanUseItem(itemId))
             {
@@ -360,7 +362,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         }), filter, current_itemId);
     }
 
-    void OnHealClick()
+    async void OnHealClick()
     {
         SelectRoleParams selectParams = new SelectRoleParams();
         selectParams.roleList = m_roleList;
@@ -391,10 +393,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             DoRefresh();
         };
 
-        Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectParams);
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SelectRolePanel), selectParams);
     }
 
-    void OnDetoxicateClick()
+    async void OnDetoxicateClick()
     {
         SelectRoleParams selectParams = new SelectRoleParams();
         selectParams.roleList = m_roleList;
@@ -425,6 +427,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             DoRefresh();
         };
 
-        Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), selectParams);
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SelectRolePanel), selectParams);
     }
 }

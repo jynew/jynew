@@ -11,6 +11,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Jyx2.MOD;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -60,10 +61,10 @@ public class Jyx2_UIManager : MonoBehaviour
         m_topParent = transform.Find("Top");
     }
 
-    public void GameStart() 
+    public async void GameStart()
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(GameMainMenu));
-        Jyx2_UIManager.Instance.ShowUI(nameof(GameInfoPanel),$"当前版本：{Application.version}");
+        await ShowUIAsync(nameof(GameMainMenu));
+        await ShowUIAsync(nameof(GameInfoPanel),$"当前版本：{Application.version}");
         GraphicSetting.GlobalSetting.Execute();
     }
 
@@ -107,7 +108,7 @@ public class Jyx2_UIManager : MonoBehaviour
             _loadingUIParams[uiName] = allParams;
             string uiPath = string.Format(GameConst.UI_PREFAB_PATH, uiName);
 
-            Jyx2ResourceHelper.SpawnPrefab(uiPath, OnUILoaded);
+            Addressables.InstantiateAsync(uiPath).Completed += r => { OnUILoaded(r.Result); };
         }
     }
 
@@ -133,7 +134,8 @@ public class Jyx2_UIManager : MonoBehaviour
             _loadingUIParams[uiName] = allParams;
             string uiPath = string.Format(GameConst.UI_PREFAB_PATH, uiName);
 
-            var go = await Addressables.InstantiateAsync(uiPath).Task;
+            var prefab = await MODLoader.LoadAsset<GameObject>(uiPath);
+            var go = Instantiate(prefab);
             OnUILoaded(go);
         }
     }
@@ -160,7 +162,7 @@ public class Jyx2_UIManager : MonoBehaviour
     }
 
     //显示主界面 LoadingPanel中加载完场景调用 移到这里来 方便修改
-    public void ShowMainUI()
+    public async UniTask ShowMainUI()
     {
         var map = LevelMaster.GetCurrentGameMap();
         /*if (map == null)
@@ -172,11 +174,11 @@ public class Jyx2_UIManager : MonoBehaviour
         }*/
         if (map != null && map.Tags.Contains("BATTLE"))
         {
-            this.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.None);
+            await ShowUIAsync(nameof(BattleMainUIPanel), BattleMainUIState.None);
             return;
         }
         else
-            this.ShowUI(nameof(MainUIPanel));
+            await ShowUIAsync(nameof(MainUIPanel));
     }
 
     void PushUI(Jyx2_UIBase uibase) 

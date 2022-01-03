@@ -144,6 +144,7 @@ public class BattleLoader : MonoBehaviour
             selectPram.canCancel = false;
 
             //弹出选择人物面板
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SelectRolePanel), selectPram);
             var rst = await SelectRolePanel.Open(selectPram);
             await LoadJyx2BattleStep2(battle, rst, callback);
         }

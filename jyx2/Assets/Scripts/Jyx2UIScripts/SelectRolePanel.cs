@@ -58,7 +58,6 @@ public partial class SelectRolePanel:Jyx2_UIBase
         {
             t.TrySetResult(ret.selectList);
         };
-        Jyx2_UIManager.Instance.ShowUI(nameof(SelectRolePanel), paras);
         return t.Task;
     }
     

@@ -92,7 +92,7 @@ namespace Jyx2.Battle
             CameraHelper.Instance.ChangeFollow(role.View.transform);
 
             //展示UI头像
-            Jyx2_UIManager.Instance.ShowUI(nameof(BattleMainUIPanel), BattleMainUIState.ShowRole, role);
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BattleMainUIPanel), BattleMainUIState.ShowRole, role);
 
             //选中框 跟随目标
             m_roleFocusRing.transform.SetParent(role.View.transform, false);
@@ -415,7 +415,7 @@ namespace Jyx2.Battle
             Action<ManualResult> callback = delegate(ManualResult result) { t.TrySetResult(result); };
             
             //显示技能动作面板，同时接受格子输入
-            Jyx2_UIManager.Instance.ShowUI(nameof(BattleActionUIPanel),role, moveRange, isSelectMove, callback);
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BattleActionUIPanel),role, moveRange, isSelectMove, callback);
             
             //等待完成
             await t.Task;

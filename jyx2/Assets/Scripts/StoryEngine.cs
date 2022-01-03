@@ -15,6 +15,7 @@ using UnityEngine.SceneManagement;
 using Jyx2;
 using System;
 using System.Globalization;
+using Cysharp.Threading.Tasks;
 using Jyx2Configs;
 using UnityEngine.Playables;
 
@@ -46,9 +47,9 @@ public class StoryEngine : MonoBehaviour
         Instance = this;
     }
 
-    public void DisplayPopInfo(string msg, float duration = 2f)
+    public async void DisplayPopInfo(string msg, float duration = 2f)
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.Common, msg, duration);
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.Common, msg, duration);
     }
 
     public static bool DoLoadGame(int index)

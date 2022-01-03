@@ -90,34 +90,34 @@ public partial class SystemUIPanel:Jyx2_UIBase
         }
     }
 
-    void Save()
+    async void Save()
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) => 
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
         {
             var levelMaster = FindObjectOfType<LevelMaster>();
             levelMaster.OnManuelSave(index);
         }),"选择存档位");
     }
     
-    void Load()
+    async void Load()
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
         {
             StoryEngine.DoLoadGame(index);
         }),"选择读档位");
     }
 
-    void GraphicSetting()
+    async void GraphicSetting()
     {
         HidePanel();
-        Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(GraphicSettingsPanel));
     }    
     
-    void Quit2MainMenu()
+    async void Quit2MainMenu()
     {
         HidePanel();
         List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
-        Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "0", "将丢失未保存进度，是否继续？", selectionContent, new Action<int>((index) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", "将丢失未保存进度，是否继续？", selectionContent, new Action<int>((index) =>
         {
             if(index == 0)
             {

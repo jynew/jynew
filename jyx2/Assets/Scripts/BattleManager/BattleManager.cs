@@ -105,10 +105,13 @@ public class BattleManager : MonoBehaviour
         //初始化范围逻辑
         rangeLogic = new RangeLogic(BattleboxHelper.Instance.IsBlockExists, m_BattleModel.BlockHasRole);
 
-        var brain = Camera.main.GetComponent<CinemachineBrain>();
-        if (brain != null)
+        if (Camera.main != null)
         {
-            brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
+            var brain = Camera.main.GetComponent<CinemachineBrain>();
+            if (brain != null)
+            {
+                brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
+            }
         }
 
         //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
@@ -238,9 +241,6 @@ public class BattleManager : MonoBehaviour
             role.ExpGot += expAdd;
         }
 
-        /// <summary>
-        /// 分配经验计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
-        /// </summary>
         foreach (var role in teammates)
         {
             if (role.ExpGot > 0)

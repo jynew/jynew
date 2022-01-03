@@ -125,7 +125,7 @@ public class LevelMaster : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start()
+    async void Start()
     {
         //先关闭触发事件
         GameObject triggers = GameObject.Find("Level/Triggers");
@@ -142,10 +142,13 @@ public class LevelMaster : MonoBehaviour
             }
         }
 
-        var brain = Camera.main.GetComponent<CinemachineBrain>();
-        if (brain != null)
+        if (Camera.main != null)
         {
-            brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
+            var brain = Camera.main.GetComponent<CinemachineBrain>();
+            if (brain != null)
+            {
+                brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
+            }
         }
 
         var gameMap = GetCurrentGameMap();
@@ -162,16 +165,6 @@ public class LevelMaster : MonoBehaviour
 
             //播放音乐
             PlayMusic(gameMap);
-            
-            if(gameMap.IsWorldMap())
-            {
-                
-            }
-            else
-            {
-                //显示当前地图名，大地图不用显示
-                Jyx2_UIManager.Instance.ShowUI(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName()); 
-            }
         }
 
         navPointer = Instantiate(navPointerPrefab);
@@ -225,12 +218,17 @@ public class LevelMaster : MonoBehaviour
                 var body = vcam.GetCinemachineComponent<CinemachineTransposer>();
                 body.m_FollowOffset = GlobalAssetConfig.Instance.defaultVcamOffset;
             }
-        }
 
+            if (!IsInBattle)
+            {
+                //显示当前地图名，大地图不用显示
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName());
+            }
+        }
+        
         IsInited = true;
     }
-
-
+    
     private void PlayMusic(Jyx2ConfigMap gameMap)
     {
         if (gameMap == null) return;

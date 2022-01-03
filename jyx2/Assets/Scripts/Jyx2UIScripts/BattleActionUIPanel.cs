@@ -238,11 +238,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         ShowAttackRangeSelector(zhaoshi);
     }
 
-    void OnUseItemClick()
+    async void OnUseItemClick()
     {
         bool Filter(Jyx2ConfigItem item) => (int)item.ItemType == 3 || (int)item.ItemType == 4;
 
-        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
 
             if (itemId == -1)
