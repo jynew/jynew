@@ -151,11 +151,6 @@ public static class Jyx2ResourceHelper
         Addressables.InstantiateAsync(path).Completed += r => { callback(r.Result); };
     }
 
-    public static void LoadAsset<T>(string path, Action<T> callback)
-    {
-        Addressables.LoadAssetAsync<T>(path).Completed += r => { callback(r.Result); };
-    }
-
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)
     {
         string url = $"Assets/BuildSource/EventsGraph/{id}.asset";
