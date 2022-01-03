@@ -47,15 +47,17 @@ namespace Jyx2
 
         public static void Talk(int roleId, string content, string talkName, int type)
         {
-            RunInMainThread(() =>
+            async void Run()
             {
                 storyEngine.BlockPlayerControl = true;
-                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.RoleId,roleId, content, type,new Action(()=> 
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.RoleId, roleId, content, type, new Action(() =>
                 {
                     storyEngine.BlockPlayerControl = false;
                     Next();
                 }));
-            });
+            }
+
+            RunInMainThread(Run);
             
             Wait();
         }
@@ -276,9 +278,13 @@ namespace Jyx2
         {
             //防止死亡后传送到enterTrigger再次触发事件。临时处理办法
             ModifyEvent(-2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
-            RunInMainThread(() => {
-                Jyx2_UIManager.Instance.ShowUI(nameof(GameOver));
-            });
+
+            async void Run()
+            {
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(GameOver));
+            }
+
+            RunInMainThread(Run);
         }
 
         public static bool HaveItem(int itemId)
@@ -1043,7 +1049,7 @@ namespace Jyx2
         //韦小宝商店
         public static void WeiShop()
         {
-            RunInMainThread(() =>
+            async void Action()
             {
                 if (LevelMaster.Instance.IsInWorldMap)
                 {
@@ -1061,8 +1067,10 @@ namespace Jyx2
                     return;
                 }
 
-                Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
-            });
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ShopUIPanel), "", new Action(() => { Next(); }));
+            }
+
+            RunInMainThread(Action);
             Wait();
         }
 
@@ -1443,9 +1451,13 @@ namespace Jyx2
         public static void jyx2_ShowEndScene()
         {
             DarkScence();
-            RunInMainThread(() => {
-                Jyx2_UIManager.Instance.ShowUI(nameof(TheEnd));
-            });
+
+            async void Action()
+            {
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(TheEnd));
+            }
+
+            RunInMainThread(Action);
             jyx2_Wait(1);
             LightScence();
         }
@@ -1483,17 +1495,19 @@ namespace Jyx2
 
         private static bool ShowYesOrNoSelectPanel(string selectMessage)
         {
-            RunInMainThread(() =>
+            async void Action()
             {
-                List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+                List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
                 storyEngine.BlockPlayerControl = true;
-                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selectionContent, new Action<int>((index) =>
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selectionContent, new Action<int>((index) =>
                 {
                     _selectResult = index;
                     storyEngine.BlockPlayerControl = false;
                     Next();
                 }));
-            });
+            }
+
+            RunInMainThread(Action);
 
             Wait();
             return _selectResult == 0;

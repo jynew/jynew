@@ -131,11 +131,6 @@ public static class Jyx2ResourceHelper
         return Serializer.Deserialize<BattleboxDataset>(memory);
     }
 
-    public static void SpawnPrefab(string path, Action<GameObject> callback)
-    {
-        Addressables.InstantiateAsync(path).Completed += r => { callback(r.Result); };
-    }
-
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)
     {
         string url = $"Assets/BuildSource/EventsGraph/{id}.asset";

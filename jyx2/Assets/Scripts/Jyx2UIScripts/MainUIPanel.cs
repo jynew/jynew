@@ -82,17 +82,17 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         }
     }
 
-    void OnXiakeBtnClick() 
+    async void OnXiakeBtnClick() 
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
+         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
     }
 
-    void OnBagBtnClick() 
+    async void OnBagBtnClick() 
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items,new Action<int>(OnUseItem));
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items,new Action<int>(OnUseItem));
     }
 
-    void OnUseItem(int id)
+    async void OnUseItem(int id)
     {
         if (id == -1) return;
 
@@ -111,9 +111,11 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         }
 
         var runtime = GameRuntimeData.Instance;
-        GameUtil.ShowYesOrNoUseItem(item, () =>
+
+        async void Action()
         {
-            GameUtil.SelectRole(runtime.GetTeam(), (selectRole) => {
+            async void Callback(RoleInstance selectRole)
+            {
                 if (selectRole == null) return;
 
                 if (selectRole.GetJyx2RoleId() == runtime.GetItemUser(item.Id)) return;
@@ -121,10 +123,10 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                 if (selectRole.CanUseItem(id))
                 {
                     //装备
-                    if ((int)item.ItemType == 1)
+                    if ((int) item.ItemType == 1)
                     {
                         //武器
-                        if ((int)item.EquipmentType == 0)
+                        if ((int) item.EquipmentType == 0)
                         {
                             if (runtime.GetItemUser(item.Id) != -1)
                             {
@@ -140,7 +142,7 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                             GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                         }
                         //防具
-                        else if ((int)item.EquipmentType == 1)
+                        else if ((int) item.EquipmentType == 1)
                         {
                             if (runtime.GetItemUser(item.Id) != -1)
                             {
@@ -157,11 +159,11 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                         }
                     }
                     //修炼
-                    else if ((int)item.ItemType == 2)
+                    else if ((int) item.ItemType == 2)
                     {
-                        if (item.NeedCastration)//辟邪剑谱和葵花宝典
+                        if (item.NeedCastration) //辟邪剑谱和葵花宝典
                         {
-                            GameUtil.ShowYesOrNoCastrate(selectRole, () =>
+                            await GameUtil.ShowYesOrNoCastrate(selectRole, () =>
                             {
                                 if (runtime.GetItemUser(item.Id) != -1)
                                 {
@@ -170,11 +172,13 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                                     roleInstance.ExpForItem = 0;
                                     roleInstance.Xiulianwupin = -1;
                                 }
+
                                 if (selectRole.GetXiulianItem() != null)
                                 {
                                     runtime.SetItemUser(selectRole.Xiulianwupin, -1);
                                     selectRole.ExpForItem = 0;
                                 }
+
                                 selectRole.Xiulianwupin = id;
                                 runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
                                 GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
@@ -189,18 +193,20 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                                 roleInstance.ExpForItem = 0;
                                 roleInstance.Xiulianwupin = -1;
                             }
+
                             if (selectRole.GetXiulianItem() != null)
                             {
                                 runtime.SetItemUser(selectRole.Xiulianwupin, -1);
                                 selectRole.ExpForItem = 0;
                             }
+
                             selectRole.Xiulianwupin = id;
                             runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
                             GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
                         }
                     }
                     //药品
-                    else if ((int)item.ItemType == 3)
+                    else if ((int) item.ItemType == 3)
                     {
                         selectRole.UseItem(item);
                         runtime.AddItem(id, -1);
@@ -209,11 +215,15 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
                 }
                 else
                 {
-                    GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
+                    GameUtil.DisplayPopinfo((int) item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
                     return;
                 }
-            });
-        });
+            }
+
+            await GameUtil.SelectRole(runtime.GetTeam(),  Callback);
+        }
+
+        await GameUtil.ShowYesOrNoUseItem(item, Action);
 
     }
 
@@ -235,9 +245,9 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         }
     }
 
-    void OnSystemBtnClick() 
+    async void OnSystemBtnClick() 
     {
-        Jyx2_UIManager.Instance.ShowUI(nameof(SystemUIPanel));
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
     }
 
     public void DoShowAnimator()

@@ -164,10 +164,10 @@ public partial class GameMainMenu : Jyx2_UIBase {
 
     // merge to SavePanel.cs
     // modified by eaphone at 2021/05/21
-    public void OnLoadGameClicked()
+    public async void OnLoadGameClicked()
     {
         m_panelType = PanelType.LoadGamePage;
-        Jyx2_UIManager.Instance.ShowUI(nameof(SavePanel), new Action<int>((index) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
         {
             if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
                 OnNewGame();
