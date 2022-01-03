@@ -165,7 +165,7 @@ public static class Jyx2ResourceHelper
             return null;
         }
 
-        return await Addressables.LoadAssetAsync<Jyx2NodeGraph>(url).Task;
+        return await MODLoader.LoadAsset<Jyx2NodeGraph>(url);
     }
     
     //根据Addressable的Ref查找他实际存储的路径
