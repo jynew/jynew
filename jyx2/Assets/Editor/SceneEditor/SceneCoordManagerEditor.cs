@@ -88,7 +88,7 @@ public class SceneCoordManagerEditor : Editor
     private void DrawBlocks()
     {
         if (myScript.m_CoordDataSet == null)
-            myScript.LoadCoordDataSet(null);
+            myScript.LoadCoordDataSet();
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         myScript.DrawBlocks(ray, true);
     }
@@ -105,7 +105,7 @@ public class SceneCoordManagerEditor : Editor
         if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
         {
             if (myScript.m_CoordDataSet == null)
-                myScript.LoadCoordDataSet(null);
+                myScript.LoadCoordDataSet();
 
             Debug.Log($"选中了坐标点：{hit.point.x}:{hit.point.z}");
 

@@ -115,35 +115,20 @@ public static class Jyx2ResourceHelper
     }
 
     [Obsolete("待修改为tilemap")]
-    public static void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
+    public static async UniTask<SceneCoordDataSet> GetSceneCoordDataSet(string sceneName)
     {
         string path = $"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes";
-        Addressables.LoadAssetAsync<TextAsset>(path).Completed += r =>
-        {
-            if (r.Result == null)
-                callback(null);
-
-            using (var memory = new MemoryStream(r.Result.bytes))
-            {
-                var obj = Serializer.Deserialize<SceneCoordDataSet>(memory);
-                callback(obj);
-            }
-        };
+        var result = await MODLoader.LoadAsset<TextAsset>(path);
+        using var memory = new MemoryStream(result.bytes);
+        return Serializer.Deserialize<SceneCoordDataSet>(memory);
     }
 
     [Obsolete("待修改为tilemap")]
-    public static void GetBattleboxDataset(string fullPath, Action<BattleboxDataset> callback)
+    public static async UniTask<BattleboxDataset> GetBattleboxDataset(string fullPath)
     {
-        Addressables.LoadAssetAsync<TextAsset>(fullPath).Completed += r =>
-        {
-            if (r.Result == null)
-                callback(null);
-            using (var memory = new MemoryStream(r.Result.bytes))
-            {
-                var obj = Serializer.Deserialize<BattleboxDataset>(memory);
-                callback(obj);
-            }
-        };
+        var result = await MODLoader.LoadAsset<TextAsset>(fullPath);
+        using var memory = new MemoryStream(result.bytes);
+        return Serializer.Deserialize<BattleboxDataset>(memory);
     }
 
     public static void SpawnPrefab(string path, Action<GameObject> callback)

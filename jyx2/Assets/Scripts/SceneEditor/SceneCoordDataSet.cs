@@ -10,6 +10,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using ProtoBuf;
 
 
@@ -76,9 +77,9 @@ namespace Jyx2
             }
         }
 
-        public static void CreateBySceneName(string name, Action<SceneCoordDataSet> callback)
+        public static async UniTask<SceneCoordDataSet> CreateBySceneName(string name)
         {
-            Jyx2ResourceHelper.GetSceneCoordDataSet(name, callback);
+            return await Jyx2ResourceHelper.GetSceneCoordDataSet(name);
         }
         
         public int GetCoordValue(int xindex, int yindex)
