@@ -61,7 +61,7 @@ namespace Jyx2.MOD
                 foreach (var name in ab.GetAllAssetNames())
                 {
                     Debug.Log($"mod file:{name}");
-                    string overrideAddr = "assets/" + name.Substring(name.IndexOf("buildsource"));
+                    string overrideAddr = name.Replace('/' + name.Split('/')[1], "");
                     _remap[overrideAddr] = new AssetBundleItem() { Name = name, Ab = ab };
                 }
             }
