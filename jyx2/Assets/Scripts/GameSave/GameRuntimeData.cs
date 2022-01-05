@@ -542,22 +542,6 @@ namespace Jyx2
             string key = "SceneEntraceCondition_" + mapId;
             SetKeyValues(key, value.ToString());
         }
-
-        private bool _isShowCompass;
-
-        public bool isShowCompass
-        {
-            get { return _isShowCompass; }
-            set { _isShowCompass = value; }
-        }
-
-        public void CheckCompass()
-        {
-            if (LevelMaster.Instance == null) return;
-            
-            isShowCompass = LevelMaster.Instance.IsInWorldMap&&Jyx2LuaBridge.HaveItem(182);
-        }
-
         #endregion
 
         private DateTime _startDate;
