@@ -210,7 +210,6 @@ namespace i18n
         /// <returns></returns>
         public string GetOrRegTranslation(string fromToken, string contentStr)
         {
-            contentStr = contentStr.Trim();//去除首尾空白字符
             //默认不做更改返回文字
             var translationContent = contentStr;
             foreach (var set in translationSet)

@@ -7,8 +7,11 @@
  *
  * 金庸老先生千古！
  */
+
+using System;
 using Jyx2;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
@@ -51,8 +54,15 @@ public class ShopUIItem : MonoBehaviour
         this.index = index;
         this.shopItem = shopItem;
         Jyx2ConfigItem item = shopItem.Item;
-
-        desText.text = $"{item.Name}\n价格：{shopItem.Price}";
+        
+        //---------------------------------------------------------------------------
+        //desText.text = $"{item.Name}\n价格：{shopItem.Price}";
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【价格显示】
+        //---------------------------------------------------------------------------
+        desText.text = string.Format("{0}\n价格：{1}".GetContent(nameof(ShopUIItem)), item.Name, shopItem.Price);
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
         leftNum = shopItem.Count - hasBuyNum;
         leftNum = Tools.Limit(leftNum,0,shopItem.Count);
         itemNum.text = leftNum.ToString();
@@ -66,7 +76,14 @@ public class ShopUIItem : MonoBehaviour
         int moneyCount = GameRuntimeData.Instance.GetMoney();
         int needCount = shopItem.Price * buyCount;
         Color textColor = moneyCount >= needCount ? Color.white : Color.red;
-        totalCost.text = "花费："+needCount.ToString();
+        //---------------------------------------------------------------------------
+        //totalCost.text = "花费："+needCount.ToString();
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【花费显示】
+        //---------------------------------------------------------------------------
+        totalCost.text = "花费：".GetContent(nameof(ShopUIItem))+needCount.ToString();
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
         totalCost.color = textColor;
     }
 
