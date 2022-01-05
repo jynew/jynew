@@ -76,8 +76,6 @@ public class LoadingPanel : MonoBehaviour
                     await UniTask.WaitForEndOfFrame();
                 } 
             }
-            
-            GameRuntimeData.Instance.CheckCompass(); //TODO，改成eventListener
         }
         
         Destroy(gameObject);

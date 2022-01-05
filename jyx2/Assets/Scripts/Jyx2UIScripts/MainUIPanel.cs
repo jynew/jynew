@@ -27,13 +27,9 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
         SystemButton_Button.onClick.AddListener(OnSystemBtnClick);
     }
 
-    public void Update()
+    void Update()
     {
-        if (GameRuntimeData.Instance.isShowCompass != Compass.gameObject.active)
-        {
-            Compass.gameObject.active = GameRuntimeData.Instance.isShowCompass;
-        }
-
+        Compass.gameObject.active = LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182);
         if (Compass.gameObject.active)
         {
             var p = LevelMaster.Instance.GetPlayerPosition();
