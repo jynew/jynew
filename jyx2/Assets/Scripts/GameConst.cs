@@ -11,6 +11,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using i18n.TranslatorDef;
 using UnityEngine;
 
 public struct PropertyItem 
@@ -145,34 +146,68 @@ public class GameConst
     public const string UI_PREFAB_PATH = "Assets/Prefabs/Jyx2UI/{0}.prefab";
     public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>()
     {
-        ["0"] = new PropertyItem(0, "MpType", "内力性质", 1, 0),
-        ["1"] = new PropertyItem(1, "MaxMp", "内力", 40, 30),//创角用到 特殊
-        ["2"] = new PropertyItem(2, "Attack", "武力", 30, 20),//创角用到 特殊
-        ["3"] = new PropertyItem(3, "Qinggong", "轻功", 30, 20),
-        ["4"] = new PropertyItem(4, "Defence", "防御", 30, 20),
-        ["5"] = new PropertyItem(5, "MaxHp", "生命", 50, 30),//创角用到 特殊
-        ["6"] = new PropertyItem(6, "Heal", "医疗", 30, 20),
-        ["7"] = new PropertyItem(7, "UsePoison", "使毒", 30, 20),
-        ["8"] = new PropertyItem(8, "DePoison", "解毒", 30, 20),
-        ["9"] = new PropertyItem(9, "Quanzhang", "拳掌", 30, 20),
-        ["10"] = new PropertyItem(10, "Yujian", "剑术", 30, 20),
-        ["11"] = new PropertyItem(11, "Shuadao", "刀术", 30, 20),
-        ["12"] = new PropertyItem(12, "Anqi", "暗器", 30, 20),
+        //---------------------------------------------------------------------------
+        //["0"] = new PropertyItem(0, "MpType", "内力性质", 1, 0),
+        //["1"] = new PropertyItem(1, "MaxMp", "内力", 40, 30),//创角用到 特殊
+        //["2"] = new PropertyItem(2, "Attack", "武力", 30, 20),//创角用到 特殊
+        //["3"] = new PropertyItem(3, "Qinggong", "轻功", 30, 20),
+        //["4"] = new PropertyItem(4, "Defence", "防御", 30, 20),
+        //["5"] = new PropertyItem(5, "MaxHp", "生命", 50, 30),//创角用到 特殊
+        //["6"] = new PropertyItem(6, "Heal", "医疗", 30, 20),
+        //["7"] = new PropertyItem(7, "UsePoison", "使毒", 30, 20),
+        //["8"] = new PropertyItem(8, "DePoison", "解毒", 30, 20),
+        //["9"] = new PropertyItem(9, "Quanzhang", "拳掌", 30, 20),
+        //["10"] = new PropertyItem(10, "Yujian", "剑术", 30, 20),
+        //["11"] = new PropertyItem(11, "Shuadao", "刀术", 30, 20),
+        //["12"] = new PropertyItem(12, "Anqi", "暗器", 30, 20),
+        //["13"] = new PropertyItem(13, "Hp", "生命", 30, 20),
+        //["14"] = new PropertyItem(14, "Tili", "体力", 30, 20),
+        //["15"] = new PropertyItem(15, "Mp", "内力", 40, 30),
+        //["16"] = new PropertyItem(16, "MaxHp", "最大生命", 50, 30),
+        //["17"] = new PropertyItem(17, "MaxMp", "最大内力", 40, 30),
+        //["18"] = new PropertyItem(18, "Attack", "攻击力", 30, 20),
+        //["19"] = new PropertyItem(19, "AntiPoison", "抗毒", 30, 20),
+        //["20"] = new PropertyItem(20, "Qimen", "奇门", 30, 20),
+        //["21"] = new PropertyItem(21, "Wuxuechangshi", "武学常识", 30, 20),
+        //["22"] = new PropertyItem(22, "Pinde", "品德", 30, 20),
+        //["23"] = new PropertyItem(23, "AttackPoison", "功夫带毒", 30, 20),
+        //["24"] = new PropertyItem(24, "Zuoyouhubo", "左右互搏", 30, 20),
+        //["25"] = new PropertyItem(25, "IQ", "资质", 100, 30),
+        //["26"] = new PropertyItem(26, "Poison", "中毒", 30, 20),
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【MainMenu右下角当前版本的翻译】
+        //---------------------------------------------------------------------------
+        ["0"] = new PropertyItem(0, "MpType", "内力性质".GetContent(nameof(GameConst)), 1, 0),
+        ["1"] = new PropertyItem(1, "MaxMp", "内力".GetContent(nameof(GameConst)), 40, 30),//创角用到 特殊
+        ["2"] = new PropertyItem(2, "Attack", "武力".GetContent(nameof(GameConst)), 30, 20),//创角用到 特殊
+        ["3"] = new PropertyItem(3, "Qinggong", "轻功".GetContent(nameof(GameConst)), 30, 20),
+        ["4"] = new PropertyItem(4, "Defence", "防御".GetContent(nameof(GameConst)), 30, 20),
+        ["5"] = new PropertyItem(5, "MaxHp", "生命".GetContent(nameof(GameConst)), 50, 30),//创角用到 特殊
+        ["6"] = new PropertyItem(6, "Heal", "医疗".GetContent(nameof(GameConst)), 30, 20),
+        ["7"] = new PropertyItem(7, "UsePoison", "使毒".GetContent(nameof(GameConst)), 30, 20),
+        ["8"] = new PropertyItem(8, "DePoison", "解毒".GetContent(nameof(GameConst)), 30, 20),
+        ["9"] = new PropertyItem(9, "Quanzhang", "拳掌".GetContent(nameof(GameConst)), 30, 20),
+        ["10"] = new PropertyItem(10, "Yujian", "剑术".GetContent(nameof(GameConst)), 30, 20),
+        ["11"] = new PropertyItem(11, "Shuadao", "刀术".GetContent(nameof(GameConst)), 30, 20),
+        ["12"] = new PropertyItem(12, "Anqi", "暗器".GetContent(nameof(GameConst)), 30, 20),
 
-        ["13"] = new PropertyItem(13, "Hp", "生命", 30, 20),
-        ["14"] = new PropertyItem(14, "Tili", "体力", 30, 20),
-        ["15"] = new PropertyItem(15, "Mp", "内力", 40, 30),
-        ["16"] = new PropertyItem(16, "MaxHp", "最大生命", 50, 30),
-        ["17"] = new PropertyItem(17, "MaxMp", "最大内力", 40, 30),
-        ["18"] = new PropertyItem(18, "Attack", "攻击力", 30, 20),
-        ["19"] = new PropertyItem(19, "AntiPoison", "抗毒", 30, 20),
-        ["20"] = new PropertyItem(20, "Qimen", "奇门", 30, 20),
-        ["21"] = new PropertyItem(21, "Wuxuechangshi", "武学常识", 30, 20),
-        ["22"] = new PropertyItem(22, "Pinde", "品德", 30, 20),
-        ["23"] = new PropertyItem(23, "AttackPoison", "功夫带毒", 30, 20),
-        ["24"] = new PropertyItem(24, "Zuoyouhubo", "左右互搏", 30, 20),
-        ["25"] = new PropertyItem(25, "IQ", "资质", 100, 30),
-        ["26"] = new PropertyItem(26, "Poison", "中毒", 30, 20),
+        ["13"] = new PropertyItem(13, "Hp", "生命".GetContent(nameof(GameConst)), 30, 20),
+        ["14"] = new PropertyItem(14, "Tili", "体力".GetContent(nameof(GameConst)), 30, 20),
+        ["15"] = new PropertyItem(15, "Mp", "内力".GetContent(nameof(GameConst)), 40, 30),
+        ["16"] = new PropertyItem(16, "MaxHp", "最大生命".GetContent(nameof(GameConst)), 50, 30),
+        ["17"] = new PropertyItem(17, "MaxMp", "最大内力".GetContent(nameof(GameConst)), 40, 30),
+        ["18"] = new PropertyItem(18, "Attack", "攻击力".GetContent(nameof(GameConst)), 30, 20),
+        ["19"] = new PropertyItem(19, "AntiPoison", "抗毒".GetContent(nameof(GameConst)), 30, 20),
+        ["20"] = new PropertyItem(20, "Qimen", "奇门".GetContent(nameof(GameConst)), 30, 20),
+        ["21"] = new PropertyItem(21, "Wuxuechangshi", "武学常识".GetContent(nameof(GameConst)), 30, 20),
+        ["22"] = new PropertyItem(22, "Pinde", "品德".GetContent(nameof(GameConst)), 30, 20),
+        ["23"] = new PropertyItem(23, "AttackPoison", "功夫带毒".GetContent(nameof(GameConst)), 30, 20),
+        ["24"] = new PropertyItem(24, "Zuoyouhubo", "左右互搏".GetContent(nameof(GameConst)), 30, 20),
+        ["25"] = new PropertyItem(25, "IQ", "资质".GetContent(nameof(GameConst)), 100, 30),
+        ["26"] = new PropertyItem(26, "Poison", "中毒".GetContent(nameof(GameConst)), 30, 20),
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+
     };
 
     //存档的数量

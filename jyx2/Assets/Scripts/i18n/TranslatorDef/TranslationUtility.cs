@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UnityEditor;
 using UnityEngine;
 
 namespace i18n.TranslatorDef
@@ -29,16 +30,23 @@ namespace i18n.TranslatorDef
         /// 全局通用的获取文本翻译函数，针对string做的单独的拓展方法
         /// </summary>
         /// <param name="content">待转化文本</param>
-        /// <param name="fromTokken">来源于哪里，一般是UI或者物体</param>
+        /// <param name="fromToken">来源于哪里，一般是UI或者物体</param>
         /// <returns></returns>
-        public static string GetContent(this string content,string fromToken)
+        public static string GetContent(this string content,string fromToken="")
         {
+#if UNITY_EDITOR
+            var translatorPath = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("koreaTranslator")[0]);
+            var translatorEdit = AssetDatabase.LoadAssetAtPath(translatorPath, typeof(Translator)) as Translator;
+            if (translatorEdit != null)
+                content = translatorEdit.GetOrRegTranslation(fromToken, content);
+            return content;
+#endif
             //没有默认全局配置则直接返回
             if (!GlobalAssetConfig.Instance) return content;
             
             //调用默认全局配置
             var translator = GlobalAssetConfig.Instance.defaultTranslator;
-            content = translator.GetOrRegTranslation(fromToken , content,GlobalAssetConfig.Instance.defaultLang);
+            content = translator.GetOrRegTranslation(fromToken , content);
             return content;
         }
 

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using ES3Types;
-
+using i18n.TranslatorDef;
 using Jyx2Configs;
 using UnityEngine;
 
@@ -256,7 +256,14 @@ namespace Jyx2
                     ItemAdded.Add(item.Item.Id);
                     if (item.Count > 0 && showGetItem)
                     {
-                        StoryEngine.Instance.DisplayPopInfo("得到物品:" + item.Item.Name + "×" + Math.Abs(item.Count));
+                        //---------------------------------------------------------------------------
+                        //StoryEngine.Instance.DisplayPopInfo("得到物品:" + item.Item.Name + "×" + Math.Abs(item.Count));
+                        //---------------------------------------------------------------------------
+                        //特定位置的翻译【得到物品提示】
+                        //---------------------------------------------------------------------------
+                        StoryEngine.Instance.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + item.Item.Name + "×" + Math.Abs(item.Count));
+                        //---------------------------------------------------------------------------
+                        //---------------------------------------------------------------------------
                     }
                     item.Count = 0;
                 }

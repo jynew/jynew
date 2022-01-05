@@ -51,7 +51,7 @@ namespace i18n.TranslateAttacher
         public override void Refresh()
         {
             //刷新翻译内容
-            TextScript.text.GetContent(GetToken());
+            TextScript.text=TextScript.text.GetContent(GetToken());
         }
 
         public override string GetToken()

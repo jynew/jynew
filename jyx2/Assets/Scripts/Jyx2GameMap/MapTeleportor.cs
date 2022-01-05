@@ -9,6 +9,7 @@
  */
 using System;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2;
 using Jyx2Configs;
 using NUnit.Framework;
@@ -47,7 +48,14 @@ public class MapTeleportor : MonoBehaviour
 	async void OnTriggerEnter(Collider other)
 	{
 		if (!triggerEnabled) return;
-		await ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText);
+		//---------------------------------------------------------------------------
+		//await ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText);
+		//---------------------------------------------------------------------------
+		//特定位置的翻译【地图传送按钮的文本显示，一般为离开】
+		//---------------------------------------------------------------------------
+		await ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText.GetContent(nameof(MapTeleportor)));
+		//---------------------------------------------------------------------------
+		//---------------------------------------------------------------------------
 		UnityTools.HighLightObjects(m_EventTargets, Color.red);
 	}
 

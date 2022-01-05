@@ -21,6 +21,7 @@ using i18n.TranslatorDef;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
+using UnityEditor.AddressableAssets.HostingServices;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -129,7 +130,7 @@ namespace i18n
                 scene.GetRootGameObjects()
                     .ForEach(rootGameObj =>
                     {
-                        rootGameObj.GetComponentsInChildren<Text>()
+                        rootGameObj.GetComponentsInChildren<Text>(true)
                             .ForEach(textScript =>
                             {
                                 while (textScript.gameObject.GetComponent<TextAttacher>())
@@ -142,8 +143,7 @@ namespace i18n
                                 EditorSceneManager.SaveScene(scene);
                                 Debug.Log($"{textScript.gameObject.GetPath()}_添加Attacher成功.");
                             });
-
-                        rootGameObj.GetComponentsInChildren<Dropdown>()
+                        rootGameObj.GetComponentsInChildren<Dropdown>(true)
                             .ForEach(dropdownScript =>
                             {
                                 while (dropdownScript.gameObject.GetComponent<DropdownAttacher>())
@@ -165,7 +165,7 @@ namespace i18n
             {
                 var tempPrefab = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                 if (tempPrefab == null) return;
-                tempPrefab.GetComponentsInChildren<Text>()
+                tempPrefab.GetComponentsInChildren<Text>(true)
                     .ForEach(textScript =>
                     {
                         while (textScript.GetComponent<TextAttacher>())
@@ -179,7 +179,7 @@ namespace i18n
                             textScript.gameObject.AddComponent<TextAttacher>();
                         Debug.Log($"{prefab.gameObject}_添加Attacher成功.");
                     });
-                tempPrefab.GetComponentsInChildren<Dropdown>()
+                tempPrefab.GetComponentsInChildren<Dropdown>(true)
                     .ForEach(dropdownScript =>
                     {
                         while (dropdownScript.gameObject.GetComponent<DropdownAttacher>())
@@ -208,39 +208,31 @@ namespace i18n
         /// <param name="contentStr">文本内容</param>
         /// <param name="lang">翻译格式</param>
         /// <returns></returns>
-        public string GetOrRegTranslation(string fromToken, string contentStr, LangFlag lang)
+        public string GetOrRegTranslation(string fromToken, string contentStr)
         {
+            contentStr = contentStr.Trim();//去除首尾空白字符
             //默认不做更改返回文字
             var translationContent = contentStr;
-            try
+            foreach (var set in translationSet)
             {
-                //查找第一个满足条件的翻译组
-                var set = translationSet.First(translation => translation.content == contentStr);
-                //从set中查找第一个满足条件的对应语言翻译内容
-                translationContent = set.translation==string.Empty ? translationContent : set.translation;
-            }
-            catch (InvalidOperationException e)
-            {
-                //针对查找不到做翻译组且设置需要动态收集文本的情况做单独处理
-                if (isCollectNewText)
+                if (set.translation == contentStr) return contentStr;
+                if (set.content == contentStr)
                 {
-                    var translation = new Translations
-                    {
-                        token = fromToken, //标记来源
-                        content = contentStr, //记录内容
-                        translation = string.Empty
-                    };
-                    translationSet.Add(translation);
+                    return string.IsNullOrEmpty(set.translation) ? translationContent : set.translation;
                 }
-
-                Debug.LogWarning($"没有{contentStr}对应的翻译组内容！");
             }
-            catch (ArgumentNullException e)
+            //针对查找不到做翻译组且设置需要动态收集文本的情况做单独处理
+            if (isCollectNewText)
             {
-                //针对翻译组查找到但是没有对应语言做处理
-                Debug.LogWarning($"没有{contentStr}对应的语言版本！");
+                var translation = new Translations
+                {
+                    token = fromToken, //标记来源
+                    content = contentStr, //记录内容
+                    translation = string.Empty
+                };
+                translationSet.Add(translation);
             }
-
+            Debug.LogWarning($"没有{contentStr}对应的翻译组内容！已添加。");
             //返回结果
             return translationContent;
         }

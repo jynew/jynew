@@ -18,17 +18,6 @@ public class GlobalAssetConfig : ScriptableObject
     //--------------------------------------------------------------------------------------------
     [BoxGroup("语言相关")] [LabelText("语言文件")]
     public Translator defaultTranslator;
-    [BoxGroup("语言相关")] [LabelText("默认语言")] [ValueDropdown("ShowLocaleList")]
-    public TranslationUtility.LangFlag defaultLang;
-    
-    /// <summary>
-    /// 语言下拉选择更为直观的获取，且防止多次刷新调用耗费内存。
-    /// </summary>
-    /// <returns>TranslationConfig类中的LocaleList</returns>
-    private ValueDropdownList<TranslationUtility.LangFlag> ShowLocaleList()
-    {
-        return TranslationUtility.LocaleList;
-    }
     //--------------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------------
     
@@ -70,6 +59,9 @@ public class GlobalAssetConfig : ScriptableObject
 
     [BoxGroup("地图设置")] [LabelText("大地图")] 
     public AssetReference BigMap;
+    
+    [BoxGroup("地图设置")] [LabelText("默认主角居名字")] 
+    public string defaultHomeName;
 
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]

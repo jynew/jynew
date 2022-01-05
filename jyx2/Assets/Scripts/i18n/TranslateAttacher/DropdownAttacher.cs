@@ -46,7 +46,7 @@ namespace i18n.TranslateAttacher
         {
             OptionDatas.ForEach(option =>
             {
-                option.text.GetContent(GetToken());
+                option.text=option.text.GetContent(GetToken());
             });
         }
 

@@ -11,7 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-
+using i18n.TranslatorDef;
 using Jyx2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -48,7 +48,14 @@ public class LoadingPanel : MonoBehaviour
             var handle = SceneManager.LoadSceneAsync(GameConst.DefaultMainMenuScene);
             while (!handle.isDone)
             {
-                m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
+                //---------------------------------------------------------------------------
+                //m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
+                //---------------------------------------------------------------------------
+                //特定位置的翻译【载入中文本显示】
+                //---------------------------------------------------------------------------
+                m_LoadingText.text = "载入中... ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
                 await UniTask.WaitForEndOfFrame();
             }
         }
@@ -59,7 +66,16 @@ public class LoadingPanel : MonoBehaviour
         
             while (!async.IsDone)
             {
-                m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
+                
+                //---------------------------------------------------------------------------
+                //m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
+                //---------------------------------------------------------------------------
+                //特定位置的翻译【载入中文本显示】
+                //---------------------------------------------------------------------------
+                m_LoadingText.text = "载入中... ".GetContent(nameof(LoadingPanel)) + (int)(async.PercentComplete * 100) + "%";
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
+                
                 await UniTask.WaitForEndOfFrame();
             }
 
