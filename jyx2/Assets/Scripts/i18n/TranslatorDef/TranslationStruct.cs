@@ -38,7 +38,9 @@ namespace i18n.TranslatorDef
         /// <summary>
         /// 翻译对应的所有翻译集合
         /// </summary>
-        [TableList(AlwaysExpanded = true, DrawScrollView = true)]
+        //[TableList(AlwaysExpanded = true, DrawScrollView = true)]
+        [TableList]
+        [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
         public Dictionary<TranslationUtility.LangFlag, string> Dict = new Dictionary<TranslationUtility.LangFlag, string>();
     }
 }

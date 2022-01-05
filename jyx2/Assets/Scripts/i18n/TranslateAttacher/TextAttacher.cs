@@ -13,7 +13,6 @@
 using System;
 using i18n.TransformAndGameobjectExt;
 using i18n.TranslatorDef;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 

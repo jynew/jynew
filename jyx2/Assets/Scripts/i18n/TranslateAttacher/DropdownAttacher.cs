@@ -13,10 +13,12 @@
 using System.Collections.Generic;
 using i18n.TransformAndGameobjectExt;
 using i18n.TranslatorDef;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace i18n.TranslateAttacher
 {
+    [RequireComponent(typeof(Dropdown))]
     public class DropdownAttacher : BaseAttacher
     {
         /// <summary>

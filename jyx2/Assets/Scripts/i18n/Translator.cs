@@ -46,15 +46,6 @@ namespace i18n
         /// </summary>
         [BoxGroup("翻译设置")] [LabelText("是否收集")] public bool isCollectNewText;
 
-        /// <summary>
-        /// 语言下拉选择
-        /// </summary>
-        /// <returns>TranslationConfig类中的LocaleList</returns>
-        private ValueDropdownList<TranslationUtility.LangFlag> ShowLocaleList()
-        {
-            return TranslationUtility.LocaleList;
-        }
-
         #endregion
 
         #region 翻译内容显示
@@ -62,8 +53,10 @@ namespace i18n
         /// <summary>
         /// 所有翻译的集合
         /// </summary>
-        [BoxGroup("翻译查看")] [LabelText("翻译列表")] [HideInPlayMode]
-        [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine, KeyLabel = "原文本", ValueLabel = "翻译")]
+        [BoxGroup("翻译查看")]
+        [LabelText("翻译列表")]
+        [HideInPlayMode]
+        [TableList(AlwaysExpanded = true, DrawScrollView = true)]
         public List<Translations> translationSet = new List<Translations>();
 
         #endregion
@@ -116,21 +109,28 @@ namespace i18n
                             {
                                 while (textScript.gameObject.GetComponent<TextAttacher>())
                                     DestroyImmediate(textScript.gameObject.GetComponent<TextAttacher>());
-                                textScript.gameObject.AddComponent<TextAttacher>();
+                                if (isCollectNewText)
+                                    textScript.gameObject.AddComponent<TextAttacher>().Refresh();
+                                else
+                                    textScript.gameObject.AddComponent<TextAttacher>();
 
                                 EditorSceneManager.SaveScene(scene);
                                 Debug.Log($"{textScript.gameObject.GetPath()}_添加Attacher成功.");
                             });
-                        
+
                         rootGameObj.GetComponentsInChildren<Dropdown>()
-                            .ForEach(textScript =>
+                            .ForEach(dropdownScript =>
                             {
-                                while (textScript.gameObject.GetComponent<TextAttacher>())
-                                    DestroyImmediate(textScript.gameObject.GetComponent<TextAttacher>());
-                                textScript.gameObject.AddComponent<TextAttacher>();
+                                while (dropdownScript.gameObject.GetComponent<DropdownAttacher>())
+                                    DestroyImmediate(dropdownScript.gameObject.GetComponent<DropdownAttacher>());
+                                dropdownScript.gameObject.AddComponent<DropdownAttacher>();
+                                if (isCollectNewText)
+                                    dropdownScript.gameObject.AddComponent<DropdownAttacher>().Refresh();
+                                else
+                                    dropdownScript.gameObject.AddComponent<DropdownAttacher>();
 
                                 EditorSceneManager.SaveScene(scene);
-                                Debug.Log($"{textScript.gameObject.GetPath()}_添加Attacher成功.");
+                                Debug.Log($"{dropdownScript.gameObject.GetPath()}_添加Attacher成功.");
                             });
                     });
             });
@@ -147,8 +147,23 @@ namespace i18n
                         {
                             DestroyImmediate(textScript.GetComponent<TextAttacher>());
                         }
-                        textScript.gameObject.AddComponent<TextAttacher>();
+
+                        if (isCollectNewText)
+                            textScript.gameObject.AddComponent<TextAttacher>().Refresh();
+                        else
+                            textScript.gameObject.AddComponent<TextAttacher>();
                         Debug.Log($"{prefab.gameObject}_添加Attacher成功.");
+                    });
+                tempPrefab.GetComponentsInChildren<Dropdown>()
+                    .ForEach(dropdownScript =>
+                    {
+                        while (dropdownScript.gameObject.GetComponent<DropdownAttacher>())
+                            DestroyImmediate(dropdownScript.gameObject.GetComponent<DropdownAttacher>());
+                        if (isCollectNewText)
+                            dropdownScript.gameObject.AddComponent<DropdownAttacher>().Refresh();
+                        else
+                            dropdownScript.gameObject.AddComponent<DropdownAttacher>();
+                        Debug.Log($"{dropdownScript.gameObject.GetPath()}_添加Attacher成功.");
                     });
                 PrefabUtility.ApplyPrefabInstance(tempPrefab, InteractionMode.AutomatedAction);
                 DestroyImmediate(tempPrefab);
@@ -158,8 +173,9 @@ namespace i18n
         #endregion
 
 #endif
+
         #region 文本获取和注册函数
-        
+
         /// <summary>
         /// 获取文本的对应翻译内容
         /// </summary>
@@ -167,7 +183,7 @@ namespace i18n
         /// <param name="contentStr">文本内容</param>
         /// <param name="lang">翻译格式</param>
         /// <returns></returns>
-        public string GetOrRegTranslation(string fromToken,string contentStr, TranslationUtility.LangFlag lang)
+        public string GetOrRegTranslation(string fromToken, string contentStr, LangFlag lang)
         {
             //默认不做更改返回文字
             var translationContent = contentStr;
@@ -187,11 +203,11 @@ namespace i18n
                     {
                         token = fromToken, //标记来源
                         content = contentStr, //记录内容
-                        Dict = new Dictionary<TranslationUtility.LangFlag, string>() //初始化字典
+                        Dict = new Dictionary<LangFlag, string>() //初始化字典
                     };
                     translationSet.Add(translation);
                 }
-                
+
                 Debug.LogWarning($"没有{contentStr}对应的翻译组内容！");
             }
             catch (ArgumentNullException e)
@@ -199,6 +215,7 @@ namespace i18n
                 //针对翻译组查找到但是没有对应语言做处理
                 Debug.LogWarning($"没有{contentStr}对应的语言版本！");
             }
+
             //返回结果
             return translationContent;
         }
