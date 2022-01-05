@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using i18n;
+using i18n.TranslatorDef;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,6 +12,25 @@ using UnityEngine.AddressableAssets;
 public class GlobalAssetConfig : ScriptableObject
 {
     public static GlobalAssetConfig Instance = null;
+    
+    //--------------------------------------------------------------------------------------------
+    //以下均为新增的语言配置文件
+    //--------------------------------------------------------------------------------------------
+    [BoxGroup("语言相关")] [LabelText("语言文件")]
+    public Translator defaultTranslator;
+    [BoxGroup("语言相关")] [LabelText("默认语言")] [ValueDropdown("ShowLocaleList")]
+    public TranslationUtility.LangFlag defaultLang;
+    
+    /// <summary>
+    /// 语言下拉选择更为直观的获取，且防止多次刷新调用耗费内存。
+    /// </summary>
+    /// <returns>TranslationConfig类中的LocaleList</returns>
+    private ValueDropdownList<TranslationUtility.LangFlag> ShowLocaleList()
+    {
+        return TranslationUtility.LocaleList;
+    }
+    //--------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------
     
     [BoxGroup("游戏动作")] [LabelText("默认受击动作")]
     public AnimationClip defaultBeHitClip;
