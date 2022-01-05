@@ -21,26 +21,22 @@ namespace i18n.TranslatorDef
     /// 翻译结构体
     /// </summary>
     [Serializable]
-    public class Translations
+    public struct Translations
     {
         /// <summary>
         /// 记录内容来源
         /// </summary>
-        [TextArea(5, 20)]
-        public string token;
+        [TextArea(5, 20), SerializeField]  public string token;
 
         /// <summary>
         /// 翻译对应原文本
         /// </summary>
-        [TextArea(5, 20)]
-        public string content;
+        [TextArea(5, 20), SerializeField] public string content;
 
         /// <summary>
-        /// 翻译对应的所有翻译集合
+        /// 文本對應的翻译
         /// </summary>
         //[TableList(AlwaysExpanded = true, DrawScrollView = true)]
-        [TableList]
-        [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
-        public Dictionary<TranslationUtility.LangFlag, string> Dict = new Dictionary<TranslationUtility.LangFlag, string>();
+        public string translation;
     }
 }

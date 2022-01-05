@@ -10,7 +10,7 @@
 // 文件名: BaseAttacher.cs
 // 时间: 2022-01-05-12:21 PM
 
-using i18n.TransformAndGameobjectExt;
+using i18n.Ext;
 using UnityEngine;
 
 namespace i18n.TranslateAttacher

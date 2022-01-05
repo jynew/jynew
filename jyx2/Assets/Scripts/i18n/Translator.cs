@@ -12,8 +12,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using i18n.TransformAndGameobjectExt;
+using System.Xml.Serialization;
+using i18n.Ext;
 using i18n.TranslateAttacher;
 using i18n.TranslatorDef;
 using Sirenix.OdinInspector;
@@ -31,8 +33,7 @@ namespace i18n
     /// 所有的翻译基本都是基于此组件延伸
     /// 所有的翻译内容也是从该文件产生的Instance中读取
     /// </summary>
-    [CreateAssetMenu(menuName = "翻译/新建Translator")]
-    [Serializable]
+    [CreateAssetMenu(menuName = "翻译/新建Translator"), Serializable]
     public class Translator : SerializedScriptableObject
     {
         #region 翻译设置相关
@@ -44,7 +45,35 @@ namespace i18n
         /// 设置为false显然可以降低其内存使用，在语言完善翻译之后，显然可以可以不用继续收集，保证了Translator不会继续增长
         /// ------------------------------------------------
         /// </summary>
-        [BoxGroup("翻译设置")] [LabelText("是否收集")] public bool isCollectNewText;
+        [BoxGroup("翻译设置"), LabelText("是否收集")]  public bool isCollectNewText;
+        
+        /// <summary>
+        /// 文件輸出目錄
+        /// </summary>
+        [BoxGroup("翻译设置"), LabelText("文件輸出目錄"), FolderPath]  
+        public string outPath;
+
+        /// <summary>
+        /// 輸出翻譯為Json文件
+        /// </summary>
+        [BoxGroup("翻译设置"), Button(ButtonSizes.Medium, Name = "转化为Json")]
+        public void Convert2Json()
+        {
+            using var sw = new StreamWriter(Path.Combine(outPath,$"{name}.json"));
+            sw.WriteLine(JsonUtility.ToJson(new Serialization<Translations>(translationSet.ToList()),true));
+            sw.Close();
+        }
+        
+        /// <summary>
+        /// 從Json讀取翻譯内容
+        /// </summary>
+        [BoxGroup("翻译设置"), Button(ButtonSizes.Medium, Name = "從Json讀取")]
+        public void ReadFromJson()
+        {
+            using var sr = new StreamReader(Path.Combine(outPath,$"{name}.json"));
+            translationSet = JsonUtility.FromJson<Serialization<Translations>>((sr.ReadToEnd())).ToList().ToHashSet();
+            sr.Close();
+        }
 
         #endregion
 
@@ -53,11 +82,8 @@ namespace i18n
         /// <summary>
         /// 所有翻译的集合
         /// </summary>
-        [BoxGroup("翻译查看")]
-        [LabelText("翻译列表")]
-        [HideInPlayMode]
-        [TableList(AlwaysExpanded = true, DrawScrollView = true)]
-        public List<Translations> translationSet = new List<Translations>();
+        [BoxGroup("翻译查看"), LabelText("翻译列表"), HideInPlayMode, TableList(AlwaysExpanded = true, DrawScrollView = true)]
+        public HashSet<Translations> translationSet = new HashSet<Translations>();
 
         #endregion
 
@@ -76,21 +102,20 @@ namespace i18n
         /// <summary>
         /// 需要转化的场景列表
         /// </summary>
-        [BoxGroup("Text翻译")] [LabelText("场景列表")]
+        [BoxGroup("Text翻译"), LabelText("场景列表")] 
         public List<SceneAsset> sceneList = new List<SceneAsset>();
 
         /// <summary>
         /// 需要转化的预制体列表
         /// </summary>
-        [BoxGroup("Text翻译")] [LabelText("Prefab列表")]
+        [BoxGroup("Text翻译"), LabelText("Prefab列表")] 
         public List<GameObject> prefabList = new List<GameObject>();
 
         /// <summary>
         /// 给添加的Object进行组件绑定
         /// 对场景和预制体分别处理
         /// </summary>
-        [BoxGroup("Text翻译")]
-        [Button(ButtonSizes.Medium, Name = "对上述物体生成TextAttacher")]
+        [BoxGroup("Text翻译"), Button(ButtonSizes.Medium, Name = "对上述物体生成TextAttacher")]
         public void AddTextAttacher()
         {
             //----------------------------------------------------
@@ -192,7 +217,7 @@ namespace i18n
                 //查找第一个满足条件的翻译组
                 var set = translationSet.First(translation => translation.content == contentStr);
                 //从set中查找第一个满足条件的对应语言翻译内容
-                set.Dict.TryGetValue(lang, out translationContent);
+                translationContent = set.translation==string.Empty ? translationContent : set.translation;
             }
             catch (InvalidOperationException e)
             {
@@ -203,7 +228,7 @@ namespace i18n
                     {
                         token = fromToken, //标记来源
                         content = contentStr, //记录内容
-                        Dict = new Dictionary<LangFlag, string>() //初始化字典
+                        translation = string.Empty
                     };
                     translationSet.Add(translation);
                 }

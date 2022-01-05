@@ -12,9 +12,9 @@
 
 using UnityEngine;
 
-namespace i18n.TransformAndGameobjectExt
+namespace i18n.Ext
 {
-    public static class ExtendFunction
+    public static class TransformAndGameobjectExt
     {
         
         /// <summary>

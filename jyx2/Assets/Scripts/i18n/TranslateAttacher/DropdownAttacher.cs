@@ -11,7 +11,7 @@
 // 时间: 2022-01-05-1:31 PM
 
 using System.Collections.Generic;
-using i18n.TransformAndGameobjectExt;
+using i18n.Ext;
 using i18n.TranslatorDef;
 using UnityEngine;
 using UnityEngine.UI;
