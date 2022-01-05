@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
 using Jyx2;
+using Jyx2.MOD;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -53,16 +54,29 @@ public class LoadingPanel : MonoBehaviour
             }
         }
         //切换场景
-        else 
+        else
         {
-            var async = Addressables.LoadSceneAsync(sceneAsset);
-        
-            while (!async.IsDone)
+            var path = Jyx2ResourceHelper.GetAssetRefAddress(sceneAsset, typeof(TextAsset));
+            if(MODLoader._remap.ContainsKey(path))
             {
-                m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
-                await UniTask.WaitForEndOfFrame();
+                var assetBundleItem = MODLoader._remap[path];
+                var handle = SceneManager.LoadSceneAsync(assetBundleItem.Name);
+                while (!handle.isDone)
+                {
+                    m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
+                    await UniTask.WaitForEndOfFrame();
+                }
             }
-
+            else
+            {
+                var async = Addressables.LoadSceneAsync(path);
+                while (!async.IsDone)
+                {
+                    m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
+                    await UniTask.WaitForEndOfFrame();
+                } 
+            }
+            
             GameRuntimeData.Instance.CheckCompass(); //TODO，改成eventListener
         }
         
