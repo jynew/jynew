@@ -13,19 +13,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
 using i18n.Ext;
 using i18n.TranslateAttacher;
 using i18n.TranslatorDef;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
-using UnityEditor.AddressableAssets.HostingServices;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using static i18n.TranslatorDef.TranslationUtility;
 
 namespace i18n
 {
@@ -46,12 +42,12 @@ namespace i18n
         /// 设置为false显然可以降低其内存使用，在语言完善翻译之后，显然可以可以不用继续收集，保证了Translator不会继续增长
         /// ------------------------------------------------
         /// </summary>
-        [BoxGroup("翻译设置"), LabelText("是否收集")]  public bool isCollectNewText;
-        
+        [BoxGroup("翻译设置"), LabelText("是否收集")] public bool isCollectNewText;
+
         /// <summary>
         /// 文件輸出目錄
         /// </summary>
-        [BoxGroup("翻译设置"), LabelText("文件輸出目錄"), FolderPath]  
+        [BoxGroup("翻译设置"), LabelText("文件輸出目錄"), FolderPath]
         public string outPath;
 
         /// <summary>
@@ -60,19 +56,19 @@ namespace i18n
         [BoxGroup("翻译设置"), Button(ButtonSizes.Medium, Name = "转化为Json")]
         public void Convert2Json()
         {
-            using var sw = new StreamWriter(Path.Combine(outPath,$"{name}.json"));
-            sw.WriteLine(JsonUtility.ToJson(new Serialization<Translations>(translationSet.ToList()),true));
+            using var sw = new StreamWriter(Path.Combine(outPath, $"{name}.json"));
+            sw.WriteLine(JsonUtility.ToJson(new Serialization<string, Translations>(TranslationSet), true));
             sw.Close();
         }
-        
+
         /// <summary>
         /// 從Json讀取翻譯内容
         /// </summary>
         [BoxGroup("翻译设置"), Button(ButtonSizes.Medium, Name = "從Json讀取")]
         public void ReadFromJson()
         {
-            using var sr = new StreamReader(Path.Combine(outPath,$"{name}.json"));
-            translationSet = JsonUtility.FromJson<Serialization<Translations>>((sr.ReadToEnd())).ToList().ToHashSet();
+            using var sr = new StreamReader(Path.Combine(outPath, $"{name}.json"));
+            TranslationSet = JsonUtility.FromJson<Serialization<string, Translations>>(sr.ReadToEnd()).ToDictionary();
             sr.Close();
         }
 
@@ -83,8 +79,8 @@ namespace i18n
         /// <summary>
         /// 所有翻译的集合
         /// </summary>
-        [BoxGroup("翻译查看"), LabelText("翻译列表"), HideInPlayMode, TableList(AlwaysExpanded = true, DrawScrollView = true)]
-        public HashSet<Translations> translationSet = new HashSet<Translations>();
+        [BoxGroup("翻译查看"), LabelText("翻译列表"), TableList(AlwaysExpanded = true, DrawScrollView = true)]
+        public Dictionary<string, Translations> TranslationSet = new Dictionary<string, Translations>();
 
         #endregion
 
@@ -103,20 +99,20 @@ namespace i18n
         /// <summary>
         /// 需要转化的场景列表
         /// </summary>
-        [BoxGroup("Text翻译"), LabelText("场景列表")] 
+        [BoxGroup("Gameobject组件翻译"), LabelText("场景列表")]
         public List<SceneAsset> sceneList = new List<SceneAsset>();
 
         /// <summary>
         /// 需要转化的预制体列表
         /// </summary>
-        [BoxGroup("Text翻译"), LabelText("Prefab列表")] 
+        [BoxGroup("Gameobject组件翻译"), LabelText("Prefab列表")]
         public List<GameObject> prefabList = new List<GameObject>();
 
         /// <summary>
         /// 给添加的Object进行组件绑定
         /// 对场景和预制体分别处理
         /// </summary>
-        [BoxGroup("Text翻译"), Button(ButtonSizes.Medium, Name = "对上述物体生成TextAttacher")]
+        [BoxGroup("Gameobject组件翻译"), Button(ButtonSizes.Medium, Name = "对上述物体生成Attacher")]
         public void AddTextAttacher()
         {
             //----------------------------------------------------
@@ -210,30 +206,31 @@ namespace i18n
         /// <returns></returns>
         public string GetOrRegTranslation(string fromToken, string contentStr)
         {
-            //默认不做更改返回文字
-            var translationContent = contentStr;
-            foreach (var set in translationSet)
+            //不存在该翻译
+            if (!TranslationSet.ContainsKey(contentStr))
             {
-                if (set.translation == contentStr) return contentStr;
-                if (set.content == contentStr)
+                if (isCollectNewText)
                 {
-                    return string.IsNullOrEmpty(set.translation) ? translationContent : set.translation;
+                    TranslationSet.Add(contentStr, new Translations
+                    {
+                        token = fromToken, //标记来源
+                        content = contentStr, //记录内容
+                        translation = string.Empty
+                    });
+                    Debug.LogWarning($"【已收集】没有{contentStr}对应的翻译组内容！");
                 }
-            }
-            //针对查找不到做翻译组且设置需要动态收集文本的情况做单独处理
-            if (isCollectNewText)
-            {
-                var translation = new Translations
+                else
                 {
-                    token = fromToken, //标记来源
-                    content = contentStr, //记录内容
-                    translation = string.Empty
-                };
-                translationSet.Add(translation);
+                    Debug.LogWarning($"没有{contentStr}对应的翻译组内容！");
+                }
+
+                return contentStr;
             }
-            Debug.LogWarning($"没有{contentStr}对应的翻译组内容！已添加。");
-            //返回结果
-            return translationContent;
+
+            //如果还没翻译
+            return string.IsNullOrEmpty(TranslationSet[contentStr].translation)
+                ? contentStr
+                : TranslationSet[contentStr].translation;
         }
 
         #endregion

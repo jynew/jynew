@@ -26,7 +26,7 @@ namespace i18n.TranslatorDef
         /// <summary>
         /// 记录内容来源
         /// </summary>
-        [TextArea(5, 20), SerializeField]  public string token;
+        [TextArea(1, 5), SerializeField]  public string token;
 
         /// <summary>
         /// 翻译对应原文本
@@ -36,7 +36,6 @@ namespace i18n.TranslatorDef
         /// <summary>
         /// 文本對應的翻译
         /// </summary>
-        //[TableList(AlwaysExpanded = true, DrawScrollView = true)]
-        public string translation;
+        [TextArea(5, 20), SerializeField] public string translation;
     }
 }

@@ -27,14 +27,6 @@ namespace i18n.TranslateAttacher
         private List<Dropdown.OptionData> OptionDatas => this.gameObject.GetComponent<Dropdown>().options;
 
         /// <summary>
-        /// 在本组件激活的时候就替换字符串
-        /// </summary>
-        private void Awake()
-        {
-            Refresh();
-        }
-
-        /// <summary>
         /// 组件从未激活状态到激活状态则触发
         /// </summary>
         private void OnEnable()

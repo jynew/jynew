@@ -33,14 +33,6 @@ namespace i18n.TranslateAttacher
         private Text TextScript => this.gameObject.GetComponent<Text>();
 
         /// <summary>
-        /// 在本组件激活的时候就替换字符串
-        /// </summary>
-        private void Awake()
-        {
-            Refresh();
-        }
-
-        /// <summary>
         /// 组件从未激活状态到激活状态则触发
         /// </summary>
         private void OnEnable()
@@ -51,7 +43,7 @@ namespace i18n.TranslateAttacher
         public override void Refresh()
         {
             //刷新翻译内容
-            TextScript.text=TextScript.text.GetContent(GetToken());
+            TextScript.text = TextScript.text.GetContent(GetToken());
         }
 
         public override string GetToken()
