@@ -211,10 +211,12 @@ public class Jyx2Player : MonoBehaviour
     {
         if(_boat == null) return; //暂实现：判断是否是大地图，有船才是大地图
 
+        var animator = GetPlayerAnimator();
+        
         if (_playingbigMapIdle)
         {
             //判断是否有移动速度，有的话立刻打断目前IDLE动作
-            if (GetPlayerAnimator().GetFloat("speed") > 0)
+            if (animator!=null && animator.GetFloat("speed") > 0)
             {
                 var animancer = GetPlayerAnimancer();
                 animancer.Stop();
@@ -225,7 +227,7 @@ public class Jyx2Player : MonoBehaviour
         }
 
         //一旦开始移动，则重新计时
-        if (GetPlayerAnimator().GetFloat("speed") > 0)
+        if (animator!=null && animator.GetFloat("speed") > 0)
         {
             _bigmapIdleTimeCount = 0;
             return;
