@@ -217,16 +217,8 @@ namespace Jyx2
         {
             /*            if (Application.isEditor) //编辑器模式下不需要缓存，直接读取文件
                             return;*/
-            var paths = new List<string>();
-            var overridePaths = new List<string>();
-            FileTools.GetAllFilePath("Assets/BuildSource/Lua", paths, new List<string>() { ".lua" });
-
-            foreach (var path in paths)
-            {
-                var overridePath = path.Substring(path.IndexOf("Assets"));
-                overridePaths.Add(overridePath);
-            }
-
+            var overridePaths = MODLoader.LoadOverrideList("Lua");
+            
             var assets = await MODLoader.LoadAssets<TextAsset>(overridePaths);
 
             __luaMapper = new Dictionary<string, byte[]>();
