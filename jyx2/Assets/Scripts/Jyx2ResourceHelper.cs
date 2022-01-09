@@ -58,14 +58,14 @@ public static class Jyx2ResourceHelper
 
         _isInited = true;
         
-        MODLoader.SaveOverrideList("Skills", ".asset");
-        MODLoader.SaveOverrideList("Configs/Characters", ".asset");
-        MODLoader.SaveOverrideList("Configs/Items", ".asset");
-        MODLoader.SaveOverrideList("Configs/Skills", ".asset");
-        MODLoader.SaveOverrideList("Configs/Shops", ".asset");
-        MODLoader.SaveOverrideList("Configs/Maps", ".asset");
-        MODLoader.SaveOverrideList("Configs/Battles", ".asset");
-        MODLoader.SaveOverrideList("Lua", ".lua");
+        /*MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");*/
 
         await MODLoader.Init();
         
@@ -78,7 +78,7 @@ public static class Jyx2ResourceHelper
         }
 
         //技能池
-        var overridePaths = MODLoader.LoadOverrideList("Skills");
+        var overridePaths = MODLoader.LoadOverrideList("Assets/BuildSource/Skills");
         var task = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
         if (task != null)
         {

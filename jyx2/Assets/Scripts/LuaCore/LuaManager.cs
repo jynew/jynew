@@ -217,7 +217,7 @@ namespace Jyx2
         {
             /*            if (Application.isEditor) //编辑器模式下不需要缓存，直接读取文件
                             return;*/
-            var overridePaths = MODLoader.LoadOverrideList("Lua");
+            var overridePaths = MODLoader.LoadOverrideList("Assets/BuildSource/Lua");
             
             var assets = await MODLoader.LoadAssets<TextAsset>(overridePaths);
 

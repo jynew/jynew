@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading;
 using CSObjectWrapEditor;
 using DG.DemiLib;
-
+using Jyx2.MOD;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
@@ -111,6 +111,18 @@ namespace Jyx2Editor
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
+            
+            //重新生成MOD资源索引表
+            if(File.Exists(path + "/" + "/Mods/OverrideList.txt"))
+                File.Delete(path + "/" + "/Mods/OverrideList.txt");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Skills", ".asset");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Configs/Characters", ".asset");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Configs/Items", ".asset");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Configs/Skills", ".asset");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Configs/Shops", ".asset");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Configs/Maps", ".asset");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Configs/Battles", ".asset");
+            MODLoader.SaveOverrideList(path + "/", "Assets/BuildSource/Lua", ".lua");
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
