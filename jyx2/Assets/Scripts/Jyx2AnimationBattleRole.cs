@@ -27,9 +27,20 @@ namespace Jyx2
             //TODO:判断是否销毁了_animacer，替换模型_animacer不会立即消失……,所以直接每次都get一次
             var animator = GetAnimator();
             _animancer = GameUtil.GetOrAddComponent<HybridAnimancerComponent>(animator.transform);
-            _animancer.Animator = animator;
-            _animancer.Controller = animator.runtimeAnimatorController;
+            
+            if(_animancer.Animator == null)
+                _animancer.Animator = animator;
+            
+            if(_animancer.Controller == null)
+                _animancer.Controller = animator.runtimeAnimatorController;
+            
             return _animancer;
+        }
+
+        protected void InitAnimantionSystem()
+        {
+            GetAnimator();
+            GetAnimancer();
         }
         
         /// <summary>

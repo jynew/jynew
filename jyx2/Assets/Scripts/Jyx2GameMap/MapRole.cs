@@ -142,7 +142,7 @@ public class MapRole : Jyx2AnimationBattleRole
 
             _lazyInitBattleAnimator = false;
         }
-        
+
         return _animator;
     }
 
