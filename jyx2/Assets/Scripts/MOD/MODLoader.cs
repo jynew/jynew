@@ -108,14 +108,9 @@ namespace Jyx2.MOD
         }
 #endregion
 
-        public static void SaveOverrideList(string directory, string path, string filter)
+        public static void SaveOverrideList(string path, string filter)
         {
-            var dir = directory + "Mods/";
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-            string filePath = dir + "OverrideList.txt";
+            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
             var fileContentsList = GetOverridePaths(path, filter);
             File.AppendAllLines(filePath, fileContentsList.ToArray());
         }
@@ -137,7 +132,7 @@ namespace Jyx2.MOD
 
         public static List<string> LoadOverrideList(string path)
         {
-            string filePath = Environment.CurrentDirectory + "/Mods/OverrideList.txt";
+            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
             var fileContentsList = File.ReadAllLines(filePath);
             List<string> lineList = new List<string>();
             foreach (var line in fileContentsList)

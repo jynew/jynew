@@ -58,15 +58,19 @@ public static class Jyx2ResourceHelper
 
         _isInited = true;
         
-        /*MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+#if UNITY_EDITOR
+        if (File.Exists(Application.streamingAssetsPath + "/OverrideList.txt")) ;
+            File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");*/
-
+        MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
+#endif
+        
         await MODLoader.Init();
         
         //全局配置表
