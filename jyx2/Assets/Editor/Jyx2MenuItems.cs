@@ -126,6 +126,34 @@ namespace Jyx2Editor
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
 
+        [MenuItem("一键打包/Windows64_Develop")]
+        private static void BuildWindows64_Dev()
+        {
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "jyx2Win64Build");
+
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneWindows64);
+
+
+            if (string.IsNullOrEmpty(path))
+                return;
+
+            //重新生成Addressable相关文件
+            AddressableAssetSettings.BuildPlayerContent();
+
+            string currentDate = DateTime.Now.ToString("yyyyMMdd");
+
+            //设置版本号
+            PlayerSettings.bundleVersion = currentDate;
+
+            //exe路径
+            string exePath = path + $"/jynew.exe";
+
+            //打包
+            BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.Development);
+
+            EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
+        }
 
         static string[] GetScenePaths()
         {
