@@ -227,6 +227,51 @@ namespace Jyx2Editor
                 Debug.LogError(e.StackTrace);
             }
         }
+        
+        
+        [MenuItem("一键打包/Android_Develop")]
+        private static void BuildAndroid_Dev()
+        {
+            if (!EditorUtility.DisplayDialog("重要提示",
+                    "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
+                return;
+
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
+
+                if (string.IsNullOrEmpty(path))
+                    return;
+                
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
+
+                //动态设置keystore的密码
+                PlayerSettings.Android.keystorePass = "123456";
+                PlayerSettings.Android.keyaliasPass = "123456";
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.Development);
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
+                
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
+        }
 
         [MenuItem("一键打包/MacOS")]
         private static void BuildMacOS()
@@ -261,6 +306,52 @@ namespace Jyx2Editor
 
                 //打包
                 BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,BuildOptions.None);
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
+
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
+        }
+        
+        
+        [MenuItem("一键打包/MacOS_Develop")]
+        private static void BuildMacOS_Dev()
+        {
+            if (!EditorUtility.DisplayDialog("重要提示",
+                    "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
+                return;
+
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneOSX);
+
+#if UNITY_STANDALONE_OSX
+                //支持m1芯片
+                UnityEditor.OSXStandalone.UserBuildSettings.architecture = MacOSArchitecture.x64ARM64;
+#endif
+
+                if (string.IsNullOrEmpty(path))
+                    return;
+
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string outputPath = path + $"/jyxOSXBuild-{currentDate}.app";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,BuildOptions.Development);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
 
