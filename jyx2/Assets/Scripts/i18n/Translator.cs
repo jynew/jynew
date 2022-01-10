@@ -18,10 +18,12 @@ using i18n.TranslateAttacher;
 using i18n.TranslatorDef;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
 
 namespace i18n
 {
@@ -202,7 +204,6 @@ namespace i18n
         /// </summary>
         /// <param name="fromToken">来源标记，仅当第一次添加时需要标记</param>
         /// <param name="contentStr">文本内容</param>
-        /// <param name="lang">翻译格式</param>
         /// <returns></returns>
         public string GetOrRegTranslation(string fromToken, string contentStr)
         {
