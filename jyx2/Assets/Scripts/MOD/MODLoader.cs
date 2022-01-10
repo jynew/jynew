@@ -19,7 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
@@ -112,7 +111,9 @@ namespace Jyx2.MOD
         {
             string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
             var fileContentsList = GetOverridePaths(path, filter);
-            File.AppendAllLines(filePath, fileContentsList.ToArray());
+#if UNITY_EDITOR
+            System.IO.File.AppendAllLines(filePath, fileContentsList.ToArray());
+#endif
         }
 
         private static List<string> GetOverridePaths(string path, string filter)
@@ -133,7 +134,19 @@ namespace Jyx2.MOD
         public static List<string> LoadOverrideList(string path)
         {
             string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
-            var fileContentsList = File.ReadAllLines(filePath);
+            List<string> fileContentsList;
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                WWW reader = new WWW(filePath);
+                while (!reader.isDone) { }
+                string textString = reader.text;
+                fileContentsList = textString.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
+            }
+            else
+            {
+                fileContentsList = System.IO.File.ReadAllLines(filePath).ToList(); 
+            }
+            
             List<string> lineList = new List<string>();
             foreach (var line in fileContentsList)
             {
