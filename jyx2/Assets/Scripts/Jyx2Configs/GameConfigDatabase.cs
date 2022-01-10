@@ -47,12 +47,12 @@ namespace Jyx2Configs
             
             _isInited = true;
             int total = 0;
-            total += await Init<Jyx2ConfigCharacter>("Configs/Characters");
-            total += await Init<Jyx2ConfigItem>("Configs/Items");
-            total += await Init<Jyx2ConfigSkill>("Configs/Skills");
-            total += await Init<Jyx2ConfigShop>("Configs/Shops");
-            total += await Init<Jyx2ConfigMap>("Configs/Maps");
-            total += await Init<Jyx2ConfigBattle>("Configs/Battles");
+            total += await Init<Jyx2ConfigCharacter>("Assets/BuildSource/Configs/Characters");
+            total += await Init<Jyx2ConfigItem>("Assets/BuildSource/Configs/Items");
+            total += await Init<Jyx2ConfigSkill>("Assets/BuildSource/Configs/Skills");
+            total += await Init<Jyx2ConfigShop>("Assets/BuildSource/Configs/Shops");
+            total += await Init<Jyx2ConfigMap>("Assets/BuildSource/Configs/Maps");
+            total += await Init<Jyx2ConfigBattle>("Assets/BuildSource/Configs/Battles");
             
             Debug.Log($"载入完成，总数{total}个配置asset");
         }

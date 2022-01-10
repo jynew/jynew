@@ -69,7 +69,7 @@ public class LoadingPanel : MonoBehaviour
             }
             else
             {
-                var async = Addressables.LoadSceneAsync(path);
+                var async = Addressables.LoadSceneAsync(sceneAsset);
                 while (!async.IsDone)
                 {
                     m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";

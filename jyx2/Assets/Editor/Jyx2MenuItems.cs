@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading;
 using CSObjectWrapEditor;
 using DG.DemiLib;
-
+using Jyx2.MOD;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
@@ -111,6 +111,18 @@ namespace Jyx2Editor
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
+            
+            //重新生成MOD资源索引表
+            if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -140,6 +152,18 @@ namespace Jyx2Editor
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
+            
+            //重新生成MOD资源索引表
+            if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -179,6 +203,18 @@ namespace Jyx2Editor
                 
                 //重新生成Addressable相关文件
                 AddressableAssetSettings.BuildPlayerContent();
+                
+                //重新生成MOD资源索引表
+                if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                    File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
@@ -224,6 +260,18 @@ namespace Jyx2Editor
                 
                 //重新生成Addressable相关文件
                 AddressableAssetSettings.BuildPlayerContent();
+                
+                //重新生成MOD资源索引表
+                if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                    File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";

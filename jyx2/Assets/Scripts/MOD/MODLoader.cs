@@ -17,6 +17,7 @@
 // - MOD配置相关UI界面
 // - 各种MODSample
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Object = UnityEngine.Object;
 
 namespace Jyx2.MOD
 {
@@ -108,16 +110,9 @@ namespace Jyx2.MOD
 
         public static void SaveOverrideList(string path, string filter)
         {
-            var dir = Application.persistentDataPath + "/mods/" + path.Split('/')[0];
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-            string filePath = Application.persistentDataPath + "/mods/" + path + ".txt";
-            if (File.Exists(filePath))
-                return;
-            var fileContentsList = GetOverridePaths("Assets/BuildSource/" + path, filter);
-            File.WriteAllLines(filePath, fileContentsList.ToArray());
+            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
+            var fileContentsList = GetOverridePaths(path, filter);
+            File.AppendAllLines(filePath, fileContentsList.ToArray());
         }
 
         private static List<string> GetOverridePaths(string path, string filter)
@@ -137,9 +132,19 @@ namespace Jyx2.MOD
 
         public static List<string> LoadOverrideList(string path)
         {
-            string filePath = Application.persistentDataPath + "/mods/" + path + ".txt";
+            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
             var fileContentsList = File.ReadAllLines(filePath);
-            return fileContentsList.ToList();
+            List<string> lineList = new List<string>();
+            foreach (var line in fileContentsList)
+            {
+                if (string.IsNullOrEmpty(line.Trim())) continue;
+                if (line.StartsWith("//")) continue;
+                if (line.StartsWith(path))
+                {
+                    lineList.Add(line);
+                }
+            }
+            return lineList;
         }
     }
 
