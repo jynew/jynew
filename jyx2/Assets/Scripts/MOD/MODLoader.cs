@@ -24,6 +24,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 using Object = UnityEngine.Object;
 
 namespace Jyx2.MOD
@@ -126,9 +127,10 @@ namespace Jyx2.MOD
             List<string> fileContentsList;
             if (Application.platform == RuntimePlatform.Android)
             {
-                WWW reader = new WWW(filePath);
-                while (!reader.isDone) { }
-                string textString = reader.text;
+                UnityWebRequest request = UnityWebRequest.Get(filePath);
+                request.SendWebRequest();
+                while (!request.isDone) { }
+                string textString = request.downloadHandler.text;
                 fileContentsList = textString.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
             }
             else
