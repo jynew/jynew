@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Text.RegularExpressions;
+using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,58 +12,13 @@ using UnityEngine.Networking;
 
 namespace Jyx2.MOD
 {
-    public class MODManager : MonoBehaviour
+    public static class MODManager
     {
+        public static readonly List<ModEntry> ModEntries = new List<ModEntry>();
         public static string ModsPath { get; private set; }
-        internal static bool Initialized;
-        
-        void Start()
-        {
-            try
-            {
-                _Start();
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-            }
-        }
 
-        private void _Start()
+        public static async UniTask Init()
         {
-            if (!Initialize())
-            {
-                Debug.Log("初始化出错！");
-                return;
-            }
-
-            if (Directory.Exists(ModsPath))
-            {
-                var mods = new Dictionary<string, ModEntry>();
-                var pathList = new List<string>();
-                FileTools.GetAllFilePath(ModsPath, pathList, new List<string>() { ".json" });
-                foreach (var jsonPath in pathList)
-                {
-                    var modMeta = new ModMeta(jsonPath);
-                    var filePath = Path.Combine(ModsPath, modMeta.id);
-                    var modEntry = new ModEntry(modMeta, filePath);
-                    mods.Add(modMeta.id, modEntry);
-                    if (!File.Exists(filePath))
-                        StartCoroutine(DownloadMod(modMeta.uri, filePath));
-                }
-                
-                if (mods.Count > 0)
-                {
-                    foreach (var modEntry in mods.Values)
-                        modEntry.Active = true;
-                }
-            }
-        }
-
-        public static bool Initialize()
-        {
-            if (Initialized) return true;
-            Initialized = true;
             ModsPath = Path.Combine(Application.persistentDataPath, "mods");;
             if (!Directory.Exists(ModsPath))
             {
@@ -71,9 +26,28 @@ namespace Jyx2.MOD
                 Debug.Log($"已创建Mods文件夹：{ModsPath}。");
             }
 
-            return Initialized;
+            if (Directory.Exists(ModsPath))
+            {
+                var pathList = new List<string>();
+                FileTools.GetAllFilePath(ModsPath, pathList, new List<string>() { ".json" });
+                foreach (var jsonPath in pathList)
+                {
+                    var modMeta = new ModMeta(jsonPath);
+                    var filePath = Path.Combine(ModsPath, modMeta.id);
+                    var modEntry = new ModEntry(modMeta, filePath);
+                    ModEntries.Add(modEntry);
+                    if (!File.Exists(filePath))
+                        await DownloadMod(modMeta.uri, filePath);
+                }
+                
+                if (ModEntries.Count > 0)
+                {
+                    foreach (var modEntry in ModEntries)
+                        modEntry.Active = true;
+                }
+            }
         }
-        
+
         private static IEnumerator DownloadMod(string uri, string path)
         {
             var uwr = UnityWebRequest.Get(uri);

@@ -30,12 +30,7 @@ using Object = UnityEngine.Object;
 namespace Jyx2.MOD
 {
     public static class MODLoader
-    {
-        /// <summary>
-        /// TODO：添加界面可配置和可导入
-        /// </summary>
-        public static readonly List<string> ModList = new List<string>();// { "D:/jynew/MOD/replace_sprite", "D:/jynew/MOD/replace_audio" };
-
+    { 
         public struct AssetBundleItem
         {
             public string Name;
@@ -50,17 +45,17 @@ namespace Jyx2.MOD
         public static async UniTask Init()
         {
             _remap.Clear();//for test
-
-            foreach (var modUri in ModList)
+            
+            var modList = MODManager.ModEntries.Where(modEntry => modEntry.Active);
+            
+            foreach (var mod in modList)
             {
-                var ab = await AssetBundle.LoadFromFileAsync(modUri);
+                var ab = await AssetBundle.LoadFromFileAsync(mod.Path);
                 if (ab == null)
                 {
-                    Debug.LogError($"载入MOD失败：{modUri}");
+                    Debug.LogError($"载入MOD失败：{mod.Path}");
                     continue;
                 }
-
-                Jyx2ModInstance modInstance = new Jyx2ModInstance() { uri = modUri, assetBundle = ab };
 
                 //记录和复写所有的MOD重载资源
                 foreach (var name in ab.GetAllPaths())
@@ -142,11 +137,5 @@ namespace Jyx2.MOD
             
             return lineList;
         }
-    }
-
-    public class Jyx2ModInstance
-    {
-        public string uri;
-        public AssetBundle assetBundle;
     }
 }
