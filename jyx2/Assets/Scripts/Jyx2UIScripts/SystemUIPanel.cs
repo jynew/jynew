@@ -156,5 +156,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 				OnItemSelect();
 			}
 		}
+		else if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
+			HidePanel();
 	}
 }

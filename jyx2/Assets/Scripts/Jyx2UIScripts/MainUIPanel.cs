@@ -41,6 +41,9 @@ public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
             }
             Compass.text = pString;
         }
+
+        if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
+            OnSystemBtnClick();
     }
 
     protected override void OnShowPanel(params object[] allParams)
