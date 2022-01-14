@@ -100,6 +100,8 @@ namespace Jyx2Editor
         [MenuItem("一键打包/Windows64")]
         private static void BuildWindows64()
         {
+            //自动运行xLua的编译
+            Generator.GenAll();
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "jyx2Win64Build");
 
@@ -137,15 +139,16 @@ namespace Jyx2Editor
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
-
+        
         [MenuItem("一键打包/Windows64_Develop")]
         private static void BuildWindows64_Dev()
         {
+            //自动运行xLua的编译
+            Generator.GenAll();
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "jyx2Win64Build");
 
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneWindows64);
-
 
             if (string.IsNullOrEmpty(path))
                 return;
@@ -169,7 +172,7 @@ namespace Jyx2Editor
 
             //设置版本号
             PlayerSettings.bundleVersion = currentDate;
-
+            
             //exe路径
             string exePath = path + $"/jynew.exe";
 
@@ -178,7 +181,6 @@ namespace Jyx2Editor
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
-
         static string[] GetScenePaths()
         {
             return new string[] {"Assets/0_GameStart.unity", "Assets/0_MainMenu.unity"};
@@ -187,9 +189,8 @@ namespace Jyx2Editor
         [MenuItem("一键打包/Android")]
         private static void BuildAndroid()
         {
-            if (!EditorUtility.DisplayDialog("重要提示",
-                "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
-                return;
+            //自动运行xLua的编译
+            Generator.GenAll();
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
@@ -244,9 +245,8 @@ namespace Jyx2Editor
         [MenuItem("一键打包/Android_Develop")]
         private static void BuildAndroid_Dev()
         {
-            if (!EditorUtility.DisplayDialog("重要提示",
-                    "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
-                return;
+            //自动运行xLua的编译
+            Generator.GenAll();
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
@@ -300,9 +300,8 @@ namespace Jyx2Editor
         [MenuItem("一键打包/MacOS")]
         private static void BuildMacOS()
         {
-            if (!EditorUtility.DisplayDialog("重要提示",
-                "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
-                return;
+            //自动运行xLua的编译
+            Generator.GenAll();
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
@@ -346,9 +345,8 @@ namespace Jyx2Editor
         [MenuItem("一键打包/MacOS_Develop")]
         private static void BuildMacOS_Dev()
         {
-            if (!EditorUtility.DisplayDialog("重要提示",
-                    "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
-                return;
+            //自动运行xLua的编译
+            Generator.GenAll();
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");

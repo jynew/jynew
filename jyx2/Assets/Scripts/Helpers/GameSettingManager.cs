@@ -10,8 +10,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using i18n;
+using i18n.TranslatorDef;
+using Jyx2.MOD;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 
 public static class GameSettingManager
@@ -24,6 +31,7 @@ public static class GameSettingManager
         Resolution,
         Viewport,
         Difficulty,
+        Language
     }
 
     /// <summary>
@@ -58,10 +66,11 @@ public static class GameSettingManager
         // DEBUG
         PrintSettings();
 
-        // 由GameSettingManager管理的设置生效委托: Resolution, Fullscreen
+        // 由GameSettingManager管理的设置生效委托: Resolution, Fullscreen, Language
         // 注册委托，且立刻生效。
         SubscribeEnforceEvent(Catalog.Resolution, SetResolution, true);
         SubscribeEnforceEvent(Catalog.Fullscreen, SetFullScreen, true);
+        SubscribeEnforceEvent(Catalog.Language, SetLanguage, true);
 
         _hasInitialized = true;
         
@@ -106,6 +115,9 @@ public static class GameSettingManager
                     break;
                 case Catalog.Difficulty:
                     result.Add(Catalog.Difficulty, GetDifficulty());
+                    break;
+                case Catalog.Language:
+                    result.Add(Catalog.Language, GetLanguage());
                     break;
             }
         }
@@ -354,6 +366,43 @@ public static class GameSettingManager
     {
         const string key = GameConst.PLAYER_PREF_VIEWPORT_TYPE;
         return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : (int) GameViewPortManager.ViewportType.Topdown;
+    }
+
+    #endregion
+    
+    
+    #region Language
+    
+    private static string GetLanguage()
+    {
+        const string key = GameConst.PLAYER_PREF_LANGUAGE;
+        return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetString(key) : "默认";
+    }
+    
+    
+    private static void SetLanguage(object mode)
+    {
+        if (!GlobalAssetConfig.Instance) return;
+        if (mode is string value)
+        {
+            if (value != "默认")
+            {
+                GlobalAssetConfig.Instance.defaultTranslator = ScriptableObject.CreateInstance<Translator>();
+                GlobalAssetConfig.Instance.defaultTranslator.outPath = Path.Combine(Application.streamingAssetsPath,
+                    "Language");
+                GlobalAssetConfig.Instance.defaultTranslator.currentLang =
+                    (TranslationUtility.LangFlag)Enum.Parse(typeof(TranslationUtility.LangFlag), value, true);
+                GlobalAssetConfig.Instance.defaultTranslator.ReadFromJson();
+            }
+            else
+            {
+                GlobalAssetConfig.Instance.defaultTranslator = null;
+            }
+        }
+        else
+        {
+            Debug.LogError("SetWindowMode: 参数必须是string.");
+        }
     }
 
     #endregion
