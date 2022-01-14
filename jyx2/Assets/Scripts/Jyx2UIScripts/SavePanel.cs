@@ -18,9 +18,9 @@ using UnityEngine.UI;
 using Keiwando.NFSO;
 using UnityEngine.SceneManagement;
 
-public partial class SavePanel:Jyx2_UIBase
+public partial class SavePanel : Jyx2_UIBase
 {
-	
+
 #if UNITY_STANDALONE_WIN
 	private const string testDirectory = @"C:\Users";
 #elif UNITY_STANDALONE_OSX
@@ -29,147 +29,175 @@ public partial class SavePanel:Jyx2_UIBase
 	private const string testDirectory = "";
 #endif
 
-    public override UILayer Layer => UILayer.NormalUI;
+	public override UILayer Layer => UILayer.NormalUI;
 
-    Action<int> m_selectCallback;
+	Action<int> m_selectCallback;
 
-    private Action closeCallback;
+	private Action closeCallback;
 
-    private int current_selection = -1;
+	private int current_selection = -1;
 
-    protected override void OnCreate()
-    {
-        InitTrans();
-        BindListener(BackButton_Button, OnBackClick);
+	protected override void OnCreate()
+	{
+		InitTrans();
+		BindListener(BackButton_Button, OnBackClick);
 		BindListener(ImButton_Button, OnImportClick);
 		BindListener(ExButton_Button, OnExportClick);
-    }
-    
-    private void OnEnable()
-    {
-	    if (!IsInGameOverPage)
-	    {
-		    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
-	    }
+	}
 
-	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
-	    {
-		    if(current_selection>0) ChangeSelection(-1);
-	    });
-	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
-	    {
-		    if(current_selection<2) ChangeSelection(1);
-	    });
-	    GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
-	    {
-		    if (current_selection != -1)
-		    {
-			    OnSaveItemClick(current_selection);
-		    }
-	    });
-    }
+	private void OnEnable()
+	{
+		if (!IsInGameOverPage)
+		{
+			GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
+		}
 
-    private void OnDisable()
-    {
-	    current_selection = -1;
-	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
-	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
-	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
-	    GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
-    }
+		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
+		{
+			if (current_selection > 0) ChangeSelection(-1);
+		});
+		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
+		{
+			if (current_selection < 2) ChangeSelection(1);
+		});
+		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
+		{
+			if (current_selection != -1)
+			{
+				OnSaveItemClick(current_selection);
+			}
+		});
+	}
 
-    public void Show()
-    {
-	    InitTrans();
-	    this.OnShowPanel(new Action<int>((index) =>
-	    {
-		    StoryEngine.DoLoadGame(index);
-	    }),"");
-    }
+	private void OnDisable()
+	{
+		current_selection = -1;
+		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
+		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
+		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
+	}
 
-    protected override void OnShowPanel(params object[] allParams)
-    {
-        base.OnShowPanel(allParams);
-        m_selectCallback = allParams[0] as Action<int>;
-		Main_Text.text=allParams[1] as string;
+	public void Show()
+	{
+		InitTrans();
+		this.OnShowPanel(new Action<int>((index) =>
+		{
+			StoryEngine.DoLoadGame(index);
+		}), "");
+	}
+
+	protected override void OnShowPanel(params object[] allParams)
+	{
+		base.OnShowPanel(allParams);
+		m_selectCallback = allParams[0] as Action<int>;
+		Main_Text.text = allParams[1] as string;
 		if (allParams.Length > 2)
 		{
 			closeCallback = allParams[2] as Action;
 		}
 
-		var curScene=SceneManager.GetActiveScene().name;
-		var isHouse=(curScene!="0_GameStart" && curScene!="0_BigMap");
+		var curScene = SceneManager.GetActiveScene().name;
+		var isHouse = (curScene != "0_GameStart" && curScene != "0_BigMap");
 		(ImButton_Button.gameObject).SetActive(!isHouse);
 		(ExButton_Button.gameObject).SetActive(!isHouse);
-        RefreshSave();
-        ChangeSelection(0);
-    }
+		RefreshSave();
+		ChangeSelection(0);
+	}
 
-    void ChangeSelection(int num)
-    {
-	    current_selection += num;
-	    for (int i = 0; i < GameConst.SAVE_COUNT; i++)
-	    {
-		    var btn = SaveParent_RectTransform.gameObject.transform.GetChild(i).GetComponent<Button>();
-		    var text = btn.transform.Find("SummaryText").GetComponent<Text>();
-		    text.color= i == current_selection
-			    ? ColorStringDefine.save_selected
-			    : ColorStringDefine.save_normal;
-	    }
-    }
+	void ChangeSelection(int num)
+	{
+		current_selection += num;
+		for (int i = 0; i < GameConst.SAVE_COUNT; i++)
+		{
+			var btn = SaveParent_RectTransform.gameObject.transform.GetChild(i).GetComponent<Button>();
+			var text = btn.transform.Find("SummaryText").GetComponent<Text>();
+			text.color = i == current_selection
+				? ColorStringDefine.save_selected
+				: ColorStringDefine.save_normal;
+		}
+	}
 
-    void RefreshSave() 
-    {
-        HSUnityTools.DestroyChildren(SaveParent_RectTransform);
+	protected override bool captureGamepadAxis
+	{
+		get { return true; }
+	}
 
-        for (int i = 0; i < GameConst.SAVE_COUNT; i++)
-        {
-            var btn = Instantiate(SaveItem_Button);
-            btn.transform.SetParent(SaveParent_RectTransform);
-            btn.transform.localScale = Vector3.one;
-            btn.name = i.ToString();
-            Text title = btn.transform.Find("Title").GetComponent<Text>();
-            title.text = "存档" + GameConst.GetUPNumber(i+1);
+	protected override void onGamepadAxisDown()
+	{
+		if (current_selection < 2) ChangeSelection(1);
 
-            var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
+	}
 
-            string summaryInfo = GameRuntimeData.GetSaveSummary(i);
-            
-            txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
-            
-            BindListener(btn, new Action(() =>
-            {
-                OnSaveItemClick(int.Parse(btn.name));
-            }));
-        }
-    }
+	protected override void onGamepadAxisUp()
+	{
+		if (current_selection > 0) ChangeSelection(-1);
+	}
 
-    protected override void OnHidePanel()
-    {
-        base.OnHidePanel();
-        HSUnityTools.DestroyChildren(SaveParent_RectTransform);
-    }
+	protected override void Update()
+	{
+		base.Update();
+		if (Input.GetButtonDown("Fire2"))
+		{
+			if (current_selection != -1)
+			{
+				OnSaveItemClick(current_selection);
+			}
+		}
+	}
 
-    void OnSaveItemClick(int index) 
-    {
-        Action<int> cb = m_selectCallback;
-        Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
-        cb?.Invoke(index);
-    }
+	void RefreshSave()
+	{
+		HSUnityTools.DestroyChildren(SaveParent_RectTransform);
 
-    private void OnBackClick()
-    {
-	    if (!IsInGameOverPage)
-	    {
-		    Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
-		    closeCallback?.Invoke();
-	    }
-    }
+		for (int i = 0; i < GameConst.SAVE_COUNT; i++)
+		{
+			var btn = Instantiate(SaveItem_Button);
+			btn.transform.SetParent(SaveParent_RectTransform);
+			btn.transform.localScale = Vector3.one;
+			btn.name = i.ToString();
+			Text title = btn.transform.Find("Title").GetComponent<Text>();
+			title.text = "存档" + GameConst.GetUPNumber(i + 1);
 
-    private void OnImportClick()
-    {
-	    if (!IsInGameOverPage)
-	    {
+			var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
+
+			string summaryInfo = GameRuntimeData.GetSaveSummary(i);
+
+			txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
+
+			BindListener(btn, new Action(() =>
+			{
+				OnSaveItemClick(int.Parse(btn.name));
+			}));
+		}
+	}
+
+	protected override void OnHidePanel()
+	{
+		base.OnHidePanel();
+		HSUnityTools.DestroyChildren(SaveParent_RectTransform);
+	}
+
+	void OnSaveItemClick(int index)
+	{
+		Action<int> cb = m_selectCallback;
+		Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
+		cb?.Invoke(index);
+	}
+
+	private void OnBackClick()
+	{
+		if (!IsInGameOverPage)
+		{
+			Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
+			closeCallback?.Invoke();
+		}
+	}
+
+	private void OnImportClick()
+	{
+		if (!IsInGameOverPage)
+		{
 #if UNITY_ANDROID
 			for(int i = 0;i<3;i++){
 				string fileName = string.Format(GameRuntimeData.ARCHIVE_FILE_NAME, i);
@@ -189,73 +217,74 @@ public partial class SavePanel:Jyx2_UIBase
 			//	RefreshSave();
 			//});
 #else
-		    NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
-			    delegate(bool didSelectPath, string savePath)
-			    {
-				    if (didSelectPath)
-				    {
-					    string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR +
-					                         "/";
-					    int SaveIndex = -1;
-					    if (File.Exists(savePath) && savePath.Contains("archive_") && savePath.Contains(".dat"))
-					    {
-						    var lines = savePath.Split('\\');
-						    File.Copy(savePath, sFolderPath + lines[lines.Length - 1]);
-						    try
-						    {
-							    SaveIndex = int.Parse(savePath.Substring(savePath.Length - 5, 1));
-						    }
-						    catch
-						    {
-						    }
-					    }
+			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
+				delegate (bool didSelectPath, string savePath)
+				{
+					if (didSelectPath)
+					{
+						string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR +
+											 "/";
+						int SaveIndex = -1;
+						if (File.Exists(savePath) && savePath.Contains("archive_") && savePath.Contains(".dat"))
+						{
+							var lines = savePath.Split('\\');
+							File.Copy(savePath, sFolderPath + lines[lines.Length - 1]);
+							try
+							{
+								SaveIndex = int.Parse(savePath.Substring(savePath.Length - 5, 1));
+							}
+							catch
+							{
+							}
+						}
 
-					    if (SaveIndex > -1)
-					    {
-						    PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + SaveIndex,
-							    "import  save data: " + SaveIndex);
-					    }
-				    }
-			    });
+						if (SaveIndex > -1)
+						{
+							PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + SaveIndex,
+								"import  save data: " + SaveIndex);
+						}
+					}
+				});
 #endif
-		    RefreshSave();
-	    }
-    }
-	
-    private void OnExportClick()
-    {
-	    if (!IsInGameOverPage)
-	    {
+			RefreshSave();
+		}
+	}
+
+	private void OnExportClick()
+	{
+		if (!IsInGameOverPage)
+		{
 #if UNITY_ANDROID
 			transform.Find("FileIO/Export/Text").GetComponent<Text>().text = "暂不支持";
 #else
-		    NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
-			    delegate(bool didSelectPath, string savePath)
-			    {
-				    if (didSelectPath)
-				    {
-					    ExportSaveData(savePath);
-				    }
-			    });
+			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
+				delegate (bool didSelectPath, string savePath)
+				{
+					if (didSelectPath)
+					{
+						ExportSaveData(savePath);
+					}
+				});
 #endif
-	    }
-    }
+		}
+	}
 
-	private FileToSave GetFileToSave() 
+	private FileToSave GetFileToSave()
 	{
 		var testFilePath = Application.persistentDataPath;
 		return new FileToSave(testFilePath, "archive_{0}.dat", SupportedFileType.Any);
 	}
-	
+
 	private void ExportSaveData(string savePath)
 	{
-		for(int i=0;i<3;i++){
+		for (int i = 0; i < 3; i++)
+		{
 			string fileName = string.Format(GameRuntimeData.ARCHIVE_FILE_NAME, i);
 			string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR;
 			string sPath = sFolderPath + "/" + fileName;
 			if (File.Exists(sPath))
 			{
-				File.Copy(sPath,string.Format(savePath, i));
+				File.Copy(sPath, string.Format(savePath, i));
 			}
 		}
 	}
