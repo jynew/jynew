@@ -43,6 +43,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     {
         //读取语言文件
         var langPath = Path.Combine(Application.streamingAssetsPath, "Language");
+        if (Directory.Exists(langPath)) Directory.CreateDirectory(langPath);//安全性检查
         var languageOptions = new List<Dropdown.OptionData>();
         //绑定到指定的文件夹目录
         var langDir = new DirectoryInfo(langPath);
@@ -52,7 +53,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         for (var index = 0; index < fsinfos.Length; index++)
         {
             var fsinfo = fsinfos[index];
-            //判断是否为空文件夹　　
             if (fsinfo is FileInfo && fsinfo.Extension == ".json")
             {
                 languageOptions.Add(new Dropdown.OptionData(fsinfo.Name.Replace(".json", "")));
