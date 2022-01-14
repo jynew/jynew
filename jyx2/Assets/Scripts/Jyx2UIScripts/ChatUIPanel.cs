@@ -282,6 +282,8 @@ public partial class ChatUIPanel : Jyx2_UIBase,IUIAnimator
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) OnMainBgClick();
+        if (Input.GetKeyDown(KeyCode.Space)
+            || Input.GetButtonDown("Fire2"))
+            OnMainBgClick();
     }
 }
