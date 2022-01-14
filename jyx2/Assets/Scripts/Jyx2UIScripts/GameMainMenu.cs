@@ -34,9 +34,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	private PanelType m_panelType;
 
 	private int main_menu_index = 0;
-	private bool downDpadPressed;
-	private bool currentlyReleased = true;
-	private bool upDpadPressed;
+
 	private const int NewGameIndex = 0;
 	private const int LoadGameIndex = 1;
 	private const int QuitGameIndex = 2;
@@ -101,44 +99,30 @@ public partial class GameMainMenu : Jyx2_UIBase
 		}
 	}
 
-	private void Update()
+	protected override bool captureGamepadAxis
 	{
-		var dpadY = Input.GetAxis("Vertical");
-		if (dpadY == -1)
-		{
-			downDpadPressed = true;
-			if (downDpadPressed && currentlyReleased)
-			{
-				if (main_menu_index < QuitGameIndex) ChangeSelection(1);
-			}
-			currentlyReleased = false;
+		get { return true; }
+	}
 
-			delayedAxisRelease();
-		}
-		else if (dpadY == 1)
-		{
-			upDpadPressed = true;
-			if (upDpadPressed && currentlyReleased)
-			{
-				if (main_menu_index > NewGameIndex) ChangeSelection(-1);
-			}
-			currentlyReleased = false;
-			delayedAxisRelease();
-		}
-		else if (Input.GetButtonDown("Fire2"))
+	protected override void onGamepadAxisDown()
+	{
+		if (main_menu_index < QuitGameIndex) ChangeSelection(1);
+	}
+
+	protected override void onGamepadAxisUp()
+	{
+		if (main_menu_index > NewGameIndex) ChangeSelection(-1);
+	}
+
+	protected override void Update()
+	{
+		base.Update();
+		if (Input.GetButtonDown("Fire2"))
 		{
 			onButtonClick();
 		}
 	}
 
-	private void delayedAxisRelease()
-	{
-		Task.Run(() =>
-		{
-			Thread.Sleep(500);
-			currentlyReleased = true;
-		});
-	}
 
 
 	protected override void OnShowPanel(params object[] allParams)

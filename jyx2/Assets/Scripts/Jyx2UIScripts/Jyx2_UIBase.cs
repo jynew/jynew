@@ -11,86 +11,149 @@ using Jyx2.Middleware;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IUIAnimator 
+public interface IUIAnimator
 {
-    void DoShowAnimator();
-    void DoHideAnimator();
+	void DoShowAnimator();
+	void DoHideAnimator();
 }
 
 public abstract class Jyx2_UIBase : MonoBehaviour
 {
-    public virtual UILayer Layer { get; } = UILayer.NormalUI;
-    public virtual bool IsOnly { get; } = false;//同一层只能单独存在
-    public virtual bool IsBlockControl { get; set; } = false;
-    public virtual bool AlwaysDisplay { get; } = false;
-    private bool IsChangedBlockControl = false;
-    protected abstract void OnCreate();
+	private bool downDpadPressed;
+	private bool currentlyReleased = true;
+	private bool upDpadPressed;
 
-    protected virtual void OnShowPanel(params object[] allParams) { }
-    protected virtual void OnHidePanel() { }
+	public virtual UILayer Layer { get; } = UILayer.NormalUI;
+	public virtual bool IsOnly { get; } = false;//同一层只能单独存在
+	public virtual bool IsBlockControl { get; set; } = false;
+	public virtual bool AlwaysDisplay { get; } = false;
+	private bool IsChangedBlockControl = false;
+	protected abstract void OnCreate();
 
-    public void Init() 
-    {
-        var rt = GetComponent<RectTransform>();
-        rt.localPosition = Vector3.zero;
-        rt.localScale = Vector3.one;
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = Vector2.zero;
-        rt.offsetMax = Vector2.zero;
+	protected virtual void OnShowPanel(params object[] allParams) { }
+	protected virtual void OnHidePanel() { }
 
-        OnCreate();
-    }
+	public void Init()
+	{
+		var rt = GetComponent<RectTransform>();
+		rt.localPosition = Vector3.zero;
+		rt.localScale = Vector3.one;
+		rt.anchorMin = Vector2.zero;
+		rt.anchorMax = Vector2.one;
+		rt.offsetMin = Vector2.zero;
+		rt.offsetMax = Vector2.zero;
 
-    public void Show(params object[] allParams) 
-    {
-        this.gameObject.SetActive(true);
-        this.transform.SetAsLastSibling();
-        this.OnShowPanel(allParams);
-        if (this is IUIAnimator) 
-        {
-            (this as IUIAnimator).DoShowAnimator();
-        }
+		OnCreate();
+	}
 
-        if (IsBlockControl && !IsChangedBlockControl && !BattleManager.Instance.IsInBattle && LevelMaster.Instance.IsPlayerCanControl())
-        {
-            IsChangedBlockControl = true;
-            LevelMaster.Instance.SetPlayerCanController(false);
-        }
-    }
+	public void Show(params object[] allParams)
+	{
+		this.gameObject.SetActive(true);
+		this.transform.SetAsLastSibling();
+		this.OnShowPanel(allParams);
+		if (this is IUIAnimator)
+		{
+			(this as IUIAnimator).DoShowAnimator();
+		}
 
-    public void Hide()
-    {
-        if (AlwaysDisplay) return;
-        this.gameObject.SetActive(false);
-        this.OnHidePanel();
-        if (IsBlockControl && IsChangedBlockControl)
-        {
-            IsChangedBlockControl = false;
-            LevelMaster.Instance.SetPlayerCanController(true);
-        }
-    }
+		if (IsBlockControl && !IsChangedBlockControl && !BattleManager.Instance.IsInBattle && LevelMaster.Instance.IsPlayerCanControl())
+		{
+			IsChangedBlockControl = true;
+			LevelMaster.Instance.SetPlayerCanController(false);
+		}
+	}
 
-    public void BindListener(Button button, Action callback)
-    {
-        if (button != null)
-        {
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(()=>
-            {
-                callback();
-            });
-            var nav = Navigation.defaultNavigation;
-            nav.mode = Navigation.Mode.None;
-            button.navigation = nav;
-        }
-    }
+	public void Hide()
+	{
+		if (AlwaysDisplay) return;
+		this.gameObject.SetActive(false);
+		this.OnHidePanel();
+		if (IsBlockControl && IsChangedBlockControl)
+		{
+			IsChangedBlockControl = false;
+			LevelMaster.Instance.SetPlayerCanController(true);
+		}
+	}
 
-    public void ClearChildren(Transform transform)
-    {
-        HSUnityTools.DestroyChildren(transform);
-    }
+	public void BindListener(Button button, Action callback)
+	{
+		if (button != null)
+		{
+			button.onClick.RemoveAllListeners();
+			button.onClick.AddListener(() =>
+			{
+				callback();
+			});
+			var nav = Navigation.defaultNavigation;
+			nav.mode = Navigation.Mode.None;
+			button.navigation = nav;
+		}
+	}
+
+	public void ClearChildren(Transform transform)
+	{
+		HSUnityTools.DestroyChildren(transform);
+	}
+
+	protected virtual bool captureGamepadAxis
+	{
+		get
+		{
+			return false;
+		}
+	}
+
+	protected virtual void onGamepadAxisDown()
+	{
+		//do nothing by default
+	}
+
+	protected virtual void onGamepadAxisUp()
+	{
+		//do nothing by default
+	}
+
+	protected virtual void Update()
+	{
+		if (captureGamepadAxis)
+		{
+			var dpadY = Input.GetAxis("Vertical");
+			if (dpadY == -1)
+			{
+				downDpadPressed = true;
+				if (downDpadPressed && currentlyReleased)
+				{
+					onGamepadAxisDown();
+				}
+				currentlyReleased = false;
+
+				delayedAxisRelease();
+			}
+			else if (dpadY == 1)
+			{
+				upDpadPressed = true;
+				if (upDpadPressed && currentlyReleased)
+				{
+					onGamepadAxisUp();
+				}
+				currentlyReleased = false;
+				delayedAxisRelease();
+			}
+		}
+	}
+
+
+	private void delayedAxisRelease()
+	{
+		Task.Run(() =>
+		{
+			Thread.Sleep(500);
+			currentlyReleased = true;
+		});
+	}
 }
