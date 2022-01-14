@@ -303,7 +303,10 @@ public partial class GameMainMenu : Jyx2_UIBase {
         Tools.openURL(url);
     }
 
-    public void OpenPanel()
+    /// <summary>
+    /// 打开设置界面
+    /// </summary>
+    public void OpenSettingsPanel()
     {
         Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
     }
