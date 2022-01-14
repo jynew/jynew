@@ -84,7 +84,7 @@ public class LoadingPanel : MonoBehaviour
             }
             else
             {
-                var async = Addressables.LoadSceneAsync(path);
+                var async = Addressables.LoadSceneAsync(sceneAsset);
                 while (!async.IsDone)
                 {
                     //---------------------------------------------------------------------------

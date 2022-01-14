@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading;
 using CSObjectWrapEditor;
 using DG.DemiLib;
-
+using Jyx2.MOD;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
@@ -111,6 +111,18 @@ namespace Jyx2Editor
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
+            
+            //重新生成MOD资源索引表
+            if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -134,12 +146,37 @@ namespace Jyx2Editor
 
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneWindows64);
 
-
             if (string.IsNullOrEmpty(path))
                 return;
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
+            
+            //重新生成MOD资源索引表
+            if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+            MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
+
+            string currentDate = DateTime.Now.ToString("yyyyMMdd");
+
+            //设置版本号
+            PlayerSettings.bundleVersion = currentDate;
+
+            //exe路径
+            string exePath = path + $"/jynew.exe";
+
+            //打包
+            BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.Development);
+
+            EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
+        }
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -178,6 +215,18 @@ namespace Jyx2Editor
                 
                 //重新生成Addressable相关文件
                 AddressableAssetSettings.BuildPlayerContent();
+                
+                //重新生成MOD资源索引表
+                if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                    File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
@@ -191,6 +240,63 @@ namespace Jyx2Editor
 
                 //打包
                 BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
+                
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
+        }
+        
+        
+        [MenuItem("一键打包/Android_Develop")]
+        private static void BuildAndroid_Dev()
+        {
+            if (!EditorUtility.DisplayDialog("重要提示",
+                    "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
+                return;
+
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
+
+                if (string.IsNullOrEmpty(path))
+                    return;
+                
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+                
+                //重新生成MOD资源索引表
+                if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
+                    File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+                MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
+
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
+
+                //动态设置keystore的密码
+                PlayerSettings.Android.keystorePass = "123456";
+                PlayerSettings.Android.keyaliasPass = "123456";
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.Development);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
                 
@@ -236,6 +342,52 @@ namespace Jyx2Editor
 
                 //打包
                 BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,BuildOptions.None);
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
+
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
+        }
+        
+        
+        [MenuItem("一键打包/MacOS_Develop")]
+        private static void BuildMacOS_Dev()
+        {
+            if (!EditorUtility.DisplayDialog("重要提示",
+                    "请先手动运行xLua/Generate Code，再执行本指令，否则可能打包出来黑屏", "继续!", "取消"))
+                return;
+
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneOSX);
+
+#if UNITY_STANDALONE_OSX
+                //支持m1芯片
+                UnityEditor.OSXStandalone.UserBuildSettings.architecture = MacOSArchitecture.x64ARM64;
+#endif
+
+                if (string.IsNullOrEmpty(path))
+                    return;
+
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string outputPath = path + $"/jyxOSXBuild-{currentDate}.app";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,BuildOptions.Development);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
 

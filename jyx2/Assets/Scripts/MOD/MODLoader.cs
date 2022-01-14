@@ -17,13 +17,15 @@
 // - MOD配置相关UI界面
 // - 各种MODSample
 
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
+using Object = UnityEngine.Object;
 
 namespace Jyx2.MOD
 {
@@ -88,36 +90,20 @@ namespace Jyx2.MOD
 
         public static async UniTask<List<T>> LoadAssets<T>(List<string> uris) where T : Object
         {
-            var assets = new List<T>();
-            var allAssets = await Addressables.LoadAssetsAsync<T>(uris, null, Addressables.MergeMode.Union).Task;
-            for (int i = 0; i < uris.Count; i++)
-            {
-                if(_remap.ContainsKey(uris[i].ToLower()))
-                {
-                    var assetBundleItem = _remap[uris[i].ToLower()];
-                    assets.Add(assetBundleItem.Ab.LoadAsset<T>(assetBundleItem.Name));
-                }
-                else
-                {
-                    assets.Add(allAssets[i]);
-                }
-            }
-            return assets;
+            var allAssets = await Addressables.LoadAssetsAsync<T>(uris, null, Addressables.MergeMode.Union);
+            var commonKeys = uris.Select(uri => uri.ToLower()).Intersect(_remap.Keys);
+            var assets = commonKeys.Select(key => _remap[key].Ab.LoadAsset<T>(_remap[key].Name));
+            return assets.Union(allAssets).ToList();
         }
 #endregion
 
         public static void SaveOverrideList(string path, string filter)
         {
-            var dir = Application.persistentDataPath + "/mods/" + path.Split('/')[0];
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-            string filePath = Application.persistentDataPath + "/mods/" + path + ".txt";
-            if (File.Exists(filePath))
-                return;
-            var fileContentsList = GetOverridePaths("Assets/BuildSource/" + path, filter);
-            File.WriteAllLines(filePath, fileContentsList.ToArray());
+            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
+            var fileContentsList = GetOverridePaths(path, filter);
+#if UNITY_EDITOR
+            System.IO.File.AppendAllLines(filePath, fileContentsList.ToArray());
+#endif
         }
 
         private static List<string> GetOverridePaths(string path, string filter)
@@ -137,9 +123,24 @@ namespace Jyx2.MOD
 
         public static List<string> LoadOverrideList(string path)
         {
-            string filePath = Application.persistentDataPath + "/mods/" + path + ".txt";
-            var fileContentsList = File.ReadAllLines(filePath);
-            return fileContentsList.ToList();
+            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
+            List<string> fileContentsList;
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                UnityWebRequest request = UnityWebRequest.Get(filePath);
+                request.SendWebRequest();
+                while (!request.isDone) { }
+                string textString = request.downloadHandler.text;
+                fileContentsList = textString.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
+            }
+            else
+            {
+                fileContentsList = System.IO.File.ReadAllLines(filePath).ToList(); 
+            }
+            
+            var lineList = fileContentsList.Where(line => line.StartsWith(path)).ToList();
+            
+            return lineList;
         }
     }
 
