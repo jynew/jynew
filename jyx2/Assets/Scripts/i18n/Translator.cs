@@ -38,6 +38,11 @@ namespace i18n
         #region 翻译设置相关
 
         /// <summary>
+        /// 翻译语言类别，用于转化为json文件
+        /// </summary>
+        [BoxGroup("翻译设置"), LabelText("翻译语言")] public TranslationUtility.LangFlag currentLang;
+        
+        /// <summary>
         /// 是否收集新的文本(游玩时)
         /// ------------------------------------------------
         /// 当我们进行游玩的时候，设置其为true则可以收集未翻译的新文本，方便后期翻译未翻译的文本
@@ -58,7 +63,7 @@ namespace i18n
         [BoxGroup("翻译设置"), Button(ButtonSizes.Medium, Name = "转化为Json")]
         public void Convert2Json()
         {
-            using var sw = new StreamWriter(Path.Combine(outPath, $"{name}.json"));
+            using var sw = new StreamWriter(Path.Combine(outPath, $"{currentLang}.json"));
             sw.WriteLine(JsonUtility.ToJson(new Serialization<string, Translations>(TranslationSet), true));
             sw.Close();
         }
@@ -69,7 +74,7 @@ namespace i18n
         [BoxGroup("翻译设置"), Button(ButtonSizes.Medium, Name = "從Json讀取")]
         public void ReadFromJson()
         {
-            using var sr = new StreamReader(Path.Combine(outPath, $"{name}.json"));
+            using var sr = new StreamReader(Path.Combine(outPath, $"{currentLang}.json"));
             TranslationSet = JsonUtility.FromJson<Serialization<string, Translations>>(sr.ReadToEnd()).ToDictionary();
             sr.Close();
         }
