@@ -25,7 +25,7 @@ public interface IUIAnimator
 public abstract class Jyx2_UIBase : MonoBehaviour
 {
 	private bool downDpadPressed;
-	private bool currentlyReleased = true;
+	private volatile bool currentlyReleased = true;
 	private bool upDpadPressed;
 
 	public virtual UILayer Layer { get; } = UILayer.NormalUI;
@@ -129,10 +129,10 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 				if (downDpadPressed && currentlyReleased)
 				{
 					onGamepadAxisDown();
-				}
-				currentlyReleased = false;
+					currentlyReleased = false;
 
-				delayedAxisRelease();
+					delayedAxisRelease();
+				}
 			}
 			else if (dpadY == 1)
 			{
@@ -140,9 +140,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 				if (upDpadPressed && currentlyReleased)
 				{
 					onGamepadAxisUp();
+					currentlyReleased = false;
+					delayedAxisRelease();
 				}
-				currentlyReleased = false;
-				delayedAxisRelease();
 			}
 		}
 	}
