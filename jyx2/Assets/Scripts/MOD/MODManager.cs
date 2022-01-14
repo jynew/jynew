@@ -38,6 +38,7 @@ namespace Jyx2.MOD
                     ModEntries.Add(modEntry);
                     if (!File.Exists(filePath))
                         await new DownloadManager().DownloadFile(modMeta.uri, filePath);
+                    ZipTools.UnCompressionZipFile(filePath, ModsPath);
                 }
                 
                 if (ModEntries.Count > 0)

@@ -57,7 +57,6 @@ namespace Jyx2.MOD
             yield return DownloadProgress(_uwr, OnProgress);
             
             IsDone = _uwr.isDone;
-            var r = _uwr.result;
             if (_uwr.isNetworkError || _uwr.isHttpError)
             {
                 Debug.LogError(_uwr.error);
