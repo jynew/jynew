@@ -34,13 +34,6 @@ namespace i18n.TranslatorDef
         /// <returns></returns>
         public static string GetContent(this string content,string fromToken="")
         {
-#if UNITY_EDITOR
-            var translatorPath = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("koreaTranslator")[0]);
-            var translatorEdit = AssetDatabase.LoadAssetAtPath(translatorPath, typeof(Translator)) as Translator;
-            if (translatorEdit != null)
-                content = translatorEdit.GetOrRegTranslation(fromToken, content);
-            return content;
-#endif
             //没有默认全局配置则直接返回
             if (!GlobalAssetConfig.Instance) return content;
             

@@ -168,20 +168,6 @@ namespace Jyx2Editor
 
             //设置版本号
             PlayerSettings.bundleVersion = currentDate;
-
-            //exe路径
-            string exePath = path + $"/jynew.exe";
-
-            //打包
-            BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.Development);
-
-            EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
-        }
-
-            string currentDate = DateTime.Now.ToString("yyyyMMdd");
-
-            //设置版本号
-            PlayerSettings.bundleVersion = currentDate;
             
             //exe路径
             string exePath = path + $"/jynew.exe";
