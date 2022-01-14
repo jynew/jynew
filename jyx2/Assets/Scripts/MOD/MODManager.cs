@@ -37,7 +37,7 @@ namespace Jyx2.MOD
                     var modEntry = new ModEntry(modMeta, filePath);
                     ModEntries.Add(modEntry);
                     if (!File.Exists(filePath))
-                        await DownloadMod(modMeta.uri, filePath);
+                        await new DownloadManager().DownloadFile(modMeta.uri, filePath);
                 }
                 
                 if (ModEntries.Count > 0)
@@ -46,17 +46,6 @@ namespace Jyx2.MOD
                         modEntry.Active = true;
                 }
             }
-        }
-
-        private static IEnumerator DownloadMod(string uri, string path)
-        {
-            var uwr = UnityWebRequest.Get(uri);
-            uwr.downloadHandler = new DownloadHandlerFile(path);
-            yield return uwr.SendWebRequest();
-            if (uwr.result != UnityWebRequest.Result.Success)
-                Debug.LogError(uwr.error);
-            else
-                Debug.Log("File successfully downloaded and saved to " + path);
         }
 
         [Serializable]
