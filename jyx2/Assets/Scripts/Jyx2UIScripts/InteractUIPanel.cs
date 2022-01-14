@@ -16,8 +16,12 @@ public partial class InteractUIPanel : Jyx2_UIBase
 
     Action m_callback1;
     Action m_callback2;
+	private int buttonCount;
+	private float lastDpadY;
+    private int focusButtonPos
+        = 0;
 
-    protected override void OnCreate()
+	protected override void OnCreate()
     {
         InitTrans();
 
@@ -31,7 +35,7 @@ public partial class InteractUIPanel : Jyx2_UIBase
 
         if (allParams == null) return;
 
-        int buttonCount = allParams.Length / 2;
+        this.buttonCount = allParams.Length / 2;
         MainBg_Button2.gameObject.SetActive(buttonCount == 2);
 
         MainText_Text1.text = allParams[0] as string;
@@ -62,6 +66,10 @@ public partial class InteractUIPanel : Jyx2_UIBase
             else if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Fire3"))
             {
                 OnBtnClick(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Jump"))
+			{
+                Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
             }
         }
     }
