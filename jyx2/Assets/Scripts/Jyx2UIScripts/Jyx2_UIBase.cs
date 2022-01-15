@@ -57,7 +57,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		OnCreate();
 	}
 
-	protected bool showing = false;
 
 	public void Show(params object[] allParams)
 	{
@@ -75,8 +74,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			LevelMaster.Instance.SetPlayerCanController(false);
 		}
 
-		showing = true;
-
 		if (captureGamepadAxis && _buttonList.Count > 0)
 			changeCurrentSelection(0);
 	}
@@ -85,7 +82,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		if (AlwaysDisplay) return;
 
-		showing = false;
 		this.gameObject.SetActive(false);
 		this.OnHidePanel();
 		if (IsBlockControl && IsChangedBlockControl)
@@ -171,7 +167,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		if (captureGamepadAxis)
+		if (captureGamepadAxis && gameObject.activeSelf)
 		{
 			var dpadY = Input.GetAxis("Vertical");
 			if (dpadY == -1)
@@ -197,10 +193,11 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			}
 		}
 
-		if (Input.GetButtonDown("Fire2") && showing)
+		if (Input.GetButtonDown("Fire2") && gameObject.activeSelf)
 		{
 			//trigger button click
-			buttonClickAt(current_selection);
+			if (captureGamepadAxis && _buttonList.Count > 0)
+				buttonClickAt(current_selection);
 		}
 	}
 

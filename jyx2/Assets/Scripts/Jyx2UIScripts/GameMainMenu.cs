@@ -105,7 +105,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 			&& m_panelType != PanelType.PropertyPage)
 			base.Update();
 
-		if (showing)
+		if (gameObject.activeSelf)
 			if (Input.GetButtonDown("Fire2"))
 			{
 				if (m_panelType == PanelType.NewGamePage)

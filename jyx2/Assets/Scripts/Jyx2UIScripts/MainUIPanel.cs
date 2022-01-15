@@ -42,7 +42,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 			Compass.text = pString;
 		}
 
-		if (showing)
+		if (gameObject.activeSelf)
 			if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
 				OnSystemBtnClick();
 		//else if (Input.GetButtonDown("Jump"))

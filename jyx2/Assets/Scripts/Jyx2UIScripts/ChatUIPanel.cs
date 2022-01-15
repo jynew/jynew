@@ -218,7 +218,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 
 	protected override void Update()
 	{
-		if (showing)
+		if (gameObject.activeSelf)
 			if (Input.GetButtonDown("Fire2"))
 			{
 				Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));

@@ -136,7 +136,7 @@ public partial class SavePanel : Jyx2_UIBase
 	protected override void Update()
 	{
 		base.Update();
-		if (showing)
+		if (gameObject.activeSelf)
 			if (Input.GetButtonDown("Fire2"))
 			{
 				if (current_selection != -1)
@@ -172,7 +172,7 @@ public partial class SavePanel : Jyx2_UIBase
 			BindListener(btn, new Action(() =>
 			{
 				OnSaveItemClick(int.Parse(btn.name));
-			}));
+			}), false);
 		}
 	}
 

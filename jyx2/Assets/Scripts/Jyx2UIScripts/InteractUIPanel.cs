@@ -57,7 +57,7 @@ public partial class InteractUIPanel : Jyx2_UIBase
 
 	protected override void Update()
 	{
-		if (showing)
+		if (gameObject.activeSelf)
 			if (LevelMaster.Instance?.IsPlayerCanControl() ?? true)
 			{
 				if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire2"))

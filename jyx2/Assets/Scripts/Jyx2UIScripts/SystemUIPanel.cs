@@ -78,15 +78,20 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	async void Save()
 	{
+		HidePanel();
+
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		{
 			var levelMaster = FindObjectOfType<LevelMaster>();
 			levelMaster.OnManuelSave(index);
+
 		}), "选择存档位");
 	}
 
 	async void Load()
 	{
+		HidePanel();
+
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		{
 			StoryEngine.DoLoadGame(index);
@@ -114,6 +119,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	void HidePanel()
 	{
+		this.gameObject.SetActive(false);
 		Jyx2_UIManager.Instance.HideUI(nameof(SystemUIPanel));
 	}
 
@@ -126,7 +132,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 	{
 		base.Update();
 
-		if (showing)
+		if (gameObject.activeSelf)
 			if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
 				HidePanel();
 	}
