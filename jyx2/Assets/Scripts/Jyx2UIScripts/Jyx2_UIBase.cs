@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public interface IUIAnimator
 {
@@ -28,11 +29,16 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	private volatile bool currentlyReleased = true;
 	private bool upDpadPressed;
 
+	Dictionary<Button, Action> _buttonList = new Dictionary<Button, Action>();
+
 	public virtual UILayer Layer { get; } = UILayer.NormalUI;
 	public virtual bool IsOnly { get; } = false;//同一层只能单独存在
 	public virtual bool IsBlockControl { get; set; } = false;
 	public virtual bool AlwaysDisplay { get; } = false;
 	private bool IsChangedBlockControl = false;
+
+	protected int current_selection = 0;
+
 	protected abstract void OnCreate();
 
 	protected virtual void OnShowPanel(params object[] allParams) { }
@@ -51,6 +57,8 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		OnCreate();
 	}
 
+	protected bool showing = false;
+
 	public void Show(params object[] allParams)
 	{
 		this.gameObject.SetActive(true);
@@ -66,11 +74,18 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			IsChangedBlockControl = true;
 			LevelMaster.Instance.SetPlayerCanController(false);
 		}
+
+		showing = true;
+
+		if (captureGamepadAxis && _buttonList.Count > 0)
+			changeCurrentSelection(0);
 	}
 
 	public void Hide()
 	{
 		if (AlwaysDisplay) return;
+
+		showing = false;
 		this.gameObject.SetActive(false);
 		this.OnHidePanel();
 		if (IsBlockControl && IsChangedBlockControl)
@@ -80,10 +95,36 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		}
 	}
 
-	public void BindListener(Button button, Action callback)
+	protected virtual void changeCurrentSelection(int num)
+	{
+		current_selection = num;
+
+		for (int i = 0; i < _buttonList.Count; i++)
+		{
+			_buttonList.ElementAt(i).Key.gameObject.transform.GetChild(0).GetComponent<Text>().color = i == current_selection
+				? selectedButtonColor()
+				: normalButtonColor();
+		}
+	}
+
+	protected virtual Color selectedButtonColor()
+	{
+		return ColorStringDefine.system_item_selected;
+	}
+
+	protected virtual Color normalButtonColor()
+	{
+		return ColorStringDefine.system_item_normal;
+	}
+
+
+	public virtual void BindListener(Button button, Action callback, bool supportGamepadButtonsNav = true)
 	{
 		if (button != null)
 		{
+			if (supportGamepadButtonsNav)
+				_buttonList[button] = callback;
+
 			button.onClick.RemoveAllListeners();
 			button.onClick.AddListener(() =>
 			{
@@ -108,14 +149,24 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		}
 	}
 
-	protected virtual void onGamepadAxisDown()
+	protected virtual void OnDirectionalDown()
 	{
-		//do nothing by default
+		if (current_selection == _buttonList.Count - 1)
+			current_selection = 0;
+		else
+			current_selection++;
+
+		changeCurrentSelection(current_selection);
 	}
 
-	protected virtual void onGamepadAxisUp()
+	protected virtual void OnDirectionalUp()
 	{
-		//do nothing by default
+		if (current_selection == 0)
+			current_selection = _buttonList.Count - 1;
+		else
+			current_selection--;
+
+		changeCurrentSelection(current_selection);
 	}
 
 	protected virtual void Update()
@@ -128,7 +179,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 				downDpadPressed = true;
 				if (downDpadPressed && currentlyReleased)
 				{
-					onGamepadAxisDown();
+					OnDirectionalDown();
 					currentlyReleased = false;
 
 					delayedAxisRelease();
@@ -139,11 +190,29 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 				upDpadPressed = true;
 				if (upDpadPressed && currentlyReleased)
 				{
-					onGamepadAxisUp();
+					OnDirectionalUp();
 					currentlyReleased = false;
 					delayedAxisRelease();
 				}
 			}
+		}
+
+		if (Input.GetButtonDown("Fire2") && showing)
+		{
+			//trigger button click
+			buttonClickAt(current_selection);
+		}
+	}
+
+	protected void buttonClickAt(int position)
+	{
+		if (position > -1 && position < _buttonList.Count)
+		{
+			Action callback = _buttonList.ElementAt(position)
+							.Value;
+
+			if (callback != null)
+				callback();
 		}
 	}
 

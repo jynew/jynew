@@ -82,21 +82,14 @@ public partial class GameMainMenu : Jyx2_UIBase
 		m_randomProperty = this.StartNewRolePanel_RectTransform.GetComponent<RandomPropertyComponent>();
 	}
 
-	private void ChangeSelection(int num)
+	protected override Color normalButtonColor()
 	{
-		if (homeBtnAndTxtPanel_RectTransform.gameObject.active && m_panelType == PanelType.Home)
-		{
-			main_menu_index += num;
-			NewGameButton_Button.gameObject.transform.GetChild(0).GetComponent<Text>().color = (main_menu_index == NewGameIndex)
-				? ColorStringDefine.main_menu_selected
-				: ColorStringDefine.main_menu_normal;
-			LoadGameButton_Button.gameObject.transform.GetChild(0).GetComponent<Text>().color = (main_menu_index == LoadGameIndex)
-				? ColorStringDefine.main_menu_selected
-				: ColorStringDefine.main_menu_normal;
-			QuitGameButton_Button.gameObject.transform.GetChild(0).GetComponent<Text>().color = (main_menu_index == QuitGameIndex)
-				? ColorStringDefine.main_menu_selected
-				: ColorStringDefine.main_menu_normal;
-		}
+		return ColorStringDefine.main_menu_normal;
+	}
+
+	protected override Color selectedButtonColor()
+	{
+		return ColorStringDefine.main_menu_selected;
 	}
 
 	protected override bool captureGamepadAxis
@@ -104,35 +97,38 @@ public partial class GameMainMenu : Jyx2_UIBase
 		get { return true; }
 	}
 
-	protected override void onGamepadAxisDown()
-	{
-		if (main_menu_index < QuitGameIndex) ChangeSelection(1);
-	}
-
-	protected override void onGamepadAxisUp()
-	{
-		if (main_menu_index > NewGameIndex) ChangeSelection(-1);
-	}
 
 	protected override void Update()
 	{
-		base.Update();
-		if (Input.GetButtonDown("Fire2"))
-		{
-			if (m_panelType == PanelType.NewGamePage)
+		if (m_panelType != PanelType.NewGamePage
+			&& m_panelType != PanelType.LoadGamePage
+			&& m_panelType != PanelType.PropertyPage)
+			base.Update();
+
+		if (showing)
+			if (Input.GetButtonDown("Fire2"))
 			{
-				OnCreateBtnClicked();
+				if (m_panelType == PanelType.NewGamePage)
+				{
+					OnCreateBtnClicked();
+				}
+				else if (m_panelType == PanelType.PropertyPage)
+				{
+					OnCreateRoleYesClick();
+				}
 			}
-			else
-				onButtonClick();
-		}
-		else if (Input.GetButtonDown("Fire3"))
-		{
-			if (m_panelType == PanelType.NewGamePage || m_panelType == PanelType.LoadGamePage) //save/ load panel has its own logic to close/ hide themself
+			else if (Input.GetButtonDown("Fire3"))
 			{
-				OnBackBtnClicked();
+				if (m_panelType == PanelType.NewGamePage
+					|| m_panelType == PanelType.LoadGamePage) //save/ load panel has its own logic to close/ hide themself
+				{
+					OnBackBtnClicked();
+				}
+				else if (m_panelType == PanelType.PropertyPage)
+				{
+					OnCreateRoleNoClick();
+				}
 			}
-		}
 	}
 
 
@@ -144,12 +140,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 		m_panelType = PanelType.Home;
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
 		{
-			if (main_menu_index < QuitGameIndex) ChangeSelection(1);
+			OnDirectionalDown();
 		});
 
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
 		{
-			if (main_menu_index > NewGameIndex) ChangeSelection(-1);
+			OnDirectionalUp();
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
 		{
@@ -240,7 +236,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 			return;
 
 		m_panelType = PanelType.PropertyPage;
-
 		//todo:给玩家提示
 		RoleInstance role = GameRuntimeData.Instance.Player;
 		role.Name = newName;
@@ -268,13 +263,15 @@ public partial class GameMainMenu : Jyx2_UIBase
 		BindListener(this.NewGameButton_Button, OnNewGameClicked);
 		BindListener(this.LoadGameButton_Button, OnLoadGameClicked);
 		BindListener(this.QuitGameButton_Button, OnQuitGameClicked);
-		BindListener(this.inputSure_Button, OnCreateBtnClicked);
-		BindListener(this.inputBack_Button, OnBackBtnClicked);
-		BindListener(this.YesBtn_Button, OnCreateRoleYesClick);
-		BindListener(this.NoBtn_Button, OnCreateRoleNoClick);
+		BindListener(this.inputSure_Button, OnCreateBtnClicked, false);
+		BindListener(this.inputBack_Button, OnBackBtnClicked, false);
+		BindListener(this.YesBtn_Button, OnCreateRoleYesClick, false);
+		BindListener(this.NoBtn_Button, OnCreateRoleNoClick, false);
 	}
 	private void OnCreateRoleYesClick()
 	{
+		//reset mode, fix bug or quit game and new game again on main menu goes straight to property panel
+		m_panelType = PanelType.Home;
 		this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
 		this.StartNewRolePanel_RectTransform.gameObject.SetActive(false);
 		var loadPara = new LevelMaster.LevelLoadPara();

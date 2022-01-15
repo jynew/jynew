@@ -18,46 +18,32 @@ public partial class SystemUIPanel : Jyx2_UIBase
 {
 	public override UILayer Layer => UILayer.NormalUI;
 
-	private int current_selection = -1;
-
 	private List<Action> ActionList = new List<Action>();
 	private List<Button> ButtonList = new List<Button>();
+
 	private void OnEnable()
 	{
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, HidePanel);
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
 		{
-			if (current_selection > 0) ChangeSelection(-1);
+			OnDirectionalUp();
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
 		{
-			if (current_selection < 4) ChangeSelection(1);
+			OnDirectionalDown();
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
 		{
 			if (current_selection != -1)
 			{
-				OnItemSelect();
+				buttonClickAt(current_selection);
 			}
 		});
-		ChangeSelection(0);
+
+		changeCurrentSelection(0);
 	}
 
-	void ChangeSelection(int num)
-	{
-		current_selection += num;
-		for (int i = 0; i < ButtonList.Count; i++)
-		{
-			ButtonList[i].gameObject.transform.GetChild(0).GetComponent<Text>().color = i == current_selection
-				? ColorStringDefine.system_item_selected
-				: ColorStringDefine.system_item_normal;
-		}
-	}
 
-	void OnItemSelect()
-	{
-		ActionList[current_selection]?.Invoke();
-	}
 
 	private void OnDisable()
 	{
@@ -136,27 +122,12 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		get { return true; }
 	}
 
-	protected override void onGamepadAxisDown()
-	{
-		if (current_selection < 4) ChangeSelection(1);
-	}
-
-	protected override void onGamepadAxisUp()
-	{
-		if (current_selection > 0) ChangeSelection(-1);
-	}
-
 	protected override void Update()
 	{
 		base.Update();
-		if (Input.GetButtonDown("Fire2"))
-		{
-			if (current_selection != -1)
-			{
-				OnItemSelect();
-			}
-		}
-		else if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
-			HidePanel();
+
+		if (showing)
+			if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
+				HidePanel();
 	}
 }

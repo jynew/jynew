@@ -41,6 +41,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         BindListener(ButtonDetoxicate_Button, OnDetoxicateClick);
     }
 
+
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);

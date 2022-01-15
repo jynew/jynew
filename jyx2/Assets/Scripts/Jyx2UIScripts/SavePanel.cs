@@ -35,14 +35,12 @@ public partial class SavePanel : Jyx2_UIBase
 
 	private Action closeCallback;
 
-	private int current_selection = -1;
-
 	protected override void OnCreate()
 	{
 		InitTrans();
-		BindListener(BackButton_Button, OnBackClick);
-		BindListener(ImButton_Button, OnImportClick);
-		BindListener(ExButton_Button, OnExportClick);
+		BindListener(BackButton_Button, OnBackClick, false);
+		BindListener(ImButton_Button, OnImportClick, false);
+		BindListener(ExButton_Button, OnExportClick, false);
 	}
 
 	private void OnEnable()
@@ -54,11 +52,11 @@ public partial class SavePanel : Jyx2_UIBase
 
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
 		{
-			if (current_selection > 0) ChangeSelection(-1);
+			OnDirectionalUp();
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
 		{
-			if (current_selection < 2) ChangeSelection(1);
+			OnDirectionalDown();
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
 		{
@@ -102,6 +100,7 @@ public partial class SavePanel : Jyx2_UIBase
 		(ImButton_Button.gameObject).SetActive(!isHouse);
 		(ExButton_Button.gameObject).SetActive(!isHouse);
 		RefreshSave();
+		current_selection = 0;
 		ChangeSelection(0);
 	}
 
@@ -123,13 +122,13 @@ public partial class SavePanel : Jyx2_UIBase
 		get { return true; }
 	}
 
-	protected override void onGamepadAxisDown()
+	protected override void OnDirectionalDown()
 	{
 		if (current_selection < 2) ChangeSelection(1);
 
 	}
 
-	protected override void onGamepadAxisUp()
+	protected override void OnDirectionalUp()
 	{
 		if (current_selection > 0) ChangeSelection(-1);
 	}
@@ -137,17 +136,18 @@ public partial class SavePanel : Jyx2_UIBase
 	protected override void Update()
 	{
 		base.Update();
-		if (Input.GetButtonDown("Fire2"))
-		{
-			if (current_selection != -1)
+		if (showing)
+			if (Input.GetButtonDown("Fire2"))
 			{
-				OnSaveItemClick(current_selection);
+				if (current_selection != -1)
+				{
+					OnSaveItemClick(current_selection);
+				}
 			}
-		}
-		else if (Input.GetButtonDown("Fire3"))
-		{
-			OnBackClick();
-		}
+			else if (Input.GetButtonDown("Fire3"))
+			{
+				OnBackClick();
+			}
 	}
 
 	void RefreshSave()
