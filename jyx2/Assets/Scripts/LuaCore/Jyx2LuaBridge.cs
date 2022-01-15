@@ -19,6 +19,7 @@ using XLua;
 using UnityEngine.Playables;
 using Sirenix.Utilities;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2Configs;
 using Jyx2.Middleware;
 
@@ -1019,11 +1020,25 @@ namespace Jyx2
 
                 if (count < 0)
                 {
-                    storyEngine.DisplayPopInfo("失去物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //storyEngine.DisplayPopInfo("失去物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //特定位置的翻译【得到物品提示】
+                    //---------------------------------------------------------------------------
+                    storyEngine.DisplayPopInfo("失去物品:".GetContent(nameof(Jyx2LuaBridge)) + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
                 }
                 else
                 {
-                    storyEngine.DisplayPopInfo("得到物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //storyEngine.DisplayPopInfo("得到物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //特定位置的翻译【得到物品提示】
+                    //---------------------------------------------------------------------------
+                    storyEngine.DisplayPopInfo("得到物品:".GetContent(nameof(Jyx2LuaBridge)) + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
                 }
 
                 runtime.AddItem(itemId, count);

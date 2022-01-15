@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2;
 
 using Jyx2;
@@ -139,7 +140,14 @@ public class BattleLoader : MonoBehaviour
             SelectRoleParams selectPram = new SelectRoleParams();
             selectPram.roleList = runtime.GetTeam().ToList();
             selectPram.mustSelect = MustRoleFunc;
-            selectPram.title = "选择上场角色";
+            //---------------------------------------------------------------------------
+            //selectPram.title = "选择上场角色";
+            //---------------------------------------------------------------------------
+            //特定位置的翻译【战斗中选择上场角色的文字显示】
+            //---------------------------------------------------------------------------
+            selectPram.title = "选择上场角色".GetContent(nameof(BattleLoader));
+            //---------------------------------------------------------------------------
+            //---------------------------------------------------------------------------
             selectPram.maxCount = GameConst.MAX_BATTLE_TEAMMATE_COUNT; //TODO 最大上场人数
             selectPram.canCancel = false;
 

@@ -12,6 +12,7 @@ using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using i18n.TranslatorDef;
 using Jyx2Configs;
 using UnityEngine;
 
@@ -207,7 +208,14 @@ public class UIHelper
         if (!string.IsNullOrEmpty(effect))
         {
             strBuilder.Append($"\n\n");
-            strBuilder.Append("<size=28><color=#FFDB00>效果</color></size>\n");
+            //---------------------------------------------------------------------------
+            //strBuilder.Append("<size=28><color=#FFDB00>效果</color></size>\n");
+            //---------------------------------------------------------------------------
+            //特定位置的翻译【MainMenu右下角当前版本的翻译】
+            //---------------------------------------------------------------------------
+            strBuilder.Append("<size=28><color=#FFDB00>效果</color></size>\n".GetContent(nameof(UIHelper)));
+            //---------------------------------------------------------------------------
+            //---------------------------------------------------------------------------
             strBuilder.Append(effect);
         }
 

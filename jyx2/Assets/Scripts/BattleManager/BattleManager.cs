@@ -15,7 +15,7 @@ using System.Linq;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-
+using i18n.TranslatorDef;
 using Jyx2;
 
 using Jyx2.Battle;
@@ -127,7 +127,15 @@ public class BattleManager : MonoBehaviour
         }
 
         m_BattleModel.InitBattleModel(); //战场初始化 行动顺序排序这些
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
+        //---------------------------------------------------------------------------
+        //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【战斗开始时候的弹窗提示】
+        //---------------------------------------------------------------------------
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始".GetContent(nameof(BattleManager))); //提示UI
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
         
         await new BattleLoop(this).StartLoop();
@@ -141,17 +149,42 @@ public class BattleManager : MonoBehaviour
             case BattleResult.Win:
             {
                 string bonusText = CalExpGot(m_battleParams.battleData);
-                GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>", delegate
+                //---------------------------------------------------------------------------
+                //GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>", delegate
+                //{
+                //    EndBattle();
+                //    m_battleParams.callback?.Invoke(result);
+                //    m_battleParams = null;
+                //});
+                //---------------------------------------------------------------------------
+                //特定位置的翻译【战斗胜利的提示】
+                //---------------------------------------------------------------------------
+                GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>".GetContent(nameof(BattleManager)), delegate
                 {
                     EndBattle();
                     m_battleParams.callback?.Invoke(result);
                     m_battleParams = null;
                 });
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
                 break;
             }
             case BattleResult.Lose:
             {
-                GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。", "<color=red><size=80>战斗失败！</size></color>", delegate
+
+                //---------------------------------------------------------------------------
+                //GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。", "<color=red><size=80>战斗失败！</size></color>", delegate
+                //{
+                //    EndBattle();
+                //    m_battleParams.callback?.Invoke(result);
+                //    //if (m_battleParams.backToBigMap) //由dead指令实现返回主界面逻辑
+                //    //    LevelLoader.LoadGameMap("Level_BigMap");
+                //    m_battleParams = null;
+                //});
+                //---------------------------------------------------------------------------
+                //特定位置的翻译【战斗失败的提示】
+                //---------------------------------------------------------------------------
+                GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。".GetContent(nameof(BattleManager)), "<color=red><size=80>战斗失败！</size></color>".GetContent(nameof(BattleManager)), delegate
                 {
                     EndBattle();
                     m_battleParams.callback?.Invoke(result);
@@ -159,6 +192,8 @@ public class BattleManager : MonoBehaviour
                     //    LevelLoader.LoadGameMap("Level_BigMap");
                     m_battleParams = null;
                 });
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
                 break;
             }
         }
@@ -244,7 +279,14 @@ public class BattleManager : MonoBehaviour
         foreach (var role in teammates)
         {
             if (role.ExpGot > 0)
-                rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
+                //---------------------------------------------------------------------------
+                //rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
+                //---------------------------------------------------------------------------
+                //特定位置的翻译【战斗胜利角色获得经验的提示】
+                //---------------------------------------------------------------------------
+                rst += string.Format("{0}获得经验{1}\n".GetContent(nameof(BattleManager)), role.Name, role.ExpGot);
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
 
             var practiseItem = role.GetXiulianItem();
             var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
@@ -261,7 +303,14 @@ public class BattleManager : MonoBehaviour
             {
                 role.LevelUp();
                 change++;
-                rst += $"{role.Name}升级了！等级{role.Level}\n";
+                //---------------------------------------------------------------------------
+                //rst += $"{role.Name}升级了！等级{role.Level}\n";
+                //---------------------------------------------------------------------------
+                //特定位置的翻译【战斗胜利角色升级的提示】
+                //---------------------------------------------------------------------------
+                rst += string.Format("{0}升级了！等级{1}\n".GetContent(nameof(BattleManager)), role.Name, role.Level);
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
             }
 
             //TODO：升级的展示
@@ -281,13 +330,27 @@ public class BattleManager : MonoBehaviour
                 {
                     role.UseItem(practiseItem);
                     change++;
-                    rst += $"{role.Name} 修炼 {practiseItem.Name} 成功\n";
+                    //---------------------------------------------------------------------------
+                    //rst += $"{role.Name} 修炼 {practiseItem.Name} 成功\n";
+                    //---------------------------------------------------------------------------
+                    //特定位置的翻译【战斗胜利角色修炼武功提示】
+                    //---------------------------------------------------------------------------
+                    rst += string.Format("{0} 修炼 {1} 成功\n".GetContent(nameof(BattleManager)), role.Name, practiseItem.Name);
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
                     if (practiseItem.Skill != null)
                     {
                         var level = role.GetWugongLevel(practiseItem.Skill.Id);
                         if (level > 1)
                         {
-                            rst += $"{practiseItem.Skill.Name} 升为 " + level.ToString() + " 级\n";
+                            //---------------------------------------------------------------------------
+                            //rst += string.Format("{0} 升为 ", practiseItem.Skill.Name) + level.ToString() + " 级\n";
+                            //---------------------------------------------------------------------------
+                            //特定位置的翻译【战斗胜利角色修炼武功升级提示】
+                            //---------------------------------------------------------------------------
+                            rst += string.Format("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), practiseItem.Skill.Name, level.ToString());
+                            //---------------------------------------------------------------------------
+                            //---------------------------------------------------------------------------
                         }
                     }
                 }
