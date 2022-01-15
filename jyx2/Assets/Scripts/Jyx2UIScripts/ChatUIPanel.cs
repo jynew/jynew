@@ -85,6 +85,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 
 	private GameObject _interactivePanel = null;
 	private Action<int> selectionCallback;
+	private int selectionContentCount = 0;
 
 	private async UniTask ShowCharacter(int headId)
 	{
@@ -221,18 +222,23 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		if (gameObject.activeSelf)
 			if (Input.GetButtonDown("Fire2"))
 			{
-				Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-				selectionCallback?.Invoke(0);
+				if (selectionContentCount > 1)
+				{
+					Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
+					selectionCallback?.Invoke(0);
+				}
+				else
+				{
+					OnMainBgClick();
+				}
 			}
 			else if (Input.GetButtonDown("Fire3"))
 			{
-				Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-				selectionCallback?.Invoke(1);
-			}
-			else if (Input.GetButtonDown("Jump"))
-			{
-				Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-				selectionCallback?.Invoke(2);
+				if (selectionContentCount > 1)
+				{
+					Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
+					selectionCallback?.Invoke(1);
+				}
 			}
 			else if (Input.GetKeyDown(KeyCode.Space))
 				OnMainBgClick();
@@ -244,6 +250,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		MainContent_Text.text = $"{msg}";
 
 		selectionCallback = callback;
+		selectionContentCount = selectionContent.Count;
 
 		ClearChildren(Container_RectTransform.transform);
 		for (int i = 0; i < selectionContent.Count; i++)
