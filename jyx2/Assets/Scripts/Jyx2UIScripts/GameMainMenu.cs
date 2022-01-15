@@ -121,6 +121,11 @@ public partial class GameMainMenu : Jyx2_UIBase
 		{
 			onButtonClick();
 		}
+		else if (Input.GetButtonDown("Fire3") && 
+			(m_panelType == PanelType.NewGamePage || m_panelType == PanelType.LoadGamePage)) //save/ load panel has its own logic to close/ hide themself
+		{
+			OnBackBtnClicked();
+		}
 	}
 
 

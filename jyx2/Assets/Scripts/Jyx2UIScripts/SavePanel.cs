@@ -144,6 +144,10 @@ public partial class SavePanel : Jyx2_UIBase
 				OnSaveItemClick(current_selection);
 			}
 		}
+		else if (Input.GetButtonDown("Fire3"))
+		{
+			OnBackClick();
+		}
 	}
 
 	void RefreshSave()
