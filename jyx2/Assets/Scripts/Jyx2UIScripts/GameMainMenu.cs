@@ -119,12 +119,19 @@ public partial class GameMainMenu : Jyx2_UIBase
 		base.Update();
 		if (Input.GetButtonDown("Fire2"))
 		{
-			onButtonClick();
+			if (m_panelType == PanelType.NewGamePage)
+			{
+				OnCreateBtnClicked();
+			}
+			else
+				onButtonClick();
 		}
-		else if (Input.GetButtonDown("Fire3") && 
-			(m_panelType == PanelType.NewGamePage || m_panelType == PanelType.LoadGamePage)) //save/ load panel has its own logic to close/ hide themself
+		else if (Input.GetButtonDown("Fire3"))
 		{
-			OnBackBtnClicked();
+			if (m_panelType == PanelType.NewGamePage || m_panelType == PanelType.LoadGamePage) //save/ load panel has its own logic to close/ hide themself
+			{
+				OnBackBtnClicked();
+			}
 		}
 	}
 
@@ -227,10 +234,13 @@ public partial class GameMainMenu : Jyx2_UIBase
 	public void OnCreateBtnClicked()
 	{
 		string newName = this.NameInput_InputField.text;
+
 		//todo:去掉特殊符号
-		if (newName.Equals(""))
+		if (string.IsNullOrWhiteSpace(newName))
 			return;
+
 		m_panelType = PanelType.PropertyPage;
+
 		//todo:给玩家提示
 		RoleInstance role = GameRuntimeData.Instance.Player;
 		role.Name = newName;
