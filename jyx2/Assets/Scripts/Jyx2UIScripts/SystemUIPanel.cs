@@ -128,7 +128,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		get { return true; }
 	}
 
-	protected override void Update()
+	public override void Update()
 	{
 		base.Update();
 

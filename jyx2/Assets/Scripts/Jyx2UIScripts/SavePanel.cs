@@ -133,7 +133,7 @@ public partial class SavePanel : Jyx2_UIBase
 		if (current_selection > 0) ChangeSelection(-1);
 	}
 
-	protected override void Update()
+	public override void Update()
 	{
 		base.Update();
 		if (gameObject.activeSelf)

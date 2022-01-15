@@ -99,7 +99,14 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         }
     }
 
-    void OnHUDCreate(Transform hudTrans) 
+	public override void Update()
+	{
+        BattleActionUIPanel panel = FindObjectOfType<BattleActionUIPanel>();
+        if (panel != null)
+            panel.Update();
+	}
+
+	void OnHUDCreate(Transform hudTrans) 
     {
         HUDItem item = GameUtil.GetOrAddComponent<HUDItem>(hudTrans);
         item.Init();

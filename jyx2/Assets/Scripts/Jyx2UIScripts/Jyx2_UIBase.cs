@@ -29,7 +29,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	private volatile bool currentlyReleased = true;
 	private bool upDpadPressed;
 
-	Dictionary<Button, Action> _buttonList = new Dictionary<Button, Action>();
+	protected Dictionary<Button, Action> _buttonList = new Dictionary<Button, Action>();
 
 	public virtual UILayer Layer { get; } = UILayer.NormalUI;
 	public virtual bool IsOnly { get; } = false;//同一层只能单独存在
@@ -97,10 +97,16 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 		for (int i = 0; i < _buttonList.Count; i++)
 		{
-			_buttonList.ElementAt(i).Key.gameObject.transform.GetChild(0).GetComponent<Text>().color = i == current_selection
-				? selectedButtonColor()
-				: normalButtonColor();
+			var buttonText = getButtonText(_buttonList.ElementAt(i));
+
+			if (buttonText != null)
+				buttonText.color = i == current_selection ? selectedButtonColor() : normalButtonColor();
 		}
+	}
+
+	protected virtual Text getButtonText(KeyValuePair<Button, Action> button)
+	{
+		return button.Key.gameObject.transform.GetChild(0).GetComponent<Text>();
 	}
 
 	protected virtual Color selectedButtonColor()
@@ -165,11 +171,11 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		changeCurrentSelection(current_selection);
 	}
 
-	protected virtual void Update()
+	public virtual void Update()
 	{
 		if (captureGamepadAxis && gameObject.activeSelf)
 		{
-			var dpadY = Input.GetAxis("Vertical");
+			var dpadY = Input.GetAxis("DPadY");
 			if (dpadY == -1)
 			{
 				downDpadPressed = true;

@@ -98,7 +98,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	}
 
 
-	protected override void Update()
+	public override void Update()
 	{
 		if (m_panelType != PanelType.NewGamePage
 			&& m_panelType != PanelType.LoadGamePage

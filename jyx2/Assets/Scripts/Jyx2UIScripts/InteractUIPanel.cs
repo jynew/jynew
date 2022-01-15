@@ -55,7 +55,7 @@ public partial class InteractUIPanel : Jyx2_UIBase
 		temp?.Invoke();
 	}
 
-	protected override void Update()
+	public override void Update()
 	{
 		if (gameObject.activeSelf)
 			if (LevelMaster.Instance?.IsPlayerCanControl() ?? true)
