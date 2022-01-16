@@ -84,7 +84,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 	{
 		base.Update();
 
-		if (Input.GetButtonDown("Fire2") && gameObject.activeSelf)
+		if (Input.GetButtonDown("JFire2") && gameObject.activeSelf)
 		{
 			OnConfirmClick();
 		}

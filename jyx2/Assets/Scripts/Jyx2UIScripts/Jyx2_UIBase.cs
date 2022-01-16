@@ -26,7 +26,7 @@ public interface IUIAnimator
 public abstract class Jyx2_UIBase : MonoBehaviour
 {
 	private bool downDpadPressed;
-	private volatile bool currentlyReleased = true;
+	protected volatile bool currentlyReleased = true;
 	private bool upDpadPressed;
 
 	protected Dictionary<Button, Action> _buttonList = new Dictionary<Button, Action>();
@@ -153,6 +153,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void OnDirectionalDown()
 	{
+		if (_buttonList.Count == 0)
+			return;
+
 		if (current_selection == _buttonList.Count - 1)
 			current_selection = 0;
 		else
@@ -163,6 +166,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void OnDirectionalUp()
 	{
+		if (_buttonList.Count == 0)
+			return;
+
 		if (current_selection == 0)
 			current_selection = _buttonList.Count - 1;
 		else
@@ -199,12 +205,17 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			}
 		}
 
-		if (Input.GetButtonDown("Fire2") && gameObject.activeSelf)
+		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
 		{
 			//trigger button click
 			if (captureGamepadAxis && _buttonList.Count > 0)
 				buttonClickAt(current_selection);
 		}
+	}
+
+	protected virtual string confirmButtonName()
+	{
+		return "JFire2";
 	}
 
 	protected void buttonClickAt(int position)
@@ -220,7 +231,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	}
 
 
-	private void delayedAxisRelease()
+	protected void delayedAxisRelease()
 	{
 		Task.Run(() =>
 		{

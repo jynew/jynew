@@ -106,7 +106,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 			base.Update();
 
 		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("Fire2"))
+			if (Input.GetButtonDown("JFire2"))
 			{
 				if (m_panelType == PanelType.NewGamePage)
 				{
@@ -117,7 +117,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 					OnCreateRoleYesClick();
 				}
 			}
-			else if (Input.GetButtonDown("Fire3"))
+			else if (Input.GetButtonDown("JFire3"))
 			{
 				if (m_panelType == PanelType.NewGamePage
 					|| m_panelType == PanelType.LoadGamePage) //save/ load panel has its own logic to close/ hide themself

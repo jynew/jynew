@@ -151,8 +151,8 @@ public class CameraHelper : MonoBehaviour
 
                     
                     //平移
-                    var v = Input.GetAxis("VerticalR");
-                    var h = Input.GetAxis("HorizontalR");
+                    var v = Input.GetAxis("JVerticalR");
+                    var h = Input.GetAxis("JHorizontalR");
                     if(v!=0 || h != 0)
                     {
                         isBattleFieldLockRole = false;

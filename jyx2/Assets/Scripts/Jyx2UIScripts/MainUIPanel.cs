@@ -43,7 +43,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 
 		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
+			if (Input.GetButtonDown("JOptions") || Input.GetButtonDown("PadPress"))
 				OnSystemBtnClick();
 		//else if (Input.GetButtonDown("Jump"))
 		//{

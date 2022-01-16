@@ -220,7 +220,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 	public override void Update()
 	{
 		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("Fire2"))
+			if (Input.GetButtonDown("JFire2"))
 			{
 				if (selectionContentCount > 1)
 				{
@@ -232,7 +232,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 					OnMainBgClick();
 				}
 			}
-			else if (Input.GetButtonDown("Fire3"))
+			else if (Input.GetButtonDown("JFire3"))
 			{
 				if (selectionContentCount > 1)
 				{

@@ -60,15 +60,15 @@ public partial class InteractUIPanel : Jyx2_UIBase
 		if (gameObject.activeSelf)
 			if (LevelMaster.Instance?.IsPlayerCanControl() ?? true)
 			{
-				if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire2"))
+				if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("JFire2"))
 				{
 					OnBtnClick(0);
 				}
-				else if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Fire3"))
+				else if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("JFire3"))
 				{
 					OnBtnClick(1);
 				}
-				else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Jump"))
+				else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("JJump"))
 				{
 					Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
 				}

@@ -38,6 +38,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	private List<BattleBlockVector> moveRange;
 	private BattleFieldModel battleModel;
 	private BattleZhaoshiInstance currentZhaoshi;
+	private Dictionary<Button, Action> zhaoshiList = new Dictionary<Button, Action>();
 
 	protected override void OnCreate()
 	{
@@ -53,6 +54,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		BindListener(Wait_Button, OnWaitClick);
 		BindListener(Rest_Button, OnRestClick);
 		BindListener(Cancel_Button, OnCancelClick);
+	}
+
+	protected override string confirmButtonName()
+	{
+		return "JJump"; //use Y button to select menu items
 	}
 
 	protected override bool captureGamepadAxis { get { return true; } }
@@ -84,6 +90,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		callback = (Action<BattleLoop.ManualResult>)allParams[3];
 		battleModel = BattleManager.Instance.GetModel();
 
+		BattleboxHelper.Instance.blockConfirmed += gamepadBlockConfirmed;
 
 		//Cancel_Button.gameObject.SetActive(false);
 		SetActionBtnState();
@@ -104,6 +111,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		}
 	}
 
+	private void gamepadBlockConfirmed(BattleBlockData obj)
+	{
+		blockConfirm(obj);
+	}
+
 
 	//显示攻击范围选择指示器
 	void ShowAttackRangeSelector(BattleZhaoshiInstance zhaoshi)
@@ -118,9 +130,96 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	}
 
 	private BattleBlockData _lastMouseOverBlock = null;
+	private bool rightDpadPressed;
+	private bool leftDpadPressed;
 
-	void Update()
+	private int cur_zhaoshi = 0;
+
+	private void changeCurrentZhaoshiSelection(int number)
 	{
+		var curBtn = zhaoshiList.ElementAt(number);
+		var curText = getButtonText(curBtn);
+		if (curText != null)
+		{
+			foreach (var btn in zhaoshiList)
+			{
+				var text = getButtonText(btn);
+				if (text != null)
+					text.color = btn.Key == curBtn.Key ?
+						selectedButtonColor() : normalButtonColor();
+			}
+		}
+	}
+
+	protected virtual void OnDirectionalRight()
+	{
+		if (zhaoshiList.Count == 0)
+			return;
+
+		if (cur_zhaoshi == zhaoshiList.Count - 1)
+			cur_zhaoshi = 0;
+		else
+			cur_zhaoshi++;
+
+		changeCurrentZhaoshiSelection(cur_zhaoshi);
+	}
+
+	protected virtual void OnDirectionalLeft()
+	{
+		if (zhaoshiList.Count == 0)
+			return;
+
+		if (cur_zhaoshi == 0)
+			cur_zhaoshi = zhaoshiList.Count - 1;
+		else
+			cur_zhaoshi--;
+
+		changeCurrentZhaoshiSelection(cur_zhaoshi);
+	}
+
+	public override void Update()
+	{
+		base.Update();
+
+		if (captureGamepadAxis && gameObject.activeSelf)
+		{
+			var dpadX = Input.GetAxis("DPadX");
+			if (dpadX == -1)
+			{
+				rightDpadPressed = true;
+				if (rightDpadPressed && currentlyReleased)
+				{
+					OnDirectionalRight();
+					currentlyReleased = false;
+
+					delayedAxisRelease();
+					return;
+				}
+			}
+			else if (dpadX == 1)
+			{
+				leftDpadPressed = true;
+				if (leftDpadPressed && currentlyReleased)
+				{
+					OnDirectionalLeft();
+					currentlyReleased = false;
+					delayedAxisRelease();
+					return;
+				}
+			}
+		}
+
+		if (gameObject.activeSelf)
+		{
+			if (Input.GetButtonDown("JFire1")) // x/square button invoke zhaoshi 
+			{
+				var zhao = zhaoshiList.ElementAt(cur_zhaoshi);
+				zhao.Value?.Invoke();
+				return;
+			}
+
+		}
+
 		//显示当前攻击范围
 		if (isSelectMove == false)
 		{
@@ -149,6 +248,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		//以下进行回调
 
 		//移动
+		blockConfirm(block);
+	}
+
+	private void blockConfirm(BattleBlockData block)
+	{
 		if (isSelectMove)
 		{
 			TryCallback(new BattleLoop.ManualResult() { movePos = block.BattlePos }); //移动
@@ -185,6 +289,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		//隐藏格子
 		BattleboxHelper.Instance?.HideAllBlocks();
+		zhaoshiList.Clear();
 	}
 
 	void SetActionBtnState()
@@ -206,6 +311,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		var zhaoshis = m_currentRole.GetZhaoshis(true).ToList();
 		childMgr.RefreshChildCount(zhaoshis.Count);
 		List<Transform> childTransList = childMgr.GetUsingTransList();
+		zhaoshiList.Clear();
 		for (int i = 0; i < zhaoshis.Count; i++)
 		{
 			int index = i;
@@ -214,9 +320,17 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			item.SetSelect(i == m_currentRole.CurrentSkill);
 
 			Button btn = item.GetComponent<Button>();
-			BindListener(btn, () => { OnItemClick(item, index); });
+			bindZhaoshi(btn, () => { OnItemClick(item, index); });
 			m_curItemList.Add(item);
 		}
+
+		changeCurrentZhaoshiSelection(0);
+	}
+
+	void bindZhaoshi(Button btn, Action callback)
+	{
+		BindListener(btn, callback, false);
+		zhaoshiList[btn] = callback;
 	}
 
 	void OnItemClick(SkillUIItem item, int index)
