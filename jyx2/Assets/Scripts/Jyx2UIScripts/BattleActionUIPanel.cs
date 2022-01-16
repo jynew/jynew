@@ -56,11 +56,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		BindListener(Cancel_Button, OnCancelClick);
 	}
 
-	protected override string confirmButtonName()
-	{
-		return "JJump"; //use Y button to select menu items
-	}
-
 	protected override bool captureGamepadAxis { get { return true; } }
 
 	protected override Text getButtonText(KeyValuePair<Button, Action> button)
@@ -126,7 +121,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		BattleboxHelper.Instance.HideAllBlocks();
 		var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, zhaoshi);
-		BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone);
+		BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone, zhaoshi is HealZhaoshiInstance);
 	}
 
 	private BattleBlockData _lastMouseOverBlock = null;
@@ -251,8 +246,26 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		blockConfirm(block);
 	}
 
+	protected override bool handleDpadMove()
+	{
+		bool dpadMoved = base.handleDpadMove();
+		if (dpadMoved)
+			BattleboxHelper.Instance.GamepadMoved = false;
+
+		return dpadMoved;
+	}
+
+	protected override void buttonClickAt(int position)
+	{
+		if (!BattleboxHelper.Instance.GamepadMoved)
+			base.buttonClickAt(position);
+	}
+
 	private void blockConfirm(BattleBlockData block)
 	{
+		if (!BattleboxHelper.Instance.GamepadMoved)
+			return;
+
 		if (isSelectMove)
 		{
 			TryCallback(new BattleLoop.ManualResult() { movePos = block.BattlePos }); //移动

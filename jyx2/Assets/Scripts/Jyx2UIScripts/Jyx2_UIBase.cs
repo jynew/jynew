@@ -179,6 +179,20 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	public virtual void Update()
 	{
+		handleDpadMove();
+
+		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
+		{
+			//trigger button click
+			if (captureGamepadAxis && _buttonList.Count > 0)
+				buttonClickAt(current_selection);
+		}
+	}
+
+
+	protected virtual bool handleDpadMove()
+	{
+		bool dpadMoved = false;
 		if (captureGamepadAxis && gameObject.activeSelf)
 		{
 			var dpadY = Input.GetAxis("DPadY");
@@ -190,6 +204,8 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 					OnDirectionalDown();
 					currentlyReleased = false;
 
+					dpadMoved = true;
+
 					delayedAxisRelease();
 				}
 			}
@@ -200,17 +216,13 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 				{
 					OnDirectionalUp();
 					currentlyReleased = false;
+					dpadMoved = true;
 					delayedAxisRelease();
 				}
 			}
 		}
 
-		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
-		{
-			//trigger button click
-			if (captureGamepadAxis && _buttonList.Count > 0)
-				buttonClickAt(current_selection);
-		}
+		return dpadMoved;
 	}
 
 	protected virtual string confirmButtonName()
@@ -218,7 +230,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		return "JFire2";
 	}
 
-	protected void buttonClickAt(int position)
+	protected virtual void buttonClickAt(int position)
 	{
 		if (position > -1 && position < _buttonList.Count)
 		{

@@ -158,6 +158,8 @@ public class BattleboxHelper : MonoBehaviour
 	private int xCurPos;
 	private int yCurPos;
 
+	public bool GamepadMoved = false;
+
 	private void Update()
 	{
 		if (xPositions.Length == 0 || yPositions.Length == 0)
@@ -167,7 +169,7 @@ public class BattleboxHelper : MonoBehaviour
 		var leftStickX = Input.GetAxis("Horizontal");
 		if (Math.Abs(leftStickX) > 0 || Math.Abs(leftStickY)> 0)
 		{
-
+			GamepadMoved = true;
 			if (leftStickY < 0)
 			{
 				if (currentlyReleased)
@@ -230,7 +232,7 @@ public class BattleboxHelper : MonoBehaviour
 
 		if (Input.GetButtonDown("JFire2"))
 		{
-			if (blockConfirmed != null)
+			if (GamepadMoved && blockConfirmed != null)
 			{
 				var selectedBlock =  _currentBattlebox.GetBlockData(xCurPos, yCurPos);
 				if (selectedBlock != null)
@@ -300,7 +302,8 @@ public class BattleboxHelper : MonoBehaviour
 	private BattleBlockData _selectedBlock;
 	private Color _oldColor;
 
-	public void ShowBlocks(IEnumerable<BattleBlockVector> list, BattleBlockType type = BattleBlockType.MoveZone)
+	public void ShowBlocks(IEnumerable<BattleBlockVector> list, BattleBlockType type = BattleBlockType.MoveZone,
+		bool selectMiddlePos = false)
 	{
 		if (!GeneralPreJudge()) return;
 		HideAllBlocks();
@@ -323,6 +326,12 @@ public class BattleboxHelper : MonoBehaviour
 		}
 
 		initShownPositions();
+
+		if (selectMiddlePos)
+		{
+			setSelectedBlock();
+		}
+
 		rangeMode = false;
 	}
 
@@ -359,6 +368,8 @@ public class BattleboxHelper : MonoBehaviour
 		{
 			_currentBattlebox.HideAllRangeBlocks();
 		}
+
+		_selectedBlock = null;
 	}
 
 
