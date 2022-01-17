@@ -58,14 +58,14 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	protected override bool captureGamepadAxis { get { return true; } }
 
-	protected override Text getButtonText(KeyValuePair<Button, Action> button)
+	protected override Text getButtonText(Button button)
 	{
-		if (button.Key.gameObject.transform.childCount == 1)
+		if (button.gameObject.transform.childCount == 1)
 			return base.getButtonText(button);
 
-		for (var i = 0; i < button.Key.gameObject.transform.childCount; i++)
+		for (var i = 0; i < button.gameObject.transform.childCount; i++)
 		{
-			var text = button.Key.gameObject.transform.GetChild(i).GetComponent<Text>();
+			var text = button.gameObject.transform.GetChild(i).GetComponent<Text>();
 			if (text != null)
 				return text;
 		}
@@ -133,12 +133,12 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	private void changeCurrentZhaoshiSelection(int number)
 	{
 		var curBtn = zhaoshiList.ElementAt(number);
-		var curText = getButtonText(curBtn);
+		var curText = getButtonText(curBtn.Key);
 		if (curText != null)
 		{
 			foreach (var btn in zhaoshiList)
 			{
-				var text = getButtonText(btn);
+				var text = getButtonText(btn.Key);
 				if (text != null)
 					text.color = btn.Key == curBtn.Key ?
 						selectedButtonColor() : normalButtonColor();

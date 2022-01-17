@@ -91,22 +91,32 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		}
 	}
 
+	protected Button[] activeButtons
+	{
+		get
+		{
+			return _buttonList.Keys
+				.Where(b => b.gameObject.activeSelf)
+				.ToArray();
+		}
+	}
+
 	protected virtual void changeCurrentSelection(int num)
 	{
 		current_selection = num;
 
-		for (int i = 0; i < _buttonList.Count; i++)
+		for (int i = 0; i < activeButtons.Length; i++)
 		{
-			var buttonText = getButtonText(_buttonList.ElementAt(i));
+			var buttonText = getButtonText(activeButtons[i]);
 
 			if (buttonText != null)
 				buttonText.color = i == current_selection ? selectedButtonColor() : normalButtonColor();
 		}
 	}
 
-	protected virtual Text getButtonText(KeyValuePair<Button, Action> button)
+	protected virtual Text getButtonText(Button button)
 	{
-		return button.Key.gameObject.transform.GetChild(0).GetComponent<Text>();
+		return button.gameObject.transform.GetChild(0).GetComponent<Text>();
 	}
 
 	protected virtual Color selectedButtonColor()
@@ -153,10 +163,10 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void OnDirectionalDown()
 	{
-		if (_buttonList.Count == 0)
+		if (activeButtons.Length == 0)
 			return;
 
-		if (current_selection == _buttonList.Count - 1)
+		if (current_selection == activeButtons.Length - 1)
 			current_selection = 0;
 		else
 			current_selection++;
@@ -166,11 +176,11 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void OnDirectionalUp()
 	{
-		if (_buttonList.Count == 0)
+		if (activeButtons.Length == 0)
 			return;
 
 		if (current_selection == 0)
-			current_selection = _buttonList.Count - 1;
+			current_selection = activeButtons.Length - 1;
 		else
 			current_selection--;
 
