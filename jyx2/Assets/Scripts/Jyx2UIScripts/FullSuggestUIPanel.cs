@@ -28,7 +28,15 @@ public partial class FullSuggestUIPanel:Jyx2_UIBase
         BindListener(MainBg_Button, OnBgClick);
     }
 
-    private void OnBgClick()
+	public override void Update()
+	{
+		//ok or cancel button both close the ui
+        if (Input.GetButtonDown("JFire2")
+            || Input.GetButtonDown("JFire3"))
+            OnBgClick();
+	}
+
+	private void OnBgClick()
     {
         if (Time.unscaledTime < m_canClickTime)
             return;
