@@ -47,7 +47,7 @@ namespace Jyx2.MOD
         /// </summary>
         public string SavePath { get; private set; }
 
-        public IEnumerator DownloadFile(string uri, string path, bool isAutoDeleteWrongFile = true)
+        public IEnumerator DownloadFile(string uri, string path, Action<float>onProgress, bool isAutoDeleteWrongFile = true)
         {
             SavePath = path;
             _uwr = UnityWebRequest.Get(uri);
@@ -55,7 +55,7 @@ namespace Jyx2.MOD
             dh.removeFileOnAbort = isAutoDeleteWrongFile;
             _uwr.downloadHandler = dh;
             _uwr.SendWebRequest();
-            yield return DownloadProgress(_uwr, OnProgress);
+            yield return DownloadProgress(_uwr, onProgress);
             
             IsDone = _uwr.isDone;
             if (_uwr.isNetworkError || _uwr.isHttpError)
@@ -74,16 +74,21 @@ namespace Jyx2.MOD
         {
             while (!uwr.isDone)
             {
-                Debug.Log(_uwr.downloadProgress);
-                Progress = _uwr.downloadProgress;
+                Debug.Log(uwr.downloadProgress);
+                Progress = uwr.downloadProgress;
                 
                 if (onProgress != null)
                 {
                     Debug.Log("onProgess event not null");
-                    onProgress(Progress);
+                    onProgress(uwr.downloadProgress);
                 }
                 
                 yield return null;
+            }
+
+            if (uwr.isDone)
+            {
+                if (onProgress != null) onProgress(1);
             }
         }
 

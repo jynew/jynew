@@ -14,7 +14,8 @@ public class ModItem : MonoBehaviour
 {
     public static ModItem Create()
     {
-        var obj = Jyx2ResourceHelper.CreatePrefabInstance("ModItem");
+        var prefab = Resources.Load<GameObject>("ModItem");
+        var obj = Instantiate(prefab);
         var modItem = obj.GetComponent<ModItem>();
         modItem.InitTrans();
         return modItem;
@@ -22,25 +23,30 @@ public class ModItem : MonoBehaviour
     
     Toggle m_Toggle;
     Image m_Image;
-    Text m_Info;
+    Text m_Name;
+    Text m_Desc;
     Text m_Status;
     Button m_Download;
     Button m_Delete;
+    Text m_Progress;
     
     void InitTrans() 
     {
         m_Toggle = transform.Find("Toggle").GetComponent<Toggle>();
         m_Image = transform.Find("Image").GetComponent<Image>();
-        m_Info = transform.Find("Info").GetComponent<Text>();
+        m_Name = transform.Find("Name").GetComponent<Text>();
+        m_Desc = transform.Find("Desc").GetComponent<Text>();
         m_Status = transform.Find("Status").GetComponent<Text>();
         m_Download = transform.Find("Download").GetComponent<Button>();
         m_Delete = transform.Find("Delete").GetComponent<Button>();
+        m_Progress = transform.Find("Progress").GetComponent<Text>();
     }
 
     public async UniTask ShowMod(ModEntry modEntry)
     {
 
-        m_Info.text = "信息";
+        m_Name.text = modEntry.ModMeta.name + " Version." + modEntry.ModMeta.version;
+        m_Desc.text = modEntry.ModMeta.description;
         m_Status.text = "状态";
         m_Download.onClick.AddListener(() =>
         {
@@ -58,12 +64,24 @@ public class ModItem : MonoBehaviour
 
     async void DoDownload(ModEntry modEntry)
     {
-        await new DownloadManager().DownloadFile(modEntry.ModMeta.uri, modEntry.Path);
+        await new DownloadManager().DownloadFile(modEntry.ModMeta.uri, modEntry.Path, (progress) =>
+        {
+            m_Progress.gameObject.SetActive(true);
+            m_Progress.text = (int)(progress * 100) + "%";
+        });
+        m_Download.gameObject.SetActive(false);
+        m_Delete.gameObject.SetActive(true);
     }
 
     void DoDelete(string filePath)
     {
         if (File.Exists(filePath))
+        {
             File.Delete(filePath);
+            Debug.Log("File successfully deleted");
+            m_Download.gameObject.SetActive(true);
+            m_Delete.gameObject.SetActive(false);
+            m_Progress.gameObject.SetActive(false);
+        }
     }
 }
