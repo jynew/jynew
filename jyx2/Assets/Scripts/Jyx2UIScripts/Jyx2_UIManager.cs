@@ -8,9 +8,11 @@
  * 金庸老先生千古！
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2.MOD;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -64,7 +66,14 @@ public class Jyx2_UIManager : MonoBehaviour
     public async void GameStart()
     {
         await ShowUIAsync(nameof(GameMainMenu));
-        await ShowUIAsync(nameof(GameInfoPanel),$"当前版本：{Application.version}");
+        //---------------------------------------------------------------------------
+        //await ShowUIAsync(nameof(GameInfoPanel),$"当前版本：{Application.version}");
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【MainMenu右下角当前版本的翻译】
+        //---------------------------------------------------------------------------
+        await ShowUIAsync(nameof(GameInfoPanel), string.Format("当前版本：{0}".GetContent(nameof(Jyx2_UIManager)), Application.version));
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
         GraphicSetting.GlobalSetting.Execute();
     }
 

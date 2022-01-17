@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,27 +77,43 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		}
 	}
 
-	async void Save()
-	{
-		HidePanel();
-
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-		{
-			var levelMaster = FindObjectOfType<LevelMaster>();
-			levelMaster.OnManuelSave(index);
-
-		}), "选择存档位");
-	}
-
-	async void Load()
-	{
-		HidePanel();
-
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-		{
-			StoryEngine.DoLoadGame(index);
-		}), "选择读档位");
-	}
+    async void Save()
+    {
+        //---------------------------------------------------------------------------
+        //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
+        //{
+        //    var levelMaster = FindObjectOfType<LevelMaster>();
+        //    levelMaster.OnManuelSave(index);
+        //}),"选择存档位");
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【存档时候的Title显示】
+        //---------------------------------------------------------------------------
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
+        {
+            var levelMaster = FindObjectOfType<LevelMaster>();
+            levelMaster.OnManuelSave(index);
+        }),"选择存档位".GetContent(nameof(SystemUIPanel)));
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+    }
+    
+    async void Load()
+    {
+        //---------------------------------------------------------------------------
+        //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+        //{
+        //    StoryEngine.DoLoadGame(index);
+        //}),"选择读档位");
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【读档时候的Title显示】
+        //---------------------------------------------------------------------------
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+        {
+            StoryEngine.DoLoadGame(index);
+        }),"选择读档位".GetContent(nameof(SystemUIPanel)));
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+    }
 
 	async void GraphicSetting()
 	{

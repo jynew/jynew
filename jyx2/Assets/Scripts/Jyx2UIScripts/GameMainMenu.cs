@@ -12,6 +12,7 @@ using Jyx2;
 using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2.Middleware;
 using UnityEngine.UI;
 
@@ -205,22 +206,36 @@ public partial class GameMainMenu : Jyx2_UIBase
 		OnNewGame();
 	}
 
-	// merge to SavePanel.cs
-	// modified by eaphone at 2021/05/21
-	public async void OnLoadGameClicked()
-	{
-		m_panelType = PanelType.LoadGamePage;
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-		{
-			if (!StoryEngine.DoLoadGame(index) && m_panelType == PanelType.LoadGamePage)
-			{
-				OnNewGame();
-			}
-		}), "选择读档位", new Action(() =>
-		 {
-			 m_panelType = PanelType.Home;
-		 }));
-	}
+    // merge to SavePanel.cs
+    // modified by eaphone at 2021/05/21
+    public async void OnLoadGameClicked()
+    {
+        m_panelType = PanelType.LoadGamePage;
+        //---------------------------------------------------------------------------
+        //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+        //{
+        //    if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
+        //        OnNewGame();
+        //    }
+        //}),"选择读档位", new Action(() =>
+        //{
+        //    m_panelType = PanelType.Home;
+        //}));
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【读档时候的Title显示】
+        //---------------------------------------------------------------------------
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+        {
+            if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
+                OnNewGame();
+            }
+        }),"选择读档位".GetContent(nameof(GameMainMenu)), new Action(() =>
+        {
+            m_panelType = PanelType.Home;
+        }));
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+    }
 
 	public void OnQuitGameClicked()
 	{
@@ -331,8 +346,16 @@ public partial class GameMainMenu : Jyx2_UIBase
 		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.N);
 	}
 
-	public void OnOpenURL(string url)
-	{
-		Tools.openURL(url);
-	}
+    public void OnOpenURL(string url)
+    {
+        Tools.openURL(url);
+    }
+
+    /// <summary>
+    /// 打开设置界面
+    /// </summary>
+    public void OpenSettingsPanel()
+    {
+        Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
+    }
 }

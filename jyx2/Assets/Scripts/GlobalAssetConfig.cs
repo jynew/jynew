@@ -2,14 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using i18n;
+using i18n.TranslatorDef;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 [CreateAssetMenu(fileName = "GlobalAssetConfig", menuName = "金庸重制版/全局资源配置文件")]
 public class GlobalAssetConfig : ScriptableObject
 {
     public static GlobalAssetConfig Instance = null;
+    
+    //--------------------------------------------------------------------------------------------
+    //以下均为新增的语言配置文件
+    //--------------------------------------------------------------------------------------------
+    [BoxGroup("语言相关")] [LabelText("语言文件")]
+    public Translator defaultTranslator;
+    //--------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------
     
     [BoxGroup("游戏动作")] [LabelText("默认受击动作")]
     public AnimationClip defaultBeHitClip;
@@ -49,6 +60,9 @@ public class GlobalAssetConfig : ScriptableObject
 
     [BoxGroup("地图设置")] [LabelText("大地图")] 
     public AssetReference BigMap;
+    
+    [BoxGroup("地图设置")] [LabelText("默认主角居名字")] 
+    public string defaultHomeName;
 
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]

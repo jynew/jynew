@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -141,24 +142,50 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         var color = role.GetMPColor();
         var color1 = role.GetHPColor1();
         var color2 = role.GetHPColor2();
-        sb.AppendLine($"等级 {role.Level}");
-        sb.AppendLine($"体力 {role.Tili}/{GameConst.MAX_ROLE_TILI}");
-        sb.AppendLine($"生命 <color={color1}>{role.Hp}</color>/<color={color2}>{role.MaxHp}</color>");
-        sb.AppendLine($"内力 <color={color}>{role.Mp}/{role.MaxMp}</color>");
-        sb.AppendLine($"经验 {role.Exp}/{role.GetLevelUpExp()}");
+        //---------------------------------------------------------------------------
+        //sb.AppendLine($"等级 {role.Level}");
+        //sb.AppendLine($"体力 {role.Tili}/{GameConst.MAX_ROLE_TILI}");
+        //sb.AppendLine($"生命 <color={color1}>{role.Hp}</color>/<color={color2}>{role.MaxHp}</color>");
+        //sb.AppendLine($"内力 <color={color}>{role.Mp}/{role.MaxMp}</color>");
+        //sb.AppendLine($"经验 {role.Exp}/{role.GetLevelUpExp()}");
+        //sb.AppendLine();
+        //sb.AppendLine($"攻击 {role.Attack}");
+        //sb.AppendLine($"防御 {role.Defence}");
+        //sb.AppendLine($"轻功 {role.Qinggong}");
+        //sb.AppendLine($"医疗 {role.Heal}");
+        //sb.AppendLine($"解毒 {role.DePoison}");
+        //sb.AppendLine($"用毒 {role.UsePoison}");
+        //sb.AppendLine();
+        //sb.AppendLine($"拳掌 {role.Quanzhang}");
+        //sb.AppendLine($"御剑 {role.Yujian}");
+        //sb.AppendLine($"耍刀 {role.Shuadao}");
+        //sb.AppendLine($"特殊 {role.Qimen}");
+        //sb.AppendLine($"暗器 {role.Anqi}");
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【XiakePanel角色信息显示大框的信息】
+        //---------------------------------------------------------------------------
+        sb.AppendLine(string.Format("等级 {0}".GetContent(nameof(XiakeUIPanel)), role.Level));
+        sb.AppendLine(string.Format("体力 {0}/{1}".GetContent(nameof(XiakeUIPanel)), role.Tili, GameConst.MAX_ROLE_TILI));
+        sb.AppendLine(string.Format("生命 <color={0}>{1}</color>/<color={2}>{3}</color>".GetContent(nameof(XiakeUIPanel)), color1, role.Hp, color2,
+            role.MaxHp));
+        sb.AppendLine(string.Format("内力 <color={0}>{1}/{2}</color>".GetContent(nameof(XiakeUIPanel)), color, role.Mp, role.MaxMp));
+        sb.AppendLine(string.Format("经验 {0}/{1}".GetContent(nameof(XiakeUIPanel)), role.Exp, role.GetLevelUpExp()));
         sb.AppendLine();
-        sb.AppendLine($"攻击 {role.Attack}");
-        sb.AppendLine($"防御 {role.Defence}");
-        sb.AppendLine($"轻功 {role.Qinggong}");
-        sb.AppendLine($"医疗 {role.Heal}");
-        sb.AppendLine($"解毒 {role.DePoison}");
-        sb.AppendLine($"用毒 {role.UsePoison}");
+        sb.AppendLine(string.Format("攻击 {0}".GetContent(nameof(XiakeUIPanel)), role.Attack));
+        sb.AppendLine(string.Format("防御 {0}".GetContent(nameof(XiakeUIPanel)), role.Defence));
+        sb.AppendLine(string.Format("轻功 {0}".GetContent(nameof(XiakeUIPanel)), role.Qinggong));
+        sb.AppendLine(string.Format("医疗 {0}".GetContent(nameof(XiakeUIPanel)), role.Heal));
+        sb.AppendLine(string.Format("解毒 {0}".GetContent(nameof(XiakeUIPanel)), role.DePoison));
+        sb.AppendLine(string.Format("用毒 {0}".GetContent(nameof(XiakeUIPanel)), role.UsePoison));
         sb.AppendLine();
-        sb.AppendLine($"拳掌 {role.Quanzhang}");
-        sb.AppendLine($"御剑 {role.Yujian}");
-        sb.AppendLine($"耍刀 {role.Shuadao}");
-        sb.AppendLine($"特殊 {role.Qimen}");
-        sb.AppendLine($"暗器 {role.Anqi}");
+        sb.AppendLine(string.Format("拳掌 {0}".GetContent(nameof(XiakeUIPanel)), role.Quanzhang));
+        sb.AppendLine(string.Format("御剑 {0}".GetContent(nameof(XiakeUIPanel)), role.Yujian));
+        sb.AppendLine(string.Format("耍刀 {0}".GetContent(nameof(XiakeUIPanel)), role.Shuadao));
+        sb.AppendLine(string.Format("特殊 {0}".GetContent(nameof(XiakeUIPanel)), role.Qimen));
+        sb.AppendLine(string.Format("暗器 {0}".GetContent(nameof(XiakeUIPanel)), role.Anqi));
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+
         return sb.ToString();
     }
 
@@ -177,15 +204,28 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         StringBuilder sb = new StringBuilder();
         var weapon = role.GetWeapon();
-        sb.AppendLine("武器：" + (weapon == null ? "" : weapon.Name));
+        //---------------------------------------------------------------------------
+        //sb.AppendLine("武器：" + (weapon == null ? "" : weapon.Name));
+        //var armor = role.GetArmor();
+        //sb.AppendLine("防具：" + (armor == null ? "" : armor.Name));
+        //var xiulianItem = role.GetXiulianItem();
+        //sb.AppendLine("修炼：" + (xiulianItem == null
+        //    ? ""
+        //    : xiulianItem.Name + $"({role.ExpForItem}/{role.GetFinishedExpForItem()})"));
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【XiakePanel角色信息显示大框的信息】
+        //---------------------------------------------------------------------------
+        sb.AppendLine("武器：".GetContent(nameof(XiakeUIPanel)) + (weapon == null ? "" : weapon.Name));
 
         var armor = role.GetArmor();
-        sb.AppendLine("防具：" + (armor == null ? "" : armor.Name));
+        sb.AppendLine("防具：".GetContent(nameof(XiakeUIPanel)) + (armor == null ? "" : armor.Name));
 
         var xiulianItem = role.GetXiulianItem();
-        sb.AppendLine("修炼：" + (xiulianItem == null
+        sb.AppendLine("修炼：".GetContent(nameof(XiakeUIPanel)) + (xiulianItem == null
             ? ""
             : xiulianItem.Name + $"({role.ExpForItem}/{role.GetFinishedExpForItem()})"));
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
 
         return sb.ToString();
     }

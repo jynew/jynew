@@ -14,6 +14,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using i18n.TranslatorDef;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
@@ -339,14 +340,25 @@ public partial class BagUIPanel : Jyx2_UIBase
 		HSUnityTools.DestroyChildren(ItemRoot_RectTransform);
 	}
 
-	void setBtnText()
-	{
-		if (m_selectItem == null) return;
-		if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item)
-			UseBtn_Text.text = "卸 下";
-		else
-			UseBtn_Text.text = "使 用";
-	}
+    void setBtnText()
+    {
+        //---------------------------------------------------------------------------
+        //if (m_selectItem==null)return;
+        //if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item)
+        //    UseBtn_Text.text = "卸 下";
+        //else
+        //    UseBtn_Text.text = "使 用";
+        //---------------------------------------------------------------------------
+        //特定位置的翻译【BagUIPanel右边显示的按钮文字】
+        //---------------------------------------------------------------------------
+        if (m_selectItem==null)return;
+        if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item)
+            UseBtn_Text.text = "卸 下".GetContent(nameof(BagUIPanel));
+        else
+            UseBtn_Text.text = "使 用".GetContent(nameof(BagUIPanel));
+        //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+    }
 
 
 	void RefreshFocusFilter()

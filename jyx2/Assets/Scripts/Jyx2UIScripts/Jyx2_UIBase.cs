@@ -66,11 +66,11 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			(this as IUIAnimator).DoShowAnimator();
 		}
 
-		if (IsBlockControl && !IsChangedBlockControl && !BattleManager.Instance.IsInBattle && LevelMaster.Instance.IsPlayerCanControl())
-		{
-			IsChangedBlockControl = true;
-			LevelMaster.Instance.SetPlayerCanController(false);
-		}
+        if (IsBlockControl && !IsChangedBlockControl && !BattleManager.Instance.IsInBattle && LevelMaster.Instance && LevelMaster.Instance.IsPlayerCanControl())
+        {
+            IsChangedBlockControl = true;
+            LevelMaster.Instance.SetPlayerCanController(false);
+        }
 
 		if (captureGamepadAxis && _buttonList.Count > 0)
 			changeCurrentSelection(0);
