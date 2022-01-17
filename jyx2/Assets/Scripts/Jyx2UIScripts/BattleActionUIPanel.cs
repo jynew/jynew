@@ -275,6 +275,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (!BattleboxHelper.Instance.GamepadMoved)
 			return;
 
+		changeCurrentSelection(-1);
+
 		if (isSelectMove)
 		{
 			TryCallback(new BattleLoop.ManualResult() { movePos = block.BattlePos }); //移动
