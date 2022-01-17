@@ -25,9 +25,7 @@ public interface IUIAnimator
 
 public abstract class Jyx2_UIBase : MonoBehaviour
 {
-	private bool downDpadPressed;
 	protected volatile bool currentlyReleased = true;
-	private bool upDpadPressed;
 
 	protected Dictionary<Button, Action> _buttonList = new Dictionary<Button, Action>();
 
@@ -161,6 +159,18 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		}
 	}
 
+	protected virtual void OnDirectionalLeft()
+	{
+		//do nothing by default, since most UI menus are vertical
+	}
+
+	protected virtual void OnDirectionalRight()
+	{
+		//do nothing by default, since most UI menus are vertical
+	}
+
+
+
 	protected virtual void OnDirectionalDown()
 	{
 		if (activeButtons.Length == 0)
@@ -191,14 +201,18 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		handleDpadMove();
 
+		handleGamepadConfirmButton();
+	}
+
+	protected virtual void handleGamepadConfirmButton()
+	{
 		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
 		{
 			//trigger button click
-			if (captureGamepadAxis && activeButtons.Length> 0)
+			if (captureGamepadAxis && activeButtons.Length > 0)
 				buttonClickAt(current_selection);
 		}
 	}
-
 
 	protected virtual bool handleDpadMove()
 	{
@@ -208,8 +222,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			var dpadY = Input.GetAxis("DPadY");
 			if (dpadY == -1)
 			{
-				downDpadPressed = true;
-				if (downDpadPressed && currentlyReleased)
+				if (currentlyReleased)
 				{
 					OnDirectionalDown();
 					currentlyReleased = false;
@@ -221,10 +234,32 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			}
 			else if (dpadY == 1)
 			{
-				upDpadPressed = true;
-				if (upDpadPressed && currentlyReleased)
+				if (currentlyReleased)
 				{
 					OnDirectionalUp();
+					currentlyReleased = false;
+					dpadMoved = true;
+					delayedAxisRelease();
+				}
+			}
+			var dpadX = Input.GetAxis("DPadX");
+			if (dpadX == -1)
+			{
+				if (currentlyReleased)
+				{
+					OnDirectionalLeft();
+					currentlyReleased = false;
+
+					dpadMoved = true;
+
+					delayedAxisRelease();
+				}
+			}
+			else if (dpadX == 1)
+			{
+				if (currentlyReleased)
+				{
+					OnDirectionalRight();
 					currentlyReleased = false;
 					dpadMoved = true;
 					delayedAxisRelease();
@@ -251,12 +286,19 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		}
 	}
 
+	protected virtual int axisReleaseDelay
+	{
+		get
+		{
+			return 500;
+		}
+	}
 
 	protected void delayedAxisRelease()
 	{
 		Task.Run(() =>
 		{
-			Thread.Sleep(500);
+			Thread.Sleep(axisReleaseDelay);
 			currentlyReleased = true;
 		});
 	}
