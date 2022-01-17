@@ -242,10 +242,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void buttonClickAt(int position)
 	{
-		if (position > -1 && position < _buttonList.Count)
+		if (position > -1 && position < activeButtons.Length)
 		{
-			Action callback = _buttonList.ElementAt(position)
-							.Value;
+			Action callback = _buttonList[activeButtons[position]];
 
 			if (callback != null)
 				callback();
