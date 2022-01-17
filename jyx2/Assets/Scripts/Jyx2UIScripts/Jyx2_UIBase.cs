@@ -166,7 +166,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		if (activeButtons.Length == 0)
 			return;
 
-		if (current_selection == activeButtons.Length - 1)
+		if (current_selection >= activeButtons.Length - 1)
 			current_selection = 0;
 		else
 			current_selection++;
@@ -179,7 +179,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		if (activeButtons.Length == 0)
 			return;
 
-		if (current_selection == 0)
+		if (current_selection <= 0)
 			current_selection = activeButtons.Length - 1;
 		else
 			current_selection--;
@@ -194,7 +194,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
 		{
 			//trigger button click
-			if (captureGamepadAxis && _buttonList.Count > 0)
+			if (captureGamepadAxis && activeButtons.Length> 0)
 				buttonClickAt(current_selection);
 		}
 	}

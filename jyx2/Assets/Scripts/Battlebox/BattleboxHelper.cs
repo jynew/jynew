@@ -257,12 +257,16 @@ public class BattleboxHelper : MonoBehaviour
 			_oldColor = newSelectedBlock.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.GetColor("_TintColor");
 			_selectedBlock.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.SetColor("_TintColor", new Color(1, 0, 1, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA));
 
+			if (dpadMovedToBlock != null)
+				dpadMovedToBlock(newSelectedBlock);
+
 			return true;
 		}
 
 		return false;
 	}
 
+	public event Action<BattleBlockData> dpadMovedToBlock;
 	public event Action<BattleBlockData> blockConfirmed;
 
 	private void initXPos()

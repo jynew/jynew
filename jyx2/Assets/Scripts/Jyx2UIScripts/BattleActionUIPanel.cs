@@ -85,6 +85,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		callback = (Action<BattleLoop.ManualResult>)allParams[3];
 		battleModel = BattleManager.Instance.GetModel();
 
+		BattleboxHelper.Instance.dpadMovedToBlock += ondpadMovedBlock;
 		BattleboxHelper.Instance.blockConfirmed += gamepadBlockConfirmed;
 
 		//Cancel_Button.gameObject.SetActive(false);
@@ -104,6 +105,14 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 				ShowAttackRangeSelector(zhaoshi);
 			}
 		}
+
+		changeCurrentSelection(-1);
+	}
+
+	private void ondpadMovedBlock(BattleBlockData obj)
+	{
+		//hide the hilite
+		changeCurrentSelection(-1);
 	}
 
 	private void gamepadBlockConfirmed(BattleBlockData obj)
