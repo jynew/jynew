@@ -130,7 +130,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		BattleboxHelper.Instance.HideAllBlocks();
 		var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, zhaoshi);
-		BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone, zhaoshi is HealZhaoshiInstance);
+		bool selectMiddlePos = zhaoshi is HealZhaoshiInstance || zhaoshi is DePoisonZhaoshiInstance;
+		BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone, selectMiddlePos);
 	}
 
 	private BattleBlockData _lastMouseOverBlock = null;

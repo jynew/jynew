@@ -169,7 +169,6 @@ public class BattleboxHelper : MonoBehaviour
 		var leftStickX = Input.GetAxis("Horizontal");
 		if (Math.Abs(leftStickX) > 0 || Math.Abs(leftStickY)> 0)
 		{
-			GamepadMoved = true;
 			if (leftStickY < 0)
 			{
 				if (currentlyReleased)
@@ -256,6 +255,9 @@ public class BattleboxHelper : MonoBehaviour
 			_selectedBlock = newSelectedBlock;
 			_oldColor = newSelectedBlock.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.GetColor("_TintColor");
 			_selectedBlock.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.SetColor("_TintColor", new Color(1, 0, 1, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA));
+
+
+			GamepadMoved = true;
 
 			if (dpadMovedToBlock != null)
 				dpadMovedToBlock(newSelectedBlock);
@@ -350,6 +352,7 @@ public class BattleboxHelper : MonoBehaviour
 
 	public void ShowRangeBlocks(IEnumerable<BattleBlockVector> list)
 	{
+		//todo: debug zhaoshi that has range instead of just one point
 		if (!GeneralPreJudge()) return;
 		_currentBattlebox.HideAllRangeBlocks();
 
