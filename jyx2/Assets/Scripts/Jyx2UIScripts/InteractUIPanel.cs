@@ -55,11 +55,11 @@ public partial class InteractUIPanel : Jyx2_UIBase
     {
         if (LevelMaster.Instance?.IsPlayerCanControl() ?? true)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("JFire2"))
             {
                 OnBtnClick(0);
             }
-            else if (Input.GetKeyDown(KeyCode.Return))
+            else if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("JFire3"))
             {
                 OnBtnClick(1);
             }
