@@ -36,8 +36,9 @@ namespace Jyx2.MOD
                     var filePath = Path.Combine(ModsPath, modMeta.id);
                     var modEntry = new ModEntry(modMeta, filePath);
                     ModEntries.Add(modEntry);
-                    if (!File.Exists(filePath))
-                        await new DownloadManager().DownloadFile(modMeta.uri, filePath);
+                    // if (!File.Exists(filePath))
+                    //     await new DownloadManager().DownloadFile(modMeta.uri, filePath);
+                    
                 }
                 
                 if (ModEntries.Count > 0)

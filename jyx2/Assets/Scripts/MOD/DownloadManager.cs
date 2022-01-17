@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 namespace Jyx2.MOD
 {
@@ -10,7 +11,7 @@ namespace Jyx2.MOD
         private UnityWebRequest _uwr;
 
         public event Action<float> OnProgress;
-        
+
         /// <summary>
         /// 是否操作完成
         /// </summary>
@@ -83,6 +84,31 @@ namespace Jyx2.MOD
                 }
                 
                 yield return null;
+            }
+        }
+
+        public IEnumerator DownloadSprite(string uri, Action<Sprite> onSprite)
+        {
+            _uwr = UnityWebRequest.Get(uri);
+            _uwr.downloadHandler = new DownloadHandlerTexture();
+            yield return _uwr.SendWebRequest();
+            
+            IsDone = _uwr.isDone;
+            Texture2D texture = null;
+            if (_uwr.isNetworkError || _uwr.isHttpError)
+            {
+                Debug.LogError(_uwr.error);
+                Error = _uwr.error;
+            }
+            else
+            {
+                Texture2D texture2D =
+                    DownloadHandlerTexture.GetContent(_uwr);
+                Sprite sp = Sprite.Create(
+                        texture2D,
+                        new Rect(0, 0, texture2D.width, texture2D.height),
+                        new Vector2(0.5f, 0.5f));
+                onSprite(sp);
             }
         }
 
