@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -7,8 +6,6 @@ using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Networking;
 
 namespace Jyx2.MOD
 {
@@ -36,15 +33,6 @@ namespace Jyx2.MOD
                     var filePath = Path.Combine(ModsPath, modMeta.id);
                     var modEntry = new ModEntry(modMeta, filePath);
                     ModEntries.Add(modEntry);
-                    // if (!File.Exists(filePath))
-                    //     await new DownloadManager().DownloadFile(modMeta.uri, filePath);
-                    
-                }
-                
-                if (ModEntries.Count > 0)
-                {
-                    foreach (var modEntry in ModEntries)
-                        modEntry.Active = true;
                 }
             }
         }

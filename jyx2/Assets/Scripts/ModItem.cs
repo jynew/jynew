@@ -29,7 +29,9 @@ public class ModItem : MonoBehaviour
     Button m_Download;
     Button m_Delete;
     Text m_Progress;
-    
+
+    private Downloader _loader;
+    private string _filePath;
     void InitTrans() 
     {
         m_Toggle = transform.Find("Toggle").GetComponent<Toggle>();
@@ -40,14 +42,19 @@ public class ModItem : MonoBehaviour
         m_Download = transform.Find("Download").GetComponent<Button>();
         m_Delete = transform.Find("Delete").GetComponent<Button>();
         m_Progress = transform.Find("Progress").GetComponent<Text>();
+
+        _loader = new Downloader();
     }
 
     public async UniTask ShowMod(ModEntry modEntry)
     {
-
-        m_Name.text = modEntry.ModMeta.name + " Version." + modEntry.ModMeta.version;
+        _filePath = modEntry.Path;
+        m_Name.text = modEntry.ModMeta.name + "Version." + modEntry.ModMeta.version;
         m_Desc.text = modEntry.ModMeta.description;
-        m_Status.text = "状态";
+        m_Toggle.onValueChanged.AddListener((isOn) =>
+        {
+            modEntry.Active = isOn;
+        });
         m_Download.onClick.AddListener(() =>
         {
             DoDownload(modEntry);
@@ -56,21 +63,12 @@ public class ModItem : MonoBehaviour
         {
             DoDelete(modEntry.Path);
         });
-        await new DownloadManager().DownloadSprite(modEntry.ModMeta.poster, sprite =>
-        {
-            m_Image.sprite = sprite;
-        });
+        m_Image.sprite = await new Downloader().DownloadSprite(modEntry.ModMeta.poster);
     }
 
     async void DoDownload(ModEntry modEntry)
     {
-        await new DownloadManager().DownloadFile(modEntry.ModMeta.uri, modEntry.Path, (progress) =>
-        {
-            m_Progress.gameObject.SetActive(true);
-            m_Progress.text = (int)(progress * 100) + "%";
-        });
-        m_Download.gameObject.SetActive(false);
-        m_Delete.gameObject.SetActive(true);
+        await _loader.DownloadFile(modEntry.ModMeta.uri, modEntry.Path);
     }
 
     void DoDelete(string filePath)
@@ -79,9 +77,28 @@ public class ModItem : MonoBehaviour
         {
             File.Delete(filePath);
             Debug.Log("File successfully deleted");
+        }
+    }
+    
+    void Update()
+    {
+        if (File.Exists(_filePath))
+        {
+            m_Status.text = "<color=green>正常</color>";
+            m_Download.gameObject.SetActive(false);
+            m_Delete.gameObject.SetActive(true);
+            m_Progress.gameObject.SetActive(true);
+        }
+        else
+        {
+            m_Status.text = "<color=grey>缺失</color>";
             m_Download.gameObject.SetActive(true);
             m_Delete.gameObject.SetActive(false);
             m_Progress.gameObject.SetActive(false);
         }
+        // 如果DownloadProgress为-1则说明下载已经完成了，不要再刷新下载进度。
+        if (_loader.DownloadProgress < 0) return;
+        // 在下载过程中可以访问loader，得到下载进度。
+        m_Progress.text = (int)(_loader.DownloadProgress * 100) + "%";
     }
 }

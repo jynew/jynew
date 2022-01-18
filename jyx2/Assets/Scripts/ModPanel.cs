@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ModPanel : MonoBehaviour
 {
-    private RectTransform ModParent_RectTransform;
+    Button StartButton;
+    RectTransform ModParent_RectTransform;
 
-    public void InitTrans()
+    void InitTrans()
     {
         ModParent_RectTransform = transform.Find("ModScroll/Viewport/ModParent").GetComponent<RectTransform>();
+        StartButton = transform.Find("StartButton").GetComponent<Button>();
+        
+        StartButton.onClick.AddListener(onStart);
+    }
 
+    void onStart()
+    {
+        
     }
 
     void Start()
@@ -20,19 +29,20 @@ public class ModPanel : MonoBehaviour
         RefreshScroll();
     }
 
-    void RefreshScroll()
+    async void RefreshScroll()
     {
         HSUnityTools.DestroyChildren(ModParent_RectTransform);
         foreach (var modEntry in MODManager.ModEntries)
         {
             var item = ModItem.Create();
-            item.transform.SetParent(ModParent_RectTransform);
-            item.transform.localScale = Vector3.one;
+            Transform transform1;
+            (transform1 = item.transform).SetParent(ModParent_RectTransform);
+            transform1.localScale = Vector3.one;
             
-            item.ShowMod(modEntry);
+            await item.ShowMod(modEntry);
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
         
