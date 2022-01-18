@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -46,7 +47,14 @@ namespace Jyx2Configs
         
         public string GetShowName()
         {
-            if ("小虾米居".Equals(Name)) return GameRuntimeData.Instance.Player.Name + "居";
+            //---------------------------------------------------------------------------
+            //if ("小虾米居".Equals(Name)) return GameRuntimeData.Instance.Player.Name + "居";
+            //---------------------------------------------------------------------------
+            //特定位置的翻译【小地图左上角的主角居显示】
+            //---------------------------------------------------------------------------
+            if (GlobalAssetConfig.Instance.defaultHomeName.Equals(Name)) return GameRuntimeData.Instance.Player.Name + "居".GetContent(nameof(Jyx2ConfigMap));
+            //---------------------------------------------------------------------------
+            //---------------------------------------------------------------------------
             return Name;
         }
         

@@ -66,7 +66,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			(this as IUIAnimator).DoShowAnimator();
 		}
 
-		if (IsBlockControl && !IsChangedBlockControl && !BattleManager.Instance.IsInBattle && LevelMaster.Instance.IsPlayerCanControl())
+		if (IsBlockControl && !IsChangedBlockControl && LevelMaster.Instance != null && !BattleManager.Instance.IsInBattle && LevelMaster.Instance.IsPlayerCanControl())
 		{
 			IsChangedBlockControl = true;
 			LevelMaster.Instance.SetPlayerCanController(false);

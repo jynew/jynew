@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using i18n.TranslatorDef;
 using UnityEngine;
 using UnityEngine.UI;
 using Keiwando.NFSO;
@@ -154,27 +155,41 @@ public partial class SavePanel : Jyx2_UIBase
 	{
 		HSUnityTools.DestroyChildren(SaveParent_RectTransform);
 
-		for (int i = 0; i < GameConst.SAVE_COUNT; i++)
-		{
-			var btn = Instantiate(SaveItem_Button);
-			btn.transform.SetParent(SaveParent_RectTransform);
-			btn.transform.localScale = Vector3.one;
-			btn.name = i.ToString();
-			Text title = btn.transform.Find("Title").GetComponent<Text>();
-			title.text = "存档" + GameConst.GetUPNumber(i + 1);
+        for (int i = 0; i < GameConst.SAVE_COUNT; i++)
+        {
+            var btn = Instantiate(SaveItem_Button,SaveParent_RectTransform);
+            //btn.transform.SetParent(SaveParent_RectTransform);
+            btn.transform.localScale = Vector3.one;
+            btn.name = i.ToString();
+            Text title = btn.transform.Find("Title").GetComponent<Text>();
+            //---------------------------------------------------------------------------
+            //title.text = "存档" + GameConst.GetUPNumber(i+1);
+            //---------------------------------------------------------------------------
+            //特定位置的翻译【存档界面存档一、存档二、存档三的显示】
+            //---------------------------------------------------------------------------
+            title.text = "存档".GetContent(nameof(SavePanel)) + GameConst.GetUPNumber(i+1).GetContent(nameof(SavePanel));
+            //---------------------------------------------------------------------------
+            //---------------------------------------------------------------------------
 
 			var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
 
-			string summaryInfo = GameRuntimeData.GetSaveSummary(i);
-
-			txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
-
-			BindListener(btn, new Action(() =>
-			{
-				OnSaveItemClick(int.Parse(btn.name));
-			}), false);
-		}
-	}
+            string summaryInfo = GameRuntimeData.GetSaveSummary(i);
+            
+            //---------------------------------------------------------------------------
+            //txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
+            //---------------------------------------------------------------------------
+            //特定位置的翻译【SavePanel中没有存档显示空档位的显示问题】
+            //---------------------------------------------------------------------------
+            txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位".GetContent(nameof(SavePanel)) : summaryInfo;
+            //---------------------------------------------------------------------------
+            //---------------------------------------------------------------------------
+            
+            BindListener(btn, new Action(() =>
+            {
+                OnSaveItemClick(int.Parse(btn.name));
+            }), false);
+        }
+    }
 
 	protected override void OnHidePanel()
 	{

@@ -12,7 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-
+using i18n.TranslatorDef;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -52,12 +52,26 @@ public class GameEvent : MonoBehaviour
     /// <summary>
     /// 交互提示按钮文字
     /// </summary>
-    public string m_InteractiveInfo = "交互";
+    //---------------------------------------------------------------------------
+    //public string m_InteractiveInfo = "交互";
+    //---------------------------------------------------------------------------
+    //特定位置的翻译【交互提示按钮文字】
+    //---------------------------------------------------------------------------
+    public string m_InteractiveInfo => "交互".GetContent(nameof(GameEvent));
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
 
     /// <summary>
     /// 使用物品按钮文字
     /// </summary>
-    public string m_UseItemInfo = "使用物品";
+    //---------------------------------------------------------------------------
+    //public string m_UseItemInfo = "使用物品";
+    //---------------------------------------------------------------------------
+    //特定位置的翻译【使用物品按钮文字】
+    //---------------------------------------------------------------------------
+    public string m_UseItemInfo => "使用物品".GetContent(nameof(GameEvent));
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
 
     /// <summary>
     /// 交互物体的最小距离
