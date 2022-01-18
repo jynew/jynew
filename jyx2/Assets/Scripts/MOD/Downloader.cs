@@ -26,8 +26,6 @@ namespace Jyx2.MOD
             {
                 if (_isProgressing && _requestCache != null)
                     return _requestCache.downloadProgress;
-                else if (!_isProgressing && _requestCache != null)
-                    return 1;
                 else
                     // UnityWebRequest对象是一次性的，下载完成后就被销毁，所以不能再去访问，否则会出现错误。
                     return -1;

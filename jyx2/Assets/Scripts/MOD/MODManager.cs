@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace Jyx2.MOD
         public static readonly List<ModEntry> ModEntries = new List<ModEntry>();
         public static string ModsPath { get; private set; }
 
-        public static async UniTask Init()
+        public static void Init()
         {
             ModsPath = Path.Combine(Application.persistentDataPath, "mods");;
             if (!Directory.Exists(ModsPath))
@@ -110,7 +109,6 @@ namespace Jyx2.MOD
             public ModMeta ModMeta;
             public readonly string Path;
             public readonly Dictionary<string, string> Dependencies = new Dictionary<string, string>();
-            public bool Loaded => File.Exists(Path);
 
             public ModEntry(ModMeta modMeta, string path)
             {
@@ -131,21 +129,8 @@ namespace Jyx2.MOD
                     if (!Dependencies.ContainsKey(dependency.id)) Dependencies.Add(dependency.id, null);
                 }
             }
-            
-            private bool _mActive;
 
-            public bool Active
-            {
-                get => _mActive;
-                set 
-                {
-                    if (value && Loaded)
-                    {
-                        _mActive = true;
-                        Debug.Log("已激活MOD！");
-                    }
-                }
-            }
+            public bool Active { get; set; }
         }
     }
 

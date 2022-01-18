@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ModPanel : MonoBehaviour
@@ -18,9 +19,10 @@ public class ModPanel : MonoBehaviour
         StartButton.onClick.AddListener(onStart);
     }
 
-    void onStart()
+    async void onStart()
     {
-        
+        await MODLoader.Init();
+        SceneManager.LoadScene("0_MainMenu");
     }
 
     void Start()

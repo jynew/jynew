@@ -47,6 +47,6 @@ public class GameStart : MonoBehaviour
         BeforeSceneLoad.ColdBind();
 #endif
         //Jyx2_UIManager.Instance.GameStart();
-        SceneManager.LoadScene("0_MainMenu");
+        SceneManager.LoadScene("0_ModMenu");
     }
 }

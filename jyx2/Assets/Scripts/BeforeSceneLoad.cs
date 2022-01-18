@@ -9,6 +9,7 @@
  */
 
 using System.Threading.Tasks;
+using Jyx2.MOD;
 using UnityEngine;
 
 namespace Jyx2
@@ -27,6 +28,7 @@ namespace Jyx2
 
         static async Task StartTasks()
         {
+            MODManager.Init();
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
         }
