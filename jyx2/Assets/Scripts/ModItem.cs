@@ -31,7 +31,6 @@ public class ModItem : MonoBehaviour
     Text m_Progress;
 
     private Downloader _loader;
-    private string _filePath;
     void InitTrans() 
     {
         m_Toggle = transform.Find("Toggle").GetComponent<Toggle>();
@@ -44,11 +43,24 @@ public class ModItem : MonoBehaviour
         m_Progress = transform.Find("Progress").GetComponent<Text>();
 
         _loader = new Downloader();
+        _loader.ResourceLoadingCompleted += OnDownloadCompleted;
     }
 
     public async UniTask ShowMod(ModEntry modEntry)
     {
-        _filePath = modEntry.Path;
+        if (!File.Exists(modEntry.Path))
+        {
+            m_Status.text = "<color=grey>缺失</color>";
+            m_Download.gameObject.SetActive(true);
+            m_Delete.gameObject.SetActive(false);
+        }
+        else
+        {
+            m_Status.text = "<color=green>正常</color>";
+            m_Download.gameObject.SetActive(false);
+            m_Delete.gameObject.SetActive(true);
+        }
+
         m_Name.text = modEntry.ModMeta.name + "Version." + modEntry.ModMeta.version;
         m_Desc.text = modEntry.ModMeta.description;
         m_Toggle.onValueChanged.AddListener((isOn) =>
@@ -77,28 +89,25 @@ public class ModItem : MonoBehaviour
         {
             File.Delete(filePath);
             Debug.Log("File successfully deleted");
+            m_Status.text = "<color=grey>缺失</color>";
+            m_Download.gameObject.SetActive(true);
+            m_Delete.gameObject.SetActive(false);
         }
     }
     
     void Update()
     {
-        if (File.Exists(_filePath))
-        {
-            m_Status.text = "<color=green>正常</color>";
-            m_Download.gameObject.SetActive(false);
-            m_Delete.gameObject.SetActive(true);
-            m_Progress.gameObject.SetActive(true);
-        }
-        else
-        {
-            m_Status.text = "<color=grey>缺失</color>";
-            m_Download.gameObject.SetActive(true);
-            m_Delete.gameObject.SetActive(false);
-            m_Progress.gameObject.SetActive(false);
-        }
         // 如果DownloadProgress为-1则说明下载已经完成了，不要再刷新下载进度。
         if (_loader.DownloadProgress < 0) return;
         // 在下载过程中可以访问loader，得到下载进度。
+        m_Progress.gameObject.SetActive(true);
         m_Progress.text = (int)(_loader.DownloadProgress * 100) + "%";
+    }
+
+    void OnDownloadCompleted(object sender, ResourceLoadCompletedEventArgs args)
+    {
+        m_Status.text = "<color=green>正常</color>";
+        m_Download.gameObject.SetActive(false);
+        m_Delete.gameObject.SetActive(true);
     }
 }

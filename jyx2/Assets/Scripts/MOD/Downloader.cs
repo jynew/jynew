@@ -5,8 +5,18 @@ using UnityEngine.Networking;
 
 namespace Jyx2.MOD
 {
+    public class ResourceLoadCompletedEventArgs :  EventArgs
+    {
+        public string ResourceName { get; set; }
+
+        public ResourceLoadCompletedEventArgs(string name)
+        {
+            ResourceName = name;
+        }
+    }
     public class Downloader
     {
+        public delegate void OnResourceDownloadedEventHandler(object sender, ResourceLoadCompletedEventArgs args);
         /// <summary>
         /// 下载的进度。(-1表示当前不在下载过程。)
         /// </summary>
@@ -24,6 +34,8 @@ namespace Jyx2.MOD
             }
         }
 
+        public event OnResourceDownloadedEventHandler ResourceLoadingCompleted;
+        
         /// <summary>
         /// 当前是否在下载的指示器。
         /// </summary>
@@ -56,6 +68,8 @@ namespace Jyx2.MOD
                         new Rect(0, 0, texture2D.width, texture2D.height),
                         new Vector2(0.5f, 0.5f));
                     _isProgressing = false;
+                    if (ResourceLoadingCompleted != null)
+                        ResourceLoadingCompleted(sprite, new ResourceLoadCompletedEventArgs(sprite.name));
                     return sprite;
                 }
             }
@@ -81,6 +95,8 @@ namespace Jyx2.MOD
                 {
                     _isProgressing = false;
                     Debug.Log("File successfully downloaded and saved to " + path);
+                    if (ResourceLoadingCompleted != null)
+                        ResourceLoadingCompleted(null, new ResourceLoadCompletedEventArgs(null));
                 }
             }
         }
