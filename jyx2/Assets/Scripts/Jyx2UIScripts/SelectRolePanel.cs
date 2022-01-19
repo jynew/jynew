@@ -80,13 +80,18 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		}
 	}
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
-		base.Update();
-
-		if (Input.GetButtonDown("JFire2") && gameObject.activeSelf)
+		if (gameObject.activeSelf)
 		{
-			OnConfirmClick();
+			if (Input.GetButtonDown("JFire2"))
+			{
+				OnConfirmClick();
+			}
+			else if (Input.GetButtonDown("JFire3"))
+			{
+				OnCancelClick();
+			}
 		}
 	}
 
@@ -108,11 +113,6 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			current_selection++;
 
 		changeCurrentSelection(current_selection);
-	}
-
-	protected override void changeCurrentSelection(int num)
-	{
-		base.changeCurrentSelection(num);
 	}
 
 	protected override void OnShowPanel(params object[] allParams)
@@ -140,6 +140,8 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		CancelBtn_Button.gameObject.SetActive(m_params.canCancel);
 	}
 
+	List<RoleUIItem> roleUIItems;
+
 	async UniTask RefreshScroll()
 	{
 		HSUnityTools.DestroyChildren(RoleParent_RectTransform);
@@ -154,6 +156,9 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		}
 		if (counter == 0)
 			m_params.roleList[0].Hp = 1;
+
+		roleUIItems = new List<RoleUIItem>();
+
 		for (int i = 0; i < m_params.roleList.Count; i++)
 		{
 			var role = m_params.roleList[i];
@@ -161,6 +166,8 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			if (role.Hp <= 0) continue;
 			item.transform.SetParent(RoleParent_RectTransform);
 			item.transform.localScale = Vector3.one;
+
+			roleUIItems.Add(item);
 
 			Button btn = item.GetComponent<Button>();
 			BindListener(btn, () =>
@@ -170,6 +177,12 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			bool select = m_params.selectList.Contains(role);
 			item.SetSelect(select);
 			item.ShowRole(role);
+
+			if (i == 0)
+			{
+				//auto select first item
+				OnItemClick(item);
+			}
 		}
 	}
 
@@ -232,5 +245,11 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		base.OnHidePanel();
 		m_params = null;
 		HSUnityTools.DestroyChildren(RoleParent_RectTransform);
+	}
+
+	protected override void changeCurrentSelection(int num)
+	{
+		if (num > 0 && num < roleUIItems.Count)
+			OnItemClick(roleUIItems[num]);
 	}
 }
