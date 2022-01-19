@@ -47,6 +47,10 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         var languageOptions = new List<Dropdown.OptionData>();
         //绑定到指定的文件夹目录
         var langDir = new DirectoryInfo(langPath);
+
+        if (!langDir.Exists)
+            return;
+
         //检索表示当前目录的文件和子目录
         var fsinfos = langDir.GetFileSystemInfos();
         //遍历检索的文件和子目录
