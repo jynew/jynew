@@ -80,10 +80,12 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         //---------------------------------------------------------------------------
         //特定位置的翻译【MainMenu右下角当前版本的翻译】
         //---------------------------------------------------------------------------
+        //Who change the UI to Korean, that is shitty. Changing it back
         DetailText_Text.text = (string.Format(
-            "체력{0}/100\n수명<color={1}>{2}</color>/<color={3}>{4}</color>\n내부 강도<color={5}>{6 }/{7}</color>".GetContent(nameof(BattleMainUIPanel)),
+            "体力{0}/100\n生命<color={1}>{2}</color>/<color={3}>{4}</color>\n内力 <color={5}>{6 }/{7}</color>".GetContent(nameof(BattleMainUIPanel)),
             m_currentRole.Tili, color1, m_currentRole.Hp, color2, m_currentRole.MaxHp, color, m_currentRole.Mp,
             m_currentRole.MaxMp));
+
         //---------------------------------------------------------------------------
         //---------------------------------------------------------------------------
 
