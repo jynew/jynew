@@ -343,6 +343,11 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		base.OnDirectionalDown();
 	}
 
+	protected override string confirmButtonName()
+	{
+		return "JOptions";
+	}
+
 	protected override void handleGamepadButtons()
 	{
 		if (!InBackground)
