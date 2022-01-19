@@ -80,7 +80,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	private void onUiVisibilityToggle(Jyx2_UIBase arg1, bool arg2)
 	{
-		if (arg1 is SavePanel && showingSavePanel)
+		if (arg1 is SavePanel && !arg2 && showingSavePanel)
 		{
 			showingSavePanel = false;
 		}
