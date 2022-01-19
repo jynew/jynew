@@ -34,12 +34,15 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         InitTrans();
         IsBlockControl = true;
         BindListener(BackButton_Button, OnBackClick);
-        BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
-        BindListener(LeaveButton_Button, OnLeaveClick);
-        BindListener(ButtonSelectArmor_Button, OnArmorClick);
-        BindListener(ButtonSelectBook_Button, OnXiulianClick);
+
         BindListener(ButtonHeal_Button, OnHealClick);
         BindListener(ButtonDetoxicate_Button, OnDetoxicateClick);
+        BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
+        BindListener(ButtonSelectArmor_Button, OnArmorClick);
+        BindListener(ButtonSelectBook_Button, OnXiulianClick);
+
+        BindListener(LeaveButton_Button, OnLeaveClick);
+
     }
 
 
@@ -470,4 +473,18 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SelectRolePanel), selectParams);
     }
+
+    protected override bool captureGamepadAxis => true;
+
+	protected override void handleGamepadButtons()
+	{
+		base.handleGamepadButtons();
+        if (gameObject.activeSelf)
+		{
+            if (Input.GetButtonDown("JFire3"))
+			{
+                OnBackClick();
+			}
+		}
+	}
 }

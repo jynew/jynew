@@ -142,7 +142,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 	private int currentFilterIndex = 0;
 
-	protected override void handleGamepadConfirmButton()
+	protected override void handleGamepadButtons()
 	{
 		if (Input.GetButtonDown("JFire2"))
 		{
@@ -315,6 +315,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 	void OnCloseBtnClick()
 	{
 		Jyx2_UIManager.Instance.HideUI(nameof(BagUIPanel));
+		visiblityToggle(false);
 	}
 
 	void OnUseBtnClick()

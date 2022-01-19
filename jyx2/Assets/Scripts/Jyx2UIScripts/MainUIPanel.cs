@@ -21,16 +21,30 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		InitTrans();
 
-		XiakeButton_Button.onClick.AddListener(OnXiakeBtnClick);
-		BagButton_Button.onClick.AddListener(OnBagBtnClick);
-		MapButton_Button.onClick.AddListener(OnMapBtnClick);
-		SystemButton_Button.onClick.AddListener(OnSystemBtnClick);
+		Jyx2_UIManager.Instance.UIVisibilityToggled += Instance_UIVisibilityToggled;
+
+		BindListener(XiakeButton_Button, OnXiakeBtnClick);
+		BindListener(BagButton_Button, OnBagBtnClick);
+		BindListener(MapButton_Button, OnMapBtnClick);
+		BindListener(SystemButton_Button, OnSystemBtnClick);
 	}
 
-	void Update()
+	private void Instance_UIVisibilityToggled(Jyx2_UIBase arg1, bool arg2)
 	{
-		Compass.gameObject.active = LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182);
-		if (Compass.gameObject.active)
+		if (arg1 is BagUIPanel
+			|| arg1 is SystemUIPanel
+			|| arg1 is XiakeUIPanel)
+		{
+			if (!arg2 && invokedSubPanel)
+				invokedSubPanel = false;
+		}
+	}
+
+	public override void Update()
+	{
+		base.Update();
+		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182));
+		if (Compass.gameObject.activeSelf)
 		{
 			var p = LevelMaster.Instance.GetPlayerPosition();
 			var pString = (p.x + 242).ToString("F0") + "," + (p.z + 435).ToString("F0");
@@ -41,20 +55,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 			}
 			Compass.text = pString;
 		}
-
-		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("JOptions") || Input.GetButtonDown("PadPress"))
-				OnSystemBtnClick();
-		//else if (Input.GetButtonDown("Jump"))
-		//{
-		//	//y button triggers bag ui
-		//	OnBagBtnClick();
-		//}
-		//else if (Input.GetButtonDown("Fire1"))
-		//{
-		//	//x button triggers xiake ui
-		//	OnXiakeBtnClick();
-		//}
 	}
 
 	protected override void OnShowPanel(params object[] allParams)
@@ -62,6 +62,17 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		base.OnShowPanel(allParams);
 		RefreshNameMapName();
 		RefreshDynamic();
+
+		selectSelectButton();
+	}
+
+	private void selectSelectButton()
+	{
+		var systemButtonIndex = activeButtons.ToList().IndexOf(SystemButton_Button);
+		if (systemButtonIndex > -1)
+		{
+			changeCurrentSelection(systemButtonIndex);
+		}
 	}
 
 	void RefreshDynamic()
@@ -92,13 +103,17 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 	}
 
+	bool invokedSubPanel = false;
+
 	async void OnXiakeBtnClick()
 	{
+		invokedSubPanel = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
 	}
 
 	async void OnBagBtnClick()
 	{
+		invokedSubPanel = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>(OnUseItem));
 	}
 
@@ -257,6 +272,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	async void OnSystemBtnClick()
 	{
+		invokedSubPanel = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
 	}
 
@@ -303,4 +319,39 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.B);
 	}
 
+	protected override bool captureGamepadAxis => true;
+
+	protected override void OnDirectionalDown()
+	{
+		//do nothing
+	}
+
+	protected override void OnDirectionalUp()
+	{
+		//do nothing
+	}
+
+	protected override void OnDirectionalLeft()
+	{
+		base.OnDirectionalUp();
+	}
+
+	protected override void OnDirectionalRight()
+	{
+		base.OnDirectionalDown();
+	}
+
+	protected override void handleGamepadButtons()
+	{
+		if (!invokedSubPanel)
+			base.handleGamepadButtons();
+	}
+
+	protected override bool handleDpadMove()
+	{
+		if (!invokedSubPanel)
+			return base.handleDpadMove();
+
+		return false;
+	}
 }

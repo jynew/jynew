@@ -145,12 +145,11 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		get { return true; }
 	}
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
-		base.Update();
-
+		base.handleGamepadButtons();
 		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("Options") || Input.GetButtonDown("PadPress"))
+			if (Input.GetButtonDown("JFire3"))
 				HidePanel();
 	}
 }

@@ -42,6 +42,13 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	protected virtual void OnShowPanel(params object[] allParams) { }
 	protected virtual void OnHidePanel() { }
 
+	public event Action<Jyx2_UIBase, bool> VisibilityToggled;
+
+	protected void visiblityToggle(bool show)
+	{
+		VisibilityToggled?.Invoke(this, show);
+	}
+
 	public void Init()
 	{
 		var rt = GetComponent<RectTransform>();
@@ -60,6 +67,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		this.gameObject.SetActive(true);
 		this.transform.SetAsLastSibling();
+		if (captureGamepadAxis && _buttonList.Count > 0)
+			changeCurrentSelection(0);
+
 		this.OnShowPanel(allParams);
 		if (this is IUIAnimator)
 		{
@@ -72,8 +82,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			LevelMaster.Instance.SetPlayerCanController(false);
 		}
 
-		if (captureGamepadAxis && _buttonList.Count > 0)
-			changeCurrentSelection(0);
+		VisibilityToggled?.Invoke(this, true);
 	}
 
 	public void Hide()
@@ -87,6 +96,8 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			IsChangedBlockControl = false;
 			LevelMaster.Instance.SetPlayerCanController(true);
 		}
+
+		VisibilityToggled.Invoke(this, false);
 	}
 
 	protected Button[] activeButtons
@@ -201,10 +212,10 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		handleDpadMove();
 
-		handleGamepadConfirmButton();
+		handleGamepadButtons();
 	}
 
-	protected virtual void handleGamepadConfirmButton()
+	protected virtual void handleGamepadButtons()
 	{
 		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
 		{
