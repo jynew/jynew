@@ -33,10 +33,12 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		if (arg1 is BagUIPanel
 			|| arg1 is SystemUIPanel
-			|| arg1 is XiakeUIPanel)
+			|| arg1 is XiakeUIPanel
+			|| arg1 is InteractUIPanel
+			|| arg1 is ChatUIPanel)
 		{
-			if (!arg2 && invokedSubPanel)
-				invokedSubPanel = false;
+			if (!arg2 && InBackground)
+				InBackground = false;
 		}
 	}
 
@@ -103,17 +105,17 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 	}
 
-	bool invokedSubPanel = false;
+	public static bool InBackground = false;
 
 	async void OnXiakeBtnClick()
 	{
-		invokedSubPanel = true;
+		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
 	}
 
 	async void OnBagBtnClick()
 	{
-		invokedSubPanel = true;
+		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>(OnUseItem));
 	}
 
@@ -272,7 +274,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	async void OnSystemBtnClick()
 	{
-		invokedSubPanel = true;
+		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
 	}
 
@@ -343,13 +345,13 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	protected override void handleGamepadButtons()
 	{
-		if (!invokedSubPanel)
+		if (!InBackground)
 			base.handleGamepadButtons();
 	}
 
 	protected override bool handleDpadMove()
 	{
-		if (!invokedSubPanel)
+		if (!InBackground)
 			return base.handleDpadMove();
 
 		return false;

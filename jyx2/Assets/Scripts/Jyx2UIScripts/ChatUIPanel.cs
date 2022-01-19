@@ -80,6 +80,13 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 
 		//Jyx2_UIManager.Instance.SetMainUIActive(false);
+		MainUIPanel.InBackground = true;
+	}
+
+	protected override void OnHidePanel()
+	{
+		MainUIPanel.InBackground = false;
+		base.OnHidePanel();
 	}
 
 
