@@ -57,6 +57,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	protected override void OnCreate()
 	{
+		Jyx2_UIManager.Instance.UIVisibilityToggled += onUiVisibilityToggle;
 		InitTrans();
 		IsBlockControl = true;
 		ActionList.Add(Save);
@@ -77,18 +78,30 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		}
 	}
 
-    async void Save()
+	private void onUiVisibilityToggle(Jyx2_UIBase arg1, bool arg2)
+	{
+		if (arg1 is SavePanel && showingSavePanel)
+		{
+			showingSavePanel = false;
+		}
+	}
+
+	bool showingSavePanel = false;
+
+	async void Save()
     {
-        //---------------------------------------------------------------------------
-        //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
-        //{
-        //    var levelMaster = FindObjectOfType<LevelMaster>();
-        //    levelMaster.OnManuelSave(index);
-        //}),"选择存档位");
-        //---------------------------------------------------------------------------
-        //特定位置的翻译【存档时候的Title显示】
-        //---------------------------------------------------------------------------
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
+		showingSavePanel = true;
+
+		//---------------------------------------------------------------------------
+		//await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
+		//{
+		//    var levelMaster = FindObjectOfType<LevelMaster>();
+		//    levelMaster.OnManuelSave(index);
+		//}),"选择存档位");
+		//---------------------------------------------------------------------------
+		//特定位置的翻译【存档时候的Title显示】
+		//---------------------------------------------------------------------------
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
         {
             var levelMaster = FindObjectOfType<LevelMaster>();
             levelMaster.OnManuelSave(index);
@@ -99,15 +112,17 @@ public partial class SystemUIPanel : Jyx2_UIBase
     
     async void Load()
     {
-        //---------------------------------------------------------------------------
-        //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-        //{
-        //    StoryEngine.DoLoadGame(index);
-        //}),"选择读档位");
-        //---------------------------------------------------------------------------
-        //特定位置的翻译【读档时候的Title显示】
-        //---------------------------------------------------------------------------
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+		showingSavePanel = true;
+
+		//---------------------------------------------------------------------------
+		//await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+		//{
+		//    StoryEngine.DoLoadGame(index);
+		//}),"选择读档位");
+		//---------------------------------------------------------------------------
+		//特定位置的翻译【读档时候的Title显示】
+		//---------------------------------------------------------------------------
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
         {
             StoryEngine.DoLoadGame(index);
         }),"选择读档位".GetContent(nameof(SystemUIPanel)));
@@ -145,8 +160,19 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		get { return true; }
 	}
 
+	protected override bool handleDpadMove()
+	{
+		if (showingSavePanel)
+			return false;
+
+		return base.handleDpadMove();
+	}
+
 	protected override void handleGamepadButtons()
 	{
+		if (showingSavePanel)
+			return;
+
 		base.handleGamepadButtons();
 		if (gameObject.activeSelf)
 			if (Input.GetButtonDown("JFire3"))
