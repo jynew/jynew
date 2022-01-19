@@ -93,6 +93,11 @@ public partial class BagUIPanel : Jyx2_UIBase
 	{
 		if (itemX > 0)
 			itemX--;
+		else if (itemY > 0)
+		{
+			itemX = getColCount() - 1;
+			OnDirectionalUp();
+		}
 
 		changeCurrentSelectionWithAxis();
 	}
