@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
@@ -40,11 +41,11 @@ namespace Jyx2.MOD
         /// <summary>
         /// 存储所有的重载资源
         /// </summary>
-        public static readonly Dictionary<string, AssetBundleItem> _remap = new Dictionary<string, AssetBundleItem>();
+        public static readonly Dictionary<string, AssetBundleItem> Remap = new Dictionary<string, AssetBundleItem>();
 
         public static async UniTask Init()
         {
-            _remap.Clear();//for test
+            Remap.Clear();//for test
             
             var modList = MODManager.ModEntries.Where(modEntry => modEntry.Active);
             
@@ -62,7 +63,7 @@ namespace Jyx2.MOD
                 {
                     Debug.Log($"mod file:{name}");
                     string overrideAddr = name.Replace('/' + name.Split('/')[1], "");
-                    _remap[overrideAddr] = new AssetBundleItem() { Name = name, Ab = ab };
+                    Remap[overrideAddr] = new AssetBundleItem() { Name = name, Ab = ab };
                 }
             }
         }
@@ -75,9 +76,9 @@ namespace Jyx2.MOD
 #region 复合MOD加载资源的接口
         public static async UniTask<T> LoadAsset<T>(string uri) where T : Object
         {
-            if (_remap.ContainsKey(uri.ToLower()))
+            if (Remap.ContainsKey(uri.ToLower()))
             {
-                var assetBundleItem = _remap[uri.ToLower()];
+                var assetBundleItem = Remap[uri.ToLower()];
                 return assetBundleItem.Ab.LoadAsset<T>(assetBundleItem.Name);
             }
             return await Addressables.LoadAssetAsync<T>(uri);
@@ -86,18 +87,18 @@ namespace Jyx2.MOD
         public static async UniTask<List<T>> LoadAssets<T>(List<string> uris) where T : Object
         {
             var allAssets = await Addressables.LoadAssetsAsync<T>(uris, null, Addressables.MergeMode.Union);
-            var commonKeys = uris.Select(uri => uri.ToLower()).Intersect(_remap.Keys);
-            var assets = commonKeys.Select(key => _remap[key].Ab.LoadAsset<T>(_remap[key].Name));
+            var commonKeys = uris.Select(uri => uri.ToLower()).Intersect(Remap.Keys);
+            var assets = commonKeys.Select(key => Remap[key].Ab.LoadAsset<T>(Remap[key].Name));
             return assets.Union(allAssets).ToList();
         }
 #endregion
 
         public static void SaveOverrideList(string path, string filter)
         {
-            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
+            string filePath = Path.Combine(Application.streamingAssetsPath, "OverrideList.txt");
             var fileContentsList = GetOverridePaths(path, filter);
 #if UNITY_EDITOR
-            System.IO.File.AppendAllLines(filePath, fileContentsList.ToArray());
+            File.AppendAllLines(filePath, fileContentsList.ToArray());
 #endif
         }
 
@@ -109,7 +110,7 @@ namespace Jyx2.MOD
 
             foreach (var filePath in fileList)
             {
-                var overridePath = filePath.Substring(filePath.IndexOf("Assets"));
+                var overridePath = filePath.Substring(filePath.IndexOf("Assets", StringComparison.Ordinal));
                 overrideList.Add(overridePath);
             }
             
@@ -118,7 +119,7 @@ namespace Jyx2.MOD
 
         public static List<string> LoadOverrideList(string path)
         {
-            string filePath = Application.streamingAssetsPath + "/OverrideList.txt";
+            string filePath = Path.Combine(Application.streamingAssetsPath, "OverrideList.txt");
             List<string> fileContentsList;
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -130,7 +131,7 @@ namespace Jyx2.MOD
             }
             else
             {
-                fileContentsList = System.IO.File.ReadAllLines(filePath).ToList(); 
+                fileContentsList = File.ReadAllLines(filePath).ToList(); 
             }
             
             var lineList = fileContentsList.Where(line => line.StartsWith(path)).ToList();

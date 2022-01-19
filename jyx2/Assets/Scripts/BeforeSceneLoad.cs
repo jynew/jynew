@@ -29,8 +29,6 @@ namespace Jyx2
         static async Task StartTasks()
         {
             MODManager.Init();
-            GameSettingManager.Init();
-            await Jyx2ResourceHelper.Init();
         }
 
         public static Task loadFinishTask = null;

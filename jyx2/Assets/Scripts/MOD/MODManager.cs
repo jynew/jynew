@@ -81,10 +81,10 @@ namespace Jyx2.MOD
 
             void InitData(string path)
             {
-                string jsonTest = File.ReadAllText(path, Encoding.UTF8);
+                string jsonString = File.ReadAllText(path, Encoding.UTF8);
                 try
                 {
-                    var modMeta = JsonUtility.FromJson<ModMeta>(jsonTest);
+                    var modMeta = JsonUtility.FromJson<ModMeta>(jsonString);
                     name = modMeta.name;
                     id = modMeta.id;
                     version = modMeta.version;

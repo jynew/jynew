@@ -59,8 +59,8 @@ public static class Jyx2ResourceHelper
         _isInited = true;
         
 #if UNITY_EDITOR
-        if (File.Exists(Application.streamingAssetsPath + "/OverrideList.txt")) ;
-            File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+        if (File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"))) ;
+            File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
         MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
         MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");

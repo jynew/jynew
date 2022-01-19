@@ -22,6 +22,8 @@ public class ModPanel : MonoBehaviour
     async void onStart()
     {
         await MODLoader.Init();
+        GameSettingManager.Init();
+        await Jyx2ResourceHelper.Init();
         SceneManager.LoadScene("0_MainMenu");
     }
 
