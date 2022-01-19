@@ -35,7 +35,9 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 			|| arg1 is SystemUIPanel
 			|| arg1 is XiakeUIPanel
 			|| arg1 is InteractUIPanel
-			|| arg1 is ChatUIPanel)
+			|| arg1 is ChatUIPanel
+			|| arg1 is GraphicSettingsPanel
+			|| arg1 is GeneralSettingsPanel)
 		{
 			if (!arg2 && InBackground)
 				InBackground = false;

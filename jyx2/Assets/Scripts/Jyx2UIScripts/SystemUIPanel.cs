@@ -133,6 +133,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 	async void GraphicSetting()
 	{
 		HidePanel();
+		MainUIPanel.InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(GraphicSettingsPanel));
 	}
 

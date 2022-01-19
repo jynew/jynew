@@ -121,7 +121,7 @@ public class LevelMaster : MonoBehaviour
     /// </summary>
     public bool IsInWorldMap
     {
-        get { return _currentMap.IsWorldMap(); }
+        get { return _currentMap?.IsWorldMap() ?? false; }
     }
 
     // Use this for initialization
