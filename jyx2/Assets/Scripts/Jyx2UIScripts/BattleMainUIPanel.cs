@@ -82,7 +82,7 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         //---------------------------------------------------------------------------
         //Who change the UI to Korean, that is shitty. Changing it back
         DetailText_Text.text = (string.Format(
-            "体力{0}/100\n生命<color={1}>{2}</color>/<color={3}>{4}</color>\n内力 <color={5}>{6 }/{7}</color>".GetContent(nameof(BattleMainUIPanel)),
+            "体力 {0}/100\n生命 <color={1}>{2}</color>/<color={3}>{4}</color>\n内力 <color={5}>{6 }/{7}</color>".GetContent(nameof(BattleMainUIPanel)),
             m_currentRole.Tili, color1, m_currentRole.Hp, color2, m_currentRole.MaxHp, color, m_currentRole.Mp,
             m_currentRole.MaxMp));
 
