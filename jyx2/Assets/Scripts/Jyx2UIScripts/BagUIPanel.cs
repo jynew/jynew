@@ -51,131 +51,6 @@ public partial class BagUIPanel : Jyx2_UIBase
 		BindListener(CloseBtn_Button, OnCloseBtnClick, false);
 	}
 
-	protected override bool captureGamepadAxis
-	{
-		get
-		{
-			return true;
-		}
-	}
-
-	private int itemX = 0;
-	private int itemY = 0;
-
-	protected override void changeCurrentSelection(int num)
-	{
-		if (num >= 0 && num < visibleItems.Count)
-		{
-			OnItemSelect(visibleItems[num]);
-		}
-	}
-
-	private int getSelectedItemIndex()
-	{
-		if (visibleItems.Count == 0)
-			return -1;
-
-		int horizontalItemsCount = getColCount();
-		return itemY * horizontalItemsCount + itemX;
-	}
-
-	private int getColCount()
-	{
-		return (int)Math.Floor(ItemRoot_RectTransform.rect.width / visibleItems[0].rectTransform().rect.width);
-	}
-
-	private int getRowCount()
-	{
-		return (int)Math.Ceiling((float)visibleItems.Count / (float)getColCount());
-	}
-
-	protected override void OnDirectionalLeft()
-	{
-		if (itemX > 0)
-			itemX--;
-		else if (itemY > 0)
-		{
-			itemX = getColCount() - 1;
-			OnDirectionalUp();
-		}
-
-		changeCurrentSelectionWithAxis();
-	}
-
-	private bool changeCurrentSelectionWithAxis()
-	{
-		var itemIndex = getSelectedItemIndex();
-		var validMove = (itemIndex > -1 && itemIndex < visibleItems.Count);
-
-		if (validMove)
-			changeCurrentSelection(itemIndex);
-
-		return validMove;
-	}
-
-	protected override void OnDirectionalUp()
-	{
-		if (itemY > 0)
-			itemY--;
-
-		changeCurrentSelectionWithAxis();
-	}
-
-	protected override void OnDirectionalRight()
-	{
-		if (itemX < getColCount() - 1)
-		{
-			itemX++;
-			if (!changeCurrentSelectionWithAxis())
-				itemX--;
-		}
-		else if (itemY < getRowCount() - 1)
-		{
-			itemX = 0;
-			OnDirectionalDown();
-		}
-	}
-
-	protected override void OnDirectionalDown()
-	{		
-		if (itemY < getRowCount() - 1)
-			itemY++;
-
-		if (!changeCurrentSelectionWithAxis())
-			itemY--;
-	}
-
-	private int currentFilterIndex = 0;
-
-	protected override void handleGamepadButtons()
-	{
-		if (Input.GetButtonDown("JFire2"))
-		{
-			OnUseBtnClick();
-		}
-		else if (Input.GetButtonDown("JFire3"))
-		{
-			OnCloseBtnClick();
-		}
-		else if (Input.GetButtonDown("JL1"))
-		{
-			if (currentFilterIndex == 0)
-				currentFilterIndex = m_Filters.Count - 1;
-			else
-				currentFilterIndex--;
-
-			changeFilter(currentFilterIndex);
-		}
-		else if (Input.GetButtonDown("JR1"))
-		{
-			if (currentFilterIndex == m_Filters.Count - 1)
-				currentFilterIndex = 0;
-			else
-				currentFilterIndex++;
-
-			changeFilter(currentFilterIndex);
-		}
-	}
 
 	private void OnEnable()
 	{
@@ -380,6 +255,8 @@ public partial class BagUIPanel : Jyx2_UIBase
 		m_Filters[index].GetComponent<Image>().color = m_Filters[index].GetComponentInChildren<Text>().color;
 	}
 
+	#region 手柄支持代码
+
 	protected override int axisReleaseDelay
 	{
 		get
@@ -387,4 +264,133 @@ public partial class BagUIPanel : Jyx2_UIBase
 			return 200;
 		}
 	}
+
+
+	protected override bool captureGamepadAxis
+	{
+		get
+		{
+			return true;
+		}
+	}
+
+	private int itemX = 0;
+	private int itemY = 0;
+
+	protected override void changeCurrentSelection(int num)
+	{
+		if (num >= 0 && num < visibleItems.Count)
+		{
+			OnItemSelect(visibleItems[num]);
+		}
+	}
+
+	private int getSelectedItemIndex()
+	{
+		if (visibleItems.Count == 0)
+			return -1;
+
+		int horizontalItemsCount = getColCount();
+		return itemY * horizontalItemsCount + itemX;
+	}
+
+	private int getColCount()
+	{
+		return (int)Math.Floor(ItemRoot_RectTransform.rect.width / visibleItems[0].rectTransform().rect.width);
+	}
+
+	private int getRowCount()
+	{
+		return (int)Math.Ceiling((float)visibleItems.Count / (float)getColCount());
+	}
+
+	protected override void OnDirectionalLeft()
+	{
+		if (itemX > 0)
+			itemX--;
+		else if (itemY > 0)
+		{
+			itemX = getColCount() - 1;
+			OnDirectionalUp();
+		}
+
+		changeCurrentSelectionWithAxis();
+	}
+
+	private bool changeCurrentSelectionWithAxis()
+	{
+		var itemIndex = getSelectedItemIndex();
+		var validMove = (itemIndex > -1 && itemIndex < visibleItems.Count);
+
+		if (validMove)
+			changeCurrentSelection(itemIndex);
+
+		return validMove;
+	}
+
+	protected override void OnDirectionalUp()
+	{
+		if (itemY > 0)
+			itemY--;
+
+		changeCurrentSelectionWithAxis();
+	}
+
+	protected override void OnDirectionalRight()
+	{
+		if (itemX < getColCount() - 1)
+		{
+			itemX++;
+			if (!changeCurrentSelectionWithAxis())
+				itemX--;
+		}
+		else if (itemY < getRowCount() - 1)
+		{
+			itemX = 0;
+			OnDirectionalDown();
+		}
+	}
+
+	protected override void OnDirectionalDown()
+	{
+		if (itemY < getRowCount() - 1)
+			itemY++;
+
+		if (!changeCurrentSelectionWithAxis())
+			itemY--;
+	}
+
+	private int currentFilterIndex = 0;
+
+	protected override void handleGamepadButtons()
+	{
+		if (Input.GetButtonDown("JFire2"))
+		{
+			OnUseBtnClick();
+		}
+		else if (Input.GetButtonDown("JFire3"))
+		{
+			OnCloseBtnClick();
+		}
+		else if (Input.GetButtonDown("JL1"))
+		{
+			if (currentFilterIndex == 0)
+				currentFilterIndex = m_Filters.Count - 1;
+			else
+				currentFilterIndex--;
+
+			changeFilter(currentFilterIndex);
+		}
+		else if (Input.GetButtonDown("JR1"))
+		{
+			if (currentFilterIndex == m_Filters.Count - 1)
+				currentFilterIndex = 0;
+			else
+				currentFilterIndex++;
+
+			changeFilter(currentFilterIndex);
+		}
+	}
+
+	#endregion
 }
