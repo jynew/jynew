@@ -9,16 +9,15 @@
  */
 
 using System.Threading.Tasks;
-using Jyx2.MOD;
 using UnityEngine;
 
 namespace Jyx2
 {
     public static class BeforeSceneLoad
     {
-#if UNITY_EDITOR
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-#endif
+// #if UNITY_EDITOR
+//         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+// #endif
         public static void ColdBind()
         {
             DebugInfoManager.Init();
@@ -28,7 +27,8 @@ namespace Jyx2
 
         static async Task StartTasks()
         {
-            MODManager.Init();
+            GameSettingManager.Init();
+            await Jyx2ResourceHelper.Init();
         }
 
         public static Task loadFinishTask = null;

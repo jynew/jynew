@@ -14,6 +14,7 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2.Middleware;
+using Jyx2.MOD;
 using UnityEngine.UI;
 
 using Jyx2Configs;
@@ -41,7 +42,9 @@ public partial class GameMainMenu : Jyx2_UIBase {
     {
         //显示loading
         var c = StartCoroutine(ShowLoading());
-        await BeforeSceneLoad.loadFinishTask;
+        await MODLoader.Init();
+        BeforeSceneLoad.ColdBind();
+        
 
         StopCoroutine(c);
         LoadingText.gameObject.SetActive(false);
