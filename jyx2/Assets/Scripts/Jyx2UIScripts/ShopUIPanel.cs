@@ -25,9 +25,15 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	ChildGoComponent childMgr;
 	int curShopId;
 	Jyx2ConfigShop curShopData;
-	int curSelectIndex = 0;
-	ShopUIItem curSelectItem;
+	ShopUIItem curSelectItem
+	{
+		get
+		{
+			return (current_selection >= 0 && current_selection < visibleItems.Count) ? visibleItems[current_selection] : null;
+		}
+	}
 	Action callback;
+	List<ShopUIItem> visibleItems = new List<ShopUIItem>();
 
 	private GameRuntimeData runtime
 	{
@@ -43,9 +49,10 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		{
 			ShopUIItem item = GameUtil.GetOrAddComponent<ShopUIItem>(trans);
 			item.Init();
+			visibleItems.Add(item);
 			BindListener(trans.GetComponent<Button>(), () =>
 			{
-				OnItemClick(item);
+				OnItemSelect(item);
 			});
 		});
 
@@ -74,7 +81,6 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		curShopId = LevelMaster.GetCurrentGameMap().Id;
 		curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
 
-		curSelectIndex = 0;
 		RefreshChild();
 		RefreshProperty();
 		RefreshMoney();
@@ -118,35 +124,36 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
 			int currentNum = GetHasBuyNum(data.Item.Id);
 			uiItem.Refresh(data, i, currentNum);
-			uiItem.SetSelect(curSelectIndex == i);
-			if (curSelectIndex == i)
-				curSelectItem = uiItem;
 		}
+
+		if (visibleItems.Count > 0)
+			changeCurrentSelection(0);
 	}
 
 	void RefreshProperty()
 	{
-		if (curSelectIndex < 0 || curSelectIndex >= curShopData.ShopItems.Count)
+		if (current_selection < 0 || current_selection >= curShopData.ShopItems.Count)
 		{
 			ItemDes_RectTransform.gameObject.SetActive(false);
 			return;
 		}
 		ItemDes_RectTransform.gameObject.SetActive(true);
-		string mainText = UIHelper.GetItemDesText(curShopData.ShopItems[curSelectIndex].Item);
+		string mainText = UIHelper.GetItemDesText(curShopData.ShopItems[current_selection].Item);
 		DesText_Text.text = mainText;
 	}
 
-	void OnItemClick(ShopUIItem item)
+	void OnItemSelect(ShopUIItem item)
 	{
 		int index = item.GetIndex();
-		if (index == curSelectIndex)
+		if (index == current_selection)
 			return;
-		curSelectIndex = index;
-		if (curSelectItem)
+
+		if (curSelectItem != null)
 		{
 			curSelectItem.SetSelect(false);
 		}
-		curSelectItem = item;
+
+		current_selection = index;
 		curSelectItem.SetSelect(true);
 		RefreshProperty();
 	}
@@ -181,4 +188,123 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		RefreshChild();
 		RefreshMoney();
 	}
+	#region 手柄支持代码
+
+	protected override int axisReleaseDelay
+	{
+		get
+		{
+			return 200;
+		}
+	}
+
+
+	protected override bool captureGamepadAxis
+	{
+		get
+		{
+			return true;
+		}
+	}
+
+	private int itemX = 0;
+	private int itemY = 0;
+
+	protected override void changeCurrentSelection(int num)
+	{
+		if (num >= 0 && num < visibleItems.Count)
+		{
+			OnItemSelect(visibleItems[num]);
+		}
+	}
+
+	private int getSelectedItemIndex()
+	{
+		if (visibleItems.Count == 0)
+			return -1;
+
+		int horizontalItemsCount = getColCount();
+		return itemY * horizontalItemsCount + itemX;
+	}
+
+	private int getColCount()
+	{
+		return (int)Math.Floor(ItemRoot_RectTransform.rect.width / visibleItems[0].rectTransform().rect.width);
+	}
+
+	private int getRowCount()
+	{
+		return (int)Math.Ceiling((float)visibleItems.Count / (float)getColCount());
+	}
+
+	protected override void OnDirectionalLeft()
+	{
+		if (itemX > 0)
+			itemX--;
+		else if (itemY > 0)
+		{
+			itemX = getColCount() - 1;
+			OnDirectionalUp();
+		}
+
+		changeCurrentSelectionWithAxis();
+	}
+
+	private bool changeCurrentSelectionWithAxis()
+	{
+		var itemIndex = getSelectedItemIndex();
+		var validMove = (itemIndex > -1 && itemIndex < visibleItems.Count);
+
+		if (validMove)
+			changeCurrentSelection(itemIndex);
+
+		return validMove;
+	}
+
+	protected override void OnDirectionalUp()
+	{
+		if (itemY > 0)
+			itemY--;
+
+		changeCurrentSelectionWithAxis();
+	}
+
+	protected override void OnDirectionalRight()
+	{
+		if (itemX < getColCount() - 1)
+		{
+			itemX++;
+			if (!changeCurrentSelectionWithAxis())
+				itemX--;
+		}
+		else if (itemY < getRowCount() - 1)
+		{
+			itemX = 0;
+			OnDirectionalDown();
+		}
+	}
+
+	protected override void OnDirectionalDown()
+	{
+		if (itemY < getRowCount() - 1)
+			itemY++;
+
+		if (!changeCurrentSelectionWithAxis())
+			itemY--;
+	}
+
+
+	protected override void handleGamepadButtons()
+	{
+		if (Input.GetButtonDown("JFire2"))
+		{
+			OnConfirmClick();
+		}
+		else if (Input.GetButtonDown("JFire3"))
+		{
+			OnCloseClick();
+		}
+	}
+
+	#endregion
 }
