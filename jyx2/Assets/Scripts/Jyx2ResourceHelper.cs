@@ -71,6 +71,8 @@ public static class Jyx2ResourceHelper
         MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
 #endif
 
+        await MODLoader.Init();
+        
         //全局配置表
         var t = await MODLoader.LoadAsset<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
         if (t != null)

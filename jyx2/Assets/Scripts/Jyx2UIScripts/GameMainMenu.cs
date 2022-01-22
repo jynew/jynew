@@ -11,10 +11,8 @@ using UnityEngine;
 using Jyx2;
 using System;
 using System.Collections;
-using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2.Middleware;
-using Jyx2.MOD;
 using UnityEngine.UI;
 
 using Jyx2Configs;
@@ -38,13 +36,11 @@ public partial class GameMainMenu : Jyx2_UIBase {
     private const int LoadGameIndex = 1;
     private const int QuitGameIndex = 2;
     
-    async void Start()
+    async void OnStart()
     {
         //显示loading
         var c = StartCoroutine(ShowLoading());
-        await MODLoader.Init();
-        BeforeSceneLoad.ColdBind();
-        
+        await BeforeSceneLoad.loadFinishTask;
 
         StopCoroutine(c);
         LoadingText.gameObject.SetActive(false);
@@ -103,6 +99,7 @@ public partial class GameMainMenu : Jyx2_UIBase {
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
+        OnStart();
         AudioManager.PlayMusic(16);
         m_panelType = PanelType.Home;
         GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>

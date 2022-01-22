@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Jyx2;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using UnityEngine;
@@ -19,8 +20,9 @@ public class ModPanel : MonoBehaviour
         StartButton.onClick.AddListener(onStart);
     }
 
-    async void onStart()
+    void onStart()
     {
+        BeforeSceneLoad.ColdBind();
         SceneManager.LoadScene("0_MainMenu");
     }
 
