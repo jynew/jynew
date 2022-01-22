@@ -217,7 +217,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void handleGamepadButtons()
 	{
-		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
+		if (GamepadHelper.IsButtonPressed(confirmButtonName()) && gameObject.activeSelf)
 		{
 			//trigger button click
 			if (captureGamepadAxis && activeButtons.Length > 0)
@@ -230,8 +230,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		bool dpadMoved = false;
 		if (captureGamepadAxis && gameObject.activeSelf)
 		{
-			var dpadY = Input.GetAxis("DPadY");
-			if (dpadY == -1)
+			if (GamepadHelper.IsDadYMove(true))
 			{
 				if (currentlyReleased)
 				{
@@ -243,7 +242,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 					delayedAxisRelease();
 				}
 			}
-			else if (dpadY == 1)
+			else if (GamepadHelper.IsDadYMove(false))
 			{
 				if (currentlyReleased)
 				{
@@ -253,8 +252,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 					delayedAxisRelease();
 				}
 			}
-			var dpadX = Input.GetAxis("DPadX");
-			if (dpadX == -1)
+			if (GamepadHelper.IsDadXMove(false))
 			{
 				if (currentlyReleased)
 				{
@@ -266,7 +264,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 					delayedAxisRelease();
 				}
 			}
-			else if (dpadX == 1)
+			else if (GamepadHelper.IsDadXMove(true))
 			{
 				if (currentlyReleased)
 				{
@@ -283,7 +281,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual string confirmButtonName()
 	{
-		return "JFire2";
+		return GamepadHelper.CONFIRM_BUTTON;
 	}
 
 	protected virtual void buttonClickAt(int position)

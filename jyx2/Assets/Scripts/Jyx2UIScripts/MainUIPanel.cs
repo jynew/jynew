@@ -347,7 +347,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	protected override string confirmButtonName()
 	{
-		return "JOptions";
+		return GamepadHelper.START_BUTTON;
 	}
 
 	protected override void handleGamepadButtons()

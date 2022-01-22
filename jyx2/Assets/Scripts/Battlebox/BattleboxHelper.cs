@@ -165,8 +165,10 @@ public class BattleboxHelper : MonoBehaviour
 		if (xPositions.Length == 0 || yPositions.Length == 0)
 			return;
 
-		var leftStickY = Input.GetAxis("Vertical");
-		var leftStickX = Input.GetAxis("Horizontal");
+		var move = GamepadHelper.GetLeftAnalogMove();
+		var leftStickX = move.X;
+		var leftStickY = move.Y;
+
 		if (Math.Abs(leftStickX) > 0 || Math.Abs(leftStickY)> 0)
 		{
 			if (leftStickY < 0)
@@ -229,7 +231,7 @@ public class BattleboxHelper : MonoBehaviour
 			delayedAxisRelease();
 		}
 
-		if (Input.GetButtonDown("JFire2"))
+		if (GamepadHelper.IsConfirm())
 		{
 			if (GamepadMoved && blockConfirmed != null)
 			{

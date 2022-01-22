@@ -215,8 +215,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         //only allow close setting for now, so at least this UI can be closed via gamepad
         if (gameObject.activeSelf)
         {
-            if (Input.GetButtonDown("JFire2")
-                || Input.GetButtonDown("JFire3"))
+            if (GamepadHelper.IsConfirm() || GamepadHelper.IsCancel())
             {
                 Close();
             }

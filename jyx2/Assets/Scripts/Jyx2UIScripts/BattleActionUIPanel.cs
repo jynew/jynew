@@ -188,8 +188,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		if (captureGamepadAxis && gameObject.activeSelf)
 		{
-			var dpadX = Input.GetAxis("DPadX");
-			if (dpadX == -1)
+			if (GamepadHelper.IsDadXMove(true))
 			{
 				rightDpadPressed = true;
 				if (rightDpadPressed && currentlyReleased)
@@ -201,7 +200,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 					return;
 				}
 			}
-			else if (dpadX == 1)
+			else if (GamepadHelper.IsDadXMove(false))
 			{
 				leftDpadPressed = true;
 				if (leftDpadPressed && currentlyReleased)
@@ -216,7 +215,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		if (gameObject.activeSelf)
 		{
-			if (Input.GetButtonDown("JFire1")) // x/square button invoke zhaoshi 
+			if (GamepadHelper.IsAction()) // x/square button invoke zhaoshi 
 			{
 				var zhao = zhaoshiList.ElementAt(cur_zhaoshi);
 				zhao.Value?.Invoke();

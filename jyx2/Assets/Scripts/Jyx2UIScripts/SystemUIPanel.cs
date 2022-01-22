@@ -176,7 +176,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 		base.handleGamepadButtons();
 		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("JFire3"))
+			if (GamepadHelper.IsCancel())
 				HidePanel();
 	}
 }

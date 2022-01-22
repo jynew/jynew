@@ -481,7 +481,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		base.handleGamepadButtons();
         if (gameObject.activeSelf)
 		{
-            if (Input.GetButtonDown("JFire3"))
+            if (GamepadHelper.IsCancel())
 			{
                 OnBackClick();
 			}

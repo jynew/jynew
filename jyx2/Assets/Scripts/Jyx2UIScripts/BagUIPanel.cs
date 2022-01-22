@@ -364,15 +364,15 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 	protected override void handleGamepadButtons()
 	{
-		if (Input.GetButtonDown("JFire2"))
+		if (GamepadHelper.IsConfirm())
 		{
 			OnUseBtnClick();
 		}
-		else if (Input.GetButtonDown("JFire3"))
+		else if (GamepadHelper.IsCancel())
 		{
 			OnCloseBtnClick();
 		}
-		else if (Input.GetButtonDown("JL1"))
+		else if (GamepadHelper.IsTabLeft())
 		{
 			if (currentFilterIndex == 0)
 				currentFilterIndex = m_Filters.Count - 1;
@@ -381,7 +381,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 			changeFilter(currentFilterIndex);
 		}
-		else if (Input.GetButtonDown("JR1"))
+		else if (GamepadHelper.IsTabRight())
 		{
 			if (currentFilterIndex == m_Filters.Count - 1)
 				currentFilterIndex = 0;

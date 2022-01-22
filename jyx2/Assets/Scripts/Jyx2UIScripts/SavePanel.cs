@@ -138,14 +138,14 @@ public partial class SavePanel : Jyx2_UIBase
 	{
 		base.Update();
 		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("JFire2"))
+			if (GamepadHelper.IsConfirm())
 			{
 				if (current_selection != -1)
 				{
 					OnSaveItemClick(current_selection);
 				}
 			}
-			else if (Input.GetButtonDown("JFire3"))
+			else if (GamepadHelper.IsCancel())
 			{
 				OnBackClick();
 			}

@@ -84,11 +84,11 @@ public partial class SelectRolePanel : Jyx2_UIBase
 	{
 		if (gameObject.activeSelf)
 		{
-			if (Input.GetButtonDown("JFire2"))
+			if (GamepadHelper.IsConfirm())
 			{
 				OnConfirmClick();
 			}
-			else if (Input.GetButtonDown("JFire3"))
+			else if (GamepadHelper.IsCancel())
 			{
 				OnCancelClick();
 			}
