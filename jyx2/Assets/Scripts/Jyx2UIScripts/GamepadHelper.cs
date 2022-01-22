@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -21,6 +22,26 @@ public class GamepadHelper
 	public const string TAB_R1 = "JR1";
 	public const string START_BUTTON = "JOptions";
 	public const string PAD_BUTTON = "PadPress";
+
+	private const int PollGamepadPeriod = 5;
+	private static DateTime _lastPollTime = DateTime.MinValue;
+	private static bool _gamepadConnected = false;
+
+	public static bool GamepadConnected
+	{
+		get
+		{
+			if (_lastPollTime.AddSeconds(PollGamepadPeriod) < DateTime.Now)
+			{
+				_gamepadConnected = Input.GetJoystickNames()
+					.Where(n => !string.IsNullOrWhiteSpace(n))
+					.Count() > 0;
+			}
+
+			return _gamepadConnected;
+		}
+	}
+
 
 	public static bool IsButtonPressed(string buttonName)
 	{

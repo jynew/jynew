@@ -126,7 +126,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			uiItem.Refresh(data, i, currentNum);
 		}
 
-		if (visibleItems.Count > 0)
+		if (visibleItems.Count > 0 && GamepadHelper.GamepadConnected)
 			changeCurrentSelection(0);
 	}
 
@@ -215,6 +215,15 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		if (num >= 0 && num < visibleItems.Count)
 		{
 			OnItemSelect(visibleItems[num]);
+		}
+		else
+		{
+			if (curSelectItem != null)
+			{
+				curSelectItem.SetSelect(false);
+			}
+
+			current_selection = -1;
 		}
 	}
 

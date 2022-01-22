@@ -251,5 +251,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 	{
 		if (num > 0 && num < roleUIItems.Count)
 			OnItemClick(roleUIItems[num]);
+		
+		//do nothing for negative select, since this is a toggle multiselect list
 	}
 }

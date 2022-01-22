@@ -41,7 +41,8 @@ public partial class SystemUIPanel : Jyx2_UIBase
 			}
 		});
 
-		changeCurrentSelection(0);
+		if (GamepadHelper.GamepadConnected)
+			changeCurrentSelection(0);
 	}
 
 
@@ -89,7 +90,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 	bool showingSavePanel = false;
 
 	async void Save()
-    {
+	{
 		showingSavePanel = true;
 
 		//---------------------------------------------------------------------------
@@ -101,17 +102,17 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		//---------------------------------------------------------------------------
 		//特定位置的翻译【存档时候的Title显示】
 		//---------------------------------------------------------------------------
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
-        {
-            var levelMaster = FindObjectOfType<LevelMaster>();
-            levelMaster.OnManuelSave(index);
-        }),"选择存档位".GetContent(nameof(SystemUIPanel)));
-        //---------------------------------------------------------------------------
-        //---------------------------------------------------------------------------
-    }
-    
-    async void Load()
-    {
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+		{
+			var levelMaster = FindObjectOfType<LevelMaster>();
+			levelMaster.OnManuelSave(index);
+		}), "选择存档位".GetContent(nameof(SystemUIPanel)));
+		//---------------------------------------------------------------------------
+		//---------------------------------------------------------------------------
+	}
+
+	async void Load()
+	{
 		showingSavePanel = true;
 
 		//---------------------------------------------------------------------------
@@ -123,12 +124,12 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		//特定位置的翻译【读档时候的Title显示】
 		//---------------------------------------------------------------------------
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-        {
-            StoryEngine.DoLoadGame(index);
-        }),"选择读档位".GetContent(nameof(SystemUIPanel)));
-        //---------------------------------------------------------------------------
-        //---------------------------------------------------------------------------
-    }
+		{
+			StoryEngine.DoLoadGame(index);
+		}), "选择读档位".GetContent(nameof(SystemUIPanel)));
+		//---------------------------------------------------------------------------
+		//---------------------------------------------------------------------------
+	}
 
 	async void GraphicSetting()
 	{

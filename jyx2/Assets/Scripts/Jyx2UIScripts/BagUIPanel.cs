@@ -147,7 +147,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 				OnItemSelect(itemUI);
 			});
 
-			if (!hasSelect)
+			if (!hasSelect && GamepadHelper.GamepadConnected)
 			{
 				//select the first item
 				m_selectItem = itemUI;
@@ -282,6 +282,11 @@ public partial class BagUIPanel : Jyx2_UIBase
 		if (num >= 0 && num < visibleItems.Count)
 		{
 			OnItemSelect(visibleItems[num]);
+		}
+		else
+		{
+			if (m_selectItem)
+				m_selectItem.Select(false);
 		}
 	}
 

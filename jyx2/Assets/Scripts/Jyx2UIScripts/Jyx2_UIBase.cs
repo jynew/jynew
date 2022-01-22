@@ -67,7 +67,8 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		this.gameObject.SetActive(true);
 		this.transform.SetAsLastSibling();
-		if (captureGamepadAxis && _buttonList.Count > 0)
+
+		if (GamepadHelper.GamepadConnected && captureGamepadAxis && _buttonList.Count > 0)
 			changeCurrentSelection(0);
 
 		this.OnShowPanel(allParams);
@@ -84,6 +85,25 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 		VisibilityToggled?.Invoke(this, true);
 	}
+
+	//temporarily comment out the game pad connection state change handler
+	//since cannot poll input joystick names in another thread
+	//private void onGameConnectionStateChange(bool hasGamepad)
+	//{
+	//	if (hasGamepad)
+	//	{
+	//		//hilite the selected item
+	//		changeCurrentSelection(Math.Max(current_selection, 0));
+	//	}
+	//	else
+	//	{
+	//		//unhilite selected item
+	//		if (current_selection > -1)
+	//		{
+	//			changeCurrentSelection(-1);
+	//		}
+	//	}
+	//}
 
 	public void Hide()
 	{
