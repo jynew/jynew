@@ -282,7 +282,7 @@ public class BattleboxHelper : MonoBehaviour
 		.OrderBy(p => p)
 		.ToArray();
 
-		xMiddlePos = xPositions[(int)Math.Ceiling((float)xPositions.Length / 2)];
+		xMiddlePos = xPositions[(int)Math.Floor((float)xPositions.Length / 2)];
 	}
 
 	private void initYPos()
@@ -294,7 +294,7 @@ public class BattleboxHelper : MonoBehaviour
 		.OrderBy(p => p)
 		.ToArray();
 
-		yMiddlePos = yPositions[(int)Math.Ceiling((float)yPositions.Length / 2)];
+		yMiddlePos = yPositions[(int)Math.Floor((float)yPositions.Length / 2)];
 	}
 
 	protected void delayedAxisRelease()

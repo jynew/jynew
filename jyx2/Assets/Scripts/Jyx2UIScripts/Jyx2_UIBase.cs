@@ -319,7 +319,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		get
 		{
-			return 500;
+			return 200;
 		}
 	}
 

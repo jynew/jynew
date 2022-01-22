@@ -264,6 +264,17 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		return dpadMoved;
 	}
 
+	protected override void handleGamepadButtons()
+	{
+		base.handleGamepadButtons();
+
+		if (GamepadHelper.IsCancel())
+			//休息
+			OnRestClick();
+		else if (GamepadHelper.IsJump())
+			OnHealClick();
+	}
+
 	protected override void buttonClickAt(int position)
 	{
 		if (!BattleboxHelper.Instance.GamepadMoved)
@@ -389,6 +400,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	void OnHealClick()
 	{
+		if (!Heal_Button.gameObject.activeSelf)
+			return;
+
 		var zhaoshi = new HealZhaoshiInstance(m_currentRole.Heal);
 		ShowAttackRangeSelector(zhaoshi);
 	}
