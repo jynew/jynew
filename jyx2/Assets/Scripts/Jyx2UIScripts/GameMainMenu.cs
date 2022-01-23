@@ -83,6 +83,8 @@ public partial class GameMainMenu : Jyx2_UIBase
 		m_randomProperty = this.StartNewRolePanel_RectTransform.GetComponent<RandomPropertyComponent>();
 	}
 
+
+
 	protected override Color normalButtonColor()
 	{
 		return ColorStringDefine.main_menu_normal;
@@ -105,31 +107,33 @@ public partial class GameMainMenu : Jyx2_UIBase
 			&& m_panelType != PanelType.LoadGamePage
 			&& m_panelType != PanelType.PropertyPage)
 			base.Update();
-
-		if (gameObject.activeSelf)
-			if (GamepadHelper.IsConfirm())
-			{
-				if (m_panelType == PanelType.NewGamePage)
+		else
+		{
+			if (gameObject.activeSelf)
+				if (GamepadHelper.IsConfirm())
 				{
-					OnCreateBtnClicked();
+					if (m_panelType == PanelType.NewGamePage)
+					{
+						OnCreateBtnClicked();
+					}
+					else if (m_panelType == PanelType.PropertyPage)
+					{
+						OnCreateRoleYesClick();
+					}
 				}
-				else if (m_panelType == PanelType.PropertyPage)
+				else if (GamepadHelper.IsCancel())
 				{
-					OnCreateRoleYesClick();
+					if (m_panelType == PanelType.NewGamePage
+						|| m_panelType == PanelType.LoadGamePage) //save/ load panel has its own logic to close/ hide themself
+					{
+						OnBackBtnClicked();
+					}
+					else if (m_panelType == PanelType.PropertyPage)
+					{
+						OnCreateRoleNoClick();
+					}
 				}
-			}
-			else if (GamepadHelper.IsCancel())
-			{
-				if (m_panelType == PanelType.NewGamePage
-					|| m_panelType == PanelType.LoadGamePage) //save/ load panel has its own logic to close/ hide themself
-				{
-					OnBackBtnClicked();
-				}
-				else if (m_panelType == PanelType.PropertyPage)
-				{
-					OnCreateRoleNoClick();
-				}
-			}
+		}
 	}
 
 
@@ -206,36 +210,37 @@ public partial class GameMainMenu : Jyx2_UIBase
 		OnNewGame();
 	}
 
-    // merge to SavePanel.cs
-    // modified by eaphone at 2021/05/21
-    public async void OnLoadGameClicked()
-    {
-        m_panelType = PanelType.LoadGamePage;
-        //---------------------------------------------------------------------------
-        //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-        //{
-        //    if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
-        //        OnNewGame();
-        //    }
-        //}),"选择读档位", new Action(() =>
-        //{
-        //    m_panelType = PanelType.Home;
-        //}));
-        //---------------------------------------------------------------------------
-        //特定位置的翻译【读档时候的Title显示】
-        //---------------------------------------------------------------------------
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-        {
-            if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
-                OnNewGame();
-            }
-        }),"选择读档位".GetContent(nameof(GameMainMenu)), new Action(() =>
-        {
-            m_panelType = PanelType.Home;
-        }));
-        //---------------------------------------------------------------------------
-        //---------------------------------------------------------------------------
-    }
+	// merge to SavePanel.cs
+	// modified by eaphone at 2021/05/21
+	public async void OnLoadGameClicked()
+	{
+		m_panelType = PanelType.LoadGamePage;
+		//---------------------------------------------------------------------------
+		//await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+		//{
+		//    if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
+		//        OnNewGame();
+		//    }
+		//}),"选择读档位", new Action(() =>
+		//{
+		//    m_panelType = PanelType.Home;
+		//}));
+		//---------------------------------------------------------------------------
+		//特定位置的翻译【读档时候的Title显示】
+		//---------------------------------------------------------------------------
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+		{
+			if (!StoryEngine.DoLoadGame(index) && m_panelType == PanelType.LoadGamePage)
+			{
+				OnNewGame();
+			}
+		}), "选择读档位".GetContent(nameof(GameMainMenu)), new Action(() =>
+		 {
+			 m_panelType = PanelType.Home;
+		 }));
+		//---------------------------------------------------------------------------
+		//---------------------------------------------------------------------------
+	}
 
 	public void OnQuitGameClicked()
 	{
@@ -346,16 +351,16 @@ public partial class GameMainMenu : Jyx2_UIBase
 		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.N);
 	}
 
-    public void OnOpenURL(string url)
-    {
-        Tools.openURL(url);
-    }
+	public void OnOpenURL(string url)
+	{
+		Tools.openURL(url);
+	}
 
-    /// <summary>
-    /// 打开设置界面
-    /// </summary>
-    public void OpenSettingsPanel()
-    {
-        Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
-    }
+	/// <summary>
+	/// 打开设置界面
+	/// </summary>
+	public void OpenSettingsPanel()
+	{
+		Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
+	}
 }

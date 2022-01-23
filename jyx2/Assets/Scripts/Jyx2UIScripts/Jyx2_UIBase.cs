@@ -125,7 +125,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		get
 		{
 			return _buttonList.Keys
-				.Where(b => b.gameObject.activeSelf)
+				.Where(b => b?.gameObject?.activeSelf ?? false)
 				.ToArray();
 		}
 	}
@@ -140,12 +140,23 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 			if (buttonText != null)
 				buttonText.color = i == current_selection ? selectedButtonColor() : normalButtonColor();
+
+			toggleGamepadButtonImage(activeButtons[i], i != current_selection);
 		}
 	}
 
 	protected virtual Text getButtonText(Button button)
 	{
 		return button.gameObject.transform.GetChild(0).GetComponent<Text>();
+	}
+
+	protected virtual Image getButtonImage(Button button)
+	{
+		Transform trans = button.gameObject.transform;
+		if (trans.childCount > 1)
+			return trans.GetChild(1).GetComponentInChildren<Image>();
+
+		return null;
 	}
 
 	protected virtual Color selectedButtonColor()
@@ -158,6 +169,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		return ColorStringDefine.system_item_normal;
 	}
 
+	//TODO: handle bottom buttons navigation with gamepad
 
 	public virtual void BindListener(Button button, Action callback, bool supportGamepadButtonsNav = true)
 	{
@@ -165,6 +177,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		{
 			if (supportGamepadButtonsNav)
 				_buttonList[button] = callback;
+
+			//only deal with buttons don't support nav for now, since those buttons are fixed functionalities
+			toggleGamepadButtonImage(button, supportGamepadButtonsNav);
 
 			button.onClick.RemoveAllListeners();
 			button.onClick.AddListener(() =>
@@ -174,6 +189,23 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			var nav = Navigation.defaultNavigation;
 			nav.mode = Navigation.Mode.None;
 			button.navigation = nav;
+		}
+	}
+
+
+	private void toggleGamepadButtonImage(Button button, bool forceOff = false)
+	{
+		//toggle image visibility is there is an image on this button
+		var image = getButtonImage(button);
+		if (image != null)
+		{
+
+			if (forceOff)
+			{
+				image.gameObject.SetActive(false);
+			}
+			else
+				image.gameObject.SetActive(GamepadHelper.GamepadConnected);
 		}
 	}
 
@@ -228,8 +260,37 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		changeCurrentSelection(current_selection);
 	}
 
+	bool gamepadConnected = false;
+
 	public virtual void Update()
 	{
+		//show hide button icons
+		if (GamepadHelper.GamepadConnected != gamepadConnected)
+		{
+			gamepadConnected = GamepadHelper.GamepadConnected;
+			//toggle all button images
+			var buttons = this.gameObject.GetComponentsInChildren<Button>(true)
+				.Where(b => b != null);
+			List<Button> activeButtonsList = activeButtons.ToList();
+			foreach (var button in buttons)
+			{
+				var buttonIndex = activeButtonsList.IndexOf(button);
+
+				if (buttonIndex > -1)
+					if (buttonIndex != current_selection)
+					{
+						//turn off unselected
+						toggleGamepadButtonImage(button, true);
+					}
+					else
+					{
+						toggleGamepadButtonImage(button);
+					}
+				else
+					toggleGamepadButtonImage(button);
+			}
+		}
+
 		handleDpadMove();
 
 		handleGamepadButtons();

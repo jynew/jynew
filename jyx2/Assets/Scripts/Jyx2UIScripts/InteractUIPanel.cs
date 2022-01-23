@@ -25,8 +25,8 @@ public partial class InteractUIPanel : Jyx2_UIBase
 	{
 		InitTrans();
 
-		BindListener(MainBg_Button1, () => OnBtnClick(0));
-		BindListener(MainBg_Button2, () => OnBtnClick(1));
+		BindListener(MainBg_Button1, () => OnBtnClick(0), false);
+		BindListener(MainBg_Button2, () => OnBtnClick(1), false);
 	}
 
 	protected override void OnShowPanel(params object[] allParams)

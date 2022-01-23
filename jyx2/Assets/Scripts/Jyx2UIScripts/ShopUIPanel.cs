@@ -56,8 +56,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			});
 		});
 
-		BindListener(CloseBtn_Button, OnCloseClick);
-		BindListener(ConfirmBtn_Button, OnConfirmClick);
+		BindListener(CloseBtn_Button, OnCloseClick, false);
+		BindListener(ConfirmBtn_Button, OnConfirmClick, false);
 	}
 
 	int GetHasBuyNum(int id)
