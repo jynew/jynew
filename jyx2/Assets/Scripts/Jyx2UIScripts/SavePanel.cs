@@ -134,9 +134,8 @@ public partial class SavePanel : Jyx2_UIBase
 		if (current_selection > 0) ChangeSelection(-1);
 	}
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
-		base.Update();
 		if (gameObject.activeSelf)
 			if (GamepadHelper.IsConfirm())
 			{

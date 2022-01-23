@@ -38,7 +38,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	private const int NewGameIndex = 0;
 	private const int LoadGameIndex = 1;
 	private const int QuitGameIndex = 2;
-	
+
 	async void OnStart()
 	{
 		//显示loading
@@ -99,12 +99,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 	}
 
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
 		if (m_panelType != PanelType.NewGamePage
 			&& m_panelType != PanelType.LoadGamePage
 			&& m_panelType != PanelType.PropertyPage)
-			base.Update();
+			base.handleGamepadButtons();
 		else
 		{
 			if (gameObject.activeSelf)

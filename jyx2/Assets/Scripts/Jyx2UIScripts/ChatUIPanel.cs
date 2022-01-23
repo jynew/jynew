@@ -224,7 +224,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		Name_RectTransform.anchoredPosition = new Vector2(headId == 0 ? -450 : 450, 280);
 	}
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
 		if (gameObject.activeSelf)
 			if (GamepadHelper.IsConfirm())

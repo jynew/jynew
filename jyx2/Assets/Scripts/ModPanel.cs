@@ -48,6 +48,7 @@ public class ModPanel : MonoBehaviour
 
     void Update()
     {
-        
+        if (GamepadHelper.IsConfirm())
+            onStart();
     }
 }
