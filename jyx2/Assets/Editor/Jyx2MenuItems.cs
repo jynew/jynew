@@ -115,8 +115,8 @@ namespace Jyx2Editor
             AddressableAssetSettings.BuildPlayerContent();
             
             //重新生成MOD资源索引表
-            if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
-                File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+            if(File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt")))
+                File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
             MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
             MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
             MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
@@ -157,8 +157,8 @@ namespace Jyx2Editor
             AddressableAssetSettings.BuildPlayerContent();
             
             //重新生成MOD资源索引表
-            if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
-                File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+            if(File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt")))
+                File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
             MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
             MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
             MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
@@ -183,7 +183,7 @@ namespace Jyx2Editor
         }
         static string[] GetScenePaths()
         {
-            return new string[] {"Assets/0_GameStart.unity", "Assets/0_MainMenu.unity"};
+            return new string[] {"Assets/0_GameStart.unity", "Assets/0_MainMenu.unity", "Assets/0_ModMenu.unity"};
         }
 
         [MenuItem("一键打包/Android")]
@@ -206,8 +206,8 @@ namespace Jyx2Editor
                 AddressableAssetSettings.BuildPlayerContent();
                 
                 //重新生成MOD资源索引表
-                if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
-                    File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+                if(File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt")))
+                    File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
                 MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
                 MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
                 MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
@@ -262,8 +262,8 @@ namespace Jyx2Editor
                 AddressableAssetSettings.BuildPlayerContent();
                 
                 //重新生成MOD资源索引表
-                if(File.Exists(Application.streamingAssetsPath + "/OverrideList.txt"))
-                    File.Delete(Application.streamingAssetsPath + "/OverrideList.txt");
+                if(File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt")))
+                    File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
                 MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
                 MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
                 MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");

@@ -16,6 +16,7 @@ using DG.Tweening;
 using UnityEngine;
 using Jyx2;
 using Jyx2.Middleware;
+using Jyx2.MOD;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
@@ -40,13 +41,8 @@ public class GameStart : MonoBehaviour
         {
             Destroy(introPanel.gameObject);
         });
-#if UNITY_EDITOR
-
-#else
-        //运行时，需要手动调用
-        BeforeSceneLoad.ColdBind();
-#endif
-        //Jyx2_UIManager.Instance.GameStart();
-        SceneManager.LoadScene("0_MainMenu");
+        
+        MODManager.Init();
+        SceneManager.LoadScene("0_ModMenu");
     }
 }

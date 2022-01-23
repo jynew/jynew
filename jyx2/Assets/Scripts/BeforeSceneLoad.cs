@@ -15,9 +15,9 @@ namespace Jyx2
 {
     public static class BeforeSceneLoad
     {
-#if UNITY_EDITOR
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-#endif
+// #if UNITY_EDITOR
+//         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+// #endif
         public static void ColdBind()
         {
             DebugInfoManager.Init();

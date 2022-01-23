@@ -64,9 +64,9 @@ public class LoadingPanel : MonoBehaviour
         else
         {
             var path = Jyx2ResourceHelper.GetAssetRefAddress(sceneAsset, typeof(TextAsset));
-            if(MODLoader._remap.ContainsKey(path))
+            if(MODLoader.Remap.ContainsKey(path))
             {
-                var assetBundleItem = MODLoader._remap[path];
+                var assetBundleItem = MODLoader.Remap[path];
                 var handle = SceneManager.LoadSceneAsync(assetBundleItem.Name);
                 while (!handle.isDone)
                 {
