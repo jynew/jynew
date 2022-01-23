@@ -20,8 +20,9 @@ public class MessageBox : MonoBehaviour
 {
     public Button m_ConfirmButton;
     public Text m_MessageText;
+	private Action _callback;
 
-    public static void Create(string msg, Action callback, Transform parent = null)
+	public static void Create(string msg, Action callback, Transform parent = null)
     {
         if(parent == null)
         {
@@ -43,13 +44,26 @@ public class MessageBox : MonoBehaviour
     public void Show(string msg, Action callback)
     {
         m_MessageText.text = msg;
+        _callback = callback;
         m_ConfirmButton.onClick.RemoveAllListeners();
-        m_ConfirmButton.onClick.AddListener(() =>
-        {
-            Jyx2ResourceHelper.ReleasePrefabInstance(this.gameObject);
-            if(callback != null)
-                callback();
-        });
+		m_ConfirmButton.onClick.AddListener(() =>
+		{
+			closeAndCallback();
+		});
     }
 
+	private void closeAndCallback()
+	{
+		Jyx2ResourceHelper.ReleasePrefabInstance(this.gameObject);
+		if (_callback != null)
+			_callback();
+	}
+
+	private void Update()
+	{
+        if (gameObject.activeSelf)
+            if (GamepadHelper.IsConfirm()
+                || GamepadHelper.IsCancel())
+                closeAndCallback();
+	}
 }

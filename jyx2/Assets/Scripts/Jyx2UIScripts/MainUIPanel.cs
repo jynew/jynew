@@ -13,280 +13,354 @@ using System;
 using System.Linq;
 using Jyx2Configs;
 
-public partial class MainUIPanel : Jyx2_UIBase,IUIAnimator
+public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 {
-    public override UILayer Layer => UILayer.MainUI;
+	public override UILayer Layer => UILayer.MainUI;
 
-    protected override void OnCreate()
-    {
-        InitTrans();
+	protected override void OnCreate()
+	{
+		InitTrans();
 
-        XiakeButton_Button.onClick.AddListener(OnXiakeBtnClick);
-        BagButton_Button.onClick.AddListener(OnBagBtnClick);
-        MapButton_Button.onClick.AddListener(OnMapBtnClick);
-        SystemButton_Button.onClick.AddListener(OnSystemBtnClick);
-    }
+		Jyx2_UIManager.Instance.UIVisibilityToggled += Instance_UIVisibilityToggled;
 
-    void Update()
-    {
-        Compass.gameObject.active = LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182);
-        if (Compass.gameObject.active)
-        {
-            var p = LevelMaster.Instance.GetPlayerPosition();
-            var pString = (p.x + 242).ToString("F0") + "," + (p.z + 435).ToString("F0");
-            if (!LevelMaster.Instance.GetPlayer().IsOnBoat)
-            {
-                var b = LevelMaster.Instance.GetPlayer().GetBoatPosition();
-                pString += "("+(b.x + 242).ToString("F0") + "," + (b.z + 435).ToString("F0")+")";
-            }
-            Compass.text = pString;
-        }
-    }
+		BindListener(XiakeButton_Button, OnXiakeBtnClick);
+		BindListener(BagButton_Button, OnBagBtnClick);
+		BindListener(MapButton_Button, OnMapBtnClick);
+		BindListener(SystemButton_Button, OnSystemBtnClick);
+	}
 
-    protected override void OnShowPanel(params object[] allParams)
-    {
-        base.OnShowPanel(allParams);
-        RefreshNameMapName();
-        RefreshDynamic();
-    }
+	private void Instance_UIVisibilityToggled(Jyx2_UIBase arg1, bool arg2)
+	{
+		if (arg1 is BagUIPanel
+			|| arg1 is SystemUIPanel
+			|| arg1 is XiakeUIPanel
+			|| arg1 is InteractUIPanel
+			|| arg1 is ChatUIPanel
+			|| arg1 is GraphicSettingsPanel
+			|| arg1 is GeneralSettingsPanel)
+		{
+			if (!arg2 && InBackground)
+				InBackground = false;
+		}
+	}
 
-    void RefreshDynamic() 
-    {
-        RoleInstance role = GameRuntimeData.Instance.Player;
-        string expText = string.Format("EXP:{0}/{1}", role.Exp, role.GetLevelUpExp());
-        Exp_Text.text = expText;
-        Level_Text.text = role.Level.ToString();
-    }
+	public override void Update()
+	{
+		base.Update();
+		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182));
+		if (Compass.gameObject.activeSelf)
+		{
+			var p = LevelMaster.Instance.GetPlayerPosition();
+			var pString = (p.x + 242).ToString("F0") + "," + (p.z + 435).ToString("F0");
+			if (!LevelMaster.Instance.GetPlayer().IsOnBoat)
+			{
+				var b = LevelMaster.Instance.GetPlayer().GetBoatPosition();
+				pString += "(" + (b.x + 242).ToString("F0") + "," + (b.z + 435).ToString("F0") + ")";
+			}
+			Compass.text = pString;
+		}
+	}
 
-    void RefreshNameMapName() 
-    {
-        RoleInstance role = GameRuntimeData.Instance.Player;
-        Name_Text.text = role.Name;
-        
-        var map = LevelMaster.GetCurrentGameMap();
-        if (map != null)
-        {
-            MapName_Text.text = map.GetShowName();
+	protected override void OnShowPanel(params object[] allParams)
+	{
+		base.OnShowPanel(allParams);
+		RefreshNameMapName();
+		RefreshDynamic();
 
-            //BY CGGG：小地图不提供传送到大地图的功能 2021/6/13
-            //MapButton_Button.gameObject.SetActive(!isWorldMap);
-            MapButton_Button.gameObject.SetActive(false);
-            
-            
-            //var rt = Image_Right.GetComponent<RectTransform>();
-　　		//rt.sizeDelta = new Vector2(isWorldMap?480:640, 100);
-        }
-    }
+		selectSelectButton();
+	}
 
-    async void OnXiakeBtnClick() 
-    {
-         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
-    }
+	private void selectSelectButton()
+	{
+		var systemButtonIndex = activeButtons.ToList().IndexOf(SystemButton_Button);
+		if (systemButtonIndex > -1)
+		{
+			changeCurrentSelection(systemButtonIndex);
+		}
+	}
 
-    async void OnBagBtnClick() 
-    {
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items,new Action<int>(OnUseItem));
-    }
+	void RefreshDynamic()
+	{
+		RoleInstance role = GameRuntimeData.Instance.Player;
+		string expText = string.Format("EXP:{0}/{1}", role.Exp, role.GetLevelUpExp());
+		Exp_Text.text = expText;
+		Level_Text.text = role.Level.ToString();
+	}
 
-    async void OnUseItem(int id)
-    {
-        if (id == -1) return;
+	void RefreshNameMapName()
+	{
+		RoleInstance role = GameRuntimeData.Instance.Player;
+		Name_Text.text = role.Name;
 
-        var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
-        if (item == null)
-        {
-            Debug.LogError("use item error, id=" + id);
-            return;
-        }
+		var map = LevelMaster.GetCurrentGameMap();
+		if (map != null)
+		{
+			MapName_Text.text = map.GetShowName();
 
-        //剧情类和暗器不能使用
-        if ((int)item.ItemType == 0 || (int)item.ItemType == 4)
-        {
-            GameUtil.DisplayPopinfo("此道具不能在此使用");
-            return;
-        }
+			//BY CGGG：小地图不提供传送到大地图的功能 2021/6/13
+			//MapButton_Button.gameObject.SetActive(!isWorldMap);
+			MapButton_Button.gameObject.SetActive(false);
 
-        var runtime = GameRuntimeData.Instance;
 
-        async void Action()
-        {
-            async void Callback(RoleInstance selectRole)
-            {
-                if (selectRole == null) return;
+			//var rt = Image_Right.GetComponent<RectTransform>();
+			//rt.sizeDelta = new Vector2(isWorldMap?480:640, 100);
+		}
+	}
 
-                if (selectRole.GetJyx2RoleId() == runtime.GetItemUser(item.Id)) return;
+	public static bool InBackground = false;
 
-                if (selectRole.CanUseItem(id))
-                {
-                    //装备
-                    if ((int) item.ItemType == 1)
-                    {
-                        //武器
-                        if ((int) item.EquipmentType == 0)
-                        {
-                            if (runtime.GetItemUser(item.Id) != -1)
-                            {
-                                RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
-                                roleInstance.UnequipItem(roleInstance.GetWeapon());
-                                roleInstance.Weapon = -1;
-                            }
+	async void OnXiakeBtnClick()
+	{
+		InBackground = true;
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
+	}
 
-                            selectRole.UnequipItem(selectRole.GetWeapon());
-                            selectRole.Weapon = id;
-                            selectRole.UseItem(selectRole.GetWeapon());
-                            runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
-                            GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
-                        }
-                        //防具
-                        else if ((int) item.EquipmentType == 1)
-                        {
-                            if (runtime.GetItemUser(item.Id) != -1)
-                            {
-                                RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
-                                roleInstance.UnequipItem(roleInstance.GetArmor());
-                                roleInstance.Armor = -1;
-                            }
+	async void OnBagBtnClick()
+	{
+		InBackground = true;
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>(OnUseItem));
+	}
 
-                            selectRole.UnequipItem(selectRole.GetArmor());
-                            selectRole.Armor = id;
-                            selectRole.UseItem(selectRole.GetArmor());
-                            runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
-                            GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
-                        }
-                    }
-                    //修炼
-                    else if ((int) item.ItemType == 2)
-                    {
-                        if (item.NeedCastration) //辟邪剑谱和葵花宝典
-                        {
-                            await GameUtil.ShowYesOrNoCastrate(selectRole, () =>
-                            {
-                                if (runtime.GetItemUser(item.Id) != -1)
-                                {
-                                    RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
-                                    runtime.SetItemUser(item.Id, -1);
-                                    roleInstance.ExpForItem = 0;
-                                    roleInstance.Xiulianwupin = -1;
-                                }
+	async void OnUseItem(int id)
+	{
+		if (id == -1) return;
 
-                                if (selectRole.GetXiulianItem() != null)
-                                {
-                                    runtime.SetItemUser(selectRole.Xiulianwupin, -1);
-                                    selectRole.ExpForItem = 0;
-                                }
+		var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
+		if (item == null)
+		{
+			Debug.LogError("use item error, id=" + id);
+			return;
+		}
 
-                                selectRole.Xiulianwupin = id;
-                                runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
-                                GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
-                            });
-                        }
-                        else
-                        {
-                            if (runtime.GetItemUser(item.Id) != -1)
-                            {
-                                RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
-                                runtime.SetItemUser(item.Id, -1);
-                                roleInstance.ExpForItem = 0;
-                                roleInstance.Xiulianwupin = -1;
-                            }
+		//剧情类和暗器不能使用
+		if ((int)item.ItemType == 0 || (int)item.ItemType == 4)
+		{
+			GameUtil.DisplayPopinfo("此道具不能在此使用");
+			return;
+		}
 
-                            if (selectRole.GetXiulianItem() != null)
-                            {
-                                runtime.SetItemUser(selectRole.Xiulianwupin, -1);
-                                selectRole.ExpForItem = 0;
-                            }
+		var runtime = GameRuntimeData.Instance;
 
-                            selectRole.Xiulianwupin = id;
-                            runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
-                            GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
-                        }
-                    }
-                    //药品
-                    else if ((int) item.ItemType == 3)
-                    {
-                        selectRole.UseItem(item);
-                        runtime.AddItem(id, -1);
-                        GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
-                    }
-                }
-                else
-                {
-                    GameUtil.DisplayPopinfo((int) item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
-                    return;
-                }
-            }
+		async void Action()
+		{
+			async void Callback(RoleInstance selectRole)
+			{
+				if (selectRole == null) return;
 
-            await GameUtil.SelectRole(runtime.GetTeam(),  Callback);
-        }
+				if (selectRole.GetJyx2RoleId() == runtime.GetItemUser(item.Id)) return;
 
-        await GameUtil.ShowYesOrNoUseItem(item, Action);
+				if (selectRole.CanUseItem(id))
+				{
+					//装备
+					if ((int)item.ItemType == 1)
+					{
+						//武器
+						if ((int)item.EquipmentType == 0)
+						{
+							if (runtime.GetItemUser(item.Id) != -1)
+							{
+								RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+								roleInstance.UnequipItem(roleInstance.GetWeapon());
+								roleInstance.Weapon = -1;
+							}
 
-    }
+							selectRole.UnequipItem(selectRole.GetWeapon());
+							selectRole.Weapon = id;
+							selectRole.UseItem(selectRole.GetWeapon());
+							runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+							GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+						}
+						//防具
+						else if ((int)item.EquipmentType == 1)
+						{
+							if (runtime.GetItemUser(item.Id) != -1)
+							{
+								RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+								roleInstance.UnequipItem(roleInstance.GetArmor());
+								roleInstance.Armor = -1;
+							}
 
-    void OnMapBtnClick() 
-    {
-        var levelMaster = LevelMaster.Instance;
+							selectRole.UnequipItem(selectRole.GetArmor());
+							selectRole.Armor = id;
+							selectRole.UseItem(selectRole.GetArmor());
+							runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+							GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+						}
+					}
+					//修炼
+					else if ((int)item.ItemType == 2)
+					{
+						if (item.NeedCastration) //辟邪剑谱和葵花宝典
+						{
+							await GameUtil.ShowYesOrNoCastrate(selectRole, () =>
+							{
+								if (runtime.GetItemUser(item.Id) != -1)
+								{
+									RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+									runtime.SetItemUser(item.Id, -1);
+									roleInstance.ExpForItem = 0;
+									roleInstance.Xiulianwupin = -1;
+								}
 
-        if (levelMaster.IsInWorldMap)
-            return;
-        
-        //执行离开事件
-        foreach (var zone in FindObjectsOfType<MapTeleportor>())
-        {
-            if (zone.m_GameMap.Id == GameConst.WORLD_MAP_ID)
-            {
-                zone.DoTransport();
-                break;
-            }
-        }
-    }
+								if (selectRole.GetXiulianItem() != null)
+								{
+									runtime.SetItemUser(selectRole.Xiulianwupin, -1);
+									selectRole.ExpForItem = 0;
+								}
 
-    async void OnSystemBtnClick() 
-    {
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
-    }
+								selectRole.Xiulianwupin = id;
+								runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+								GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+							});
+						}
+						else
+						{
+							if (runtime.GetItemUser(item.Id) != -1)
+							{
+								RoleInstance roleInstance = runtime.GetRoleInTeam(runtime.GetItemUser(item.Id));
+								runtime.SetItemUser(item.Id, -1);
+								roleInstance.ExpForItem = 0;
+								roleInstance.Xiulianwupin = -1;
+							}
 
-    public void DoShowAnimator()
-    {
-        //AnimRoot_RectTransform.anchoredPosition = new Vector2(0, 150);
-        //AnimRoot_RectTransform.DOAnchorPosY(-50, 1.0f);
-    }
+							if (selectRole.GetXiulianItem() != null)
+							{
+								runtime.SetItemUser(selectRole.Xiulianwupin, -1);
+								selectRole.ExpForItem = 0;
+							}
 
-    public void DoHideAnimator()
-    {
-        
-    }
+							selectRole.Xiulianwupin = id;
+							runtime.SetItemUser(item.Id, selectRole.GetJyx2RoleId());
+							GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+						}
+					}
+					//药品
+					else if ((int)item.ItemType == 3)
+					{
+						selectRole.UseItem(item);
+						runtime.AddItem(id, -1);
+						GameUtil.DisplayPopinfo($"{selectRole.Name}使用了{item.Name}");
+					}
+				}
+				else
+				{
+					GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
+					return;
+				}
+			}
 
-    private void OnEnable()
-    {
-        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
-        {
-            if (LevelMaster.Instance.IsPlayerCanControl())
-            {
-                OnSystemBtnClick();
-            }
-        });
-        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.X, () =>
-        {
-            if (LevelMaster.Instance.IsPlayerCanControl())
-            {
-                OnXiakeBtnClick();
-            }
-        });
-        GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.B, () =>
-        {
-            if (LevelMaster.Instance.IsPlayerCanControl())
-            {
-                OnBagBtnClick();
-            }
-        });
-    }
+			await GameUtil.SelectRole(runtime.GetTeam(), Callback);
+		}
 
-    private void OnDisable()
-    {
-        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
-        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.X);
-        GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.B);
-    }
+		await GameUtil.ShowYesOrNoUseItem(item, Action);
 
+	}
+
+	void OnMapBtnClick()
+	{
+		var levelMaster = LevelMaster.Instance;
+
+		if (levelMaster.IsInWorldMap)
+			return;
+
+		//执行离开事件
+		foreach (var zone in FindObjectsOfType<MapTeleportor>())
+		{
+			if (zone.m_GameMap.Id == GameConst.WORLD_MAP_ID)
+			{
+				zone.DoTransport();
+				break;
+			}
+		}
+	}
+
+	async void OnSystemBtnClick()
+	{
+		InBackground = true;
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
+	}
+
+	public void DoShowAnimator()
+	{
+		//AnimRoot_RectTransform.anchoredPosition = new Vector2(0, 150);
+		//AnimRoot_RectTransform.DOAnchorPosY(-50, 1.0f);
+	}
+
+	public void DoHideAnimator()
+	{
+
+	}
+
+	private void OnEnable()
+	{
+		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
+		{
+			if (LevelMaster.Instance.IsPlayerCanControl())
+			{
+				OnSystemBtnClick();
+			}
+		});
+		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.X, () =>
+		{
+			if (LevelMaster.Instance.IsPlayerCanControl())
+			{
+				OnXiakeBtnClick();
+			}
+		});
+		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.B, () =>
+		{
+			if (LevelMaster.Instance.IsPlayerCanControl())
+			{
+				OnBagBtnClick();
+			}
+		});
+	}
+
+	private void OnDisable()
+	{
+		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
+		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.X);
+		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.B);
+	}
+
+	protected override bool captureGamepadAxis => true;
+
+	protected override void OnDirectionalDown()
+	{
+		//do nothing
+	}
+
+	protected override void OnDirectionalUp()
+	{
+		//do nothing
+	}
+
+	protected override void OnDirectionalLeft()
+	{
+		base.OnDirectionalUp();
+	}
+
+	protected override void OnDirectionalRight()
+	{
+		base.OnDirectionalDown();
+	}
+
+	protected override string confirmButtonName()
+	{
+		return GamepadHelper.START_BUTTON;
+	}
+
+	protected override void handleGamepadButtons()
+	{
+		if (!InBackground)
+			base.handleGamepadButtons();
+	}
+
+	protected override bool handleDpadMove()
+	{
+		if (!InBackground)
+			return base.handleDpadMove();
+
+		return false;
+	}
 }

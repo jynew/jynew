@@ -151,13 +151,13 @@ public class CameraHelper : MonoBehaviour
 
                     
                     //平移
-                    var v = Input.GetAxis("Vertical");
-                    var h = Input.GetAxis("Horizontal");
-                    if(v!=0 || h != 0)
+
+                    var analogMove = GamepadHelper.GetRightAnalogMove();
+                    if(analogMove.Y!=0 || analogMove.X != 0)
                     {
                         isBattleFieldLockRole = false;
                         
-                        Vector3 movement = new Vector3(h * 30 * Time.deltaTime, 0f, v * 30 * Time.deltaTime);
+                        Vector3 movement = new Vector3(analogMove.X * 30 * Time.deltaTime, 0f, analogMove.Y * 30 * Time.deltaTime);
 
                         m_BattleCam.Translate(movement);
                     }

@@ -72,6 +72,53 @@ public class AIManager
         AIResult result = null;
         double maxscore = 0;
 
+
+        //优先考虑吃药，更正角色中毒不退问题
+        if (role.Items.Count > 0 && (role.Hp < 0.2 * role.MaxHp || role.Mp < 0.2 * role.MaxMp || role.Tili < 0.2 * GameConst.MAX_ROLE_TILI))
+        {
+            List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
+            foreach (var item in items)
+            {
+                double score = 0;
+                //尽量吃刚刚好的药
+                if (item.AddHp > 0)
+                {
+                    score += Mathf.Min(item.AddHp, role.MaxHp - role.Hp) - item.AddHp / 10;
+                }
+                if (item.AddMp > 0)
+                {
+                    score += Mathf.Min(item.AddMp, role.MaxMp - role.Mp) / 2 - item.AddMp / 10;
+                }
+                if (item.AddTili > 0)
+                {
+                    score += Mathf.Min(item.AddTili, GameConst.MAX_ROLE_TILI - role.Tili) - item.AddTili / 10;
+                }
+
+                if (score > 0)
+                {
+                    score *= 1.5;//自保系数大
+                }
+
+                if (score > maxscore)
+                {
+                    maxscore = score;
+                    var tmp = GetFarestEnemyBlock(role, range);
+                    result = new AIResult
+                    {
+                        MoveX = tmp.X,
+                        MoveY = tmp.Y,
+                        IsRest = false,
+                        Item = item
+                    };
+                }
+            }
+        }
+
+        if (result != null)
+        {
+            return result;
+        }
+
         foreach (var zhaoshi in zhaoshis)
         {
             if (zhaoshi.GetStatus() != BattleZhaoshiInstance.ZhaoshiStatus.OK)
@@ -98,47 +145,6 @@ public class AIManager
                 }
                 
                 await UniTask.WaitForEndOfFrame();
-            }
-        }
-
-        //考虑吃药
-        if (role.Items.Count > 0 && (role.Hp < 0.2 * role.MaxHp || role.Mp < 0.2 * role.MaxMp || role.Tili < 0.2 * GameConst.MAX_ROLE_TILI))
-        {
-            List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
-            foreach(var item in items)
-            {
-                double score = 0;
-                //尽量吃刚刚好的药
-                if(item.AddHp > 0)
-                {
-                    score += Mathf.Min(item.AddHp, role.MaxHp - role.Hp) - item.AddHp / 10;
-                }
-                if(item.AddMp > 0)
-                {
-                    score += Mathf.Min(item.AddMp, role.MaxMp - role.Mp) / 2 - item.AddMp / 10;
-                }
-                if(item.AddTili > 0)
-                {
-                    score += Mathf.Min(item.AddTili, GameConst.MAX_ROLE_TILI - role.Tili) - item.AddTili / 10;
-                }
-
-                if(score > 0)
-                {
-                    score *= 1.5;//自保系数大
-                }
-
-                if (score > maxscore)
-                {
-                    maxscore = score;
-                    var tmp = GetFarestEnemyBlock(role, range);
-                    result = new AIResult
-                    {
-                        MoveX = tmp.X,
-                        MoveY = tmp.Y,
-                        IsRest = false,
-                        Item = item
-                    };
-                }
             }
         }
 

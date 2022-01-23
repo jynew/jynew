@@ -208,7 +208,9 @@ public class GameEventManager : MonoBehaviour
 
         //停止导航
         var levelMaster = LevelMaster.Instance;
-        if (levelMaster != null)
+
+        //fix player stop moving after interaction UI confirm
+        if (levelMaster != null && eventId != 911)
         {
             // fix drag motion continuous move the player when scene is playing
             // modified by eaphone at 2021/05/31

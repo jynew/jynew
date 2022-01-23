@@ -176,4 +176,17 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     {
         IsBlockControl = true;
     }
+
+	public override void Update()
+	{
+		//only allow close setting for now, so at least this UI can be closed via gamepad
+        if (gameObject.activeSelf)
+		{
+            if(GamepadHelper.IsConfirm() 
+                ||GamepadHelper.IsCancel())
+			{
+                Close();
+			}
+		}
+	}
 }

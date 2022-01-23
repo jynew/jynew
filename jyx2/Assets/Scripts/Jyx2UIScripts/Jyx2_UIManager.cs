@@ -160,6 +160,9 @@ public class Jyx2_UIManager : MonoBehaviour
         Transform parent = GetUIParent(uibase.Layer);
         go.transform.SetParent(parent);
 
+		//听取ui的 OnVisibilityToggle event
+		uibase.VisibilityToggled += Uibase_OnVisibilityToggle;
+
         uibase.Init();
         m_uiDic[uiName] = uibase;
         if (uibase.IsOnly)//如果这个层唯一存在 那么先关闭其他
@@ -170,8 +173,15 @@ public class Jyx2_UIManager : MonoBehaviour
         _loadingUIParams.Remove(uiName);
     }
 
-    //显示主界面 LoadingPanel中加载完场景调用 移到这里来 方便修改
-    public async UniTask ShowMainUI()
+	private void Uibase_OnVisibilityToggle(Jyx2_UIBase ui, bool obj)
+	{
+		UIVisibilityToggled?.Invoke(ui, obj);
+	}
+
+    public event Action<Jyx2_UIBase, bool> UIVisibilityToggled;
+
+	//显示主界面 LoadingPanel中加载完场景调用 移到这里来 方便修改
+	public async UniTask ShowMainUI()
     {
         var map = LevelMaster.GetCurrentGameMap();
         /*if (map == null)
