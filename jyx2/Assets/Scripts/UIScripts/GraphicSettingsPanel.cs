@@ -177,7 +177,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         IsBlockControl = true;
     }
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
 		//only allow close setting for now, so at least this UI can be closed via gamepad
         if (gameObject.activeSelf)
