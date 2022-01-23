@@ -126,7 +126,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			uiItem.Refresh(data, i, currentNum);
 		}
 
-		if (visibleItems.Count > 0)
+		if (visibleItems.Count > 0 && GamepadHelper.GamepadConnected)
 			changeCurrentSelection(0);
 	}
 
@@ -216,6 +216,15 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		{
 			OnItemSelect(visibleItems[num]);
 		}
+		else
+		{
+			if (curSelectItem != null)
+			{
+				curSelectItem.SetSelect(false);
+			}
+
+			current_selection = -1;
+		}
 	}
 
 	private int getSelectedItemIndex()
@@ -296,11 +305,11 @@ public partial class ShopUIPanel : Jyx2_UIBase
 
 	protected override void handleGamepadButtons()
 	{
-		if (Input.GetButtonDown("JFire2"))
+		if (GamepadHelper.IsConfirm())
 		{
 			OnConfirmClick();
 		}
-		else if (Input.GetButtonDown("JFire3"))
+		else if (GamepadHelper.IsCancel())
 		{
 			OnCloseClick();
 		}

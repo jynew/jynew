@@ -67,7 +67,8 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		this.gameObject.SetActive(true);
 		this.transform.SetAsLastSibling();
-		if (captureGamepadAxis && _buttonList.Count > 0)
+
+		if (GamepadHelper.GamepadConnected && captureGamepadAxis && _buttonList.Count > 0)
 			changeCurrentSelection(0);
 
 		this.OnShowPanel(allParams);
@@ -84,6 +85,25 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 		VisibilityToggled?.Invoke(this, true);
 	}
+
+	//temporarily comment out the game pad connection state change handler
+	//since cannot poll input joystick names in another thread
+	//private void onGameConnectionStateChange(bool hasGamepad)
+	//{
+	//	if (hasGamepad)
+	//	{
+	//		//hilite the selected item
+	//		changeCurrentSelection(Math.Max(current_selection, 0));
+	//	}
+	//	else
+	//	{
+	//		//unhilite selected item
+	//		if (current_selection > -1)
+	//		{
+	//			changeCurrentSelection(-1);
+	//		}
+	//	}
+	//}
 
 	public void Hide()
 	{
@@ -217,7 +237,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual void handleGamepadButtons()
 	{
-		if (Input.GetButtonDown(confirmButtonName()) && gameObject.activeSelf)
+		if (GamepadHelper.IsButtonPressed(confirmButtonName()) && gameObject.activeSelf)
 		{
 			//trigger button click
 			if (captureGamepadAxis && activeButtons.Length > 0)
@@ -230,8 +250,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		bool dpadMoved = false;
 		if (captureGamepadAxis && gameObject.activeSelf)
 		{
-			var dpadY = Input.GetAxis("DPadY");
-			if (dpadY == -1)
+			if (GamepadHelper.IsDadYMove(true))
 			{
 				if (currentlyReleased)
 				{
@@ -243,7 +262,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 					delayedAxisRelease();
 				}
 			}
-			else if (dpadY == 1)
+			else if (GamepadHelper.IsDadYMove(false))
 			{
 				if (currentlyReleased)
 				{
@@ -253,8 +272,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 					delayedAxisRelease();
 				}
 			}
-			var dpadX = Input.GetAxis("DPadX");
-			if (dpadX == -1)
+			if (GamepadHelper.IsDadXMove(false))
 			{
 				if (currentlyReleased)
 				{
@@ -266,7 +284,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 					delayedAxisRelease();
 				}
 			}
-			else if (dpadX == 1)
+			else if (GamepadHelper.IsDadXMove(true))
 			{
 				if (currentlyReleased)
 				{
@@ -283,7 +301,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 	protected virtual string confirmButtonName()
 	{
-		return "JFire2";
+		return GamepadHelper.CONFIRM_BUTTON;
 	}
 
 	protected virtual void buttonClickAt(int position)
@@ -301,7 +319,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	{
 		get
 		{
-			return 500;
+			return 200;
 		}
 	}
 

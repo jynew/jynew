@@ -410,14 +410,14 @@ namespace Jyx2
         public void AddItem(int itemId, int count)
         {
             var item = Items.Find(it => it.Item.Id == itemId);
-            if (count < 0)
-            {
-                Items.Remove(item);
-            }
 
             if (item != null)
             {
                 item.Count += count;
+
+                //fix issue of using one removed the entire item
+                if (count <  0 && item.Count <= 0)
+                    Items.Remove(item);
             }
             else
             {

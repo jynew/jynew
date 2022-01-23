@@ -114,6 +114,10 @@ public class AIManager
             }
         }
 
+        if (result != null)
+        {
+            return result;
+        }
 
         foreach (var zhaoshi in zhaoshis)
         {

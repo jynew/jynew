@@ -227,7 +227,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 	public override void Update()
 	{
 		if (gameObject.activeSelf)
-			if (Input.GetButtonDown("JFire2"))
+			if (GamepadHelper.IsConfirm())
 			{
 				if (selectionContentCount > 1)
 				{
@@ -239,7 +239,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 					OnMainBgClick();
 				}
 			}
-			else if (Input.GetButtonDown("JFire3"))
+			else if (GamepadHelper.IsCancel())
 			{
 				if (selectionContentCount > 1)
 				{

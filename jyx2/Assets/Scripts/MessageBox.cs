@@ -62,8 +62,8 @@ public class MessageBox : MonoBehaviour
 	private void Update()
 	{
         if (gameObject.activeSelf)
-            if (Input.GetButtonDown("JFire2")
-                || Input.GetButtonDown("JFire3"))
+            if (GamepadHelper.IsConfirm()
+                || GamepadHelper.IsCancel())
                 closeAndCallback();
 	}
 }
