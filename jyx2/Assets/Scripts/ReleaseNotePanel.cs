@@ -32,4 +32,13 @@ public class ReleaseNotePanel : MonoBehaviour
     {
         Show().Forget();
     }
+
+	private void Update()
+	{
+		if (GamepadHelper.IsCancel()
+            || GamepadHelper.IsConfirm())
+		{
+            Jyx2_UIManager.Instance.HideUI(nameof(ReleaseNotePanel));
+        }
+    }
 }
