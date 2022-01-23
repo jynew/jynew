@@ -88,13 +88,10 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		{
 			callback = (Action)allParams[1];
 		}
-
-		MainUIPanel.InBackground = true;
 	}
 
 	protected override void OnHidePanel()
 	{
-		MainUIPanel.InBackground = false;
 		base.OnHidePanel();
 		callback?.Invoke();
 		callback = null;

@@ -46,8 +46,6 @@ public partial class InteractUIPanel : Jyx2_UIBase
 			MainText_Text2.text = allParams[2] as string;
 			m_callback2 = allParams[3] as Action;
 		}
-		
-		MainUIPanel.InBackground = true;
 	}
 
 	void OnBtnClick(int buttonIndex)
@@ -79,7 +77,6 @@ public partial class InteractUIPanel : Jyx2_UIBase
 
 	protected override void OnHidePanel()
 	{
-		MainUIPanel.InBackground = false;
 		base.OnHidePanel();
 		m_callback1 = null;
 		m_callback2 = null;

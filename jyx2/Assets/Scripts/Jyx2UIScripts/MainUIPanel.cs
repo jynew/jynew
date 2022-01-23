@@ -31,16 +31,18 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	private void Instance_UIVisibilityToggled(Jyx2_UIBase arg1, bool arg2)
 	{
-		if (arg1 is BagUIPanel
-			|| arg1 is SystemUIPanel
-			|| arg1 is XiakeUIPanel
-			|| arg1 is InteractUIPanel
-			|| arg1 is ChatUIPanel
-			|| arg1 is GraphicSettingsPanel
-			|| arg1 is GeneralSettingsPanel)
+		if (arg1 is MainUIPanel)
+			return;
+
+		if (arg2)
 		{
-			if (!arg2 && InBackground)
-				InBackground = false;
+			PanelsShowing++;
+		}
+		else
+		{
+			PanelsShowing--;
+			if (PanelsShowing < 0)
+				PanelsShowing = 0;
 		}
 	}
 
@@ -107,17 +109,15 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 	}
 
-	public static bool InBackground = false;
+	public static int PanelsShowing = 0;
 
 	async void OnXiakeBtnClick()
 	{
-		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
 	}
 
 	async void OnBagBtnClick()
 	{
-		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>(OnUseItem));
 	}
 
@@ -276,7 +276,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	async void OnSystemBtnClick()
 	{
-		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
 	}
 
@@ -352,13 +351,13 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	protected override void handleGamepadButtons()
 	{
-		if (!InBackground)
+		if (PanelsShowing == 0)
 			base.handleGamepadButtons();
 	}
 
 	protected override bool handleDpadMove()
 	{
-		if (!InBackground)
+		if (PanelsShowing == 0)
 			return base.handleDpadMove();
 
 		return false;

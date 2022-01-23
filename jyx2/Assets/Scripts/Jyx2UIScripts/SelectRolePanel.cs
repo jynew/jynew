@@ -92,6 +92,13 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			{
 				OnCancelClick();
 			}
+			else if (GamepadHelper.IsAction())
+			{
+				if (current_selection > -1 && current_selection < m_params.roleList.Count)
+				{
+					OnItemClick(roleUIItems[current_selection]);
+				}
+			}
 		}
 	}
 
@@ -174,16 +181,22 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			{
 				OnItemClick(item);
 			});
+
 			bool select = m_params.selectList.Contains(role);
-			item.SetSelect(select);
+			item.SetState(select, false);
 			item.ShowRole(role);
 
 			if (i == 0)
 			{
 				//auto select first item
-				OnItemClick(item);
+				OnItemOver(item, true);
 			}
 		}
+	}
+
+	void OnItemOver(RoleUIItem item, bool over)
+	{
+		item.SetState(false, over);
 	}
 
 	void OnItemClick(RoleUIItem item)
@@ -198,7 +211,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 				return;
 			}
 			m_params.selectList.Remove(role);
-			item.SetSelect(false);
+			item.SetState(false, false);
 		}
 		else
 		{
@@ -208,7 +221,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 				return;
 			}
 			m_params.selectList.Add(role);
-			item.SetSelect(true);
+			item.SetState(true, false);
 		}
 	}
 
@@ -250,8 +263,9 @@ public partial class SelectRolePanel : Jyx2_UIBase
 	protected override void changeCurrentSelection(int num)
 	{
 		if (num > 0 && num < roleUIItems.Count)
-			OnItemClick(roleUIItems[num]);
+			OnItemOver(roleUIItems[num], num == current_selection);
 		
+		current_selection = num;
 		//do nothing for negative select, since this is a toggle multiselect list
 	}
 }

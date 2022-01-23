@@ -78,14 +78,10 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			_interactivePanel = panel.gameObject;
 			panel.gameObject.SetActive(false);
 		}
-
-		//Jyx2_UIManager.Instance.SetMainUIActive(false);
-		MainUIPanel.InBackground = true;
 	}
 
 	protected override void OnHidePanel()
 	{
-		MainUIPanel.InBackground = false;
 		base.OnHidePanel();
 	}
 
