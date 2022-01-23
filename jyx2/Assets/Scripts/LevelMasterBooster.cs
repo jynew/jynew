@@ -36,6 +36,10 @@ public class LevelMasterBooster : MonoBehaviour
 
     private async void Awake()
     {
+#if UNITY_EDITOR
+        BeforeSceneLoad.ColdBind();
+#endif
+        
         await BeforeSceneLoad.loadFinishTask;
 
         //实例化LevelMaster
