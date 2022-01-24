@@ -12,6 +12,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using Jyx2Configs;
+using System.Collections.Generic;
 
 public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 {
@@ -29,20 +30,26 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		BindListener(SystemButton_Button, OnSystemBtnClick);
 	}
 
+	static HashSet<string> IgnorePanelTypes = new HashSet<string>(new[]
+	{
+		"CommonTipsUIPanel"
+	});
+
 	private void Instance_UIVisibilityToggled(Jyx2_UIBase arg1, bool arg2)
 	{
 		if (arg1 is MainUIPanel)
 			return;
 
+		string panelType = arg1.GetType().FullName;
+
 		if (arg2)
 		{
-			PanelsShowing++;
+			if (!IgnorePanelTypes.Contains(panelType))
+				showingPanels.Add(panelType);
 		}
 		else
 		{
-			PanelsShowing--;
-			if (PanelsShowing < 0)
-				PanelsShowing = 0;
+			showingPanels.Remove(panelType);
 		}
 	}
 
@@ -109,7 +116,15 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 	}
 
-	public static int PanelsShowing = 0;
+	public static int PanelsShowing
+	{
+		get
+		{
+			return showingPanels.Count;
+		}
+	}
+
+	static HashSet<string> showingPanels = new HashSet<string>();
 
 	async void OnXiakeBtnClick()
 	{

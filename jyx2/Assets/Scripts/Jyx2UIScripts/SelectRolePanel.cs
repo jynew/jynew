@@ -102,7 +102,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		}
 	}
 
-	protected override void OnDirectionalUp()
+	protected override void OnDirectionalLeft()
 	{
 		if (current_selection == 0)
 			current_selection = m_params.roleList.Count - 1;
@@ -112,7 +112,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		changeCurrentSelection(current_selection);
 	}
 
-	protected override void OnDirectionalDown()
+	protected override void OnDirectionalRight()
 	{
 		if (current_selection == m_params.roleList.Count - 1)
 			current_selection = 0;
@@ -183,7 +183,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			});
 
 			bool select = m_params.selectList.Contains(role);
-			item.SetState(select, false);
+			item.SetState(select, null);
 			item.ShowRole(role);
 
 			if (i == 0)
@@ -196,7 +196,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
 	void OnItemOver(RoleUIItem item, bool over)
 	{
-		item.SetState(false, over);
+		item.SetState(null, over);
 	}
 
 	void OnItemClick(RoleUIItem item)
@@ -211,7 +211,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 				return;
 			}
 			m_params.selectList.Remove(role);
-			item.SetState(false, false);
+			item.SetState(false, null);
 		}
 		else
 		{
@@ -221,7 +221,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 				return;
 			}
 			m_params.selectList.Add(role);
-			item.SetState(true, false);
+			item.SetState(true, null);
 		}
 	}
 
@@ -262,10 +262,13 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
 	protected override void changeCurrentSelection(int num)
 	{
-		if (num > 0 && num < roleUIItems.Count)
-			OnItemOver(roleUIItems[num], num == current_selection);
-		
-		current_selection = num;
-		//do nothing for negative select, since this is a toggle multiselect list
+		if (num >= 0 && num < roleUIItems.Count)
+		{
+			current_selection = num;
+			for (var i = 0; i < roleUIItems.Count; i++)
+			{
+				OnItemOver(roleUIItems[i], i == num);
+			}
+		}
 	}
 }
