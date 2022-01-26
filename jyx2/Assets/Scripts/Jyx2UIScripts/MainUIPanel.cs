@@ -12,6 +12,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using Jyx2Configs;
+using System.Collections.Generic;
 
 public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 {
@@ -29,18 +30,26 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		BindListener(SystemButton_Button, OnSystemBtnClick);
 	}
 
+	static HashSet<string> IgnorePanelTypes = new HashSet<string>(new[]
+	{
+		"CommonTipsUIPanel"
+	});
+
 	private void Instance_UIVisibilityToggled(Jyx2_UIBase arg1, bool arg2)
 	{
-		if (arg1 is BagUIPanel
-			|| arg1 is SystemUIPanel
-			|| arg1 is XiakeUIPanel
-			|| arg1 is InteractUIPanel
-			|| arg1 is ChatUIPanel
-			|| arg1 is GraphicSettingsPanel
-			|| arg1 is GeneralSettingsPanel)
+		if (arg1 is MainUIPanel)
+			return;
+
+		string panelType = arg1.GetType().FullName;
+
+		if (arg2)
 		{
-			if (!arg2 && InBackground)
-				InBackground = false;
+			if (!IgnorePanelTypes.Contains(panelType))
+				showingPanels.Add(panelType);
+		}
+		else
+		{
+			showingPanels.Remove(panelType);
 		}
 	}
 
@@ -107,17 +116,23 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 	}
 
-	public static bool InBackground = false;
+	public static int PanelsShowing
+	{
+		get
+		{
+			return showingPanels.Count;
+		}
+	}
+
+	static HashSet<string> showingPanels = new HashSet<string>();
 
 	async void OnXiakeBtnClick()
 	{
-		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
 	}
 
 	async void OnBagBtnClick()
 	{
-		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>(OnUseItem));
 	}
 
@@ -276,7 +291,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	async void OnSystemBtnClick()
 	{
-		InBackground = true;
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
 	}
 
@@ -352,13 +366,13 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	protected override void handleGamepadButtons()
 	{
-		if (!InBackground)
+		if (PanelsShowing == 0)
 			base.handleGamepadButtons();
 	}
 
 	protected override bool handleDpadMove()
 	{
-		if (!InBackground)
+		if (PanelsShowing == 0)
 			return base.handleDpadMove();
 
 		return false;

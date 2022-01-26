@@ -25,8 +25,8 @@ public partial class InteractUIPanel : Jyx2_UIBase
 	{
 		InitTrans();
 
-		BindListener(MainBg_Button1, () => OnBtnClick(0));
-		BindListener(MainBg_Button2, () => OnBtnClick(1));
+		BindListener(MainBg_Button1, () => OnBtnClick(0), false);
+		BindListener(MainBg_Button2, () => OnBtnClick(1), false);
 	}
 
 	protected override void OnShowPanel(params object[] allParams)
@@ -46,8 +46,6 @@ public partial class InteractUIPanel : Jyx2_UIBase
 			MainText_Text2.text = allParams[2] as string;
 			m_callback2 = allParams[3] as Action;
 		}
-		
-		MainUIPanel.InBackground = true;
 	}
 
 	void OnBtnClick(int buttonIndex)
@@ -57,7 +55,7 @@ public partial class InteractUIPanel : Jyx2_UIBase
 		temp?.Invoke();
 	}
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
 		if (gameObject.activeSelf)
 			if (LevelMaster.Instance?.IsPlayerCanControl() ?? true)
@@ -79,7 +77,6 @@ public partial class InteractUIPanel : Jyx2_UIBase
 
 	protected override void OnHidePanel()
 	{
-		MainUIPanel.InBackground = false;
 		base.OnHidePanel();
 		m_callback1 = null;
 		m_callback2 = null;

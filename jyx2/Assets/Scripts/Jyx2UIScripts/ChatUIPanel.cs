@@ -78,14 +78,10 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			_interactivePanel = panel.gameObject;
 			panel.gameObject.SetActive(false);
 		}
-
-		//Jyx2_UIManager.Instance.SetMainUIActive(false);
-		MainUIPanel.InBackground = true;
 	}
 
 	protected override void OnHidePanel()
 	{
-		MainUIPanel.InBackground = false;
 		base.OnHidePanel();
 	}
 
@@ -224,7 +220,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		Name_RectTransform.anchoredPosition = new Vector2(headId == 0 ? -450 : 450, 280);
 	}
 
-	public override void Update()
+	protected override void handleGamepadButtons()
 	{
 		if (gameObject.activeSelf)
 			if (GamepadHelper.IsConfirm())

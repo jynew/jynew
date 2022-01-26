@@ -92,10 +92,17 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			{
 				OnCancelClick();
 			}
+			else if (GamepadHelper.IsAction())
+			{
+				if (current_selection > -1 && current_selection < m_params.roleList.Count)
+				{
+					OnItemClick(roleUIItems[current_selection]);
+				}
+			}
 		}
 	}
 
-	protected override void OnDirectionalUp()
+	protected override void OnDirectionalLeft()
 	{
 		if (current_selection == 0)
 			current_selection = m_params.roleList.Count - 1;
@@ -105,7 +112,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		changeCurrentSelection(current_selection);
 	}
 
-	protected override void OnDirectionalDown()
+	protected override void OnDirectionalRight()
 	{
 		if (current_selection == m_params.roleList.Count - 1)
 			current_selection = 0;
@@ -174,16 +181,22 @@ public partial class SelectRolePanel : Jyx2_UIBase
 			{
 				OnItemClick(item);
 			});
+
 			bool select = m_params.selectList.Contains(role);
-			item.SetSelect(select);
+			item.SetState(select, null);
 			item.ShowRole(role);
 
 			if (i == 0)
 			{
 				//auto select first item
-				OnItemClick(item);
+				OnItemOver(item, true);
 			}
 		}
+	}
+
+	void OnItemOver(RoleUIItem item, bool over)
+	{
+		item.SetState(null, over);
 	}
 
 	void OnItemClick(RoleUIItem item)
@@ -198,7 +211,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 				return;
 			}
 			m_params.selectList.Remove(role);
-			item.SetSelect(false);
+			item.SetState(false, null);
 		}
 		else
 		{
@@ -208,7 +221,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 				return;
 			}
 			m_params.selectList.Add(role);
-			item.SetSelect(true);
+			item.SetState(true, null);
 		}
 	}
 
@@ -249,9 +262,13 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
 	protected override void changeCurrentSelection(int num)
 	{
-		if (num > 0 && num < roleUIItems.Count)
-			OnItemClick(roleUIItems[num]);
-		
-		//do nothing for negative select, since this is a toggle multiselect list
+		if (num >= 0 && num < roleUIItems.Count)
+		{
+			current_selection = num;
+			for (var i = 0; i < roleUIItems.Count; i++)
+			{
+				OnItemOver(roleUIItems[i], i == num);
+			}
+		}
 	}
 }

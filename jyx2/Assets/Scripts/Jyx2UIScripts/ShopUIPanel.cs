@@ -56,8 +56,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			});
 		});
 
-		BindListener(CloseBtn_Button, OnCloseClick);
-		BindListener(ConfirmBtn_Button, OnConfirmClick);
+		BindListener(CloseBtn_Button, OnCloseClick, false);
+		BindListener(ConfirmBtn_Button, OnConfirmClick, false);
 	}
 
 	int GetHasBuyNum(int id)
@@ -88,13 +88,10 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		{
 			callback = (Action)allParams[1];
 		}
-
-		MainUIPanel.InBackground = true;
 	}
 
 	protected override void OnHidePanel()
 	{
-		MainUIPanel.InBackground = false;
 		base.OnHidePanel();
 		callback?.Invoke();
 		callback = null;
