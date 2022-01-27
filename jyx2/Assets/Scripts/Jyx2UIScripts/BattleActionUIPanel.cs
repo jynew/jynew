@@ -142,6 +142,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	private void changeCurrentZhaoshiSelection(int number)
 	{
+		if (zhaoshiList.Count == 0)
+			return;
+
 		var curBtn = zhaoshiList.ElementAt(number);
 		var curText = getButtonText(curBtn.Key);
 		if (curText != null)
@@ -217,9 +220,10 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		{
 			if (GamepadHelper.IsAction()) // x/square button invoke zhaoshi 
 			{
+				if (zhaoshiList.Count == 0)
+					return;
 				var zhao = zhaoshiList.ElementAt(cur_zhaoshi);
 				zhao.Value?.Invoke();
-				return;
 			}
 
 		}
