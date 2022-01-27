@@ -934,21 +934,25 @@ public class LevelMaster : MonoBehaviour
 
 	private void Update()
 	{
+		Button button = Jyx2InteractiveButton.GetInteractiveButton();
 
 		if (GamepadHelper.GamepadConnected != gamepadConnected)
 		{
 			gamepadConnected = GamepadHelper.GamepadConnected;
 
-			Transform trans = interactiveButton.gameObject.transform;
-			var image = trans.GetChild(2).GetComponentInChildren<Image>();
-			image.gameObject.SetActive(gamepadConnected);
+			Transform trans = button?.gameObject.transform;
+			if (trans != null)
+			{
+				var image = trans.GetChild(2).GetComponentInChildren<Image>();
+				image.gameObject.SetActive(gamepadConnected);
+			}
 		}
 
 		if (gamepadConnected)
 		{
-			if (GamepadHelper.IsConfirm() && interactiveButton.gameObject.activeSelf)
+			if (GamepadHelper.IsConfirm() && button != null && button.gameObject.activeSelf)
 			{
-				interactiveButton.onClick?.Invoke();
+				button.onClick?.Invoke();
 			}
 		}
 	}

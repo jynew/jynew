@@ -114,6 +114,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	{
 		childMgr.RefreshChildCount(curShopData.ShopItems.Count);
 		List<Transform> childList = childMgr.GetUsingTransList();
+
 		for (int i = 0; i < childList.Count; i++)
 		{
 			Transform trans = childList[i];

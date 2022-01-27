@@ -125,7 +125,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		get
 		{
 			return _buttonList.Keys
-				.Where(b => b?.gameObject?.activeSelf ?? false)
+				.Where(b => b != null && !b.IsDestroyed() && b.gameObject.activeSelf)
 				.ToArray();
 		}
 	}
@@ -189,6 +189,18 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			var nav = Navigation.defaultNavigation;
 			nav.mode = Navigation.Mode.None;
 			button.navigation = nav;
+		}
+	}
+
+	protected virtual void cleanupDestroyedButtons()
+	{
+		var buttons = _buttonList.Keys.ToArray();
+		foreach (var button in buttons)
+		{
+			if (button.IsDestroyed())
+			{
+				_buttonList.Remove(button);
+			}
 		}
 	}
 

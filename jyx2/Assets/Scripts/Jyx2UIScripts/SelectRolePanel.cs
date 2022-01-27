@@ -166,6 +166,9 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
 		roleUIItems = new List<RoleUIItem>();
 
+		//clean up any destroyed buttons of buttons listing
+		cleanupDestroyedButtons();
+
 		for (int i = 0; i < m_params.roleList.Count; i++)
 		{
 			var role = m_params.roleList[i];
