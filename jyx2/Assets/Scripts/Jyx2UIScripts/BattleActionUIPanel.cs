@@ -159,7 +159,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		}
 	}
 
-	protected virtual void OnDirectionalRight()
+	protected override void OnDirectionalRight()
 	{
 		if (zhaoshiList.Count == 0)
 			return;
@@ -172,7 +172,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		changeCurrentZhaoshiSelection(cur_zhaoshi);
 	}
 
-	protected virtual void OnDirectionalLeft()
+	protected override void OnDirectionalLeft()
 	{
 		if (zhaoshiList.Count == 0)
 			return;
@@ -188,45 +188,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	public override void Update()
 	{
 		base.Update();
-
-		if (captureGamepadAxis && gameObject.activeSelf)
-		{
-			if (GamepadHelper.IsDadXMove(true))
-			{
-				rightDpadPressed = true;
-				if (rightDpadPressed && currentlyReleased)
-				{
-					OnDirectionalRight();
-					currentlyReleased = false;
-
-					delayedAxisRelease();
-					return;
-				}
-			}
-			else if (GamepadHelper.IsDadXMove(false))
-			{
-				leftDpadPressed = true;
-				if (leftDpadPressed && currentlyReleased)
-				{
-					OnDirectionalLeft();
-					currentlyReleased = false;
-					delayedAxisRelease();
-					return;
-				}
-			}
-		}
-
-		if (gameObject.activeSelf)
-		{
-			if (GamepadHelper.IsAction()) // x/square button invoke zhaoshi 
-			{
-				if (zhaoshiList.Count == 0)
-					return;
-				var zhao = zhaoshiList.ElementAt(cur_zhaoshi);
-				zhao.Value?.Invoke();
-			}
-
-		}
 
 		//显示当前攻击范围
 		if (isSelectMove == false)
@@ -265,6 +226,33 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (dpadMoved)
 			BattleboxHelper.Instance.GamepadMoved = false;
 
+		if (captureGamepadAxis && gameObject.activeSelf)
+		{
+			if (GamepadHelper.IsDadXMove(true))
+			{
+				rightDpadPressed = true;
+				if (rightDpadPressed && currentlyReleased)
+				{
+					OnDirectionalRight();
+					currentlyReleased = false;
+
+					delayedAxisRelease();
+					return dpadMoved;
+				}
+			}
+			else if (GamepadHelper.IsDadXMove(false))
+			{
+				leftDpadPressed = true;
+				if (leftDpadPressed && currentlyReleased)
+				{
+					OnDirectionalLeft();
+					currentlyReleased = false;
+					delayedAxisRelease();
+					return dpadMoved;
+				}
+			}
+		}
+
 		return dpadMoved;
 	}
 
@@ -272,11 +260,21 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		base.handleGamepadButtons();
 
-		if (GamepadHelper.IsCancel())
-			//休息
-			OnRestClick();
-		else if (GamepadHelper.IsJump())
-			OnHealClick();
+		if (gameObject.activeSelf)
+		{
+			if (GamepadHelper.IsCancel())
+				//休息
+				OnRestClick();
+			else if (GamepadHelper.IsJump())
+				OnHealClick();
+			else if (GamepadHelper.IsAction()) // x/square button invoke zhaoshi 
+			{
+				if (m_curItemList.Count == 0)
+					return;
+
+				OnItemClick(m_curItemList[cur_zhaoshi], cur_zhaoshi);
+			}
+		}
 	}
 
 	protected override void buttonClickAt(int position)
@@ -351,6 +349,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		childMgr.RefreshChildCount(zhaoshis.Count);
 		List<Transform> childTransList = childMgr.GetUsingTransList();
 		zhaoshiList.Clear();
+		cur_zhaoshi = 0;
+
 		for (int i = 0; i < zhaoshis.Count; i++)
 		{
 			int index = i;
@@ -363,7 +363,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			m_curItemList.Add(item);
 		}
 
-		changeCurrentZhaoshiSelection(0);
+		if (m_currentRole.CurrentSkill > -1 && m_currentRole.CurrentSkill < zhaoshis.Count)
+			changeCurrentZhaoshiSelection(m_currentRole.CurrentSkill);
 	}
 
 	void bindZhaoshi(Button btn, Action callback)

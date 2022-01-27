@@ -68,7 +68,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		this.gameObject.SetActive(true);
 		this.transform.SetAsLastSibling();
 
-		if (GamepadHelper.GamepadConnected && captureGamepadAxis && _buttonList.Count > 0)
+		if (GamepadHelper.GamepadConnected && captureGamepadAxis && activeButtons.Length > 0)
 			changeCurrentSelection(0);
 
 		this.OnShowPanel(allParams);
