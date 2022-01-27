@@ -41,7 +41,7 @@ namespace Jyx2
             }
         }
 
-        static Button GetInteractiveButton()
+        public static Button GetInteractiveButton()
         {
             var root = GameObject.Find("LevelMaster/UI");
             var btn = root.transform.Find("InteractiveButton").GetComponent<Button>();

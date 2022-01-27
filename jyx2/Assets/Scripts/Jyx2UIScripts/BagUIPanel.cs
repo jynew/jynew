@@ -79,6 +79,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 		//道具类型过滤器
 		int index = 0;
+		currentFilterIndex = 0;
 		foreach (var btn in m_Filters)
 		{
 			btn.onClick.RemoveAllListeners();

@@ -96,9 +96,12 @@ public class RoleUIItem : MonoBehaviour
 
 	public void SetState(bool? selected, bool? over)
 	{
+
+
 		if (selected != null)
 		{
-			m_select.gameObject.SetActive(selected.Value);
+			if (m_select != null)
+				m_select.gameObject.SetActive(selected.Value);
 		}
 
 		if (over != null)
@@ -107,9 +110,11 @@ public class RoleUIItem : MonoBehaviour
 			var allowPerformingOver = selected != null ? !selected.Value : true;
 
 			//turn off over if selected
-			m_over.gameObject.SetActive(over.Value && allowPerformingOver);
+			if (m_over != null)
+				m_over.gameObject.SetActive(over.Value && allowPerformingOver);
 			//always show
-			m_actionButton.gameObject.SetActive(over.Value);
+			if (m_actionButton != null)
+				m_actionButton.gameObject.SetActive(over.Value);
 		}
 	}
 

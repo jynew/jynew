@@ -111,6 +111,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		if (m_roleList == null || m_roleList.Count <= 0)
 			return;
 		RoleInstance role;
+		cleanupDestroyedButtons();
 		for (int i = 0; i < m_roleList.Count; i++)
 		{
 			role = m_roleList[i];
