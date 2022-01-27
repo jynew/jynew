@@ -46,7 +46,7 @@ public class ColorStringDefine
 
     public static Color main_menu_selected = new Color(238/255.0f,39/255.0f,24/255.0f,1.0f);
     public static Color main_menu_normal = new Color(125/255.0f,9/255.0f,0.0f,1.0f);
-    public static Color save_selected = new Color(164/255.0f,164/255.0f,164/255.0f,1.0f);
+    public static Color save_selected = new Color(255/255.0f,150/255.0f,70/255.0f,1.0f);
     public static Color save_normal = new Color(1.0f,1.0f,1.0f);
     public static Color system_item_selected = new Color(1.0f,223/255.0f,181/255.0f);
     public static Color system_item_normal = new Color(1.0f,150/255.0f,16/255.0f,1.0f);

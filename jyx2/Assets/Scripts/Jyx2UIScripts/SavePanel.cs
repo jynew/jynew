@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Keiwando.NFSO;
 using UnityEngine.SceneManagement;
+using System.Globalization;
 
 public partial class SavePanel : Jyx2_UIBase
 {
@@ -115,6 +116,7 @@ public partial class SavePanel : Jyx2_UIBase
 			text.color = i == current_selection
 				? ColorStringDefine.save_selected
 				: ColorStringDefine.save_normal;
+			text.fontStyle = FontStyle.Bold;
 		}
 	}
 
@@ -153,6 +155,7 @@ public partial class SavePanel : Jyx2_UIBase
 	void RefreshSave()
 	{
 		HSUnityTools.DestroyChildren(SaveParent_RectTransform);
+		cleanupDestroyedButtons();
 
         for (int i = 0; i < GameConst.SAVE_COUNT; i++)
         {
@@ -180,8 +183,16 @@ public partial class SavePanel : Jyx2_UIBase
             //特定位置的翻译【SavePanel中没有存档显示空档位的显示问题】
             //---------------------------------------------------------------------------
             txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位".GetContent(nameof(SavePanel)) : summaryInfo;
-            //---------------------------------------------------------------------------
-            //---------------------------------------------------------------------------
+			//---------------------------------------------------------------------------
+			//---------------------------------------------------------------------------
+
+			var date = btn.transform.Find("DateTime").GetComponent<Text>();
+
+			var dateText = GameRuntimeData.GetSaveDate(i)
+				?.ToLocalTime() //save time is utc, need to convert to local time first
+				.ToString("yyyy年M月d日 hh时mm分") ?? "";
+
+			date.text = dateText;
             
             BindListener(btn, new Action(() =>
             {
