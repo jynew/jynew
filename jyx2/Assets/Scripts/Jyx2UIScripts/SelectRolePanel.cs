@@ -124,7 +124,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
 	protected override void OnDirectionalUp()
 	{
-		var next_selection = current_selection -= getColCount();
+		var next_selection = current_selection - getColCount();
 		if (next_selection >= 0)
 		{
 			changeCurrentSelection(next_selection);
@@ -133,7 +133,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
 	protected override void OnDirectionalDown()
 	{
-		var next_selection = current_selection += getColCount();
+		var next_selection = current_selection + getColCount();
 		if (next_selection < roleUIItems.Count)
 		{
 			changeCurrentSelection(next_selection);
