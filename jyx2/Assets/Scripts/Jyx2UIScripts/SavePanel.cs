@@ -208,7 +208,7 @@ public partial class SavePanel : Jyx2_UIBase
 
 			var dateText = GameRuntimeData.GetSaveDate(i)
 				?.ToLocalTime() //save time is utc, need to convert to local time first
-				.ToString("yyyy年M月d日 hh时mm分") ?? "";
+				.ToString("yyyy年M月d日 H时m分") ?? "";
 
 			date.text = dateText;
 
