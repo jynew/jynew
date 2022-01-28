@@ -87,6 +87,8 @@ public partial class SavePanel : Jyx2_UIBase
 		}), "");
 	}
 
+	volatile static int _current_selection = 0;
+
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
@@ -102,6 +104,7 @@ public partial class SavePanel : Jyx2_UIBase
 		(ImButton_Button.gameObject).SetActive(!isHouse);
 		(ExButton_Button.gameObject).SetActive(!isHouse);
 		RefreshSave();
+		current_selection = _current_selection;
 		hiliteSaveItem();
 	}
 
@@ -110,6 +113,7 @@ public partial class SavePanel : Jyx2_UIBase
 	void ChangeSelection(int num)
 	{
 		current_selection += num;
+		_current_selection = current_selection;
 		hiliteSaveItem();
 	}
 
