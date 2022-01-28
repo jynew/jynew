@@ -257,9 +257,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	private void blockConfirm(BattleBlockData block)
 	{
-		if (!BattleboxHelper.Instance.GamepadMoved)
-			return;
-
 		changeCurrentSelection(-1);
 
 		if (isSelectMove)
