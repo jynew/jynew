@@ -145,6 +145,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (zhaoshiList.Count == 0)
 			return;
 
+		cur_zhaoshi = number;
+
 		var curBtn = zhaoshiList.ElementAt(number);
 		var curText = getButtonText(curBtn.Key);
 		if (curText != null)
@@ -163,13 +165,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		if (zhaoshiList.Count == 0)
 			return;
+		var nextZhaoshi = (cur_zhaoshi == zhaoshiList.Count - 1) ? 
+			0 : 
+			cur_zhaoshi + 1;
 
-		if (cur_zhaoshi == zhaoshiList.Count - 1)
-			cur_zhaoshi = 0;
-		else
-			cur_zhaoshi++;
-
-		changeCurrentZhaoshiSelection(cur_zhaoshi);
+		changeCurrentZhaoshiSelection(nextZhaoshi);
 	}
 
 	protected override void OnDirectionalLeft()
@@ -177,12 +177,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (zhaoshiList.Count == 0)
 			return;
 
-		if (cur_zhaoshi == 0)
-			cur_zhaoshi = zhaoshiList.Count - 1;
-		else
-			cur_zhaoshi--;
+		var nextZhaoshi = (cur_zhaoshi == 0) ?
+			cur_zhaoshi = zhaoshiList.Count - 1:
+			cur_zhaoshi - 1;
 
-		changeCurrentZhaoshiSelection(cur_zhaoshi);
+		changeCurrentZhaoshiSelection(nextZhaoshi);
 	}
 
 	public override void Update()
@@ -349,7 +348,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		childMgr.RefreshChildCount(zhaoshis.Count);
 		List<Transform> childTransList = childMgr.GetUsingTransList();
 		zhaoshiList.Clear();
-		cur_zhaoshi = 0;
 
 		for (int i = 0; i < zhaoshis.Count; i++)
 		{
@@ -364,7 +362,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		}
 
 		if (m_currentRole.CurrentSkill > -1 && m_currentRole.CurrentSkill < zhaoshis.Count)
+		{
 			changeCurrentZhaoshiSelection(m_currentRole.CurrentSkill);
+		}
 	}
 
 	void bindZhaoshi(Button btn, Action callback)
@@ -376,7 +376,13 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	void OnItemClick(SkillUIItem item, int index)
 	{
 		m_currentRole.CurrentSkill = index;
-		RefreshSkill();
+		//RefreshSkill(); //why!!!
+
+		m_curItemList.ForEach(t =>
+		{
+			t.SetSelect(t == item);
+		});
+
 		m_currentRole.SwitchAnimationToSkill(item.GetSkill().Data);
 		ShowAttackRangeSelector(item.GetSkill());
 	}
