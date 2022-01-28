@@ -85,7 +85,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		callback = (Action<BattleLoop.ManualResult>)allParams[3];
 		battleModel = BattleManager.Instance.GetModel();
 
-		BattleboxHelper.Instance.dpadMovedToBlock += ondpadMovedBlock;
+		BattleboxHelper.Instance.analogLeftMovedToBlock += onBattleBlockMove;
 		BattleboxHelper.Instance.blockConfirmed += gamepadBlockConfirmed;
 
 		//Cancel_Button.gameObject.SetActive(false);
@@ -109,7 +109,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		changeCurrentSelection(-1);
 	}
 
-	private void ondpadMovedBlock(BattleBlockData obj)
+	private void onBattleBlockMove(BattleBlockData obj)
 	{
 		//hide the hilite
 		changeCurrentSelection(-1);
@@ -223,34 +223,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		bool dpadMoved = base.handleDpadMove();
 		if (dpadMoved)
-			BattleboxHelper.Instance.GamepadMoved = false;
-
-		if (captureGamepadAxis && gameObject.activeSelf)
-		{
-			if (GamepadHelper.IsDadXMove(true))
-			{
-				rightDpadPressed = true;
-				if (rightDpadPressed && currentlyReleased)
-				{
-					OnDirectionalRight();
-					currentlyReleased = false;
-
-					delayedAxisRelease();
-					return dpadMoved;
-				}
-			}
-			else if (GamepadHelper.IsDadXMove(false))
-			{
-				leftDpadPressed = true;
-				if (leftDpadPressed && currentlyReleased)
-				{
-					OnDirectionalLeft();
-					currentlyReleased = false;
-					delayedAxisRelease();
-					return dpadMoved;
-				}
-			}
-		}
+			BattleboxHelper.Instance.GamepadMoved = false;		
 
 		return dpadMoved;
 	}
@@ -385,6 +358,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		m_currentRole.SwitchAnimationToSkill(item.GetSkill().Data);
 		ShowAttackRangeSelector(item.GetSkill());
+
+		changeCurrentSelection(-1);
 	}
 
 	void OnCancelClick()
