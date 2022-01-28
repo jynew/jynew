@@ -46,8 +46,19 @@ public class ModPanel : MonoBehaviour
         }
     }
 
+    bool gamepadOn;
+
     void Update()
     {
+        var gamepadButtonIcon = StartButton.gameObject.transform
+            .GetChild(1).GetComponentInChildren<Image>();
+
+        if (gamepadOn != GamepadHelper.GamepadConnected)
+		{
+            gamepadOn = GamepadHelper.GamepadConnected;
+            gamepadButtonIcon.gameObject.SetActive(gamepadOn);
+        }
+
         if (GamepadHelper.IsConfirm()
             || GamepadHelper.IsCancel())
             onStart();

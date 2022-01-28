@@ -302,6 +302,9 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 	private int getColCount()
 	{
+		if (visibleItems.Count == 0)
+			return 1;
+
 		return (int)Math.Floor(ItemRoot_RectTransform.rect.width / visibleItems[0].rectTransform().rect.width);
 	}
 

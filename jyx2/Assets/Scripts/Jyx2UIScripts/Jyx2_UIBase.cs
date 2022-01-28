@@ -68,9 +68,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		this.gameObject.SetActive(true);
 		this.transform.SetAsLastSibling();
 
-		if (GamepadHelper.GamepadConnected && captureGamepadAxis && _buttonList.Count > 0)
-			changeCurrentSelection(0);
-
 		this.OnShowPanel(allParams);
 		if (this is IUIAnimator)
 		{
@@ -84,6 +81,17 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		}
 
 		VisibilityToggled?.Invoke(this, true);
+
+		if (resetCurrentSelectionOnShow && GamepadHelper.GamepadConnected && captureGamepadAxis && activeButtons.Length > 0)
+			changeCurrentSelection(0);
+	}
+
+	protected virtual bool resetCurrentSelectionOnShow
+	{
+		get
+		{
+			return true;
+		}
 	}
 
 	//temporarily comment out the game pad connection state change handler

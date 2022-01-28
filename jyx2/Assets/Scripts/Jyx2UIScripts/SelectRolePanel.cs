@@ -122,6 +122,24 @@ public partial class SelectRolePanel : Jyx2_UIBase
 		changeCurrentSelection(current_selection);
 	}
 
+	protected override void OnDirectionalUp()
+	{
+		var next_selection = current_selection - getColCount();
+		if (next_selection >= 0)
+		{
+			changeCurrentSelection(next_selection);
+		}
+	}
+
+	protected override void OnDirectionalDown()
+	{
+		var next_selection = current_selection + getColCount();
+		if (next_selection < roleUIItems.Count)
+		{
+			changeCurrentSelection(next_selection);
+		}
+	}
+
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
@@ -168,6 +186,9 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
 		//clean up any destroyed buttons of buttons listing
 		cleanupDestroyedButtons();
+
+		//reset to first item, since the first item gets selected anyway
+		current_selection = 0;
 
 		for (int i = 0; i < m_params.roleList.Count; i++)
 		{
@@ -273,5 +294,14 @@ public partial class SelectRolePanel : Jyx2_UIBase
 				OnItemOver(roleUIItems[i], i == num);
 			}
 		}
+	}
+
+	private int getColCount()
+	{
+		if (roleUIItems.Count == 0)
+		{
+			return 1;
+		}
+		return (int)Math.Floor(RoleParent_RectTransform.rect.width / roleUIItems[0].rectTransform().rect.width);
 	}
 }

@@ -261,8 +261,8 @@ public class BattleboxHelper : MonoBehaviour
 
 			GamepadMoved = true;
 
-			if (dpadMovedToBlock != null)
-				dpadMovedToBlock(newSelectedBlock);
+			if (analogLeftMovedToBlock != null)
+				analogLeftMovedToBlock(newSelectedBlock);
 
 			return true;
 		}
@@ -270,7 +270,7 @@ public class BattleboxHelper : MonoBehaviour
 		return false;
 	}
 
-	public event Action<BattleBlockData> dpadMovedToBlock;
+	public event Action<BattleBlockData> analogLeftMovedToBlock;
 	public event Action<BattleBlockData> blockConfirmed;
 
 	private void initXPos()

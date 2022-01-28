@@ -76,10 +76,10 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		RefreshNameMapName();
 		RefreshDynamic();
 
-		selectSelectButton();
+		selectSystemButton();
 	}
 
-	private void selectSelectButton()
+	private void selectSystemButton()
 	{
 		var systemButtonIndex = activeButtons.ToList().IndexOf(SystemButton_Button);
 		if (systemButtonIndex > -1)
@@ -367,7 +367,9 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	protected override void handleGamepadButtons()
 	{
 		if (PanelsShowing == 0)
+		{
 			base.handleGamepadButtons();
+		}
 	}
 
 	protected override bool handleDpadMove()
@@ -377,4 +379,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 		return false;
 	}
+
+	//don't reset to 0 for this main, since it will select the system button automatically
+	protected override bool resetCurrentSelectionOnShow => false;
 }
