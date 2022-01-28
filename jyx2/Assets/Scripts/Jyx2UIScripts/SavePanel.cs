@@ -102,13 +102,19 @@ public partial class SavePanel : Jyx2_UIBase
 		(ImButton_Button.gameObject).SetActive(!isHouse);
 		(ExButton_Button.gameObject).SetActive(!isHouse);
 		RefreshSave();
-		current_selection = 0;
-		ChangeSelection(0);
+		hiliteSaveItem();
 	}
+
+	protected override bool resetCurrentSelectionOnShow => false;
 
 	void ChangeSelection(int num)
 	{
 		current_selection += num;
+		hiliteSaveItem();
+	}
+
+	private void hiliteSaveItem()
+	{
 		for (int i = 0; i < GameConst.SAVE_COUNT; i++)
 		{
 			var btn = SaveParent_RectTransform.gameObject.transform.GetChild(i).GetComponent<Button>();
@@ -150,6 +156,14 @@ public partial class SavePanel : Jyx2_UIBase
 			{
 				OnBackClick();
 			}
+			else if (GamepadHelper.IsJump())
+			{
+				OnExportClick();
+			}
+			else if (GamepadHelper.IsAction())
+			{
+				OnImportClick();
+			}
 	}
 
 	void RefreshSave()
@@ -157,32 +171,32 @@ public partial class SavePanel : Jyx2_UIBase
 		HSUnityTools.DestroyChildren(SaveParent_RectTransform);
 		cleanupDestroyedButtons();
 
-        for (int i = 0; i < GameConst.SAVE_COUNT; i++)
-        {
-            var btn = Instantiate(SaveItem_Button,SaveParent_RectTransform);
-            //btn.transform.SetParent(SaveParent_RectTransform);
-            btn.transform.localScale = Vector3.one;
-            btn.name = i.ToString();
-            Text title = btn.transform.Find("Title").GetComponent<Text>();
-            //---------------------------------------------------------------------------
-            //title.text = "存档" + GameConst.GetUPNumber(i+1);
-            //---------------------------------------------------------------------------
-            //特定位置的翻译【存档界面存档一、存档二、存档三的显示】
-            //---------------------------------------------------------------------------
-            title.text = "存档".GetContent(nameof(SavePanel)) + GameConst.GetUPNumber(i+1).GetContent(nameof(SavePanel));
-            //---------------------------------------------------------------------------
-            //---------------------------------------------------------------------------
+		for (int i = 0; i < GameConst.SAVE_COUNT; i++)
+		{
+			var btn = Instantiate(SaveItem_Button, SaveParent_RectTransform);
+			//btn.transform.SetParent(SaveParent_RectTransform);
+			btn.transform.localScale = Vector3.one;
+			btn.name = i.ToString();
+			Text title = btn.transform.Find("Title").GetComponent<Text>();
+			//---------------------------------------------------------------------------
+			//title.text = "存档" + GameConst.GetUPNumber(i+1);
+			//---------------------------------------------------------------------------
+			//特定位置的翻译【存档界面存档一、存档二、存档三的显示】
+			//---------------------------------------------------------------------------
+			title.text = "存档".GetContent(nameof(SavePanel)) + GameConst.GetUPNumber(i + 1).GetContent(nameof(SavePanel));
+			//---------------------------------------------------------------------------
+			//---------------------------------------------------------------------------
 
 			var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
 
-            string summaryInfo = GameRuntimeData.GetSaveSummary(i);
-            
-            //---------------------------------------------------------------------------
-            //txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
-            //---------------------------------------------------------------------------
-            //特定位置的翻译【SavePanel中没有存档显示空档位的显示问题】
-            //---------------------------------------------------------------------------
-            txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位".GetContent(nameof(SavePanel)) : summaryInfo;
+			string summaryInfo = GameRuntimeData.GetSaveSummary(i);
+
+			//---------------------------------------------------------------------------
+			//txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
+			//---------------------------------------------------------------------------
+			//特定位置的翻译【SavePanel中没有存档显示空档位的显示问题】
+			//---------------------------------------------------------------------------
+			txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位".GetContent(nameof(SavePanel)) : summaryInfo;
 			//---------------------------------------------------------------------------
 			//---------------------------------------------------------------------------
 
@@ -193,13 +207,13 @@ public partial class SavePanel : Jyx2_UIBase
 				.ToString("yyyy年M月d日 hh时mm分") ?? "";
 
 			date.text = dateText;
-            
-            BindListener(btn, new Action(() =>
-            {
-                OnSaveItemClick(int.Parse(btn.name));
-            }), false);
-        }
-    }
+
+			BindListener(btn, new Action(() =>
+			{
+				OnSaveItemClick(int.Parse(btn.name));
+			}), false);
+		}
+	}
 
 	protected override void OnHidePanel()
 	{
