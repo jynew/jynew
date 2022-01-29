@@ -125,7 +125,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 			bool isSelect = (m_currentRole == role);
 			if (isSelect)
 				m_currentShowItem = item;
-			item.SetState(isSelect, false);
+			item.SetState(isSelect, isSelect);
 			item.ShowRole(role);
 		}
 	}
@@ -139,7 +139,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 			m_currentShowItem.SetState(false, false);
 
 		m_currentShowItem = item;
-		m_currentShowItem.SetState(true, false);
+		m_currentShowItem.SetState(true, true);
 
 		m_currentRole = m_currentShowItem.GetShowRole();
 		RefreshCurrent();

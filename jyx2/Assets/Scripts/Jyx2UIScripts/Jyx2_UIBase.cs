@@ -208,7 +208,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	}
 
 
-	private void toggleGamepadButtonImage(Button button, bool forceOff = false)
+	protected void toggleGamepadButtonImage(Button button, bool forceOff = false)
 	{
 		//toggle image visibility is there is an image on this button
 		var image = getButtonImage(button);
@@ -286,7 +286,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			//toggle all button images
 			var buttons = this.gameObject.GetComponentsInChildren<Button>(true)
 				.Where(b => b != null);
-			List<Button> activeButtonsList = activeButtons.ToList();
 			foreach (var button in buttons)
 			{
 				toggleGamepadButtonImage(button);

@@ -13,6 +13,7 @@ using System;
 using System.Linq;
 using Jyx2Configs;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 {
@@ -28,14 +29,28 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		BindListener(SystemButton_Button, OnSystemBtnClick);
 	}
 
+	public override void BindListener(UnityEngine.UI.Button button, Action callback, bool supportGamepadButtonsNav = true)
+	{
+		base.BindListener(button, callback, supportGamepadButtonsNav);
+		getButtonImage(button)?.gameObject.SetActive(false);
+	}
+
 	static HashSet<string> IgnorePanelTypes = new HashSet<string>(new[]
 	{
 		"CommonTipsUIPanel"
 	});
+	private bool initialized;
 
 	public override void Update()
 	{
 		base.Update();
+
+		if (!initialized)
+		{
+			selectSystemButton();
+			initialized = true;
+		}
+
 		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182));
 		if (Compass.gameObject.activeSelf)
 		{
@@ -55,8 +70,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		base.OnShowPanel(allParams);
 		RefreshNameMapName();
 		RefreshDynamic();
-
-		selectSystemButton();
 	}
 
 	private void selectSystemButton()
@@ -65,6 +78,16 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		if (systemButtonIndex > -1)
 		{
 			changeCurrentSelection(systemButtonIndex);
+		}
+	}
+
+	protected override void changeCurrentSelection(int num)
+	{
+		base.changeCurrentSelection(num);
+		for (var i = 0; i < activeButtons.Length; i++)
+		{
+			var button = activeButtons[i];
+			getButtonImage(button)?.gameObject.SetActive(i == num);
 		}
 	}
 
