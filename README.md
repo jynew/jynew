@@ -116,3 +116,7 @@
 * 开发者Q群 749167552 （入群密码是本代码仓库名称）
 * 玩家Q群 480072818
 
+## 感谢支持
+
+[JetBrains Rider](https://www.jetbrains.com/community/opensource/#support)
+

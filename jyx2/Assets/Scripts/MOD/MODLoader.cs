@@ -89,7 +89,7 @@ namespace Jyx2.MOD
             var allAssets = await Addressables.LoadAssetsAsync<T>(uris, null, Addressables.MergeMode.Union);
             var commonKeys = uris.Select(uri => uri.ToLower()).Intersect(Remap.Keys);
             var assets = commonKeys.Select(key => Remap[key].Ab.LoadAsset<T>(Remap[key].Name));
-            return assets.Union(allAssets).ToList();
+            return allAssets.Union(assets).ToList();
         }
 #endregion
 
