@@ -7,6 +7,7 @@ if AskBattle() == true then goto label0 end;
     if TryBattle(14) == false then goto label1 end;
         ModifyEvent(-2, -2, -2, -2, 100, -1, -1, -2, -2, -2, -2, -2, -2);
         SetScenceMap(-2, 1, 21, 17, 0);
+        jyx2_FixMapObject("灵蛇岛开门",1);
         LightScence();
         Talk(0, "老婆婆，我想请问你天有多高，地有多厚啊？我真的不知道耶！", "talkname0", 1);
         Talk(15, "哼！", "talkname15", 0);
