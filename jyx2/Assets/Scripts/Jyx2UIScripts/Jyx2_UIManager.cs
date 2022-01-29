@@ -11,6 +11,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2.MOD;
@@ -63,7 +64,40 @@ public class Jyx2_UIManager : MonoBehaviour
         m_topParent = transform.Find("Top");
     }
 
-    public async void GameStart()
+    public bool IsTopVisibleUI(Jyx2_UIBase ui)
+	{
+        if (!ui.gameObject.activeSelf)
+            return false;
+
+        if (ui.Layer == UILayer.MainUI)
+		{
+			//make sure no normal and popup ui on top
+			return m_normalUIStack.Count == 0 &&
+				(noInterferingPopupUI());
+		}
+		else if (ui.Layer == UILayer.NormalUI)
+		{
+            return m_normalUIStack.Peek() == ui && noInterferingPopupUI();
+		}
+        else if (ui.Layer == UILayer.PopupUI)
+		{
+            return m_PopUIStack.Peek() == ui;
+		}
+        else if (ui.Layer == UILayer.Top)
+		{
+            return true;
+		}
+
+        return false;
+	}
+
+	private bool noInterferingPopupUI()
+	{
+        //common tips panel has no interaction, doesn't count towards active uis
+        return m_PopUIStack.Count == 0 || (m_PopUIStack.All(p => p is CommonTipsUIPanel));
+	}
+
+	public async void GameStart()
     {
         await ShowUIAsync(nameof(GameMainMenu));
         //---------------------------------------------------------------------------

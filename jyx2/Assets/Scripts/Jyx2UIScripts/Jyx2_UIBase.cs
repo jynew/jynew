@@ -148,8 +148,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 			if (buttonText != null)
 				buttonText.color = i == current_selection ? selectedButtonColor() : normalButtonColor();
-
-			toggleGamepadButtonImage(activeButtons[i], i != current_selection);
 		}
 	}
 
@@ -185,9 +183,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		{
 			if (supportGamepadButtonsNav)
 				_buttonList[button] = callback;
-
-			//only deal with buttons don't support nav for now, since those buttons are fixed functionalities
-			toggleGamepadButtonImage(button, supportGamepadButtonsNav);
 
 			button.onClick.RemoveAllListeners();
 			button.onClick.AddListener(() =>
@@ -294,26 +289,15 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			List<Button> activeButtonsList = activeButtons.ToList();
 			foreach (var button in buttons)
 			{
-				var buttonIndex = activeButtonsList.IndexOf(button);
-
-				if (buttonIndex > -1)
-					if (buttonIndex != current_selection)
-					{
-						//turn off unselected
-						toggleGamepadButtonImage(button, true);
-					}
-					else
-					{
-						toggleGamepadButtonImage(button);
-					}
-				else
-					toggleGamepadButtonImage(button);
+				toggleGamepadButtonImage(button);
 			}
 		}
 
-		handleDpadMove();
-
-		handleGamepadButtons();
+		if (isOnTop())
+		{
+			handleDpadMove();
+			handleGamepadButtons();
+		}
 	}
 
 	protected virtual void handleGamepadButtons()
@@ -324,6 +308,11 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			if (captureGamepadAxis && activeButtons.Length > 0)
 				buttonClickAt(current_selection);
 		}
+	}
+
+	protected bool isOnTop()
+	{
+		return Jyx2_UIManager.Instance.IsTopVisibleUI(this);
 	}
 
 	protected virtual bool handleDpadMove()

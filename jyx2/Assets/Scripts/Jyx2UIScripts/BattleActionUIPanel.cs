@@ -73,6 +73,19 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		return null;
 	}
 
+	protected Image getZhaoshiButtonImage(Button button)
+	{
+		Transform trans = button.gameObject.transform;
+		for (var i = 0; i < trans.childCount; i++)
+		{
+			var image = trans.GetChild(i).GetComponent<Image>();
+			if (image != null && image.name == "ActionIcon")
+				return image;
+		}
+
+		return null;
+	}
+
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
@@ -113,6 +126,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		//hide the hilite
 		changeCurrentSelection(-1);
+		//hide the zhaoshi selection
+		changeCurrentZhaoshiSelection(-1);
 	}
 
 	private void gamepadBlockConfirmed(BattleBlockData obj)
@@ -147,29 +162,71 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		cur_zhaoshi = number;
 
-		var curBtn = zhaoshiList.ElementAt(number);
-		var curText = getButtonText(curBtn.Key);
-		if (curText != null)
+		if (number > -1)
 		{
-			foreach (var btn in zhaoshiList)
+			changeCurrentSelection(-1);
+			BattleboxHelper.Instance.AnalogMoved = false;
+		}
+
+		var curBtnKey = number < 0 || number > zhaoshiList.Count ?
+			null :
+			zhaoshiList.ElementAt(number).Key;
+
+		foreach (var btn in zhaoshiList)
+		{
+			bool isInvokedButton = btn.Key == curBtnKey;
+			var text = getButtonText(btn.Key);
+			if (text != null)
 			{
-				var text = getButtonText(btn.Key);
-				if (text != null)
-					text.color = btn.Key == curBtn.Key ?
-						selectedButtonColor() : normalButtonColor();
+				text.color = isInvokedButton ?
+					base.selectedButtonColor() :
+					base.normalButtonColor();
+				text.fontStyle = isInvokedButton ?
+					FontStyle.Bold :
+					FontStyle.Normal;
+			}
+
+			var action = getZhaoshiButtonImage(btn.Key);
+			if (action != null)
+			{
+				action.gameObject.SetActive(isInvokedButton);
 			}
 		}
+	}
+
+	protected override void changeCurrentSelection(int num)
+	{
+		if (num > -1)
+		{
+			changeCurrentZhaoshiSelection(-1);
+			BattleboxHelper.Instance.AnalogMoved = false;
+		}
+
+		base.changeCurrentSelection(num);
 	}
 
 	protected override void OnDirectionalRight()
 	{
 		if (zhaoshiList.Count == 0)
 			return;
-		var nextZhaoshi = (cur_zhaoshi == zhaoshiList.Count - 1) ? 
-			0 : 
+
+		changeCurrentSelection(-1);
+
+		var nextZhaoshi = (cur_zhaoshi >= zhaoshiList.Count - 1) ?
+			0 :
 			cur_zhaoshi + 1;
 
 		changeCurrentZhaoshiSelection(nextZhaoshi);
+	}
+
+	protected override void OnDirectionalUp()
+	{
+		base.OnDirectionalUp();
+	}
+
+	protected override void OnDirectionalDown()
+	{
+		base.OnDirectionalDown();
 	}
 
 	protected override void OnDirectionalLeft()
@@ -177,8 +234,10 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (zhaoshiList.Count == 0)
 			return;
 
-		var nextZhaoshi = (cur_zhaoshi == 0) ?
-			cur_zhaoshi = zhaoshiList.Count - 1:
+		changeCurrentSelection(-1);
+
+		var nextZhaoshi = (cur_zhaoshi <= 0) ?
+			cur_zhaoshi = zhaoshiList.Count - 1 :
 			cur_zhaoshi - 1;
 
 		changeCurrentZhaoshiSelection(nextZhaoshi);
@@ -219,15 +278,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		blockConfirm(block);
 	}
 
-	protected override bool handleDpadMove()
-	{
-		bool dpadMoved = base.handleDpadMove();
-		if (dpadMoved)
-			BattleboxHelper.Instance.GamepadMoved = false;		
-
-		return dpadMoved;
-	}
-
 	protected override void handleGamepadButtons()
 	{
 		base.handleGamepadButtons();
@@ -235,13 +285,15 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (gameObject.activeSelf)
 		{
 			if (GamepadHelper.IsCancel())
-				//休息
-				OnRestClick();
+				//取消
+				OnCancelClick();
 			else if (GamepadHelper.IsJump())
 				OnHealClick();
+			else if (GamepadHelper.IsTabRight())
+				OnRestClick();
 			else if (GamepadHelper.IsAction()) // x/square button invoke zhaoshi 
 			{
-				if (m_curItemList.Count == 0)
+				if (m_curItemList.Count == 0 || cur_zhaoshi < 0 || cur_zhaoshi >= m_curItemList.Count)
 					return;
 
 				OnItemClick(m_curItemList[cur_zhaoshi], cur_zhaoshi);
@@ -251,13 +303,13 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	protected override void buttonClickAt(int position)
 	{
-		if (!BattleboxHelper.Instance.GamepadMoved)
+		if (!BattleboxHelper.Instance.AnalogMoved && cur_zhaoshi == -1)
 			base.buttonClickAt(position);
 	}
 
 	private void blockConfirm(BattleBlockData block)
 	{
-		if (!BattleboxHelper.Instance.GamepadMoved)
+		if (!BattleboxHelper.Instance.AnalogMoved)
 			return;
 
 		changeCurrentSelection(-1);
@@ -346,10 +398,14 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		zhaoshiList[btn] = callback;
 	}
 
+
+
 	void OnItemClick(SkillUIItem item, int index)
 	{
+		// clear current zhaoshi selection selected color only
+		changeCurrentZhaoshiSelection(-1);
+
 		m_currentRole.CurrentSkill = index;
-		//RefreshSkill(); //why!!!
 
 		m_curItemList.ForEach(t =>
 		{
@@ -358,8 +414,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		m_currentRole.SwitchAnimationToSkill(item.GetSkill().Data);
 		ShowAttackRangeSelector(item.GetSkill());
-
-		changeCurrentSelection(-1);
 	}
 
 	void OnCancelClick()

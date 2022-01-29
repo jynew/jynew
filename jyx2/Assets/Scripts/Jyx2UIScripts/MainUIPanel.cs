@@ -22,8 +22,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		InitTrans();
 
-		Jyx2_UIManager.Instance.UIVisibilityToggled += Instance_UIVisibilityToggled;
-
 		BindListener(XiakeButton_Button, OnXiakeBtnClick);
 		BindListener(BagButton_Button, OnBagBtnClick);
 		BindListener(MapButton_Button, OnMapBtnClick);
@@ -34,24 +32,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		"CommonTipsUIPanel"
 	});
-
-	private void Instance_UIVisibilityToggled(Jyx2_UIBase arg1, bool arg2)
-	{
-		if (arg1 is MainUIPanel)
-			return;
-
-		string panelType = arg1.GetType().FullName;
-
-		if (arg2)
-		{
-			if (!IgnorePanelTypes.Contains(panelType))
-				showingPanels.Add(panelType);
-		}
-		else
-		{
-			showingPanels.Remove(panelType);
-		}
-	}
 
 	public override void Update()
 	{
@@ -115,16 +95,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 			//rt.sizeDelta = new Vector2(isWorldMap?480:640, 100);
 		}
 	}
-
-	public static int PanelsShowing
-	{
-		get
-		{
-			return showingPanels.Count;
-		}
-	}
-
-	static HashSet<string> showingPanels = new HashSet<string>();
 
 	async void OnXiakeBtnClick()
 	{
@@ -362,22 +332,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	protected override string confirmButtonName()
 	{
 		return GamepadHelper.START_BUTTON;
-	}
-
-	protected override void handleGamepadButtons()
-	{
-		if (PanelsShowing == 0)
-		{
-			base.handleGamepadButtons();
-		}
-	}
-
-	protected override bool handleDpadMove()
-	{
-		if (PanelsShowing == 0)
-			return base.handleDpadMove();
-
-		return false;
 	}
 
 	//don't reset to 0 for this main, since it will select the system button automatically
