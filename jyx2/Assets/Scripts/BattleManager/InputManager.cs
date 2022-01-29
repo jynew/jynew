@@ -61,7 +61,7 @@ public class InputManager
 
     public BattleBlockData GetMouseUpBattleBlock()
     {
-        if (Input.GetMouseButtonUp(0) && !IsPointerOverUIObjectExceptTouchpad())
+        if (Input.GetMouseButtonUp(0) && !IsPointerOverUIObjectExceptTouchpad() && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
