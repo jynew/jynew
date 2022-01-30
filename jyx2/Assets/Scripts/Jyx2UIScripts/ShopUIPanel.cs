@@ -92,6 +92,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 
 	protected override void OnHidePanel()
 	{
+		itemX = 0;
+		itemY = 0;
 		base.OnHidePanel();
 		callback?.Invoke();
 		callback = null;
@@ -142,17 +144,11 @@ public partial class ShopUIPanel : Jyx2_UIBase
 
 	void OnItemSelect(ShopUIItem item)
 	{
+		curSelectItem?.SetSelect(false);
+
 		int index = item.GetIndex();
-		if (index == current_selection)
-			return;
-
-		if (curSelectItem != null)
-		{
-			curSelectItem.SetSelect(false);
-		}
-
 		current_selection = index;
-		curSelectItem.SetSelect(true);
+		curSelectItem?.SetSelect(true);
 		RefreshProperty();
 	}
 
@@ -220,8 +216,6 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			{
 				curSelectItem.SetSelect(false);
 			}
-
-			current_selection = -1;
 		}
 	}
 
