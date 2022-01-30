@@ -78,6 +78,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
 	protected override void OnHidePanel()
 	{
+		m_currentRole_index = 0;
 		base.OnHidePanel();
 		HSUnityTools.DestroyChildren(RoleParent_RectTransform);
 	}
