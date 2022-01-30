@@ -35,16 +35,16 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 	{
 		InitTrans();
 		IsBlockControl = true;
-		BindListener(BackButton_Button, OnBackClick);
+
+		//there is button for this, so doesn't get into the listing of dpad nav
+		BindListener(BackButton_Button, OnBackClick, false);
 
 		BindListener(ButtonHeal_Button, OnHealClick);
 		BindListener(ButtonDetoxicate_Button, OnDetoxicateClick);
 		BindListener(ButtonSelectWeapon_Button, OnWeaponClick);
 		BindListener(ButtonSelectArmor_Button, OnArmorClick);
 		BindListener(ButtonSelectBook_Button, OnXiulianClick);
-
 		BindListener(LeaveButton_Button, OnLeaveClick);
-
 	}
 
 
@@ -101,6 +101,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		bool canHeal = m_currentRole.Heal >= 20 && m_currentRole.Tili >= 50;
 		ButtonHeal_Button.gameObject.SetActive(canHeal);
 
+		//select the first available button
+		changeCurrentSelection(0);
+
 		PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
 	}
 
@@ -139,7 +142,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 			m_currentShowItem.SetState(false, false);
 
 		m_currentShowItem = item;
-		m_currentShowItem.SetState(true, true);
+		m_currentShowItem.SetState(true, false);
 
 		m_currentRole = m_currentShowItem.GetShowRole();
 		RefreshCurrent();
