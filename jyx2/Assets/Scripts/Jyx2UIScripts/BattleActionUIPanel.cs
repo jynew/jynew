@@ -132,7 +132,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	private void gamepadBlockConfirmed(BattleBlockData obj)
 	{
-		blockConfirm(obj);
+		showRangeIfAction();
+		blockConfirm(obj, false);
 	}
 
 
@@ -248,16 +249,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		base.Update();
 
 		//显示当前攻击范围
-		if (isSelectMove == false)
-		{
-			var mouseOverBlock = InputManager.Instance.GetMouseOverBattleBlock();
-			if (mouseOverBlock != null && mouseOverBlock != _lastMouseOverBlock)
-			{
-				_lastMouseOverBlock = mouseOverBlock;
-				var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, mouseOverBlock.BattlePos, m_currentRole.Pos);
-				BattleboxHelper.Instance.ShowRangeBlocks(range);
-			}
-		}
+		showRangeIfAction();
 
 		//寻找玩家点击的格子
 		var block = InputManager.Instance.GetMouseUpBattleBlock();
@@ -275,7 +267,21 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		//以下进行回调
 
 		//移动
-		blockConfirm(block);
+		blockConfirm(block, true);
+	}
+
+	private void showRangeIfAction()
+	{
+		if (isSelectMove == false)
+		{
+			var mouseOverBlock = InputManager.Instance.GetMouseOverBattleBlock();
+			if (mouseOverBlock != null && mouseOverBlock != _lastMouseOverBlock)
+			{
+				_lastMouseOverBlock = mouseOverBlock;
+				var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, mouseOverBlock.BattlePos, m_currentRole.Pos);
+				BattleboxHelper.Instance.ShowRangeBlocks(range);
+			}
+		}
 	}
 
 	protected override void handleGamepadButtons()
@@ -307,9 +313,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			base.buttonClickAt(position);
 	}
 
-	private void blockConfirm(BattleBlockData block)
+	private void blockConfirm(BattleBlockData block, bool isMouseClick)
 	{
-		if (!BattleboxHelper.Instance.AnalogMoved)
+		if (!BattleboxHelper.Instance.AnalogMoved && !isMouseClick)
 			return;
 
 		changeCurrentSelection(-1);
