@@ -77,7 +77,9 @@ public class Jyx2_UIManager : MonoBehaviour
 		}
 		else if (ui.Layer == UILayer.NormalUI)
 		{
-            return m_normalUIStack.Peek() == ui && noInterferingPopupUI();
+			Jyx2_UIBase currentUi = m_normalUIStack.Peek();
+            
+			return (ui == currentUi || ui.transform.IsChildOf(currentUi.transform)) && noInterferingPopupUI();
 		}
         else if (ui.Layer == UILayer.PopupUI)
 		{
