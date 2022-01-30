@@ -114,6 +114,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		{
 			if (m_curItemList.Count > 0)
 			{
+				//fix issue of mp deplition causes zhaoshi not showing, and previously recorded current index
+				//out of range.
+				if (m_currentRole.CurrentSkill >= m_curItemList.Count)
+					m_currentRole.CurrentSkill = 0;
+
 				var zhaoshi = m_curItemList[m_currentRole.CurrentSkill].GetSkill();
 				ShowAttackRangeSelector(zhaoshi);
 			}
@@ -299,8 +304,14 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 				OnRestClick();
 			else if (GamepadHelper.IsAction()) // x/square button invoke zhaoshi 
 			{
-				if (m_curItemList.Count == 0 || cur_zhaoshi < 0 || cur_zhaoshi >= m_curItemList.Count)
+				if (m_curItemList.Count == 0)
 					return;
+
+				if (cur_zhaoshi < 0 || cur_zhaoshi >= m_curItemList.Count)
+				{
+					cur_zhaoshi = 0;
+					changeCurrentZhaoshiSelection(cur_zhaoshi);
+				}
 
 				OnItemClick(m_curItemList[cur_zhaoshi], cur_zhaoshi);
 			}
