@@ -158,7 +158,7 @@ public class BattleboxHelper : MonoBehaviour
 	private int xCurPos;
 	private int yCurPos;
 
-	public bool GamepadMoved = false;
+	public bool AnalogMoved = false;
 
 	private void Update()
 	{
@@ -233,7 +233,7 @@ public class BattleboxHelper : MonoBehaviour
 
 		if (GamepadHelper.IsConfirm())
 		{
-			if (GamepadMoved && blockConfirmed != null)
+			if (AnalogMoved && blockConfirmed != null)
 			{
 				var selectedBlock =  _currentBattlebox.GetBlockData(xCurPos, yCurPos);
 				if (selectedBlock != null)
@@ -259,7 +259,7 @@ public class BattleboxHelper : MonoBehaviour
 			_selectedBlock.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.SetColor("_TintColor", new Color(1, 0, 1, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA));
 
 
-			GamepadMoved = true;
+			AnalogMoved = true;
 
 			if (analogLeftMovedToBlock != null)
 				analogLeftMovedToBlock(newSelectedBlock);

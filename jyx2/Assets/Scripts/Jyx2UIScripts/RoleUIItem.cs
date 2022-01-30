@@ -96,25 +96,23 @@ public class RoleUIItem : MonoBehaviour
 
 	public void SetState(bool? selected, bool? over)
 	{
-
-
-		if (selected != null)
+		if (selected.HasValue)
 		{
 			if (m_select != null)
 				m_select.gameObject.SetActive(selected.Value);
 		}
 
-		if (over != null)
+		if (over.HasValue)
 		{
 			isOver = over.Value;
 			var allowPerformingOver = selected != null ? !selected.Value : true;
 
 			//turn off over if selected
 			if (m_over != null)
-				m_over.gameObject.SetActive(over.Value && allowPerformingOver);
+				m_over.gameObject.SetActive(isOver && allowPerformingOver);
 			//always show
 			if (m_actionButton != null)
-				m_actionButton.gameObject.SetActive(over.Value);
+				m_actionButton.gameObject.SetActive(isOver);
 		}
 	}
 
@@ -123,17 +121,24 @@ public class RoleUIItem : MonoBehaviour
 		return m_role;
 	}
 
+	bool gamepadConnected = false;
+
 	private void Update()
 	{
-		if (GamepadHelper.GamepadConnected && isOver)
+		if (gamepadConnected != GamepadHelper.GamepadConnected)
 		{
-			m_actionButton.gameObject.SetActive(true);
-			m_over.gameObject.SetActive(true);
-		}
-		else if (!GamepadHelper.GamepadConnected)
-		{
-			m_actionButton.gameObject.SetActive(false);
-			m_over.gameObject.SetActive(false);
+			gamepadConnected = GamepadHelper.GamepadConnected;
+
+			if (gamepadConnected)
+			{
+				m_actionButton.gameObject.SetActive(isOver);
+				m_over.gameObject.SetActive(isOver);
+			}
+			else if (!gamepadConnected)
+			{
+				m_actionButton.gameObject.SetActive(false);
+				m_over.gameObject.SetActive(false);
+			}
 		}
 	}
 }

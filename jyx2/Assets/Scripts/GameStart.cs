@@ -23,26 +23,33 @@ using Image = UnityEngine.UI.Image;
 
 public class GameStart : MonoBehaviour
 {
-    public CanvasGroup introPanel;
-    
-    void Start()
-    {
-        StartAsync().Forget();
-    }
+	public CanvasGroup introPanel;
 
-    async UniTask StartAsync()
-    {
-        introPanel.gameObject.SetActive(true);
+	void Start()
+	{
+		StartAsync().Forget();
+	}
 
-        introPanel.alpha = 0;
-        await introPanel.DOFade(1, 1f).SetEase(Ease.Linear);
-        await UniTask.Delay(TimeSpan.FromSeconds(1f));
-        await introPanel.DOFade(0, 1f).SetEase(Ease.Linear).OnComplete(() =>
-        {
-            Destroy(introPanel.gameObject);
-        });
-        
-        MODManager.Init();
-        SceneManager.LoadScene("0_ModMenu");
-    }
+	async UniTask StartAsync()
+	{
+		introPanel.gameObject.SetActive(true);
+
+		introPanel.alpha = 0;
+		await introPanel.DOFade(1, 1f).SetEase(Ease.Linear);
+		await UniTask.Delay(TimeSpan.FromSeconds(1f));
+		await introPanel.DOFade(0, 1f).SetEase(Ease.Linear).OnComplete(() =>
+		{
+			Destroy(introPanel.gameObject);
+		});
+
+		//如果没有 mod，跳过 mod ui，直接进入游戏
+		MODManager.Init();
+		if (MODManager.ModEntries.Count > 0)
+			SceneManager.LoadScene("0_ModMenu");
+		else
+		{
+			BeforeSceneLoad.ColdBind();
+			SceneManager.LoadScene("0_MainMenu");
+		}
+	}
 }
