@@ -72,7 +72,7 @@ public class Jyx2_UIManager : MonoBehaviour
         if (ui.Layer == UILayer.MainUI)
 		{
 			//make sure no normal and popup ui on top
-			return m_normalUIStack.Count == 0 &&
+			return noShowingNormalUi() &&
 				(noInterferingPopupUI());
 		}
 		else if (ui.Layer == UILayer.NormalUI)
@@ -93,10 +93,17 @@ public class Jyx2_UIManager : MonoBehaviour
         return false;
 	}
 
+	private bool noShowingNormalUi()
+	{
+        return !m_normalUIStack
+            .Any(ui => ui.gameObject.activeSelf);
+	}
+
 	private bool noInterferingPopupUI()
 	{
         //common tips panel has no interaction, doesn't count towards active uis
-        return m_PopUIStack.Count == 0 || (m_PopUIStack.All(p => p is CommonTipsUIPanel));
+        return !m_normalUIStack
+            .Any(ui => ui.gameObject.activeSelf) || (m_PopUIStack.All(p => p is CommonTipsUIPanel));
 	}
 
 	public async void GameStart()
