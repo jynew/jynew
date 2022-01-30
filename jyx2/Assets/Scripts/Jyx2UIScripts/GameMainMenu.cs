@@ -18,6 +18,7 @@ using UnityEngine.UI;
 using Jyx2Configs;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
@@ -103,7 +104,8 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		if (m_panelType != PanelType.NewGamePage
 			&& m_panelType != PanelType.LoadGamePage
-			&& m_panelType != PanelType.PropertyPage)
+			&& m_panelType != PanelType.PropertyPage
+			&& !ReleaseNote_Panel.gameObject.activeSelf)
 			base.handleGamepadButtons();
 		else
 		{
@@ -129,6 +131,10 @@ public partial class GameMainMenu : Jyx2_UIBase
 					else if (m_panelType == PanelType.PropertyPage)
 					{
 						OnCreateRoleNoClick();
+					}
+					else if (ReleaseNote_Panel.gameObject.activeSelf)
+					{
+						ReleaseNote_Panel.gameObject.SetActive(false);
 					}
 				}
 		}
@@ -183,6 +189,30 @@ public partial class GameMainMenu : Jyx2_UIBase
 				OnCreateRoleNoClick();
 			}
 		});
+	}
+
+	private void toggleButtonOutline(Button button, bool on)
+	{
+		var outline = button?.gameObject.GetComponentInChildren<Outline>();
+		if (outline != null)
+			outline.enabled = on;
+	}
+
+	int current_selection_x = 3;
+
+	private void selectBottomButton(int index)
+	{
+		current_selection_x = index;
+		isXSelection = index > -1;
+
+		for (var i = 0; i < bottomButtons.Count; i++)
+		{
+			var button = bottomButtons[i];
+			toggleButtonOutline(button, i == current_selection_x);
+		}
+
+		if (index > -1)
+			changeCurrentSelection(-1);
 	}
 
 	private void onButtonClick()
@@ -362,4 +392,39 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		Jyx2_UIManager.Instance.ShowUI(nameof(GraphicSettingsPanel));
 	}
+
+	bool isXSelection = false;
+
+	protected override void OnDirectionalLeft()
+	{
+		var nextSelectionX = (current_selection_x <= 0) ? bottomButtons.Count - 1 : current_selection_x - 1;
+
+		selectBottomButton(nextSelectionX);
+	}
+
+	protected override void OnDirectionalRight()
+	{
+		var nextSelectionX = (current_selection_x >= bottomButtons.Count - 1) ? 0 : current_selection_x + 1;
+
+		selectBottomButton(nextSelectionX);
+	}
+
+	protected override void changeCurrentSelection(int num)
+	{
+		base.changeCurrentSelection(num);
+
+		if (num > -1)
+			selectBottomButton(-1);
+	}
+
+	protected override void buttonClickAt(int position)
+	{
+		if (!isXSelection)
+			base.buttonClickAt(position);
+		else
+		{
+			bottomButtons[current_selection_x]?.onClick?.Invoke();
+		}
+	}
+
 }
