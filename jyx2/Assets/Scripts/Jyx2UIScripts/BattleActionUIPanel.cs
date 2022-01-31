@@ -108,12 +108,17 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		if (isSelectMove)
 		{
-			BattleboxHelper.Instance.ShowBlocks(moveRange);
+			BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange);
 		}
 		else
 		{
 			if (m_curItemList.Count > 0)
 			{
+				//fix issue of mp deplition causes zhaoshi not showing, and previously recorded current index
+				//out of range.
+				if (m_currentRole.CurrentSkill >= m_curItemList.Count)
+					m_currentRole.CurrentSkill = 0;
+
 				var zhaoshi = m_curItemList[m_currentRole.CurrentSkill].GetSkill();
 				ShowAttackRangeSelector(zhaoshi);
 			}
@@ -122,17 +127,20 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		changeCurrentSelection(-1);
 	}
 
-	private void onBattleBlockMove(BattleBlockData obj)
+	private void onBattleBlockMove(BattleBlockData block)
 	{
 		//hide the hilite
 		changeCurrentSelection(-1);
 		//hide the zhaoshi selection
 		changeCurrentZhaoshiSelection(-1);
+
+		showZhaoshiHitRange(block);
 	}
 
 	private void gamepadBlockConfirmed(BattleBlockData obj)
 	{
-		blockConfirm(obj);
+		showZhaoshiHitRange();
+		blockConfirm(obj, false);
 	}
 
 
@@ -145,11 +153,10 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		BattleboxHelper.Instance.HideAllBlocks();
 		var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, zhaoshi);
-		bool selectMiddlePos = zhaoshi is HealZhaoshiInstance || zhaoshi is DePoisonZhaoshiInstance;
-		BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone, selectMiddlePos);
+		BattleboxHelper.Instance.ShowBlocks(m_currentRole, blockList, BattleBlockType.AttackZone, true);
 	}
 
-	private BattleBlockData _lastMouseOverBlock = null;
+	private BattleBlockData _lastOverBlock = null;
 	private bool rightDpadPressed;
 	private bool leftDpadPressed;
 
@@ -248,16 +255,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		base.Update();
 
 		//显示当前攻击范围
-		if (isSelectMove == false)
-		{
-			var mouseOverBlock = InputManager.Instance.GetMouseOverBattleBlock();
-			if (mouseOverBlock != null && mouseOverBlock != _lastMouseOverBlock)
-			{
-				_lastMouseOverBlock = mouseOverBlock;
-				var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, mouseOverBlock.BattlePos, m_currentRole.Pos);
-				BattleboxHelper.Instance.ShowRangeBlocks(range);
-			}
-		}
+		showZhaoshiHitRange();
 
 		//寻找玩家点击的格子
 		var block = InputManager.Instance.GetMouseUpBattleBlock();
@@ -275,7 +273,21 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		//以下进行回调
 
 		//移动
-		blockConfirm(block);
+		blockConfirm(block, true);
+	}
+
+	private void showZhaoshiHitRange(BattleBlockData block = null)
+	{
+		if (isSelectMove == false)
+		{
+			var overBlock = block ?? InputManager.Instance.GetMouseOverBattleBlock();
+			if (overBlock != null && overBlock != _lastOverBlock)
+			{
+				_lastOverBlock = overBlock;
+				var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, overBlock.BattlePos, m_currentRole.Pos);
+				BattleboxHelper.Instance.ShowRangeBlocks(range);
+			}
+		}
 	}
 
 	protected override void handleGamepadButtons()
@@ -293,8 +305,14 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 				OnRestClick();
 			else if (GamepadHelper.IsAction()) // x/square button invoke zhaoshi 
 			{
-				if (m_curItemList.Count == 0 || cur_zhaoshi < 0 || cur_zhaoshi >= m_curItemList.Count)
+				if (m_curItemList.Count == 0)
 					return;
+
+				if (cur_zhaoshi < 0 || cur_zhaoshi >= m_curItemList.Count)
+				{
+					cur_zhaoshi = 0;
+					changeCurrentZhaoshiSelection(cur_zhaoshi);
+				}
 
 				OnItemClick(m_curItemList[cur_zhaoshi], cur_zhaoshi);
 			}
@@ -307,9 +325,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			base.buttonClickAt(position);
 	}
 
-	private void blockConfirm(BattleBlockData block)
+	private void blockConfirm(BattleBlockData block, bool isMouseClick)
 	{
-		if (!BattleboxHelper.Instance.AnalogMoved)
+		if (!BattleboxHelper.Instance.AnalogMoved && !isMouseClick)
 			return;
 
 		changeCurrentSelection(-1);

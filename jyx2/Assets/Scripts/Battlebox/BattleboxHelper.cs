@@ -281,8 +281,6 @@ public class BattleboxHelper : MonoBehaviour
 		.Select(b => b.BattlePos.X)
 		.OrderBy(p => p)
 		.ToArray();
-
-		xMiddlePos = xPositions[(int)Math.Floor((float)xPositions.Length / 2)];
 	}
 
 	private void initYPos()
@@ -293,8 +291,6 @@ public class BattleboxHelper : MonoBehaviour
 		.Select(b => b.BattlePos.Y)
 		.OrderBy(p => p)
 		.ToArray();
-
-		yMiddlePos = yPositions[(int)Math.Floor((float)yPositions.Length / 2)];
 	}
 
 	protected void delayedAxisRelease()
@@ -310,7 +306,7 @@ public class BattleboxHelper : MonoBehaviour
 	private BattleBlockData _selectedBlock;
 	private Color _oldColor;
 
-	public void ShowBlocks(IEnumerable<BattleBlockVector> list, BattleBlockType type = BattleBlockType.MoveZone,
+	public void ShowBlocks(RoleInstance role, IEnumerable<BattleBlockVector> list, BattleBlockType type = BattleBlockType.MoveZone,
 		bool selectMiddlePos = false)
 	{
 		if (!GeneralPreJudge()) return;
@@ -333,6 +329,8 @@ public class BattleboxHelper : MonoBehaviour
 			if (block != null && block.BoxBlock.IsValid) block.Show();
 		}
 
+		xMiddlePos = role.Pos.X;
+		yMiddlePos = role.Pos.Y;
 		initShownPositions();
 
 		if (selectMiddlePos)
