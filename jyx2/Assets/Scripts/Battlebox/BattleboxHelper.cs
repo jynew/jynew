@@ -255,7 +255,7 @@ public class BattleboxHelper : MonoBehaviour
 			_selectedBlock = newSelectedBlock;
 			_oldColor = newSelectedBlock.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.GetColor("_TintColor");
 			Color hiliteColor = newSelectedBlock.Inaccessible ?				
-				new Color(0.6f, 0.6f, 0.6f, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA) : //gray color for inaccessible blocks
+				new Color(0.4f, 0.4f, 0.4f, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA) : //gray color for inaccessible blocks
 				new Color(1, 0, 1, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA);
 			_selectedBlock.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.SetColor("_TintColor", hiliteColor);
 
