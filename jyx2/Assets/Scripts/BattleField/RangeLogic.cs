@@ -404,7 +404,8 @@ namespace Jyx2
 		/// <param name="ignoreRole">是否可以穿人，默认关闭</param>
 		/// <returns></returns>
 		public List<BattleBlockVector> GetMoveRange(int x, int y, int mobility,
-			bool ignoreRole = false)
+			bool ignoreRole,
+			bool forDisplay)
 		{
 			var rst = new List<BattleBlockVector>();
 			var visited = new HashSet<int>();
@@ -433,6 +434,9 @@ namespace Jyx2
 					int x2 = b.X;
 					int y2 = b.Y;
 					int dcost = 1;
+
+					if ((!forDisplay && !ignoreRole && HasRole != null && HasRole(x2, y2)))
+						continue;
 
 					if (cost + dcost <= mobility && !visited.Contains(GetBlockHash(x2, y2)))
 					{

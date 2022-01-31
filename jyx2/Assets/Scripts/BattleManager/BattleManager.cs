@@ -438,7 +438,7 @@ public class BattleManager : MonoBehaviour
         //获得角色移动能力
         int moveAbility = role.GetMoveAbility();
         //绘制周围的移动格子
-        var blockList = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - movedStep);
+        var blockList = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - movedStep, false, true);
         return blockList;
     }
 
