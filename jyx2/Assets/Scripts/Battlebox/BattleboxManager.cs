@@ -442,13 +442,23 @@ public class BattleboxManager : MonoBehaviour
     public void SetAllBlockColor(Color color, bool isRangeBlocks = false)
     {
         foreach (var block in isRangeBlocks ? _rangeLayerBlocks : _battleBlocks)
-        {
-            block.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.SetColor("_TintColor", color); 
-            //block.gameObject.GetComponent<EasyDecal>().DecalMaterial.SetColor("_TintColor", color);
-        }
-    }
+		{
+			setBlockColor(color, block);
+			//block.gameObject.GetComponent<EasyDecal>().DecalMaterial.SetColor("_TintColor", color);
+		}
+	}
 
-    private List<BattleBlockVector> _battleBoxBlockList = new List<BattleBlockVector>();
+	private void setBlockColor(Color color, BattleBlockData block)
+	{
+		block.gameObject.GetComponent<EasyDecal>().DecalRenderer.material.SetColor("_TintColor", color);
+	}
+
+    public void SetBlockInaccessible(BattleBlockData block)
+	{
+        setBlockColor(new Color(0, 0, 0, 0), block);
+	}
+
+	private readonly List<BattleBlockVector> _battleBoxBlockList = new List<BattleBlockVector>();
 
     public void CreateBlockMap(int x, int y, int ox, int oy, int range)
     {
