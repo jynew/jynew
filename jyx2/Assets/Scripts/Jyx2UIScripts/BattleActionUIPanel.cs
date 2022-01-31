@@ -108,7 +108,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		if (isSelectMove)
 		{
-			BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange);
+			BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange, BattleBlockType.MoveZone, false);
 		}
 		else
 		{
@@ -212,6 +212,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		base.changeCurrentSelection(num);
 	}
 
+	protected override bool resetCurrentSelectionOnShow => false;
+
 	protected override void OnDirectionalRight()
 	{
 		if (zhaoshiList.Count == 0)
@@ -278,7 +280,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	private void showZhaoshiHitRange(BattleBlockData block = null)
 	{
-		if (isSelectMove == false)
+		if (!isSelectMove)
 		{
 			var overBlock = block ?? InputManager.Instance.GetMouseOverBattleBlock();
 			if (overBlock != null && overBlock != _lastOverBlock)

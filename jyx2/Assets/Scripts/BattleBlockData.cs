@@ -32,6 +32,8 @@ namespace Jyx2
         }
         private bool _isActive = false;
 
+        public bool Inaccessible { get; internal set; }
+
         public void Show()
         {
             gameObject.layer = 0;

@@ -267,33 +267,9 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			if (image != null)
 			{
 				image.gameObject.SetActive(GamepadHelper.GamepadConnected);
-				string iconPath;
-				switch (i)
-				{
-					case 0:
-						iconPath = "Assets/BuildSource/Gamepad/confirm.png";
-						break;
-					case 1:
-						iconPath = "Assets/BuildSource/Gamepad/cancel.png";
-						break ;
-					case 2:
-						iconPath = "Assets/BuildSource/Gamepad/action.png";
-						break;
-					case 3:
-						iconPath = "Assets/BuildSource/Gamepad/jump.png";
-						break;
-					default:
-						iconPath = "";
-						break;
-				}
+				Sprite[] iconSprite = getGamepadIconSprites(i);
 
-				if (!string.IsNullOrWhiteSpace(iconPath))
-				{
-					var iconSprite = Addressables.LoadAssetAsync<Sprite>(iconPath)
-						.Result;
-					if (iconSprite != null)
-						image.sprite = iconSprite;
-				}
+				image.sprite = iconSprite?.FirstOrDefault();
 			}
 			selectionItem.transform.SetParent(Container_RectTransform, false);
 			BindListener(selectionItem, delegate
@@ -314,6 +290,34 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			callback?.Invoke(1);
 		});
 		SelectionPanel_RectTransform.gameObject.SetActive(true);
+	}
+
+	public static Sprite[] getGamepadIconSprites(int i)
+	{
+		string iconPath;
+		switch (i)
+		{
+			case 0:
+				iconPath = "Assets/BuildSource/Gamepad/confirm.png";
+				break;
+			case 1:
+				iconPath = "Assets/BuildSource/Gamepad/cancel.png";
+				break;
+			case 2:
+				iconPath = "Assets/BuildSource/Gamepad/action.png";
+				break;
+			case 3:
+				iconPath = "Assets/BuildSource/Gamepad/jump.png";
+				break;
+			default:
+				iconPath = "";
+				break;
+		}
+
+		var iconSprite = !string.IsNullOrWhiteSpace(iconPath) ?
+			Addressables.LoadAssetAsync<Sprite[]>(iconPath)
+				.Result : null;
+		return iconSprite;
 	}
 
 	public void DoShowAnimator()

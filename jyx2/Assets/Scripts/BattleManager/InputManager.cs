@@ -70,7 +70,7 @@ public class InputManager
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
             {
                 var block = BattleboxHelper.Instance.GetLocationBattleBlock(hitInfo.point);
-                if (block != null && block.IsActive)
+                if (block != null && block.IsActive && !block.Inaccessible)
                 {
                     return block;
                 }
@@ -87,7 +87,7 @@ public class InputManager
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
         {
             var block = BattleboxHelper.Instance.GetLocationBattleBlock(hitInfo.point);
-            if (block != null && block.IsActive)
+            if (block != null && block.IsActive && !block.Inaccessible)
             {
                 return block;
             }
@@ -106,7 +106,7 @@ public class InputManager
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
             {
                 var block = BattleboxHelper.Instance.GetLocationBattleBlock(hitInfo.point);
-                if (block != null && block.IsActive)
+                if (block != null && block.IsActive && !block.Inaccessible)
                 {
                     return block;
                 }
