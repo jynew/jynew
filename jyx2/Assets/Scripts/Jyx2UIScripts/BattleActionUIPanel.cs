@@ -108,7 +108,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		if (isSelectMove)
 		{
-			BattleboxHelper.Instance.ShowBlocks(moveRange);
+			BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange);
 		}
 		else
 		{
@@ -127,17 +127,19 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		changeCurrentSelection(-1);
 	}
 
-	private void onBattleBlockMove(BattleBlockData obj)
+	private void onBattleBlockMove(BattleBlockData block)
 	{
 		//hide the hilite
 		changeCurrentSelection(-1);
 		//hide the zhaoshi selection
 		changeCurrentZhaoshiSelection(-1);
+
+		showZhaoshiHitRange(block);
 	}
 
 	private void gamepadBlockConfirmed(BattleBlockData obj)
 	{
-		showRangeIfAction();
+		showZhaoshiHitRange();
 		blockConfirm(obj, false);
 	}
 
@@ -151,11 +153,10 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		BattleboxHelper.Instance.HideAllBlocks();
 		var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, zhaoshi);
-		bool selectMiddlePos = zhaoshi is HealZhaoshiInstance || zhaoshi is DePoisonZhaoshiInstance;
-		BattleboxHelper.Instance.ShowBlocks(blockList, BattleBlockType.AttackZone, selectMiddlePos);
+		BattleboxHelper.Instance.ShowBlocks(m_currentRole, blockList, BattleBlockType.AttackZone, true);
 	}
 
-	private BattleBlockData _lastMouseOverBlock = null;
+	private BattleBlockData _lastOverBlock = null;
 	private bool rightDpadPressed;
 	private bool leftDpadPressed;
 
@@ -254,7 +255,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		base.Update();
 
 		//显示当前攻击范围
-		showRangeIfAction();
+		showZhaoshiHitRange();
 
 		//寻找玩家点击的格子
 		var block = InputManager.Instance.GetMouseUpBattleBlock();
@@ -275,15 +276,15 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		blockConfirm(block, true);
 	}
 
-	private void showRangeIfAction()
+	private void showZhaoshiHitRange(BattleBlockData block = null)
 	{
 		if (isSelectMove == false)
 		{
-			var mouseOverBlock = InputManager.Instance.GetMouseOverBattleBlock();
-			if (mouseOverBlock != null && mouseOverBlock != _lastMouseOverBlock)
+			var overBlock = block ?? InputManager.Instance.GetMouseOverBattleBlock();
+			if (overBlock != null && overBlock != _lastOverBlock)
 			{
-				_lastMouseOverBlock = mouseOverBlock;
-				var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, mouseOverBlock.BattlePos, m_currentRole.Pos);
+				_lastOverBlock = overBlock;
+				var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, overBlock.BattlePos, m_currentRole.Pos);
 				BattleboxHelper.Instance.ShowRangeBlocks(range);
 			}
 		}
