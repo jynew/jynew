@@ -82,6 +82,10 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
 
 		RefreshChild();
+		//only change to first item, when first time showing
+		if (visibleItems.Count > 0 && GamepadHelper.GamepadConnected)
+			changeCurrentSelection(0);
+
 		RefreshProperty();
 		RefreshMoney();
 		if (allParams.Length > 1)
@@ -125,9 +129,6 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			int currentNum = GetHasBuyNum(data.Item.Id);
 			uiItem.Refresh(data, i, currentNum);
 		}
-
-		if (visibleItems.Count > 0 && GamepadHelper.GamepadConnected)
-			changeCurrentSelection(0);
 	}
 
 	void RefreshProperty()
