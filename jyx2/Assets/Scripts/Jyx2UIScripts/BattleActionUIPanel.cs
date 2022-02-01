@@ -108,6 +108,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		if (isSelectMove)
 		{
+			_lastHitRangeOverBlock = null;
 			BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange, BattleBlockType.MoveZone, false);
 		}
 		else
@@ -153,10 +154,13 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		BattleboxHelper.Instance.HideAllBlocks();
 		var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, zhaoshi);
+
+		//prevent reselecting causing not showing hit range
+		_lastHitRangeOverBlock = null;
 		BattleboxHelper.Instance.ShowBlocks(m_currentRole, blockList, BattleBlockType.AttackZone, true);
 	}
 
-	private BattleBlockData _lastOverBlock = null;
+	private BattleBlockData _lastHitRangeOverBlock = null;
 	private bool rightDpadPressed;
 	private bool leftDpadPressed;
 
@@ -283,9 +287,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (!isSelectMove)
 		{
 			var overBlock = block ?? InputManager.Instance.GetMouseOverBattleBlock();
-			if (overBlock != null && overBlock != _lastOverBlock)
+			if (overBlock != null && overBlock != _lastHitRangeOverBlock)
 			{
-				_lastOverBlock = overBlock;
+				_lastHitRangeOverBlock = overBlock;
 				var range = BattleManager.Instance.GetSkillCoverBlocks(currentZhaoshi, overBlock.BattlePos, m_currentRole.Pos);
 				BattleboxHelper.Instance.ShowRangeBlocks(range);
 			}
@@ -316,7 +320,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 					changeCurrentZhaoshiSelection(cur_zhaoshi);
 				}
 
-				OnItemClick(m_curItemList[cur_zhaoshi], cur_zhaoshi);
+				onZhaoshiStart(m_curItemList[cur_zhaoshi], cur_zhaoshi);
 			}
 		}
 	}
@@ -402,7 +406,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			item.SetSelect(i == m_currentRole.CurrentSkill);
 
 			Button btn = item.GetComponent<Button>();
-			bindZhaoshi(btn, () => { OnItemClick(item, index); });
+			bindZhaoshi(btn, () => { onZhaoshiStart(item, index); });
 			m_curItemList.Add(item);
 		}
 
@@ -420,10 +424,11 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 
 
-	void OnItemClick(SkillUIItem item, int index)
+	void onZhaoshiStart(SkillUIItem item, int index)
 	{
 		// clear current zhaoshi selection selected color only
-		changeCurrentZhaoshiSelection(-1);
+		if (index > -1)
+			changeCurrentSelection(-1);
 
 		m_currentRole.CurrentSkill = index;
 

@@ -128,7 +128,10 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 			BindListener(btn, () => { OnItemClick(item); }, false);
 			bool isSelect = (m_currentRole == role);
 			if (isSelect)
+			{
 				m_currentShowItem = item;
+				m_currentRole_index = i;
+			}
 			item.SetState(isSelect, false);
 			item.ShowRole(role);
 		}

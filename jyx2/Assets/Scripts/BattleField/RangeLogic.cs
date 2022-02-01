@@ -404,7 +404,8 @@ namespace Jyx2
 		/// <param name="ignoreRole">是否可以穿人，默认关闭</param>
 		/// <returns></returns>
 		public List<BattleBlockVector> GetMoveRange(int x, int y, int mobility,
-			bool ignoreRole = false)
+			bool ignoreRole,
+			bool forDisplay)
 		{
 			var rst = new List<BattleBlockVector>();
 			var visited = new HashSet<int>();
@@ -433,6 +434,15 @@ namespace Jyx2
 					int x2 = b.X;
 					int y2 = b.Y;
 					int dcost = 1;
+
+					if (!forDisplay)
+					{
+						if (Exists != null && !Exists(x2, y2))
+							continue;
+
+						if (!ignoreRole && HasRole != null && HasRole(x2, y2))
+							continue;
+					}
 
 					if (cost + dcost <= mobility && !visited.Contains(GetBlockHash(x2, y2)))
 					{
@@ -592,15 +602,15 @@ namespace Jyx2
 						break;
 					}
 				/*case SkillCoverType.RECT:
-                    rst.Add(new BattleBlockVector() { X = tx, Y = ty });
-                    
+					rst.Add(new BattleBlockVector() { X = tx, Y = ty });
 
-                    if (coversize > 0)
-                    {
-                        int actualSize = (int)Math.Ceiling(coversize / Math.Sqrt(2)); //尝试修复距离不对？
-                        rst.AddRange(GetNearBlocks(tx, ty, actualSize));
-                    }
-                    break;*/
+
+					if (coversize > 0)
+					{
+						int actualSize = (int)Math.Ceiling(coversize / Math.Sqrt(2)); //尝试修复距离不对？
+						rst.AddRange(GetNearBlocks(tx, ty, actualSize));
+					}
+					break;*/
 				case SkillCoverType.RECT:
 					for (int i = tx - coversize; i <= tx + coversize; ++i)
 					{
