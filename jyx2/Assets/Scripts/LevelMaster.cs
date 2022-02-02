@@ -498,6 +498,7 @@ public class LevelMaster : MonoBehaviour
 
 	void OnClickControlPlayer()
 	{
+		if (_currentMap.IsNoNavAgent()) return;
 
 		SetPlayerSpeed(_playerNavAgent.velocity.magnitude);
 
