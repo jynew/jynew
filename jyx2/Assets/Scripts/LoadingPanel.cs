@@ -70,7 +70,6 @@ public class LoadingPanel : MonoBehaviour
                 var handle = SceneManager.LoadSceneAsync(assetBundleItem.Name);
                 while (!handle.isDone)
                 {
-                    m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
                     //---------------------------------------------------------------------------
                     //m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
                     //---------------------------------------------------------------------------
@@ -99,6 +98,8 @@ public class LoadingPanel : MonoBehaviour
                 }
             }
         }
+        //要再等一帧
+        await UniTask.WaitForEndOfFrame();
         
         Destroy(gameObject);
     }
