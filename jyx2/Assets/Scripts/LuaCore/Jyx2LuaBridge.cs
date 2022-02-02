@@ -1404,7 +1404,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="rolePath"></param>
         /// <param name="animationControllerPath"></param>
-        public static void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
+        public static void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath, string scene = "")
         {
             Debug.Log("jyx2_SwitchRoleAnimation called");
 
@@ -1418,7 +1418,7 @@ namespace Jyx2
                     return;
                 }
 
-                level.ReplaceNpcAnimatorController("", rolePath, animationControllerPath);
+                level.ReplaceNpcAnimatorController(scene, rolePath, animationControllerPath);
                 Next();
             });
             Wait();
