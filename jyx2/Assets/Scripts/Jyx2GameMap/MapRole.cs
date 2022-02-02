@@ -608,6 +608,8 @@ public class MapRole : Jyx2AnimationBattleRole
         if (modelAsset == null) return;
         
         var view = await modelAsset.GetView();
+        //要再等一帧
+        await UniTask.WaitForEndOfFrame();
         
         if (Application.isPlaying)
         {
