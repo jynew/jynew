@@ -43,6 +43,7 @@ namespace Jyx2Configs
         public override async UniTask WarmUp()
         {
             _isWorldMap = Tags.Contains("WORLDMAP");
+            _isNoNavAgent = Tags.Contains("NONAVAGENT");
         }
         
         public string GetShowName()
@@ -77,6 +78,13 @@ namespace Jyx2Configs
         /// <returns></returns>
         public bool IsWorldMap() { return _isWorldMap;}
         private bool _isWorldMap;
+        
+        /// <summary>
+        /// 是否不能寻路
+        /// </summary>
+        /// <returns></returns>
+        public bool IsNoNavAgent() { return _isNoNavAgent;}
+        private bool _isNoNavAgent;
 
 #if UNITY_EDITOR
 
