@@ -52,7 +52,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			visibleItems.Add(item);
 			BindListener(trans.GetComponent<Button>(), () =>
 			{
-				OnItemSelect(item);
+				OnItemSelect(item, false);
 			});
 		});
 
@@ -143,13 +143,15 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		DesText_Text.text = mainText;
 	}
 
-	void OnItemSelect(ShopUIItem item)
+	void OnItemSelect(ShopUIItem item, bool scroll)
 	{
 		curSelectItem?.SetSelect(false);
 
 		int index = item.GetIndex();
 		current_selection = index;
 		curSelectItem?.SetSelect(true);
+		if (scroll)
+			scrollIntoView(ItemsArea_ScrollReact, item.transform as RectTransform);
 		RefreshProperty();
 	}
 
@@ -209,7 +211,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	{
 		if (num >= 0 && num < visibleItems.Count)
 		{
-			OnItemSelect(visibleItems[num]);
+			OnItemSelect(visibleItems[num], true);
 		}
 		else
 		{

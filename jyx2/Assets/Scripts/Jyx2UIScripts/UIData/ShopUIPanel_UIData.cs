@@ -21,6 +21,7 @@ public partial class ShopUIPanel
 	private Button ConfirmBtn_Button;
 	private Button CloseBtn_Button;
 	private Text MoneyNum_Text;
+	private ScrollRect ItemsArea_ScrollReact;
 
 	public void InitTrans()
 	{
@@ -31,6 +32,6 @@ public partial class ShopUIPanel
 		ConfirmBtn_Button = transform.Find("Btns/ConfirmBtn").GetComponent<Button>();
 		CloseBtn_Button = transform.Find("Btns/CloseBtn").GetComponent<Button>();
 		MoneyNum_Text = transform.Find("MoneyNum").GetComponent<Text>();
-
+		ItemsArea_ScrollReact = transform.Find("ShopScroll").GetComponent<ScrollRect>();
 	}
 }
