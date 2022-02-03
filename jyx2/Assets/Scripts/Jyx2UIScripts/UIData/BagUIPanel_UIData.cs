@@ -21,6 +21,7 @@ public partial class BagUIPanel
 	private Button UseBtn_Button;
 	private Text UseBtn_Text;
 	private Button CloseBtn_Button;
+	private ScrollRect ItemsArea_ScrollRect;
 
 
 	private List<Button> m_Filters;
@@ -33,6 +34,7 @@ public partial class BagUIPanel
 		UseBtn_Button = transform.Find("Btns/UseBtn").GetComponent<Button>();
 		UseBtn_Text = transform.Find("Btns/UseBtn/Text").GetComponent<Text>();
 		CloseBtn_Button = transform.Find("Btns/CloseBtn").GetComponent<Button>();
+		ItemsArea_ScrollRect = transform.Find("ItemScroll").GetComponent<ScrollRect>();
 
 		m_Filters = transform.Find("FilterBtns").GetComponentsInChildren<Button>().ToList();
 	}

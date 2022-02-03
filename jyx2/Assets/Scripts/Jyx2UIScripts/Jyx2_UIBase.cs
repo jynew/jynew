@@ -400,4 +400,23 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			currentlyReleased = true;
 		});
 	}
+
+	protected void scrollIntoView(ScrollRect area, RectTransform item)
+	{
+		Canvas.ForceUpdateCanvases();
+
+		var contentPos = (Vector2)area.transform.InverseTransformPoint(area.content.position);
+		var childPos = (Vector2)area.transform.InverseTransformPoint(item.position);
+		var endPos = contentPos - childPos;
+
+		//make sure the item is fully shown, so alway snap at top of the item
+		var itemHeightHalf = item.rect.height / 2;
+
+		endPos.y = endPos.y - itemHeightHalf;
+
+		//no x scroll, reset it
+		endPos.x = 0;
+
+		area.content.anchoredPosition = endPos;
+	}
 }
