@@ -121,6 +121,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		childMgr.RefreshChildCount(curShopData.ShopItems.Count);
 		List<Transform> childList = childMgr.GetUsingTransList();
 
+		float itemHeight = 0;
+
 		for (int i = 0; i < childList.Count; i++)
 		{
 			Transform trans = childList[i];
@@ -128,7 +130,15 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
 			int currentNum = GetHasBuyNum(data.Item.Id);
 			uiItem.Refresh(data, i, currentNum);
+
+			if (itemHeight == 0)
+				itemHeight = uiItem.rectTransform().rect.height;
 		}
+
+		//setAreasHeightForItemCompleteView(itemHeight, new[] {
+		//	ItemsArea_ScrollReact.rectTransform(),
+		//	ItemDes_RectTransform
+		//});
 	}
 
 	void RefreshProperty()
@@ -151,7 +161,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		current_selection = index;
 		curSelectItem?.SetSelect(true);
 		if (scroll)
-			scrollIntoView(ItemsArea_ScrollReact, item.transform as RectTransform);
+			scrollIntoView(ItemsArea_ScrollReact, item.transform as RectTransform, ItemRoot_GridLayout, 0);
 		RefreshProperty();
 	}
 

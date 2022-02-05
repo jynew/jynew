@@ -276,6 +276,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	}
 
 	bool gamepadConnected = false;
+	private bool scrollSizeAdjusted;
 
 	public virtual void Update()
 	{
@@ -401,22 +402,45 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 		});
 	}
 
-	protected void scrollIntoView(ScrollRect area, RectTransform item)
+	protected void setAreasHeightForItemCompleteView(float itemHeight, RectTransform[] areasToAdjust )
 	{
+		if (areasToAdjust.Length == 0)
+			return;
+
+		if (!scrollSizeAdjusted)
+		{
+			//shrink scroll and description boxes, to make sure no half items showing
+			var boxHeight = areasToAdjust[0].rect.height;
+			boxHeight = (float)Math.Floor(boxHeight / itemHeight) * itemHeight;
+
+			foreach(var area in areasToAdjust)
+			{
+				var scrollSize = area.sizeDelta;
+				area.sizeDelta = new Vector2(scrollSize.x, boxHeight);
+			}
+
+			scrollSizeAdjusted = true;
+		}
+	}
+
+	protected void scrollIntoView(ScrollRect area, RectTransform item, GridLayoutGroup layout, float padding)
+	{
+		var itemHeight = layout.cellSize.y + layout.spacing.y;
+
 		Canvas.ForceUpdateCanvases();
 
-		var contentPos = (Vector2)area.transform.InverseTransformPoint(area.content.position);
-		var childPos = (Vector2)area.transform.InverseTransformPoint(item.position);
-		var endPos = contentPos - childPos;
+		var areaPos = area.transform.InverseTransformPoint(area.content.position).y;
+		var childPos = area.transform.InverseTransformPoint(item.position).y;
+		var scrollRelativePos = areaPos - childPos - area.content.anchoredPosition.y;
 
-		//make sure the item is fully shown, so alway snap at top of the item
-		var itemHeightHalf = item.rect.height / 2;
+		//check if the item is fully visible, if yes, no need to scroll
+		var areaHeight = (area.transform as RectTransform).rect.height - (padding * 2);
 
-		endPos.y = endPos.y - itemHeightHalf;
+		var scrollFinalRelativePos = (float) Math.Floor(scrollRelativePos / areaHeight) * areaHeight;
 
-		//no x scroll, reset it
-		endPos.x = 0;
+		//if item display half, snap to top of the item
+		scrollFinalRelativePos =  (float)Math.Floor(scrollFinalRelativePos / itemHeight) * itemHeight;
 
-		area.content.anchoredPosition = endPos;
+		area.content.anchoredPosition = new Vector2(0, area.content.anchoredPosition.y + scrollFinalRelativePos);
 	}
 }
