@@ -77,13 +77,15 @@ public class Jyx2_UIManager : MonoBehaviour
 		}
 		else if (ui.Layer == UILayer.NormalUI)
 		{
-			Jyx2_UIBase currentUi = m_normalUIStack.Peek();
+            Jyx2_UIBase currentUi = m_normalUIStack.Count > 0 ? m_normalUIStack.Peek() : null;
+            if (currentUi == null)
+                return true;
             
 			return (ui == currentUi || ui.transform.IsChildOf(currentUi.transform)) && noInterferingPopupUI();
 		}
         else if (ui.Layer == UILayer.PopupUI)
 		{
-            return m_PopUIStack.Peek() == ui;
+            return (m_PopUIStack.Count > 0 ? m_PopUIStack.Peek() : null) == ui;
 		}
         else if (ui.Layer == UILayer.Top)
 		{

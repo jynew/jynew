@@ -114,6 +114,8 @@ public partial class BagUIPanel : Jyx2_UIBase
 		itemX = 0;
 		itemY = 0;
 
+		float itemHeight = 0;
+
 		foreach (var kv in m_itemsData)
 		{
 			string id = kv.Key;
@@ -157,13 +159,27 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 			itemUI.Select(m_selectItem == itemUI);
 
-			if (m_selectItem == itemUI)
-				scrollIntoView(ItemsArea_ScrollRect, itemUI.transform as RectTransform);
+			if (itemHeight == 0)
+			{
+				itemHeight = (itemUI.transform as RectTransform).rect.height;
+			}
 		}
+
+		//setAreasHeightForItemCompleteView(itemHeight, new[]
+		//{
+		//	ItemsArea_ScrollRect.rectTransform(),
+		//	ItemDes_RectTransform
+		//}); 
+
+		if (m_selectItem != null)
+			scrollIntoView(ItemsArea_ScrollRect, m_selectItem.transform as RectTransform, 
+				ItemRoot_GridLayout, 0);
 
 		setBtnText();
 
 		ShowItemDes();
+
+
 	}
 
 	void ShowItemDes()
@@ -196,7 +212,8 @@ public partial class BagUIPanel : Jyx2_UIBase
 		ShowItemDes();
 
 		if (scroll)
-			scrollIntoView(ItemsArea_ScrollRect, m_selectItem.gameObject.transform as RectTransform);
+			scrollIntoView(ItemsArea_ScrollRect, m_selectItem.gameObject.transform as RectTransform, 
+				ItemRoot_GridLayout, 0);
 
 	}
 
