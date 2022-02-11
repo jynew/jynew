@@ -15,15 +15,16 @@ using UnityEngine.UI;
 
 public class DebugInfoManager : MonoBehaviour
 {
-    static public void Init()
+    public static void Init()
     {
-        var obj = GameObject.Find("DebugInfoManager");
+        var obj = FindObjectOfType<DebugInfoManager>();
         if (obj != null)
             return;
 
         //否则初始化
         var prefab = Resources.Load<GameObject>("DebugInfoManager");
         var newObj = Instantiate(prefab) as GameObject;
+        newObj.name = "[DebugInfoManager]";
         DontDestroyOnLoad(newObj);
     }
 
