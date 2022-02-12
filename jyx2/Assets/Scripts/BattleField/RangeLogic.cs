@@ -425,7 +425,7 @@ namespace Jyx2
 				{
 					X = xx,
 					Y = yy,
-					Inaccessible = currentNode.Inaccessbiel
+					Inaccessible = currentNode.Inaccessble
 				});
 
 				var nearBlocks = GetNearBlocks(xx, yy);
@@ -451,8 +451,9 @@ namespace Jyx2
 							X = x2,
 							Y = y2,
 							Cost = cost + dcost,
-							Inaccessbiel = (Exists != null && !Exists(x2, y2))
+							Inaccessble = (Exists != null && !Exists(x2, y2))
 								|| (!ignoreRole && HasRole != null && HasRole(x2, y2))
+								|| currentNode.Inaccessble
 						};
 
 						searchQueue.Enqueue(node);
@@ -635,6 +636,6 @@ namespace Jyx2
 		public int Y;
 		public int Cost;
 		public MoveSearchHelper front;
-		public bool Inaccessbiel;
+		public bool Inaccessble;
 	}
 }
