@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Jyx2;
 using System;
+using System.Collections;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Jyx2Configs;
@@ -126,7 +127,7 @@ public class LevelMaster : MonoBehaviour
 	}
 
 	// Use this for initialization
-	async void Start()
+	void Start()
 	{
 		//先关闭触发事件
 		GameObject triggers = GameObject.Find("Level/Triggers");
@@ -175,7 +176,7 @@ public class LevelMaster : MonoBehaviour
 		UpdateMobileControllerUI();
 
 		//尝试绑定主角
-		TryBindPlayer();
+		TryBindPlayer().Forget();
 
 		//大地图不能使用跟随相机（目前好像比较卡？）
 		if (gameMap != null && !gameMap.IsWorldMap())
@@ -223,7 +224,7 @@ public class LevelMaster : MonoBehaviour
 			if (!IsInBattle)
 			{
 				//显示当前地图名，大地图不用显示
-				await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName());
+				Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, gameMap.GetShowName()).Forget();
 			}
 		}
 
@@ -391,7 +392,7 @@ public class LevelMaster : MonoBehaviour
 
 	// fix bind player failed error when select player before start battle
 	// modified by eaphone at 2021/05/31
-	public void TryBindPlayer()
+	public async UniTask TryBindPlayer()
 	{
 		if (_player != null)
 			return;
@@ -401,7 +402,7 @@ public class LevelMaster : MonoBehaviour
 		if (playerObj != null)
 		{
 			//设置主角
-			SetPlayer(playerObj).Forget();
+			await SetPlayer(playerObj);
 
 			var gameMap = GetCurrentGameMap();
 			if (gameMap != null && gameMap.Tags.Contains("POINTLIGHT")) //点光源

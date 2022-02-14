@@ -12,11 +12,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using Animancer;
+using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using XLua;
 
 public class Jyx2Player : MonoBehaviour
 {
@@ -44,6 +46,18 @@ public class Jyx2Player : MonoBehaviour
             return null;
         
         return LevelMaster.Instance.GetPlayer();
+    }
+
+    public async UniTask OnSceneLoad()
+    {
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        
+        //fix bug:无法正确触发开场的剧情，似乎异步加载scene的时候，触发器碰撞没有被激活
+        var c = GetComponent<Collider>();
+        await UniTask.WaitForEndOfFrame();
+        c.enabled = false;
+        await UniTask.WaitForEndOfFrame();
+        c.enabled = true;
     }
 
     
