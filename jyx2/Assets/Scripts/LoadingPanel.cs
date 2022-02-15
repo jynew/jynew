@@ -98,6 +98,8 @@ public class LoadingPanel : MonoBehaviour
                 }
             }
         }
+        
+
         //要再等一帧
         await UniTask.WaitForEndOfFrame();
         

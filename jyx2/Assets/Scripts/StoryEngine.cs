@@ -85,7 +85,7 @@ public class StoryEngine : MonoBehaviour
         }
 
         LevelLoader.LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId), loadPara,
-            () => { LevelMaster.Instance.TryBindPlayer(); });
+            () => { LevelMaster.Instance.TryBindPlayer().Forget(); });
         return true;
     }
 }

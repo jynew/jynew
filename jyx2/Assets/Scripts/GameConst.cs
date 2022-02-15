@@ -190,21 +190,23 @@ public class GameConst
         ["10"] = new PropertyItem(10, "Yujian", "剑术".GetContent(nameof(GameConst)), 30, 20),
         ["11"] = new PropertyItem(11, "Shuadao", "刀术".GetContent(nameof(GameConst)), 30, 20),
         ["12"] = new PropertyItem(12, "Anqi", "暗器".GetContent(nameof(GameConst)), 30, 20),
-
-        ["13"] = new PropertyItem(13, "Hp", "生命".GetContent(nameof(GameConst)), 30, 20),
-        ["14"] = new PropertyItem(14, "Tili", "体力".GetContent(nameof(GameConst)), 30, 20),
-        ["15"] = new PropertyItem(15, "Mp", "内力".GetContent(nameof(GameConst)), 40, 30),
-        ["16"] = new PropertyItem(16, "MaxHp", "最大生命".GetContent(nameof(GameConst)), 50, 30),
-        ["17"] = new PropertyItem(17, "MaxMp", "最大内力".GetContent(nameof(GameConst)), 40, 30),
-        ["18"] = new PropertyItem(18, "Attack", "攻击力".GetContent(nameof(GameConst)), 30, 20),
-        ["19"] = new PropertyItem(19, "AntiPoison", "抗毒".GetContent(nameof(GameConst)), 30, 20),
-        ["20"] = new PropertyItem(20, "Qimen", "奇门".GetContent(nameof(GameConst)), 30, 20),
+        ["13"] = new PropertyItem(20, "Qimen", "特殊".GetContent(nameof(GameConst)), 30, 20),
+        //-------以上自动生成
+        
+        ["14"] = new PropertyItem(13, "Hp", "生命".GetContent(nameof(GameConst)), 30, 20),
+        ["15"] = new PropertyItem(14, "Tili", "体力".GetContent(nameof(GameConst)), 30, 20),
+        ["16"] = new PropertyItem(15, "Mp", "内力".GetContent(nameof(GameConst)), 40, 30),
+        ["17"] = new PropertyItem(16, "MaxHp", "最大生命".GetContent(nameof(GameConst)), 50, 30),
+        ["18"] = new PropertyItem(17, "MaxMp", "最大内力".GetContent(nameof(GameConst)), 40, 30),
+        ["19"] = new PropertyItem(18, "Attack", "攻击力".GetContent(nameof(GameConst)), 30, 20),
+        ["20"] = new PropertyItem(19, "AntiPoison", "抗毒".GetContent(nameof(GameConst)), 30, 20),
         ["21"] = new PropertyItem(21, "Wuxuechangshi", "武学常识".GetContent(nameof(GameConst)), 30, 20),
         ["22"] = new PropertyItem(22, "Pinde", "品德".GetContent(nameof(GameConst)), 30, 20),
         ["23"] = new PropertyItem(23, "AttackPoison", "功夫带毒".GetContent(nameof(GameConst)), 30, 20),
         ["24"] = new PropertyItem(24, "Zuoyouhubo", "左右互搏".GetContent(nameof(GameConst)), 30, 20),
         ["25"] = new PropertyItem(25, "IQ", "资质".GetContent(nameof(GameConst)), 100, 30),
         ["26"] = new PropertyItem(26, "Poison", "中毒".GetContent(nameof(GameConst)), 30, 20),
+        //["27"] = new PropertyItem(27, "HpInc", "生命增长".GetContent(nameof(GameConst)), 7, 3),
         //---------------------------------------------------------------------------
         //---------------------------------------------------------------------------
 
