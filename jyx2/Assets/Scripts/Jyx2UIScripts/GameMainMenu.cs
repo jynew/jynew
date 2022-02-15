@@ -23,7 +23,6 @@ using Cysharp.Threading.Tasks;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
-
 	private enum PanelType
 	{
 		Home,
@@ -358,9 +357,24 @@ public partial class GameMainMenu : Jyx2_UIBase
 		if (GameConst.ProItemDic.ContainsKey(key))
 		{
 			PropertyItem item = GameConst.ProItemDic[key];
-			int value = Tools.GetRandomInt(item.DefaulMin, item.DefaulMax);
-			role.GetType().GetField(item.PropertyName).SetValue(role, value);
+
+			int value = 0;
+			if (BaberuthCheating()) //秘籍
+			{
+				value = item.DefaulMax;
+			}
+			else
+			{
+				value = Tools.GetRandomInt(item.DefaulMin, item.DefaulMax);
+			}
+			role.GetType().GetField(item.PropertyName).SetValue(role, value);	
 		}
+	}
+
+	//是否启用秘籍
+	bool BaberuthCheating()
+	{
+		return this.NameInput_InputField.text.ToLower().Equals("baberuth");
 	}
 
 	private void OnBackBtnClicked()
