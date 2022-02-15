@@ -49,6 +49,7 @@ namespace Jyx2
         [SerializeField] public int Zuoyouhubo; //左右互搏
         [SerializeField] public int Shengwang; //声望
         [SerializeField] public int IQ; //资质
+        [SerializeField] public int HpInc; //生命增长
 
 
         [SerializeField] public int ExpForItem; //修炼点数
@@ -141,6 +142,7 @@ namespace Jyx2
             AttackPoison = Data.AttackPoison;
             Zuoyouhubo = Data.Zuoyouhubo;
             IQ = Data.IQ;
+            HpInc = Data.HpInc;
 
             ResetItems();
         }
@@ -164,14 +166,6 @@ namespace Jyx2
                 Poison = 0;
             }
         }
-
-        public int HpInc
-        {
-            get { return Data.HpInc; }
-        }
-
-
-
 
         public int GetJyx2RoleId()
         {
@@ -217,7 +211,7 @@ namespace Jyx2
         {
             Level++;
             Tili = GameConst.MAX_ROLE_TILI;
-            MaxHp += (Data.HpInc + Random.Range(0, 3)) * 3;
+            MaxHp += (HpInc + Random.Range(0, 3)) * 3;
             SetHPAndRefreshHudBar(this.MaxHp);
             //当0 <= 资质 < 30, a = 2;
             //当30 <= 资质 < 50, a = 3;

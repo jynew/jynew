@@ -70,14 +70,16 @@ public class GraphicSetting : MonoBehaviour
         {
             if (_globalSetting == null)
             {
-                _globalSetting = new GraphicSetting();
+                var obj = new GameObject("[GraphicSetting]");
+                DontDestroyOnLoad(obj);
+                _globalSetting = obj.AddComponent<GraphicSetting>();
                 _globalSetting.Load();
             }
             return _globalSetting;
         }
     }
 
-    public GraphicSetting()
+    void Awake()
     {
         HasFog = 1;
         HasPost = 1;

@@ -32,6 +32,11 @@ public class RandomPropertyComponent : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        _mainMenu = FindObjectOfType<GameMainMenu>();
+    }
+
     public void ShowComponent( )
     {
         m_titleText.text = string.Format("{0}  这样的属性你满意吗?", GameRuntimeData.Instance.Player.Name);
@@ -79,4 +84,44 @@ public class RandomPropertyComponent : MonoBehaviour
         role.Recover(true);
     }
 
+    private string cheatingCode = "baberuth";
+    private int index = 0;
+    private GameMainMenu _mainMenu;
+    
+    void OnGUI()
+    {
+        if (Input.anyKeyDown)
+        {
+            try
+            {
+                //响应秘籍的输入
+                
+                Event e = Event.current;
+                if (e == null || e.keyCode == KeyCode.None || e.type != EventType.KeyDown)
+                    return;
+                var keycode = e.keyCode.ToString().ToLower()[0];
+                if (keycode == cheatingCode[index])
+                {
+                    index++;
+                    if (index >= cheatingCode.Length)
+                    {
+                        _mainMenu.DoGeneratePlayerRole(true);
+                        index = 0;
+                        return;
+                    }
+                }
+                else
+                {
+                    index = 0;
+                    if (keycode == cheatingCode[index]) index++;
+                }
+                _mainMenu.DoGeneratePlayerRole(false);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+    }
+    
 }

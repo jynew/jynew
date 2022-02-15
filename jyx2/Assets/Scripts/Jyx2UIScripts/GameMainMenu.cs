@@ -342,16 +342,41 @@ public partial class GameMainMenu : Jyx2_UIBase
 	}
 	private void OnCreateRoleNoClick()
 	{
+		DoGeneratePlayerRole();
+	}
+
+	/// <summary>
+	/// 参考:https://github.com/jynew/jynew/issues/688
+	/// </summary>
+	public void DoGeneratePlayerRole(bool cheating = false)
+	{
 		RoleInstance role = GameRuntimeData.Instance.Player;
-		for (int i = 0; i <= 12; i++)
+		
+		//生成基础属性
+		for (int i = 0; i <= 13; i++)
 		{
-			GenerateRamdomPro(role, i);
+			GenerateRamdomPro(role, i, cheating);
 		}
-		GenerateRamdomPro(role, 25);//资质
+
+		role.HpInc = cheating ? 7 : Tools.GetRandomInt(3, 7);
+		role.MaxHp = role.HpInc * 3 + 29;
+		int seed = cheating ? 9 : Tools.GetRandomInt(0, 9);
+		if (seed < 2)
+		{
+			role.IQ = Tools.GetRandomInt(0, 35) + 30;
+		}else if (seed <= 7)
+		{
+			role.IQ = Tools.GetRandomInt(0, 20) + 60;
+		}
+		else
+		{
+			role.IQ = Tools.GetRandomInt(0, 20) + 75;
+		}
+
 		m_randomProperty.RefreshProperty();
 	}
 
-	private void GenerateRamdomPro(RoleInstance role, int i)
+	private void GenerateRamdomPro(RoleInstance role, int i, bool cheating)
 	{
 		string key = i.ToString();
 		if (GameConst.ProItemDic.ContainsKey(key))
@@ -359,7 +384,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 			PropertyItem item = GameConst.ProItemDic[key];
 
 			int value = 0;
-			if (BaberuthCheating()) //秘籍
+			if (cheating) //秘籍
 			{
 				value = item.DefaulMax;
 			}
@@ -370,12 +395,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 			role.GetType().GetField(item.PropertyName).SetValue(role, value);	
 		}
 	}
-
-	//是否启用秘籍
-	bool BaberuthCheating()
-	{
-		return this.NameInput_InputField.text.ToLower().Equals("baberuth");
-	}
+	
 
 	private void OnBackBtnClicked()
 	{

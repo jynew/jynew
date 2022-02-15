@@ -85,8 +85,15 @@ public class RoleUIItem : MonoBehaviour
 			}
 			else
 			{
-				int value = (int)m_role.GetType().GetProperty(proItem.PropertyName).GetValue(m_role, null);
-				sb.Append($"{proItem.Name}:{value}\n");
+				try
+				{
+					int value = (int) m_role.GetType().GetProperty(proItem.PropertyName).GetValue(m_role, null);
+					sb.Append($"{proItem.Name}:{value}\n");
+				}
+				catch
+				{
+					
+				}
 			}
 		}
 		m_roleInfo.text = sb.ToString();
