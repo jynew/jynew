@@ -2,11 +2,11 @@
 
 SetFlag("test", "ok")
 if GetFlag("test") == "ok" then
-    print("test Set/Get Flag success.")
+    print("test Set/GetFlag success.")
 end
 
 SetFlagInt("testInt", 99)
-if GetFlag("testInt") == 99 then
-    print("test Set/Get FlagInt success.")
+if GetFlagInt("testInt") == 99 then
+    print("test Set/GetFlagInt success.")
 end 
 
