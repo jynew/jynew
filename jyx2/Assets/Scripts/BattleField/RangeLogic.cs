@@ -517,10 +517,11 @@ namespace Jyx2
 			var covertype = zhaoshi.GetCoverType();
 			if (covertype == SkillCoverType.LINE)
 			{
-				foreach (var loc in GetNearBlocks(x, y))
-				{
-					yield return new BattleBlockVector(loc.X, loc.Y);
-				}
+                foreach (var loc in GetNearBlocks(x, y))
+                {
+                    if (BattleboxHelper.Instance.GetBlockData(loc.X, loc.Y) != null)
+                        yield return new BattleBlockVector(loc.X, loc.Y);
+                }
 
 				//central is inaccessible, but need to allow selection for gamepad moves
 				yield return new BattleBlockVector(x, y)
@@ -540,7 +541,8 @@ namespace Jyx2
 
 			foreach (var loc in GetNearBlocks(x, y, castSize))
 			{
-				yield return new BattleBlockVector(loc.X, loc.Y);
+                if (BattleboxHelper.Instance.GetBlockData(loc.X, loc.Y) != null)
+					yield return new BattleBlockVector(loc.X, loc.Y);
 			}
 		}
 
