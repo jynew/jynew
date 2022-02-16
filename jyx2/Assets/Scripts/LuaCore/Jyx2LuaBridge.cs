@@ -1478,11 +1478,40 @@ namespace Jyx2
             LightScence();
         }
 
+        public static void jyx2_SetFlag(string flagKey, string value)
+        {
+            runtime.SetKeyValues(GetCustomerFlagPrefix(flagKey), value);
+        }
+
+        public static string jyx2_GetFlag(string flagKey)
+        {
+            if(runtime.KeyExist(GetCustomerFlagPrefix(flagKey)))
+                return runtime.GetKeyValues(GetCustomerFlagPrefix(flagKey));
+            return "";
+        }
+        
+        public static void jyx2_SetFlagInt(string flagKey, int value)
+        {
+            runtime.SetKeyValues(GetCustomerFlagPrefix(flagKey), value.ToString());
+        }
+
+        public static int jyx2_GetFlagInt(string flagKey)
+        {
+            if(runtime.KeyExist(GetCustomerFlagPrefix(flagKey)))
+                return int.Parse(runtime.GetKeyValues(GetCustomerFlagPrefix(flagKey)));
+            return 0;
+        }
+
         #endregion
 
 
         #region private
 
+        private static string GetCustomerFlagPrefix(string flag)
+        {
+            return "CustomerFlag_" + flag;
+        }
+        
         private static void RunInMainThread(Action run)
         {
             Loom.QueueOnMainThread(_ =>

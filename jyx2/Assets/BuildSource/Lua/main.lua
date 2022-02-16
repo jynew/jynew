@@ -181,6 +181,12 @@ jyx2_CheckBookAndRepute=CS.Jyx2.Jyx2LuaBridge.jyx2_CheckBookAndRepute
 jyx2_SetTimelineSpeed = CS.Jyx2.Jyx2LuaBridge.jyx2_SetTimelineSpeed
 jyx2_PlayTimelineSimple = CS.Jyx2.Jyx2LuaBridge.jyx2_PlayTimelineSimple
 jyx2_ShowEndScene = CS.Jyx2.Jyx2LuaBridge.jyx2_ShowEndScene
+
+SetFlag = CS.Jyx2.Jyx2LuaBridge.jyx2_SetFlag
+GetFlag = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlag
+SetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_SetFlagInt
+GetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlagInt
+
 function main_getLuaFiles()
 	return {}
 end 
