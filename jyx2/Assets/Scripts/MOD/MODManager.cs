@@ -37,7 +37,24 @@ namespace Jyx2.MOD
                 {
                     var filePath = Path.Combine(ModsPath, modMeta.id);
                     var modEntry = new ModEntry(modMeta, filePath);
-                    ModEntries.Add(modEntry);
+#if UNITY_ANDROID
+                    if (modMeta.platform == "Android")
+                    {
+                        ModEntries.Add(modEntry); 
+                    }
+#endif
+#if UNITY_STANDALONE_WIN
+                    if (modMeta.platform == "Windows")
+                    {
+                        ModEntries.Add(modEntry);
+                    }
+#endif
+#if UNITY_STANDALONE_OSX
+                    if (modMeta.platform == "MacOS")
+                    {
+                        ModEntries.Add(modEntry);
+                    }
+#endif
                 }
                 
                 var pathList = new List<string>();
@@ -56,6 +73,7 @@ namespace Jyx2.MOD
         [Serializable]
         public class ModMeta
         {
+            public string platform;
             public string name;
             public string id;
             public string version;

@@ -62,8 +62,7 @@ namespace Jyx2.MOD
                 foreach (var name in ab.GetAllPaths())
                 {
                     Debug.Log($"mod file:{name}");
-                    string overrideAddr = name.Replace('/' + name.Split('/')[1], "");
-                    Remap[overrideAddr] = new AssetBundleItem() { Name = name, Ab = ab };
+                    Remap[name] = new AssetBundleItem() { Name = name, Ab = ab };
                 }
             }
         }
