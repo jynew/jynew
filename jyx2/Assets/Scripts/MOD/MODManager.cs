@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Jyx2.Middleware;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Jyx2.MOD
 {
     public static class MODManager
     {
         public static readonly List<ModEntry> ModEntries = new List<ModEntry>();
+        public static readonly string Http = "http://42.192.48.70:3001/getPassMods";
         public static string ModsPath { get; private set; }
 
         public static void Init()
@@ -24,11 +27,25 @@ namespace Jyx2.MOD
 
             if (Directory.Exists(ModsPath))
             {
+                UnityWebRequest request = UnityWebRequest.Get(Http);
+                request.SendWebRequest();
+                while (!request.isDone) { }
+                string textString = request.downloadHandler.text;
+                var response = new Response(textString);
+                var modMetas = response.data;
+                foreach (var modMeta in modMetas)
+                {
+                    var filePath = Path.Combine(ModsPath, modMeta.id);
+                    var modEntry = new ModEntry(modMeta, filePath);
+                    ModEntries.Add(modEntry);
+                }
+                
                 var pathList = new List<string>();
                 FileTools.GetAllFilePath(ModsPath, pathList, new List<string>() { ".json" });
                 foreach (var jsonPath in pathList)
                 {
-                    var modMeta = new ModMeta(jsonPath);
+                    var jsonString = File.ReadAllText(jsonPath, Encoding.UTF8);
+                    var modMeta = new ModMeta(jsonString);
                     var filePath = Path.Combine(ModsPath, modMeta.id);
                     var modEntry = new ModEntry(modMeta, filePath);
                     ModEntries.Add(modEntry);
@@ -39,7 +56,6 @@ namespace Jyx2.MOD
         [Serializable]
         public class ModMeta
         {
-            public string jsonPath;
             public string name;
             public string id;
             public string version;
@@ -73,15 +89,13 @@ namespace Jyx2.MOD
                 return id.GetHashCode();
             }
             
-            public ModMeta(string path)
+            public ModMeta(string jsonString)
             {
-                jsonPath = path;
-                InitData(path);
+                InitData(jsonString);
             }
 
-            void InitData(string path)
+            void InitData(string jsonString)
             {
-                string jsonString = File.ReadAllText(path, Encoding.UTF8);
                 try
                 {
                     var modMeta = JsonUtility.FromJson<ModMeta>(jsonString);
@@ -103,7 +117,35 @@ namespace Jyx2.MOD
                 }
             }
         }
-        
+
+        [Serializable]
+        public class Response
+        {
+            public int code;
+            public string msg;
+            public List<ModMeta> data = new List<ModMeta>();
+            
+            public Response(string jsonString)
+            {
+                InitData(jsonString);
+            }
+
+            void InitData(string jsonString)
+            {
+                try
+                {
+                    var response = JsonUtility.FromJson<Response>(jsonString);
+                    code = response.code;
+                    msg = response.msg;
+                    data = response.data;
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception);
+                }
+            }
+        }
+
         public class ModEntry
         {
             public ModMeta ModMeta;
