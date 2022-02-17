@@ -65,7 +65,7 @@ public class ModItem : MonoBehaviour
             m_Progress.gameObject.SetActive(false);
         }
 
-        m_Name.text = modEntry.ModMeta.name + "Version." + modEntry.ModMeta.version;
+        m_Name.text = modEntry.ModMeta.name + "V" + modEntry.ModMeta.version;
         m_Desc.text = modEntry.ModMeta.description;
         m_Toggle.onValueChanged.AddListener((isOn) =>
         {
