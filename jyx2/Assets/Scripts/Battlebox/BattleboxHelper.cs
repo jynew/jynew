@@ -98,7 +98,7 @@ public class BattleboxHelper : MonoBehaviour
 		{
 			if (!CanEnterBattle(pos)) return;
 			EnterBattle(pos);
-			ShowMoveZone(GameRuntimeData.Instance.Player.View.transform.position);
+			ShowMoveZone(Jyx2Player.GetPlayer().transform.position);
 		}
 		else if (Input.GetKey("h"))
 		{

@@ -33,20 +33,6 @@ public class CinemachineTriggerActionHelper : UIBehaviour
     //接受的trigger名字
     public List<string> m_AcceptColliderNames;
 
-    bool IsGameObjectAccept(GameObject obj)
-    {
-        if (!enabled) return false;
-        if (obj == null) return false;
-
-        if (m_AcceptColliderNames == null || m_AcceptColliderNames.Count == 0)
-        {
-            return obj == GameRuntimeData.Instance.Player.View.gameObject;
-        }
-        else
-        {
-            return m_AcceptColliderNames.Contains(obj.name);
-        }
-    }
 
     void OnTriggerEnter(Collider other)
     {

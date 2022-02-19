@@ -39,7 +39,7 @@ public class Jyx2Player : MonoBehaviour
     public bool EnableInteractive { get; set; }
 
     private bool canControl = true;
-    
+
     public static Jyx2Player GetPlayer()
     {
         if (LevelMaster.Instance == null)
@@ -50,7 +50,7 @@ public class Jyx2Player : MonoBehaviour
 
     public async UniTask OnSceneLoad()
     {
-        transform.rotation = Quaternion.Euler(Vector3.zero);
+        //transform.rotation = Quaternion.Euler(Vector3.zero);
         
         //fix bug:无法正确触发开场的剧情，似乎异步加载scene的时候，触发器碰撞没有被激活
         var c = GetComponent<Collider>();
@@ -59,6 +59,9 @@ public class Jyx2Player : MonoBehaviour
         await UniTask.WaitForEndOfFrame();
         c.enabled = true;
     }
+
+    public HybridAnimancerComponent m_Animancer;
+    public Animator m_Animator;
 
     
     public bool IsOnBoat;
@@ -148,7 +151,8 @@ public class Jyx2Player : MonoBehaviour
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _boat = FindObjectOfType<Jyx2Boat>();
-
+        
+        
         EnableInteractive = true;
     }
 
@@ -180,21 +184,24 @@ public class Jyx2Player : MonoBehaviour
         if (!canControl)
             return;
 
-        BigMapIdleJudge();
+        //BigMapIdleJudge();
         
         //判断交互范围
         Debug.DrawRay(transform.position, transform.forward, Color.yellow);
-        
-        //获得当前可以触发的交互物体
-        var gameEvent = DetectInteractiveGameEvent();
-        if (gameEvent == null)
+
+        if (evtManager != null)
         {
-            evtManager.OnExitAllEvents();
-        }
-        else
-        {
-            //Debug.Log("find interactive trigger:" + gameEvent.name);
-            evtManager.OnTriggerEvent(gameEvent);
+            //获得当前可以触发的交互物体
+            var gameEvent = DetectInteractiveGameEvent();
+            if (gameEvent == null)
+            {
+                evtManager.OnExitAllEvents();
+            }
+            else
+            {
+                //Debug.Log("find interactive trigger:" + gameEvent.name);
+                evtManager.OnTriggerEvent(gameEvent);
+            }
         }
     }
 
@@ -202,22 +209,16 @@ public class Jyx2Player : MonoBehaviour
     private float _bigmapIdleTimeCount = 0;
     private const float BIG_MAP_IDLE_TIME = 5f;
     private bool _playingbigMapIdle = false;
-
-    private Animator _playerAnimator;
-    private HybridAnimancerComponent _playerAnimancer;
+    
 
     private Animator GetPlayerAnimator()
     {
-        if (_playerAnimator == null)
-            _playerAnimator = this.transform.GetChild(0).GetComponent<Animator>();
-        return _playerAnimator;
+        return m_Animator;
     }
     
     private HybridAnimancerComponent GetPlayerAnimancer()
     {
-        if (_playerAnimancer == null)
-            _playerAnimancer = GameUtil.GetOrAddComponent<HybridAnimancerComponent>(this.transform.GetChild(0));
-        return _playerAnimancer;
+        return m_Animancer;
     }
     
     //在大地图上判断是否需要展示待机动作
