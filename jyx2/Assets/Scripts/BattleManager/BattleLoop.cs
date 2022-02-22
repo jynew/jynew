@@ -76,7 +76,8 @@ namespace Jyx2.Battle
                 {
                     await RoleManualAction(role); //人工操作
                 }
-
+                //角色运动完以后记录当前回合的生命值
+                role.PreviousRoundHp = role.Hp;
                 //标记角色已经行动过
                 model.OnActioned(role);
             }
