@@ -247,7 +247,8 @@ public class BattleManager : MonoBehaviour
 
         //加入战场
         m_BattleModel.AddBattleRole(role, npcStandBlock.BattlePos, team, (team != 0));
-
+        //角色初次加入战场时候，上一回合的生命值就是出场生命值
+        role.PreviousRoundHp = role.Hp;
         //待命
         role.View.Idle();
         var enemy = AIManager.Instance.GetNearestEnemy(role);

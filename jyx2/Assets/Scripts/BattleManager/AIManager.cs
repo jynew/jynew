@@ -14,6 +14,7 @@ using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using Jyx2Configs;
@@ -54,6 +55,7 @@ public class AIManager
     private void Init()
     {
     }
+
     public async UniTask<AIResult> GetAIResult(RoleInstance role)
     {
         //初始化范围逻辑
@@ -67,56 +69,61 @@ public class AIManager
 
         //可使用招式
         var zhaoshis = role.GetZhaoshis(false);
-        
+
         //AI算法：穷举每个点，使用招式，取最大收益
         AIResult result = null;
         double maxscore = 0;
 
-
         //优先考虑吃药，更正角色中毒不退问题
-        if (role.Items.Count > 0 && (role.Hp < 0.2 * role.MaxHp || role.Mp < 0.2 * role.MaxMp || role.Tili < 0.2 * GameConst.MAX_ROLE_TILI))
+        //将生命、内力和体力的吃药逻辑分开，通常战斗时都有目的性的吃药，以免逻辑混合
+        //如果是我方人物，应当获取玩家物品
+        List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
+        Jyx2ConfigItem resultItem = null;
+        //生成随机阈值
+        float randomThreshold = UnityEngine.Random.Range(0.15F, 0.25F);
+        //当角色还有道具并且生命小于阈值，或担心下一轮可能会死亡时，则需要使用恢复生命道具，阈值随机为15~25%
+        //担心下一轮死亡的逻辑：当前生命值小于等于上一轮生命扣减值的107.5%~112.5% by Tomato
+        if (items.Count > 0 && (role.Hp < randomThreshold * role.MaxHp || role.Hp < (role.PreviousRoundHp - role.Hp) * (1 + randomThreshold/2)))
         {
-            List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
-            foreach (var item in items)
+            Dictionary<int, double> decisionDictionary = new Dictionary<int, double>();
+            items.Where(y => (role.Hp + y.AddHp) >= 0.9 * role.MaxHp).ToList().ForEach(x => { decisionDictionary.Add(x.Id, x.AddHp - Mathf.Min(x.AddHp, role.MaxHp - role.Hp)); });
+            resultItem = decisionDictionary.Count > 0 ? items.FirstOrDefault(x => x.Id == decisionDictionary.OrderBy(y => y.Value).FirstOrDefault().Key) : items.OrderByDescending(x => x.AddHp).FirstOrDefault();
+            if (resultItem != null)
             {
-                double score = 0;
-                //尽量吃刚刚好的药
-                if (item.AddHp > 0)
-                {
-                    score += Mathf.Min(item.AddHp, role.MaxHp - role.Hp) - item.AddHp / 10;
-                }
-                if (item.AddMp > 0)
-                {
-                    score += Mathf.Min(item.AddMp, role.MaxMp - role.Mp) / 2 - item.AddMp / 10;
-                }
-                if (item.AddTili > 0)
-                {
-                    score += Mathf.Min(item.AddTili, GameConst.MAX_ROLE_TILI - role.Tili) - item.AddTili / 10;
-                }
-
-                if (score > 0)
-                {
-                    score *= 1.5;//自保系数大
-                }
-
-                if (score > maxscore)
-                {
-                    maxscore = score;
-                    var tmp = GetFarestEnemyBlock(role, range);
-                    result = new AIResult
-                    {
-                        MoveX = tmp.X,
-                        MoveY = tmp.Y,
-                        IsRest = false,
-                        Item = item
-                    };
-                }
+                var tmp = GetFarestEnemyBlock(role, range);
+                result = new AIResult { MoveX = tmp.X, MoveY = tmp.Y, IsRest = false, Item = resultItem };
+                return result;
             }
         }
 
-        if (result != null)
+        //当角色还有道具并且内力小于阈值，则需要使用恢复内力道具，阈值随机为15~25%
+        if (items.Count > 0 && role.Mp < randomThreshold * role.MaxMp)
         {
-            return result;
+
+            Dictionary<int, double> decisionDictionary = new Dictionary<int, double>();
+            items.Where(y => (role.Mp + y.AddMp) >= 0.9 * role.MaxMp).ToList().ForEach(x => { decisionDictionary.Add(x.Id, x.AddMp - Mathf.Min(x.AddMp, role.MaxMp - role.Mp)); });
+            resultItem = decisionDictionary.Count > 0 ? items.FirstOrDefault(x => x.Id == decisionDictionary.OrderBy(y => y.Value).FirstOrDefault().Key) : items.OrderByDescending(x => x.AddMp).FirstOrDefault();
+            if (resultItem != null)
+            {
+                var tmp = GetFarestEnemyBlock(role, range);
+                result = new AIResult { MoveX = tmp.X, MoveY = tmp.Y, IsRest = false, Item = resultItem };
+                return result;
+            }
+
+        }
+
+        //当角色还有道具并且体力小于阈值，则需要使用恢复体力道具，阈值随机为7.5~12.5%
+        if (items.Count > 0 && role.Tili < randomThreshold * GameConst.MAX_ROLE_TILI / 2)
+        {
+            Dictionary<int, double> decisionDictionary = new Dictionary<int, double>();
+            items.Where(y => (role.Tili + y.AddTili) >= 0.9 * GameConst.MAX_ROLE_TILI).ToList().ForEach(x => { decisionDictionary.Add(x.Id, x.AddTili - Mathf.Min(x.AddTili, GameConst.MAX_ROLE_TILI - role.Tili)); });
+            resultItem = decisionDictionary.Count > 0 ? items.FirstOrDefault(x => x.Id == decisionDictionary.OrderBy(y => y.Value).FirstOrDefault().Key) : items.OrderByDescending(x => x.AddTili).FirstOrDefault();
+            if (resultItem != null)
+            {
+                var tmp = GetFarestEnemyBlock(role, range);
+                result = new AIResult { MoveX = tmp.X, MoveY = tmp.Y, IsRest = false, Item = resultItem };
+                return result;
+            }
         }
 
         foreach (var zhaoshi in zhaoshis)
@@ -143,16 +150,16 @@ public class AIManager
                         IsRest = false
                     };
                 }
-                
+
                 await UniTask.WaitForEndOfFrame();
             }
         }
 
         List<Jyx2ConfigItem> anqis = GetAvailableItems(role, 4); //获取暗器
         //使用暗器
-        if(anqis.Count > 0)
+        if (anqis.Count > 0)
         {
-            foreach(var anqi in anqis)
+            foreach (var anqi in anqis)
             {
                 BattleZhaoshiInstance anqizhaoshi = new AnqiZhaoshiInstance(role.Anqi, anqi);
 
@@ -160,7 +167,7 @@ public class AIManager
                     continue;
 
                 BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqizhaoshi, range);
-                
+
                 if (tmp != null && tmp.Length == 2 && tmp[0] != null)
                 {
                     BattleBlockVector movePos = tmp[0];
@@ -603,12 +610,29 @@ public class AIManager
     List<Jyx2ConfigItem> GetAvailableItems(RoleInstance role, int itemType)
     {
         List<Jyx2ConfigItem> items = new List<Jyx2ConfigItem>();
-        foreach (var item in role.Items)
+        // 如果角色是玩家这方的，应该使用玩家的物品栏 by Tomato
+        if (role.team == 0)
         {
-            var tmp = item.Item;
-            if ((int)tmp.ItemType == itemType)
-                items.Add(tmp);
+            foreach (var kv in GameRuntimeData.Instance.Items)
+            {
+                string id = kv.Key;
+                int count = kv.Value;
+
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
+                if ((int)item.ItemType == itemType)
+                    items.Add(item);
+            }
         }
+        else
+        {
+            foreach (var item in role.Items)
+            {
+                var tmp = item.Item;
+                if ((int)tmp.ItemType == itemType)
+                    items.Add(tmp);
+            }
+        }
+
         return items;
     }
 
