@@ -118,6 +118,7 @@ namespace Jyx2
             Level = Data.Level;
             Exp = Data.Exp;
             Hp = Data.MaxHp;
+            PreviousRoundHp = Hp;
             MaxHp = Data.MaxHp;
             Mp = Data.MaxMp;
             MaxMp = Data.MaxMp;
@@ -304,7 +305,7 @@ namespace Jyx2
 
 
         public int ExpGot; //战斗中获得的经验
-
+        public int PreviousRoundHp; //上一回合的生命值
         #endregion
 
         public Jyx2ConfigItem GetWeapon()
