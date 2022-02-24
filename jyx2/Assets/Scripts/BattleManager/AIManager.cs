@@ -437,6 +437,9 @@ public class AIManager
         //寻找一个点离敌人最远
         foreach (var r in range)
         {
+            // 遍历时过滤不可达的位置，以免引发异常
+            if (BattleboxHelper.Instance.GetBlockData(r.X, r.Y) == null)
+                continue;
             int min = int.MaxValue;
             foreach (RoleInstance sp in BattleModel.AliveRoles)
             {
@@ -446,12 +449,14 @@ public class AIManager
                     min = distance;
                 }
             }
+
             if (min > max)
             {
                 max = min;
                 rst = r;
             }
         }
+
         return rst;
     }
 
