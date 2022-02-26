@@ -112,6 +112,7 @@ namespace Jyx2Editor
                 return;
 
             //重新生成Addressable相关文件
+            AddressableAssetSettings.CleanPlayerContent();
             AddressableAssetSettings.BuildPlayerContent();
             
             //重新生成MOD资源索引表
@@ -154,6 +155,7 @@ namespace Jyx2Editor
                 return;
 
             //重新生成Addressable相关文件
+            AddressableAssetSettings.CleanPlayerContent();
             AddressableAssetSettings.BuildPlayerContent();
             
             //重新生成MOD资源索引表
@@ -203,6 +205,7 @@ namespace Jyx2Editor
                     return;
                 
                 //重新生成Addressable相关文件
+                AddressableAssetSettings.CleanPlayerContent();
                 AddressableAssetSettings.BuildPlayerContent();
                 
                 //重新生成MOD资源索引表
@@ -259,6 +262,7 @@ namespace Jyx2Editor
                     return;
                 
                 //重新生成Addressable相关文件
+                AddressableAssetSettings.CleanPlayerContent();
                 AddressableAssetSettings.BuildPlayerContent();
                 
                 //重新生成MOD资源索引表
@@ -319,6 +323,7 @@ namespace Jyx2Editor
                     return;
 
                 //重新生成Addressable相关文件
+                AddressableAssetSettings.CleanPlayerContent();
                 AddressableAssetSettings.BuildPlayerContent();
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
@@ -364,6 +369,7 @@ namespace Jyx2Editor
                     return;
 
                 //重新生成Addressable相关文件
+                AddressableAssetSettings.CleanPlayerContent();
                 AddressableAssetSettings.BuildPlayerContent();
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
