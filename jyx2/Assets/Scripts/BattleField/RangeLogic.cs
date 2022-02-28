@@ -467,14 +467,14 @@ namespace Jyx2
 		/// <summary>
 		/// 返回角色技能的施展距离
 		/// </summary>
-		/// <param name="zhaoshi"></param>
+		/// <param name="skillCast"></param>
 		/// <param name="source"></param>
 		/// <returns></returns>
-		public int GetCastSize(BattleZhaoshiInstance zhaoshi, RoleInstance source)
+		public int GetCastSize(SkillCastInstance skillCast, RoleInstance source)
 		{
-			if (zhaoshi.GetCastSize() == 0)
+			if (skillCast.GetCastSize() == 0)
 				return 0;
-			var castsize = PreCastSizeAdjust(zhaoshi, source);
+			var castsize = PreCastSizeAdjust(skillCast, source);
 			castsize = PostRoleCastSizeAdjust(castsize, source);
 			return castsize;
 		}
@@ -482,12 +482,12 @@ namespace Jyx2
 		/// <summary>
 		/// 角色施展技能前调整距离
 		/// </summary>
-		/// <param name="zhaoshi"></param>
+		/// <param name="skillCast"></param>
 		/// <param name="source"></param>
 		/// <returns></returns>
-		public static int PreCastSizeAdjust(BattleZhaoshiInstance zhaoshi, RoleInstance source)
+		public static int PreCastSizeAdjust(SkillCastInstance skillCast, RoleInstance source)
 		{
-			var castsize = zhaoshi.GetCastSize();
+			var castsize = skillCast.GetCastSize();
 			return castsize;
 		}
 
@@ -507,14 +507,14 @@ namespace Jyx2
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		/// <param name="zhaoshi"></param>
+		/// <param name="skillCast"></param>
 		/// <param name="source"></param>
 		/// <returns></returns>
-		public IEnumerable<BattleBlockVector> GetSkillCastBlocks(int x, int y, BattleZhaoshiInstance zhaoshi, RoleInstance source)
+		public IEnumerable<BattleBlockVector> GetSkillCastBlocks(int x, int y, SkillCastInstance skillCast, RoleInstance source)
 		{
-			var castSize = GetCastSize(zhaoshi, source);
+			var castSize = GetCastSize(skillCast, source);
 
-			var covertype = zhaoshi.GetCoverType();
+			var covertype = skillCast.GetCoverType();
 			if (covertype == SkillCoverType.LINE)
 			{
                 foreach (var loc in GetNearBlocks(x, y))

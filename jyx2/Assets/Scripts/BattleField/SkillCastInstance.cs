@@ -20,22 +20,22 @@ using Random = UnityEngine.Random;
 
 namespace Jyx2
 {
-    public class BattleZhaoshiInstance
+    public class SkillCastInstance
     {
         public const int MAX_MAGIC_LEVEL_INDEX = 9;
 
-        protected BattleZhaoshiInstance()
+        protected SkillCastInstance()
         {
         }
 
-        public BattleZhaoshiInstance(SkillInstance skill)
+        public SkillCastInstance(SkillInstance skill)
         {
             Data = skill;
             level = skill.GetLevel();
             Key = skill.Key.ToString();
         }
 
-        public enum ZhaoshiStatus
+        public enum SkillCastStatus
         {
             OK, //正常
             CD, //CD中
@@ -111,7 +111,7 @@ namespace Jyx2
             }
             
             //暗器，扣除道具
-            if (this is AnqiZhaoshiInstance)
+            if (this is AnqiSkillCastInstance)
             {
                 if (!role.isAI)
                 {
@@ -137,11 +137,11 @@ namespace Jyx2
                 CurrentCooldown -= 1;
         }
 
-        public ZhaoshiStatus GetStatus()
+        public SkillCastStatus GetStatus()
         {
             if (CurrentCooldown > 0)
-                return ZhaoshiStatus.CD;
-            return ZhaoshiStatus.OK;
+                return SkillCastStatus.CD;
+            return SkillCastStatus.OK;
         }
 
 
@@ -205,9 +205,9 @@ namespace Jyx2
     /// <summary>
     /// JYX2:用毒
     /// </summary>
-    public class PoisonZhaoshiInstance : BattleZhaoshiInstance
+    public class PoisonSkillCastInstance : SkillCastInstance
     {
-        public PoisonZhaoshiInstance(int lv)
+        public PoisonSkillCastInstance(int lv)
         {
             _level = lv;
             Data = new SkillInstance(93);
@@ -240,9 +240,9 @@ namespace Jyx2
     /// <summary>
     /// JYX2：解毒
     /// </summary>
-    public class DePoisonZhaoshiInstance : BattleZhaoshiInstance
+    public class DePoisonSkillCastInstance : SkillCastInstance
     {
-        public DePoisonZhaoshiInstance(int lv)
+        public DePoisonSkillCastInstance(int lv)
         {
             _level = lv;
             Data = new SkillInstance(94);
@@ -280,9 +280,9 @@ namespace Jyx2
     /// <summary>
     /// JYX2：医疗
     /// </summary>
-    public class HealZhaoshiInstance : BattleZhaoshiInstance
+    public class HealSkillCastInstance : SkillCastInstance
     {
-        public HealZhaoshiInstance(int lv)
+        public HealSkillCastInstance(int lv)
         {
             _level = lv;
             Data = new SkillInstance(95);
@@ -320,11 +320,11 @@ namespace Jyx2
     /// <summary>
     /// JYX2:暗器
     /// </summary>
-    public class AnqiZhaoshiInstance : BattleZhaoshiInstance
+    public class AnqiSkillCastInstance : SkillCastInstance
     {
         private const int ANQI_MAGIC_ID = 97;
 
-        public AnqiZhaoshiInstance(int lv, Jyx2ConfigItem item)
+        public AnqiSkillCastInstance(int lv, Jyx2ConfigItem item)
         {
             //Key = "暗器_" + item.Name;
             Key = "暗器";

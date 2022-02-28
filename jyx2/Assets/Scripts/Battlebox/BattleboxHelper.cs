@@ -363,7 +363,7 @@ public class BattleboxHelper : MonoBehaviour
 
 	public void ShowRangeBlocks(IEnumerable<BattleBlockVector> list)
 	{
-		//todo: debug zhaoshi that has range instead of just one point
+		//todo: debug skillCast that has range instead of just one point
 		if (!GeneralPreJudge()) return;
 		_currentBattlebox.HideAllRangeBlocks();
 

@@ -58,12 +58,12 @@ namespace Jyx2
         public Jyx2AnimationBattleRole Source;
         public IEnumerable<Jyx2AnimationBattleRole> Targets;
         public IEnumerable<Transform> CoverBlocks;
-        public BattleZhaoshiInstance Zhaoshi;
+        public SkillCastInstance Skill;
 
 
         Jyx2SkillDisplayAsset GetDisplay()
         {
-            return Zhaoshi.Data.GetDisplay();
+            return Skill.Data.GetDisplay();
         }
 
 
@@ -76,7 +76,7 @@ namespace Jyx2
             var display = GetDisplay();
             if(display == null)
             {
-                Debug.LogError($"招式{Zhaoshi.Key}没有配置Display!");
+                Debug.LogError($"招式{Skill.Key}没有配置Display!");
                 return;
             }
 
