@@ -27,15 +27,15 @@ public class UIHelper
     {
         Dictionary<int, int> result = new Dictionary<int, int>();
         if (item.AddHp != 0)//加血
-            result.Add(14, item.AddHp);
+            result.Add(13, item.AddHp);
         if (item.AddMaxHp != 0)//最大血量
-            result.Add(17, item.AddMaxHp);
+            result.Add(16, item.AddMaxHp);
         if (item.AddMp != 0)//加内力
-            result.Add(16, item.AddMp);
+            result.Add(15, item.AddMp);
         if (item.AddMaxMp != 0)//最大内力
-            result.Add(18, item.AddMaxMp);
+            result.Add(17, item.AddMaxMp);
         if (item.Attack != 0)//攻击
-            result.Add(19, item.Attack);
+            result.Add(18, item.Attack);
         if (item.Qinggong != 0)//轻功
             result.Add(3, item.Qinggong);
         if (item.Defence != 0)//防御
@@ -47,7 +47,7 @@ public class UIHelper
         if (item.DePoison != 0)//解毒
             result.Add(8, item.DePoison);
         if (item.AntiPoison != 0)//抗毒
-            result.Add(20, item.AntiPoison);
+            result.Add(19, item.AntiPoison);
         if (item.Quanzhang != 0)//拳掌
             result.Add(9, item.Quanzhang);
         if (item.Yujian != 0)//御剑
