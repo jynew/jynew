@@ -32,12 +32,6 @@ public class Jyx2Player : MonoBehaviour
     /// </summary>
     const float PLAYER_INTERACTIVE_ANGLE = 120f;
 
-    /// <summary>
-    /// 是否激活交互选项
-    /// </summary>
-    [HideInInspector]
-    public bool EnableInteractive { get; set; }
-
     private bool canControl = true;
 
     public static Jyx2Player GetPlayer()
@@ -151,9 +145,8 @@ public class Jyx2Player : MonoBehaviour
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _boat = FindObjectOfType<Jyx2Boat>();
-        
-        
-        EnableInteractive = true;
+
+        _gameEventLayerMask = LayerMask.GetMask("GameEvent");
     }
 
     void Start()
@@ -209,12 +202,7 @@ public class Jyx2Player : MonoBehaviour
     private float _bigmapIdleTimeCount = 0;
     private const float BIG_MAP_IDLE_TIME = 5f;
     private bool _playingbigMapIdle = false;
-    
 
-    private Animator GetPlayerAnimator()
-    {
-        return m_Animator;
-    }
     
     private HybridAnimancerComponent GetPlayerAnimancer()
     {
@@ -226,7 +214,7 @@ public class Jyx2Player : MonoBehaviour
     {
         if(_boat == null) return; //暂实现：判断是否是大地图，有船才是大地图
 
-        var animator = GetPlayerAnimator();
+        var animator = m_Animator;
         
         if (_playingbigMapIdle)
         {
@@ -263,6 +251,8 @@ public class Jyx2Player : MonoBehaviour
     #region 事件交互
     
     private Collider[] targets = new Collider[10];
+
+    private int _gameEventLayerMask = -1;
     
     /// <summary>
     /// 在交互视野范围内寻找第一个可被交互物体
@@ -270,7 +260,7 @@ public class Jyx2Player : MonoBehaviour
     /// <returns></returns>
     GameEvent DetectInteractiveGameEvent()
     {
-        int count = Physics.OverlapSphereNonAlloc(transform.position, PLAYER_INTERACTIVE_RANGE, targets, LayerMask.GetMask("GameEvent"));
+        int count = Physics.OverlapSphereNonAlloc(transform.position, PLAYER_INTERACTIVE_RANGE, targets, _gameEventLayerMask);
         //添加
         for (int i = 0; i < count; i++)
         {
@@ -288,7 +278,6 @@ public class Jyx2Player : MonoBehaviour
 
     bool CanSee(Collider target)
     {
-
         //判断是否在视野角度内
         var isInViewField = Vector3.Angle(transform.forward, target.transform.position - transform.position) <= PLAYER_INTERACTIVE_ANGLE / 2;
         if(isInViewField) {
@@ -329,7 +318,7 @@ public class Jyx2Player : MonoBehaviour
 
     bool SetInteractiveGameEvent(Collider c)
     {
-        var evt = c.GetComponent<GameEvent>();
+        var evt = c.GetComponent<GameEvent>(); 
         if (evt == null)
             return false;
 
