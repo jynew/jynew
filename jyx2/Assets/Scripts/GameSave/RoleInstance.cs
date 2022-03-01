@@ -150,7 +150,7 @@ namespace Jyx2
 
         public void ResetForBattle()
         {
-            ResetZhaoshis();
+            ResetSkillCasts();
             ResetItems();
         }
 
@@ -331,48 +331,48 @@ namespace Jyx2
         /// <summary>
         /// 战斗中使用的招式
         /// </summary>
-        private List<BattleZhaoshiInstance> Zhaoshis;
+        private List<SkillCastInstance> Skills;
 
 
         /// <summary>
         /// 获取该角色所有的招式，（如果有医疗、用毒、解毒，也封装成招式）
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BattleZhaoshiInstance> GetZhaoshis(bool forceAttackZhaoshi)
+        public IEnumerable<SkillCastInstance> GetSkills(bool forceAttackSkill)
         {
             //金庸DOS版逻辑，体力大于等于10且有武功最低等级所需内力值才可以使用技能
             if (this.Tili >= 10)
             {
-                foreach (var zhaoshi in Zhaoshis)
+                foreach (var skill in Skills)
                 {
-                    if (this.Mp >= zhaoshi.Data.GetSkill().MpCost)
-                        yield return zhaoshi;
+                    if (this.Mp >= skill.Data.GetSkill().MpCost)
+                        yield return skill;
                 }
             }
 
-            if (forceAttackZhaoshi)
+            if (forceAttackSkill)
                 yield break;
 
             //金庸DOS版逻辑，用毒、解毒、医疗
-            if (this.UsePoison >= 20 && this.Tili >= 10) yield return new PoisonZhaoshiInstance(this.UsePoison);
-            if (this.DePoison >= 20 && this.Tili >= 10) yield return new DePoisonZhaoshiInstance(this.DePoison);
-            if (this.Heal >= 20 && this.Tili >= 50) yield return new HealZhaoshiInstance(this.Heal);
+            if (this.UsePoison >= 20 && this.Tili >= 10) yield return new PoisonSkillCastInstance(this.UsePoison);
+            if (this.DePoison >= 20 && this.Tili >= 10) yield return new DePoisonSkillCastInstance(this.DePoison);
+            if (this.Heal >= 20 && this.Tili >= 50) yield return new HealSkillCastInstance(this.Heal);
         }
 
-        public void ResetZhaoshis()
+        public void ResetSkillCasts()
         {
-            if (Zhaoshis == null)
+            if (Skills == null)
             {
-                Zhaoshis = new List<BattleZhaoshiInstance>();
+                Skills = new List<SkillCastInstance>();
             }
             else
             {
-                Zhaoshis.Clear();
+                Skills.Clear();
             }
 
             foreach (var wugong in Wugongs)
             {
-                Zhaoshis.Add(new BattleZhaoshiInstance(wugong));
+                Skills.Add(new SkillCastInstance(wugong));
             }
         }
 
@@ -976,7 +976,7 @@ namespace Jyx2
 
             SkillInstance w = new SkillInstance(magicId);
             Wugongs.Add(w);
-            ResetZhaoshis();
+            ResetSkillCasts();
             return 0;
         }
         

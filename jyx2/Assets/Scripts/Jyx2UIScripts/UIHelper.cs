@@ -66,6 +66,8 @@ public class UIHelper
             result.Add(23, item.AttackPoison);
         if (item.ChangePoisonLevel != 0)//中毒解毒
             result.Add(26, item.ChangePoisonLevel);
+        if (item.AddTili != 0) //体力
+            result.Add(14, item.AddTili);
 
 
         return result;

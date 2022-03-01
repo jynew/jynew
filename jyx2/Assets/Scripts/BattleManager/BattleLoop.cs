@@ -160,10 +160,10 @@ namespace Jyx2.Battle
                 //使用道具
                 await RoleUseItem(role, aiResult.Item);
             }
-            else if (aiResult.Zhaoshi != null)
+            else if (aiResult.SkillCast != null)
             {
                 //使用技能
-                await RoleCastSkill(role, aiResult.Zhaoshi, new BattleBlockVector(aiResult.AttackX, aiResult.AttackY));
+                await RoleCastSkill(role, aiResult.SkillCast, new BattleBlockVector(aiResult.AttackX, aiResult.AttackY));
             }
             else
             {
@@ -206,7 +206,7 @@ namespace Jyx2.Battle
         }
 
         //角色施展技能总逻辑
-        async UniTask RoleCastSkill(RoleInstance role, BattleZhaoshiInstance skill, BattleBlockVector skillTo)
+        async UniTask RoleCastSkill(RoleInstance role, SkillCastInstance skill, BattleBlockVector skillTo)
         {
             if (role == null || skill == null || skillTo == null)
             {
@@ -230,7 +230,7 @@ namespace Jyx2.Battle
         }
 
         //一次施展技能
-        async UniTask CastOnce(RoleInstance role, BattleZhaoshiInstance skill, BattleBlockVector skillTo)
+        async UniTask CastOnce(RoleInstance role, SkillCastInstance skill, BattleBlockVector skillTo)
         {
             List<RoleInstance> beHitAnimationList = new List<RoleInstance>();
             //获取攻击范围
@@ -266,7 +266,7 @@ namespace Jyx2.Battle
             {
                 Source = role.View,
                 CoverBlocks = coverBlocks.ToTransforms(),
-                Zhaoshi = skill,
+                Skill = skill,
                 Targets = beHitAnimationList.ToMapRoles(),
             };
 
@@ -274,7 +274,7 @@ namespace Jyx2.Battle
         }
 
         //判断是否可以左右互搏
-        bool Zuoyouhubo(RoleInstance role, BattleZhaoshiInstance skill)
+        bool Zuoyouhubo(RoleInstance role, SkillCastInstance skill)
         {
             return (role.Zuoyouhubo > 0 && (skill.Data.GetSkill().DamageType == 0 || (int)skill.Data.GetSkill().DamageType == 1));
         }

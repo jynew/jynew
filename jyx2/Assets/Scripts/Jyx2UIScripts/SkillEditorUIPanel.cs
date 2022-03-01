@@ -146,7 +146,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         helper.Targets = enemys;
         
         wugong.Level = skillLevel;
-        helper.Zhaoshi = new BattleZhaoshiInstance(wugong);
+        helper.Skill = new SkillCastInstance(wugong);
 
         //根据不同的技能覆盖类型，显示不同的效果
         Transform[] blocks = null;
