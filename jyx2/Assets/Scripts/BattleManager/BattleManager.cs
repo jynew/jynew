@@ -345,7 +345,7 @@ public class BattleManager : MonoBehaviour
                         if (level > 1)
                         {
                             //---------------------------------------------------------------------------
-                            //rst += string.Format("{0} 升为 ", practiseItem.Skill.Name) + level.ToString() + " 级\n";
+                            //rst += string.Format("{0} 升为 ", practiseItem.SkillCast.Name) + level.ToString() + " 级\n";
                             //---------------------------------------------------------------------------
                             //特定位置的翻译【战斗胜利角色修炼武功升级提示】
                             //---------------------------------------------------------------------------
@@ -398,7 +398,7 @@ public class BattleManager : MonoBehaviour
     /// 获取技能覆盖范围
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BattleBlockVector> GetSkillCoverBlocks(BattleZhaoshiInstance skill, BattleBlockVector targetPos,
+    public IEnumerable<BattleBlockVector> GetSkillCoverBlocks(SkillCastInstance skill, BattleBlockVector targetPos,
         BattleBlockVector selfPos)
     {
         var coverSize = skill.GetCoverSize();
@@ -444,21 +444,21 @@ public class BattleManager : MonoBehaviour
     }
 
     //获取技能的使用范围
-    public List<BattleBlockVector> GetSkillUseRange(RoleInstance role, BattleZhaoshiInstance zhaoshi)
+    public List<BattleBlockVector> GetSkillUseRange(RoleInstance role, SkillCastInstance skillCast)
     {
-        int castSize = zhaoshi.GetCastSize();
-        var coverType = zhaoshi.GetCoverType();
+        int castSize = skillCast.GetCastSize();
+        var coverType = skillCast.GetCoverType();
         var sx = role.Pos.X;
         var sy = role.Pos.Y;
 
         //绘制周围的攻击格子
-        var blockList = rangeLogic.GetSkillCastBlocks(sx, sy, zhaoshi, role);
+        var blockList = rangeLogic.GetSkillCastBlocks(sx, sy, skillCast, role);
 
         return blockList.ToList();
     }
 
     //获取范围内的敌人或者友军
-    public List<RoleInstance> GetRoleInSkillRange(BattleZhaoshiInstance skill, IEnumerable<BattleBlockVector> range, int team)
+    public List<RoleInstance> GetRoleInSkillRange(SkillCastInstance skill, IEnumerable<BattleBlockVector> range, int team)
     {
         List<RoleInstance> result = new List<RoleInstance>();
 

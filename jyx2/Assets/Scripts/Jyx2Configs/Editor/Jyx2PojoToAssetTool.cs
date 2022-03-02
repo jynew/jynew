@@ -91,7 +91,7 @@ public class Jyx2PojoToScriptTool : Editor
             c.EquipmentType = (Jyx2ConfigItem.Jyx2ConfigItemEquipmentType) i.EquipmentType;
             if (i.Wugong != -1)
             {
-                c.Skill = GetSkillAsset(i.Wugong);
+                c.SkillCast = GetSkillAsset(i.Wugong);
             }
 
             c.AddHp = i.AddHp;
@@ -246,7 +246,7 @@ public class Jyx2PojoToScriptTool : Editor
                 newS.Level = skill.Level;
                 var asset = GetSkillAsset(skill.Id);
                 Assert.NotNull(asset);
-                newS.Skill = asset;
+                newS.SkillCast = asset;
                 c.Skills.Add(newS);
             }
 

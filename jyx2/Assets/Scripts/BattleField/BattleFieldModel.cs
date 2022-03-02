@@ -13,6 +13,9 @@ using UnityEngine;
 
 namespace Jyx2
 {
+    /// <summary>
+    /// 战斗结果
+    /// </summary>
     public enum BattleResult
     {
         Win,
@@ -20,6 +23,9 @@ namespace Jyx2
         InProgress,
     }
     
+    /// <summary>
+    /// 战场数据核心逻辑
+    /// </summary>
     public class BattleFieldModel
     {
         //行动集气

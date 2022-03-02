@@ -68,7 +68,7 @@ public class AIManager
         var range = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - role.movedStep, false, false);
 
         //可使用招式
-        var zhaoshis = role.GetZhaoshis(false);
+        var skills = role.GetSkills(false);
 
         //AI算法：穷举每个点，使用招式，取最大收益
         AIResult result = null;
@@ -126,17 +126,17 @@ public class AIManager
             }
         }
 
-        foreach (var zhaoshi in zhaoshis)
+        foreach (var skill in skills)
         {
-            if (zhaoshi.GetStatus() != BattleZhaoshiInstance.ZhaoshiStatus.OK)
+            if (skill.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
                 continue;
 
-            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, zhaoshi, range);
+            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, skill, range);
             if (tmp != null && tmp.Length == 2 && tmp[0] != null)
             {
                 BattleBlockVector movePos = tmp[0];
                 BattleBlockVector castPos = tmp[1];
-                double score = GetSkillCastResultScore(role, zhaoshi, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
+                double score = GetSkillCastResultScore(role, skill, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
                 if (score > maxscore)
                 {
                     maxscore = score;
@@ -146,7 +146,7 @@ public class AIManager
                         AttackY = castPos.Y,
                         MoveX = movePos.X,
                         MoveY = movePos.Y,
-                        Zhaoshi = zhaoshi,
+                        SkillCast = skill,
                         IsRest = false
                     };
                 }
@@ -161,18 +161,18 @@ public class AIManager
         {
             foreach (var anqi in anqis)
             {
-                BattleZhaoshiInstance anqizhaoshi = new AnqiZhaoshiInstance(role.Anqi, anqi);
+                SkillCastInstance anqiSkillCast = new AnqiSkillCastInstance(role.Anqi, anqi);
 
-                if (anqizhaoshi.GetStatus() != BattleZhaoshiInstance.ZhaoshiStatus.OK)
+                if (anqiSkillCast.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
                     continue;
 
-                BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqizhaoshi, range);
+                BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqiSkillCast, range);
 
                 if (tmp != null && tmp.Length == 2 && tmp[0] != null)
                 {
                     BattleBlockVector movePos = tmp[0];
                     BattleBlockVector castPos = tmp[1];
-                    double score = GetSkillCastResultScore(role, anqizhaoshi, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
+                    double score = GetSkillCastResultScore(role, anqiSkillCast, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
 
                     if (score > maxscore)
                     {
@@ -183,7 +183,7 @@ public class AIManager
                             AttackY = castPos.Y,
                             MoveX = movePos.X,
                             MoveY = movePos.Y,
-                            Zhaoshi = anqizhaoshi,
+                            SkillCast = anqiSkillCast,
                             IsRest = false
                         };
                     }
@@ -209,7 +209,7 @@ public class AIManager
         return Rest(role);
     }
 
-    public double GetSkillCastResultScore(RoleInstance caster, BattleZhaoshiInstance skill,
+    public double GetSkillCastResultScore(RoleInstance caster, SkillCastInstance skill,
             int movex, int movey, int castx, int casty, bool isAIComputing)
     {
         double score = 0;
@@ -231,7 +231,7 @@ public class AIManager
             score += result.GetTotalScore();
 
             //暗器算分
-            if (skill is AnqiZhaoshiInstance)
+            if (skill is AnqiSkillCastInstance)
             {
                 if (score > targetRole.Hp)
                 {
@@ -258,7 +258,7 @@ public class AIManager
 
         AIResult rst = new AIResult
         {
-            Zhaoshi = null,
+            SkillCast = null,
             MoveX = tmp.X,
             MoveY = tmp.Y,
             IsRest = true //靠近对手
@@ -281,12 +281,12 @@ public class AIManager
         return rst;
     }
 
-    public async UniTask<BattleBlockVector[]> GetMoveAndCastPos(RoleInstance role, BattleZhaoshiInstance zhaoshi, List<BattleBlockVector> moveRange)
+    public async UniTask<BattleBlockVector[]> GetMoveAndCastPos(RoleInstance role, SkillCastInstance skillCast, List<BattleBlockVector> moveRange)
     {
         BattleBlockVector[] rst = new BattleBlockVector[2];
         
         //丢给自己的，随便乱跑一个地方丢
-        if (zhaoshi.GetCoverType() == SkillCoverType.POINT && zhaoshi.GetCastSize() == 0 && zhaoshi.GetCoverSize() == 0)
+        if (skillCast.GetCoverType() == SkillCoverType.POINT && skillCast.GetCastSize() == 0 && skillCast.GetCoverSize() == 0)
         {
             BattleBlockVector targetBlock = null;
             if ((float)role.Hp / role.MaxHp > 0.5)
@@ -304,17 +304,17 @@ public class AIManager
             return rst;
         }
 
-        bool isAttack = zhaoshi.IsCastToEnemy();
+        bool isAttack = skillCast.IsCastToEnemy();
         double maxScore = 0;
 
         Dictionary<int,float > cachedScore = new Dictionary<int, float>();
         //带攻击范围的，找最多人丢
         foreach (var moveBlock in moveRange)
         {
-            var coverType = zhaoshi.GetCoverType();
+            var coverType = skillCast.GetCoverType();
             var sx = moveBlock.X;
             var sy = moveBlock.Y;
-            var castBlocks = rangeLogic.GetSkillCastBlocks(sx, sy, zhaoshi, role);
+            var castBlocks = rangeLogic.GetSkillCastBlocks(sx, sy, skillCast, role);
 
             int splitFrame = 0;//分帧
             foreach (var castBlock in castBlocks)
@@ -326,7 +326,7 @@ public class AIManager
                 }
                 else
                 {
-                    var coverSize = zhaoshi.GetCoverSize();
+                    var coverSize = skillCast.GetCoverSize();
                     var tx = castBlock.X;
                     var ty = castBlock.Y;
                     var coverBlocks = rangeLogic.GetSkillCoverBlocks(coverType, tx, ty, sx, sy, coverSize);
@@ -470,7 +470,7 @@ public class AIManager
     /// <param name="skill"></param>
     /// <param name="blockVector"></param>
     /// <returns></returns>
-    public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, BattleZhaoshiInstance skill, BattleBlockVector blockVector)
+    public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, SkillCastInstance skill, BattleBlockVector blockVector)
     {        
         SkillCastResult rst = new SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
         var magic = skill.Data.GetSkill();
