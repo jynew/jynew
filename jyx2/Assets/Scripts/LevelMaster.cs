@@ -177,14 +177,14 @@ public class LevelMaster : MonoBehaviour
 
 		//尝试绑定主角
 		TryBindPlayer().Forget();
-
+		
 		//大地图不能使用跟随相机（目前好像比较卡？）
-		if (gameMap != null && !gameMap.IsWorldMap())
+		if (gameMap != null && !gameMap.IsWorldMap() && _player != null)
 		{
 			//初始化跟随相机
 			GameViewPortManager.Instance.InitForLevel(_player.transform);
 		}
-
+		
 		//刷新游戏事件
 		RefreshGameEvents();
 
