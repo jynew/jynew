@@ -11,6 +11,7 @@ if InTeam(49) == true then goto label0 end;
     SetScenceMap(53, 1, 24, 24, 1536);--by fanyu修改地图，开门 场景53
     SetScenceMap(53, 1, 24, 23, 1538);--by fanyu修改地图，开门 场景53
     jyx2_FixMapObject("擂鼓山开门",1);
+    ModifyEvent(53, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by qige2016 移除脚本，可以通过 场景53-编号4
     Leave(49);
     AddEthics(10);
 do return end;
