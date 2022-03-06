@@ -401,14 +401,15 @@ public class BattleRole : Jyx2AnimationBattleRole
         if (this._animator == null) return;
 
         //人型骨骼，播放死亡动作
+        var clip = Jyx2.Middleware.Tools.GetRandomElement(globalConfig.defaultDieClips);
         if (this._animator.runtimeAnimatorController == globalConfig.defaultAnimatorController)
         {
-            var clip = Jyx2.Middleware.Tools.GetRandomElement(globalConfig.defaultDieClips);
             PlayAnimation(clip, () => { Destroy(gameObject); });
         }
         else
         {
-            Destroy(gameObject);  
+            //非人型等待动画完成后再隐藏，解决鳄鱼等角色死亡后血槽不消失问题 by Tomato
+            GameUtil.CallWithDelay(clip.length, () => { gameObject.SetActive(false); });
         }
         
         m_Health = MapRoleHealth.Death;
