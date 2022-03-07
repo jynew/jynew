@@ -116,15 +116,14 @@ namespace Jyx2.MOD
             return overrideList;
         }
 
-        public static List<string> LoadOverrideList(string path)
+        public static async UniTask<List<string>> LoadOverrideList(string path)
         {
             string filePath = Path.Combine(Application.streamingAssetsPath, "OverrideList.txt");
             List<string> fileContentsList;
             if (Application.platform == RuntimePlatform.Android)
             {
                 UnityWebRequest request = UnityWebRequest.Get(filePath);
-                request.SendWebRequest();
-                while (!request.isDone) { }
+                await request.SendWebRequest();
                 string textString = request.downloadHandler.text;
                 fileContentsList = textString.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
             }

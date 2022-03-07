@@ -21,8 +21,7 @@ public sealed class AddScenesToBuildTool
     private static string[] _scenesList =
     {
         "Assets/0_GameStart.unity",
-        "Assets/0_MainMenu.unity",
-        "Assets/0_ModMenu.unity"
+        "Assets/0_MainMenu.unity"
     };
 
     [Obsolete("20210729: 由于场景都使用Addressable的方式动态加载了，不再需要强制添加到BUILD")]

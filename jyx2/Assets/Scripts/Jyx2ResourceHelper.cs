@@ -82,7 +82,7 @@ public static class Jyx2ResourceHelper
         }
 
         //技能池
-        var overridePaths = MODLoader.LoadOverrideList("Assets/BuildSource/Skills");
+        var overridePaths = await MODLoader.LoadOverrideList("Assets/BuildSource/Skills");
         var task = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
         if (task != null)
         {
