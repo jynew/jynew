@@ -105,7 +105,7 @@ namespace Jyx2Configs
                 throw new Exception("类型" + typeof(T) + "已经创建过了，不允许重复创建！");
             }
             
-            var overridePaths = MODLoader.LoadOverrideList(path);
+            var overridePaths = await MODLoader.LoadOverrideList(path);
             
             var assets = await MODLoader.LoadAssets<T>(overridePaths);
 

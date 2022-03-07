@@ -430,6 +430,14 @@ public partial class GameMainMenu : Jyx2_UIBase
 		Jyx2_UIManager.Instance.ShowUIAsync(nameof(GraphicSettingsPanel)).Forget();
 	}
 
+	/// <summary>
+	/// 打开mod界面
+	/// </summary>
+	public void OpenModPanel()
+	{
+		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanel)).Forget();
+	}
+	
 	bool isXSelection = false;
 
 	protected override void OnDirectionalLeft()
