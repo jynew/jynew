@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Diagnostics;
 using Jyx2;
 using Jyx2.Middleware;
 using Jyx2.MOD;
@@ -7,29 +6,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ModPanel : MonoBehaviour
+public partial class ModPanel : Jyx2_UIBase
 {
-    Button StartButton;
-    RectTransform ModParent_RectTransform;
-
-    void InitTrans()
-    {
-        ModParent_RectTransform = transform.Find("ModScroll/Viewport/ModParent").GetComponent<RectTransform>();
-        StartButton = transform.Find("StartButton").GetComponent<Button>();
-        
-        StartButton.onClick.AddListener(onStart);
-    }
-
-    void onStart()
-    {
-        BeforeSceneLoad.ColdBind();
-        SceneManager.LoadScene("0_MainMenu");
-    }
-
-    void Start()
+    protected override void OnCreate()
     {
         InitTrans();
         RefreshScroll();
+        
+        BindListener(CloseBtn_Button, OnCloseClick, false);
     }
 
     async void RefreshScroll()
@@ -45,22 +29,31 @@ public class ModPanel : MonoBehaviour
             await item.ShowMod(modEntry);
         }
     }
+    
+    void OnCloseClick()
+    {
+        Jyx2_UIManager.Instance.HideUI(nameof(ModPanel));
+        Application.Quit();
+    }
 
+    #region 手柄支持代码
+    
     bool gamepadOn;
 
     void Update()
     {
-        var gamepadButtonIcon = StartButton.gameObject.transform
+        var gamepadButtonIcon = CloseBtn_Button.gameObject.transform
             .GetChild(1).GetComponentInChildren<Image>();
 
         if (gamepadOn != GamepadHelper.GamepadConnected)
-		{
+        {
             gamepadOn = GamepadHelper.GamepadConnected;
             gamepadButtonIcon.gameObject.SetActive(gamepadOn);
         }
 
         if (GamepadHelper.IsConfirm()
             || GamepadHelper.IsCancel())
-            onStart();
+            OnCloseClick();
     }
+    #endregion
 }

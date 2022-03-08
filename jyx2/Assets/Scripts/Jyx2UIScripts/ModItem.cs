@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
-using Jyx2;
 using Jyx2.MOD;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using ModEntry = Jyx2.MOD.MODManager.ModEntry;
 
@@ -64,9 +60,10 @@ public class ModItem : MonoBehaviour
             m_Delete.gameObject.SetActive(true);
             m_Progress.gameObject.SetActive(false);
         }
-
+        
         m_Name.text = modEntry.ModMeta.name + "V" + modEntry.ModMeta.version;
         m_Desc.text = modEntry.ModMeta.description;
+        m_Toggle.isOn = modEntry.Active;
         m_Toggle.onValueChanged.AddListener((isOn) =>
         {
             modEntry.Active = isOn;

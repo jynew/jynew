@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -16,7 +17,7 @@ namespace Jyx2.MOD
         public static readonly string Http = "http://42.192.48.70:3001/getPassMods";
         public static string ModsPath { get; private set; }
 
-        public static void Init()
+        public static async UniTask Init()
         {
             ModsPath = Path.Combine(Application.persistentDataPath, "mods");;
             if (!Directory.Exists(ModsPath))
@@ -28,8 +29,7 @@ namespace Jyx2.MOD
             if (Directory.Exists(ModsPath))
             {
                 UnityWebRequest request = UnityWebRequest.Get(Http);
-                request.SendWebRequest();
-                while (!request.isDone) { }
+                await request.SendWebRequest();
                 string textString = request.downloadHandler.text;
                 var response = new Response(textString);
                 var modMetas = response.data;
@@ -190,7 +190,21 @@ namespace Jyx2.MOD
                 }
             }
 
-            public bool Active { get; set; }
+            private bool _active;
+            
+            public bool Active
+            {
+                get
+                {
+                    return PlayerPrefs.GetInt(ModMeta.name) == 1 || _active;
+                }
+                set
+                {
+                    PlayerPrefs.SetInt(ModMeta.name, value ? 1 : 0);
+                    PlayerPrefs.Save();
+                    _active = value;
+                }
+            }
         }
     }
 
