@@ -29,5 +29,10 @@
         /// 加入房间失败，队伍位已经被占用了
         /// </summary>
         JoinBattleErrorDuplicatedTeamId = 10004,
+        
+        /// <summary>
+        /// TEAM ID非法
+        /// </summary>
+        InValidTeamId = 10005,
     }
 }

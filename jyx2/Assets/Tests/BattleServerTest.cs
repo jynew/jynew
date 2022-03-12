@@ -23,12 +23,17 @@ public class BattleServerTest
     {
         var battleServer = BattleServerFactory.CreateServer();
 
-        BattleFieldSettings battleFieldSettings = new BattleFieldSettings() {BattleId = 0};
+        BattleFieldSettings battleFieldSettings = new BattleFieldSettings() {BattleId = 0, TeamCount = 2};
         var ret = await battleServer.RequestForBattleRoom(battleFieldSettings);
         Assert.True(ret.ErrCode == ErrorCode.Success);
 
         var roomId = ret.RetCode;
-        ret = await battleServer.JoinBattleRoom(roomId, new BattleClientSetup());
+        ret = await battleServer.JoinBattleRoom(roomId, new BattleClientSetup()
+        {
+            Team = 0, 
+            BattleMsgCallback = OnServerCallback, 
+            Roles = new List<RoleInstance>() { new RoleInstance(){Hp = 3}}
+        });
         
         Assert.True(ret.ErrCode == ErrorCode.Success);
 
@@ -36,9 +41,30 @@ public class BattleServerTest
         Debug.Log(token);
         Assert.AreNotEqual(token,string.Empty);
         
-        ret = await battleServer.JoinBattleRoom(roomId, new BattleClientSetup());
-
         //重复加入
+        ret = await battleServer.JoinBattleRoom(roomId, new BattleClientSetup());
         Assert.True(ret.ErrCode == ErrorCode.JoinBattleErrorDuplicatedTeamId);
+
+        //team id非法
+        ret = await battleServer.JoinBattleRoom(roomId, new BattleClientSetup() {Team = 1000});
+        Assert.True(ret.ErrCode == ErrorCode.InValidTeamId);
+        
+        
+        //正常加入
+        ret = await battleServer.JoinBattleRoom(roomId, new BattleClientSetup()
+        {
+            Team = 1,
+            BattleMsgCallback = OnServerCallback,
+            Roles = new List<RoleInstance>() { new RoleInstance(){Hp = 2}}
+        });
+        
+        //下面应该开始战斗了。。
+        
+        Assert.True(ret.ErrCode == ErrorCode.Success);
+    }
+
+    void OnServerCallback(BattleMsg msg)
+    {
+        Debug.Log(msg.Msg);
     }
 }

@@ -29,7 +29,7 @@ namespace Jyx2.SharedScripts.BattleServer
         /// <summary>
         /// 队伍数量
         /// </summary>
-        public int TeamNumber = 2;
+        public int TeamCount = 2;
     }
     
     /// <summary>
@@ -46,7 +46,7 @@ namespace Jyx2.SharedScripts.BattleServer
         /// <summary>
         /// 参与战斗的单位
         /// </summary>
-        public List<BattleUnit> Units;
+        public List<RoleInstance> Roles;
 
         /// <summary>
         /// 是否是AI
@@ -95,7 +95,7 @@ namespace Jyx2.SharedScripts.BattleServer
     /// </summary>
     public struct BattleMsg
     {
-        
+        public string Msg;
     }
     
     /// <summary>
