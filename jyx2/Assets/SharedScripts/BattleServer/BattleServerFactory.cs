@@ -7,7 +7,7 @@
     {
         public static IBattleC2S CreateServer()
         {
-            return new BattleC2SImpl();
+            return new FakeBattleServer();
         }
     }
 }

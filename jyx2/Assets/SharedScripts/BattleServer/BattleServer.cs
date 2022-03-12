@@ -9,15 +9,27 @@ namespace Jyx2.SharedScripts.BattleServer
     /// </summary>
     public interface IBattleRoomHost
     {
-        
+        /// <summary>
+        /// 申请分配玩家连接token
+        /// </summary>
+        /// <returns></returns>
+        string RequestForPlayerToken(int roomId);
     }
 
     /// <summary>
     /// 战场配置信息
     /// </summary>
-    public struct BattleFieldSettings
+    public class BattleFieldSettings
     {
+        /// <summary>
+        /// TODO：改为具体的战斗配置信息
+        /// </summary>
         public int BattleId;
+
+        /// <summary>
+        /// 队伍数量
+        /// </summary>
+        public int TeamNumber = 2;
     }
     
     /// <summary>
@@ -36,7 +48,11 @@ namespace Jyx2.SharedScripts.BattleServer
         /// </summary>
         public List<BattleUnit> Units;
 
-
+        /// <summary>
+        /// 是否是AI
+        /// </summary>
+        public bool IsAI;
+        
         /// <summary>
         /// 战场数据回调
         /// </summary>
@@ -46,11 +62,6 @@ namespace Jyx2.SharedScripts.BattleServer
         /// 战斗结果回调
         /// </summary>
         public Action<BattleResult> BattleResultCallback;
-        
-        /// <summary>
-        /// 是否是AI
-        /// </summary>
-        public bool IsAI;
     }
 
     public enum BattleResult
@@ -58,10 +69,25 @@ namespace Jyx2.SharedScripts.BattleServer
         Win, Lose, Draw
     }
 
+    /// <summary>
+    /// 通信返回标准数据结构
+    /// </summary>
     public struct RetInfo
     {
-        public int Id;
-        public ErrorCode ErrCode;
+        /// <summary>
+        /// 存放返回值的int
+        /// </summary>
+        public int RetCode; 
+        
+        /// <summary>
+        /// 存放返回值的string
+        /// </summary>
+        public string RetMsg; 
+        
+        /// <summary>
+        /// 错误码
+        /// </summary>
+        public ErrorCode ErrCode; 
     }
 
     /// <summary>
@@ -73,9 +99,9 @@ namespace Jyx2.SharedScripts.BattleServer
     }
     
     /// <summary>
-    /// 战斗服务器
+    /// 客户端虚拟的战斗服务器
     /// </summary>
-    public class BattleC2SImpl : IBattleC2S, IBattleRoomHost
+    public class FakeBattleServer : IBattleC2S, IBattleRoomHost
     {
 
         /// <summary>
@@ -83,41 +109,73 @@ namespace Jyx2.SharedScripts.BattleServer
         /// </summary>
         private readonly Dictionary<int, BattleRoom> _dictBattleRooms = new Dictionary<int, BattleRoom>();
 
+
+        /// <summary>
+        /// 客户端到房间的映射
+        ///
+        /// key为客户端token
+        /// value为房间id
+        /// </summary>
+        private readonly Dictionary<string, int> _clientRoomMapping = new Dictionary<string, int>();
+        
         /// <summary>
         /// 房间id分配
         /// </summary>
         private int _roomIdIndex = 0;
-        
-        public async Task<RetInfo>  RequestForBattleRoom(BattleFieldSettings battleFieldSettings)
+
+        public async Task<RetInfo> RequestForBattleRoom(BattleFieldSettings battleFieldSettings)
         {
             if (_dictBattleRooms.Count > BattleServerConfigs.MAX_BATTLE_ROOMS)
             {
-                return new RetInfo() {Id = -1, ErrCode = ErrorCode.RoomIsFull};
+                return new RetInfo() {RetCode = -1, ErrCode = ErrorCode.RoomIsFull};
             }
-
-            var battleRoom = new BattleRoom(this, battleFieldSettings);
-            int id = _roomIdIndex++;
             
+            int id = _roomIdIndex++;
+            var battleRoom = new BattleRoom(id, this, battleFieldSettings);
+
             //创建战场房间
             _dictBattleRooms.Add(id, battleRoom);
 
-            return new RetInfo() {Id = id};
+            return new RetInfo() {RetCode = id};
         }
 
-        public async Task<RetInfo> JoinBattle(int battleRoomId, BattleClientSetup battleClientSetup)
+        public async Task<RetInfo> JoinBattleRoom(int battleRoomId, BattleClientSetup battleClientSetup)
         {
             //检测房间是否已经被创建
             if (!_dictBattleRooms.ContainsKey(battleRoomId))
             {
-                return new RetInfo() {Id = -1, ErrCode = ErrorCode.RoomIsNotExist};
+                return new RetInfo() {RetCode = -1, ErrCode = ErrorCode.RoomIsNotExist};
             }
 
             var room = _dictBattleRooms[battleRoomId];
             
+            //连接到房间服务器，分配玩家的token
+            var errCode = room.PlayerConnect(battleClientSetup,out var playerToken);
             
-            
-            throw new NotImplementedException();
+            if (errCode == ErrorCode.Success)
+            {
+                return new RetInfo() {RetMsg = playerToken, ErrCode = errCode};
+            }
+            else
+            {
+                return new RetInfo() {ErrCode = errCode};
+            }
         }
-        
+
+        /// <summary>
+        /// 房间服务器向网关服务器申请玩家连接房间的token
+        /// </summary>
+        /// <returns></returns>
+        public string RequestForPlayerToken(int roomId)
+        {
+            if (_clientRoomMapping.Count > BattleServerConfigs.MAX_CONNECTED_PLAYERS)
+            {
+                return string.Empty;
+            }
+            
+            string token = System.Guid.NewGuid().ToString();
+            _clientRoomMapping.Add(token, roomId); //记录玩家连接到房间的token - 房间ID映射
+            return token;
+        }
     }
 }

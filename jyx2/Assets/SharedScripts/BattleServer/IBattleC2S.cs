@@ -21,6 +21,6 @@ namespace Jyx2.SharedScripts.BattleServer
         /// <param name="battleRoomId">房间ID</param>
         /// <param name="battleClientSetup">客户端配置</param>
         /// <returns>返回信息，id为服务器连接token，为-1则失败</returns>
-        Task<RetInfo> JoinBattle(int battleRoomId, BattleClientSetup battleClientSetup);
+        Task<RetInfo> JoinBattleRoom(int battleRoomId, BattleClientSetup battleClientSetup);
     }
 }

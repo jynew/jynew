@@ -10,5 +10,10 @@
         /// </summary>
         public const int MAX_BATTLE_ROOMS = 999;
 
+        /// <summary>
+        /// 最大连接玩家数
+        /// </summary>
+        public const int MAX_CONNECTED_PLAYERS = 2000;
+
     }
 }

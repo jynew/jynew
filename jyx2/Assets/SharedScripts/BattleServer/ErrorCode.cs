@@ -19,6 +19,15 @@
         /// 指定ID的房间不存在
         /// </summary>
         RoomIsNotExist = 10002,
+
+        /// <summary>
+        /// 加入房间失败，token冲突
+        /// </summary>
+        JoinBattleErrorDuplicatedToken = 10003,
         
+        /// <summary>
+        /// 加入房间失败，队伍位已经被占用了
+        /// </summary>
+        JoinBattleErrorDuplicatedTeamId = 10004,
     }
 }

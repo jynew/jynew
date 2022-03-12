@@ -27,18 +27,59 @@ namespace Jyx2.SharedScripts.BattleServer
     /// </summary>
     public class BattleRoom
     {
-        private readonly List<BattleClientSetup> _clients = new List<BattleClientSetup>();
+        //客户端token到配置的映射
+        private Dictionary<string, BattleClientSetup> _clientTokenMapping = new Dictionary<string, BattleClientSetup>();
         
+        //当前战场配置
         private BattleFieldSettings _battleFieldSettings;
-        private IBattleRoomHost _parent;
         
-        public BattleRoom(IBattleRoomHost parent, BattleFieldSettings battleFieldSettings)
+        //保存房间管理器
+        private IBattleRoomHost _parent;
+
+        //房间ID
+        private int _roomId;
+        
+        /// <summary>
+        /// 初始化战斗房间
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="battleFieldSettings"></param>
+        public BattleRoom(int roomId, IBattleRoomHost parent, BattleFieldSettings battleFieldSettings)
         {
             _battleFieldSettings = battleFieldSettings;
             _parent = parent;
         }
-        
-        
-        
+
+        /// <summary>
+        /// 玩家连接战斗房间服务
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="playerToken"></param>
+        /// <returns></returns>
+        public ErrorCode PlayerConnect(BattleClientSetup client, out string playerToken)
+        {
+            playerToken = string.Empty;
+            
+            //是否该队伍已经有人加入过了
+            foreach (var clientSetup in _clientTokenMapping)
+            {
+                if (clientSetup.Value.Team == client.Team)
+                {
+                    return ErrorCode.JoinBattleErrorDuplicatedTeamId;
+                }
+            }
+
+            playerToken = _parent.RequestForPlayerToken(_roomId);
+            
+            //客户端token重复
+            if (_clientTokenMapping.ContainsKey(playerToken))
+            {
+                return ErrorCode.JoinBattleErrorDuplicatedToken;
+            }
+            
+            //否则添加到队伍
+            _clientTokenMapping.Add(playerToken, client);
+            return ErrorCode.Success;
+        }
     }
 }
