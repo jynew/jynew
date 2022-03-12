@@ -32,7 +32,8 @@ public class BattleServerTest
         {
             Team = 0, 
             BattleMsgCallback = OnServerCallback, 
-            Roles = new List<RoleInstance>() { new RoleInstance(){Hp = 3}}
+            BattleResultCallback = (rst) => { Debug.Log($"team=0, BattleResult={rst}"); },
+            Roles = new List<RoleInstance>() { new RoleInstance(){Hp = 3}},
         });
         
         Assert.True(ret.ErrCode == ErrorCode.Success);
@@ -47,7 +48,7 @@ public class BattleServerTest
 
         //team id非法
         ret = await battleServer.JoinBattleRoom(roomId, new BattleClientSetup() {Team = 1000});
-        Assert.True(ret.ErrCode == ErrorCode.InValidTeamId);
+        Assert.True(ret.ErrCode == ErrorCode.InvalidTeamId);
         
         
         //正常加入
@@ -55,12 +56,24 @@ public class BattleServerTest
         {
             Team = 1,
             BattleMsgCallback = OnServerCallback,
-            Roles = new List<RoleInstance>() { new RoleInstance(){Hp = 2}}
+            BattleResultCallback = (rst) => { Debug.Log($"team=1, BattleResult={rst}"); },
+            Roles = new List<RoleInstance>() { new RoleInstance(){Hp = 2}},
         });
         
-        //下面应该开始战斗了。。
-        
         Assert.True(ret.ErrCode == ErrorCode.Success);
+        
+        //下面应该开始战斗了。。
+
+        while(true)
+        {
+            var rst = await battleServer.GetMyBattleStatus(ret.RetMsg);
+            if (rst.RetCode == (int) BattleRoomStatus.Finished)
+            {
+                break;
+            }
+        }
+        
+        Debug.Log("test finished.");
     }
 
     void OnServerCallback(BattleMsg msg)

@@ -14,10 +14,21 @@ namespace Jyx2.SharedScripts.BattleServer
         /// 客户端ID
         /// </summary>
         public int ClientId;
-        
-        
+
         public BattleClientSetup ClientConfig;
         
+    }
+
+    /// <summary>
+    /// 战斗房间状态
+    /// </summary>
+    public enum BattleRoomStatus
+    {
+        Starting = 0,
+        WaitForClientJoin = 1,
+        BattleLoop = 2,
+        Finishing = 3,
+        Finished = 4,
     }
     
     
@@ -43,6 +54,11 @@ namespace Jyx2.SharedScripts.BattleServer
 
         //战场单位
         private readonly List<BattleUnit> _units = new List<BattleUnit>();
+
+        //战场房间状态
+        private BattleRoomStatus _status = BattleRoomStatus.Starting;
+        
+        #region 公开函数
         
         /// <summary>
         /// 初始化战斗房间
@@ -53,6 +69,8 @@ namespace Jyx2.SharedScripts.BattleServer
         {
             _battleFieldSettings = battleFieldSettings;
             _parent = parent;
+            _roomId = roomId;
+            _status = BattleRoomStatus.WaitForClientJoin;
         }
 
         /// <summary>
@@ -61,12 +79,18 @@ namespace Jyx2.SharedScripts.BattleServer
         /// <param name="client"></param>
         /// <param name="playerToken"></param>
         /// <returns></returns>
-        public ErrorCode PlayerConnect(BattleClientSetup client, out string playerToken)
+        public ErrorCode PlayerJoinBattle(BattleClientSetup client, out string playerToken)
         {
             playerToken = string.Empty;
 
+            if (_status != BattleRoomStatus.WaitForClientJoin)
+            {
+                return ErrorCode.PlayerJoinAfterBattleStarted;
+            }
+            
             if (client.Team >= _battleFieldSettings.TeamCount)
-                return ErrorCode.InValidTeamId;
+                return ErrorCode.InvalidTeamId;
+            
             
             //是否该队伍已经有人加入过了
             foreach (var clientSetup in _clientTokenMapping)
@@ -91,15 +115,23 @@ namespace Jyx2.SharedScripts.BattleServer
             //如果所有人都已经进齐了，就开始战斗
             if (_clientTokenMapping.Count == _battleFieldSettings.TeamCount)
             {
-                StartBattle().Start();
+                Task.Run(StartBattle);
             }
             
             return ErrorCode.Success;
         }
 
+        /// <summary>
+        /// 获取战斗状态
+        /// </summary>
+        /// <returns></returns>
+        public BattleRoomStatus GetStatus()
+        {
+            return _status;
+        }
         
-        
-        
+        #endregion
+
         private async Task StartBattle()
         {
             //初始化战斗配置
@@ -107,11 +139,15 @@ namespace Jyx2.SharedScripts.BattleServer
 
             //战斗主循环
             await BattleMainLoop();
+
+            //战斗结束
+            FinishBattle();
         }
         
         //战场主循环
         private async Task BattleMainLoop()
         {
+            _status = BattleRoomStatus.BattleLoop;
             while (!IsBattleFinished())
             {
                 foreach (var unit in _units)
@@ -150,6 +186,38 @@ namespace Jyx2.SharedScripts.BattleServer
         }
 
         /// <summary>
+        /// 战斗结束
+        /// </summary>
+        private void FinishBattle()
+        {
+            int winTeam = -1;
+            foreach (var battleUnit in _units.Where(p => p.IsAlive()))
+            {
+                winTeam = battleUnit.Team;
+            }
+            
+            
+            //战斗结果回调
+            foreach (var kv in _clientTokenMapping)
+            {
+                var battleResultCallback = kv.Value.BattleResultCallback;
+                if (winTeam == -1)
+                {
+                    battleResultCallback(BattleResult.Draw);
+                }
+                else
+                {
+                    battleResultCallback(winTeam == kv.Value.Team ? BattleResult.Win : BattleResult.Lose);
+                }
+            }
+            
+            _status = BattleRoomStatus.Finished;
+            
+            //通知管理器回收数据
+            _parent.BattleFinished(_roomId);
+        }
+
+        /// <summary>
         /// 战场执行结果
         /// </summary>
         /// <param name="unit"></param>
@@ -168,6 +236,7 @@ namespace Jyx2.SharedScripts.BattleServer
 
         private void InitBattle()
         {
+            _status = BattleRoomStatus.Starting;
             //初始化所有的战斗单位
             foreach (var kv in _clientTokenMapping)
             {

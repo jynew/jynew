@@ -22,5 +22,13 @@ namespace Jyx2.SharedScripts.BattleServer
         /// <param name="battleClientSetup">客户端配置</param>
         /// <returns>返回信息，id为服务器连接token，为-1则失败</returns>
         Task<RetInfo> JoinBattleRoom(int battleRoomId, BattleClientSetup battleClientSetup);
+
+
+        /// <summary>
+        /// 获取战斗的状态
+        /// </summary>
+        /// <param name="token">当前客户端的token</param>
+        /// <returns>id为状态，-1则失败</returns>
+        Task<RetInfo> GetMyBattleStatus(string token);
     }
 }

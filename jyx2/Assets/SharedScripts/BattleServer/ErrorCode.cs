@@ -33,6 +33,17 @@
         /// <summary>
         /// TEAM ID非法
         /// </summary>
-        InValidTeamId = 10005,
+        InvalidTeamId = 10005,
+        
+        /// <summary>
+        /// 客户端的token无效
+        /// </summary>
+        InvalidClientToken = 10006,
+        
+        
+        /// <summary>
+        /// 战斗已经开始了，不再能新加入玩家
+        /// </summary>
+        PlayerJoinAfterBattleStarted = 10007,
     }
 }

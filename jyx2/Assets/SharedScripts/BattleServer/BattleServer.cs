@@ -14,6 +14,13 @@ namespace Jyx2.SharedScripts.BattleServer
         /// </summary>
         /// <returns></returns>
         string RequestForPlayerToken(int roomId);
+
+
+        /// <summary>
+        /// 关闭房间，通知管理器回收相关资源
+        /// </summary>
+        /// <param name="roomId"></param>
+        void BattleFinished(int roomId);
     }
 
     /// <summary>
@@ -60,6 +67,8 @@ namespace Jyx2.SharedScripts.BattleServer
         
         /// <summary>
         /// 战斗结果回调
+        ///
+        /// TODO：重构到Msg中去
         /// </summary>
         public Action<BattleResult> BattleResultCallback;
     }
@@ -150,7 +159,7 @@ namespace Jyx2.SharedScripts.BattleServer
             var room = _dictBattleRooms[battleRoomId];
             
             //连接到房间服务器，分配玩家的token
-            var errCode = room.PlayerConnect(battleClientSetup,out var playerToken);
+            var errCode = room.PlayerJoinBattle(battleClientSetup,out var playerToken);
             
             if (errCode == ErrorCode.Success)
             {
@@ -160,6 +169,18 @@ namespace Jyx2.SharedScripts.BattleServer
             {
                 return new RetInfo() {ErrCode = errCode};
             }
+        }
+
+        public async Task<RetInfo> GetMyBattleStatus(string token)
+        {
+            if (!_clientRoomMapping.ContainsKey(token))
+            {
+                return new RetInfo() {RetCode = -1, ErrCode = ErrorCode.InvalidClientToken};
+            }
+
+            var roomId = _clientRoomMapping[token];
+            var room = _dictBattleRooms[roomId];
+            return new RetInfo() {RetCode = (int)room.GetStatus()};
         }
 
         /// <summary>
@@ -176,6 +197,40 @@ namespace Jyx2.SharedScripts.BattleServer
             string token = System.Guid.NewGuid().ToString();
             _clientRoomMapping.Add(token, roomId); //记录玩家连接到房间的token - 房间ID映射
             return token;
+        }
+
+        public void BattleFinished(int roomId)
+        {
+            if (!_dictBattleRooms.ContainsKey(roomId))
+            {
+                //TODO:增加报错日志 
+                Logger.Log($"BattleFinished调用错误，不存在的roomId={roomId}");
+                return;
+            }
+            
+            //5秒后回收数据
+            Task.Run(async () =>
+            {
+                await Task.Delay(BattleServerConfigs.BATTLE_REMOVE_DESTROY_TIME);
+                
+                _dictBattleRooms.Remove(roomId);
+
+                List<string> tobeRemovedPlayerTokens = new List<string>();
+                foreach (var kv in _clientRoomMapping)
+                {
+                    if (kv.Value == roomId)
+                    {
+                        tobeRemovedPlayerTokens.Add(kv.Key);
+                    }
+                }
+
+                foreach (var key in tobeRemovedPlayerTokens)
+                {
+                    _clientRoomMapping.Remove(key);
+                }
+                Logger.Log($"战斗结束，回收房间数据roomId={roomId}共{tobeRemovedPlayerTokens.Count}个玩家连接。");
+                
+            });
         }
     }
 }
