@@ -115,6 +115,7 @@ public class BattleRole : Jyx2AnimationBattleRole
     /// <returns>物体身上的Animator组件</returns>
     public override Animator GetAnimator()
     {
+        _animator.applyRootMotion = false; //不接受动作变化位置
         return _animator;
         
         if (_animator == null && transform.childCount == 0)
