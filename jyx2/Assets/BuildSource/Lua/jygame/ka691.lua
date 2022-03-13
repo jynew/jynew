@@ -1,3 +1,4 @@
+SetRoleFace(1);
 jyx2_SetTimelineSpeed(3); --播放速度X3
 jyx2_PlayTimeline("[Timeline]ka691_小虾米居_醒来", 0, false);
 jyx2_Wait(1);
