@@ -7,9 +7,11 @@
  *
  * 金庸老先生千古！
  */
+
+using System;
 using DG.Tweening;
 using Jyx2;
-using HSFrameWork.ConfigTable;
+
 using System.Collections;
 using System.Collections.Generic;
 using Jyx2Configs;
@@ -77,19 +79,53 @@ public class JYX2DebugPanel : MonoBehaviour
     }
 
     //切换场景
-    public void OnChangeScene(int value)
+    public async void OnChangeScene(int value)
     {
         if (value == 0) return;
 
         var id = m_ChangeSceneMaps[value - 1].Id;
-        LevelLoader.LoadGameMap(Jyx2ConfigMap.Get(id));
+
+        var curMap = LevelMaster.GetCurrentGameMap();
+        if (!curMap.IsWorldMap())
+        {
+            string msg = "<color=red>警告：不在大地图上执行传送可能会导致某些剧情中断，强烈建议您退到大地图再执行。是否强行执行？</color>";
+            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
+            {
+                if (index == 0)
+                {
+                    LevelLoader.LoadGameMap(Jyx2ConfigMap.Get(id));
+                }
+            }));
+        }
+        else
+        {
+            LevelLoader.LoadGameMap(Jyx2ConfigMap.Get(id));
+        }
     }
 
-    public void OnTransport(int value)
+    public async void OnTransport(int value)
     {
         if (value == 0) return;
         var transportName = m_TransportDropdown.options[value].text;
-        LevelMaster.Instance.Transport(transportName);
+
+        var curMap = LevelMaster.GetCurrentGameMap();
+        if (!curMap.IsWorldMap())
+        {
+            string msg = "<color=red>警告：不在大地图上执行传送可能会导致某些剧情中断，强烈建议您退到大地图再执行。是否强行执行？</color>";
+            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
+            {
+                if (index == 0)
+                {
+                    LevelMaster.Instance.Transport(transportName);
+                }
+            }));
+        }
+        else
+        {
+            LevelMaster.Instance.Transport(transportName);
+        }
     }
     #endregion
 

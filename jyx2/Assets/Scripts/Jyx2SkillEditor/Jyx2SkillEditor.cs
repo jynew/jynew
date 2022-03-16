@@ -7,27 +7,23 @@
  *
  * 金庸老先生千古！
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using HSFrameWork;
 using Jyx2;
-using HSFrameWork.ConfigTable;
-using System.IO;
-using System.Threading;
-using HSFrameWork.Common;
-using Jyx2.Middleware;
-using Jyx2.Setup;
+using Sirenix.OdinInspector;
 
 public class Jyx2SkillEditor : MonoBehaviour
 {
-    public MapRole player;
+    public BattleRole player;
 
     public Jyx2SkillEditorEnemy[] enemys;
 
     public Transform[] faceTrans;
     public Transform[] lineTrans;
     public Transform[] crossTrans;
+
+    [LabelText("是否测试左右互搏")]
+    public bool TestZuoyouhubo = false;
     // Start is called before the first frame update
     async void Start()
     {
@@ -51,7 +47,7 @@ public class Jyx2SkillEditor : MonoBehaviour
 
         await BeforeSceneLoad.loadFinishTask;
         
-        Jyx2_UIManager.Instance.ShowUI(nameof(SkillEditorUIPanel),player,enemys);
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SkillEditorUIPanel),player,enemys);
     }
 
     /*

@@ -13,13 +13,15 @@ public sealed class AddScenesToBuildTool
     // 需要搜索的场景路径
     private static readonly string[] __SCENES_DIR =
     {
-        "/Jyx2Scenes",
-        "/Jyx2BattleScene",
+        /*"/Jyx2Scenes",
+        "/Jyx2BattleScene",*/
     };
 
     // 默认需要添加的场景, 就是不在上面路径里的
     private static string[] _scenesList =
     {
+        "Assets/0_GameStart.unity",
+        "Assets/0_MainMenu.unity"
     };
 
     [Obsolete("20210729: 由于场景都使用Addressable的方式动态加载了，不再需要强制添加到BUILD")]

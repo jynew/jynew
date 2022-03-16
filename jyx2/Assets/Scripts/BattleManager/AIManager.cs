@@ -8,13 +8,15 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-using HSFrameWork.Common;
-using HSFrameWork.ConfigTable;
+
+
 using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
+using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 
@@ -53,6 +55,7 @@ public class AIManager
     private void Init()
     {
     }
+
     public async UniTask<AIResult> GetAIResult(RoleInstance role)
     {
         //初始化范围逻辑
@@ -62,26 +65,78 @@ public class AIManager
         int moveAbility = role.GetMoveAbility();
 
         //行动范围
-        var range = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility);
+        var range = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - role.movedStep, false, false);
 
         //可使用招式
-        var zhaoshis = role.GetZhaoshis(false);
-        
+        var skills = role.GetSkills(false);
+
         //AI算法：穷举每个点，使用招式，取最大收益
         AIResult result = null;
         double maxscore = 0;
 
-        foreach (var zhaoshi in zhaoshis)
+        //优先考虑吃药，更正角色中毒不退问题
+        //将生命、内力和体力的吃药逻辑分开，通常战斗时都有目的性的吃药，以免逻辑混合
+        //如果是我方人物，应当获取玩家物品
+        List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
+        Jyx2ConfigItem resultItem = null;
+        //生成随机阈值
+        float randomThreshold = UnityEngine.Random.Range(0.15F, 0.25F);
+        //当角色还有道具并且生命小于阈值，或担心下一轮可能会死亡时，则需要使用恢复生命道具，阈值随机为15~25%
+        //担心下一轮死亡的逻辑：当前生命值小于等于上一轮生命扣减值的107.5%~112.5% by Tomato
+        if (items.Count > 0 && (role.Hp < randomThreshold * role.MaxHp || role.Hp < (role.PreviousRoundHp - role.Hp) * (1 + randomThreshold/2)))
         {
-            if (zhaoshi.GetStatus() != BattleZhaoshiInstance.ZhaoshiStatus.OK)
+            Dictionary<int, double> decisionDictionary = new Dictionary<int, double>();
+            items.Where(y => (role.Hp + y.AddHp) >= 0.9 * role.MaxHp).ToList().ForEach(x => { decisionDictionary.Add(x.Id, x.AddHp - Mathf.Min(x.AddHp, role.MaxHp - role.Hp)); });
+            resultItem = decisionDictionary.Count > 0 ? items.FirstOrDefault(x => x.Id == decisionDictionary.OrderBy(y => y.Value).FirstOrDefault().Key) : items.OrderByDescending(x => x.AddHp).FirstOrDefault();
+            if (resultItem != null)
+            {
+                var tmp = GetFarestEnemyBlock(role, range);
+                result = new AIResult { MoveX = tmp.X, MoveY = tmp.Y, IsRest = false, Item = resultItem };
+                return result;
+            }
+        }
+
+        //当角色还有道具并且内力小于阈值，则需要使用恢复内力道具，阈值随机为15~25%
+        if (items.Count > 0 && role.Mp < randomThreshold * role.MaxMp)
+        {
+
+            Dictionary<int, double> decisionDictionary = new Dictionary<int, double>();
+            items.Where(y => (role.Mp + y.AddMp) >= 0.9 * role.MaxMp).ToList().ForEach(x => { decisionDictionary.Add(x.Id, x.AddMp - Mathf.Min(x.AddMp, role.MaxMp - role.Mp)); });
+            resultItem = decisionDictionary.Count > 0 ? items.FirstOrDefault(x => x.Id == decisionDictionary.OrderBy(y => y.Value).FirstOrDefault().Key) : items.OrderByDescending(x => x.AddMp).FirstOrDefault();
+            if (resultItem != null)
+            {
+                var tmp = GetFarestEnemyBlock(role, range);
+                result = new AIResult { MoveX = tmp.X, MoveY = tmp.Y, IsRest = false, Item = resultItem };
+                return result;
+            }
+
+        }
+
+        //当角色还有道具并且体力小于阈值，则需要使用恢复体力道具，阈值随机为7.5~12.5%
+        if (items.Count > 0 && role.Tili < randomThreshold * GameConst.MAX_ROLE_TILI / 2)
+        {
+            Dictionary<int, double> decisionDictionary = new Dictionary<int, double>();
+            items.Where(y => (role.Tili + y.AddTili) >= 0.9 * GameConst.MAX_ROLE_TILI).ToList().ForEach(x => { decisionDictionary.Add(x.Id, x.AddTili - Mathf.Min(x.AddTili, GameConst.MAX_ROLE_TILI - role.Tili)); });
+            resultItem = decisionDictionary.Count > 0 ? items.FirstOrDefault(x => x.Id == decisionDictionary.OrderBy(y => y.Value).FirstOrDefault().Key) : items.OrderByDescending(x => x.AddTili).FirstOrDefault();
+            if (resultItem != null)
+            {
+                var tmp = GetFarestEnemyBlock(role, range);
+                result = new AIResult { MoveX = tmp.X, MoveY = tmp.Y, IsRest = false, Item = resultItem };
+                return result;
+            }
+        }
+
+        foreach (var skill in skills)
+        {
+            if (skill.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
                 continue;
 
-            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, zhaoshi, range);
+            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, skill, range);
             if (tmp != null && tmp.Length == 2 && tmp[0] != null)
             {
                 BattleBlockVector movePos = tmp[0];
                 BattleBlockVector castPos = tmp[1];
-                double score = GetSkillCastResultScore(role, zhaoshi, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
+                double score = GetSkillCastResultScore(role, skill, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
                 if (score > maxscore)
                 {
                     maxscore = score;
@@ -91,74 +146,33 @@ public class AIManager
                         AttackY = castPos.Y,
                         MoveX = movePos.X,
                         MoveY = movePos.Y,
-                        Zhaoshi = zhaoshi,
+                        SkillCast = skill,
                         IsRest = false
                     };
                 }
-                
+
                 await UniTask.WaitForEndOfFrame();
-            }
-        }
-
-        //考虑吃药
-        if (role.Items.Count > 0 && (role.Hp < 0.2 * role.MaxHp || role.Mp < 0.2 * role.MaxMp || role.Tili < 0.2 * GameConst.MAX_ROLE_TILI))
-        {
-            List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
-            foreach(var item in items)
-            {
-                double score = 0;
-                //尽量吃刚刚好的药
-                if(item.AddHp > 0)
-                {
-                    score += Mathf.Min(item.AddHp, role.MaxHp - role.Hp) - item.AddHp / 10;
-                }
-                if(item.AddMp > 0)
-                {
-                    score += Mathf.Min(item.AddMp, role.MaxMp - role.Mp) / 2 - item.AddMp / 10;
-                }
-                if(item.AddTili > 0)
-                {
-                    score += Mathf.Min(item.AddTili, GameConst.MAX_ROLE_TILI - role.Tili) - item.AddTili / 10;
-                }
-
-                if(score > 0)
-                {
-                    score *= 1.5;//自保系数大
-                }
-
-                if (score > maxscore)
-                {
-                    maxscore = score;
-                    var tmp = GetFarestEnemyBlock(role, range);
-                    result = new AIResult
-                    {
-                        MoveX = tmp.X,
-                        MoveY = tmp.Y,
-                        IsRest = false,
-                        Item = item
-                    };
-                }
             }
         }
 
         List<Jyx2ConfigItem> anqis = GetAvailableItems(role, 4); //获取暗器
         //使用暗器
-        if(anqis.Count > 0)
+        if (anqis.Count > 0)
         {
-            foreach(var anqi in anqis)
+            foreach (var anqi in anqis)
             {
-                BattleZhaoshiInstance anqizhaoshi = new AnqiZhaoshiInstance(role.Anqi, anqi);
+                SkillCastInstance anqiSkillCast = new AnqiSkillCastInstance(role.Anqi, anqi);
 
-                if (anqizhaoshi.GetStatus() != BattleZhaoshiInstance.ZhaoshiStatus.OK)
+                if (anqiSkillCast.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
                     continue;
 
-                BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqizhaoshi, range);
-                
+                BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqiSkillCast, range);
+
                 if (tmp != null && tmp.Length == 2 && tmp[0] != null)
                 {
                     BattleBlockVector movePos = tmp[0];
                     BattleBlockVector castPos = tmp[1];
-                    double score = GetSkillCastResultScore(role, anqizhaoshi, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
+                    double score = GetSkillCastResultScore(role, anqiSkillCast, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
 
                     if (score > maxscore)
                     {
@@ -169,7 +183,7 @@ public class AIManager
                             AttackY = castPos.Y,
                             MoveX = movePos.X,
                             MoveY = movePos.Y,
-                            Zhaoshi = anqizhaoshi,
+                            SkillCast = anqiSkillCast,
                             IsRest = false
                         };
                     }
@@ -195,7 +209,7 @@ public class AIManager
         return Rest(role);
     }
 
-    public double GetSkillCastResultScore(RoleInstance caster, BattleZhaoshiInstance skill,
+    public double GetSkillCastResultScore(RoleInstance caster, SkillCastInstance skill,
             int movex, int movey, int castx, int casty, bool isAIComputing)
     {
         double score = 0;
@@ -217,7 +231,7 @@ public class AIManager
             score += result.GetTotalScore();
 
             //暗器算分
-            if (skill is AnqiZhaoshiInstance)
+            if (skill is AnqiSkillCastInstance)
             {
                 if (score > targetRole.Hp)
                 {
@@ -244,7 +258,7 @@ public class AIManager
 
         AIResult rst = new AIResult
         {
-            Zhaoshi = null,
+            SkillCast = null,
             MoveX = tmp.X,
             MoveY = tmp.Y,
             IsRest = true //靠近对手
@@ -267,12 +281,12 @@ public class AIManager
         return rst;
     }
 
-    public async UniTask<BattleBlockVector[]> GetMoveAndCastPos(RoleInstance role, BattleZhaoshiInstance zhaoshi, List<BattleBlockVector> moveRange)
+    public async UniTask<BattleBlockVector[]> GetMoveAndCastPos(RoleInstance role, SkillCastInstance skillCast, List<BattleBlockVector> moveRange)
     {
         BattleBlockVector[] rst = new BattleBlockVector[2];
         
         //丢给自己的，随便乱跑一个地方丢
-        if (zhaoshi.GetCoverType() == SkillCoverType.POINT && zhaoshi.GetCastSize() == 0 && zhaoshi.GetCoverSize() == 0)
+        if (skillCast.GetCoverType() == SkillCoverType.POINT && skillCast.GetCastSize() == 0 && skillCast.GetCoverSize() == 0)
         {
             BattleBlockVector targetBlock = null;
             if ((float)role.Hp / role.MaxHp > 0.5)
@@ -290,17 +304,17 @@ public class AIManager
             return rst;
         }
 
-        bool isAttack = zhaoshi.IsCastToEnemy();
+        bool isAttack = skillCast.IsCastToEnemy();
         double maxScore = 0;
 
         Dictionary<int,float > cachedScore = new Dictionary<int, float>();
         //带攻击范围的，找最多人丢
         foreach (var moveBlock in moveRange)
         {
-            var coverType = zhaoshi.GetCoverType();
+            var coverType = skillCast.GetCoverType();
             var sx = moveBlock.X;
             var sy = moveBlock.Y;
-            var castBlocks = rangeLogic.GetSkillCastBlocks(sx, sy, zhaoshi, role);
+            var castBlocks = rangeLogic.GetSkillCastBlocks(sx, sy, skillCast, role);
 
             int splitFrame = 0;//分帧
             foreach (var castBlock in castBlocks)
@@ -312,7 +326,7 @@ public class AIManager
                 }
                 else
                 {
-                    var coverSize = zhaoshi.GetCoverSize();
+                    var coverSize = skillCast.GetCoverSize();
                     var tx = castBlock.X;
                     var ty = castBlock.Y;
                     var coverBlocks = rangeLogic.GetSkillCoverBlocks(coverType, tx, ty, sx, sy, coverSize);
@@ -423,6 +437,9 @@ public class AIManager
         //寻找一个点离敌人最远
         foreach (var r in range)
         {
+            // 遍历时过滤不可达的位置，以免引发异常
+            if (BattleboxHelper.Instance.GetBlockData(r.X, r.Y) == null)
+                continue;
             int min = int.MaxValue;
             foreach (RoleInstance sp in BattleModel.AliveRoles)
             {
@@ -432,18 +449,18 @@ public class AIManager
                     min = distance;
                 }
             }
+
             if (min > max)
             {
                 max = min;
                 rst = r;
             }
         }
+
         return rst;
     }
 
-
-    
-    /// <summary>
+    /// </summary>
     /// 战斗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
     ///
     /// 
@@ -453,14 +470,8 @@ public class AIManager
     /// <param name="skill"></param>
     /// <param name="blockVector"></param>
     /// <returns></returns>
-    public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, BattleZhaoshiInstance skill, BattleBlockVector blockVector)
-    {
-        //队伍1武学常识
-        int totalWuxue = BattleModel.GetTotalWuXueChangShi(r1.team);
-        
-        //队伍2武学常识
-        int totalWuxue2 = BattleModel.GetTotalWuXueChangShi(r2.team);
-        
+    public SkillCastResult GetSkillResult(RoleInstance r1, RoleInstance r2, SkillCastInstance skill, BattleBlockVector blockVector)
+    {        
         SkillCastResult rst = new SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
         var magic = skill.Data.GetSkill();
         int level_index = skill.Data.GetLevel()-1;//此方法返回的是显示的武功等级，1-10。用于calMaxLevelIndexByMP时需要先-1变为数组index再使用
@@ -468,36 +479,22 @@ public class AIManager
         //普通攻击
         if (magic.DamageType == 0)
         {
+            //队伍1武学常识
+            int totalWuxue = BattleModel.GetTotalWuXueChangShi(r1.team);
+
+            //队伍2武学常识
+            int totalWuxue2 = BattleModel.GetTotalWuXueChangShi(r2.team);
+
             if (r1.Mp <= magic.MpCost) //已经不够内力释放了
             {
                 rst.damage = 1 + UnityEngine.Random.Range(0, 10);
                 return rst;
             }
             //总攻击力＝(人物攻击力×3 ＋ 武功当前等级攻击力)/2 ＋武器加攻击力 ＋ 防具加攻击力 ＋ 武器武功配合加攻击力 ＋我方武学常识之和
-            int attack = (r1.Attack * 3 + skill.Data.GetSkillLevelInfo(level_index).Attack) / 2 + totalWuxue;
+            int attack = ((r1.Attack - r1.GetWeaponProperty("Attack") - r1.GetArmorProperty("Attack")) * 3 + skill.Data.GetSkillLevelInfo(level_index).Attack) / 2 + r1.GetWeaponProperty("Attack") + r1.GetArmorProperty("Attack") + r1.GetExtraAttack(magic) + totalWuxue;
             
             //总防御力 ＝ 人物防御力 ＋武器加防御力 ＋ 防具加防御力 ＋ 敌方武学常识之和
             int defence = r2.Defence + totalWuxue2;
-            if (r1.Weapon >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r1.Weapon);
-                attack += i.Attack;
-            }
-            if (r1.Armor >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r1.Armor);
-                attack += i.Attack;
-            }
-            if (r2.Weapon >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r2.Weapon);
-                defence += i.Defence;
-            }
-            if (r2.Armor >= 0)
-            {
-                var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(r2.Armor);
-                defence += i.Defence;
-            }
 
             //伤害 ＝ （总攻击力－总防御×3）×2 / 3 + RND(20) – RND(20)                  （公式1）
             int v = (attack - defence * 3) * 2 / 3 + UnityEngine.Random.Range(0, 20) - UnityEngine.Random.Range(0, 20);
@@ -524,7 +521,7 @@ public class AIManager
             //点、线、十字的伤害，距离就是两人相差的格子数，最小为1。
             //面攻击时，距离是两人相差的格子数＋敌人到攻击点的距离。
             int dist = r1.Pos.GetDistance(r2.Pos);
-            if (skill.GetCoverType() == SkillCoverType.FACE)
+            if (skill.GetCoverType() == SkillCoverType.RECT)
             {
                 dist += blockVector.GetDistance(r2.Pos);
             }
@@ -545,8 +542,25 @@ public class AIManager
             //10、if 伤害 < 1  伤害 ＝ 1
             if (v < 1)
                 v = 1;
-            
+
             rst.damage = v;
+
+            //敌人受伤程度
+            rst.hurt = v / 10;
+
+            //攻击带毒
+            //中毒程度＝武功等级×武功中毒点数＋人物攻击带毒
+            int add = level_index * skill.Data.GetSkill().Poison + r1.AttackPoison;
+            //if 敌人抗毒> 中毒程度 或 敌人抗毒> 90 则不中毒
+            //敌人中毒=敌人已中毒＋ 中毒程度/15
+            //if 敌人中毒> 100 then 敌人中毒 ＝100
+            //if 敌人中毒<0 then 敌人中毒=0
+            if (r2.AntiPoison <= add && r2.AntiPoison <= 90)
+            {
+                int poison = Tools.Limit(add / 15, 0, GameConst.MAX_ROLE_ATK_POISON);
+                rst.poison = poison;
+            }
+  
             return rst;
         }
         else if ((int)magic.DamageType == 1) //吸内
@@ -555,22 +569,15 @@ public class AIManager
             
             //杀伤内力逻辑
             int v = levelInfo.KillMp;
-            v += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
-            if (v < 10)
-            {
-                v = 1 + UnityEngine.Random.Range(0, 10);
-            }
+            v += UnityEngine.Random.Range(0, 3) - UnityEngine.Random.Range(0, 3);
             rst.damageMp = v;
 
             //吸取内力逻辑
             int addMp = levelInfo.AddMp;
             if (addMp > 0)
             {
-                addMp += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
-                if (addMp < 10)
-                {
-                    addMp = 1 + UnityEngine.Random.Range(0, 10);
-                }
+                rst.addMaxMp = UnityEngine.Random.Range(0, addMp / 2);
+                addMp += UnityEngine.Random.Range(0, 3) - UnityEngine.Random.Range(0, 3);
                 rst.addMp = addMp;    
             }
             
@@ -588,18 +595,18 @@ public class AIManager
         }
         else if ((int)magic.DamageType == 4) //治疗
         {
-            rst.heal = medicine(r1, r2);
+            var _rst = medicine(r1, r2);
+            rst.heal = _rst.heal;
+            rst.hurt = _rst.hurt;
             return rst;
         }
         else if ((int)magic.DamageType == 5) //暗器
         {
             var anqi = skill.Anqi;
-            rst.damage = hiddenWeapon(r1, r2, anqi);
-            //带毒
-            if(anqi.ChangePoisonLevel > 0)
-            {
-                rst.poison = usePoison(r1, r2);
-            }
+            var _rst = hiddenWeapon(r1, r2, anqi);
+            rst.damage = _rst.damage;
+            rst.hurt = _rst.hurt;
+            rst.poison = _rst.poison;
             return rst;
         }
         return null;
@@ -608,54 +615,143 @@ public class AIManager
     List<Jyx2ConfigItem> GetAvailableItems(RoleInstance role, int itemType)
     {
         List<Jyx2ConfigItem> items = new List<Jyx2ConfigItem>();
-        foreach (var item in role.Items)
+        // 如果角色是玩家这方的，应该使用玩家的物品栏 by Tomato
+        if (role.team == 0)
         {
-            var tmp = item.Item;
-            if ((int)tmp.ItemType == itemType)
-                items.Add(tmp);
+            foreach (var kv in GameRuntimeData.Instance.Items)
+            {
+                string id = kv.Key;
+                int count = kv.Value;
+
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
+                if ((int)item.ItemType == itemType)
+                    items.Add(item);
+            }
         }
+        else
+        {
+            foreach (var item in role.Items)
+            {
+                var tmp = item.Item;
+                if ((int)tmp.ItemType == itemType)
+                    items.Add(tmp);
+            }
+        }
+
         return items;
     }
 
-    //对应kys-cpp:BattleScene::calMagicHurt
 
     //用毒
+    /// </summary>
+    /// 中毒计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+    /// 也参考War_PoisonHurt：https://github.com/ZhanruiLiang/jinyong-legend
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <returns></returns>
     int usePoison(RoleInstance r1, RoleInstance r2)
     {
-        int add = r1.UsePoison / 3;
-        int rst = Tools.Limit(r2.Poison + add, 0, 100);
-        return rst - r2.Poison;
+        //中毒程度 ＝（用毒能力－抗毒能力）/ 4
+        int poison = (r1.UsePoison - r2.AntiPoison) / 4;
+        //小于0则为0
+        if (poison < 0)
+            poison = 0;
+        return poison;
     }
 
-    //医疗的效果
-    int medicine(RoleInstance r1, RoleInstance r2)
+    //医疗
+    /// </summary>
+    /// 医疗计算公式可以参考：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
+    /// 也参考ExecDoctor：https://github.com/ZhanruiLiang/jinyong-legend
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <returns></returns>
+    SkillCastResult medicine(RoleInstance r1, RoleInstance r2)
     {
-        int add = r1.Heal;
-        int rst = Tools.Limit(r2.Hp + add, 0, r2.MaxHp);
-        return rst - r2.Hp;
+        SkillCastResult rst = new SkillCastResult();
+        if (r2.Hurt > r1.Heal + 20)
+        {
+            GameUtil.DisplayPopinfo("受伤太重无法医疗");
+            return rst;
+        }
+        //增加生命 = 医疗能力 * a + random(5);
+        //当受伤程度 > 75, a = 1 / 2;
+        //当50 < 受伤程度 <= 75, a = 2 / 3;
+        //当25 < 受伤程度 <= 50, a = 3 / 4;
+        //当0 < 受伤程度 <= 25, a = 4 / 5;
+        //当受伤程度 = 0，a = 4 / 5;
+        int a = (int)Math.Ceiling((double)r2.Hurt / 25);
+        if (a == 0) a = 1;
+        int addHp = r1.Heal * (5 - a) / (6 - a) + UnityEngine.Random.Range(0, 5);
+        rst.heal = addHp;
+        //减低受伤程度 = 医疗能力.
+        rst.hurt = -addHp;
+        return rst;
     }
 
     //解毒
-    //注意这个返回值通常应为负
+    /// </summary>
+    /// 解毒计算公式可以参考ExecDecPoison：https://github.com/ZhanruiLiang/jinyong-legend
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <returns></returns>
     int detoxification(RoleInstance r1, RoleInstance r2)
     {
-        int mius = r1.DePoison / 3;
-        int rst = Tools.Limit(r2.Poison - mius, 0, 100);
-        return r2.Poison - rst;
+        if (r2.Poison > r1.DePoison + 20)
+        {
+            GameUtil.DisplayPopinfo("中毒太重无法解毒");
+            return 0;
+        }
+        int add = (r1.DePoison / 3) + UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
+        int depoison = Tools.Limit(add, 0, r2.Poison);
+        return depoison;
     }
 
     //暗器
     //返回值为一正数
-    int hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2ConfigItem anqi)
+    /// </summary>
+    /// 暗器计算公式可以参考War_AnqiHurt：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
+    ///
+    /// 
+    /// </summary>
+    /// <param name="r1"></param>
+    /// <param name="r2"></param>
+    /// <param name="anqi"></param>
+    /// <returns></returns>
+    SkillCastResult hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2ConfigItem anqi)
     {
-        int v = r1.Anqi - anqi.AddHp;
-        int dis = r1.Pos.GetDistance(r2.Pos);
-        v = (int)(v / Math.Exp((dis - 1) / 10));
-        v += UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
-        if (v < 1)
+        SkillCastResult rst = new SkillCastResult();
+        //增加生命 = (暗器增加生命/a-random(5)-暗器能力*2)/3;
+        //式中暗器增加生命为负值.
+        //当受伤程度 = 100，a = 1;
+        //当66 < 受伤程度 <= 99, a = 1;
+        //当33 < 受伤程度 <= 66, a = 2;
+        //当0 < 受伤程度 <= 33, a = 3;
+        //当受伤程度 = 0, a = 4;
+        int a = (int)Math.Ceiling((double)r2.Hurt / 33);
+        if (a == 4) a = 3;
+        int v = (anqi.AddHp / (4 - a) - UnityEngine.Random.Range(0, 5) - r1.Anqi * 2) / 3;
+        rst.damage = -v;
+        //敌人受伤程度
+        rst.hurt = -v / 4; //此处v为负值
+        //当暗器带毒 > 0,
+        //增加中毒程度 = [(暗器带毒 + 暗器技巧) / 2 - 抗毒能力] / 2;
+        //当抗毒 = 100, 增加中毒程度 = 0.
+        if (anqi.ChangePoisonLevel > 0)
         {
-            v = 1;
+            int add = ((anqi.ChangePoisonLevel + r1.Anqi) / 2 - r2.AntiPoison) / 2;
+            if (r2.AntiPoison == 100)
+                add = 0;
+            int poison = Tools.Limit(add, 0, GameConst.MAX_USE_POISON);
+            rst.poison = poison;
         }
-        return v;
+        return rst;
     }
 }

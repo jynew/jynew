@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using Jyx2;
+using Jyx2.MOD;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -41,7 +42,22 @@ namespace Jyx2Configs
         private const string EXTEND_GROUP = "扩展属性";
         private const string EFFECT_GROUP = "使用效果";
         private const string CONDITION_GROUP = "使用条件";
-        
+
+        [ShowIf(nameof(IsWeapon))]
+        [BoxGroup(EXTEND_GROUP)][LabelText("武器武功配合加攻击力")]
+        public int ExtraAttack;
+
+        [ShowIf(nameof(IsWeapon))]
+        [BoxGroup(EXTEND_GROUP)][LabelText("配合武功")][SerializeReference]
+        public Jyx2ConfigSkill PairedWugong;
+
+        bool IsWeapon()
+        {
+            return (int)this.EquipmentType == 0;
+        }
+
+
+
         [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("图标")]
         public AssetReferenceTexture2D Pic;
 
@@ -51,7 +67,7 @@ namespace Jyx2Configs
             if (Pic == null || string.IsNullOrEmpty(Pic.AssetGUID)) return null;
             if (_sprite == null)
             {
-                _sprite = await Addressables.LoadAssetAsync<Sprite>(Pic).Task;
+                _sprite = await MODLoader.LoadAsset<Sprite>(Jyx2ResourceHelper.GetAssetRefAddress(Pic, typeof(Texture2D)));
             }
             return _sprite;
         }
@@ -207,6 +223,9 @@ namespace Jyx2Configs
         [BoxGroup(CONDITION_GROUP)][LabelText("需经验")]
         public int NeedExp;
 
+        [BoxGroup(CONDITION_GROUP)][LabelText("需自宫")]
+        public bool NeedCastration;
+
         [ShowIf(nameof(IsItemBook))]
         [BoxGroup(EFFECT_GROUP)][LabelText("练出物品需经验")]
         public int GenerateItemNeedExp;
@@ -222,23 +241,12 @@ namespace Jyx2Configs
 
         public override async UniTask WarmUp()
         {
-            GetPic().Forget();
-        }
-        
-        /// <summary>
-        /// 这个代码实现太丑陋，需要重构
-        /// </summary>
-        public int User
-        {
-            get
+            //GetPic().Forget();
+            
+            //清理缓存
+            if (Application.isEditor)
             {
-                if (!GameRuntimeData.Instance.ItemUser.ContainsKey(Id.ToString()))
-                    return -1;
-                return GameRuntimeData.Instance.ItemUser[Id.ToString()];
-            }
-            set
-            {
-                GameRuntimeData.Instance.ItemUser[Id.ToString()] = value;
+                _sprite = null;
             }
         }
     }

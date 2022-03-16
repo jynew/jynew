@@ -10,9 +10,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using Jyx2Configs;
 using Sirenix.OdinInspector;
@@ -38,7 +40,7 @@ public class BattleLoader : MonoBehaviour
 
         public int team;
 
-        public string roleKey;
+        public int roleKey;
     }
 
     public List<BattlePosRole> m_Roles;
@@ -117,10 +119,10 @@ public class BattleLoader : MonoBehaviour
                 AddRole(roleId, 0); //TODO IS AUTO
                 for (var i = 0; i < m_Roles.Count; i++)
                 {
-                    if (m_Roles[i].roleKey == roleId.ToString())
+                    if (m_Roles[i].roleKey == roleId)
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
-                        if (roleInstance!=null && roleInstance.Hp == 0) roleInstance.Hp = 1;
+                        if (roleInstance!=null && roleInstance.Hp <= 0) roleInstance.Hp = 1;
                     }
                 }
             }
@@ -132,19 +134,25 @@ public class BattleLoader : MonoBehaviour
             //必选人物
             bool MustRoleFunc(RoleInstance r)
             {
-                return battle.TeamMates.Exists(t => t.Id.ToString() == r.Key);
+                return battle.TeamMates.Exists(t => t.Id == r.Key);
             }
 
-
-
             SelectRoleParams selectPram = new SelectRoleParams();
-            selectPram.roleList = runtime.Team;
+            selectPram.roleList = runtime.GetTeam().ToList();
             selectPram.mustSelect = MustRoleFunc;
-            selectPram.title = "选择上场角色";
+            //---------------------------------------------------------------------------
+            //selectPram.title = "选择上场角色";
+            //---------------------------------------------------------------------------
+            //特定位置的翻译【战斗中选择上场角色的文字显示】
+            //---------------------------------------------------------------------------
+            selectPram.title = "选择上场角色".GetContent(nameof(BattleLoader));
+            //---------------------------------------------------------------------------
+            //---------------------------------------------------------------------------
             selectPram.maxCount = GameConst.MAX_BATTLE_TEAMMATE_COUNT; //TODO 最大上场人数
             selectPram.canCancel = false;
 
             //弹出选择人物面板
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SelectRolePanel), selectPram);
             var rst = await SelectRolePanel.Open(selectPram);
             await LoadJyx2BattleStep2(battle, rst, callback);
         }
@@ -183,7 +191,7 @@ public class BattleLoader : MonoBehaviour
             return;
 
         //已经添加过了
-        if (m_Roles.Exists(r => r.roleKey == id.ToString() && r.team == team))
+        if (m_Roles.Exists(r => r.roleKey == id && r.team == team))
             return;
 
         if (!teamRoleIndex.ContainsKey(team))
@@ -195,7 +203,7 @@ public class BattleLoader : MonoBehaviour
         string posKey = $"battle{m_BattleId}/{team}_{teamRoleIndex[team]}";
         teamRoleIndex[team]++;
 
-        m_Roles.Add(new BattlePosRole() {pos = posKey, team = team, roleKey = id.ToString()});
+        m_Roles.Add(new BattlePosRole() {pos = posKey, team = team, roleKey = id});
     }
 
     //初始化战斗
@@ -205,12 +213,14 @@ public class BattleLoader : MonoBehaviour
         List<RoleInstance> roles = new List<RoleInstance>();
         foreach (var r in m_Roles)
         {
-            RoleInstance roleInstance = runtime.GetRoleInTeam(int.Parse(r.roleKey));
+            //队友取队伍实例，敌人新生成
+            RoleInstance roleInstance = runtime.GetRoleInTeam(r.roleKey);
             if (roleInstance == null)
             {
-                roleInstance = new RoleInstance(r.roleKey);
+                roleInstance = new RoleInstance(r.roleKey); 
             }
 
+            //开始位置
             var pos = FindSpawnPosition(r.pos, r.team);
             if (pos == null)
             {
@@ -264,7 +274,7 @@ public class BattleLoader : MonoBehaviour
             npcRoot = new GameObject("BattleRoles");
         }
 
-        MapRole roleView;
+        BattleRole roleView;
         //JYX2苟且逻辑：找第一个能找到的角色设置为主角
         if (!setPlayer)
         {
@@ -280,7 +290,6 @@ public class BattleLoader : MonoBehaviour
         
         roleView.transform.SetParent(npcRoot.transform, false);
         roleView.transform.position = pos.position;
-
         role.team = team;
         return roleView.RefreshModel(); //刷新模型
     }

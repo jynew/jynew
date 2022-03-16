@@ -52,8 +52,6 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_ShadowShowLevelDropdown.onValueChanged.AddListener(DropdownShadowShowLevel);
 
         m_CloseButton.onClick.AddListener(Close);
-        
-        
     }
 
     void Close()
@@ -178,4 +176,17 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     {
         IsBlockControl = true;
     }
+
+	protected override void handleGamepadButtons()
+	{
+		//only allow close setting for now, so at least this UI can be closed via gamepad
+        if (gameObject.activeSelf)
+		{
+            if(GamepadHelper.IsConfirm() 
+                ||GamepadHelper.IsCancel())
+			{
+                Close();
+			}
+		}
+	}
 }

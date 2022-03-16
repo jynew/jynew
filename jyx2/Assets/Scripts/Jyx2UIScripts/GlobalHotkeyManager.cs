@@ -9,18 +9,36 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using HSFrameWork.Common;
 using UnityEngine;
 
 /// <summary>
 /// 全局的热键管理，将对应热键进行堆栈式管理。
 ///
 /// </summary>
-public class GlobalHotkeyManager : SingletonMB<GlobalHotkeyManager, GlobalHotkeyManager>
+public class GlobalHotkeyManager : MonoBehaviour
 {
+    public static GlobalHotkeyManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject obj = new GameObject();
+                obj.name = "[GlobalHotkeyManager]";
+                _instance = obj.AddComponent<GlobalHotkeyManager>();
+            }
+            return _instance;
+        }
+    }
+
+    private static GlobalHotkeyManager _instance;
+
+    private GlobalHotkeyManager()
+    {
+    }
+
+
     public bool isLock=false;
     
     class HotkeyRegist
@@ -111,5 +129,11 @@ public class GlobalHotkeyManager : SingletonMB<GlobalHotkeyManager, GlobalHotkey
                 }
             }
         }
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        Destroy(this.gameObject);
     }
 }

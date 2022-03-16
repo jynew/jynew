@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ch.sycoforge.Decal;
+using Cysharp.Threading.Tasks;
 using Jyx2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,24 +34,21 @@ public class BattleBlockHelper : MonoBehaviour {
     private GameObject _parent;
 
 
-    void Start()
+    async void Start()
     {
         var sceneName = SceneManager.GetActiveScene().name;
-        SceneCoordDataSet.CreateBySceneName(sceneName, r =>
+        m_CoordDataSet = await SceneCoordDataSet.CreateBySceneName(sceneName);
+        if (m_CoordDataSet == null)
         {
-            m_CoordDataSet = r;
-            if (m_CoordDataSet == null)
-            {
-                Debug.LogWarning($"没有初始化格子信息，请在编辑器模式下初始化场景的格子信息（Level下的LevelEditor");
-            }
-        });
+            Debug.LogWarning($"没有初始化格子信息，请在编辑器模式下初始化场景的格子信息（Level下的LevelEditor");
+        }
     }
 
     public void OnTestControl()
     {
         if (Input.GetKey("g"))
         {
-            DrawMovezones(GameRuntimeData.Instance.Player.View.transform.position);
+            DrawMovezones(Jyx2Player.GetPlayer().transform.position);
         }
         else if (Input.GetKey("h"))
         {
@@ -62,7 +60,7 @@ public class BattleBlockHelper : MonoBehaviour {
     public void InitMovezones(int range = -1)
     {
         SetBlockColor(Color.white);
-        DrawMovezones(GameRuntimeData.Instance.Player.View.transform.position, range);
+        DrawMovezones(Jyx2Player.GetPlayer().transform.position, range);
         StartCoroutine(SetDecalsHidenFrames(2));
     }
 

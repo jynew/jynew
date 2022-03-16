@@ -1589,7 +1589,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BattleId: 10
-  m_TestTeammateIds: 01000000020000000300000004000000
   IsTestCase: 0
 --- !u!4 &159201354
 Transform:
@@ -3217,13 +3216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e95f9b5bac0984585ce4150cb9d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TestLevel: 5
-  m_TestTeammate:
-  - "\u6843\u82B1\u4ED9\u5B50"
-  - "\u9646\u6E38"
-  - "\u8F9B\u5F03\u75BE"
-  m_RuntimeDataSimulate: 1
   m_MobileSimulate: 0
+  m_GameMap: {fileID: 0}
+  m_IsBattleMap: 1
 --- !u!4 &339691458
 Transform:
   m_ObjectHideFlags: 0
@@ -3951,7 +3946,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 2
+  serializedVersion: 3
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
@@ -3973,7 +3968,7 @@ LightingSettings:
   m_MixedBakeMode: 2
   m_LightmapsBakeMode: 1
   m_FilterMode: 1
-  m_LightmapParameters: {fileID: 0}
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
   m_ExportTrainingData: 0
   m_TrainingDataDestination: TrainingData
   m_RealtimeResolution: 2
@@ -3990,7 +3985,7 @@ LightingSettings:
   m_PVREnvironmentReferencePointCount: 2048
   m_LightProbeSampleCountMultiplier: 4
   m_PVRBounces: 2
-  m_PVRRussianRouletteStartBounce: 2
+  m_PVRMinBounces: 1
   m_PVREnvironmentMIS: 0
   m_PVRFilteringMode: 2
   m_PVRDenoiserTypeDirect: 0
@@ -13065,6 +13060,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1123313482
@@ -16276,6 +16272,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1378011985

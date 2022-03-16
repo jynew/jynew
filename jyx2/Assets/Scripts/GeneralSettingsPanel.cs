@@ -7,66 +7,95 @@
  *
  * 金庸老先生千古！
  */
+
+using System;
 using System.Reflection;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 public class GeneralSettingsPanel : Jyx2_UIBase
 {
-
     public Dropdown resolutionDropdown;
     public Dropdown windowDropdown;
     public Dropdown difficultyDropdown;
     public Dropdown viewportDropdown;
+    public Dropdown languageDropdown;
 
     public Slider volumeSlider;
     public Slider soundEffectSlider;
 
     public Button m_CloseButton;
 
-    private GameObject audioManager;
-    private AudioSource audiosource;
-
     private GraphicSetting _graphicSetting;
     Resolution[] resolutions;
+
+    private UnityEvent<float> OnVolumeChange;
+    
+    private Dictionary<GameSettingManager.Catalog, UnityEvent<object>> _gameSettingEvents;
+
+    private Dictionary<GameSettingManager.Catalog, object> gameSetting => GameSettingManager.settings;
+
+    private void Awake()
+    {
+        //读取语言文件
+        var langPath = Path.Combine(Application.streamingAssetsPath, "Language");
+        if (Directory.Exists(langPath)) Directory.CreateDirectory(langPath);//安全性检查
+        var languageOptions = new List<Dropdown.OptionData>();
+        //绑定到指定的文件夹目录
+        var langDir = new DirectoryInfo(langPath);
+
+        if (!langDir.Exists)
+            return;
+
+        //检索表示当前目录的文件和子目录
+        var fsinfos = langDir.GetFileSystemInfos();
+        //遍历检索的文件和子目录
+        for (var index = 0; index < fsinfos.Length; index++)
+        {
+            var fsinfo = fsinfos[index];
+            if (fsinfo is FileInfo && fsinfo.Extension == ".json")
+            {
+                languageOptions.Add(new Dropdown.OptionData(fsinfo.Name.Replace(".json", "")));
+            }
+        }
+
+        languageDropdown.AddOptions(languageOptions);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("GeneralSettingsPanel Start()");
         _graphicSetting = GraphicSetting.GlobalSetting;
-        audioManager = GameObject.Find("[AudioManager]");
-        audiosource = audioManager?.GetComponent<AudioSource>();
 
         InitWindowDropdown();
         InitResolutionDropdown();
         InitVolumeSlider();
+        InitSoundEffectSlider();
         InitViewportSetting();
-
+        InitLanguageSetting();
+        
+        windowDropdown.onValueChanged.AddListener(SetFullscreen);
+        resolutionDropdown.onValueChanged.AddListener(SetResolution);
+        volumeSlider.onValueChanged.AddListener(SetVolume);
+        soundEffectSlider.onValueChanged.AddListener(SetSoundEffect);
+        viewportDropdown.onValueChanged.AddListener(SetViewport);
+        languageDropdown.onValueChanged.AddListener(SetLanguage);
+        
         m_CloseButton.onClick.AddListener(Close);
+        
+        Debug.Log("GeneralSettingsPanel Start() END");
     }
 
     public void Close()
     {
-        Save();
         _graphicSetting.Save();
         _graphicSetting.Execute();
         Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
-    }
-
-    public void Save()
-    {
-        PlayerPrefs.SetFloat("volume", audiosource.volume);
-        PlayerPrefs.SetInt("resolution", resolutionDropdown.value);
-        if (Screen.fullScreen)
-        {
-            PlayerPrefs.SetInt("fullscreen", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("fullscreen", 0);
-        }
     }
 
     public void InitResolutionDropdown()
@@ -76,43 +105,26 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
 
-        int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
         }
-
+        
         resolutionDropdown.AddOptions(options);
-        if (PlayerPrefs.HasKey("resolution"))
-        {
-            resolutionDropdown.value = PlayerPrefs.GetInt("resolution");
-            Resolution resol = resolutions[resolutionDropdown.value];
-            Screen.SetResolution(resol.width, resol.height, Screen.fullScreen);
-        }
-        else
-        {
-            resolutionDropdown.value = currentResolutionIndex;
-        }
+
+        var setting = (int) gameSetting[GameSettingManager.Catalog.Resolution];
+        resolutionDropdown.value = setting;
         resolutionDropdown.RefreshShownValue();
 #endif
     }
 
-    public void InitWindowDropdown()
+    private void InitWindowDropdown()
     {
 #if !UNITY_ANDROID
-        if(PlayerPrefs.HasKey("fullscreen"))
-        {
-            Screen.fullScreen = PlayerPrefs.GetInt("fullscreen") == 1;
-            windowDropdown.value = PlayerPrefs.GetInt("fullscreen");
-            windowDropdown.RefreshShownValue();
-        }
+        var setting = (int) gameSetting[GameSettingManager.Catalog.Fullscreen];
+        windowDropdown.value = setting;
+        windowDropdown.RefreshShownValue();
 #endif
     }
 
@@ -122,61 +134,69 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     void InitVolumeSlider()
     {
-        if (PlayerPrefs.HasKey("volume"))
+        var volume = gameSetting[GameSettingManager.Catalog.Volume];
+        if (volume is float value)
         {
-            if (audiosource != null)
-            {
-                audiosource.volume = PlayerPrefs.GetFloat("volume");    
-            }
-            
-            volumeSlider.value = PlayerPrefs.GetFloat("volume");
+            volumeSlider.value = value;
         }
     }
 
     public void InitSoundEffectSlider()
     {
-
-    }
-
-    public void SetResolution(int index)
-    {
-        Resolution resolution = resolutions[index];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
-
-    public void SetVolume(float volume)
-    {
-        if(audioManager != null)
+        var volume = gameSetting[GameSettingManager.Catalog.SoundEffect];
+        if (volume is float value)
         {
-            audiosource.volume = volume;
+            soundEffectSlider.value = value;
+        }
+    }
+    
+   private void InitViewportSetting()
+    {
+        var setting = gameSetting[GameSettingManager.Catalog.Viewport];
+        if (setting is int value)
+        {
+            viewportDropdown.value = value;
         }
     }
 
-    /*音效，暂未实现*/
-    public void SetSoundEffect(float volume)
+   
+   private void InitLanguageSetting()
+   {
+       var setting = gameSetting[GameSettingManager.Catalog.Language];
+       if (setting is int value)
+       {
+           languageDropdown.value = value;
+       }
+   }
+
+    private void SetResolution(int index)
     {
-        
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, index);
     }
 
-    public void SetFullscreen(int index)
+    private void SetVolume(float volume)
     {
-        Screen.fullScreen = index == 1;
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Volume, volume);
     }
 
-    public void SetViewport(int index)
+    private void SetSoundEffect(float volume)
     {
-        PlayerPrefs.SetInt("viewport_type", viewportDropdown.value);
-        GameViewPortManager.Instance.SetViewport((GameViewPortManager.ViewportType)(viewportDropdown.value));
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.SoundEffect, volume);
     }
 
-    void InitViewportSetting()
+    private void SetFullscreen(int index)
     {
-        int setting = 0;
-        if (PlayerPrefs.HasKey("viewport_type"))
-        {
-            setting = PlayerPrefs.GetInt("viewport_type");    
-        }
-        viewportDropdown.value = setting;
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Fullscreen, index);
+    }
+
+    private void SetViewport(int index)
+    {
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Viewport, index);
+    }
+    
+    private void SetLanguage(int index)
+    {
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Language, languageDropdown.options[index].text);
     }
 
     /*游戏难度，暂未实现*/
@@ -188,5 +208,17 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     protected override void OnCreate()
     {
 
+    }
+
+    public override void Update()
+    {
+        //only allow close setting for now, so at least this UI can be closed via gamepad
+        if (gameObject.activeSelf)
+        {
+            if (GamepadHelper.IsConfirm() || GamepadHelper.IsCancel())
+            {
+                Close();
+            }
+        }
     }
 }

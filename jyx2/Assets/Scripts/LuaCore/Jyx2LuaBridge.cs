@@ -10,24 +10,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Cinemachine;
 using DG.Tweening;
-using Hanjiasongshu;
-using HanSquirrel.ResourceManager;
-using Jyx2;
-using HSFrameWork.ConfigTable;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using XLua;
 using UnityEngine.Playables;
 using Sirenix.Utilities;
-using UnityEngine.Timeline;
 using Cysharp.Threading.Tasks;
+using i18n.TranslatorDef;
 using Jyx2Configs;
+using Jyx2.Middleware;
 
 namespace Jyx2
 {
@@ -54,15 +48,17 @@ namespace Jyx2
 
         public static void Talk(int roleId, string content, string talkName, int type)
         {
-            RunInMainThread(() =>
+            async void Run()
             {
                 storyEngine.BlockPlayerControl = true;
-                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.RoleId,roleId, content, type,new Action(()=> 
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.RoleId, roleId, content, type, new Action(() =>
                 {
                     storyEngine.BlockPlayerControl = false;
                     Next();
                 }));
-            });
+            }
+
+            RunInMainThread(Run);
             
             Wait();
         }
@@ -111,21 +107,22 @@ namespace Jyx2
             int interactiveEventId,
             int useItemEventId,
             int enterEventId,
-            int p7,int p8,int p9,int p10,int p11,int p12)
+            int p7, int p8, int p9, int p10, int p11, int p12)
         {
-            RunInMainThread(() => {
+            RunInMainThread(() =>
+            {
 
-				bool isCurrentScene=false;
+                bool isCurrentScene = false;
                 //场景ID
-                if(scene == -2) //当前场景
+                if (scene == -2) //当前场景
                 {
                     scene = LevelMaster.GetCurrentGameMap().Id;
-					isCurrentScene=true;
+                    isCurrentScene = true;
                 }
 
-				var evt = GameEvent.GetCurrentGameEvent();
+                var evt = GameEvent.GetCurrentGameEvent();
                 //事件ID
-                if(eventId == -2)
+                if (eventId == -2)
                 {
                     if (evt == null)
                     {
@@ -133,25 +130,31 @@ namespace Jyx2
                         Next();
                         return;
                     }
+
                     eventId = int.Parse(evt.name); //当前事件
-                }else{
-					evt=GameEventManager.GetGameEventByID(eventId.ToString());
-				}
-				
-				if(isCurrentScene && evt!=null)//当前场景事件如何获取
-				{
-					if(interactiveEventId==-2){
-						interactiveEventId=evt.m_InteractiveEventId;
-					}
-					
-					if(useItemEventId==-2){
-						useItemEventId=evt.m_UseItemEventId;
-					}
-					
-					if(enterEventId==-2){
-						enterEventId=evt.m_EnterEventId;
-					}
-				}
+                }
+                else
+                {
+                    evt = GameEventManager.GetGameEventByID(eventId.ToString());
+                }
+
+                if (isCurrentScene && evt != null) //当前场景事件如何获取
+                {
+                    if (interactiveEventId == -2)
+                    {
+                        interactiveEventId = evt.m_InteractiveEventId;
+                    }
+
+                    if (useItemEventId == -2)
+                    {
+                        useItemEventId = evt.m_UseItemEventId;
+                    }
+
+                    if (enterEventId == -2)
+                    {
+                        enterEventId = evt.m_EnterEventId;
+                    }
+                }
                 // 非当前场景事件如何获取
                 else
                 {
@@ -173,10 +176,11 @@ namespace Jyx2
 
                 //更新全局记录
                 runtime.ModifyEvent(scene, eventId, interactiveEventId, useItemEventId, enterEventId);
-				
-				if(p7!=-2){
-					runtime.SetMapPic(scene,eventId,p7);
-				}
+
+                if (p7 != -2)
+                {
+                    runtime.SetMapPic(scene, eventId, p7);
+                }
 
                 //刷新当前场景中的事件
                 LevelMaster.Instance.RefreshGameEvents();
@@ -201,7 +205,7 @@ namespace Jyx2
         //询问是否战斗
         public static bool AskBattle()
         {
-            return ShowYesOrNoSelectPanel("是否与之战斗?");
+            return ShowYesOrNoSelectPanel("是否与之过招?");
         }
 
         private static bool _battleResult = false;
@@ -217,19 +221,20 @@ namespace Jyx2
 
             bool isWin = false;
             RunInMainThread(() => {
-                var pos = LevelMaster.Instance.GetPlayerPosition();
-                string posStr = UnityTools.Vector3ToString(pos);
-                string posOri = UnityTools.QuaternionToString(LevelMaster.Instance.GetPlayerOrientation());
-
+                
+                //记录当前地图和位置
                 Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
-
+                var pos = LevelMaster.Instance.GetPlayerPosition();
+                var rotate = LevelMaster.Instance.GetPlayerOrientation();
+                
                 LevelLoader.LoadBattle(battleId, (ret) =>
                 {
                     LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
                     {
-                        loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtPos,
-                        CurrentPos = posStr,
-                        CurrentOri = posOri,
+                        //还原当前地图和位置
+                        loadType = LevelMaster.LevelLoadPara.LevelLoadType.ReturnFromBattle,
+                        Pos = pos,
+                        Rotate = rotate,
                     }, () =>
                     {
                         isWin = (ret == BattleResult.Win);
@@ -259,29 +264,10 @@ namespace Jyx2
         {
             RunInMainThread(() => {
                 
-                if (runtime.JoinRoleToTeam(roleId))
+                if (runtime.JoinRoleToTeam(roleId, true))
                 {
                     RoleInstance role = runtime.GetRole(roleId);
                     storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
-
-                    if (role.AlreadyJoinedTeam == 0)
-                    {
-                        //同时获得对方身上的物品
-                        foreach (var item in role.Items)
-                        {
-                            if (item.Count == 0) item.Count = 1;
-                            AddItem(item.Item.Id, item.Count);
-                            item.Count = 0;
-                        }
-                        role.AlreadyJoinedTeam = 1;
-                    }
-
-                    //清空角色身上的装备
-                    role.Weapon = -1;
-                    role.Armor = -1;
-                    role.Xiulianwupin = -1;
-
-                    role.Items.Clear();    
                 }
                 
                 Next();
@@ -291,9 +277,15 @@ namespace Jyx2
         
         public static void Dead()
         {
-            RunInMainThread(() => {
-                Jyx2_UIManager.Instance.ShowUI(nameof(GameOver));
-            });
+            //防止死亡后传送到enterTrigger再次触发事件。临时处理办法
+            ModifyEvent(-2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
+
+            async void Run()
+            {
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(GameOver));
+            }
+
+            RunInMainThread(Run);
         }
 
         public static bool HaveItem(int itemId)
@@ -319,15 +311,6 @@ namespace Jyx2
                 {
                     RoleInstance role = runtime.GetRole(roleId);
                     storyEngine.DisplayPopInfo(role.Name + "离队。");
-
-                    //卸下角色身上的装备
-                    role.UnequipItem(role.GetWeapon());
-                    role.UnequipItem(role.GetArmor());
-                    role.UnequipItem(role.GetXiulianItem());
-                    role.Weapon = -1;
-                    role.Armor = -1;
-                    role.Xiulianwupin = -1;
-
                 }
                 
                 Next();
@@ -338,7 +321,7 @@ namespace Jyx2
         public static void ZeroAllMP()
         {
             RunInMainThread(() => {
-                foreach (var r in runtime.Team)
+                foreach (var r in runtime.GetTeam())
                 {
                     r.Mp = 0;
                 }
@@ -372,81 +355,82 @@ namespace Jyx2
 
         }
         
-		//修改这个接口逻辑为在当前trigger对应事件序号基础上加上v1,v2,v3 (只对大于0的进行相加，-2保留原事件序号，-1为直接设置)
-		// modified by eaphone at 2021/6/12
+        //修改这个接口逻辑为在当前trigger对应事件序号基础上加上v1,v2,v3 (只对大于0的进行相加，-2保留原事件序号，-1为直接设置)
+        // modified by eaphone at 2021/6/12
         public static void Add3EventNum(int scene, int eventId,int v1,int v2,int v3)
         {
-			RunInMainThread(() =>
+            RunInMainThread(() =>
             {
-				bool isCurrentScene=false;
+                bool isCurrentScene=false;
                 //场景ID
                 if (scene == -2) //当前场景
                 {
                     scene = LevelMaster.GetCurrentGameMap().Id;
-					isCurrentScene=true;
+                    isCurrentScene=true;
                 }
 
-				var evt=GameEvent.GetCurrentGameEvent();
+                var evt=GameEvent.GetCurrentGameEvent();
                 //事件ID
                 if (eventId == -2)
                 {
                     if (evt == null)
                     {
                         Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
                         return;
                     }
                     eventId = int.Parse(evt.name); //当前事件
                 }else{
-					evt=GameEventManager.GetGameEventByID(eventId.ToString());
-				}
+                    evt=GameEventManager.GetGameEventByID(eventId.ToString());
+                }
 
-				if(isCurrentScene && evt!=null)//非当前场景事件如何获取
-				{
-					if(v1==-2){//值为-2时，取当前值
-						v1=evt.m_InteractiveEventId;
-					}else if(v1>-1){
-						v1+=evt.m_InteractiveEventId;
-					}
-					if(v2==-2){
-						v2=evt.m_UseItemEventId;
-					}else if(v2>-1){
-						v2+=evt.m_UseItemEventId;
-					}
-					if(v3==-2){
-						v3=evt.m_EnterEventId;
-					}else if(v3>-1){
-						v3+=evt.m_EnterEventId;
-					}
-					
-					runtime.ModifyEvent(scene, eventId, v1, v2, v3);
+                if(isCurrentScene && evt!=null)//非当前场景事件如何获取
+                {
+                    if(v1==-2){//值为-2时，取当前值
+                        v1=evt.m_InteractiveEventId;
+                    }else if(v1>-1){
+                        v1+=evt.m_InteractiveEventId;
+                    }
+                    if(v2==-2){
+                        v2=evt.m_UseItemEventId;
+                    }else if(v2>-1){
+                        v2+=evt.m_UseItemEventId;
+                    }
+                    if(v3==-2){
+                        v3=evt.m_EnterEventId;
+                    }else if(v3>-1){
+                        v3+=evt.m_EnterEventId;
+                    }
+                    
+                    runtime.ModifyEvent(scene, eventId, v1, v2, v3);
 
-					//刷新当前场景中的事件
-					LevelMaster.Instance.RefreshGameEvents();
-				}else{
-					if(v1>0){
-						runtime.AddEventCount(scene,eventId,0,v1);
-					}
-					if(v2>0){
-						runtime.AddEventCount(scene,eventId,1,v2);
-					}
-					if(v3>0){
-						runtime.AddEventCount(scene,eventId,2,v3);
-					}
-				}
+                    //刷新当前场景中的事件
+                    LevelMaster.Instance.RefreshGameEvents();
+                }else{
+                    if(v1>0){
+                        runtime.AddEventCount(scene,eventId,0,v1);
+                    }
+                    if(v2>0){
+                        runtime.AddEventCount(scene,eventId,1,v2);
+                    }
+                    if(v3>0){
+                        runtime.AddEventCount(scene,eventId,2,v3);
+                    }
+                }
 
                 //下一条指令
                 Next();
-			});
+            });
             Wait();
         }
-		
-		//targetEvent:0-interactiveEvent, 1-useItemEvent, 2-enterEvent
-		public static int jyx2_CheckEventCount(int scene, int eventId, int targetEvent)
+        
+        //targetEvent:0-interactiveEvent, 1-useItemEvent, 2-enterEvent
+        public static int jyx2_CheckEventCount(int scene, int eventId, int targetEvent)
         {
-			int result=0;
-			RunInMainThread(() =>
+            int result=0;
+            RunInMainThread(() =>
             {
-				//场景ID
+                //场景ID
                 if (scene == -2) //当前场景
                 {
                     scene = LevelMaster.GetCurrentGameMap().Id;
@@ -455,32 +439,33 @@ namespace Jyx2
                 //事件ID
                 if (eventId == -2)
                 {
-					var evt=GameEvent.GetCurrentGameEvent();
+                    var evt=GameEvent.GetCurrentGameEvent();
                     if (evt == null)
                     {
                         Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
                         return;
                     }
                     eventId = int.Parse(evt.name); //当前事件
                 }
-				
-				result= runtime.GetEventCount(scene,eventId,targetEvent);
+                
+                result= runtime.GetEventCount(scene,eventId,targetEvent);
                 Next();
-			});
+            });
             Wait();
-			return result;
-		}
+            return result;
+        }
 
         public static bool InTeam(int roleId)
         {
-            return runtime.Team.Exists(r => r.Key == roleId.ToString());
+            return runtime.GetRoleInTeam(roleId) != null;
         }
 
-		// modify the logicc, when count>=6, team is full
-		// by eaphone at 2021/6/5
+        // modify the logicc, when count>=6, team is full
+        // by eaphone at 2021/6/5
         public static bool TeamIsFull()
         {
-            return runtime.Team.Count > GameConst.MAX_TEAMCOUNT-1;
+            return runtime.GetTeamMembersCount() > GameConst.MAX_TEAMCOUNT - 1;
         }
 
         /// <summary>
@@ -498,13 +483,13 @@ namespace Jyx2
             
         }
 
-        //增加道德
+        //增加品德
         public static void AddEthics(int value)
         {
             RunInMainThread(() =>
             {
-                runtime.Player.Pinde = HSFrameWork.Common.Tools.Limit(runtime.Player.Pinde + value, 0, 100);
-               /* storyEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "道德:" + Math.Abs(value));*/
+                runtime.Player.Pinde = Tools.Limit(runtime.Player.Pinde + value, 0, 100);
+               /* storyEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "品德:" + Math.Abs(value));*/
                 Next();
             });
             Wait();
@@ -557,6 +542,7 @@ namespace Jyx2
                 if (role == null)
                 {
                     Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    Next();
                     return;
                 }
 
@@ -579,7 +565,7 @@ namespace Jyx2
             RunInMainThread(() =>
             {
                 var role = runtime.GetRole(roleId);
-                role.IQ = HSFrameWork.Common.Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
+                role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
                 storyEngine.DisplayPopInfo(role.Name + "资质增加" + v);
                 Next();
             });
@@ -600,12 +586,14 @@ namespace Jyx2
                 if (role == null)
                 {
                     Debug.LogError("调用了不存在的角色,roleId =" + roleId);
+                    Next();
                     return;
                 }
 
                 if(magicIndexRole >= role.Wugongs.Count)
                 {
                     Debug.LogError("SetOneMagic调用错误，index越界");
+                    Next();
                     return;
                 }
 
@@ -624,7 +612,7 @@ namespace Jyx2
         //判断队伍中是否有女性
         public static bool JudgeFemaleInTeam()
         {
-            foreach(var r in runtime.Team)
+            foreach(var r in runtime.GetTeam())
             {
                 if (r.Sex == 1)
                     return true;
@@ -644,7 +632,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
-                r.Qinggong = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Qinggong = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
                 Next();
             });
@@ -658,8 +646,8 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
-                r.MaxMp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                r.Mp = HSFrameWork.Common.Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
+                r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
+                r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
                 Next();
             });
@@ -673,7 +661,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
-                r.Attack = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Attack = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
                 storyEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
                 Next();
             });
@@ -687,8 +675,8 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
-                r.MaxHp = HSFrameWork.Common.Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                r.Hp = HSFrameWork.Common.Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
+                r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
+                r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
                 storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
                 Next();
             });
@@ -710,7 +698,7 @@ namespace Jyx2
         public static void ShowEthics()
         {
             RunInMainThread(() => {
-                MessageBox.Create("你的道德指数为" + runtime.Player.Pinde, Next);
+                MessageBox.Create("你现在的品德指数为" + runtime.Player.Pinde, Next);
             });
             Wait();
         }
@@ -719,7 +707,7 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                MessageBox.Create("你的声望指数为" + runtime.Player.Shengwang, Next);
+                MessageBox.Create("你现在的个人声望指数为" + runtime.Player.Shengwang, Next);
             });
             Wait();
         }
@@ -755,81 +743,81 @@ namespace Jyx2
         //武林大会
         public static void FightForTop()
         {
-			Dictionary<int, string> heads= new Dictionary<int, string>();
-			heads.Add(8,"唐文亮来领教阁下的高招．");
-			heads.Add(21,"贫尼定闲愿领教阁下高招．");
-			heads.Add(23,"贫道天门领教阁下高招．");
-			heads.Add(31,"小兄弟，我们再来玩玩．");
-			heads.Add(32,"小兄弟，秃笔翁陪你玩玩．");
-			heads.Add(43,"白某愿领教阁下高招．");
-			heads.Add(7,"何太冲来领教阁下的高招．");
-			heads.Add(11,"杨逍技痒，和少侠玩玩．");
-			heads.Add(14,"韦一笑技痒，和少侠玩玩．");
-			heads.Add(20,"莫某再次领教阁下高招．");
-			heads.Add(33,"小兄弟，黑白子向你讨教．");
-			heads.Add(34,"小兄弟，黄钟公向你讨教．");
-			heads.Add(10,"范某技痒，和少侠玩玩．");
-			heads.Add(12,"老朽技痒，和少侠玩玩．");
-			heads.Add(19,"岳某不才，向少侠挑战．");
-			heads.Add(22,"左冷禅愿领教阁下高招．");
-			heads.Add(56,"黄蓉愿领教阁下高招．");
-			heads.Add(68,"丘处机领教阁下高招．");
-			heads.Add(13,"谢某技痒，和少侠玩玩．");
-			heads.Add(55,"郭靖愿领教阁下高招．");
-			heads.Add(62,"老夫领教少侠高招！");
-			heads.Add(67,"裘千仞来领教阁下的高招．");
-			heads.Add(70,"阿弥陀佛，贫道愿向少侠挑战．");
-			heads.Add(71,"洪某拜教！");
-			heads.Add(26,"任某来领教阁下的高招．");
-			heads.Add(57,"少侠的确武功高强，我黄老邪来领教领教．");
-			heads.Add(60,"让我老毒物来会会你．");
-			heads.Add(64,"哇！你又学了这麽多新奇的功夫.来，来，老顽童陪你玩玩．");
-			heads.Add(3,"苗某向少侠讨教．");
-			heads.Add(69,"不错不错，七公我来领教领教．");
-			var ran=new System.Random();
-			var keys=heads.Keys.ToList();
-			var values=heads.Values.ToList();
-			for(int i=0;i<5;i++)
-			{
-				var tempList=new List<int>();
-				for(int i2=0;i2<3;i2++)
-				{
-					int j=ran.Next(0,6);
-					while(tempList.Contains(j))
-					{
-						j=ran.Next(0,6);
-					}
-					tempList.Add(j);
-					Talk(keys[i*6+j],values[i*6+j],"",0);
-					if (!TryBattle(102 + i*6+j))
-					{
-						Dead();
-						return;
-					}
-				}
-				if(i!=4){
-					Talk(70,"少侠已连战三场，可先休息再战．","talkname0", 0);
-					Rest();
-					DarkScence();
-					LightScence();
-				}
-			}
-			
-			Talk(0,"接下来换谁？","talkname0", 1);
-			Talk(0,"．．．．．．．．","talkname0", 1);
-			Talk(0,"没有人了吗？","talkname0", 1);
-			Talk(70,"如果还没有人要出来向这位少侠挑战，那麽这武功天下第一之名，武林盟主之位，就由这位少侠夺得．","talkname0", 0);
-			Talk(70,"．．．．．．．．．．．．．．．．．．","talkname0", 0);
-			Talk(70,"好，恭喜少侠，这武林盟主之位就由少侠获得，而这把”武林神杖”也由你保管．","talkname0", 0);
-			Talk(12,"恭喜少侠！","talkname0", 0);
-			Talk(64,"小兄弟，恭喜你！","talkname0", 0);
-			Talk(19,"好，今年的武林大会到此已圆满结束，希望明年各位武林同道能再到我华山一游．","talkname0", 0);
-			DarkScence();
-			jyx2_ReplaceSceneObject("","NPC/华山弟子","");
-			jyx2_ReplaceSceneObject("","NPC/battleNPC","");
-			LightScence();
-			Talk(0,"历经千辛万苦，我终于打败群雄，得到这武林盟主之位及神杖．但是”圣堂”在那呢？为什麽没人告诉我，难道大家都不知道．这会儿又有的找了．","talkname0", 1);
-			AddItem(143,1);
+            Dictionary<int, string> heads= new Dictionary<int, string>();
+            heads.Add(8,"唐文亮来领教阁下的高招．");
+            heads.Add(21,"贫尼定闲愿领教阁下高招．");
+            heads.Add(23,"贫道天门领教阁下高招．");
+            heads.Add(31,"小兄弟，我们再来玩玩．");
+            heads.Add(32,"小兄弟，秃笔翁陪你玩玩．");
+            heads.Add(43,"白某愿领教阁下高招．");
+            heads.Add(7,"何太冲来领教阁下的高招．");
+            heads.Add(11,"杨逍技痒，和少侠玩玩．");
+            heads.Add(14,"韦一笑技痒，和少侠玩玩．");
+            heads.Add(20,"莫某再次领教阁下高招．");
+            heads.Add(33,"小兄弟，黑白子向你讨教．");
+            heads.Add(34,"小兄弟，黄钟公向你讨教．");
+            heads.Add(10,"范某技痒，和少侠玩玩．");
+            heads.Add(12,"老朽技痒，和少侠玩玩．");
+            heads.Add(19,"岳某不才，向少侠挑战．");
+            heads.Add(22,"左冷禅愿领教阁下高招．");
+            heads.Add(56,"黄蓉愿领教阁下高招．");
+            heads.Add(68,"丘处机领教阁下高招．");
+            heads.Add(13,"谢某技痒，和少侠玩玩．");
+            heads.Add(55,"郭靖愿领教阁下高招．");
+            heads.Add(62,"老夫领教少侠高招！");
+            heads.Add(67,"裘千仞来领教阁下的高招．");
+            heads.Add(70,"阿弥陀佛，贫道愿向少侠挑战．");
+            heads.Add(71,"洪某拜教！");
+            heads.Add(26,"任某来领教阁下的高招．");
+            heads.Add(57,"少侠的确武功高强，我黄老邪来领教领教．");
+            heads.Add(60,"让我老毒物来会会你．");
+            heads.Add(64,"哇！你又学了这麽多新奇的功夫.来，来，老顽童陪你玩玩．");
+            heads.Add(3,"苗某向少侠讨教．");
+            heads.Add(69,"不错不错，七公我来领教领教．");
+            var ran=new System.Random();
+            var keys=heads.Keys.ToList();
+            var values=heads.Values.ToList();
+            for(int i=0;i<5;i++)
+            {
+                var tempList=new List<int>();
+                for(int i2=0;i2<3;i2++)
+                {
+                    int j=ran.Next(0,6);
+                    while(tempList.Contains(j))
+                    {
+                        j=ran.Next(0,6);
+                    }
+                    tempList.Add(j);
+                    Talk(keys[i*6+j],values[i*6+j],"",0);
+                    if (!TryBattle(102 + i*6+j))
+                    {
+                        Dead();
+                        return;
+                    }
+                }
+                if(i!=4){
+                    Talk(70,"少侠已连战三场，可先休息再战．","talkname0", 0);
+                    RestFight();
+                    DarkScence();
+                    LightScence();
+                }
+            }
+            
+            Talk(0,"接下来换谁？","talkname0", 1);
+            Talk(0,"．．．．．．．．","talkname0", 1);
+            Talk(0,"没有人了吗？","talkname0", 1);
+            Talk(70,"如果还没有人要出来向这位少侠挑战，那麽这武功天下第一之名，武林盟主之位，就由这位少侠夺得．","talkname0", 0);
+            Talk(70,"．．．．．．．．．．．．．．．．．．","talkname0", 0);
+            Talk(70,"好，恭喜少侠，这武林盟主之位就由少侠获得，而这把”武林神杖”也由你保管．","talkname0", 0);
+            Talk(12,"恭喜少侠！","talkname0", 0);
+            Talk(64,"小兄弟，恭喜你！","talkname0", 0);
+            Talk(19,"好，今年的武林大会到此已圆满结束，希望明年各位武林同道能再到我华山一游．","talkname0", 0);
+            DarkScence();
+            jyx2_ReplaceSceneObject("","NPC/华山弟子","");
+            jyx2_ReplaceSceneObject("","NPC/battleNPC","");
+            LightScence();
+            Talk(0,"历经千辛万苦，我终于打败群雄，得到这武林盟主之位及神杖．但是”圣堂”在那呢？为什麽没人告诉我，难道大家都不知道．这会儿又有的找了．","talkname0", 1);
+            AddItem(143,1);
         }
 
         //所有人离队
@@ -837,20 +825,27 @@ namespace Jyx2
         {
             RunInMainThread(() => {
                 Debug.Log("call AllLeave()");
-                Debug.Log(runtime.Team.Count);
-                runtime.Team.ForEach(r => Debug.Log(r.Key));
-                runtime.Team.RemoveAll(role => role.Key != "0");
+                Debug.Log(runtime.GetTeamMembersCount());
+
+                var roleList = runtime.GetTeam().ToList();
+                foreach (var role in roleList)
+                {
+                    if (role.Key != 0)
+                    {
+                        runtime.LeaveTeam(role.Key);
+                    }
+                }
                 Next();
             });
             Wait();
         }
 
-		//判断场景贴图。ModifyEvent里如果p7!=-2时，会更新对应{场景}_{事件}的贴图信息，可以用此方法JudegeScenePic检查对应的贴图信息
+        //判断场景贴图。ModifyEvent里如果p7!=-2时，会更新对应{场景}_{事件}的贴图信息，可以用此方法JudegeScenePic检查对应的贴图信息
         public static bool JudgeScenePic(int scene, int eventId, int pic)
         {
             bool result = false;
             RunInMainThread(() => {
-				//场景ID
+                //场景ID
                 if(scene == -2) //当前场景
                 {
                     scene = LevelMaster.GetCurrentGameMap().Id;
@@ -859,14 +854,14 @@ namespace Jyx2
                 //事件ID
                 if(eventId == -2)
                 {
-					var evt = GameEvent.GetCurrentGameEvent();
+                    var evt = GameEvent.GetCurrentGameEvent();
                     if (evt != null)
                     {
                         eventId = int.Parse(evt.name); //当前事件
-					}
+                    }
                 }
-				var _target=runtime.GetMapPic(scene, eventId);
-				//Debug.LogError(_target);
+                var _target=runtime.GetMapPic(scene, eventId);
+                //Debug.LogError(_target);
                 result = _target==pic;
                 Next();
             });
@@ -907,16 +902,16 @@ namespace Jyx2
             runtime.SetSceneEntraceCondition(sceneId, 0);
         }
 
-		// modify by eaphone at 2021/6/5
+        // modify by eaphone at 2021/6/5
         public static void SetRoleFace(int dir)
         {
-			RunInMainThread(() =>
+            RunInMainThread(() =>
             {
                 var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
-				levelMaster.SetRotation(dir);
-				Next();
+                levelMaster.SetRotation(dir);
+                Next();
             });
-			Wait();
+            Wait();
         }
 
         public static void NPCGetItem(int roleId,int itemId,int count)
@@ -928,20 +923,15 @@ namespace Jyx2
         {
             RunInMainThread(()=>
             {
-                string path = "Assets/BuildSource/sound/e" +
-                    (waveIndex < 10 ? ("0" + waveIndex.ToString()) : waveIndex.ToString()) + ".wav";
-
-                Jyx2ResourceHelper.LoadAsset<AudioClip>(path, clip =>
-                {
-                    AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
-                });
+                string path = "Assets/BuildSource/sound/e" + (waveIndex < 10 ? ("0" + waveIndex.ToString()) : waveIndex.ToString()) + ".wav";
+                AudioManager.PlayClipAtPoint(path, Camera.main.transform.position).Forget();
             });
         }
 
      
         public static bool AskRest()
         {
-            return ShowYesOrNoSelectPanel("是否休息?");
+            return ShowYesOrNoSelectPanel("是否休息?<color=red>（温馨提示：受伤太重或中毒不回复）</color>");
         }
 
         public static void DarkScence()
@@ -967,9 +957,20 @@ namespace Jyx2
         {
             RunInMainThread(() =>
             {
-                foreach (var role in runtime.Team)
+                foreach (var role in runtime.GetTeam())
                 {
-                    role.Recover();
+                    role.Recover(role.Hurt < 33 && role.Poison <= 0);
+                }
+            });
+        }
+
+        public static void RestFight()
+        {
+            RunInMainThread(() =>
+            {
+                foreach (var role in runtime.GetTeam())
+                {
+                    role.Recover(role.Hurt < 50 && role.Poison <= 0);
                 }
             });
         }
@@ -1019,11 +1020,25 @@ namespace Jyx2
 
                 if (count < 0)
                 {
-                    storyEngine.DisplayPopInfo("失去物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //storyEngine.DisplayPopInfo("失去物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //特定位置的翻译【得到物品提示】
+                    //---------------------------------------------------------------------------
+                    storyEngine.DisplayPopInfo("失去物品:".GetContent(nameof(Jyx2LuaBridge)) + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
                 }
                 else
                 {
-                    storyEngine.DisplayPopInfo("得到物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //storyEngine.DisplayPopInfo("得到物品:" + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //特定位置的翻译【得到物品提示】
+                    //---------------------------------------------------------------------------
+                    storyEngine.DisplayPopInfo("得到物品:".GetContent(nameof(Jyx2LuaBridge)) + item.Name + "×" + Math.Abs(count));
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
                 }
 
                 runtime.AddItem(itemId, count);
@@ -1039,7 +1054,7 @@ namespace Jyx2
         public static void AddRepute(int value)
         {
             RunInMainThread(() =>{
-                runtime.Player.Shengwang = HSFrameWork.Common.Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
+                runtime.Player.Shengwang = Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
             /*    storyEngine.DisplayPopInfo("增加声望:" + value);*/
                 Next();
             });
@@ -1049,25 +1064,29 @@ namespace Jyx2
         //韦小宝商店
         public static void WeiShop()
         {
-            RunInMainThread(() =>
+            async void Action()
             {
                 if (LevelMaster.Instance.IsInWorldMap)
                 {
                     storyEngine.DisplayPopInfo("大地图中无法打开商店，需到客栈中使用");
-					return;
-				}
-
-				string mapId = LevelMaster.GetCurrentGameMap().Id.ToString();
-				var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
-                if (!hasData)
-                {
-					storyEngine.DisplayPopInfo($"地图{mapId}没有配置商店，可在excel/JYX2小宝商店.xlsx中查看");
-					return;
+                    Next();
+                    return;
                 }
 
-				Jyx2_UIManager.Instance.ShowUI(nameof(ShopUIPanel), "", new Action(()=>{Next();}));
-            });
-			Wait();
+                string mapId = LevelMaster.GetCurrentGameMap().Id.ToString();
+                var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
+                if (!hasData)
+                {
+                    storyEngine.DisplayPopInfo($"地图{mapId}没有配置商店，可在excel/JYX2小宝商店.xlsx中查看");
+                    Next();
+                    return;
+                }
+
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ShopUIPanel), "", new Action(() => { Next(); }));
+            }
+
+            RunInMainThread(Action);
+            Wait();
         }
 
         public static void AskSoftStar()
@@ -1095,22 +1114,22 @@ namespace Jyx2
             });
             Wait();
         }
-		
-		
-		// add to handle indoor transport object
-		// path: name of destination transform
-		// parent: parent path of destination transform
-		// target: "" mean transport player. otherwise, need the full path of transport object.
-		// eahphone at 2021/6/5
+        
+        
+        // add to handle indoor transport object
+        // path: name of destination transform
+        // parent: parent path of destination transform
+        // target: "" mean transport player. otherwise, need the full path of transport object.
+        // eahphone at 2021/6/5
         public static void jyx2_MovePlayer(string path, string parent="Level/Triggers", string target="")
         {
-			RunInMainThread(() =>
+            RunInMainThread(() =>
             {
                 var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
-				levelMaster.TransportToTransform(parent, path, target);
-				Next();
+                levelMaster.TransportToTransform(parent, path, target);
+                Next();
             });
-			Wait();
+            Wait();
         }
 
         public static void jyx2_CameraFollow(string path)
@@ -1144,15 +1163,15 @@ namespace Jyx2
             jyx2_CameraFollow("Level/Player");
         }
 
-		//fromName:-1, 获取主角当前位置作为起始点
+        //fromName:-1, 获取主角当前位置作为起始点
         public static void jyx2_WalkFromTo(int fromName, int toName) 
         {
             RunInMainThread(() =>
             {
                 var fromObj = GameObject.Find("Level/Player");
-				if(fromName!=-1){
-					fromObj=GameObject.Find($"Level/NavigateObjs/{fromName}");
-				}
+                if(fromName!=-1){
+                    fromObj=GameObject.Find($"Level/NavigateObjs/{fromName}");
+                }
                 var toObj = GameObject.Find($"Level/NavigateObjs/{toName}");
                 if (fromObj == null || toObj == null) 
                 {
@@ -1193,12 +1212,18 @@ namespace Jyx2
         /// 简单模式播放timeline，播放完毕后直接关闭
         /// </summary>
         /// <param name="timelineName"></param>
-        public static void jyx2_PlayTimelineSimple(string timelineName)
+        public static void jyx2_PlayTimelineSimple(string timelineName, bool hidePlayer = false)
         {
             RunInMainThread(() =>
             {
                 var timeLineRoot = GameObject.Find("Timeline");
                 var timeLineObj = timeLineRoot.transform.Find(timelineName);
+
+                if (hidePlayer)
+                {
+                    var player = LevelMaster.Instance.GetPlayer();
+                    player.gameObject.SetActive(false);
+                }
                 
                 if (timeLineObj == null)
                 {
@@ -1212,6 +1237,11 @@ namespace Jyx2
                 GameUtil.CallWithDelay(playableDirector.duration, () =>
                 {
                     timeLineObj.gameObject.SetActive(false);
+                    if (hidePlayer)
+                    {
+                        var player = LevelMaster.Instance.GetPlayer();
+                        player.gameObject.SetActive(true);
+                    }
                 });
             });
         }
@@ -1264,9 +1294,9 @@ namespace Jyx2
                     {
                         if (clonePlayer == null)
                         {
-                            clonePlayer = GameObject.Instantiate(GameRuntimeData.Instance.Player.View.GetAnimator());
+                            clonePlayer = GameObject.Instantiate(Jyx2Player.GetPlayer().m_Animator);
                             clonePlayer.runtimeAnimatorController = null;
-                            GameRuntimeData.Instance.Player.View.gameObject.SetActive(false);
+                            Jyx2Player.GetPlayer().gameObject.SetActive(false);
                         }
 
                         DoPlayTimeline(playableDirector, clonePlayer.gameObject);
@@ -1279,7 +1309,8 @@ namespace Jyx2
                         {
                             if (playableBinding.outputTargetType == typeof(Animator))
                             {
-                                playableDirector.SetGenericBinding(playableBinding.sourceObject, GameRuntimeData.Instance.Player.View.GetAnimator().gameObject);
+                                var bindPlayerObj = Jyx2Player.GetPlayer().m_Animator.gameObject;
+                                playableDirector.SetGenericBinding(playableBinding.sourceObject, bindPlayerObj);
                             }
                         });
                     }
@@ -1337,9 +1368,11 @@ namespace Jyx2
                 playableDiretor.stopped -= TimeLineNext;
                 timeLineObj.gameObject.SetActive(false);
 
-                GameRuntimeData.Instance.Player.View.gameObject.SetActive(true);
-                GameRuntimeData.Instance.Player.View.GetAnimator().transform.localPosition = Vector3.zero;
-                GameRuntimeData.Instance.Player.View.GetAnimator().transform.localRotation = Quaternion.Euler(Vector3.zero);
+                var player = Jyx2Player.GetPlayer();
+                
+                player.gameObject.SetActive(true);
+                player.m_Animator.transform.localPosition = Vector3.zero;
+                player.m_Animator.transform.localRotation = Quaternion.Euler(Vector3.zero);
                 if(clonePlayer != null)
                 {
                     GameObject.Destroy(clonePlayer.gameObject);
@@ -1374,7 +1407,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="rolePath"></param>
         /// <param name="animationControllerPath"></param>
-        public static void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath)
+        public static void jyx2_SwitchRoleAnimation(string rolePath, string animationControllerPath, string scene = "")
         {
             Debug.Log("jyx2_SwitchRoleAnimation called");
 
@@ -1388,7 +1421,7 @@ namespace Jyx2
                     return;
                 }
 
-                level.ReplaceNpcAnimatorController("", rolePath, animationControllerPath);
+                level.ReplaceNpcAnimatorController(scene, rolePath, animationControllerPath);
                 Next();
             });
             Wait();
@@ -1402,45 +1435,73 @@ namespace Jyx2
                 var objs = GameObject.FindObjectsOfType<FixWithGameRuntime>();
                 if (objs != null)
                 {
-					foreach(var obj in objs)
-					{
-						if(key==obj.Flag)
-							obj.Reload();
-						else continue;
-					}
+                    foreach(var obj in objs)
+                    {
+                        if(key==obj.Flag)
+                            obj.Reload();
+                        else continue;
+                    }
                 }
-				LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
-				level.RefreshSceneObjects();
+                LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
+                level.RefreshSceneObjects();
                 Next();
             });
 
             Wait();
         }
-		
-		public static bool jyx2_CheckBookAndRepute()
-		{
-			if(runtime.Player.Shengwang<200)
-			{
-				return false;
-			}
-			for(var i=144;i<158;i++)
-			{
-				if(!HaveItem(i))
-				{
-					return false;
-				}
-			}
-			return true;
-		}
+        
+        public static bool jyx2_CheckBookAndRepute()
+        {
+            if(runtime.Player.Shengwang<200)
+            {
+                return false;
+            }
+            for(var i=144;i<158;i++)
+            {
+                if(!HaveItem(i))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         public static void jyx2_ShowEndScene()
         {
             DarkScence();
-            RunInMainThread(() => {
-                Jyx2_UIManager.Instance.ShowUI(nameof(TheEnd));
-            });
+
+            async void Action()
+            {
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(TheEnd));
+            }
+
+            RunInMainThread(Action);
             jyx2_Wait(1);
             LightScence();
+        }
+
+        public static void jyx2_SetFlag(string flagKey, string value)
+        {
+            runtime.SetKeyValues(GetCustomerFlagPrefix(flagKey), value);
+        }
+
+        public static string jyx2_GetFlag(string flagKey)
+        {
+            if(runtime.KeyExist(GetCustomerFlagPrefix(flagKey)))
+                return runtime.GetKeyValues(GetCustomerFlagPrefix(flagKey));
+            return "";
+        }
+        
+        public static void jyx2_SetFlagInt(string flagKey, int value)
+        {
+            runtime.SetKeyValues(GetCustomerFlagPrefix(flagKey), value.ToString());
+        }
+
+        public static int jyx2_GetFlagInt(string flagKey)
+        {
+            if(runtime.KeyExist(GetCustomerFlagPrefix(flagKey)))
+                return int.Parse(runtime.GetKeyValues(GetCustomerFlagPrefix(flagKey)));
+            return 0;
         }
 
         #endregion
@@ -1448,6 +1509,11 @@ namespace Jyx2
 
         #region private
 
+        private static string GetCustomerFlagPrefix(string flag)
+        {
+            return "CustomerFlag_" + flag;
+        }
+        
         private static void RunInMainThread(Action run)
         {
             Loom.QueueOnMainThread(_ =>
@@ -1476,17 +1542,19 @@ namespace Jyx2
 
         private static bool ShowYesOrNoSelectPanel(string selectMessage)
         {
-            RunInMainThread(() =>
+            async void Action()
             {
-                List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+                List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
                 storyEngine.BlockPlayerControl = true;
-                Jyx2_UIManager.Instance.ShowUI(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selectionContent, new Action<int>((index) =>
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selectionContent, new Action<int>((index) =>
                 {
                     _selectResult = index;
                     storyEngine.BlockPlayerControl = false;
                     Next();
                 }));
-            });
+            }
+
+            RunInMainThread(Action);
 
             Wait();
             return _selectResult == 0;
@@ -1498,10 +1566,10 @@ namespace Jyx2
             RunInMainThread(() =>
             {
                 var role = runtime.GetRoleInTeam(roleId);
-				if(role == null)
-				{
-					role = runtime.GetRole(roleId);
-				}
+                if(role == null)
+                {
+                    role = runtime.GetRole(roleId);
+                }
                 if (role == null)
                 {
                     Debug.LogError("调用了不存在的role，roleid=" + roleId);

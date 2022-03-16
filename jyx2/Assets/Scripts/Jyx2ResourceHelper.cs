@@ -8,13 +8,19 @@
  * 金庸老先生千古！
  */
 
-using HSFrameWork.Common;
+
 using Jyx2;
 using Lean.Pool;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Jyx2.MOD;
+using Jyx2.Middleware;
+using Jyx2Configs;
+using ProtoBuf;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -35,82 +41,70 @@ namespace Jyx2
             image.sprite = await task;
             image.gameObject.SetActive(true);
         }
-        
-        public static void LoadAsyncForget(this Image image, AssetReference reference)
-        {
-            LoadAsync(image, reference).Forget();
-        }
-    
-        public static async UniTask LoadAsync(this Image image, AssetReference reference)
-        {
-            image.gameObject.SetActive(false);
-            image.sprite = await LoadSprite(reference);
-            image.gameObject.SetActive(true);
-        }
-        
-        public static async UniTask<Sprite> LoadSprite(AssetReference refernce)
-        {
-            //注：不Release的话，Addressable会进行缓存
-            //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/
-
-            return await Addressables.LoadAssetAsync<Sprite>(refernce);
-        }
     }
 }
 
 public static class Jyx2ResourceHelper
 {
-    private static Dictionary<string, GameObject> cachedPrefabs;
-
+    private static bool _isInited = false;
+    
     public static async Task Init()
     {
         //已经初始化过了
-        if (cachedPrefabs != null)
+        if (_isInited)
         {
             return;
         }
 
-        //所有需要预加载的资源
-        var handler = await Addressables.LoadAssetAsync<TextAsset>("Assets/BuildSource/PreCachedPrefabs.txt").Task;
+        _isInited = true;
         
-        cachedPrefabs = new Dictionary<string, GameObject>();
+#if UNITY_EDITOR
+        if (File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"))) ;
+            File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
+        MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
+        MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
+#endif
 
-        foreach (var path in handler.text.Split('\n'))
+        await MODLoader.Init();
+        
+        //全局配置表
+        var t = await MODLoader.LoadAsset<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
+        if (t != null)
         {
-            if (string.IsNullOrEmpty(path)) continue;
-
-            var p = path.Replace("\r", "");
-            var h = Addressables.LoadAssetAsync<GameObject>(p).Task;
-            await h;
-            if (h.Result != null)
-            {
-                cachedPrefabs[p] = h.Result;
-                Debug.Log("cached prefab:" + p);
-            }
+            GlobalAssetConfig.Instance = t;
+            t.OnLoad();
         }
 
         //技能池
-        var task = await Addressables.LoadAssetsAsync<Jyx2SkillDisplayAsset>("skills", null);
+        var overridePaths = await MODLoader.LoadOverrideList("Assets/BuildSource/Skills");
+        var task = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
         if (task != null)
         {
             Jyx2SkillDisplayAsset.All = task;
         }
 
-        //全局配置表
-        var t = await Addressables.LoadAssetAsync<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
-        if (t != null)
-        {
-            GlobalAssetConfig.Instance = t;
-        }
+        //基础配置表
+        await GameConfigDatabase.Instance.Init();
+
+        //lua
+        await LuaManager.InitLuaMapper();
+        LuaManager.Init();
     }
 
     public static GameObject GetCachedPrefab(string path)
     {
-        if (cachedPrefabs.ContainsKey(path))
-            return cachedPrefabs[path];
-
-        Debug.LogError($"载入缓存的Prefab失败：{path}(是否没写入Assets/BuildSource/PreCachedPrefabs.txt?)");
-
+        if(GlobalAssetConfig.Instance.CachePrefabDict.TryGetValue(path, out var prefab))
+        {
+            return prefab;
+        }
+        
+        Debug.LogError($"载入缓存的Prefab失败：{path}(是否没填入GlobalAssetConfig.CachedPrefabs?)");
         return null;
     }
 
@@ -118,48 +112,28 @@ public static class Jyx2ResourceHelper
     {
         var obj = GetCachedPrefab(path);
         return Object.Instantiate(obj);
-        //return LeanPool.Spawn(obj);
     }
 
     public static void ReleasePrefabInstance(GameObject obj)
     {
         Object.Destroy(obj);
-        //LeanPool.Despawn(obj);
     }
 
     [Obsolete("待修改为tilemap")]
-    public static void GetSceneCoordDataSet(string sceneName, Action<SceneCoordDataSet> callback)
+    public static async UniTask<SceneCoordDataSet> GetSceneCoordDataSet(string sceneName)
     {
         string path = $"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes";
-        Addressables.LoadAssetAsync<TextAsset>(path).Completed += r =>
-        {
-            if (r.Result == null)
-                callback(null);
-            var obj = r.Result.bytes.Deserialize<SceneCoordDataSet>();
-            callback(obj);
-        };
+        var result = await MODLoader.LoadAsset<TextAsset>(path);
+        using var memory = new MemoryStream(result.bytes);
+        return Serializer.Deserialize<SceneCoordDataSet>(memory);
     }
 
     [Obsolete("待修改为tilemap")]
-    public static void GetBattleboxDataset(string fullPath, Action<BattleboxDataset> callback)
+    public static async UniTask<BattleboxDataset> GetBattleboxDataset(string fullPath)
     {
-        Addressables.LoadAssetAsync<TextAsset>(fullPath).Completed += r =>
-        {
-            if (r.Result == null)
-                callback(null);
-            var obj = r.Result.bytes.Deserialize<BattleboxDataset>();
-            callback(obj);
-        };
-    }
-
-    public static void SpawnPrefab(string path, Action<GameObject> callback)
-    {
-        Addressables.InstantiateAsync(path).Completed += r => { callback(r.Result); };
-    }
-
-    public static void LoadAsset<T>(string path, Action<T> callback)
-    {
-        Addressables.LoadAssetAsync<T>(path).Completed += r => { callback(r.Result); };
+        var result = await MODLoader.LoadAsset<TextAsset>(fullPath);
+        using var memory = new MemoryStream(result.bytes);
+        return Serializer.Deserialize<BattleboxDataset>(memory);
     }
 
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)
@@ -171,6 +145,23 @@ public static class Jyx2ResourceHelper
             return null;
         }
 
-        return await Addressables.LoadAssetAsync<Jyx2NodeGraph>(url).Task;
+        return await MODLoader.LoadAsset<Jyx2NodeGraph>(url);
+    }
+    
+    //根据Addressable的Ref查找他实际存储的路径
+    public static string GetAssetRefAddress(AssetReference reference, Type type)
+    {
+        foreach (var locator in Addressables.ResourceLocators)
+        {
+            if (locator.Locate(reference.AssetGUID, type, out var locs))
+            {
+                foreach (var loc in locs)
+                {
+                    return loc.ToString();
+                }
+            }
+        }
+
+        return "";
     }
 }

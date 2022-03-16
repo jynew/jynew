@@ -7,24 +7,17 @@
  *
  * 金庸老先生千古！
  */
-using System;
+
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
-using GLib;
-using HanSquirrel.ResourceManager;
-using HSFrameWork.ConfigTable;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Debug = UnityEngine.Debug;
+using UnityEngine.AddressableAssets;
+using Cysharp.Threading.Tasks;
+using Jyx2.MOD;
 
 namespace Jyx2
 {
@@ -32,9 +25,18 @@ namespace Jyx2
     public class ModelAsset : ScriptableObject
     {
         [BoxGroup("数据", false)]
+        public AssetReferenceT<GameObject> View;
+        [BoxGroup("数据")] [Header("模型")]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         [OnValueChanged("AutoBindModelData")]
         public GameObject m_View;
+
+        public async UniTask<GameObject> GetView()
+        {
+            if (View == null || string.IsNullOrEmpty(View.AssetGUID)) return null;
+            
+            return await MODLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
+        }
 
         [BoxGroup("数据")] [Header("剑")] [SerializeReference]
         public SwordPart m_SwordWeapon;
@@ -71,14 +73,14 @@ namespace Jyx2
                 OpenSceneMode.Additive);
 
             var gameObjects = scene.GetRootGameObjects();
-            gameObjects.ForEachG(delegate(GameObject o)
+            foreach (var o in gameObjects)
             {
                 if (o.name == m_View.name)
                 {
                     DestroyImmediate(o);
                 }
-            });
-
+            }
+            
             viewWithWeapon = (GameObject) PrefabUtility.InstantiatePrefab(m_View, scene);
             viewWithWeapon.transform.SetAsLastSibling();
             PrefabUtility.UnpackPrefabInstance(viewWithWeapon, PrefabUnpackMode.Completely,

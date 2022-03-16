@@ -36,8 +36,8 @@ public class TheEnd : Jyx2_UIBase
         }else if (phase == 2)
         {
             Vector3 p = image.transform.position;
-            p[1]-=1.5f;
-            if (p[1] > UnityEngine.Screen.height-i[1]) image.transform.position = p;
+            p[1]+=1.5f;
+            if (p[1] < UnityEngine.Screen.height+i[1]) image.transform.position = p;
             else phase = 3;
         }else if (phase == 3)
         {

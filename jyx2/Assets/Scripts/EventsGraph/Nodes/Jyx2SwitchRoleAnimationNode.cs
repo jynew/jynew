@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using HanSquirrel.ResourceManager;
-using HSFrameWork.ConfigTable;
+
+
 using Jyx2;
 using UnityEngine;
 using XNode;
@@ -19,10 +19,12 @@ public class Jyx2SwitchRoleAnimationNode : Jyx2SimpleNode
     public string rolePath = "";
     [Header("controller路径")]
     public string animationControllerPath;
+    [Header("场景id")]
+    public string sceneId;
     
 	protected override void DoExecute()
 
 	{
-		Jyx2LuaBridge.jyx2_SwitchRoleAnimation(rolePath, animationControllerPath);
+		Jyx2LuaBridge.jyx2_SwitchRoleAnimation(rolePath, animationControllerPath, sceneId);
 	}
 }

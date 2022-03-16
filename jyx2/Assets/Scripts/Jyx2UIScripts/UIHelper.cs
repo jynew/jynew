@@ -7,11 +7,12 @@
  *
  * 金庸老先生千古！
  */
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using i18n.TranslatorDef;
 using Jyx2Configs;
 using UnityEngine;
 
@@ -65,6 +66,8 @@ public class UIHelper
             result.Add(23, item.AttackPoison);
         if (item.ChangePoisonLevel != 0)//中毒解毒
             result.Add(26, item.ChangePoisonLevel);
+        if (item.AddTili != 0) //体力
+            result.Add(14, item.AddTili);
 
 
         return result;
@@ -106,6 +109,20 @@ public class UIHelper
 
     }
 
+    //使用人
+    static string GetItemUser(Jyx2ConfigItem item)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        RoleInstance user = GameRuntimeData.Instance.GetRoleInTeam(GameRuntimeData.Instance.GetItemUser(item.Id));
+        if (user != null)
+        {
+            sb.Append($"{user.Name}\n");
+        }
+
+        return sb.ToString();
+    }
+
     //效果
     static string GetEffectText(Jyx2ConfigItem item)
     {
@@ -129,14 +146,14 @@ public class UIHelper
         StringBuilder sb = new StringBuilder();
         if (item.NeedExp > 0)
         {
-            sb.Append($"经验:  {item.NeedExp}\n");
+            //sb.Append($"经验:  {item.NeedExp}\n");
         }
         foreach (var effect in effects)
         {
             if (!GameConst.ProItemDic.ContainsKey(effect.Key.ToString()))
                 continue;
             PropertyItem pro = GameConst.ProItemDic[effect.Key.ToString()];
-			sb.Append($"{pro.Name}:  {effect.Value.ToString()}\n");
+            sb.Append($"{pro.Name}:  {effect.Value.ToString()}\n");
         }
         return sb.ToString();
     }
@@ -165,7 +182,7 @@ public class UIHelper
         StringBuilder sb = new StringBuilder();
         if (item.GenerateItemNeedExp > 0)
         {
-            sb.Append($"练出物品需经验:  {item.GenerateItemNeedExp}\n");
+           /* sb.Append($"练出物品需经验:  {item.GenerateItemNeedExp}\n");*/
         }
         
         if (item.GenerateItemNeedCost != null)
@@ -180,13 +197,27 @@ public class UIHelper
     {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.Append($"<size=35><color=#FFDB00>{item.Name}</color></size>\n");
-		strBuilder.Append($"{item.Desc}");
+        strBuilder.Append($"{item.Desc}");
 
+        string user = GetItemUser(item);
+        if (!string.IsNullOrEmpty(user))
+        {
+            strBuilder.Append($"\n\n");
+            strBuilder.Append("<size=28><color=#FFDB00>使用人</color></size>\n");
+            strBuilder.Append(user);
+        }
         string effect = GetEffectText(item);
         if (!string.IsNullOrEmpty(effect))
         {
             strBuilder.Append($"\n\n");
-            strBuilder.Append("<size=28><color=#FFDB00>效果</color></size>\n");
+            //---------------------------------------------------------------------------
+            //strBuilder.Append("<size=28><color=#FFDB00>效果</color></size>\n");
+            //---------------------------------------------------------------------------
+            //特定位置的翻译【MainMenu右下角当前版本的翻译】
+            //---------------------------------------------------------------------------
+            strBuilder.Append("<size=28><color=#FFDB00>效果</color></size>\n".GetContent(nameof(UIHelper)));
+            //---------------------------------------------------------------------------
+            //---------------------------------------------------------------------------
             strBuilder.Append(effect);
         }
 

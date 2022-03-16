@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Jyx2;
+using Jyx2.MOD;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Jyx2Configs
@@ -54,7 +56,8 @@ namespace Jyx2Configs
             
             if (_sprite == null)
             {
-                _sprite = await Addressables.LoadAssetAsync<Sprite>(Pic).Task;
+                var path = Jyx2ResourceHelper.GetAssetRefAddress(Pic, typeof(Texture2D)); //先转换到URL
+                _sprite = await MODLoader.LoadAsset<Sprite>(path); //在MOD列表中过滤
                 
                 //下面代码会可能重入导致出错：
                 //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/
@@ -97,8 +100,8 @@ namespace Jyx2Configs
         [BoxGroup(CGroup2)][LabelText("开场等级")]
         public int Level;
         
-        /*[BoxGroup(CGroup2)][LabelText("经验")]
-        public int Exp;*/
+        [BoxGroup(CGroup2)][LabelText("经验")]
+        public int Exp;
 
         [BoxGroup(CGroup2)][LabelText("内力性质")][EnumToggleButtons]
         public MpTypeEnum MpType; //内力性质 ,0:阴 1:阳 2:调和
@@ -170,7 +173,13 @@ namespace Jyx2Configs
 
         public override async UniTask WarmUp()
         {
-            GetPic().Forget();
+            //GetPic().Forget();
+            
+            //清理缓存
+            if (Application.isEditor)
+            {
+                _sprite = null;
+            }
         }
     }
 

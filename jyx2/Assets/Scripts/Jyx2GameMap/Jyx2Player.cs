@@ -11,9 +11,14 @@ using Jyx2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Animancer;
+using Cysharp.Threading.Tasks;
+using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using XLua;
 
 public class Jyx2Player : MonoBehaviour
 {
@@ -27,14 +32,8 @@ public class Jyx2Player : MonoBehaviour
     /// </summary>
     const float PLAYER_INTERACTIVE_ANGLE = 120f;
 
-    /// <summary>
-    /// 是否激活交互选项
-    /// </summary>
-    [HideInInspector]
-    public bool EnableInteractive { get; set; }
-
     private bool canControl = true;
-    
+
     public static Jyx2Player GetPlayer()
     {
         if (LevelMaster.Instance == null)
@@ -42,6 +41,21 @@ public class Jyx2Player : MonoBehaviour
         
         return LevelMaster.Instance.GetPlayer();
     }
+
+    public async UniTask OnSceneLoad()
+    {
+        //transform.rotation = Quaternion.Euler(Vector3.zero);
+        
+        //fix bug:无法正确触发开场的剧情，似乎异步加载scene的时候，触发器碰撞没有被激活
+        var c = GetComponent<Collider>();
+        await UniTask.WaitForEndOfFrame();
+        c.enabled = false;
+        await UniTask.WaitForEndOfFrame();
+        c.enabled = true;
+    }
+
+    public HybridAnimancerComponent m_Animancer;
+    public Animator m_Animator;
 
     
     public bool IsOnBoat;
@@ -132,7 +146,7 @@ public class Jyx2Player : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _boat = FindObjectOfType<Jyx2Boat>();
 
-        EnableInteractive = true;
+        _gameEventLayerMask = LayerMask.GetMask("GameEvent");
     }
 
     void Start()
@@ -162,25 +176,83 @@ public class Jyx2Player : MonoBehaviour
 
         if (!canControl)
             return;
+
+        //BigMapIdleJudge();
         
         //判断交互范围
         Debug.DrawRay(transform.position, transform.forward, Color.yellow);
-        
-        //获得当前可以触发的交互物体
-        var gameEvent = DetectInteractiveGameEvent();
-        if (gameEvent == null)
+
+        if (evtManager != null)
         {
-            evtManager.OnExitAllEvents();
-        }
-        else
-        {
-            //Debug.Log("find interactive trigger:" + gameEvent.name);
-            evtManager.OnTriggerEvent(gameEvent);
+            //获得当前可以触发的交互物体
+            var gameEvent = DetectInteractiveGameEvent();
+            if (gameEvent == null)
+            {
+                evtManager.OnExitAllEvents();
+            }
+            else
+            {
+                //Debug.Log("find interactive trigger:" + gameEvent.name);
+                evtManager.OnTriggerEvent(gameEvent);
+            }
         }
     }
+
+
+    private float _bigmapIdleTimeCount = 0;
+    private const float BIG_MAP_IDLE_TIME = 5f;
+    private bool _playingbigMapIdle = false;
+
+    
+    private HybridAnimancerComponent GetPlayerAnimancer()
+    {
+        return m_Animancer;
+    }
+    
+    //在大地图上判断是否需要展示待机动作
+    void BigMapIdleJudge()
+    {
+        if(_boat == null) return; //暂实现：判断是否是大地图，有船才是大地图
+
+        var animator = m_Animator;
+        
+        if (_playingbigMapIdle)
+        {
+            //判断是否有移动速度，有的话立刻打断目前IDLE动作
+            if (animator!=null && animator.GetFloat("speed") > 0)
+            {
+                var animancer = GetPlayerAnimancer();
+                animancer.Stop();
+                animancer.PlayController();
+                _playingbigMapIdle = false;
+            }
+            return;
+        }
+
+        //一旦开始移动，则重新计时
+        if (animator!=null && animator.GetFloat("speed") > 0)
+        {
+            _bigmapIdleTimeCount = 0;
+            return;
+        }
+        
+        _bigmapIdleTimeCount += Time.deltaTime;
+        if (_bigmapIdleTimeCount > BIG_MAP_IDLE_TIME)
+        {
+            //展示IDLE动作
+            _bigmapIdleTimeCount = 0;
+            var animancer = GetPlayerAnimancer();
+            var clip = Jyx2.Middleware.Tools.GetRandomElement(GlobalAssetConfig.Instance.bigMapIdleClips);
+            animancer.Play(clip, 0.25f);
+            _playingbigMapIdle = true;
+        }
+    }
+    
     #region 事件交互
     
     private Collider[] targets = new Collider[10];
+
+    private int _gameEventLayerMask = -1;
     
     /// <summary>
     /// 在交互视野范围内寻找第一个可被交互物体
@@ -188,7 +260,7 @@ public class Jyx2Player : MonoBehaviour
     /// <returns></returns>
     GameEvent DetectInteractiveGameEvent()
     {
-        int count = Physics.OverlapSphereNonAlloc(transform.position, PLAYER_INTERACTIVE_RANGE, targets, LayerMask.GetMask("GameEvent"));
+        int count = Physics.OverlapSphereNonAlloc(transform.position, PLAYER_INTERACTIVE_RANGE, targets, _gameEventLayerMask);
         //添加
         for (int i = 0; i < count; i++)
         {
@@ -206,7 +278,6 @@ public class Jyx2Player : MonoBehaviour
 
     bool CanSee(Collider target)
     {
-
         //判断是否在视野角度内
         var isInViewField = Vector3.Angle(transform.forward, target.transform.position - transform.position) <= PLAYER_INTERACTIVE_ANGLE / 2;
         if(isInViewField) {
@@ -247,7 +318,7 @@ public class Jyx2Player : MonoBehaviour
 
     bool SetInteractiveGameEvent(Collider c)
     {
-        var evt = c.GetComponent<GameEvent>();
+        var evt = c.GetComponent<GameEvent>(); 
         if (evt == null)
             return false;
 
@@ -266,42 +337,48 @@ public class Jyx2Player : MonoBehaviour
 
 
     #endregion
+    
     //保存世界信息
     public void RecordWorldInfo()
     {
         var runtime = GameRuntimeData.Instance;
-        runtime.WorldPosition = UnityTools.Vector3ToString(this.transform.position);
-		runtime.WorldRotation = UnityTools.QuaternionToString(this.transform.rotation);
-        runtime.BoatWorldPos = UnityTools.Vector3ToString(_boat.transform.position);
-        runtime.BoatRotate = UnityTools.QuaternionToString(_boat.transform.rotation);
-        runtime.OnBoat = IsOnBoat ? 1 : 0;
+
+        if (runtime.WorldData == null)
+        {
+            runtime.WorldData = new WorldMapSaveData();
+        }
+
+        WorldMapSaveData worldData = runtime.WorldData;
+        worldData.WorldPosition = this.transform.position;
+        worldData.WorldRotation = this.transform.rotation;
+        worldData.BoatWorldPos = _boat.transform.position;
+        worldData.BoatRotate = _boat.transform.rotation;
+        worldData.OnBoat = IsOnBoat ? 1 : 0;
     }
 
     public void LoadWorldInfo()
     {
         var runtime = GameRuntimeData.Instance;
-        var pos = UnityTools.StringToVector3(runtime.WorldPosition); //大地图读取当前位置
-        PlayerSpawnAt(pos,UnityTools.StringToQuaternion(runtime.WorldRotation));
+        if (runtime.WorldData == null) return;
+        
+        PlayerSpawnAt(runtime.WorldData.WorldPosition, runtime.WorldData.WorldRotation);
 
-        if (!string.IsNullOrEmpty(runtime.BoatWorldPos))
+        LoadBoat();
+
+        if (runtime.WorldData.OnBoat == 1)
         {
-            LoadBoat();
-
-            if (runtime.OnBoat == 1)
-            {
-                _boat.GetInBoat();
-            }
+            _boat.GetInBoat();
         }
     }
 
     public void LoadBoat()
     {
         var runtime = GameRuntimeData.Instance;
-        if (string.IsNullOrEmpty(runtime.BoatWorldPos))
-            return;
-
-        _boat.transform.position = UnityTools.StringToVector3(runtime.BoatWorldPos);
-        _boat.transform.rotation = UnityTools.StringToQuaternion(runtime.BoatRotate);
+        if (runtime.WorldData == null)
+            return; //首次进入
+        
+        _boat.transform.position = runtime.WorldData.BoatWorldPos;
+        _boat.transform.rotation = runtime.WorldData.BoatRotate;
     }
 
     public Vector3 GetBoatPosition()

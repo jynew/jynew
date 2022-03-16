@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using DG.DemiLib;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using Jyx2Editor;
 using MK.Toon;

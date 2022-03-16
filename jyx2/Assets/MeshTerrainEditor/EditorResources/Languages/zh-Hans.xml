@@ -1,0 +1,450 @@
+<StringTable>
+  <Creator>MTE创建工具</Creator>
+  <MeshSize>模型大小</MeshSize>
+  <SplatTexture>溅斑(Splat)贴图</SplatTexture>
+	<NormalMap>法线贴图</NormalMap>
+	<ShaderType>Shader类型</ShaderType>
+  <CreateMultipleCopies>创建多个副本</CreateMultipleCopies>
+  <LegacyCreator_Header>旧式MTE地形</LegacyCreator_Header>
+  <LegacyCreator_Description>创建旧式MTE地形：支持2、3、4、5层贴图，基于使用2、3、4、5张独立贴图的shader.</LegacyCreator_Description>
+  <AsAPlane>平面</AsAPlane>
+  <FromAHeightMap>从高度图</FromAHeightMap>
+  <FromACurve>从曲线</FromACurve>
+  <BaseHeight>基础高度</BaseHeight>
+  <TotalHeight>总高度</TotalHeight>
+  <MTEConverter>MTE转换器</MTEConverter>
+  <MTEConverter_Header>MTE转换器</MTEConverter_Header>
+  <UnityTerrainToMTEMesh_Header>Unity地形 → MTE地形</UnityTerrainToMTEMesh_Header>
+  <UnityTerrainToMTEMesh_Description>将Unity地形转换为可被MTE编辑的地形模型</UnityTerrainToMTEMesh_Description>
+  <MeshToMTEMesh_Header>常规模型 → MTE地形</MeshToMTEMesh_Header>
+  <MeshToMTEMesh_Description>将常规模型转换为可被MTE编辑的地形模型</MeshToMTEMesh_Description>
+  <Name>名称</Name>
+  <KeepMeshVertex>使用原模型顶点</KeepMeshVertex>
+  <Info_KeepMeshVertex>转换得到的模型会使用原模型的顶点位置。</Info_KeepMeshVertex>
+  <Info_NotKeepMeshVertex>转换得到的模型会使用均匀平铺的顶点位置，顶点高度从模型取样。</Info_NotKeepMeshVertex>
+  <KeepMeshUV>使用原模型UV</KeepMeshUV>
+  <Info_KeepMeshUV>转换得到的模型会使用原模型UV.</Info_KeepMeshUV>
+  <Info_NotKeepMeshUV>转换得到的模型会使用均匀平铺的UV.</Info_NotKeepMeshUV>
+  <KeepMeshNormal>使用原模型法线</KeepMeshNormal>
+  <Info_KeepMeshNormal>转换得到的模型会使用原模型的法线。（暂时不支持obj格式。）
+注意：请到设置中关闭“保存模型时重新计算法线”选项，从而在保存模型时继续保持原始模型法线。</Info_KeepMeshNormal>
+  <Info_NotKeepMeshNormal>转换得到的模型会使用平滑过的法线。</Info_NotKeepMeshNormal>
+  <CreatePrefab>创建预置</CreatePrefab>
+  <SelectOutputDir>选择输出文件夹</SelectOutputDir>
+  <Warning_OutputDirContainsNameFolder>输出目录中包含相同名称的文件夹。请用不同的名称或换个目录。</Warning_OutputDirContainsNameFolder>
+  <Textures>贴图</Textures>
+  <Vertexes>顶点</Vertexes>
+  <SplatTextureCount>层贴图数量</SplatTextureCount>
+  <WeightMapSize>权重图大小</WeightMapSize>
+  <MeshOnly>只生成模型</MeshOnly>
+	<Info_TerrainConverter_MeshOnly>地形会被转换为使用默认材质的模型。
+转换后溅斑层贴图不会被保留。</Info_TerrainConverter_MeshOnly>
+	<Info_TerrainConverter_NotMeshOnly>地形会被转换为使用MTE shader的材质的MTE可编辑模型。
+转换后溅斑层贴图会被保留。</Info_TerrainConverter_NotMeshOnly>
+  <KeepLightmapping>保留光照图数据</KeepLightmapping>
+  <Tooltip_KeepLightmapping>“保留光照图数据”和“分割"、"文件格式：*.obj"不兼容</Tooltip_KeepLightmapping>
+  <ExportTrees>输出树</ExportTrees>
+  <BeginCovert>开始转换</BeginCovert>
+	<Error_ControlTextureResolutionIsNotAMultipleOfNumberOfCopies>控制图大小不能被切分数整除，请输入可被整除的切分数量。</Error_ControlTextureResolutionIsNotAMultipleOfNumberOfCopies>
+	<Error_Conversion_Failed>转换失败</Error_Conversion_Failed>
+  <Warning_GameObjectNotSelected>没有选中对象。</Warning_GameObjectNotSelected>
+  <Warning_SelectedGameObjectNotActive>选中的对象没有激活（active）。</Warning_SelectedGameObjectNotActive>
+  <Warning_SelectedGameObjectNoMeshFilter>选中的对象没有MeshFilter组件。</Warning_SelectedGameObjectNoMeshFilter>
+  <Warning_SelectedGameObjectNoMesh>选中的对象的MeshFilter组件没有有效的Mesh.</Warning_SelectedGameObjectNoMesh>
+  <MTEEditor>MTE编辑器</MTEEditor>
+  <MTEEditor_Title>MTE编辑器</MTEEditor_Title>
+  <Info_DisabledMTEWhenCameraSelected>选中了摄像机，临时禁用了MTE编辑器。</Info_DisabledMTEWhenCameraSelected>
+  <Warning_CannotFindMeshTerrain>找不到符合指定layer和tag的模型。请确保待编辑的模型与MTE编辑器有相同的layer和tag，然后点击筛选器刷新按钮载入它们。</Warning_CannotFindMeshTerrain>
+  <Warning_TargetScaled>目标 {0} 被缩放了： 实际绘制的区域可能会和笔刷覆盖的区域不同，请重置缩放为(1,1,1).</Warning_TargetScaled>
+  <Error_NoEditorLoaded>无法加载编辑器，这个问题很有可能是您的项目代码中有编译错误导致。请先修复它们，否则MTE无法正常工作。</Error_NoEditorLoaded>
+  <GameObjectsPassedTheFilterFormat>以下{0}个对象通过了筛选：</GameObjectsPassedTheFilterFormat>
+  <Info_MakeSureOnlyMeshTerrainsPassedTheFilter>请确保只有你想要编辑的MTE模型通过了筛选。</Info_MakeSureOnlyMeshTerrainsPassedTheFilter>
+  <RaiseLower_Header>提升/降低高度</RaiseLower_Header>
+  <RaiseLower_Description>拖动鼠标绘制，按空格键来切换上升和下降</RaiseLower_Description>
+  <Falloff>衰减</Falloff>
+  <PaintHeight_Header>绘制高度</PaintHeight_Header>
+  <PaintHeight_Description>按住Ctrl对高度取样</PaintHeight_Description>
+  <SmoothHeight_Header>平滑高度</SmoothHeight_Header>
+  <SmoothHeight_Description>点击、拖动鼠标来平滑</SmoothHeight_Description>
+  <SplatPainter_Header>绘制地形纹理</SplatPainter_Header>
+  <SplatPainter_Description>选择贴图，点击、拖动鼠标绘制</SplatPainter_Description>
+  <SplatPainter_Mode_Selected>单个选中</SplatPainter_Mode_Selected>
+  <SplatPainter_Mode_SelectedDescription>在选中的MTE地表上绘制贴图，支持自定义UV，忽略筛选器。</SplatPainter_Mode_SelectedDescription>
+  <SplatPainter_Mode_Filtered>筛选多个</SplatPainter_Mode_Filtered>
+  <SplatPainter_Mode_FilteredDescription>在所有符合筛选器tag和layer的MTE地表上绘制贴图，不支持自定义UV.</SplatPainter_Mode_FilteredDescription>
+  <Info_SplatPainter_NoSplatTextureFound>没有在通过筛选的编辑目标中找到贴图</Info_SplatPainter_NoSplatTextureFound>
+  <Info_SplatPainter_NoSplatTextureFoundOnSelectedObject>没有在选中的对象上找到贴图</Info_SplatPainter_NoSplatTextureFoundOnSelectedObject>
+  <PaintVertexColor_Header>绘制顶点颜色</PaintVertexColor_Header>
+  <PaintVertexColor_Description>拖动鼠标来绘制</PaintVertexColor_Description>
+  <ColorPresets>颜色预置</ColorPresets>
+  <SingleChannel>单通道绘制</SingleChannel>
+  <Info_ToolDescription_VertexColorFill>用指定颜色填充所有MTE地形</Info_ToolDescription_VertexColorFill>
+  <Info_ToolDescription_VertexColorRandomize>用随机颜色填充所有MTE地形</Info_ToolDescription_VertexColorRandomize>
+  <AttachVertexColor>附加
+顶点颜色</AttachVertexColor>
+  <Info_ToolDescription_AttachVertexColor>将顶点颜色组件附加到选中的对象上</Info_ToolDescription_AttachVertexColor>
+  <PaintGrass_Header>草绘制工具</PaintGrass_Header>
+  <PaintGrass_Description>点击、拖动进行绘制，按住Shift删除草。
+按PageUp/Down撤销/重做。</PaintGrass_Description>
+  <Grasses>草</Grasses>
+  <Warning_NoGrass>没有定义草</Warning_NoGrass>
+  <Warning_NoGrassLoader>请先创建一个GrassLoader对象（详情请参考文档）</Warning_NoGrassLoader>
+  <LoadFromFile>从文件加载...</LoadFromFile>
+  <LoadFromGrassLoader>从GrassLoader加载...</LoadFromGrassLoader>
+  <Info_ToolDescription_SaveLightMapData>保存光照图数据到已加载的grasses.asset.</Info_ToolDescription_SaveLightMapData>
+  <Random>随机</Random>
+  	<CreateGrassLoader>创建
+GrassLoader</CreateGrassLoader>
+	<Info_ToolDescription_CreateGrassLoader>在场景中创建GrassLoader对象，场景中只能同时存在一个GrassLoader对象。</Info_ToolDescription_CreateGrassLoader>
+  <AttachGrassLoader>附加
+GrassLoader</AttachGrassLoader>
+  <Info_ToolDescription_AttachGrassLoader>附加GrassLoader组件到选择的GameObject. 或修复上面的GrassLoader.</Info_ToolDescription_AttachGrassLoader>
+  <BakePointCloudToMesh>点云转模型</BakePointCloudToMesh>
+	<Info_ToolDescription_BakePointCloudToMesh>将绘制的点云转换为实际的草模型，转换后无法继续编辑点云。</Info_ToolDescription_BakePointCloudToMesh>
+	<Warning_NoGrassLoader_CannotBakePointCloudToMesh>不能转换点云为模型：在场景中没找到GrassLoader组件。</Warning_NoGrassLoader_CannotBakePointCloudToMesh>
+	<Info_RemoveGrassLoader>删除GrassLoader组件吗？其点云数据将被保留在asset文件中。</Info_RemoveGrassLoader>
+  <ReloadFromFile>1. 从文件重新加载</ReloadFromFile>
+  <BakeLightmap>2. 烘培光照图</BakeLightmap>
+  <SaveLightmapData>3. 保存光照图数据</SaveLightmapData>
+  <ClearPreviewGrasssesAndSaveScene>4. 清除预览用的草并保存场景</ClearPreviewGrasssesAndSaveScene>
+  <Warning_HowToSaveASceneWithGrasses>请使用4号按钮来保存场景，否则预览用的草会被保存到场景文件(.unity)中！</Warning_HowToSaveASceneWithGrasses>
+  <ShowGrassObjects>显示草对象</ShowGrassObjects>
+  <Info_ReloadedGrassesFromFile>从文件重新加载草完成</Info_ReloadedGrassesFromFile>
+  <Info_LightmapDataSaved>光照图数据保存完成</Info_LightmapDataSaved>
+  <ObjectPainter_Header>物体绘制工具</ObjectPainter_Header>
+  <ObjectPainter_Description>点击、拖动进行绘制，按住Shift删除物体。
+按PageUp/Down撤销/重做。</ObjectPainter_Description>
+  <Container>容器</Container>
+  <PaintFlow_Header>流编辑器</PaintFlow_Header>
+  <PaintFlow_Description>点击进行绘制。
+强度在各个模式下是共享的;
+速度表示绘制的速度。</PaintFlow_Description>
+  <CreateFlowMap>创建
+流动图</CreateFlowMap>
+	<Info_ModeDescription_Fixed>按住Ctrl，滚动滚轮调整方向。</Info_ModeDescription_Fixed>
+	<Info_ModeDescription_Movement>流动的速度和方向由鼠标的移动决定，强度决定最大流速。</Info_ModeDescription_Movement>
+	<Info_ModeDescription_Pinch>按空格键切换聚集和扩散。</Info_ModeDescription_Pinch>
+	<Info_ModeDescription_Vortex>按空格键切换旋转方向。</Info_ModeDescription_Vortex>
+  <Info_ToolDescription_CreateFlowMap>使用当前的方向创建一张flowmap.</Info_ToolDescription_CreateFlowMap>
+  <MeshMisc_Header>模型工具</MeshMisc_Header>
+  <MeshMisc_Description>拖动选择顶点(按住Shift取消选择)
+按回车确认,
+按Esc重新选择</MeshMisc_Description>
+  <Info_ToolDescription_DeleteVertices>删除选中的顶点（只删除相连的面）。含有顶点颜色组件的对象会被忽略。</Info_ToolDescription_DeleteVertices>
+  <Warning_CannotCutHolesOnAVertexColoredMesh>不能在附加有顶点颜色组件的对象上挖洞</Warning_CannotCutHolesOnAVertexColoredMesh>
+  <TextureArrayPainter_Header>绘制地形纹理(数组)-测试版</TextureArrayPainter_Header>
+  <TextureArrayPainter_Description>选择贴图，点击、拖动鼠标绘制</TextureArrayPainter_Description>
+  <Info_TextureArrayPainter_NoSplatTextureFoundOnSelectedObject>没有在选中的对象上找到纹理贴图数组。</Info_TextureArrayPainter_NoSplatTextureFoundOnSelectedObject>
+  <CreateTextureArraySettings>创建纹理
+数组配置</CreateTextureArraySettings>
+  <Info_ToolDescription_CreateTextureArraySettings>创建纹理数组配置，用于创建贴图数组</Info_ToolDescription_CreateTextureArraySettings>
+  <Settings_Header>设置</Settings_Header>
+  <Settings_Description>总体设置</Settings_Description>
+  <CompactGUI>使用紧凑界面</CompactGUI>
+  <AutoRefreshFilter>自动刷新筛选器</AutoRefreshFilter>
+  <ShowAffectedVertex>标识受影响的顶点</ShowAffectedVertex>
+  <FlashAffectedVertex>闪烁</FlashAffectedVertex>
+  <ShowBrushRange>显示笔刷范围</ShowBrushRange>
+  <UseCircularBrush>使用圆形笔刷</UseCircularBrush>
+  <ShowNormal>显示顶点的法线方向</ShowNormal>
+  <BrushUnit>笔刷单位大小</BrushUnit>
+  <UseTileSize>使用格子(瓦片)大小</UseTileSize>
+	<RecalculateNormalsWhenSavingMesh>保存模型时重新计算法线</RecalculateNormalsWhenSavingMesh>
+  <MeshSmoothAngle>模型平滑角度</MeshSmoothAngle>
+  <Language>语言</Language>
+  <AutoSaveMesh>自动保存模型</AutoSaveMesh>
+  <PackTextures>打包贴图</PackTextures>
+  <AlbedoAndSmoothness>颜色&amp;光滑度</AlbedoAndSmoothness>
+  <Info_AlbedoAndSmoothness>颜色(RGB) &amp; 光滑度(A)贴图，只读，只有这张图被用于渲染。
+点击刷新按钮从颜色贴图、光滑度贴图生成。</Info_AlbedoAndSmoothness>
+  <AlbedoTexturePropertyName>颜色(RGB)</AlbedoTexturePropertyName>
+  <Info_AlbedoTexturePropertyName>颜色贴图，只用于生成颜色(RGB) &amp; 光滑度(A) 贴图，不用于渲染。</Info_AlbedoTexturePropertyName>
+  <SmoothnessTexturePropertyName>光滑度(A)</SmoothnessTexturePropertyName>
+  <Info_SmoothnessTexturePropertyName>光滑度贴图，只用于生成颜色(RGB) &amp; 光滑度(A) 贴图，不用于渲染。</Info_SmoothnessTexturePropertyName>
+  <RefreshAlbedoAndSmoothnessTextures>刷新颜色&amp;光滑度贴图</RefreshAlbedoAndSmoothnessTextures>
+  <AddOneLayer>增加一层</AddOneLayer>
+  <EnableNormalIntensity>启用法线强度</EnableNormalIntensity>
+  <EnableSmoothnessTexture>启用光滑度贴图</EnableSmoothnessTexture>
+  <Tooltip_CannotModifySmoothnessTextureText>不能修改单块地形的光滑度贴图状态，请使用根节点（TileContainer）上的界面来修改。</Tooltip_CannotModifySmoothnessTextureText>
+  <ExtraProperties>额外属性</ExtraProperties>
+  <ShowDefaultShaderGUI>显示默认shader界面</ShowDefaultShaderGUI>
+  <TileCount>地形块数</TileCount>
+  <HistoryViewer>MTE历史</HistoryViewer>
+  <MeshStatisticsViewer>Mesh统计数据</MeshStatisticsViewer>
+  <Snapshooter>快照工具</Snapshooter>
+  <Info_ToolDescription_Snapshooter>以MTE地形的顶部为视角，拍照保存为贴图。</Info_ToolDescription_Snapshooter>
+	<Info_Snapshooter_DisableLighting>忽略所有光照，只用纯白色的扁平环境光。MTE地形上的光照图也会被忽略。</Info_Snapshooter_DisableLighting>
+  <BeginBake>开始生成</BeginBake>
+  <MeshTillingBaker>Mesh Tilling Baker</MeshTillingBaker>
+  <Info_ToolDescription_MeshTillingBaker>将统一的贴图平铺数合并到模型的uv0中。注意先备份你的模型！
+需要使用特殊shader来渲染转换后的模型。如果你不清楚细节，请不要使用此工具。</Info_ToolDescription_MeshTillingBaker>
+  <MeshToTerrainConverter>模型转地形工具</MeshToTerrainConverter>
+  <MeshToTerrainConverter_Description>将mesh-terrain转换为Unity3D地形。</MeshToTerrainConverter_Description>
+  <UVEditor>模型UV调整工具</UVEditor>
+  <UVEditor_Description>标准化模型UV；取反模型的u或v贴图坐标。</UVEditor_Description>
+  <PivotEditor>模型基准点(Pivot)调整工具</PivotEditor>
+  <PivotEditor_Description>移动模型的基准点(pivot)。</PivotEditor_Description>
+  <MeshZUpToYUpConverter>Z-up模型转Y-up模型工具</MeshZUpToYUpConverter>
+  <MeshZUpToYUpConverter_Description>通过将模型绕x轴旋转 -90 度，将上方向为z的模型转换为上方向为y的模型。</MeshZUpToYUpConverter_Description>
+  <MeshSaver>模型保存工具</MeshSaver>
+  <MeshSaver_Description>将单个任意格式的模型保存到obj、asset或fbx文件中。</MeshSaver_Description>
+	<ControlTextureCreator>控制图创建工具</ControlTextureCreator>
+	<ControlTextureCreator_Description>创建控制图。
+所创建的控制图会被保存到Assets目录下。</ControlTextureCreator_Description>
+	<TextureAdjuster>贴图调整工具</TextureAdjuster>
+	<TextureAdjuster_Description>调整贴图并保存为副本。
+调整后的贴图会被保存到Assets目录下。
+可以使用此工具调整控制图(SplatAlpha)的尺寸和方向。</TextureAdjuster_Description>
+	<FilterMode>Filter Mode</FilterMode>
+	<TextureChannelPacker>贴图通道打包工具</TextureChannelPacker>
+	<TextureChannelPacker_Description>将多张单通道8bit贴图打包到一张RGBA32bit格式的贴图中</TextureChannelPacker_Description>
+	<TextureSize>贴图大小</TextureSize>
+  <LayerNumber>层数</LayerNumber>
+  <PBRTextureArraySettings_Description>每层的粗糙度、法线和AO贴图合并到一张贴图中： R通道是粗糙度，GB通道是法线，A通道是AO，然后将所有合并的贴图填充到一个纹理数组中；所有Albedo颜色贴图也会被填充到一个纹理数组中。</PBRTextureArraySettings_Description>
+  <Tooltip_TextureArrayMode>只用颜色贴图？或者颜色和法线贴图？或者PBR贴图：颜色（Albedo）、法线、粗糙度和AO贴图？</Tooltip_TextureArrayMode>
+  <Tooltip_TextureModeColor>只用颜色贴图。</Tooltip_TextureModeColor>
+  <Tooltip_TextureModeColorAndNormal>用颜色和法线贴图。</Tooltip_TextureModeColorAndNormal>
+  <Tooltip_TextureModePBR>用PBR贴图，包括颜色（Albedo）、法线、粗糙度和AO贴图。</Tooltip_TextureModePBR>
+  <Info_ColorOrColorNormalTextureArrayLimitation>目前暂时，当使用“Color”或“ColorNormal”贴图数组模式，只有自动和自定义shader类型可用。</Info_ColorOrColorNormalTextureArrayLimitation>
+  <Info>信息</Info>
+  <Warning>提示</Warning>
+  <Error>错误</Error>
+  <Settings>设置</Settings>
+  <Tools>工具</Tools>
+  <Brushes>笔刷</Brushes>
+  <Size>大小</Size>
+  <Number>数量</Number>
+  <Speed>速度</Speed>
+  <Height>高度</Height>
+  <Strength>强度</Strength>
+  <Color>颜色</Color>
+  <Flow>流量</Flow>
+  <Intensity>硬度</Intensity>
+  <Density>密度</Density>
+  <Reduction>减量</Reduction>
+  <VertexCount>顶点数</VertexCount>
+  <TriangleCount>三角形/面数</TriangleCount>
+  <IndexCount>索引数</IndexCount>
+  <CellSize>格子/瓦片大小</CellSize>
+  <TexelDensity>纹理像素密度</TexelDensity>
+  <LayerTextureTilling>层贴图平铺数</LayerTextureTilling>
+  <HeightMap>高度图</HeightMap>
+  <Curve>曲线</Curve>
+  <Rotation>旋转</Rotation>
+  <RepeatCount>重复次数</RepeatCount>
+  <Mesh>Mesh</Mesh>
+  <FileFormat>文件格式</FileFormat>
+  <Material>材质</Material>
+  <MinWidth>最小宽度</MinWidth>
+  <MaxWidth>最大宽度</MaxWidth>
+  <MinHeight>最小高度</MinHeight>
+  <MaxHeight>最大高度</MaxHeight>
+  <Direction>方向</Direction>
+  <AngleInDegrees>角度(°)</AngleInDegrees>
+	<Mode>模式</Mode>
+	<Type>类型</Type>
+  <Object>物体</Object>
+  <Prefab>预制体</Prefab>
+  <FreeVersion>免费版</FreeVersion>
+  <ProVersion>专业版</ProVersion>
+  <Grass>草</Grass>
+  <On>启用</On>
+  <Off>禁用</Off>
+	<Texture>贴图</Texture>
+	<ControlTexture>控制图</ControlTexture>
+  <LabelWidth>标签宽度</LabelWidth>
+  <Interval>间隔</Interval>
+  <Minutes>分钟</Minutes>
+  <Hotkey>快捷键</Hotkey>
+  <NumPad>数字键盘</NumPad>
+  <OverallVertexCount>总顶点数</OverallVertexCount>
+  <PerTileStatistics>每块模型的统计数据</PerTileStatistics>
+  <Scale>缩放</Scale>
+  <UnifiedScale>使用均匀缩放</UnifiedScale>
+  <Normal>法线</Normal>
+  <Smoothness>光滑度</Smoothness>
+  <Roughness>粗糙度</Roughness>
+  <AmbientOcclusion>AO</AmbientOcclusion>
+  <AO>AO</AO>
+  <TextureArray>贴图数组</TextureArray>
+  <RoughnessNormalAO>粗糙度法线AO</RoughnessNormalAO>
+  <NormalIntensity>法线强度</NormalIntensity>
+  <UVScaleOffset>UV缩放和偏移</UVScaleOffset>
+  <WeightMaps>权重图</WeightMaps>
+  <Shader>Shader</Shader>
+	<TextureArrayMode>贴图数组的组成模式</TextureArrayMode>
+  <Yes>是</Yes>
+  <No>否</No>
+  <OK>确定</OK>
+  <Cancel>取消</Cancel>
+  <Save>保存</Save>
+  <SaveAs>另存为</SaveAs>
+  <SaveLater>稍后保存</SaveLater>
+  <Fill>填充</Fill>
+  <Create>创建</Create>
+  <Delete>删除</Delete>
+  <Randomize>随机化</Randomize>
+  <Undo>撤销</Undo>
+  <Redo>重做</Redo>
+  <SelectFile>选择文件</SelectFile>
+  <Reload>重新加载</Reload>
+	<Add>添加</Add>
+	<Apply>应用</Apply>
+  <Open>打开</Open>
+  <Download>下载</Download>
+  <Edit>编辑</Edit>
+  <Remove>删除</Remove>
+  <CustomizeUI>自定义界面</CustomizeUI>
+  <Flip>翻转</Flip>
+  <Help>帮助</Help>
+  <Adjust>调整</Adjust>
+  <Split>切分</Split>
+  <SwitchMode>切换模式</SwitchMode>
+  <AllowOverlap>允许重叠</AllowOverlap>
+  <DisableLighting>关闭光照</DisableLighting>
+  <Refresh>刷新</Refresh>
+  <OpenInASE>用ASE打开</OpenInASE>
+  <OverrideMaterial>替代材质</OverrideMaterial>
+  <UseBuiltinFBXExporter>使用内置的FBX导出</UseBuiltinFBXExporter>
+  <CreateShortcut>创建
+桌面快捷方式</CreateShortcut>
+  <Horizontal>水平(x)</Horizontal>
+  <Vertical>垂直(z)</Vertical>
+  <Immediately>立刻</Immediately>
+  <Customized>自定义</Customized>
+  <ReadTheDocs>查看文档</ReadTheDocs>
+  <DelayUntil7DaysLater>推迟7天</DelayUntil7DaysLater>
+  <AutoCheckForUpdates>自动检查更新</AutoCheckForUpdates>
+  <BrowseToAsset>定位资产位置</BrowseToAsset>
+  <UseTextureArray>使用贴图数组</UseTextureArray>
+  <Tooltip_AdjustControlMap>修改控制图的尺寸；纵向或横向翻转它</Tooltip_AdjustControlMap>
+  <Info_AutoSaveMeshImmediately>鼠标释放时，修改过的MTE地表模型将会被自动保存。如果编辑器有明显卡顿，请到设置中关闭“自动保存模型”。注意启用自动保存后，撤销重做功能会失效。</Info_AutoSaveMeshImmediately>
+  <Info_AutoSaveMeshWithInterval>每隔设置的分钟数，修改过的MTE地表模型将会被自动保存。注意启用定时自动保存后，撤销重做功能会不稳定。</Info_AutoSaveMeshWithInterval>
+  <Info_UseTheSaveButtonToSaveMesh>必须使用下面的保存按钮来保存对模型的修改，Ctrl+S不会保存对模型的修改！</Info_UseTheSaveButtonToSaveMesh>
+  <Info_DirtyMeshSaved>已保存被修改的MTE地表模型</Info_DirtyMeshSaved>
+  <Info_PleaseSelectAGameObjectWithVaildMesh>请选中带有有效Mesh的MeshFilter的GameObject再进行操作！</Info_PleaseSelectAGameObjectWithVaildMesh>
+  <Info_PleaseSelectAGameObjectWithTerrain>请选中带有有效Terrain的GameObject再进行操作！</Info_PleaseSelectAGameObjectWithTerrain>
+  <Info_LimitOfTexture5>当使用的shader是 MTE/XXXX/5 Textures/XXXX/Fog 时，第5张贴图与第4张贴图共享Tilling和Offset属性。</Info_LimitOfTexture5>
+  <Info_HotkeyTable>快捷键表
+
+F1        高度工具：提升降低地形
+F2        高度工具：压平/绘制高度
+F3        高度工具：平滑
+F4        绘制贴图
+F5        绘制顶点颜色
+F6        草绘制工具
+F7        物体绘制工具
+F8        流编辑器
+F9        模型工具
+
+- +       调整笔刷大小
+[ ]       调整笔刷速度/强度/流量
+
+PageUp    撤销 (Mac: Fn+Up)
+PageDown  重做 (Mac: Fn+Down)
+
+~         切换选择网格的显隐
+
+* 快捷键仅在以下条件满足时有效
+  1. 输入法处于关闭状态
+  2. 编辑器窗口或场景窗口具有焦点
+</Info_HotkeyTable>
+  <Info_PleaseSelectAMeshTerrain>请选中一个mesh-terrain.</Info_PleaseSelectAMeshTerrain>
+  <Info_WillBeSavedInstantly>修改会自动保存。</Info_WillBeSavedInstantly>
+  <Info_SliderModeHint>右键点击切换滑动条模式：常规或对数</Info_SliderModeHint>
+  <Info_RefreshAlbedoAndSmoothnessTexturesOnTileContainer>将会基于第一块地形的材质，重新生成“颜色&amp;光滑度”贴图，应用到所有地形块。</Info_RefreshAlbedoAndSmoothnessTexturesOnTileContainer>
+  <Info_FreeVersion_UsingSplatTexturesExcept4IsAProFeature>免费版用户只能使用4张不同的贴图。
+请使用4张、不同的贴图，并使用4 Textures的shader.</Info_FreeVersion_UsingSplatTexturesExcept4IsAProFeature>
+  <Info_FreeVersion_UsingTextureArrayExcept4IsAProFeature>免费版用户只能只用4层贴图数组。</Info_FreeVersion_UsingTextureArrayExcept4IsAProFeature>
+  <Info_FreeVersion_UsingPrefabMoreThan2IsAProFeature>免费版用户只能使用2个及以下的预制体。</Info_FreeVersion_UsingPrefabMoreThan2IsAProFeature>
+  <Info_FreeVersion_EditMoreThan2MeshTerrainsIsAProFeature>免费版用户只能同时编辑2个及以下的MTE模型（只会有最多两个通过筛选）。</Info_FreeVersion_EditMoreThan2MeshTerrainsIsAProFeature>
+  <Warning_ProFeature>MTE 专业版功能</Warning_ProFeature>
+  <About>关于Mesh Terrain Editor</About>
+  <CheckForUpdates>检查更新</CheckForUpdates>
+  <AlreadyLatestRelease>Mesh Terrain Editor已经是最新版本。</AlreadyLatestRelease>
+  <NewReleaseAvailable>有新版本可供下载。</NewReleaseAvailable>
+  <AuthorWebsite>作者的站点</AuthorWebsite>
+  <Buy>购买专业版</Buy>
+  <Forum>论坛</Forum>
+  <InstantMessaging>QQ群</InstantMessaging>
+  <EmailAuthor>向作者发邮件</EmailAuthor>
+  <CopyInfo>© 2016-2021 邹维. 保留所有权利.</CopyInfo>
+  <About_AuthorWebsiteLink>https://zwcloud.net</About_AuthorWebsiteLink>
+  <BuyLink>https://assetstore.unity.com/packages/tools/terrain/mesh-terrain-editor-pro-57515</BuyLink>
+  <ForumLink>https://connect.unity.com/messages/pj/5c455c0bedbc2a70e68c8153</ForumLink>
+  <InstantMessagingLink>http://shang.qq.com/wpa/qunwpa?idkey=5e654a8b0cb6d9fc3694a72962a05d1458222776ebdae00318f48b2dfb156267</InstantMessagingLink>
+  <EmailAddress>zwcloud@hotmail.com</EmailAddress>
+  <EmailLink>mailto:zwcloud@hotmail.com</EmailLink>
+  <WelcomeToMTE>欢迎使用Mesh Terrain Editor</WelcomeToMTE>
+  <CreatorShortcut>创建工具</CreatorShortcut>
+  <ConverterShortcut>转换器</ConverterShortcut>
+  <EditorShortcut>编辑器</EditorShortcut>
+  <Documentation>文档</Documentation>
+  <DocumentationDescription>如何使用Mesh Terrain Editor.</DocumentationDescription>
+  <ForumDescription>交流关于Mesh Terrain Editor的想法和观点。</ForumDescription>
+  <InstantMessagingDescription>Mesh Terrain Editor用户交流群 689511734</InstantMessagingDescription>
+  <Email>邮件</Email>
+  <EmailDescription>首先请阅读文档，如果没有帮助，再发邮件。</EmailDescription>
+  <FeatureRequestAndBugReport>新功能提议和Bug报告</FeatureRequestAndBugReport>
+  <FeatureRequestAndBugReportDescription>提议实现新功能或修改当前功能；提交bug报告到问题跟踪器。</FeatureRequestAndBugReportDescription>
+  <Video>视频</Video>
+  <VideoDescription>Mesh Terrain Editor的介绍视频。</VideoDescription>
+  <Short_CopyInfo>© 2016-2021 邹维</Short_CopyInfo>
+  <IssueTrackerLink>https://github.com/zwcloud/MeshTerrainEditor-issues/issues</IssueTrackerLink>
+  <VideoLink>https://space.bilibili.com/375686/#/channel/detail?cid=12959</VideoLink>
+  <ShowWelcomeAtStartUp>在启动时显示欢迎窗口。</ShowWelcomeAtStartUp>
+  <Warning_Confirm>确定执行此操作吗?</Warning_Confirm>
+  <Warning_Confirm_UnrecoverableOperation>确定执行此操作吗? 此操作无法撤销。</Warning_Confirm_UnrecoverableOperation>
+  <Warning_ConfirmReplaceControlTexture>确定要替换控制图吗？</Warning_ConfirmReplaceControlTexture>
+  <Warning_MeshIsNotSaved>对地形模型的修改还没有保存，需要现在保存吗？
+
+也可以稍后再保存，但如果在保存前就关闭了Unity3D，您的修改就会丢失。</Warning_MeshIsNotSaved>
+  <Warning_PleaseSelectAPathInsideAssets>请选择一个在"Assets"目录下的路径。</Warning_PleaseSelectAPathInsideAssets>
+  <Warning_TextureCountNotSupported>选择的地形的贴图数量不是2/3/4/5，请删除或添加贴图到2/3/4/5张后再试。</Warning_TextureCountNotSupported>
+  <Warning_SelectAGameObject>请选中一个GameObject.</Warning_SelectAGameObject>
+  <Warning_GrassLoaderExists>不能创建新的GrassLoader对象，场景中已经存在添加了GrassLoader组件的GameObject {0}.</Warning_GrassLoaderExists>
+  <Warning_CannotAttachGrassLoaderToAGameObjectWithMeshFilter>无法向带有MeshFilter的GameObject附加GrassLoader.</Warning_CannotAttachGrassLoaderToAGameObjectWithMeshFilter>
+  <Warning_AlreadyAttached>已附加此组件。</Warning_AlreadyAttached>
+ 	<ChooseGrassPointCloudDataFilePath>选择草的点云数据文件的保存路径</ChooseGrassPointCloudDataFilePath>
+  <Warning_VertexCountTooBig_AssetPreferred>顶点数量过多，建议使用.asset文件格式，可以显著减少模型文件的保存和导入时间。</Warning_VertexCountTooBig_AssetPreferred>
+  <TextureArrayBasedCreator_Header>贴图数组MTE地形创建工具（测试版）</TextureArrayBasedCreator_Header>
+  <TextureArrayBasedCreator_Description>创建支持2~12层贴图的MTE地形，基于使用2个贴图数组的shader.</TextureArrayBasedCreator_Description>
+  <Warning_FbxNotSupported>尚不支持FBX。请在设置中启用内置FBX导出，或通过Package Manager安装FBX Exporter.</Warning_FbxNotSupported>
+	<Warning_ShaderIsExperimental>此shader是实验性质的或者不是稳定版本，在未来的版本中随时可能变化。
+请不要使用此shader，除非您清楚自己在做什么。</Warning_ShaderIsExperimental>
+	<Warning_ASENotFound>找不到Amplify Shader Editor，基于ASE的功能可能无法使用。请升级ASE到最新版本重启Unity再试。</Warning_ASENotFound>
+  <Warning_ShaderTypeNotMatchTheRenderPipeline>Shader和当前的渲染管线不匹配，这会导致MTE地形不能正常渲染。</Warning_ShaderTypeNotMatchTheRenderPipeline>
+  <Warning_ParameterCannotBeEmptyFormat>参数“{0}”不能是空的。</Warning_ParameterCannotBeEmptyFormat>
+  <Warning_ShaderNotProvided>尚未提供这种类型的Shader.</Warning_ShaderNotProvided>
+  <Warning_TextureArrayIsEmpty>没有赋予贴图数组。</Warning_TextureArrayIsEmpty>
+  <Warning_OutputDirNotExist>输出目录是空的。</Warning_OutputDirNotExist>
+  <Warning_InvalidObjectName>对象名不能空白或包含以下字符 \ / : * ? " &lt; &gt; |</Warning_InvalidObjectName>
+  <Warning_InvalidShader>Shader无效。</Warning_InvalidShader>
+  <Error_ShaderNotSupported>此shader不支持当前平台！</Error_ShaderNotSupported>
+  <Error_MTEFilesDuplicated>发现重复的MTE文件，重复文件会引起未知行为和错误。请确保工程中只导入了一份MTE. 如果有多份或旧版本文件，请先删除它们后再导入MTE的包。</Error_MTEFilesDuplicated>
+  <RateAndReview>评分和评价</RateAndReview>
+  <Info_InvoiceNumberHint>Invoice number 可以在两个地方找到。
+  1. 由Unity asset store发来的购买确认邮件的pdf附件中，邮件可能有一到两天左右的延迟，如果超过2天还没收到请联系Unity处理。
+  2. 打开 https://assetstore.unity.com/orders, 找到 *Mesh Terrain Editor Pro*, invoice number 在 *Description* 这一栏</Info_InvoiceNumberHint>
+  <OpenAssetStoreOrders>打开 https://assetstore.unity.com/orders</OpenAssetStoreOrders>
+  <Activation>激活</Activation>
+  <Activation_Header>激活/反激活Mesh Terrain Editor专业版</Activation_Header>
+  <Activation_Description>使用序列号或发票编码(Invoice Number)激活MTE专业版。</Activation_Description>
+  <ActivateProLicense>激活MTE专业版</ActivateProLicense>
+  <Activating>激活中...</Activating>
+  <ActivateHint>使用Invoice/Serial号码激活MTE专业版 (需要联网)</ActivateHint>
+  <DeactivateProLicense>反激活MTE专业版</DeactivateProLicense>
+  <Deactivating>反激活中...</Deactivating>
+  <DeactivateHint>反激活这台机器上的MTE专业版副本，之后可以在其他机器上激活该副本 (需要联网)</DeactivateHint>
+  <ManualActivate>手动激活</ManualActivate>
+  <ManualActivateHint>用于在无法联网的机器上激活MTE专业版</ManualActivateHint>
+  <Error_AccessServerFailed>访问服务器发生异常。
+请检查你的网络连接后再试。
+错误:
+{0}</Error_AccessServerFailed>
+  <Warning_ActivationFailed>激活失败：Invoice/serial无效，请检查后再试。</Warning_ActivationFailed>
+  <Info_ActivationSucceeded>Mesh Terrain Editor专业版激活成功！</Info_ActivationSucceeded>
+  <Info_ActivationHelp>若需要帮助，请先查看文档(点击问号按钮打开)。再通过 zwcloud@hotmail.com 联系作者(请在邮件中附上你的Invoice number)。或加QQ群 689511734 联系作者。</Info_ActivationHelp>
+  <ManualActivationHint1>请确保你的Invoice/Serial是正确的，在可以联网的机器上用浏览器打开下面的链接地址，获得激活码，此链接地址只能用于获取激活此机器的激活码。</ManualActivationHint1>
+  <ManualActivationHint2>将获得的激活码粘贴到下面</ManualActivationHint2>
+</StringTable>

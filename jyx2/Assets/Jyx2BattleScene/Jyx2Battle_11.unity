@@ -11014,13 +11014,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e95f9b5bac0984585ce4150cb9d913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TestLevel: 5
-  m_TestTeammate:
-  - "\u6843\u82B1\u4ED9\u5B50"
-  - "\u9646\u6E38"
-  - "\u8F9B\u5F03\u75BE"
-  m_RuntimeDataSimulate: 1
   m_MobileSimulate: 0
+  m_GameMap: {fileID: 0}
+  m_IsBattleMap: 1
 --- !u!4 &339691458
 Transform:
   m_ObjectHideFlags: 0
@@ -36660,6 +36656,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1121115483
@@ -44713,6 +44710,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1001 &1375167779
@@ -48719,8 +48717,8 @@ MonoBehaviour:
   shaderNames:
   - Desktop
   - Mobile
-  shaderIndex: 0
-  shader: {fileID: 4800000, guid: 4bcc0b68579a5c740ad31644411ffb54, type: 3}
+  shaderIndex: 1
+  shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
   isUnlit: 0
@@ -48754,9 +48752,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.39705607, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39701393, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.4115615, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.41151935, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -48770,7 +48768,7 @@ MonoBehaviour:
   - World-aligned (planar)
   worldSpaceTiling: 0
   refractionAmount: 0.018
-  enableNormalMap: 1
+  enableNormalMap: 0
   normalStrength: 0.307
   enableMacroNormals: 0
   macroNormalsDistance: 2000
@@ -48882,10 +48880,10 @@ MonoBehaviour:
   enableShadows: 0
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: 31cc54898a6ea2449a4c17acf45079b8, type: 2}
-  isMobileAdvanced: 0
+  isMobileAdvanced: 1
   isMobilePlatform: 0
   isMobileBasic: 0
-  shaderName: StylizedWater/Desktop
+  shaderName: StylizedWater/Mobile
   isWaterLayer: 0
   hasShaderParams: 1
   hasMaterial: 1
@@ -53382,7 +53380,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BattleId: 135
-  m_TestTeammateIds: 0100000002000000030000000400000005000000
   IsTestCase: 0
 --- !u!4 &1663777655
 Transform:

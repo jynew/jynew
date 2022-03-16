@@ -25,15 +25,9 @@ public class GameViewPortManager : MonoBehaviour
                 GameObject.DontDestroyOnLoad(obj);
                 obj.name = "[GameViewPortManager]";
                 _instance = obj.AddComponent<GameViewPortManager>();
-
-                if (PlayerPrefs.HasKey("viewport_type"))
-                {
-                    _instance._viewportType = (ViewportType) (PlayerPrefs.GetInt("viewport_type"));
-                }
-                else
-                {
-                    _instance._viewportType = ViewportType.Topdown;
-                }
+                
+                // 注册设置改变时需要执行的委托，并且立刻执行一次，确保游戏初始化时设置生效。
+                GameSettingManager.SubscribeEnforceEvent(GameSettingManager.Catalog.Viewport, _instance.SetViewport, true);
             }
 
             return _instance;
@@ -45,8 +39,9 @@ public class GameViewPortManager : MonoBehaviour
 
     private ViewportType _viewportType = ViewportType.Follow;
     
-    public void SetViewport(ViewportType viewportType)
+    public void SetViewport(object value)
     {
+        var viewportType = (ViewportType) value;
         _viewportType = viewportType;
         var vcam = GetFollowVCam();
         if (vcam != null)

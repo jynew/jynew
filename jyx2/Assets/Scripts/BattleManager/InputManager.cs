@@ -61,7 +61,7 @@ public class InputManager
 
     public BattleBlockData GetMouseUpBattleBlock()
     {
-        if (Input.GetMouseButtonUp(0) && !IsPointerOverUIObjectExceptTouchpad())
+        if (Input.GetMouseButtonUp(0) && !IsPointerOverUIObjectExceptTouchpad() && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -70,12 +70,29 @@ public class InputManager
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
             {
                 var block = BattleboxHelper.Instance.GetLocationBattleBlock(hitInfo.point);
-                if (block != null && block.IsActive)
+                if (block != null && block.IsActive && !block.Inaccessible)
                 {
                     return block;
                 }
             }
         }
+        return null;
+    }
+
+    public BattleBlockData GetMouseOverBattleBlock()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        //待调整为格子才可以移动
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            var block = BattleboxHelper.Instance.GetLocationBattleBlock(hitInfo.point);
+            if (block != null && block.IsActive && !block.Inaccessible)
+            {
+                return block;
+            }
+        }
+
         return null;
     }
 
@@ -89,7 +106,7 @@ public class InputManager
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
             {
                 var block = BattleboxHelper.Instance.GetLocationBattleBlock(hitInfo.point);
-                if (block != null && block.IsActive)
+                if (block != null && block.IsActive && !block.Inaccessible)
                 {
                     return block;
                 }

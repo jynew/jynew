@@ -8,28 +8,24 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
-using Jyx2.Setup;
 using Jyx2Configs;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public partial class SkillEditorUIPanel:Jyx2_UIBase
 {
     
-    public MapRole player;
+    public BattleRole player;
 
     public Jyx2SkillEditorEnemy[] enemys;
 
     private int skillId;
     private int skillLevel;
-    private string roleKey;
+    private int roleKey;
 
     private readonly List<Jyx2ConfigSkill> allSkills = new List<Jyx2ConfigSkill>();
     private readonly List<Jyx2ConfigCharacter> allRole = new List<Jyx2ConfigCharacter>();
@@ -38,7 +34,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         InitTrans();
         skillId = 1;
         skillLevel = 1;
-        roleKey = "主角";
+        roleKey = 0;
         
         dropSkillId_Dropdown.ClearOptions();
         dropSkillLevel_Dropdown.ClearOptions();
@@ -81,8 +77,9 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
     private void OnSwitchdropModelId(int index)
     {
         var role = allRole[index];
-        roleKey = role.Id.ToString();
-        OnSwitchModel();
+        roleKey = role.Id;
+        //下面这一行会触发模型更新，这样显得按钮很没有用，所以我取消了
+        //OnSwitchModel();
     }
 
     private void OnSwitchSkillLevel(int arg0)
@@ -100,9 +97,9 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
     protected override void OnShowPanel(params object[] allParams)
     {
         base.OnShowPanel(allParams);
-        player = allParams[0] as MapRole;
+        player = allParams[0] as BattleRole;
         enemys = allParams[1] as Jyx2SkillEditorEnemy[];
-        DoSwitchRoleModel().Forget();
+        //DoSwitchRoleModel().Forget();//这里也去掉，防止多次加载模型
     }
 
     private void OnSwitchModel()
@@ -117,17 +114,21 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
 
     private void OnDisplaySkill()
     {
-        TryDisplaySkill();
+        TryDisplaySkill().Forget();
     }
 
     async UniTask DoSwitchRoleModel()
     {
         var role = new RoleInstance(this.roleKey);
         await player.BindRoleInstance(role);
+        await player.RefreshModel();//添加这一行刷新模型
         
-        var animator = player.GetAnimator();
-        animator.runtimeAnimatorController = player.GetComponent<Animator>().runtimeAnimatorController; //force set animator
-        SwitchSkillPose();
+        //不必要的指定
+        //var animator = player.GetAnimator();
+        //animator.runtimeAnimatorController = player.GetComponent<Animator>().runtimeAnimatorController; //force set animator
+        
+        //不必要切换姿势
+        //SwitchSkillPose();
     }
 
     void DoSwitchMove()
@@ -136,22 +137,22 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         player.Run();
     }
 
-    void TryDisplaySkill()
+    async UniTask TryDisplaySkill()
     { 
-        var wugong = new WugongInstance(skillId);
+        var wugong = new SkillInstance(skillId);
 
         SkillCastHelper helper = new SkillCastHelper();
         helper.Source = player;
         helper.Targets = enemys;
         
         wugong.Level = skillLevel;
-        helper.Zhaoshi = new BattleZhaoshiInstance(wugong);
+        helper.Skill = new SkillCastInstance(wugong);
 
         //根据不同的技能覆盖类型，显示不同的效果
         Transform[] blocks = null;
         switch (wugong.CoverType)
         {
-            case SkillCoverType.FACE:
+            case SkillCoverType.RECT:
                 blocks = skillEditor.faceTrans;
                 break;
             case SkillCoverType.LINE:
@@ -163,7 +164,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
             case SkillCoverType.POINT:
                 
                 //任选一个敌人受击
-                blocks = new Transform[1] {Hanjiasongshu.Tools.GetRandomElement(enemys).transform};
+                blocks = new Transform[1] {Jyx2.Middleware.Tools.GetRandomElement(enemys).transform};
                 
                 //直接在每个敌人身上受击
                 /*blocks = new Transform[enemys.Length];
@@ -181,7 +182,11 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
         helper.CoverBlocks = blocks; 
         
 
-        helper.Play().Forget();
+        await helper.Play();
+        if (skillEditor.TestZuoyouhubo) //测试左右互搏
+        {
+            await helper.Play();
+        }
     }
 
     /// <summary>
@@ -189,7 +194,7 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
     /// </summary>
     void SwitchSkillPose()
     {
-        var wugong = new WugongInstance(skillId);
+        var wugong = new SkillInstance(skillId);
         //切换武器和动作
 
         player.SwitchSkillTo(wugong);

@@ -1,0 +1,109 @@
+3.3.2f7
+- Type data is now stored when using ES3.Serialize<object>.
+- Worked around issue where Unity would return an incorrect number of assemblies.
+
+3.3.2f6
+- ES3Spreadsheet now correctly serializes object types into a CSV file.
+- Resolved issue where an object[] containing primitive types could not be loaded in some situations.
+- Worked around issue where PlayMaker wouldn't initialize variable before it's value was reset.
+- Created a workaround for some situations where Unity creates new instances of ScriptableObjects in Assets at runtime.
+- Resolved issue where Base-64 encoding option would not work with newline option in PlayMaker SaveRaw action.
+
+3.3.2f5
+- Resolved issue where scripts were not overwritten by Asset Store importer, causing Easy Save to be unstable.
+
+3.3.2f4
+- Resolved issue where Save action for PlayMaker could return NullReferenceException due to using the wrong ES3.Save override.
+- Worked around IL2CPP bug where reflection would not find particular ES3Types on iOS
+- Resolved issue where trying to store an empty/unassigned PlayMaker object would throw a NulReferenceException.
+- Keys of a type which no longer exists in the project are now automatically removed
+- Abstract types used in an ES3Type will now work as intended
+
+3.3.2f3
+- Added GameObject variables to Auto Save
+- Resolved issue where Sprites would be loaded with the incorrect pivot.
+- Resolved issue where Stacks were loaded in reverse.
+- Added a 'quality' field to the ES3.SaveImage method to allow the quality to be specified when saving JPEGs.
+
+3.3.2f2
+- Added method which allows raw bytes to be uploaded via ES3Cloud.
+- Worked around issue where File IO was called on platforms which don't support it
+- Accounted for situations where Component should evaluate to null but doesn't
+- Updated PlayMaker actions to work around issue where global variables sometimes go missing
+- Objects with the NotEditable hideFlags can now be stored by reference
+- Worked around Unity bug where it fails to deserialize data when Prefab mode is open
+- Resolved issue where global 'Save GameObject Children' settings can take precedence over Auto Save settings
+- 'Enable Easy Save for Prefab' context menu item now works when multiple objects are selected.
+
+3.3.2f1
+- Resolved issue where Components on prefabs would sometimes not be added to the reference manager.
+- Resolved issue where reference ID was read unnecesserily, causing format exception.
+- Resolved issue where child prefabs would not be recognised by manager.
+
+3.3.1p12
+- Resolved case where certain references would not be added to manager.
+
+3.3.1f11
+- Fixed issue where using ES3.CacheFile with an encrypted file could fail.
+- Fixed issue where Directory.GetFiles cannot process a full path on certain configurations.
+- Accounted for case where HideFlags are changed during build process.
+- Added a timeout parameter to the ES3Cloud constructor.
+- ES3.Serialize and ES3.Deserialize now work with encryption and compression
+
+3.3.1f10
+- Full support for projects which use multiple scenes at once.
+- Added ES3.Encrypt and ES3.Decrypt methods.
+- Supported saving the active state and FsmVariables of PlayMaker FSMs.
+- Added edge case for SkinnedMeshRenderers which use LODs to ensure that all meshes and Materials are added to the reference manager.
+- Ensured that Auto Update References setting is ackowledged when first adding manager to scene.
+- Moved menu items into Tools/Easy Save 3 menu.
+- Using LoadInto will now assign the loaded reference ID to the object you're loading into.
+
+3.3.1f9
+- It's not possible to add an ES3ReferenceMgr to your scene directly, ensuring that initialisation code is performed.
+- Compressed files can now be cached.
+- Ability to only add prefabs directly referenced by your scene to the manager.
+
+3.3.1f8
+- Caching is now enabled by default for Auto Save, significantly improving performance.
+- Added ES3.LoadString method so you do not need to provide all parameters to use the defaultValue overload.
+- Resolved case where SaveAll would not correctly save some types of array.
+- Resolved case where global references would not be acknowledged.
+
+3.3.1f7
+- Serialization depth limit has been raised to account for projects with deep hierearchies
+- Fixed issue where Easy Save 3 Manager could not be found for scenes which had not been saved.
+- Resolved issue where Add Reference(s) to Manager would not dirty scene when Auto Update References was disabled.
+- Improved Editor performance by accounting for situations where post-processing events would be called multiple times.
+
+3.3.1f6
+- Internal fields of the UnityEngine.Object class are hidden in the Types pane as they are not serialisable.
+- Accounted for edge case where unassigned script is returned by GameObject.GetComponents().
+- ES3Settings constructor now accepts any settings enum (e.g. ES3.Location).
+- No longer throws warning when multiple scenes are open.
+
+3.3.1f5
+- Updated PlayMaker actions.
+- Provided workaround for issue where IL2CPP stripper removes methods which are marked to not be stripped.
+- Performance updates.
+
+3.3.1f4 
+- Improved performance when gathering references for reference manager.
+
+3.3.1f3
+- Added Cache as a storage location, providing a much simpler way of caching data.
+- References can now be added by right-clicking the object and going to Easy Save 3 > Add Reference to Manager.
+- Floats and doubles are now stored with full precision.
+- Assorted bug fixes.
+
+3.3.1f2
+- Added compression, reducing file size by 85% on average when enabled
+- JSON is now pretty printed (formatted) by default
+- Added attributes to control serialisation
+- Private fields in inherited classes are now stored
+- Added search capabilities to the Auto Save window
+- The way in which GameObjects is saved is now more flexible
+- The reference manager is now updated whenever playmode is entered
+- Null values in the global manager are now automatically removed
+- Fixed issue where default settings were not applied properly
+- Fixed issue where ES3Types would be stored in Easy Save root rather than in Assets/Easy Save 3/

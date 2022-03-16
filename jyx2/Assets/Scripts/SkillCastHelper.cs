@@ -14,9 +14,9 @@ using System.Linq;
 using Animancer;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using HanSquirrel.ResourceManager;
+
 using Jyx2.Middleware;
-using HSFrameWork.Common;
+
 using SkillEffect;
 using UniRx;
 using UnityEditor;
@@ -58,12 +58,12 @@ namespace Jyx2
         public Jyx2AnimationBattleRole Source;
         public IEnumerable<Jyx2AnimationBattleRole> Targets;
         public IEnumerable<Transform> CoverBlocks;
-        public BattleZhaoshiInstance Zhaoshi;
+        public SkillCastInstance Skill;
 
 
         Jyx2SkillDisplayAsset GetDisplay()
         {
-            return Zhaoshi.Data.GetDisplay();
+            return Skill.Data.GetDisplay();
         }
 
 
@@ -76,7 +76,7 @@ namespace Jyx2
             var display = GetDisplay();
             if(display == null)
             {
-                Debug.LogError($"招式{Zhaoshi.Key}没有配置Display!");
+                Debug.LogError($"招式{Skill.Key}没有配置Display!");
                 return;
             }
 
@@ -242,7 +242,7 @@ namespace Jyx2
             if (soundEffect == null)
                 return;
 
-            AudioSource.PlayClipAtPoint(soundEffect, Camera.main.transform.position, 1);
+            AudioManager.PlayClipAtPoint(soundEffect, Camera.main.transform.position);
         }
     }
 }

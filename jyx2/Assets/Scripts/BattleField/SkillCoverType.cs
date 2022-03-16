@@ -35,9 +35,9 @@ namespace Jyx2
         CROSS = 2,
         
         /// <summary>
-        /// 面攻击
+        /// 矩形面攻击
         /// </summary>
-        FACE = 3,
+        RECT = 3,
 
         /// <summary>
         /// 无效

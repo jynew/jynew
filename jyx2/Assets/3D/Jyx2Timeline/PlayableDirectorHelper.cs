@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -52,6 +53,7 @@ public class PlayableDirectorHelper : MonoBehaviour
                     {
                         bindObject.transform.localPosition = m_BindObject.transform.localPosition;
                         bindObject.transform.localRotation = m_BindObject.transform.localRotation;
+                        bindObject.transform.localScale = m_BindObject.transform.localScale;
                     }
                     else
                     {

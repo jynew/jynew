@@ -1,0 +1,1 @@
+Place for detail list files. Don't delete this folder.

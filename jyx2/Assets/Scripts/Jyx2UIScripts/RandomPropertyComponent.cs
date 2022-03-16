@@ -7,12 +7,10 @@
  *
  * 金庸老先生千古！
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2;
-using Hanjiasongshu;
 
 public class RandomPropertyComponent : MonoBehaviour
 {
@@ -32,6 +30,11 @@ public class RandomPropertyComponent : MonoBehaviour
             trans.localScale = Vector3.one;
             trans.gameObject.SetActive(true);
         }
+    }
+
+    void Start()
+    {
+        _mainMenu = FindObjectOfType<GameMainMenu>();
     }
 
     public void ShowComponent( )
@@ -68,7 +71,8 @@ public class RandomPropertyComponent : MonoBehaviour
             if (!GameConst.ProItemDic.ContainsKey(trans.name))
                 continue;
             PropertyItem item = GameConst.ProItemDic[trans.name];
-            var proValue = (int)role.GetType().GetProperty(item.PropertyName).GetValue(role,null);
+
+            var proValue = (int)role.GetType().GetField(item.PropertyName).GetValue(role);
             string text = string.Format("{0}：{1}", item.Name, proValue);
             label.text = text;
 
@@ -77,7 +81,47 @@ public class RandomPropertyComponent : MonoBehaviour
             label.color = color;
             BG.gameObject.SetActive(showBg);
         }
-        role.Recover();
+        role.Recover(true);
     }
 
+    private string cheatingCode = "baberuth";
+    private int index = 0;
+    private GameMainMenu _mainMenu;
+    
+    void OnGUI()
+    {
+        if (Input.anyKeyDown)
+        {
+            try
+            {
+                //响应秘籍的输入
+                
+                Event e = Event.current;
+                if (e == null || e.keyCode == KeyCode.None || e.type != EventType.KeyDown)
+                    return;
+                var keycode = e.keyCode.ToString().ToLower()[0];
+                if (keycode == cheatingCode[index])
+                {
+                    index++;
+                    if (index >= cheatingCode.Length)
+                    {
+                        _mainMenu.DoGeneratePlayerRole(true);
+                        index = 0;
+                        return;
+                    }
+                }
+                else
+                {
+                    index = 0;
+                    if (keycode == cheatingCode[index]) index++;
+                }
+                _mainMenu.DoGeneratePlayerRole(false);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+    }
+    
 }

@@ -1,0 +1,31 @@
+# Packed shader naming conversion
+
+Please name your packed shader property in following names and refer to existing packed shaders.
+
+## packed splat-texture property Names:
+Layer 1(RGB) and Layer 4(R): "_PackedSplat0"
+Layer 2(RGB) and Layer 4(G): "_PackedSplat1"
+Layer 3(RGB) and Layer 4(G): "_PackedSplat2"
+Layer 5(RGB) and Layer 8(G): "_PackedSplat3"
+Layer 6(RGB) and Layer 8(G): "_PackedSplat4"
+Layer 7(RGB) and Layer 8(G): "_PackedSplat5"
+
+## packed height-map property names
+Layer 1,2,3,4(RGBA): "_PackedHeightMap"
+Layer 5,6,7,8(RGBA): "_PackedHeightMapExtra"
+
+## metallic property names
+Layer 1,2,3,4: "_Metallic"
+Layer 5,6,7,8: "_MetallicExtra"
+
+## smoothness property names
+Layer 1,2,3,4: "_Smoothness"
+Layer 5,6,7,8: "_SmoothnessExtra"
+
+## height weight property names
+Layer 1,2,3,4: "_HeightWeight"
+Layer 5,6,7,8: "_HeightWeightExtra"
+
+## normal strength property names
+Layer 1,2,3,4: "_NormalStrength"
+Layer 5,6,7,8: "_NormalStrengthExtra"

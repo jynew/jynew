@@ -31,6 +31,8 @@ namespace Jyx2
         [ProtoMember(2)]
         public int Y;
 
+        public bool Inaccessible { get; internal set; }
+
         //求两点的距离
         public int GetDistance(BattleBlockVector pos)
         {

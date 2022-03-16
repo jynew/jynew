@@ -1,0 +1,62 @@
+using System;
+using UnityEngine;
+
+namespace ES3Types
+{
+	[UnityEngine.Scripting.Preserve]
+	public class ES3UserType_Material : ES3UnityObjectType
+	{
+		public static ES3Type Instance = null;
+
+		public ES3UserType_Material() : base(typeof(UnityEngine.Material)){ Instance = this; priority = 1; }
+
+
+		protected override void WriteUnityObject(object obj, ES3Writer writer)
+		{
+			var instance = (UnityEngine.Material)obj;
+
+			writer.WriteProperty("shader", instance.shader);
+			writer.WriteProperty("renderQueue", instance.renderQueue, ES3Type_int.Instance);
+			writer.WriteProperty("shaderKeywords", instance.shaderKeywords);
+			writer.WriteProperty("globalIlluminationFlags", instance.globalIlluminationFlags);
+	[writes]
+		}
+
+		protected override object ReadUnityObject<T>(ES3Reader reader)
+		{
+			var obj = new Material(Shader.Find("Diffuse"));
+			ReadUnityObject<T>(reader, obj);
+			return obj;
+		}
+
+		protected override void ReadUnityObject<T>(ES3Reader reader, object obj)
+		{
+			var instance = (UnityEngine.Material)obj;
+			foreach(string propertyName in reader.Properties)
+			{
+				switch(propertyName)
+				{
+					case "name":
+						instance.name = reader.Read<string>(ES3Type_string.Instance);
+						break;
+					case "shader":
+						instance.shader = reader.Read<UnityEngine.Shader>(ES3Type_Shader.Instance);
+						break;
+					case "renderQueue":
+						instance.renderQueue = reader.Read<System.Int32>(ES3Type_int.Instance);
+						break;
+					case "shaderKeywords":
+						instance.shaderKeywords = reader.Read<System.String[]>();
+						break;
+					case "globalIlluminationFlags":
+						instance.globalIlluminationFlags = reader.Read<UnityEngine.MaterialGlobalIlluminationFlags>();
+						break;
+	[reads]
+					default:
+						reader.Skip();
+						break;
+				}
+			}
+		}
+	}
+}

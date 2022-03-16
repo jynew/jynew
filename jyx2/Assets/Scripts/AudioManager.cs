@@ -12,17 +12,20 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Jyx2.MOD;
 
 public class AudioManager
 {
     //JYX2
     public static void PlayMusic(int id)
     {
+        Init();
         PlayMusicAtPath("Assets/BuildSource/Musics/" + id + ".mp3").Forget();
     }
 
     public static bool PlayMusic(AssetReference asset)
     {
+        Init();
         if (string.IsNullOrEmpty(asset.AssetGUID))
             return false;
         DoPlayMusic(asset).Forget();
@@ -31,7 +34,7 @@ public class AudioManager
 
     private static async UniTask DoPlayMusic(AssetReference asset)
     {
-        var audioClip = await Addressables.LoadAssetAsync<AudioClip>(asset);
+        var audioClip = await MODLoader.LoadAsset<AudioClip>(Jyx2ResourceHelper.GetAssetRefAddress(asset, typeof(AudioClip)));
         if (audioClip != null)
         {
             PlayMusic(audioClip);
@@ -40,55 +43,81 @@ public class AudioManager
 
     public static void PlayMusic(AudioClip audioClip)
     {
-        var audioSource = GetAudioSource();
-        if (audioClip != audioSource.clip)
+        Init();
+        if (audioClip != bgmAudioSource.clip)
         {
-            audioSource.clip = audioClip;
-            audioSource.Play();    
+            bgmAudioSource.clip = audioClip;
+            bgmAudioSource.Play();
         }
     }
 
     public static async UniTask PlayMusicAtPath(string path)
     {
+        Init();
         if (path == null)
         {
             return;
         }
 
-        if(_currentPlayMusic == path)
-        {
-            return;
-        }
+        var audioClip = await MODLoader.LoadAsset<AudioClip>(path);
 
-        var audioClip = await Addressables.LoadAssetAsync<AudioClip>(path).Task;
         if (audioClip != null)
         {
-            var audioSource = GetAudioSource();
-            audioSource.clip = audioClip;
-            audioSource.Play();
-            _currentPlayMusic = path;
+            bgmAudioSource.clip = audioClip;
+            bgmAudioSource.Play();
         }
     }
 
-    static string _currentPlayMusic;
+    private static AudioSource _bgmAudioSource = null;
 
-    static AudioSource s_AudioSource = null;
-
-    private static AudioSource GetAudioSource()
+    private static AudioSource bgmAudioSource
     {
-        if (s_AudioSource != null)
-            return s_AudioSource;
+        get
+        {
+            if (_bgmAudioSource == null)
+            {
+                GameObject obj = new GameObject("[AudioManager]");
+                GameObject.DontDestroyOnLoad(obj);
+                _bgmAudioSource = obj.AddComponent<AudioSource>();
+                _bgmAudioSource.loop = true;
+            }
 
-        GameObject obj = new GameObject("[AudioManager]");
-        GameObject.DontDestroyOnLoad(obj);
-        s_AudioSource = obj.AddComponent<AudioSource>();
-        s_AudioSource.loop = true;
-        return s_AudioSource;
+            return _bgmAudioSource;
+        }
+    }
+
+    private static bool _hasInitialized = false;
+
+    private static void Init()
+    {
+        if (_hasInitialized)
+            return;
+
+        GameSettingManager.SubscribeEnforceEvent(
+            GameSettingManager.Catalog.Volume, (volume) => { bgmAudioSource.volume = (float)volume; },
+            true);
+
+        _hasInitialized = true;
     }
 
     public static AudioClip GetCurrentMusic()
     {
-        var audioSource = GetAudioSource();
-        return audioSource.clip;
+        Init();
+        return bgmAudioSource.clip;
+    }
+
+    public static void PlayClipAtPoint(AudioClip clip, Vector3 position)
+    {
+        Init();
+        var soundEffectVolume = GameSettingManager.settings[GameSettingManager.Catalog.SoundEffect];
+        AudioSource.PlayClipAtPoint(clip, position, (float)soundEffectVolume);
+    }
+
+    public static async UniTask PlayClipAtPoint(string path, Vector3 position)
+    {
+        Init();
+        var soundEffectVolume = GameSettingManager.settings[GameSettingManager.Catalog.SoundEffect];
+        var clip = await MODLoader.LoadAsset<AudioClip>(path);
+        AudioSource.PlayClipAtPoint(clip, position, (float)soundEffectVolume);
     }
 }

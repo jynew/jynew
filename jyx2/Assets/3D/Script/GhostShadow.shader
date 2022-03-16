@@ -13,6 +13,13 @@ Shader "SkillEffect/GhostShadow"
 		Tags{ "Queue" = "Transparent" "RenderType" = "Opaque" }
 
 		LOD 200
+		
+		// 写入深度，修复龙透明效果不正确问题
+		Pass
+		{
+		    ColorMask 0
+		}
+		
 		Pass
 		{
 		Blend SrcAlpha One//打开混合模式

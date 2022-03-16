@@ -7,6 +7,7 @@
  *
  * 金庸老先生千古！
  */
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +34,8 @@ public partial class GameMainMenu
 	private Text LoadingText;
 	private ReleaseNotePanel ReleaseNote_Panel;
 
+	List<Button> bottomButtons = new List<Button>();
+
 	public void InitTrans()
 	{
 		mainPanel_RectTransform = transform.Find("mainPanel").GetComponent<RectTransform>();
@@ -55,5 +58,11 @@ public partial class GameMainMenu
 		PropertyRoot_RectTransform = transform.Find("StartNewRolePanel/PropertyRoot").GetComponent<RectTransform>();
 		LoadingText = transform.Find("mainPanel/LoadingText").GetComponent<Text>();
 		ReleaseNote_Panel = transform.Find("ReleaseNotePanel").GetComponent<ReleaseNotePanel>();
+
+		//bottom buttons
+		bottomButtons.Add(transform.Find("mainPanel/GithubButton").GetComponent<Button>());
+		bottomButtons.Add(transform.Find("mainPanel/ProjButton").GetComponent<Button>());
+		bottomButtons.Add(transform.Find("mainPanel/ReleaseNoteButton").GetComponent<Button>());
+		bottomButtons.Add(transform.Find("mainPanel/SettingButton").GetComponent<Button>());
 	}
 }

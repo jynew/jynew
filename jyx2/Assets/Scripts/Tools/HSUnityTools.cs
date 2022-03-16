@@ -94,7 +94,8 @@ namespace Jyx2.Middleware
             {
                 var go = transform.GetChild(i).gameObject;
                 go.SetActive(false);
-                LeanPool.Despawn(go);
+                Destroy(go);
+                //LeanPool.Despawn(go);
             }
             transform.DetachChildren();
         }

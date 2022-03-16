@@ -8,7 +8,7 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-using HSFrameWork.Common;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -98,7 +98,7 @@ public class GameEventManager : MonoBehaviour
     /// <summary>
     /// 显示交互面板
     /// </summary>
-    void ShowInteractUIPanel(GameEvent evt)
+    async void ShowInteractUIPanel(GameEvent evt)
     {
         var uiParams = new List<object>();
         int buttonCount = 0;
@@ -126,11 +126,11 @@ public class GameEventManager : MonoBehaviour
 
         if (buttonCount == 1)
         {
-            Jyx2_UIManager.Instance.ShowUI(nameof(InteractUIPanel), uiParams[0], uiParams[1]);
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), uiParams[0], uiParams[1]);
         }
         else if (buttonCount == 2)
         {
-            Jyx2_UIManager.Instance.ShowUI(nameof(InteractUIPanel), uiParams[0], uiParams[1], uiParams[2], uiParams[3]);
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), uiParams[0], uiParams[1], uiParams[2], uiParams[3]);
         }
     }
 
@@ -142,11 +142,11 @@ public class GameEventManager : MonoBehaviour
     }
 
 
-    void OnClickedUseItemButton()
+    async void OnClickedUseItemButton()
     {
         if (curEvent.m_UseItemEventId == NO_EVENT) return;
 
-        Jyx2_UIManager.Instance.ShowUI(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
             if (itemId == -1) //取消使用
                 return;
@@ -208,7 +208,9 @@ public class GameEventManager : MonoBehaviour
 
         //停止导航
         var levelMaster = LevelMaster.Instance;
-        if (levelMaster != null)
+
+        //fix player stop moving after interaction UI confirm
+        if (levelMaster != null && eventId != 911)
         {
             // fix drag motion continuous move the player when scene is playing
             // modified by eaphone at 2021/05/31
@@ -265,7 +267,7 @@ public class GameEventManager : MonoBehaviour
     }
 
     static string _currentEvt;
-    static public void SetCurrentGameEvent(GameEvent evt)
+    public static void SetCurrentGameEvent(GameEvent evt)
     {
         if (evt == null)
         {
@@ -276,12 +278,12 @@ public class GameEventManager : MonoBehaviour
             _currentEvt = evt.name;
         }
     }
-    static public GameEvent GetCurrentGameEvent()
+    public static GameEvent GetCurrentGameEvent()
     {
         return GetGameEventByID(_currentEvt);
     }
 	
-	static public GameEvent GetGameEventByID(string id)
+	public static GameEvent GetGameEventByID(string id)
 	{
         if (string.IsNullOrEmpty(id))
             return null;

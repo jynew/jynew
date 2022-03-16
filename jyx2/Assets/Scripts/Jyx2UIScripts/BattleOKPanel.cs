@@ -8,7 +8,7 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-using HSFrameWork.ConfigTable;
+
 using Jyx2;
 using System;
 using System.Collections;
@@ -51,23 +51,7 @@ public partial class BattleOKPanel:Jyx2_UIBase
 
     void ShowSkillDamage() 
     {
-        /*BattleZhaoshiInstance zhaoshi = BattleStateMechine.Instance.CurrentZhaoshi;
-        RoleInstance role = BattleStateMechine.Instance.CurrentRole;
-        if (zhaoshi == null || role == null)
-            return;*/
-        //int level_index = zhaoshi.Data.GetLevel();
-        //int damage = role.Attack + zhaoshi.Data.GetSkillLevelInfo(level_index).Attack / 3;
-        //if (role.Weapon >= 0)
-        //{
-        //    var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(role.Weapon);
-        //    damage += i.Attack;
-        //}
-        //if (role.Armor >= 0)
-        //{
-        //    var i = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(role.Armor);
-        //    damage += i.Attack;
-        //}
-        //DamageText_Text.text = $"{zhaoshi.Data.Name} Lv.{zhaoshi.Data.GetLevel()}";
+        //NOTHING
     }
 
     void OnOKClick() 
@@ -89,4 +73,12 @@ public partial class BattleOKPanel:Jyx2_UIBase
             cancelCallback = null;
         }
     }
+
+	protected override void handleGamepadButtons()
+	{
+		if (GamepadHelper.IsConfirm())
+            OnOKClick();
+        else if (GamepadHelper.IsCancel())
+            OnCancelClick();
+	}
 }

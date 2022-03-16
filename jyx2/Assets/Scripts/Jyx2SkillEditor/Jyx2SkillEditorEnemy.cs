@@ -10,7 +10,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Animancer;
-using HSFrameWork.ConfigTable;
+
 using UnityEngine;
 using Jyx2;
 using Jyx2Configs;
@@ -34,7 +34,7 @@ public class Jyx2SkillEditorEnemy : Jyx2AnimationBattleRole
         
         animator = GetComponent<Animator>();
         Jyx2ConfigSkill skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(SkillId.ToString());
-        var wugong = new WugongInstance(SkillId);
+        var wugong = new SkillInstance(SkillId);
 
         var display = wugong.GetDisplay();
         this.CurDisplay = display;
