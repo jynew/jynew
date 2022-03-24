@@ -241,7 +241,8 @@ public class BattleRole : Jyx2AnimationBattleRole
             ExtraDelayTime = 0.2f,
             AnimationType = bl_HUDText.TextAnimationType.HorizontalSmall,
             FadeSpeed = 200,
-            ExtraFloatSpeed = -11
+            ExtraFloatSpeed = -11,
+            Size = 30,
         };
         info.TextPrefab = Jyx2ResourceHelper.GetCachedPrefab("AttackInfoText");
         hudRoot.NewText(info);
