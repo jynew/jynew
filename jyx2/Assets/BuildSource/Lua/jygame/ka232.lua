@@ -1,5 +1,5 @@
-Talk(0, "好啊，你们居然在这里计划要杀人，亏你们还是同盟的帮派．", "talkname0", 1);
-Talk(84, "小子，偷听了我们的计划，只好杀了你灭口．怪不得我们了．上！", "talkname84", 0);
+Talk(0, "好啊，你们居然在这里计划要杀人，亏你们还是同盟的帮派。", "talkname0", 1);
+Talk(84, "小子，偷听了我们的计划，只好杀了你灭口。怪不得我们了。上！", "talkname84", 0);
 if TryBattle(42) == true then goto label0 end;
     Dead();
     do return end;

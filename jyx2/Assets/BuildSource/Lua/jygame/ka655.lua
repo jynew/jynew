@@ -1,15 +1,15 @@
 if JudgeAttack(0, 90, 1000) == true then goto label0 end;
-    Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物．", "talkname0", 1);
+    Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物。", "talkname0", 1);
     do return end;
 ::label0::
     if HaveItem(106) == true then goto label1 end;
-        Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物．", "talkname0", 1);
+        Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物。", "talkname0", 1);
         do return end;
         if HaveItem(109) == true then goto label2 end;
-            Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物．", "talkname0", 1);
+            Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物。", "talkname0", 1);
             do return end;
             if HaveItem(117) == true then goto label3 end;
-                Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物．", "talkname0", 1);
+                Talk(0, "我看这块巨石门大有问题，后面肯定藏有宝物。", "talkname0", 1);
                 do return end;
 ::label1::
 ::label2::

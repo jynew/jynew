@@ -1,4 +1,4 @@
-Talk(91, "小子，你居然还敢再来，找死．", "talkname91", 0);
+Talk(91, "小子，你居然还敢再来，找死。", "talkname91", 0);
 if TryBattle(99) == true then goto label0 end;
     Dead();
     do return end;

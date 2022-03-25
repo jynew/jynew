@@ -1,4 +1,4 @@
-Talk(109, "．．．．．．", "talkname109", 0);
+Talk(109, "……", "talkname109", 0);
 if InTeam(53) == true then goto label0 end;
     do return end;
 ::label0::

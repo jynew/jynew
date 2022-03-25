@@ -1,6 +1,6 @@
 --instruct_50(138, 139, 140, 141, 142, 6, 0);
 if HaveItem(138) and  HaveItem(139) and  HaveItem(140) and  HaveItem(141) and  HaveItem(142) then goto labelS end;
-	Talk(75, "想要”玉笛谁家听落梅”，就赶紧将羊羔坐臀，小猪耳朵，小牛腰子，獐腿肉，兔肉这五种材料找来．", "talkname75", 0);
+	Talk(75, "想要“玉笛谁家听落梅”，就赶紧将羊羔坐臀，小猪耳朵，小牛腰子，獐腿肉，兔肉这五种材料找来。", "talkname75", 0);
 	do return end;
 
 ::labelS::
@@ -9,7 +9,7 @@ if HaveItem(138) and  HaveItem(139) and  HaveItem(140) and  HaveItem(141) and  H
 	AddItemWithoutHint(140, -1);
 	AddItemWithoutHint(141, -1);
 	AddItemWithoutHint(142, -1);
-	Talk(75, "好，材料通通都有了，我马上就把”玉笛谁家听落梅”作给你．", "talkname75", 0);
+	Talk(75, "好，材料通通都有了，我马上就把“玉笛谁家听落梅”做给你。", "talkname75", 0);
 	DarkScence();
 	ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 	ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
@@ -29,7 +29,7 @@ if HaveItem(138) and  HaveItem(139) and  HaveItem(140) and  HaveItem(141) and  H
 	jyx2_FixMapObject("林厨子做完菜",1);
 	ModifyEvent(-2, 4, -2, -2, -1, -1, 677, -2, -2, -2, -2, -2, -2);--by fanyu 启动脚本677 场景32-编号4
 	LightScence();
-	Talk(75, "好了，完成了，这一道”玉笛谁家听落梅”你拿去吧．", "talkname75", 0);
-	Talk(0, "谢谢林师父．", "talkname0", 1);
+	Talk(75, "好了，完成了，这一道“玉笛谁家听落梅”你拿去吧。", "talkname75", 0);
+	Talk(0, "谢谢林师父。", "talkname0", 1);
 	AddItem(176, 1);
 	do return end;
