@@ -213,18 +213,7 @@ public class LevelMaster : MonoBehaviour
 		if (gameMap != null && !gameMap.IsWorldMap())
 		{
 			//调整摄像机参数
-			var vcamObj = GameObject.Find("CameraGroup/CM vcam1");
-			if (vcamObj != null)
-			{
-				var vcam = vcamObj.GetComponent<CinemachineVirtualCamera>();
-				var body = vcam.GetCinemachineComponent<CinemachineTransposer>();
-				
-				//高度
-				body.m_FollowOffset = GlobalAssetConfig.Instance.defaultVcamOffset;
-				
-				//跟随对象
-				vcam.Follow = _gameMapPlayer.transform;
-			}
+			UpdateCameraParams();
 
 			if (!IsInBattle)
 			{
@@ -236,6 +225,39 @@ public class LevelMaster : MonoBehaviour
 		interactiveButton = Jyx2InteractiveButton.GetInteractiveButton();
 
 		IsInited = true;
+	}
+
+	public void UpdateCameraParams()
+	{
+		//世界地图取默认场景的设置
+		if (_currentMap.IsWorldMap())
+			return;
+		
+		//调整摄像机参数
+		var vcamObj = GameObject.Find("CameraGroup/CM vcam1");
+
+		if (vcamObj != null)
+		{
+			var vcam = vcamObj.GetComponent<CinemachineVirtualCamera>();
+			var body = vcam.GetCinemachineComponent<CinemachineTransposer>();
+
+			var viewPortType = GameViewPortManager.Instance.GetViewportType();
+
+			//高度
+			if (viewPortType == GameViewPortManager.ViewportType.Topdown)
+			{
+				body.m_FollowOffset = GlobalAssetConfig.Instance.defaultVcamOffset;	
+			}
+			else if(viewPortType == GameViewPortManager.ViewportType.TopdownClose)
+			{
+				body.m_FollowOffset = GlobalAssetConfig.Instance.vcamOffsetClose;
+			}
+			
+			
+				
+			//跟随对象
+			vcam.Follow = _gameMapPlayer.transform;
+		}
 	}
 
 	private void PlayMusic(Jyx2ConfigMap gameMap)
@@ -437,8 +459,8 @@ public class LevelMaster : MonoBehaviour
 
 		if (_gameMapPlayer == null)
 			return;
-
-		if (GameViewPortManager.Instance.GetViewportType() == GameViewPortManager.ViewportType.Topdown || IsInWorldMap)
+		
+		if (GameViewPortManager.Instance.GetViewportType() != GameViewPortManager.ViewportType.Follow || IsInWorldMap)
 		{
 			//鼠标点击控制
 			OnClickControlPlayer();

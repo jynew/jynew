@@ -11,8 +11,9 @@ public class GameViewPortManager : MonoBehaviour
 {
     public enum ViewportType
     {
-        Topdown = 0, //顶视角
-        Follow = 1, //跟随视角
+        TopdownClose = 0, //顶视角（近）
+        Topdown = 1, //顶视角（远）
+        Follow = 2, //跟随视角
     }
     
     public static GameViewPortManager Instance
@@ -48,6 +49,8 @@ public class GameViewPortManager : MonoBehaviour
         {
             vcam.gameObject.SetActive(viewportType == ViewportType.Follow);
         }
+
+        LevelMaster.Instance.UpdateCameraParams();
     }
 
     public ViewportType GetViewportType()

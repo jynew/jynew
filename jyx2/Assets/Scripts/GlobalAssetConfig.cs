@@ -58,6 +58,9 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("游戏相机配置")] [LabelText("相机偏移")]
     public Vector3 defaultVcamOffset = new Vector3(7, 10, 8);
 
+    [BoxGroup("游戏相机配置")][LabelText("相机偏移（近）")]
+    public Vector3 vcamOffsetClose = new Vector3(5, 8, 5);
+
     [BoxGroup("地图设置")] [LabelText("大地图")] 
     public AssetReference BigMap;
     

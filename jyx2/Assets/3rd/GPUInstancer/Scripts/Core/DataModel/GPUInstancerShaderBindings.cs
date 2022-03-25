@@ -174,7 +174,21 @@ namespace GPUInstancer
 
                         Shader originalShader = Shader.Find(shaderInstances[i].name);
                         string originalAssetPath = UnityEditor.AssetDatabase.GetAssetPath(originalShader);
-                        DateTime lastWriteTime = System.IO.File.GetLastWriteTime(originalAssetPath);
+
+                        if (string.IsNullOrEmpty(originalAssetPath))
+                            continue;
+                        
+                        DateTime lastWriteTime;
+                        try
+                        {
+                            lastWriteTime = System.IO.File.GetLastWriteTime(originalAssetPath);
+                        }
+                        catch(Exception e)
+                        {
+                            Debug.LogError(e.ToString());
+                            continue;
+                        }
+                        
                         if (lastWriteTime >= DateTime.Now)
                             continue;
 
