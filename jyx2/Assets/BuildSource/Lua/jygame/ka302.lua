@@ -11,5 +11,5 @@ if InTeam(29) == false then goto label0 end;
         do return end;
 ::label0::
         Talk(28, "你还在这做什么？", "talkname28", 0);
-        Talk(0, "没事逛逛．", "talkname0", 1);
+        Talk(0, "没事逛逛。", "talkname0", 1);
 do return end;

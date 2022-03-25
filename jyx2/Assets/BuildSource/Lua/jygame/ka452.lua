@@ -8,5 +8,5 @@ if TryBattle(72) == true then goto label0 end;
     ModifyEvent(-2, 17, -2, -2, 474, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 18, -2, -2, 474, -1, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
-    Talk(0, "老伯，我看下一次的华山论剑，你还是别参加了，继续再苦练吧．", "talkname0", 1);
+    Talk(0, "老伯，我看下一次的华山论剑，你还是别参加了，继续再苦练吧。", "talkname0", 1);
 do return end;

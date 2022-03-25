@@ -1,5 +1,5 @@
-Talk(91, "小子，金轮寺暂时封寺，你要参观就到别处．", "talkname91", 0);
-Talk(0, "大爷我就爱到处逛逛，你们这些秃子管不着．", "talkname0", 1);
+Talk(91, "小子，金轮寺暂时封寺，你要参观就到别处。", "talkname91", 0);
+Talk(0, "大爷我就爱到处逛逛，你们这些秃子管不着。", "talkname0", 1);
 if TryBattle(99) == true then goto label0 end;
     Dead();
     do return end;

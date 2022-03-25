@@ -1,6 +1,6 @@
 Talk(29, "怎么，还想杀我吗？还是想跟我学几招对付女人呀？", "talkname29", 0);
 if AskBattle() == false then goto label0 end;
-    Talk(0, "你这采花淫贼，死到临头还不觉悟．你受死吧！", "talkname0", 1);
+    Talk(0, "你这采花淫贼，死到临头还不觉悟。你受死吧！", "talkname0", 1);
     if TryBattle(53) == true then goto label1 end;
         Dead();
         do return end;
@@ -14,9 +14,9 @@ if AskBattle() == false then goto label0 end;
         do return end;
 ::label0::
         if AskJoin () == false then goto label2 end;
-            Talk(0, "这可是你说的，我们就一起走吧，到时可得传授小弟几招．", "talkname0", 1);
+            Talk(0, "这可是你说的，我们就一起走吧，到时可得传授小弟几招。", "talkname0", 1);
             if TeamIsFull() == false then goto label3 end;
-                Talk(29, "你的队伍已满，我无法加入．", "talkname29", 0);
+                Talk(29, "你的队伍已满，我无法加入。", "talkname29", 0);
                 do return end;
 ::label3::
                 DarkScence();
@@ -28,5 +28,5 @@ if AskBattle() == false then goto label0 end;
                 AddEthics(-6);
                 do return end;
 ::label2::
-                Talk(0, "你们俩的事，我不想管．", "talkname0", 1);
+                Talk(0, "你们俩的事，我不想管。", "talkname0", 1);
 do return end;

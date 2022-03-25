@@ -9,7 +9,7 @@ if UseItem(147) == true then goto label0 end;
         do return end;
 ::label1::
         PlayWave(23);
-        Talk(0, "咦！好像有什么声音．", "talkname0", 1);
+        Talk(0, "咦！好像有什么声音。", "talkname0", 1);
         DarkScence();
         SetScenceMap(-2, 1, 18, 25, 0);
         SetScenceMap(-2, 1, 18, 26, 0);

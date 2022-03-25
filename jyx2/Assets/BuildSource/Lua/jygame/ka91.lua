@@ -1,6 +1,6 @@
 Talk(0, "好啊！成昆，原来你躲在这里，怎么，几个坏蛋聚在这里，是不是又在一起商量什么坏勾当？", "talkname0", 1);
-Talk(18, "哼！上次的事全被你坏了，我这次饶不了你．", "talkname18", 0);
-Talk(0, "手下败将还说大话，这次得小心一点，可别再让你跑了．", "talkname0", 1);
+Talk(18, "哼！上次的事全被你坏了，我这次饶不了你。", "talkname18", 0);
+Talk(0, "手下败将还说大话，这次得小心一点，可别再让你跑了。", "talkname0", 1);
 if TryBattle(13) == true then goto label0 end;
     Dead();
     do return end;
@@ -15,7 +15,7 @@ if TryBattle(13) == true then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/成昆喽喽3", "");
     jyx2_ReplaceSceneObject("", "NPC/成昆", "");
     LightScence();
-    Talk(0, "今天真是大快人心，替武林除了一个大害．", "talkname0", 1);
+    Talk(0, "今天真是大快人心，替武林除了一个大害。", "talkname0", 1);
     AddItem(191, 1);
     AddRepute(5);
 do return end;
