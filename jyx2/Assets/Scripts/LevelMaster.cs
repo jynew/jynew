@@ -546,7 +546,7 @@ public class LevelMaster : MonoBehaviour
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 				//NPC层
-				if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, 1 << LayerMask.NameToLayer("NPC")))
+				if (Physics.Raycast(ray, out RaycastHit hitInfo, 500, 1 << LayerMask.NameToLayer("NPC")))
 				{
 					var dist = Vector3.Distance(runtime.Player.View.transform.position, hitInfo.transform.position);
 					Debug.Log("on npc clicked, dist = " + dist);
@@ -554,7 +554,7 @@ public class LevelMaster : MonoBehaviour
 					//现在没有直接地图上点击NPC的实现
 				}
 				//BY CG: MASK：15:Ground层
-				else if (Physics.Raycast(ray, out hitInfo, 100, 1 << LayerMask.NameToLayer("Ground")))
+				else if (Physics.Raycast(ray, out hitInfo, 500, 1 << LayerMask.NameToLayer("Ground")))
 				{
 					_playerNavAgent.isStopped = false;
 					_playerNavAgent.updateRotation = true;
