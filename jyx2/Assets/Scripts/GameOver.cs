@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Jyx2;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,5 +40,10 @@ public class GameOver : Jyx2_UIBase
         date_text=transform.Find("image/date").GetComponent<Text>();
         note_text=transform.Find("note").GetComponent<Text>();
         (transform.Find("operationArea/SavePanel").GetComponent<SavePanel>()).Show();
+    }
+    
+    public async void BackToMainMenu()
+    {
+        LoadingPanel.Create(null).Forget();
     }
 }
