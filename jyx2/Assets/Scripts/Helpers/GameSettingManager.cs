@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using AClockworkBerry;
 using Cysharp.Threading.Tasks;
 using i18n;
 using i18n.TranslatorDef;
@@ -31,7 +32,8 @@ public static class GameSettingManager
 		Resolution,
 		Viewport,
 		Difficulty,
-		Language
+		Language,
+		DebugMode,
 	}
 
 	/// <summary>
@@ -71,6 +73,7 @@ public static class GameSettingManager
 		SubscribeEnforceEvent(Catalog.Resolution, SetResolution, true);
 		SubscribeEnforceEvent(Catalog.Fullscreen, SetFullScreen, true);
 		SubscribeEnforceEvent(Catalog.Language, SetLanguage, true);
+		SubscribeEnforceEvent(Catalog.DebugMode, SetDebugMode, true);
 
 		_hasInitialized = true;
 
@@ -118,6 +121,9 @@ public static class GameSettingManager
 					break;
 				case Catalog.Language:
 					result.Add(Catalog.Language, GetLanguage());
+					break;
+				case Catalog.DebugMode:
+					result.Add(Catalog.DebugMode, GetDebugMode());
 					break;
 			}
 		}
@@ -214,6 +220,9 @@ public static class GameSettingManager
 				break;
 			case Catalog.Viewport:
 				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_VIEWPORT_TYPE, (int)value);
+				break;
+			case Catalog.DebugMode:
+				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_DEBUGMODE, (int)value);
 				break;
 		}
 		Debug.Log($"Update validation：{Enum.GetName(typeof(Catalog), setting)}, value {GetSettings()[setting]}。");
@@ -379,7 +388,7 @@ public static class GameSettingManager
 		const string key = GameConst.PLAYER_PREF_LANGUAGE;
 		return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetString(key) : "默认";
 	}
-
+	
 
 	private static void SetLanguage(object mode)
 	{
@@ -406,5 +415,27 @@ public static class GameSettingManager
 		}
 	}
 
+	#endregion
+	
+	#region debugMode
+	private static int GetDebugMode()
+	{
+		int result = 0;
+		var key = GameConst.PLAYER_PREF_DEBUGMODE;
+		if (PlayerPrefs.HasKey(key))
+		{
+			result = PlayerPrefs.GetInt(key);
+		}
+
+		return result;
+	}
+
+	private static void SetDebugMode(object mode)
+	{
+		if (!GlobalAssetConfig.Instance) return;
+		int debugMode = (int) mode;
+		ScreenLogger.Instance.ShowLog = (debugMode == 1);
+	}
+	
 	#endregion
 }

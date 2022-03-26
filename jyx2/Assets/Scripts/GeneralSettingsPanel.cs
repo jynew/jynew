@@ -24,6 +24,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     public Dropdown difficultyDropdown;
     public Dropdown viewportDropdown;
     public Dropdown languageDropdown;
+    public Dropdown debugModeDropdown;
 
     public Slider volumeSlider;
     public Slider soundEffectSlider;
@@ -78,6 +79,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitSoundEffectSlider();
         InitViewportSetting();
         InitLanguageSetting();
+        InitDebugModeSetting();
         
         windowDropdown.onValueChanged.AddListener(SetFullscreen);
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -85,6 +87,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         soundEffectSlider.onValueChanged.AddListener(SetSoundEffect);
         viewportDropdown.onValueChanged.AddListener(SetViewport);
         languageDropdown.onValueChanged.AddListener(SetLanguage);
+        debugModeDropdown.onValueChanged.AddListener(SetDebugMode);
         
         m_CloseButton.onClick.AddListener(Close);
         
@@ -95,7 +98,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     {
         _graphicSetting.Save();
         _graphicSetting.Execute();
-        Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
+        Jyx2_UIManager.Instance.HideUI(nameof(GameSettingsPanel));
     }
 
     public void InitResolutionDropdown()
@@ -169,6 +172,15 @@ public class GeneralSettingsPanel : Jyx2_UIBase
        }
    }
 
+   private void InitDebugModeSetting()
+   {
+       var setting = gameSetting[GameSettingManager.Catalog.DebugMode];
+       if (setting is int value)
+       {
+           debugModeDropdown.value = value;
+       }
+   }
+
     private void SetResolution(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, index);
@@ -197,6 +209,11 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     private void SetLanguage(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Language, languageDropdown.options[index].text);
+    }
+
+    private void SetDebugMode(int index)
+    {
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.DebugMode, index);
     }
 
     /*游戏难度，暂未实现*/

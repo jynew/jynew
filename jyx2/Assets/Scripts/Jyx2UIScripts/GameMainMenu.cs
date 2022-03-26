@@ -427,7 +427,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenSettingsPanel()
 	{
-		Jyx2_UIManager.Instance.ShowUIAsync(nameof(GraphicSettingsPanel)).Forget();
+		Jyx2_UIManager.Instance.ShowUIAsync(nameof(GameSettingsPanel)).Forget();
 	}
 
 	/// <summary>

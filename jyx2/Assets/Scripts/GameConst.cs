@@ -235,4 +235,5 @@ public class GameConst
     public const string PLAYER_PREF_FULLSCREEN = "fullscreen";
     public const string PLAYER_PREF_VIEWPORT_TYPE = "viewport_type";
     public const string PLAYER_PREF_LANGUAGE = "language";
+    public const string PLAYER_PREF_DEBUGMODE = "debugmode";
 }
