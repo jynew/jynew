@@ -111,15 +111,17 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void InitResolutionDropdown()
     {
-#if !UNITY_ANDROID
+//#if !UNITY_ANDROID
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
-
+        
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
+            
+            if(!options.Contains(option))
+                options.Add(option);
         }
         
         resolutionDropdown.AddOptions(options);
@@ -127,7 +129,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         var setting = (int) gameSetting[GameSettingManager.Catalog.Resolution];
         resolutionDropdown.value = setting;
         resolutionDropdown.RefreshShownValue();
-#endif
+//#endif
     }
 
     private void InitWindowDropdown()
