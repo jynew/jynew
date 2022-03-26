@@ -87,7 +87,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         windowDropdown.gameObject.SetActive(!Application.isMobilePlatform);
         
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
-        resolutionDropdown.gameObject.SetActive(!Application.isMobilePlatform);
         
         volumeSlider.onValueChanged.AddListener(SetVolume);
         soundEffectSlider.onValueChanged.AddListener(SetSoundEffect);
@@ -111,34 +110,41 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void InitResolutionDropdown()
     {
-//#if !UNITY_ANDROID
+        var setting = (string) gameSetting[GameSettingManager.Catalog.Resolution];
+
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
+
+        int currentIndex = 0;
         
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            
-            if(!options.Contains(option))
+            string option = resolutions[i].width + "x" + resolutions[i].height;
+
+            if (!options.Contains(option))
+            {
+                //如果是当前的分辨率，则记下来
+                if (option.Equals(setting))
+                {
+                    currentIndex = i;
+                }
+                
                 options.Add(option);
+            }
+                
         }
         
         resolutionDropdown.AddOptions(options);
-
-        var setting = (int) gameSetting[GameSettingManager.Catalog.Resolution];
-        resolutionDropdown.value = setting;
+        resolutionDropdown.value = currentIndex;
         resolutionDropdown.RefreshShownValue();
-//#endif
     }
 
     private void InitWindowDropdown()
     {
-#if !UNITY_ANDROID
         var setting = (int) gameSetting[GameSettingManager.Catalog.Fullscreen];
         windowDropdown.value = setting;
         windowDropdown.RefreshShownValue();
-#endif
     }
 
     public void InitDifficultyDropdown()
@@ -202,7 +208,8 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     private void SetResolution(int index)
     {
-        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, index);
+        string resolutionText = resolutionDropdown.options[index].text;
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, resolutionText);
     }
 
     private void SetVolume(float volume)

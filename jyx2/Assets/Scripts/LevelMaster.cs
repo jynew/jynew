@@ -404,7 +404,8 @@ public class LevelMaster : MonoBehaviour
 		_playerNavAgent.angularSpeed = GameConst.MapAngularSpeed;
 		_playerNavAgent.acceleration = GameConst.MapAcceleration;
 		_playerNavAgent.autoBraking = false;
-		_playerNavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+		_playerNavAgent.radius = 0.1f;
+		_playerNavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
 
 		playerRoleView.Init();

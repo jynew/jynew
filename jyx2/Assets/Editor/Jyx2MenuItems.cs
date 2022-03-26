@@ -102,14 +102,11 @@ namespace Jyx2Editor
         {
             //自动运行xLua的编译
             Generator.GenAll();
+
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "jyx2Win64Build");
 
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneWindows64);
-
-
-            if (string.IsNullOrEmpty(path))
-                return;
 
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();

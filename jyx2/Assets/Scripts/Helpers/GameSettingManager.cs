@@ -209,7 +209,7 @@ public static class GameSettingManager
 		switch (setting)
 		{
 			case Catalog.Resolution:
-				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_RESOLUTION, (int)value);
+				PlayerPrefs.SetString(GameConst.PLAYER_PREF_RESOLUTION, (string)value);
 				break;
 			case Catalog.Fullscreen:
 				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_FULLSCREEN, (int)value);
@@ -238,51 +238,69 @@ public static class GameSettingManager
 
 	#region Resolution
 
+	private static Vector2Int ParseResolution(string resolutionStr)
+	{
+		if(string.IsNullOrEmpty(resolutionStr))
+			return Vector2Int.zero;
+		
+		if (!resolutionStr.Contains("x"))
+			return Vector2Int.zero;
+		
+		try
+		{
+			var tmp = resolutionStr.Split('x');
+			int width = int.Parse(tmp[0]);
+			int height = int.Parse(tmp[1]);
+			return new Vector2Int(width, height);
+		}
+		catch(Exception e)
+		{
+			Debug.LogError(e.ToString());
+			PlayerPrefs.DeleteKey(GameConst.PLAYER_PREF_RESOLUTION);
+		}
+		
+		return Vector2Int.zero;
+	}
+	
 	private static void InitResolution()
 	{
-#if !UNITY_ANDROID
 		var key = GameConst.PLAYER_PREF_RESOLUTION;
 
 		if (PlayerPrefs.HasKey(key))
 		{
-			var value = PlayerPrefs.GetInt(key);
-			Resolution resolution = resolutions[value];
-			Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+			var value = PlayerPrefs.GetString(key);
+			var resolution = ParseResolution(value);
+			if (resolution != Vector2Int.zero)
+			{
+				Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreen);
+			}
 		}
-#endif
 	}
 
-	private static void SetResolution(object index)
+	private static void SetResolution(object resolutionStr)
 	{
-#if !UNITY_ANDROID
-		if (index is int value)
+		if (resolutionStr is string value)
 		{
-			// 如果存储的游戏设置分辨率索引值超出了当前设备所支持的分辨率的数组范围，使用当前设备上的默认分辨率。
-			// 这个问题通常发生在开发中更换显示设备的情况下。实际应用中应该不会出现。除非日后有用户设置迁移功能。
-			if (value >= resolutions.Length)
+			var resolution = ParseResolution(value);
+			if (resolution != Vector2Int.zero)
 			{
-				value = GetDefaultResolution();
-				Debug.Log("[Dev]存储分辨率与当前显示设备不兼容。适用当前显示设备的默认分辨率：" + resolutions[value]);
+				Debug.Log($"分辨率设置为：{resolution}");
+				Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreen);
 			}
-
-			Resolution resolution = resolutions[value];
-			Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
 		}
 		else
 		{
-			Debug.LogError("SetResolution: 参数必须是float.");
+			Debug.LogError("SetResolution: 参数必须是 string.");
 		}
-#endif
 	}
 
 	/// <summary>
 	/// 返回当前的分辨率设置。如果没有储存分辨率设置，返回符合当前窗口尺寸的分辨率。
 	/// </summary>
-	/// <returns>Return -1 if no pref key</returns>
-	private static int GetResolution()
+	private static string GetResolution()
 	{
 		var result = PlayerPrefs.HasKey(GameConst.PLAYER_PREF_RESOLUTION)
-			? PlayerPrefs.GetInt(GameConst.PLAYER_PREF_RESOLUTION)
+			? PlayerPrefs.GetString(GameConst.PLAYER_PREF_RESOLUTION)
 			: GetDefaultResolution();
 
 		return result;
@@ -292,18 +310,9 @@ public static class GameSettingManager
 	/// 返回符合当前窗口尺寸的分辨率。
 	/// </summary>
 	/// <returns></returns>
-	private static int GetDefaultResolution()
+	private static string GetDefaultResolution()
 	{
-		for (var i = 0; i < resolutions.Length; i++)
-		{
-			if (resolutions[i].width == Screen.currentResolution.width &&
-				resolutions[i].height == Screen.currentResolution.height)
-			{
-				return i;
-			}
-		}
-
-		return 0;
+		return $"{Screen.currentResolution.width}x{Screen.currentResolution.height}";
 	}
 
 	#endregion
@@ -472,12 +481,12 @@ public static class GameSettingManager
 		}
 	}
 
-	public static MobileMoveModeType MobileMoveMode = MobileMoveModeType.Joystick;
+	public static MobileMoveModeType MobileMoveMode = MobileMoveModeType.Click;
 
 	public enum MobileMoveModeType
 	{
-		Joystick = 0, //摇杆
-		Click = 1, //点击
+		Click = 0, //点击
+		Joystick = 1, //摇杆
 	}
 
 	#endregion
