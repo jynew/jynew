@@ -17,6 +17,7 @@ using System;
 using System.Reflection;
 using System.Text;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 
 namespace CSObjectWrapEditor
@@ -1470,7 +1471,7 @@ namespace CSObjectWrapEditor
             {
                 new List<string>(){"UnityEngine.Light", "shadowRadius"},
                 new List<string>(){"UnityEngine.Light", "SetLightDirty"},
-                new List<string>(){"UnityEngine.Light", "shadowAngle"}
+                new List<string>(){"UnityEngine.Light", "shadowAngle"},
             };
 
             HotfixCfg = new Dictionary<Type, HotfixFlag>();
@@ -1478,6 +1479,7 @@ namespace CSObjectWrapEditor
             OptimizeCfg = new Dictionary<Type, OptimizeFlag>();
 
             DoNotGen = new Dictionary<Type, HashSet<string>>();
+
 
 #if UNITY_EDITOR && HOTFIX_ENABLE
             assemblyList = HotfixConfig.GetHotfixAssembly().Select(a => a.GetName().Name).ToList();
@@ -1640,14 +1642,16 @@ namespace CSObjectWrapEditor
 #if !XLUA_GENERAL
         static void callCustomGen()
         {
+
             foreach (var method in (from type in XLua.Utils.GetAllTypes()
-                               from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
-                               where method.IsDefined(typeof(GenCodeMenuAttribute), false) select method))
+                from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
+                where method.IsDefined(typeof(GenCodeMenuAttribute), false)
+                select method))
             {
                 method.Invoke(null, new object[] { });
             }
         }
-
+  
         [MenuItem("XLua/Generate Code", false, 1)]
         public static void GenAll()
         {
