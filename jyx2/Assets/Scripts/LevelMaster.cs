@@ -391,16 +391,17 @@ public class LevelMaster : MonoBehaviour
 		var gameMap = GetCurrentGameMap();
 		if (gameMap != null && gameMap.IsWorldMap())
 		{
-			_playerNavAgent.speed = GameConst.MapSpeed * 4; //大地图上放大4倍
+			_playerNavAgent.speed = GlobalAssetConfig.Instance.playerMoveSpeedWorldMap;
 		}
 		else
 		{
-			_playerNavAgent.speed = GameConst.MapSpeed;
+			_playerNavAgent.speed = GlobalAssetConfig.Instance.playerMoveSpeed;
 		}
 
 		_playerNavAgent.angularSpeed = GameConst.MapAngularSpeed;
 		_playerNavAgent.acceleration = GameConst.MapAcceleration;
 		_playerNavAgent.autoBraking = false;
+		_playerNavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
 
 		playerRoleView.Init();

@@ -67,6 +67,14 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("地图设置")] [LabelText("默认主角居名字")] 
     public string defaultHomeName;
 
+
+    [BoxGroup("角色控制")] [LabelText("主角移动速度")]
+    public float playerMoveSpeed = 7.5f;
+    
+    [BoxGroup("角色控制")] [LabelText("大地图移动速度")]
+    public float playerMoveSpeedWorldMap = 20f;
+    
+
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
     public List<StoryIdNameFix> StoryIdNameFixes;
