@@ -84,7 +84,11 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitMobileMoveModeSetting();
         
         windowDropdown.onValueChanged.AddListener(SetFullscreen);
+        windowDropdown.gameObject.SetActive(!Application.isMobilePlatform);
+        
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
+        resolutionDropdown.gameObject.SetActive(!Application.isMobilePlatform);
+        
         volumeSlider.onValueChanged.AddListener(SetVolume);
         soundEffectSlider.onValueChanged.AddListener(SetSoundEffect);
         viewportDropdown.onValueChanged.AddListener(SetViewport);

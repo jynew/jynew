@@ -463,7 +463,6 @@ public static class GameSettingManager
 
 	private static void SetMobileMoveMode(object mode)
 	{
-		if (!GlobalAssetConfig.Instance) return;
 		int moveMode = (int) mode;
 		MobileMoveMode = (MobileMoveModeType)moveMode;
 

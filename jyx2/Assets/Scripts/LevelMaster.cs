@@ -294,7 +294,7 @@ public class LevelMaster : MonoBehaviour
 	public void UpdateMobileControllerUI()
 	{
 		m_Joystick.gameObject.SetActive(IsJoystickControlEnable());
-		m_TouchPad.gameObject.SetActive(IsJoystickControlEnable());
+		m_TouchPad.gameObject.SetActive(false); //暂时关掉
 
 		//战斗中移动按钮隐藏
 		if (BattleManager.Instance.IsInBattle)
