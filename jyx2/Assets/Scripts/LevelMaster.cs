@@ -291,15 +291,16 @@ public class LevelMaster : MonoBehaviour
 		AudioManager.PlayMusicAtPath(musicPath).Forget();
 	}
 
-	private void UpdateMobileControllerUI()
+	public void UpdateMobileControllerUI()
 	{
-		m_Joystick.gameObject.SetActive(IsMobilePlatform());
-		m_TouchPad.gameObject.SetActive(IsMobilePlatform());
+		m_Joystick.gameObject.SetActive(IsJoystickControlEnable());
+		m_TouchPad.gameObject.SetActive(IsJoystickControlEnable());
 
 		//战斗中移动按钮隐藏
 		if (BattleManager.Instance.IsInBattle)
 		{
 			m_Joystick.gameObject.SetActive(false);
+			m_TouchPad.gameObject.SetActive(false);
 		}
 	}
 
@@ -445,10 +446,10 @@ public class LevelMaster : MonoBehaviour
 	void FixedUpdate()
 	{
 		TryClearNavPointer();
-		PlayerControll();
+		PlayerControl();
 	}
 
-	void PlayerControll()
+	void PlayerControl()
 	{
 		if (BattleManager.Instance.IsInBattle)
 			return;
@@ -541,10 +542,10 @@ public class LevelMaster : MonoBehaviour
 			return;
 
 		//在editor上可以寻路
-		if (!Application.isMobilePlatform || _currentMap.IsWorldMap())
+		if (IsClickControlEnable())
 		{
 			//点击寻路
-			if (Input.GetMouseButton(1) && !UnityTools.IsPointerOverUIObject())
+			if ((Input.GetMouseButton(0) || Input.GetMouseButton(1)) && !UnityTools.IsPointerOverUIObject())
 			{
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -569,6 +570,40 @@ public class LevelMaster : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// 是否可以点击移动
+	/// </summary>
+	/// <returns></returns>
+	private bool IsClickControlEnable()
+	{
+		if (!IsMobilePlatform()) return true;
+		if (IsMobileClickControl()) return true;
+		return false;
+	}
+
+	/// <summary>
+	/// 是否可以虚拟摇杆移动
+	/// </summary>
+	/// <returns></returns>
+	private bool IsJoystickControlEnable()
+	{
+		return IsMobilePlatform() && !IsMobileClickControl();
+	}
+
+	/// <summary>
+	/// 是否可以标准输入移动
+	/// </summary>
+	/// <returns></returns>
+	private bool IsAxisControlEnable()
+	{
+		return true;
+	}
+
+	private bool IsMobileClickControl()
+	{
+		return IsMobilePlatform() && GameSettingManager.MobileMoveMode == GameSettingManager.MobileMoveModeType.Click;
+	}
+
 	public void ForceSetEnable(bool forceDisable)
 	{
 		_forceDisable = forceDisable;
@@ -580,12 +615,12 @@ public class LevelMaster : MonoBehaviour
 	{
 		if (!_CanController || _forceDisable)//掉本调用自动寻路的时候 不能手动控制
 			return;
-
-		if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+		
+		if (IsAxisControlEnable() && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
 		{
 			OnManuelMove(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 		}
-		else if (m_Joystick.axisX.axisValue != 0 || m_Joystick.axisY.axisValue != 0)
+		else if (IsJoystickControlEnable() && (m_Joystick.axisX.axisValue != 0 || m_Joystick.axisY.axisValue != 0))
 		{
 			OnManuelMove(-m_Joystick.axisX.axisValue, m_Joystick.axisY.axisValue);
 		}

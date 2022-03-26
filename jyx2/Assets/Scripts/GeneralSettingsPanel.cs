@@ -25,6 +25,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     public Dropdown viewportDropdown;
     public Dropdown languageDropdown;
     public Dropdown debugModeDropdown;
+    public Dropdown mobileMoveModeDropdown;
 
     public Slider volumeSlider;
     public Slider soundEffectSlider;
@@ -80,6 +81,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitViewportSetting();
         InitLanguageSetting();
         InitDebugModeSetting();
+        InitMobileMoveModeSetting();
         
         windowDropdown.onValueChanged.AddListener(SetFullscreen);
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -88,6 +90,8 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         viewportDropdown.onValueChanged.AddListener(SetViewport);
         languageDropdown.onValueChanged.AddListener(SetLanguage);
         debugModeDropdown.onValueChanged.AddListener(SetDebugMode);
+        mobileMoveModeDropdown.onValueChanged.AddListener(SetMobileMoveMode);
+        mobileMoveModeDropdown.gameObject.SetActive(Application.isMobilePlatform);
         
         m_CloseButton.onClick.AddListener(Close);
         
@@ -181,6 +185,15 @@ public class GeneralSettingsPanel : Jyx2_UIBase
        }
    }
 
+   private void InitMobileMoveModeSetting()
+   {
+       var setting = gameSetting[GameSettingManager.Catalog.MobileMoveMode];
+       if (setting is int value)
+       {
+           mobileMoveModeDropdown.value = value;
+       }
+   }
+
     private void SetResolution(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, index);
@@ -214,6 +227,11 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     private void SetDebugMode(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.DebugMode, index);
+    }
+
+    private void SetMobileMoveMode(int index)
+    {
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.MobileMoveMode, index);
     }
 
     /*游戏难度，暂未实现*/

@@ -113,6 +113,12 @@ namespace XLua
 			{
 				try
 				{
+					//JYX2：CG， xlua与这个插件冲突！没找到xlua哪里排除dll，先苟着这样写。
+					if (assemblies[i].Modules.First().Name.Contains("MTE.dll"))
+					{
+						continue;
+					}
+						
 #if (UNITY_EDITOR || XLUA_GENERAL) && !NET_STANDARD_2_0
 					if (!(assemblies[i].ManifestModule is System.Reflection.Emit.ModuleBuilder))
 					{

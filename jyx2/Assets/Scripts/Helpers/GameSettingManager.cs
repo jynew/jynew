@@ -34,6 +34,7 @@ public static class GameSettingManager
 		Difficulty,
 		Language,
 		DebugMode,
+		MobileMoveMode,
 	}
 
 	/// <summary>
@@ -74,6 +75,7 @@ public static class GameSettingManager
 		SubscribeEnforceEvent(Catalog.Fullscreen, SetFullScreen, true);
 		SubscribeEnforceEvent(Catalog.Language, SetLanguage, true);
 		SubscribeEnforceEvent(Catalog.DebugMode, SetDebugMode, true);
+		SubscribeEnforceEvent(Catalog.MobileMoveMode, SetMobileMoveMode, true);
 
 		_hasInitialized = true;
 
@@ -124,6 +126,9 @@ public static class GameSettingManager
 					break;
 				case Catalog.DebugMode:
 					result.Add(Catalog.DebugMode, GetDebugMode());
+					break;
+				case Catalog.MobileMoveMode:
+					result.Add(Catalog.MobileMoveMode, GetMobileMoveMode());
 					break;
 			}
 		}
@@ -223,6 +228,9 @@ public static class GameSettingManager
 				break;
 			case Catalog.DebugMode:
 				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_DEBUGMODE, (int)value);
+				break;
+			case Catalog.MobileMoveMode:
+				PlayerPrefs.SetInt(GameConst.PLAYER_MOBILE_MOVE_MODE, (int)value);
 				break;
 		}
 		Debug.Log($"Update validation：{Enum.GetName(typeof(Catalog), setting)}, value {GetSettings()[setting]}。");
@@ -437,5 +445,41 @@ public static class GameSettingManager
 		ScreenLogger.Instance.ShowLog = (debugMode == 1);
 	}
 	
+	#endregion
+	
+	#region MobileMoveMode
+
+	private static int GetMobileMoveMode()
+	{
+		int result = 0;
+		var key = GameConst.PLAYER_MOBILE_MOVE_MODE;
+		if (PlayerPrefs.HasKey(key))
+		{
+			result = PlayerPrefs.GetInt(key);
+		}
+
+		return result;
+	}
+
+	private static void SetMobileMoveMode(object mode)
+	{
+		if (!GlobalAssetConfig.Instance) return;
+		int moveMode = (int) mode;
+		MobileMoveMode = (MobileMoveModeType)moveMode;
+
+		if (LevelMaster.Instance != null)
+		{
+			LevelMaster.Instance.UpdateMobileControllerUI();;
+		}
+	}
+
+	public static MobileMoveModeType MobileMoveMode = MobileMoveModeType.Joystick;
+
+	public enum MobileMoveModeType
+	{
+		Joystick = 0, //摇杆
+		Click = 1, //点击
+	}
+
 	#endregion
 }
