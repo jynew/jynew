@@ -236,4 +236,5 @@ public class GameConst
     public const string PLAYER_PREF_VIEWPORT_TYPE = "viewport_type";
     public const string PLAYER_PREF_LANGUAGE = "language";
     public const string PLAYER_PREF_DEBUGMODE = "debugmode";
+    public const string PLAYER_MOBILE_MOVE_MODE = "mobile_move_mode";
 }
