@@ -252,11 +252,13 @@ public class LevelMaster : MonoBehaviour
 			{
 				body.m_FollowOffset = GlobalAssetConfig.Instance.vcamOffsetClose;
 			}
-			
-			
-				
-			//跟随对象
-			vcam.Follow = _gameMapPlayer.transform;
+
+
+			if (_gameMapPlayer != null)
+			{
+				//跟随对象
+				vcam.Follow = _gameMapPlayer.transform;	
+			}
 		}
 	}
 
