@@ -26,8 +26,7 @@ public class PlayableDirectorHelper : MonoBehaviour
             player.transform.position = m_PreviewRole.transform.position;
             player.transform.rotation = m_PreviewRole.transform.rotation;
         }
-
-        player.SetActive(true);
+        
         BindSignals(player);
     }
 
