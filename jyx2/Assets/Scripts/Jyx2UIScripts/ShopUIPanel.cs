@@ -130,6 +130,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
 			int currentNum = GetHasBuyNum(data.Item.Id);
 			uiItem.Refresh(data, i, currentNum);
+			uiItem.SetSelect(current_selection == i);
 
 			if (itemHeight == 0)
 				itemHeight = uiItem.rectTransform().rect.height;
