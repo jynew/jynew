@@ -14,7 +14,7 @@ if InTeam(38) == true then goto label0 end;
     Talk(0, "贤弟，你干什么？", "talkname0", 1);
     DarkScence();
     LightScence();
-    Talk(38, "啊！好累．我怎么觉得好累。", "talkname38", 1);
+    Talk(38, "啊！好累。我怎么觉得好累。", "talkname38", 1);
     Talk(0, "贤弟，你总算清醒过来了。", "talkname0", 1);
     Talk(38, "怎么，难道我昏迷过去了吗？", "talkname38", 1);
     Talk(0, "是啊！原先我以为你又着魔了，后来龙岛主说你正悟出神功，我才没有去吵你，前后算起来已有三天了。", "talkname0", 1);

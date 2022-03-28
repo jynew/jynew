@@ -1,4 +1,4 @@
-Talk(0, "胡大哥，我知道苗人凤的下落，而关于你们之间的恩怨是如此如此这般这般……", "talkname0", 1);
+Talk(0, "胡大哥，我知道苗人凤的下落，而关于你们之间的恩怨是如此如此……这般这般……", "talkname0", 1);
 if AskJoin () == true then goto label0 end;
     do return end;
 ::label0::

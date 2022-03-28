@@ -4,7 +4,7 @@ if AskJoin () == true then goto label0 end;
     Talk(61, "真是可惜，本来还想跟你研究研究“床上功夫”呢。", "talkname61", 0);
     do return end;
 ::label0::
-    Talk(0, "好吧，那我们就一起称霸武林吧．反正有句名言不是说“好人早死，坏人较长命”。", "talkname0", 1);
+    Talk(0, "好吧，那我们就一起称霸武林吧。反正有句名言不是说“好人早死，坏人较长命”。", "talkname0", 1);
     if JudgeFemaleInTeam() == true then goto label1 end;
         Talk(61, "不行，不行，我们同伴中没有女的我会受不了，等你找到女的再说。", "talkname61", 0);
         do return end;

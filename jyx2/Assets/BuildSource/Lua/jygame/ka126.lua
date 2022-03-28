@@ -5,14 +5,14 @@ if InTeam(9) == true then goto label0 end;
         ModifyEvent(-2, -2, -2, -2, 127, -1, -1, -2, -2, -2, -2, -2, -2);
         do return end;
 ::label1::
-        Talk(0, "该不会是掌门您七伤拳练的火侯不够，才不敢拿出来见人吧？", "talkname0", 1);
+        Talk(0, "该不会是掌门您七伤拳练的火候不够，才不敢拿出来见人吧？", "talkname0", 1);
         Talk(8, "小子，你自寻死路。", "talkname8", 0);
         if TryBattle(16) == true then goto label2 end;
             Dead();
             do return end;
 ::label2::
             LightScence();
-            Talk(0, "我说你火侯不够还不相信，再多练个几年吧。", "talkname0", 1);
+            Talk(0, "我说你火候不够还不相信，再多练个几年吧。", "talkname0", 1);
             Talk(8, "哼！小兄弟留下个字号，他日我唐文亮再向你请教。", "talkname8", 0);
             Talk(0, "字号？好吧，记着，“软世派河洛分舵”金庸堂堂主是也。", "talkname0", 1);
             Talk(8, "“软世派河洛分舵”？没听过。", "talkname8", 0);

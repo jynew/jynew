@@ -16,7 +16,7 @@ if UseItem(127) == true then goto label0 end;
         Talk(0, "＜这个玩物丧志的家伙，整天就只知道喝酒，跟他在一起真是浪费我找书的时间。＞啊！令狐兄，我突然想起还有重要的事要办，我先失陪了。", "talkname0", 1);
         do return end;
 ::label1::
-        Talk(0, "我看不如这样吧．令狐兄就和我一起同游江湖共寻美酒，才不枉此生。", "talkname0", 1);
+        Talk(0, "我看不如这样吧。令狐兄就和我一起同游江湖共寻美酒，才不枉此生。", "talkname0", 1);
         if TeamIsFull() == false then goto label2 end;
             Talk(35, "你的队伍已满，我无法加入。", "talkname35", 0);
             do return end;
