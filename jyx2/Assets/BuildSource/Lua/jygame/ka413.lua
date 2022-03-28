@@ -1,4 +1,4 @@
-Talk(64, "来来来，来跟老顽童来玩两招。", "talkname64", 0);
+Talk(64, "来来来，跟老顽童来玩两招。", "talkname64", 0);
 if AskBattle() == true then goto label0 end;
     Talk(0, "前辈别开玩笑了，晚辈怎是你的对手。", "talkname0", 1);
     do return end;
