@@ -61,7 +61,7 @@ public static class Jyx2ResourceHelper
         await MODLoader.Init();
         
         //全局配置表
-        var t = await MODLoader.LoadAsset<GlobalAssetConfig>("Assets/BuildSource/GlobalAssetConfig.asset");
+        var t = await MODLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
         if (t != null)
         {
             GlobalAssetConfig.Instance = t;

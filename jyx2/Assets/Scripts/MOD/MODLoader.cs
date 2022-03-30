@@ -38,14 +38,14 @@ namespace Jyx2.MOD
             if (File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"))) ;
                 File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
                 
-            SaveOverrideList("Assets/Mods/JYX2/Skills", ".asset");
-            SaveOverrideList("Assets/Mods/JYX2/Configs/Characters", ".asset");
-            SaveOverrideList("Assets/Mods/JYX2/Configs/Items", ".asset");
-            SaveOverrideList("Assets/Mods/JYX2/Configs/Skills", ".asset");
-            SaveOverrideList("Assets/Mods/JYX2/Configs/Shops", ".asset");
-            SaveOverrideList("Assets/Mods/JYX2/Configs/Maps", ".asset");
-            SaveOverrideList("Assets/Mods/JYX2/Configs/Battles", ".asset");
-            SaveOverrideList("Assets/Mods/JYX2/Lua", ".lua");
+            SaveOverrideList("Assets/Mods/SAMPLE/Skills", ".asset");
+            SaveOverrideList("Assets/Mods/SAMPLE/Configs/Characters", ".asset");
+            SaveOverrideList("Assets/Mods/SAMPLE/Configs/Items", ".asset");
+            SaveOverrideList("Assets/Mods/SAMPLE/Configs/Skills", ".asset");
+            SaveOverrideList("Assets/Mods/SAMPLE/Configs/Shops", ".asset");
+            SaveOverrideList("Assets/Mods/SAMPLE/Configs/Maps", ".asset");
+            SaveOverrideList("Assets/Mods/SAMPLE/Configs/Battles", ".asset");
+            SaveOverrideList("Assets/Mods/SAMPLE/Lua", ".lua");
             #endif
         }
         

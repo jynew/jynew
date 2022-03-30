@@ -331,6 +331,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 		//加载地图
 		var startMap = Jyx2ConfigMap.GetGameStartMap();
 
+		string startTrigger = startMap.GetTagValue("START");
+		if (!string.IsNullOrEmpty(startTrigger))
+		{
+			loadPara.triggerName = startTrigger;
+		}
+		
 		LevelLoader.LoadGameMap(startMap, loadPara, () =>
 		{
 			//首次进入游戏音乐

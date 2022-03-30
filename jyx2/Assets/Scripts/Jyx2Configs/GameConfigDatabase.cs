@@ -106,6 +106,8 @@ namespace Jyx2Configs
             }
             
             var overridePaths = await MODLoader.LoadOverrideList(path);
+            if (overridePaths == null || overridePaths.Count == 0)
+                return 0;
             
             var assets = await MODLoader.LoadAssets<T>(overridePaths);
 
