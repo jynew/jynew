@@ -145,7 +145,10 @@ public class BattleboxManager : MonoBehaviour
         Debug.Log($"<color=green>保存格子数据完成：{m_Dataset.GetCount()}个格子中，一共有多少格子有效：{m_Dataset.GetValidCount()}</color>");
         
 #if UNITY_EDITOR
-        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        if (!Application.isPlaying)
+        {
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());    
+        }
 #endif
     }
 
