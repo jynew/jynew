@@ -1,0 +1,26 @@
+Talk(0, "看你的样子，你就是那“狗熊野猪”的头头？", "talkname0", 1);
+Talk(24, "阁下是谁，为何跟我青城派过不去？", "talkname24", 0);
+Talk(0, "我跟你说，快将林震南前辈放了，否则打你满头包。", "talkname0", 1);
+Talk(24, "原来是为了林家的事。", "talkname24", 0);
+Talk(0, "快说，林前辈在哪？", "talkname0", 1);
+Talk(24, "哼！只怕你见不到他了。", "talkname24", 0);
+Talk(0, "你将他杀了？", "talkname0", 1);
+Talk(24, "谁叫他不说出“辟邪剑谱”的下落。", "talkname24", 0);
+Talk(0, "你好狠毒的心。", "talkname0", 1);
+Talk(24, "你这么想见他，我就送你去。", "talkname24", 0);
+if TryBattle(50) == true then goto label0 end;
+    Dead();
+    do return end;
+::label0::
+    LightScence();
+    Talk(0, "看来阎王爷不收留我。", "talkname0", 1);
+    Talk(24, "哼！废话少说，要杀要剐随你。", "talkname24", 0);
+    Talk(0, "我看起来像会乱杀人的吗？要如何处置你，由林家自己来决定。", "talkname0", 1);
+    ModifyEvent(-2, -2, -2, -2, 296, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 0, -2, -2, 315, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 1, -2, -2, 315, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 2, -2, -2, 315, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 3, -2, -2, 297, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(56, 1, -1, -1, 288, -1, -1, -2, -2, -2, -2, -2, -2);
+    AddRepute(2);
+do return end;

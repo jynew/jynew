@@ -1,0 +1,15 @@
+ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+ScenceFromTo(33, 26, 21, 26);
+jyx2_CameraFollow("Level/NPC/battleNPC/岳不群");
+Talk(19, "承蒙各位看得起我华山派，每年都选择在我华山齐聚，举办这武林大会。今年岳某特别邀请到少林寺住持玄慈大师，前来此处主持今年的“华山论剑”。", "talkname19", 0);
+Talk(70, "阿弥陀佛！承蒙大家看得起我玄慈，今年就由我来为各位服务。今年还是和往年一样，受到邀请前来华山的各位英雄，都有机会成为新一任的武林盟主，获得保管“神杖”的资格。现在，我宣布大会开始，只要愿意，谁都可出来比试，直到无人挑战为止。", "talkname70", 4);
+Talk(19, "不知哪位英雄要先出来接受挑战？……似乎没有人愿意先出来？……", "talkname19", 0);
+ScenceFromTo(21, 26, 33, 26);
+jyx2_CameraFollowPlayer();
+Talk(0, "好，那就我先来！", "talkname0", 1);
+WalkFromTo(33, 26, 25, 26);
+jyx2_WalkFromTo(-1,2526);
+SetRoleFace(2);
+Talk(0, "不知哪位英雄愿下场赐教？", "talkname0", 1);
+FightForTop();
+do return end;

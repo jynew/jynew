@@ -58,7 +58,11 @@ public class BattleboxManagerEditor : Editor
             myScript.Init();
             myScript.DrawAllBlocks(true);
         }
-        else myScript.ClearAllBlocks(); 
+        else
+        {
+            myScript.SaveToData();
+            myScript.ClearAllBlocks();
+        } 
     }
 
     private void ChangeHideStatus(bool value)
@@ -127,7 +131,7 @@ public class BattleboxManagerEditor : Editor
             {
                 Debug.Log($"编辑格子状态，{xindex}:{yindex}");
                 myScript.ChangeValid(xindex, yindex);
-                myScript.SaveToFile();
+                myScript.SaveToData();
             }
             else 
             {
