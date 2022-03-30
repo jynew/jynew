@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
@@ -37,6 +38,34 @@ namespace Jyx2Configs
 
         [LabelText("标签")] 
         public string Tags;
+
+        /// <summary>
+        /// 获取标签数据，以半角的冒号分割
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public string GetTagValue(string tag)
+        {
+            try
+            {
+                foreach (var tmp in Tags.Split(','))
+                {
+                    if (tmp.StartsWith(tag))
+                    {
+                        var s = tmp.Split(':');
+                        if (s.Length == 2)
+                        {
+                            return s[1];
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.ToString());
+            }
+            return string.Empty;
+        }
 
         [HideInInspector] public int ForceSetLeaveMusicId = -1;
         

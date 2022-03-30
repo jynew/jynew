@@ -58,43 +58,35 @@ public static class Jyx2ResourceHelper
 
         _isInited = true;
         
-#if UNITY_EDITOR
-        if (File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"))) ;
-            File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
-        MODLoader.SaveOverrideList("Assets/BuildSource/Skills", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Characters", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Items", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Skills", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Shops", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Maps", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Configs/Battles", ".asset");
-        MODLoader.SaveOverrideList("Assets/BuildSource/Lua", ".lua");
-#endif
-
         await MODLoader.Init();
         
         //全局配置表
-        var t = await MODLoader.LoadAsset<GlobalAssetConfig>("Assets/BuildSource/Configs/GlobalAssetConfig.asset");
+        var t = await MODLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
         if (t != null)
         {
             GlobalAssetConfig.Instance = t;
             t.OnLoad();
         }
 
+        //生成MOD的文件索引
+        MODLoader.WriteAllOverrideList(t.startMod.ModRootDir);
+
         //技能池
-        var overridePaths = await MODLoader.LoadOverrideList("Assets/BuildSource/Skills");
-        var task = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
-        if (task != null)
+        var overridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
+        var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
+        if (allSkills != null)
         {
-            Jyx2SkillDisplayAsset.All = task;
+            Jyx2SkillDisplayAsset.All = allSkills;
         }
 
         //基础配置表
-        await GameConfigDatabase.Instance.Init();
+        await GameConfigDatabase.Instance.Init(t.startMod.ModRootDir);
 
         //lua
-        await LuaManager.InitLuaMapper();
-        LuaManager.Init();
+        await LuaManager.InitLuaMapper(t.startMod.ModRootDir);
+        
+        //执行lua根文件
+        LuaManager.Init(t.rootLuaFile.text);
     }
 
     public static GameObject GetCachedPrefab(string path)
@@ -128,13 +120,7 @@ public static class Jyx2ResourceHelper
         return Serializer.Deserialize<SceneCoordDataSet>(memory);
     }
 
-    [Obsolete("待修改为tilemap")]
-    public static async UniTask<BattleboxDataset> GetBattleboxDataset(string fullPath)
-    {
-        var result = await MODLoader.LoadAsset<TextAsset>(fullPath);
-        using var memory = new MemoryStream(result.bytes);
-        return Serializer.Deserialize<BattleboxDataset>(memory);
-    }
+
 
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)
     {

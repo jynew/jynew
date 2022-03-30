@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -31,7 +32,38 @@ using Object = UnityEngine.Object;
 namespace Jyx2.MOD
 {
     public static class MODLoader
-    { 
+    {
+
+        public static void WriteAllOverrideList()
+        {
+            var globalSettings = AssetDatabase.LoadAssetAtPath<GlobalAssetConfig>("GlobalAssetConfig.asset");
+            WriteAllOverrideList(globalSettings.startMod.ModRootDir);
+        }
+        
+        public static void WriteAllOverrideList(string path)
+        {
+            #if UNITY_EDITOR
+
+            string indexPath = Path.Combine(path, "index.txt");
+
+            if (File.Exists(indexPath))
+            {
+                File.Delete(indexPath);
+            }
+
+
+            SaveOverrideList(indexPath, $"{path}/Skills", ".asset");
+            SaveOverrideList(indexPath, $"{path}/Configs/Characters", ".asset");
+            SaveOverrideList(indexPath, $"{path}/Configs/Items", ".asset");
+            SaveOverrideList(indexPath, $"{path}/Configs/Skills", ".asset");
+            SaveOverrideList(indexPath, $"{path}/Configs/Shops", ".asset");
+            SaveOverrideList(indexPath, $"{path}/Configs/Maps", ".asset");
+            SaveOverrideList(indexPath, $"{path}/Configs/Battles", ".asset");
+            SaveOverrideList(indexPath, $"{path}/Lua", ".lua");
+#endif
+        }
+        
+        
         public struct AssetBundleItem
         {
             public string Name;
@@ -92,12 +124,11 @@ namespace Jyx2.MOD
         }
 #endregion
 
-        public static void SaveOverrideList(string path, string filter)
+        private static void SaveOverrideList(string indexPath, string path, string filter)
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, "OverrideList.txt");
-            var fileContentsList = GetOverridePaths(path, filter);
 #if UNITY_EDITOR
-            File.AppendAllLines(filePath, fileContentsList.ToArray());
+            var fileContentsList = GetOverridePaths(path, filter);
+            File.AppendAllLines(indexPath, fileContentsList.ToArray());
 #endif
         }
 
@@ -118,7 +149,9 @@ namespace Jyx2.MOD
 
         public static async UniTask<List<string>> LoadOverrideList(string path)
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, "OverrideList.txt");
+            string rootPath = GlobalAssetConfig.Instance.startMod.ModRootDir;
+            
+            string filePath = Path.Combine(rootPath, "index.txt");
             List<string> fileContentsList;
             if (Application.platform == RuntimePlatform.Android)
             {

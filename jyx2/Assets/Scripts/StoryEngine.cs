@@ -54,38 +54,53 @@ public class StoryEngine : MonoBehaviour
 
     public static bool DoLoadGame(int index)
     {
-        //加载存档
-        var r = GameRuntimeData.LoadArchive(index);
-        if (r == null)
+        try
         {
-            return false;
-        }
+            //加载存档
+            var r = GameRuntimeData.LoadArchive(index);
+            if (r == null)
+            {
+                return false;
+            }
 
-        //初始化角色
-        foreach (var role in r.AllRoles.Values)
+            //初始化角色
+            foreach (var role in r.AllRoles.Values)
+            {
+                role.BindKey();
+            }
+
+            var loadPara = new LevelMaster.LevelLoadPara() {loadType = LevelMaster.LevelLoadPara.LevelLoadType.Load};
+
+            //加载地图
+            int mapId = -1;
+            if (r.SubMapData == null)
+            {
+                mapId = GameConst.WORLD_MAP_ID;
+                loadPara.Pos = r.WorldData.WorldPosition;
+                loadPara.Rotate = r.WorldData.WorldRotation;
+            }
+            else
+            {
+                mapId = r.SubMapData.MapId;
+                loadPara.Pos = r.SubMapData.CurrentPos;
+                loadPara.Rotate = r.SubMapData.CurrentOri;
+            }
+
+            var map = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
+
+            if (map == null)
+            {
+                throw new Exception("存档中的地图找不到！");
+            }
+            
+            LevelLoader.LoadGameMap(map, loadPara,
+                () => { LevelMaster.Instance.TryBindPlayer().Forget(); });
+            return true;
+        }
+        catch (Exception e)
         {
-            role.BindKey();
+            MessageBox.Create("错误，载入存档失败。请检查版本号和MOD是否匹配。");
+            return true;
         }
-
-        var loadPara = new LevelMaster.LevelLoadPara() {loadType = LevelMaster.LevelLoadPara.LevelLoadType.Load};
-
-        //加载地图
-        int mapId = -1;
-        if (r.SubMapData == null)
-        {
-            mapId = GameConst.WORLD_MAP_ID;
-            loadPara.Pos = r.WorldData.WorldPosition;
-            loadPara.Rotate = r.WorldData.WorldRotation;
-        }
-        else
-        {
-            mapId = r.SubMapData.MapId;
-            loadPara.Pos = r.SubMapData.CurrentPos;
-            loadPara.Rotate = r.SubMapData.CurrentOri;
-        }
-
-        LevelLoader.LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId), loadPara,
-            () => { LevelMaster.Instance.TryBindPlayer().Forget(); });
-        return true;
     }
 }

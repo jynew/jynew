@@ -65,12 +65,8 @@ namespace Jyx2
             ClearLuaMapper();
         }
 
-        public static void Init(bool forceReset = false)
+        public static void Init(string rootLuaFileText)
         {
-            if (forceReset)
-            {
-                Clear();
-            }
             if (_inited) return;
 
             
@@ -82,23 +78,27 @@ namespace Jyx2
                 luaEnv.DoString("\nif jit then\n\n  jit.off();jit.flush()\n\nend");
             }
 
+
+            if (!string.IsNullOrEmpty(rootLuaFileText))
+            {
+                luaEnv.DoString(rootLuaFileText);    
+            }
+            
             //load lua base files
-            foreach (var f in files)
+            /*foreach (var f in files)
             {
                 luaEnv.DoString(LoadLua(LuaManager.LUA_ROOT_MENU + f.Replace(".lua", "")), f);
-            }
+            }*/
 
             _inited = true;
-            LoadLuaFiles();
-
-
+            //LoadLuaFiles();
         }
 
         private static object[] Call(string functionName, params object[] paras)
         {
             if (!_inited)
             {
-                Init();
+                Init(null);
             }
 
             var func = getCachedFunction(functionName);
@@ -117,7 +117,7 @@ namespace Jyx2
         {
             if (!_inited)
             {
-                Init();
+                Init(null);
             }
 
             var func = getCachedFunction(functionName);
@@ -173,22 +173,6 @@ namespace Jyx2
                 path = path.Replace(".", "/");
             }
 
-            /*
-            if (LuaManager.LUAJIT_ENABLE)
-            {
-                path = "/luajit/" + path;
-            }
-            else
-            {
-                path = "/lua/" + path;
-            }
-
-            if (!path.EndsWith(".lua"))
-            {
-                path += ".lua";
-            }
-            */
-
             path = path.Split('/').Last();
             
             if (__luaMapper.ContainsKey(path))
@@ -213,11 +197,11 @@ namespace Jyx2
             __luaMapper = null;
         }
 
-        public static async UniTask InitLuaMapper()
+        public static async UniTask InitLuaMapper(string rootPath)
         {
             /*            if (Application.isEditor) //编辑器模式下不需要缓存，直接读取文件
                             return;*/
-            var overridePaths = await MODLoader.LoadOverrideList("Assets/BuildSource/Lua");
+            var overridePaths = await MODLoader.LoadOverrideList($"{rootPath}/Lua");
             
             var assets = await MODLoader.LoadAssets<TextAsset>(overridePaths);
 
@@ -241,7 +225,7 @@ namespace Jyx2
             foreach (var luaFile in files.Cast<List<string>>())
             {
                 //HSUtils.Log(luaFile);
-                luaEnv.DoString(LoadLua(LuaManager.LUA_ROOT_MENU + luaFile.Replace(".lua", "")), luaFile);
+                luaEnv.DoString(LoadLua(LUA_ROOT_MENU + luaFile.Replace(".lua", "")), luaFile);
             }
             files.Dispose();
             files = null;

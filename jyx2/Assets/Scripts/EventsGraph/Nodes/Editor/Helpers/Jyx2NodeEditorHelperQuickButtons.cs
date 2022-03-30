@@ -81,7 +81,7 @@ static public class Jyx2NodeEditorHelperQuickButtons
             }
             else
             {
-                string luaPath = $"data/lua/jygame/ka{eventId}.lua";
+                string luaPath = $"data/lua/jygame/ka{eventId}.lua"; //CG：待调整
                 if (File.Exists(luaPath))
                 {
                     //EditorUtility.RevealInFinder(luaPath);

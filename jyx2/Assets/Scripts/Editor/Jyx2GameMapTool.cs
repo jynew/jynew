@@ -38,13 +38,13 @@ public class Jyx2GameMapTool : Editor
 
     public static async UniTask CurrentMapTrans()
     {
-        await GameConfigDatabase.Instance.Init();
+        /*await GameConfigDatabase.Instance.Init();
         foreach (var zone in FindObjectsOfType<MapTeleportor>())
         {
             if (zone.m_GameMap == null)
             {
                 //zone.m_GameMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(zone.TransportMapId);
             }
-        }
+        }*/
     }
 }

@@ -16,7 +16,7 @@ using Jyx2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
+[Obsolete("CG重构：好像没用了？？")]
 public class BattleBlockHelper : MonoBehaviour {
     
 
@@ -38,6 +38,7 @@ public class BattleBlockHelper : MonoBehaviour {
     {
         var sceneName = SceneManager.GetActiveScene().name;
         m_CoordDataSet = await SceneCoordDataSet.CreateBySceneName(sceneName);
+        
         if (m_CoordDataSet == null)
         {
             Debug.LogWarning($"没有初始化格子信息，请在编辑器模式下初始化场景的格子信息（Level下的LevelEditor");

@@ -12,7 +12,14 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 [CreateAssetMenu(fileName = "GlobalAssetConfig", menuName = "金庸重制版/全局资源配置文件")]
 public class GlobalAssetConfig : ScriptableObject
 {
-    public static GlobalAssetConfig Instance = null;
+    public static GlobalAssetConfig Instance { get; set; }= null;
+
+    [BoxGroup("游戏MOD")] [LabelText("启动MOD")]
+    public MODRootConfig startMod;
+
+    [BoxGroup("基础配置")] [LabelText("Lua引导文件")]
+    [InfoBox("这里定义所有的lua到C#的公共绑定和一些公用函数")]
+    public TextAsset rootLuaFile;
     
     //--------------------------------------------------------------------------------------------
     //以下均为新增的语言配置文件
@@ -60,9 +67,6 @@ public class GlobalAssetConfig : ScriptableObject
 
     [BoxGroup("游戏相机配置")][LabelText("相机偏移（近）")]
     public Vector3 vcamOffsetClose = new Vector3(5, 8, 5);
-
-    [BoxGroup("地图设置")] [LabelText("大地图")] 
-    public AssetReference BigMap;
     
     [BoxGroup("地图设置")] [LabelText("默认主角居名字")] 
     public string defaultHomeName;
@@ -73,11 +77,9 @@ public class GlobalAssetConfig : ScriptableObject
     
     [BoxGroup("角色控制")] [LabelText("大地图移动速度")]
     public float playerMoveSpeedWorldMap = 20f;
-    
 
-    [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
-    [HideLabel]
-    public List<StoryIdNameFix> StoryIdNameFixes;
+
+    [HideInInspector] public List<StoryIdNameFix> StoryIdNameFixes => startMod.StoryIdNameFixes;
 
     [BoxGroup("预缓存Prefab")]
     [HideLabel]

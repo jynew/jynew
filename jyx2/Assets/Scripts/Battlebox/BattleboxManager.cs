@@ -17,6 +17,10 @@ using ch.sycoforge.Decal;
 using Cysharp.Threading.Tasks;
 using Jyx2;
 using ProtoBuf;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -29,6 +33,10 @@ public class BattleboxManager : MonoBehaviour
     public Color m_InvalidColor = new Color(1,1,1,0.2f);
     public const float BATTLEBLOCK_DECAL_ALPHA = 0.4f;
 
+    [SerializeField]
+    [HideInInspector]
+    private string m_BattleboxSerializedData;
+    
     private SpriteRenderer _BlockPrefab;
 
     [HideInInspector]
@@ -55,8 +63,13 @@ public class BattleboxManager : MonoBehaviour
         InitCollider();
 
         if (m_Dataset == null)
-            InitFromFile();
-
+        {
+            if (!InitFromData())
+            {
+                Debug.LogError("战场初始化失败！载入格子数据错误"); 
+            }
+        }
+            
         if (m_Dataset == null || !CheckSize())
             CreateDataset();
     }
@@ -92,31 +105,51 @@ public class BattleboxManager : MonoBehaviour
         return false;
     }
 
-    public async UniTask InitFromFile()
-    {
-        var filePath = GetFilePath();
 
-        m_Dataset = await Jyx2ResourceHelper.GetBattleboxDataset(filePath);
-        if(m_Dataset != null)
-            Debug.Log($"载入文件结束：{m_Dataset.GetCount()}个格子中，一共有多少格子有效：{m_Dataset.GetValidCount()}");
+    public bool InitFromData()
+    {
+        if (m_BattleboxSerializedData == null)
+        {
+            Debug.LogError("载入战斗地图格子数据失败!");
+            return false;
+        }
+
+        try
+        {
+            var data = Convert.FromBase64String(m_BattleboxSerializedData);
+            using var memory = new MemoryStream(data);
+            m_Dataset = Serializer.Deserialize<BattleboxDataset>(memory);
+            if (m_Dataset != null)
+            {
+                Debug.Log($"载入文件结束：{m_Dataset.GetCount()}个格子中，一共有多少格子有效：{m_Dataset.GetValidCount()}");
+            }
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+        
     }
-
-    public void SaveToFile()
+    
+    public void SaveToData()
     {
-        if (m_Dataset == null) return;
-
-        var filePath = GetFilePath();
         byte[] bs;
         using (var memory = new MemoryStream())
         {
             Serializer.Serialize(memory, m_Dataset);
             bs = memory.ToArray();
         }
-        
-        Directory.CreateDirectory(ConStr.BattleboxDatasetPath);
-        File.WriteAllBytes(filePath, bs);
 
-        Debug.Log($"保存格子数据完成：{m_Dataset.GetCount()}个格子中，一共有多少格子有效：{m_Dataset.GetValidCount()}");
+        m_BattleboxSerializedData = Convert.ToBase64String(bs);
+        Debug.Log($"<color=green>保存格子数据完成：{m_Dataset.GetCount()}个格子中，一共有多少格子有效：{m_Dataset.GetValidCount()}</color>");
+        
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());    
+        }
+#endif
     }
 
     public bool CheckSize()
@@ -200,7 +233,10 @@ public class BattleboxManager : MonoBehaviour
         }
         Debug.Log($"重新生成格子结束：一共生成了{m_Dataset.GetCount()}个格子");
 
-        if(Application.isEditor) SaveToFile();
+        if (Application.isEditor)
+        {
+            SaveToData();
+        }
     }
 
     public List<BattleBlockData> GetBattleBlocks()

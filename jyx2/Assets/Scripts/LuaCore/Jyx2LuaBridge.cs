@@ -1092,7 +1092,8 @@ namespace Jyx2
         public static void AskSoftStar()
         {
             RunInMainThread(() => {
-                var eventLuaPath = "jygame/ka" + UnityEngine.Random.Range(801, 820).ToString();
+                
+                var eventLuaPath = string.Format(GlobalAssetConfig.Instance.startMod.LuaFilePatten, UnityEngine.Random.Range(801, 820).ToString());
                 Jyx2.LuaExecutor.Execute(eventLuaPath, null);
             });
         }
