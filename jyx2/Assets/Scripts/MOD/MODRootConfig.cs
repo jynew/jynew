@@ -16,7 +16,7 @@ public class MODRootConfig : ScriptableObject
     [Multiline] [LabelText("游戏的欢迎语")] public string WelcomeWord;
     [LabelText("游戏作者名")] public string Author;
 
-    [LabelText("LUA文件名配置")] public string LuaFilePatten;
+    [LabelText("LUA文件名配置")] public string LuaFilePatten = "ka{0}";
 
     
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
