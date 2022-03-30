@@ -68,19 +68,9 @@ public static class Jyx2ResourceHelper
             t.OnLoad();
         }
 
-#if UNITY_EDITOR
-        if (File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"))) ;
-            File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Skills", ".asset");
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Configs/Characters", ".asset");
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Configs/Items", ".asset");
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Configs/Skills", ".asset");
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Configs/Shops", ".asset");
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Configs/Maps", ".asset");
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Configs/Battles", ".asset");
-        MODLoader.SaveOverrideList("Assets/Mods/JYX2/Lua", ".lua");
-#endif
-        
+        //写所有的资产列表
+        MODLoader.WriteAllOverrideList();
+
         //技能池
         var overridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
         var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);

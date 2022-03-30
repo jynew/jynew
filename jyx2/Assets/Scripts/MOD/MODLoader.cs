@@ -31,7 +31,25 @@ using Object = UnityEngine.Object;
 namespace Jyx2.MOD
 {
     public static class MODLoader
-    { 
+    {
+        public static void WriteAllOverrideList()
+        {
+            #if UNITY_EDITOR
+            if (File.Exists(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"))) ;
+                File.Delete(Path.Combine(Application.streamingAssetsPath, "OverrideList.txt"));
+                
+            SaveOverrideList("Assets/Mods/JYX2/Skills", ".asset");
+            SaveOverrideList("Assets/Mods/JYX2/Configs/Characters", ".asset");
+            SaveOverrideList("Assets/Mods/JYX2/Configs/Items", ".asset");
+            SaveOverrideList("Assets/Mods/JYX2/Configs/Skills", ".asset");
+            SaveOverrideList("Assets/Mods/JYX2/Configs/Shops", ".asset");
+            SaveOverrideList("Assets/Mods/JYX2/Configs/Maps", ".asset");
+            SaveOverrideList("Assets/Mods/JYX2/Configs/Battles", ".asset");
+            SaveOverrideList("Assets/Mods/JYX2/Lua", ".lua");
+            #endif
+        }
+        
+        
         public struct AssetBundleItem
         {
             public string Name;
@@ -92,11 +110,11 @@ namespace Jyx2.MOD
         }
 #endregion
 
-        public static void SaveOverrideList(string path, string filter)
+        private static void SaveOverrideList(string path, string filter)
         {
+#if UNITY_EDITOR
             string filePath = Path.Combine(Application.streamingAssetsPath, "OverrideList.txt");
             var fileContentsList = GetOverridePaths(path, filter);
-#if UNITY_EDITOR
             File.AppendAllLines(filePath, fileContentsList.ToArray());
 #endif
         }
