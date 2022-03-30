@@ -40,19 +40,19 @@ namespace Jyx2Configs
 
         private bool _isInited = false;
         
-        public async UniTask Init()
+        public async UniTask Init(string rootPath)
         {
             if (_isInited)
                 return;
             
             _isInited = true;
             int total = 0;
-            total += await Init<Jyx2ConfigCharacter>("Assets/BuildSource/Configs/Characters");
-            total += await Init<Jyx2ConfigItem>("Assets/BuildSource/Configs/Items");
-            total += await Init<Jyx2ConfigSkill>("Assets/BuildSource/Configs/Skills");
-            total += await Init<Jyx2ConfigShop>("Assets/BuildSource/Configs/Shops");
-            total += await Init<Jyx2ConfigMap>("Assets/BuildSource/Configs/Maps");
-            total += await Init<Jyx2ConfigBattle>("Assets/BuildSource/Configs/Battles");
+            total += await Init<Jyx2ConfigCharacter>(rootPath + "/Configs/Characters");
+            total += await Init<Jyx2ConfigItem>(rootPath + "/Configs/Items");
+            total += await Init<Jyx2ConfigSkill>(rootPath + "/Configs/Skills");
+            total += await Init<Jyx2ConfigShop>(rootPath + "/Configs/Shops");
+            total += await Init<Jyx2ConfigMap>(rootPath + "/Configs/Maps");
+            total += await Init<Jyx2ConfigBattle>(rootPath + "/Configs/Battles");
             
             Debug.Log($"载入完成，总数{total}个配置asset");
         }

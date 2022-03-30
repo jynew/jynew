@@ -15,7 +15,10 @@ public class GlobalAssetConfig : ScriptableObject
     public static GlobalAssetConfig Instance = null;
 
     [BoxGroup("游戏MOD")] [LabelText("启动MOD")]
-    public string startMod;
+    public MODRootConfig startMod;
+
+    [BoxGroup("基础配置")] [LabelText("共享根Lua引导文件")]
+    public TextAsset rootLuaFile;
     
     //--------------------------------------------------------------------------------------------
     //以下均为新增的语言配置文件
