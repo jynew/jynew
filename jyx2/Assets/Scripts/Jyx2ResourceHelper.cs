@@ -68,8 +68,8 @@ public static class Jyx2ResourceHelper
             t.OnLoad();
         }
 
-        //写所有的资产列表
-        MODLoader.WriteAllOverrideList();
+        //生成MOD的文件索引
+        MODLoader.WriteAllOverrideList(t.startMod.ModRootDir);
 
         //技能池
         var overridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");

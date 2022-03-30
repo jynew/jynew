@@ -215,7 +215,7 @@ namespace Jyx2
         private string GenerateSaveSummaryInfo()
         {
             string mapName = LevelMaster.GetCurrentGameMap().GetShowName();
-            return $"{Player.Level}级,{mapName},队伍:{GetTeamMembersCount()}人";
+            return $"{Player.Level}级,{mapName},队伍:{GetTeamMembersCount()}人 <size=20>[{GlobalAssetConfig.Instance.startMod.ModName}]</size>";
         }
 
         #endregion

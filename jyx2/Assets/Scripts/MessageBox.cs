@@ -22,11 +22,11 @@ public class MessageBox : MonoBehaviour
     public Text m_MessageText;
 	private Action _callback;
 
-	public static void Create(string msg, Action callback, Transform parent = null)
+	public static void Create(string msg, Action callback = null, Transform parent = null)
     {
         if(parent == null)
         {
-            var go = GameObject.Find("MainUI");
+            var go = GameObject.Find("Top");
             parent = go.transform;
         }
 

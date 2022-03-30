@@ -12,7 +12,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 [CreateAssetMenu(fileName = "GlobalAssetConfig", menuName = "金庸重制版/全局资源配置文件")]
 public class GlobalAssetConfig : ScriptableObject
 {
-    public static GlobalAssetConfig Instance = null;
+    public static GlobalAssetConfig Instance { get; set; }= null;
 
     [BoxGroup("游戏MOD")] [LabelText("启动MOD")]
     public MODRootConfig startMod;

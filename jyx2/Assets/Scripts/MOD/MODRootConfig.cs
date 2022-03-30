@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Jyx2.MOD;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -24,4 +25,11 @@ public class MODRootConfig : ScriptableObject
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
     public List<StoryIdNameFix> StoryIdNameFixes;
+
+
+    [Button("生成索引")]
+    void GenerateIndexFile()
+    {
+        MODLoader.WriteAllOverrideList(ModRootDir);
+    }
 }
