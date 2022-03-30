@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,4 +15,11 @@ public class MODRootConfig : ScriptableObject
     [LabelText("游戏MOD的根目录")] public string ModRootDir;
     [Multiline] [LabelText("游戏的欢迎语")] public string WelcomeWord;
     [LabelText("游戏作者名")] public string Author;
+
+    [LabelText("LUA文件名配置")] public string LuaFilePatten;
+
+    
+    [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
+    [HideLabel]
+    public List<StoryIdNameFix> StoryIdNameFixes;
 }
