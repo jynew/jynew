@@ -1,7 +1,7 @@
-Talk(0, "韦小宝躲在那里，快叫他出来．", "talkname0", 1);
-Talk(87, "小子你疯了，跑到我五毒教来大吼大叫的．", "talkname87", 0);
-Talk(0, "你们教主呢？是不是在跟韦小宝相好．", "talkname0", 1);
-Talk(87, "疯小子，想见教主是吧，我们就拿你去见．", "talkname87", 0);
+Talk(0, "韦小宝躲在哪里，快叫他出来。", "talkname0", 1);
+Talk(87, "小子你疯了，跑到我五毒教来大吼大叫的。", "talkname87", 0);
+Talk(0, "你们教主呢？是不是在跟韦小宝相好。", "talkname0", 1);
+Talk(87, "疯小子，想见教主是吧，我们就拿你去见。", "talkname87", 0);
 if TryBattle(97) == true then goto label0 end;
     Dead();
     do return end;

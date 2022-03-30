@@ -58,11 +58,22 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("游戏相机配置")] [LabelText("相机偏移")]
     public Vector3 defaultVcamOffset = new Vector3(7, 10, 8);
 
+    [BoxGroup("游戏相机配置")][LabelText("相机偏移（近）")]
+    public Vector3 vcamOffsetClose = new Vector3(5, 8, 5);
+
     [BoxGroup("地图设置")] [LabelText("大地图")] 
     public AssetReference BigMap;
     
     [BoxGroup("地图设置")] [LabelText("默认主角居名字")] 
     public string defaultHomeName;
+
+
+    [BoxGroup("角色控制")] [LabelText("主角移动速度")]
+    public float playerMoveSpeed = 7.5f;
+    
+    [BoxGroup("角色控制")] [LabelText("大地图移动速度")]
+    public float playerMoveSpeedWorldMap = 20f;
+    
 
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]

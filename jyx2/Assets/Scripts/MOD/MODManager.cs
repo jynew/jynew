@@ -29,14 +29,16 @@ namespace Jyx2.MOD
             if (Directory.Exists(ModsPath))
             {
                 UnityWebRequest request = UnityWebRequest.Get(Http);
-                await request.SendWebRequest();
-                string textString = request.downloadHandler.text;
-                var response = new Response(textString);
-                var modMetas = response.data;
-                foreach (var modMeta in modMetas)
+                try
                 {
-                    var filePath = Path.Combine(ModsPath, modMeta.id);
-                    var modEntry = new ModEntry(modMeta, filePath);
+                    await request.SendWebRequest();
+                    string textString = request.downloadHandler.text;
+                    var response = new Response(textString);
+                    var modMetas = response.data;
+                    foreach (var modMeta in modMetas)
+                    {
+                        var filePath = Path.Combine(ModsPath, modMeta.id);
+                        var modEntry = new ModEntry(modMeta, filePath);
 #if UNITY_ANDROID
                     if (modMeta.platform == "Android")
                     {
@@ -44,10 +46,10 @@ namespace Jyx2.MOD
                     }
 #endif
 #if UNITY_STANDALONE_WIN
-                    if (modMeta.platform == "Windows")
-                    {
-                        ModEntries.Add(modEntry);
-                    }
+                        if (modMeta.platform == "Windows")
+                        {
+                            ModEntries.Add(modEntry);
+                        }
 #endif
 #if UNITY_STANDALONE_OSX
                     if (modMeta.platform == "MacOS")
@@ -55,17 +57,22 @@ namespace Jyx2.MOD
                         ModEntries.Add(modEntry);
                     }
 #endif
-                }
+                    }
                 
-                var pathList = new List<string>();
-                FileTools.GetAllFilePath(ModsPath, pathList, new List<string>() { ".json" });
-                foreach (var jsonPath in pathList)
+                    var pathList = new List<string>();
+                    FileTools.GetAllFilePath(ModsPath, pathList, new List<string>() { ".json" });
+                    foreach (var jsonPath in pathList)
+                    {
+                        var jsonString = File.ReadAllText(jsonPath, Encoding.UTF8);
+                        var modMeta = new ModMeta(jsonString);
+                        var filePath = Path.Combine(ModsPath, modMeta.id);
+                        var modEntry = new ModEntry(modMeta, filePath);
+                        ModEntries.Add(modEntry);
+                    }
+                }
+                catch (Exception e)
                 {
-                    var jsonString = File.ReadAllText(jsonPath, Encoding.UTF8);
-                    var modMeta = new ModMeta(jsonString);
-                    var filePath = Path.Combine(ModsPath, modMeta.id);
-                    var modEntry = new ModEntry(modMeta, filePath);
-                    ModEntries.Add(modEntry);
+                    Debug.LogError(e);
                 }
             }
         }

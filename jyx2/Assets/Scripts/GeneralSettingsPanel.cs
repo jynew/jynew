@@ -24,6 +24,8 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     public Dropdown difficultyDropdown;
     public Dropdown viewportDropdown;
     public Dropdown languageDropdown;
+    public Dropdown debugModeDropdown;
+    public Dropdown mobileMoveModeDropdown;
 
     public Slider volumeSlider;
     public Slider soundEffectSlider;
@@ -78,13 +80,21 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitSoundEffectSlider();
         InitViewportSetting();
         InitLanguageSetting();
+        InitDebugModeSetting();
+        InitMobileMoveModeSetting();
         
         windowDropdown.onValueChanged.AddListener(SetFullscreen);
+        windowDropdown.gameObject.SetActive(!Application.isMobilePlatform);
+        
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
+        
         volumeSlider.onValueChanged.AddListener(SetVolume);
         soundEffectSlider.onValueChanged.AddListener(SetSoundEffect);
         viewportDropdown.onValueChanged.AddListener(SetViewport);
         languageDropdown.onValueChanged.AddListener(SetLanguage);
+        debugModeDropdown.onValueChanged.AddListener(SetDebugMode);
+        mobileMoveModeDropdown.onValueChanged.AddListener(SetMobileMoveMode);
+        mobileMoveModeDropdown.gameObject.SetActive(Application.isMobilePlatform);
         
         m_CloseButton.onClick.AddListener(Close);
         
@@ -95,37 +105,46 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     {
         _graphicSetting.Save();
         _graphicSetting.Execute();
-        Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
+        Jyx2_UIManager.Instance.HideUI(nameof(GameSettingsPanel));
     }
 
     public void InitResolutionDropdown()
     {
-#if !UNITY_ANDROID
+        var setting = (string) gameSetting[GameSettingManager.Catalog.Resolution];
+
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
 
+        int currentIndex = 0;
+        
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
+            string option = resolutions[i].width + "x" + resolutions[i].height;
+
+            if (!options.Contains(option))
+            {
+                //如果是当前的分辨率，则记下来
+                if (option.Equals(setting))
+                {
+                    currentIndex = i;
+                }
+                
+                options.Add(option);
+            }
+                
         }
         
         resolutionDropdown.AddOptions(options);
-
-        var setting = (int) gameSetting[GameSettingManager.Catalog.Resolution];
-        resolutionDropdown.value = setting;
+        resolutionDropdown.value = currentIndex;
         resolutionDropdown.RefreshShownValue();
-#endif
     }
 
     private void InitWindowDropdown()
     {
-#if !UNITY_ANDROID
         var setting = (int) gameSetting[GameSettingManager.Catalog.Fullscreen];
         windowDropdown.value = setting;
         windowDropdown.RefreshShownValue();
-#endif
     }
 
     public void InitDifficultyDropdown()
@@ -169,9 +188,28 @@ public class GeneralSettingsPanel : Jyx2_UIBase
        }
    }
 
+   private void InitDebugModeSetting()
+   {
+       var setting = gameSetting[GameSettingManager.Catalog.DebugMode];
+       if (setting is int value)
+       {
+           debugModeDropdown.value = value;
+       }
+   }
+
+   private void InitMobileMoveModeSetting()
+   {
+       var setting = gameSetting[GameSettingManager.Catalog.MobileMoveMode];
+       if (setting is int value)
+       {
+           mobileMoveModeDropdown.value = value;
+       }
+   }
+
     private void SetResolution(int index)
     {
-        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, index);
+        string resolutionText = resolutionDropdown.options[index].text;
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Resolution, resolutionText);
     }
 
     private void SetVolume(float volume)
@@ -197,6 +235,16 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     private void SetLanguage(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Language, languageDropdown.options[index].text);
+    }
+
+    private void SetDebugMode(int index)
+    {
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.DebugMode, index);
+    }
+
+    private void SetMobileMoveMode(int index)
+    {
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.MobileMoveMode, index);
     }
 
     /*游戏难度，暂未实现*/

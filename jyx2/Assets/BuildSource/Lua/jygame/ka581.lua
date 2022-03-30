@@ -1,6 +1,6 @@
-Talk(0, "贤弟，我们走了吧．", "talkname0", 1);
+Talk(0, "贤弟，我们走了吧。", "talkname0", 1);
 if TeamIsFull() == false then goto label0 end;
-    Talk(49, "你的队伍已满，我无法加入．", "talkname49", 0);
+    Talk(49, "你的队伍已满，我无法加入。", "talkname49", 0);
     do return end;
 ::label0::
     DarkScence();

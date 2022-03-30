@@ -55,10 +55,9 @@ public class ColorStringDefine
 public class GameConst
 {
     public const string DefaultMainMenuScene = "0_MainMenu";
-
-    public const float MapSpeed = 5;
-    public const float MapAngularSpeed = 1000;
-    public const float MapAcceleration = 100;
+    
+    public const float MapAngularSpeed = 9999;
+    public const float MapAcceleration = 9999;
 
     public const bool SEMI_REAL = false;//游戏是否是半即时制
     public const int ACTION_SP = 1000;//半即时制的情况下 行动一次的花费
@@ -236,4 +235,6 @@ public class GameConst
     public const string PLAYER_PREF_FULLSCREEN = "fullscreen";
     public const string PLAYER_PREF_VIEWPORT_TYPE = "viewport_type";
     public const string PLAYER_PREF_LANGUAGE = "language";
+    public const string PLAYER_PREF_DEBUGMODE = "debugmode";
+    public const string PLAYER_MOBILE_MOVE_MODE = "mobile_move_mode";
 }

@@ -60,9 +60,10 @@ public partial class GameMainMenu
 		ReleaseNote_Panel = transform.Find("ReleaseNotePanel").GetComponent<ReleaseNotePanel>();
 
 		//bottom buttons
-		bottomButtons.Add(transform.Find("mainPanel/GithubButton").GetComponent<Button>());
-		bottomButtons.Add(transform.Find("mainPanel/ProjButton").GetComponent<Button>());
-		bottomButtons.Add(transform.Find("mainPanel/ReleaseNoteButton").GetComponent<Button>());
-		bottomButtons.Add(transform.Find("mainPanel/SettingButton").GetComponent<Button>());
+		foreach (Transform child in transform.Find("mainPanel/ExtendPanel"))
+		{
+			var btn = child.GetComponent<Button>();
+			bottomButtons.Add(btn);
+		}
 	}
 }

@@ -1,2 +1,2 @@
-Talk(94, "．．．．．．", "talkname94", 0);
+Talk(94, "……", "talkname94", 0);
 do return end;

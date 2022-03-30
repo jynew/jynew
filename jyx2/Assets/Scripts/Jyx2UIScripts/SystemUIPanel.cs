@@ -134,7 +134,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 	async void GraphicSetting()
 	{
 		HidePanel();
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(GraphicSettingsPanel));
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(GameSettingsPanel));
 	}
 
 	async void Quit2MainMenu()

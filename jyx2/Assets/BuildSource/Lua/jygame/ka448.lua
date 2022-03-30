@@ -1,6 +1,6 @@
-Talk(94, "来者何人，擅闯我铁掌山．", "talkname94", 0);
-Talk(0, "铁掌山？我还以为是”猴爪山”呢？", "talkname0", 1);
-Talk(94, "大胆狂徒，竟敢上我铁掌帮找碴．", "talkname94", 0);
+Talk(94, "来者何人，擅闯我铁掌山。", "talkname94", 0);
+Talk(0, "铁掌山？我还以为是“猴爪山”呢？", "talkname0", 1);
+Talk(94, "大胆狂徒，竟敢上我铁掌帮找碴。", "talkname94", 0);
 if TryBattle(70) == true then goto label0 end;
     Dead();
     do return end;

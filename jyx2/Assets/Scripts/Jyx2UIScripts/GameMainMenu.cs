@@ -236,6 +236,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	public void OnNewGameClicked()
 	{
+		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(false); 
 		OnNewGame();
 	}
 
@@ -402,6 +403,8 @@ public partial class GameMainMenu : Jyx2_UIBase
 		this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
 		this.InputNamePanel_RectTransform.gameObject.SetActive(false);
 		m_panelType = PanelType.Home;
+		
+		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(true);
 	}
 
 	protected override void OnHidePanel()
@@ -427,7 +430,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenSettingsPanel()
 	{
-		Jyx2_UIManager.Instance.ShowUIAsync(nameof(GraphicSettingsPanel)).Forget();
+		Jyx2_UIManager.Instance.ShowUIAsync(nameof(GameSettingsPanel)).Forget();
 	}
 
 	/// <summary>

@@ -51,6 +51,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_ShadowQualityDropdown.onValueChanged.AddListener(DropdownShadowQuality);
         m_ShadowShowLevelDropdown.onValueChanged.AddListener(DropdownShadowShowLevel);
 
+
         m_CloseButton.onClick.AddListener(Close);
     }
 
@@ -58,7 +59,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     {
         _graphicSetting.Save();
         _graphicSetting.Execute();
-        Jyx2_UIManager.Instance.HideUI(nameof(GraphicSettingsPanel));
+        Jyx2_UIManager.Instance.HideUI(nameof(GameSettingsPanel));
     }
     
     public void InitUI()

@@ -80,12 +80,12 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		//curShopId = (int)allParams[0];
 		curShopId = LevelMaster.GetCurrentGameMap().Id;
 		curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
-
-		RefreshChild();
+		
 		//only change to first item, when first time showing
 		if (visibleItems.Count > 0 && GamepadHelper.GamepadConnected)
 			changeCurrentSelection(0);
 
+		RefreshChild();
 		RefreshProperty();
 		RefreshMoney();
 		if (allParams.Length > 1)
@@ -130,6 +130,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
 			int currentNum = GetHasBuyNum(data.Item.Id);
 			uiItem.Refresh(data, i, currentNum);
+			uiItem.SetSelect(current_selection == i);
 
 			if (itemHeight == 0)
 				itemHeight = uiItem.rectTransform().rect.height;

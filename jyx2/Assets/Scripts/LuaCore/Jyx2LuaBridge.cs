@@ -1246,7 +1246,7 @@ namespace Jyx2
             });
         }
         
-        public static void jyx2_PlayTimeline(string timelineName, int playMode, bool isClonePlayer, string tagRole = "")
+        public static void jyx2_PlayTimeline(string timelineName, int playMode, bool isMovePlayer, string tagRole = "")
         {
             RunInMainThread(() =>
             {
@@ -1289,31 +1289,8 @@ namespace Jyx2
                 //没有指定对象，则默认为主角播放
                 if (string.IsNullOrEmpty(tagRole) || tagRole == "PLAYER")
                 {
-                    //克隆主角来播放特殊剧情
-                    if (isClonePlayer)
-                    {
-                        if (clonePlayer == null)
-                        {
-                            clonePlayer = GameObject.Instantiate(Jyx2Player.GetPlayer().m_Animator);
-                            clonePlayer.runtimeAnimatorController = null;
-                            Jyx2Player.GetPlayer().gameObject.SetActive(false);
-                        }
-
-                        DoPlayTimeline(playableDirector, clonePlayer.gameObject);
-                    }
-                    //正常绑定当前主角播放
-                    else
-                    {
-                        var bindingDic = playableDirector.playableAsset.outputs;
-                        bindingDic.ForEach(delegate (PlayableBinding playableBinding)
-                        {
-                            if (playableBinding.outputTargetType == typeof(Animator))
-                            {
-                                var bindPlayerObj = Jyx2Player.GetPlayer().m_Animator.gameObject;
-                                playableDirector.SetGenericBinding(playableBinding.sourceObject, bindPlayerObj);
-                            }
-                        });
-                    }
+                    var bindPlayerObj = Jyx2Player.GetPlayer().m_Animator.gameObject;
+                    DoPlayTimeline(playableDirector, bindPlayerObj, isMovePlayer);
                 }
                 else
                 {
@@ -1327,18 +1304,17 @@ namespace Jyx2
             Wait();
         }
 
-        static void DoPlayTimeline(PlayableDirector playableDirector, GameObject player)
+        static void DoPlayTimeline(PlayableDirector playableDirector, GameObject player, bool isMovePlayer = false)
         {
-            player.SetActive(false);
-
             var bindingDic = playableDirector.playableAsset.outputs;
             bindingDic.ForEach(delegate (PlayableBinding playableBinding)
             {
                 if (playableBinding.outputTargetType == typeof(Animator))
                 {
-                    if (playableBinding.sourceObject != null)
+                    //移动主角来播放特殊剧情
+                    if (isMovePlayer)
                     {
-                        playableDirector.GetComponent<PlayableDirectorHelper>().BindPlayer(player);
+                        playableDirector.GetComponent<PlayableDirectorHelper>().BindPlayer(player); 
                     }
                     playableDirector.SetGenericBinding(playableBinding.sourceObject, player);
                 }

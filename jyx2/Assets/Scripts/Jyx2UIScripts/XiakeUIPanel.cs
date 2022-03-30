@@ -276,13 +276,28 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		var eventLuaPath = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(m_currentRole.GetJyx2RoleId()).LeaveStoryId;
 		if (!string.IsNullOrEmpty(eventLuaPath))
 		{
-			Jyx2.LuaExecutor.Execute("jygame/ka" + eventLuaPath, RefreshView);
+			PlayLeaveStory(eventLuaPath).Forget();
+			
 		}
 		else
 		{
 			GameRuntimeData.Instance.LeaveTeam(m_currentRole.GetJyx2RoleId());
 			RefreshView();
 		}
+	}
+
+
+	async UniTask PlayLeaveStory(string story)
+	{
+		this.gameObject.SetActive(false);
+		var s = new UniTaskCompletionSource();
+		Jyx2.LuaExecutor.Execute("jygame/ka" + story, () =>
+		{
+			s.TrySetResult();
+		});
+		await s.Task;
+		this.gameObject.SetActive(true);
+		RefreshView();
 	}
 
 	void RefreshView()
