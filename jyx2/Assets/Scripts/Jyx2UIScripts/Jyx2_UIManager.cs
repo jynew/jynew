@@ -115,7 +115,7 @@ public class Jyx2_UIManager : MonoBehaviour
 
         await BeforeSceneLoad.loadFinishTask;
         
-        string info = string.Format("当前版本：{0} 当前MOD：{1}".GetContent(nameof(Jyx2_UIManager)),
+        string info = string.Format("<b>版本：{0} 模组：{1}</b>".GetContent(nameof(Jyx2_UIManager)),
             Application.version,
             GlobalAssetConfig.Instance.startMod.ModName);
         
