@@ -30,6 +30,6 @@ public class MODRootConfig : ScriptableObject
     [Button("生成索引")]
     void GenerateIndexFile()
     {
-        MODLoader.WriteAllOverrideList(ModRootDir);
+        MODLoader.WriteModIndexFile(ModRootDir);
     }
 }
