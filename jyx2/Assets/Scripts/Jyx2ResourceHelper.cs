@@ -69,7 +69,7 @@ public static class Jyx2ResourceHelper
         }
 
         //生成MOD的文件索引
-        MODLoader.WriteAllOverrideList(t.startMod.ModRootDir);
+        MODLoader.WriteModIndexFile(t.startMod.ModRootDir);
 
         //技能池
         var overridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");

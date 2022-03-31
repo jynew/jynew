@@ -112,7 +112,7 @@ namespace Jyx2Editor
             AddressableAssetSettings.BuildPlayerContent();
             
             //重新生成MOD资源索引表
-            MODLoader.WriteAllOverrideList();
+            WriteCurrentModIndexFile();
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -145,7 +145,7 @@ namespace Jyx2Editor
             AddressableAssetSettings.BuildPlayerContent();
             
             //重新生成MOD资源索引表
-            MODLoader.WriteAllOverrideList();
+            WriteCurrentModIndexFile();
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -185,7 +185,7 @@ namespace Jyx2Editor
                 AddressableAssetSettings.BuildPlayerContent();
                 
                 //重新生成MOD资源索引表
-                MODLoader.WriteAllOverrideList();
+                WriteCurrentModIndexFile();
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
@@ -232,7 +232,7 @@ namespace Jyx2Editor
                 AddressableAssetSettings.BuildPlayerContent();
                 
                 //重新生成MOD资源索引表
-                MODLoader.WriteAllOverrideList();
+                WriteCurrentModIndexFile();
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
@@ -346,5 +346,12 @@ namespace Jyx2Editor
                 Debug.LogError(e.StackTrace);
             }
         }
+        
+        private static void WriteCurrentModIndexFile()
+        {
+            var globalSettings = AssetDatabase.LoadAssetAtPath<GlobalAssetConfig>("Assets/GlobalAssetConfig.asset");
+            MODLoader.WriteModIndexFile(globalSettings.startMod.ModRootDir);
+        }
+
     }
 }

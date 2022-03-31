@@ -23,7 +23,6 @@ using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -33,16 +32,11 @@ namespace Jyx2.MOD
 {
     public static class MODLoader
     {
-
-        public static void WriteAllOverrideList()
-        {
-            var globalSettings = AssetDatabase.LoadAssetAtPath<GlobalAssetConfig>("GlobalAssetConfig.asset");
-            WriteAllOverrideList(globalSettings.startMod.ModRootDir);
-        }
         
-        public static void WriteAllOverrideList(string path)
+        
+        public static void WriteModIndexFile(string path)
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
 
             string indexPath = Path.Combine(path, "index.txt");
 
