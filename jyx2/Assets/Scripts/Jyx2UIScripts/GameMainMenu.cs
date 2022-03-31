@@ -11,6 +11,7 @@ using UnityEngine;
 using Jyx2;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using i18n.TranslatorDef;
 using Jyx2.Middleware;
 using UnityEngine.UI;
@@ -260,9 +261,25 @@ public partial class GameMainMenu : Jyx2_UIBase
 		//---------------------------------------------------------------------------
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		{
-			if (!StoryEngine.DoLoadGame(index) && m_panelType == PanelType.LoadGamePage)
+			var summary = GameSaveSummary.Load(index);
+			if (summary.ModId != null && !summary.ModId.Equals(GlobalAssetConfig.Instance.startMod.ModId))
 			{
-				OnNewGame();
+				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
+				string msg = "该存档MOD不匹配，载入可能导致数据错乱，是否继续？";
+				Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
+				{
+					if (index == 0)
+					{
+						StoryEngine.DoLoadGame(index);
+					}
+				})).Forget();
+			}
+			else
+			{
+				if (!StoryEngine.DoLoadGame(index) && m_panelType == PanelType.LoadGamePage)
+				{
+					OnNewGame();
+				}
 			}
 		}), "选择读档位".GetContent(nameof(GameMainMenu)), new Action(() =>
 		 {

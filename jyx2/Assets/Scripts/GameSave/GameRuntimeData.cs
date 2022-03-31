@@ -19,8 +19,53 @@ using UnityEngine;
 
 namespace Jyx2
 {
-    
-    
+
+    public struct GameSaveSummary
+    {
+        public string Summary;
+        public string ModId;
+        public string ModName;
+
+        public static GameSaveSummary Load(int index)
+        {
+            var summaryInfoFilePath = GetSummaryFilePath(index);
+            GameSaveSummary rst = new GameSaveSummary();
+            rst.Summary = ES3.Load<string>("summary", summaryInfoFilePath);
+
+            //适配之前的存档
+            try
+            {
+                rst.ModId = ES3.Load<string>("modId", summaryInfoFilePath);
+                rst.ModName = ES3.Load<string>("modName", summaryInfoFilePath);
+            }
+            catch (Exception e)
+            {
+                
+            }
+            
+            return rst;
+        }
+
+        public static void Save(int index, GameSaveSummary summary)
+        {
+            var summaryInfoFilePath = GetSummaryFilePath(index);
+            ES3.Save("summary", summary.Summary, summaryInfoFilePath);
+            ES3.Save("modId", summary.ModId, summaryInfoFilePath);
+            ES3.Save("modName", summary.ModName, summaryInfoFilePath);
+        }
+
+        public string GetBrief()
+        {
+            return $"{Summary} <size=20>[{ModName}]</size>";
+        }
+
+        public static string GetSummaryFilePath(int index)
+        {
+            return string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);
+        }
+        
+        const string ARCHIVE_SUMMARY_FILE_NAME = "archive_summary_{0}.dat";
+    }
     
     /// <summary>
     /// 这里是整个游戏的存档数据结构根节点
@@ -149,7 +194,6 @@ namespace Jyx2
 
 
         public const string ARCHIVE_FILE_NAME = "archive_{0}.dat";
-        public const string ARCHIVE_SUMMARY_FILE_NAME = "archive_summary_{0}.dat";
         public const string ARCHIVE_FILE_DIR = "Save";
         
         [Obsolete("待删除")]
@@ -160,46 +204,27 @@ namespace Jyx2
             Debug.Log("存档中.. index = " + index);
             SaveToFile(index);
             Debug.Log("存档结束");
-
-            var summaryInfo = GenerateSaveSummaryInfo();
-            ES3.Save("summary", summaryInfo, string.Format(ARCHIVE_SUMMARY_FILE_NAME, index));
-            //PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + index, summaryInfo);
         }
 
         public static DateTime? GetSaveDate(int index)
 		{
-            var summaryInfoFilePath = getSaveFileName(index);
+            var summaryInfoFilePath = GameSaveSummary.GetSummaryFilePath(index);
             return ES3.FileExists(summaryInfoFilePath) ?
                  ((DateTime?) ES3.GetTimestamp(summaryInfoFilePath)) : null;
         }
 
-        public static string GetSaveSummary(int index)
-		{
-			string summaryInfo = "";
-			var summaryInfoFilePath = getSaveFileName(index);
-			if (ES3.FileExists(summaryInfoFilePath))
-			{
-				summaryInfo = ES3.Load<string>("summary", summaryInfoFilePath);
-			}
-			else //CGGG：否则使用老的方式进行载入，适配老存档，此处待删除
-			{
-				var summaryInfoKey = ARCHIVE_SUMMARY_PREFIX + index;
-				if (PlayerPrefs.HasKey(summaryInfoKey))
-				{
-					summaryInfo = PlayerPrefs.GetString(summaryInfoKey);
-				}
-			}
-
-			return summaryInfo;
-		}
-
-		private static string getSaveFileName(int index)
-		{
-			return string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);
-		}
-
-		public void SaveToFile(int fileIndex)
+		private void SaveToFile(int fileIndex)
         {
+            //保存存档简介
+            GameSaveSummary summary = new GameSaveSummary()
+            {
+                Summary = GenerateSaveSummaryInfo(),
+                ModId = GlobalAssetConfig.Instance.startMod.ModId,
+                ModName = GlobalAssetConfig.Instance.startMod.ModName,
+            };
+            GameSaveSummary.Save(fileIndex, summary);
+            
+            //存档
             string path = string.Format(ARCHIVE_FILE_NAME, fileIndex);
             ES3.Save(nameof(GameRuntimeData), this, path);
         }
@@ -215,7 +240,7 @@ namespace Jyx2
         private string GenerateSaveSummaryInfo()
         {
             string mapName = LevelMaster.GetCurrentGameMap().GetShowName();
-            return $"{Player.Level}级,{mapName},队伍:{GetTeamMembersCount()}人 <size=20>[{GlobalAssetConfig.Instance.startMod.ModName}]</size>";
+            return $"{Player.Level}级,{mapName},队伍:{GetTeamMembersCount()}人";
         }
 
         #endregion

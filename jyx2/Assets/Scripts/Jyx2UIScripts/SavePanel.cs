@@ -193,7 +193,9 @@ public partial class SavePanel : Jyx2_UIBase
 
 			var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
 
-			string summaryInfo = GameRuntimeData.GetSaveSummary(i);
+			var summary = GameSaveSummary.Load(i);
+			
+			string summaryInfo = summary.GetBrief();
 
 			//---------------------------------------------------------------------------
 			//txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
