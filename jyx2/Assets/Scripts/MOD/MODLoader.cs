@@ -143,11 +143,12 @@ namespace Jyx2.MOD
 
         public static async UniTask<List<string>> LoadOverrideList(string path)
         {
-            string rootPath = GlobalAssetConfig.Instance.startMod.ModRootDir;
+            //string rootPath = GlobalAssetConfig.Instance.startMod.ModRootDir;
+            string filePath = GlobalAssetConfig.Instance.startMod.ModRootDir +  "/index.txt";
+            var content = await Addressables.LoadAssetAsync<TextAsset>(filePath);
+            var fileContentsList = content.text.Split(new string[] {"\r\n"}, StringSplitOptions.None);
             
-            string filePath = Path.Combine(rootPath, "index.txt");
-            List<string> fileContentsList;
-            if (Application.platform == RuntimePlatform.Android)
+            /*if (Application.platform == RuntimePlatform.Android)
             {
                 UnityWebRequest request = UnityWebRequest.Get(filePath);
                 await request.SendWebRequest();
@@ -157,7 +158,7 @@ namespace Jyx2.MOD
             else
             {
                 fileContentsList = File.ReadAllLines(filePath).ToList(); 
-            }
+            }*/
             
             var lineList = fileContentsList.Where(line => line.StartsWith(path)).ToList();
             

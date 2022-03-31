@@ -30,11 +30,10 @@ namespace Jyx2
         {
             var summaryInfoFilePath = GetSummaryFilePath(index);
             GameSaveSummary rst = new GameSaveSummary();
-            rst.Summary = ES3.Load<string>("summary", summaryInfoFilePath);
-
             //适配之前的存档
             try
             {
+                rst.Summary = ES3.Load<string>("summary", summaryInfoFilePath);
                 rst.ModId = ES3.Load<string>("modId", summaryInfoFilePath);
                 rst.ModName = ES3.Load<string>("modName", summaryInfoFilePath);
             }
@@ -56,7 +55,14 @@ namespace Jyx2
 
         public string GetBrief()
         {
-            return $"{Summary} <size=20>[{ModName}]</size>";
+            if (string.IsNullOrEmpty(ModName))
+            {
+                return $"{Summary}";   
+            }
+            else
+            {
+                return $"{Summary} <size=20>[{ModName}]</size>";    
+            }
         }
 
         public static string GetSummaryFilePath(int index)
