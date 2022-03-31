@@ -56,7 +56,14 @@ namespace Jyx2
 
         public string GetBrief()
         {
-            return $"{Summary} <size=20>[{ModName}]</size>";
+            if (string.IsNullOrEmpty(ModName))
+            {
+                return $"{Summary}";   
+            }
+            else
+            {
+                return $"{Summary} <size=20>[{ModName}]</size>";    
+            }
         }
 
         public static string GetSummaryFilePath(int index)

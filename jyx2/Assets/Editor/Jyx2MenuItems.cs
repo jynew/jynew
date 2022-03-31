@@ -108,11 +108,11 @@ namespace Jyx2Editor
 
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneWindows64);
 
-            //重新生成Addressable相关文件
-            AddressableAssetSettings.BuildPlayerContent();
-            
             //重新生成MOD资源索引表
             WriteCurrentModIndexFile();
+            
+            //重新生成Addressable相关文件
+            AddressableAssetSettings.BuildPlayerContent();
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -140,12 +140,12 @@ namespace Jyx2Editor
 
             if (string.IsNullOrEmpty(path))
                 return;
-
-            //重新生成Addressable相关文件
-            AddressableAssetSettings.BuildPlayerContent();
             
             //重新生成MOD资源索引表
             WriteCurrentModIndexFile();
+            
+            //重新生成Addressable相关文件
+            AddressableAssetSettings.BuildPlayerContent();
 
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -180,12 +180,12 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
-                
-                //重新生成Addressable相关文件
-                AddressableAssetSettings.BuildPlayerContent();
-                
+                                
                 //重新生成MOD资源索引表
                 WriteCurrentModIndexFile();
+
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
@@ -227,12 +227,12 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
-                
-                //重新生成Addressable相关文件
-                AddressableAssetSettings.BuildPlayerContent();
-                
+                                
                 //重新生成MOD资源索引表
                 WriteCurrentModIndexFile();
+
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
@@ -279,6 +279,10 @@ namespace Jyx2Editor
                 if (string.IsNullOrEmpty(path))
                     return;
 
+                                
+                //重新生成MOD资源索引表
+                WriteCurrentModIndexFile();
+
                 //重新生成Addressable相关文件
                 AddressableAssetSettings.BuildPlayerContent();
 
@@ -323,6 +327,9 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
+                
+                //重新生成MOD资源索引表
+                WriteCurrentModIndexFile();
 
                 //重新生成Addressable相关文件
                 AddressableAssetSettings.BuildPlayerContent();
@@ -351,6 +358,8 @@ namespace Jyx2Editor
         {
             var globalSettings = AssetDatabase.LoadAssetAtPath<GlobalAssetConfig>("Assets/GlobalAssetConfig.asset");
             MODLoader.WriteModIndexFile(globalSettings.startMod.ModRootDir);
+            
+            AssetDatabase.Refresh();
         }
 
     }
