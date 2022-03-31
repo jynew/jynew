@@ -93,6 +93,11 @@ namespace Jyx2.MOD
             }
         }
 
+        public static async UniTask InitV2()
+        {
+            
+        }
+
         private static string[] GetAllPaths(this AssetBundle ab)
         {
             return ab.GetAllScenePaths().Concat(ab.GetAllAssetNames()).ToArray();
@@ -145,7 +150,7 @@ namespace Jyx2.MOD
         {
             //string rootPath = GlobalAssetConfig.Instance.startMod.ModRootDir;
             string filePath = GlobalAssetConfig.Instance.startMod.ModRootDir +  "/index.txt";
-            var content = await Addressables.LoadAssetAsync<TextAsset>(filePath);
+            var content = await MODLoader.LoadAsset<TextAsset>(filePath);
             var fileContentsList = content.text.Split(new string[] {"\r\n"}, StringSplitOptions.None);
             
             /*if (Application.platform == RuntimePlatform.Android)

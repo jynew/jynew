@@ -361,6 +361,5 @@ namespace Jyx2Editor
             
             AssetDatabase.Refresh();
         }
-
     }
 }
