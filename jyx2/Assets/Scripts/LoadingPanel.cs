@@ -54,7 +54,7 @@ public class LoadingPanel : MonoBehaviour
                 //---------------------------------------------------------------------------
                 //特定位置的翻译【载入中文本显示】
                 //---------------------------------------------------------------------------
-                m_LoadingText.text = "载入中... ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
+                m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
                 //---------------------------------------------------------------------------
                 //---------------------------------------------------------------------------
                 await UniTask.WaitForEndOfFrame();
@@ -75,7 +75,7 @@ public class LoadingPanel : MonoBehaviour
                     //---------------------------------------------------------------------------
                     //特定位置的翻译【载入中文本显示】
                     //---------------------------------------------------------------------------
-                    m_LoadingText.text = "载入中... ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
+                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
                     //---------------------------------------------------------------------------
                     //---------------------------------------------------------------------------
                     await UniTask.WaitForEndOfFrame();
@@ -91,7 +91,7 @@ public class LoadingPanel : MonoBehaviour
                     //---------------------------------------------------------------------------
                     //特定位置的翻译【载入中文本显示】
                     //---------------------------------------------------------------------------
-                    m_LoadingText.text = "载入中... ".GetContent(nameof(LoadingPanel)) + (int)(async.PercentComplete * 100) + "%";
+                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(async.PercentComplete * 100) + "%";
                     //---------------------------------------------------------------------------
                     //---------------------------------------------------------------------------
                     await UniTask.WaitForEndOfFrame();

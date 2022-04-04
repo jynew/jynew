@@ -31,7 +31,7 @@ public class GameOver : Jyx2_UIBase
         name_text.text = GameRuntimeData.Instance.Player.Name;
         DateTime dt = DateTime.Now;
         date_text.text = dt.Subtract(GameRuntimeData.Instance.startDate).Days.ToString()+"天前";
-        note_text.text = dt.ToLongDateString().ToString()+"\n在地球某处\n当地失踪人口又增加了\n一例。。。";
+        note_text.text = dt.ToLongDateString().ToString()+"\n在地球某处\n当地失踪人口又增加了\n一例……";
     }
 
     public void InitUi()
