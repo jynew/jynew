@@ -113,11 +113,11 @@ namespace Jyx2
             //暗器，扣除道具
             if (this is AnqiSkillCastInstance)
             {
-                if (!role.isAI)
+                if (GameRuntimeData.Instance.IsRoleInTeam(role.GetJyx2RoleId())) //如果是玩家角色，则从背包里扣。
                 {
                     GameRuntimeData.Instance.AddItem(Anqi.Id, -1);
                 }
-                else
+                else //否则从角色身上扣
                 {
                     role.AddItem(Anqi.Id, -1);
                 }
