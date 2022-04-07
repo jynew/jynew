@@ -662,12 +662,29 @@ public class AIManager
     List<Jyx2ConfigItem> GetAvailableItems(RoleInstance role, int itemType)
     {
         List<Jyx2ConfigItem> items = new List<Jyx2ConfigItem>();
-        foreach (var item in role.Items)
+        // 如果角色是玩家这方的，应该使用玩家的物品栏 by Tomato
+        if (role.team == 0)
         {
-            var tmp = item.Item;
-            if ((int)tmp.ItemType == itemType)
-                items.Add(tmp);
+            foreach (var kv in GameRuntimeData.Instance.Items)
+            {
+                string id = kv.Key;
+                int count = kv.Value;
+
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
+                if ((int)item.ItemType == itemType)
+                    items.Add(item);
+            }
         }
+        else
+        {
+            foreach (var item in role.Items)
+            {
+                var tmp = item.Item;
+                if ((int)tmp.ItemType == itemType)
+                    items.Add(tmp);
+            }
+        }
+
         return items;
     }
 
