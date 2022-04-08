@@ -74,35 +74,6 @@ public class AIManager
         AIResult result = null;
         double maxscore = 0;
 
-        foreach (var skill in skills)
-        {
-            if (skill.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
-                continue;
-
-            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, skill, range);
-            if (tmp != null && tmp.Length == 2 && tmp[0] != null)
-            {
-                BattleBlockVector movePos = tmp[0];
-                BattleBlockVector castPos = tmp[1];
-                double score = GetSkillCastResultScore(role, skill, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
-                if (score > maxscore)
-                {
-                    maxscore = score;
-                    result = new AIResult
-                    {
-                        AttackX = castPos.X,
-                        AttackY = castPos.Y,
-                        MoveX = movePos.X,
-                        MoveY = movePos.Y,
-                        SkillCast = skill,
-                        IsRest = false
-                    };
-                }
-
-                await UniTask.WaitForEndOfFrame();
-            }
-        }
-        
         //考虑吃药
         List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
         foreach (var item in items)
@@ -204,37 +175,64 @@ public class AIManager
 
         List<Jyx2ConfigItem> anqis = GetAvailableItems(role, 4); //获取暗器
         //使用暗器
-        if (anqis.Count > 0)
+        foreach (var anqi in anqis)
         {
-            foreach (var anqi in anqis)
+            SkillCastInstance anqiSkillCast = new AnqiSkillCastInstance(role.Anqi, anqi);
+
+            if (anqiSkillCast.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
+                continue;
+
+            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqiSkillCast, range);
+
+            if (tmp != null && tmp.Length == 2 && tmp[0] != null)
             {
-                SkillCastInstance anqiSkillCast = new AnqiSkillCastInstance(role.Anqi, anqi);
+                BattleBlockVector movePos = tmp[0];
+                BattleBlockVector castPos = tmp[1];
+                double score = GetSkillCastResultScore(role, anqiSkillCast, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
 
-                if (anqiSkillCast.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
-                    continue;
-
-                BattleBlockVector[] tmp = await GetMoveAndCastPos(role, anqiSkillCast, range);
-
-                if (tmp != null && tmp.Length == 2 && tmp[0] != null)
+                if (score > maxscore)
                 {
-                    BattleBlockVector movePos = tmp[0];
-                    BattleBlockVector castPos = tmp[1];
-                    double score = GetSkillCastResultScore(role, anqiSkillCast, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
-
-                    if (score > maxscore)
+                    maxscore = score;
+                    result = new AIResult
                     {
-                        maxscore = score;
-                        result = new AIResult
-                        {
-                            AttackX = castPos.X,
-                            AttackY = castPos.Y,
-                            MoveX = movePos.X,
-                            MoveY = movePos.Y,
-                            SkillCast = anqiSkillCast,
-                            IsRest = false
-                        };
-                    }
+                        AttackX = castPos.X,
+                        AttackY = castPos.Y,
+                        MoveX = movePos.X,
+                        MoveY = movePos.Y,
+                        SkillCast = anqiSkillCast,
+                        IsRest = false
+                    };
                 }
+            }
+        }
+        
+        //使用武学
+        foreach (var skill in skills)
+        {
+            if (skill.GetStatus() != SkillCastInstance.SkillCastStatus.OK)
+                continue;
+
+            BattleBlockVector[] tmp = await GetMoveAndCastPos(role, skill, range);
+            if (tmp != null && tmp.Length == 2 && tmp[0] != null)
+            {
+                BattleBlockVector movePos = tmp[0];
+                BattleBlockVector castPos = tmp[1];
+                double score = GetSkillCastResultScore(role, skill, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
+                if (score > maxscore)
+                {
+                    maxscore = score;
+                    result = new AIResult
+                    {
+                        AttackX = castPos.X,
+                        AttackY = castPos.Y,
+                        MoveX = movePos.X,
+                        MoveY = movePos.Y,
+                        SkillCast = skill,
+                        IsRest = false
+                    };
+                }
+
+                await UniTask.WaitForEndOfFrame();
             }
         }
 
@@ -269,14 +267,42 @@ public class AIManager
             var targetRole = BattleModel.GetAliveRole(blockVector);
             //还活着
             if (targetRole == null || targetRole.IsDead()) continue;
-            //打敌人的招式
+            //打敌人的招式    
             if (skill.IsCastToEnemy() && caster.team == targetRole.team) continue;
             //“打”自己人的招式
             if (!skill.IsCastToEnemy() && caster.team != targetRole.team) continue;
 
             var result = GetSkillResult(caster, targetRole, skill, blockVector);
             score += result.GetTotalScore();
+            
+            //解毒算分
+            if (skill is DePoisonSkillCastInstance)
+            {
+                if (targetRole.Poison > 50)
+                {
+                    score = result.poison;
+                }
+            }
 
+            //医疗算分
+            if (skill is HealSkillCastInstance)
+            {
+                if (targetRole.Hp < 0.2 * targetRole.MaxHp)
+                {
+                    score = result.heal;
+                }
+            }
+            
+            //用毒算分
+            if (skill is PoisonSkillCastInstance)
+            {
+                score = Mathf.Min(GameConst.MAX_POISON - targetRole.Poison, caster.UsePoison) * 0.5;
+                if (targetRole.Hp < 10)
+                {
+                    score = 1;
+                }
+            }
+            
             //暗器算分
             if (skill is AnqiSkillCastInstance)
             {
@@ -386,13 +412,20 @@ public class AIManager
 
                         //如果判断是施展给原来的自己，但自己已经不在原位置了,相当于没打中
                         if (targetSprite == role && !(targetSprite.Pos.X == moveBlock.X && targetSprite.Pos.Y == moveBlock.Y)) continue;
-                        //如果是自己的新位置，则相当于施展给自己
-                        if (targetSprite.Pos.X == moveBlock.X && targetSprite.Pos.Y == moveBlock.Y)
+                        //打敌人的招式优先“打”自己人的招式
+                        if (isAttack)
                         {
-                            continue;
-                            //targetSprite = sprite;
+                            //如果是自己的新位置，则相当于施展给自己
+                            if (targetSprite.Pos.X == moveBlock.X && targetSprite.Pos.Y == moveBlock.Y)
+                            {
+                                continue;
+                            }
+                            else if (targetSprite.team != role.team && targetSprite.Hp > 0)
+                            {
+                                score += 0.2f;
+                            }
                         }
-                        else if (targetSprite.team != role.team && targetSprite.Hp > 0)
+                        else
                         {
                             score += 0.1f;
                         }

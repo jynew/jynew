@@ -97,21 +97,14 @@ namespace Jyx2
 
         public double GetTotalScore()
         {
-            if(r1.team != r2.team)
-            {
-                float scale = 1;
-                if (damage >= r2.Hp)
-                    scale = 1.25f;
-                float attackTwiceScale = 1;
-                if (r1.Zuoyouhubo == 1)
-                    attackTwiceScale = 2;
+            float scale = 1;
+            if (damage >= r2.Hp)
+                scale = 1.25f;
+            float attackTwiceScale = 1;
+            if (r1.Zuoyouhubo == 1)
+                attackTwiceScale = 2;
 
-                return attackTwiceScale * scale * damage + attackTwiceScale * damageMp / 5 + poison;
-            }else if(r1.team == r2.team)
-            {
-                return depoison + heal;
-            }
-            return 0;
+            return attackTwiceScale * scale * damage + attackTwiceScale * damageMp / 5;
         }
 
         public bool IsDamage()
