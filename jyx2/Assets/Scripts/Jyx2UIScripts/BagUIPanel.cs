@@ -219,6 +219,11 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 	void OnCloseBtnClick()
 	{
+		if (m_callback != null)
+		{
+			m_callback(-1);
+		}
+		
 		Jyx2_UIManager.Instance.HideUI(nameof(BagUIPanel));
 		visiblityToggle(false);
 	}
