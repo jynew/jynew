@@ -48,6 +48,7 @@ if InTeam(49) == true then goto label0 end;
     ModifyEvent(-2, 3, 1, 1, -1, -1, -1, 6342, 6342, 6342, -2, -2, -2);
 	jyx2_SwitchRoleAnimation("NPC/xiaoyaozi", "Assets/BuildSource/AnimationControllers/Dead-FaceUp.controller");
 	jyx2_FixMapObject("逍遥子传功完毕",1);
+    jyx2_SwitchRoleAnimation("NPC/suxinghe", "Assets/BuildSource/AnimationControllers/跪拜Controller.controller");
     LightScence();
     Talk(0, "奇怪，怎么进去这么久……我也进去看看好了。", "talkname0", 1);
 do return end;
