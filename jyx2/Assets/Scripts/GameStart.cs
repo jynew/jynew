@@ -13,10 +13,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using HanSquirrel.OpenSource;
 using UnityEngine;
 using Jyx2;
 using Jyx2.Middleware;
 using Jyx2.MOD;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
@@ -42,7 +44,11 @@ public class GameStart : MonoBehaviour
 			Destroy(introPanel.gameObject);
 		});
 		
-		await MODManager.Init();
+		//await MODManager.Init(); //GG 感觉没用就先注释掉。
+		await Addressables.InitializeAsync(); 
+		//BasicModRuntime.RegisterMod(@"D:\Steam\123466\Icons");  //GG 注册标准目录之外的MOD
+		await BasicModRuntime.InitModsAsync("JYX2"); 
+		
 		BeforeSceneLoad.ColdBind();
 		SceneManager.LoadScene("0_MainMenu");
 	}
