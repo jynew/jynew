@@ -60,6 +60,7 @@
     - UnityEditor下：ModOutput
     - 在WindowsExe下：游戏根目录下的ModDeploy
     - 其他平台：Application.persistentDataPath + "/ModDeploy"
+- 项目组需要自行拷贝缺省MOD到安装目录
 - 在Mod根目录下的MOD不需要注册，可以直接初始化，这种Mod发布称作《标准发布》
 - 如果需要注册非Mod根目录下的MOD，则调用函数 BasicModRuntime.RegisterMod
 - 可以用非标注册来覆盖内部MOD
