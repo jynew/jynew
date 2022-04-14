@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -16,7 +15,7 @@ namespace HanSquirrel.OpenSource
         /// 游戏里面是固定的目录作为MOD的根目录，所有MOD都直接下载到这个目录下面。
         public static readonly string RootDir =
 #if UNITY_EDITOR
-            $"ModOutput/{EditorUserBuildSettings.activeBuildTarget}";
+            $"ModOutput/{UnityEditor.EditorUserBuildSettings.activeBuildTarget}";
 #elif UNITY_STANDALONE_WIN
              new DirectoryInfo(Application.streamingAssetsPath).Parent.Parent.FullName+ "/ModDeploy";
             ///不直接用"ModDeploy"是因为Untiy里面Build&Run的时候，当前路径并非游戏EXE的路径
@@ -34,6 +33,16 @@ namespace HanSquirrel.OpenSource
         ///从任意目录安装MOD
         public static void RegisterMod(string path)
         {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.playModeStateChanged += p =>
+            {
+                if (p == UnityEditor.PlayModeStateChange.ExitingEditMode)
+                {
+                    _Inited = false;
+                    _DirMap.Clear();
+                }
+            };
+#endif
             if (_Inited)
                 throw new Exception("程序编写错误：BasicModRuntime在InitAsync之后，无法InstallMod");
 
