@@ -21,7 +21,7 @@ public class CameraHelper : MonoBehaviour
     public Transform m_BattleCam;
     private CinemachineVirtualCamera _battleVCam;
 
-    public float m_RrotateSpeed = 50f;//旋转速度
+    public float m_RrotateSpeed = 120f;//旋转速度
     public float smoothing = 3;//平滑系数
     private float zoomSpeed = 3f;//缩放速度
 

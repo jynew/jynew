@@ -225,6 +225,7 @@ public class LevelMaster : MonoBehaviour
 		interactiveButton = Jyx2InteractiveButton.GetInteractiveButton();
 
 		IsInited = true;
+		
 	}
 
 	public void UpdateCameraParams()
@@ -293,15 +294,13 @@ public class LevelMaster : MonoBehaviour
 
 	public void UpdateMobileControllerUI()
 	{
-		m_Joystick.gameObject.SetActive(IsJoystickControlEnable());
-		m_TouchPad.gameObject.SetActive(false); //暂时关掉
-
-		//战斗中移动按钮隐藏
-		if (BattleManager.Instance.IsInBattle)
+		if (!BattleManager.Instance.IsInBattle)
 		{
-			m_Joystick.gameObject.SetActive(false);
-			m_TouchPad.gameObject.SetActive(false);
+			m_Joystick.gameObject.SetActive(IsJoystickControlEnable());	
 		}
+		
+		m_Joystick.visible = !BattleManager.Instance.IsInBattle; //战斗中移动按钮隐藏
+		m_TouchPad.gameObject.SetActive(BattleManager.Instance.IsInBattle && IsMobilePlatform()); //移动平台显示战斗旋转
 	}
 
 	void LoadSpawnPosition()
@@ -382,7 +381,7 @@ public class LevelMaster : MonoBehaviour
 		var animator = _gameMapPlayer.m_Animator;
 		if (animator != null)
 		{
-			animator.SetFloat("speed", speed);
+			animator.SetFloat("speed", Math.Min(speed, 20));
 		}
 	}
 
@@ -443,10 +442,12 @@ public class LevelMaster : MonoBehaviour
 		GameObject.Find("LevelMaster/UI/PlayerStatusPanel").SetActive(!isOn);
 	}
 
-	void FixedUpdate()
+	void Update()
 	{
 		TryClearNavPointer();
 		PlayerControl();
+
+		GamePadUpdate();
 	}
 
 	void PlayerControl()
@@ -730,10 +731,10 @@ public class LevelMaster : MonoBehaviour
 		var maxSpeed = _playerNavAgent.speed;
 
 		//设置位移
-		_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.fixedDeltaTime * maxSpeed);
+		_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.deltaTime * maxSpeed);
 
 		//计算当前速度
-		var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.fixedDeltaTime;
+		var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.deltaTime;
 		SetPlayerSpeed(speed);
 
 		if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
@@ -788,10 +789,10 @@ public class LevelMaster : MonoBehaviour
 		var maxSpeed = _playerNavAgent.speed;
 
 		//设置位移
-		_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.fixedDeltaTime * maxSpeed);
+		_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.deltaTime * maxSpeed);
 
 		//计算当前速度
-		var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.fixedDeltaTime;
+		var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.deltaTime;
 		SetPlayerSpeed(speed);
 
 		if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
@@ -970,7 +971,7 @@ public class LevelMaster : MonoBehaviour
 		}
 	}
 
-	private void Update()
+	private void GamePadUpdate()
 	{
 		Button button = Jyx2InteractiveButton.GetInteractiveButton();
 

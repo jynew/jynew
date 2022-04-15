@@ -99,6 +99,9 @@ public class BattleManager : MonoBehaviour
         if (!BattleboxHelper.Instance.CanEnterBattle(tempView.transform.position)) return;
 
         IsInBattle = true;
+        
+        LevelMaster.Instance.UpdateMobileControllerUI();
+        
         m_battleParams = customParams;
         //初始化战斗model
         m_BattleModel = new BattleFieldModel();
