@@ -74,7 +74,7 @@ public class ModItem : MonoBehaviour
         });
         m_Delete.onClick.AddListener(() =>
         {
-            DoDelete(modEntry.Path);
+            DoDelete(modEntry);
         });
         m_Image.sprite = await new Downloader().DownloadSprite(modEntry.ModMeta.poster);
     }
@@ -84,11 +84,15 @@ public class ModItem : MonoBehaviour
         await _loader.DownloadFile(modEntry.ModMeta.uri, modEntry.Path);
     }
 
-    void DoDelete(string filePath)
+    void DoDelete(ModEntry modEntry)
     {
-        if (File.Exists(filePath))
+        if (modEntry.Active)
         {
-            File.Delete(filePath);
+            modEntry.Active = false;
+        }
+        if (File.Exists(modEntry.Path))
+        {
+            File.Delete(modEntry.Path);
             Debug.Log("File successfully deleted");
             m_Status.text = "<color=grey>缺失</color>";
             m_Toggle.gameObject.SetActive(false);
