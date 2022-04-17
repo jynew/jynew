@@ -550,17 +550,32 @@ namespace Jyx2
         {
             if (practiseItem == null)
                 return "";
+            if (practiseItem.GenerateItems == null)
+                return "";
+            if (practiseItem.GenerateItemNeedCost == null)
+                return "";
+            if (!runtime.HaveItemBool(practiseItem.GenerateItemNeedCost.Id))
+                return "";
+            int GenerateItemNeedCount = runtime.Items[practiseItem.GenerateItemNeedCost.Id.ToString()];
             int GenerateItemNeedExp = (7 - IQ / 15) * practiseItem.GenerateItemNeedExp;
-            if (practiseItem.GenerateItems != null && practiseItem.GenerateItemNeedCost != null && ExpForMakeItem >= GenerateItemNeedExp &&
-                runtime.HaveItemBool(practiseItem.GenerateItemNeedCost.Id))
+            if (ExpForMakeItem >= GenerateItemNeedExp && GenerateItemNeedCount  >= practiseItem.GenerateItems.Count)
             {
-                
+                //随机选择练出的物品
                 var pickItem = Jyx2.Middleware.Tools.GetRandomElement(practiseItem.GenerateItems);
-
-                runtime.AddItem(pickItem.Item.Id, pickItem.Count);
-                runtime.AddItem(practiseItem.GenerateItemNeedCost.Id, -1);
+                
+                //已经有物品
+                if (runtime.HaveItemBool(pickItem.Item.Id))
+                {
+                    runtime.AddItem(pickItem.Item.Id, 1);
+                }
+                else
+                {
+                    runtime.AddItem(pickItem.Item.Id, 1 + Random.Range(0, 3));
+                }
+                
+                runtime.AddItem(practiseItem.GenerateItemNeedCost.Id, -pickItem.Count);
                 ExpForMakeItem = 0;
-                return $"{GetXiulianItem().Name} 炼出 {pickItem.Item.Name}×{pickItem.Count}\n";
+                return $"{Name} 制造出 {pickItem.Item.Name}\n";
             }
 
             return "";
