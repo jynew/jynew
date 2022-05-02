@@ -21,7 +21,7 @@ namespace Jyx2Editor
         [MenuItem("项目快速导航/技能编辑器")]
         private static void OpenSkillEditor()
         {
-            SceneHelper.StartScene("Assets/Jyx2BattleScene/Jyx2SkillEditor.unity");
+            SceneHelper.StartScene("Assets/Jyx2Tools/Jyx2SkillEditor.unity");
         }
 
         [MenuItem("项目快速导航/全模型预览")]
