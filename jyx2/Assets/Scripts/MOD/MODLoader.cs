@@ -32,7 +32,14 @@ namespace Jyx2.MOD
 {
     public static class MODLoader
     {
-        
+        #region Static Member
+
+#if UNITY_EDITOR_OSX || UNITY_IOS || UNITY_STANDALONE_OSX
+         private static readonly char[] SplitTag = new char[]{'\n'};
+#else
+        private static readonly string[] SplitTag = new string[] {"\r\n"};
+#endif
+        #endregion
         
         public static void WriteModIndexFile(string path)
         {
@@ -146,7 +153,7 @@ namespace Jyx2.MOD
             //string rootPath = GlobalAssetConfig.Instance.startMod.ModRootDir;
             string filePath = GlobalAssetConfig.Instance.startMod.ModRootDir +  "/index.txt";
             var content = await Addressables.LoadAssetAsync<TextAsset>(filePath);
-            var fileContentsList = content.text.Split(new string[] {"\r\n"}, StringSplitOptions.None);
+            var fileContentsList = content.text.Split( SplitTag,StringSplitOptions.None);
             
             /*if (Application.platform == RuntimePlatform.Android)
             {
