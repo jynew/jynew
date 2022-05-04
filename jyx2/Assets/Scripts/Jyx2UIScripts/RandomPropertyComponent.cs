@@ -97,7 +97,7 @@ public class RandomPropertyComponent : MonoBehaviour
                 //响应秘籍的输入
                 
                 Event e = Event.current;
-                if (e == null || e.keyCode == KeyCode.None || e.type != EventType.KeyDown)
+                if (e == null || e.keyCode == KeyCode.None || e.keyCode == KeyCode.Y || e.type != EventType.KeyDown)
                     return;
                 var keycode = e.keyCode.ToString().ToLower()[0];
                 if (keycode == cheatingCode[index])
