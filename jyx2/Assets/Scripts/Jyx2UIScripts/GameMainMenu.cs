@@ -377,11 +377,13 @@ public partial class GameMainMenu : Jyx2_UIBase
 		RoleInstance role = GameRuntimeData.Instance.Player;
 		
 		//生成基础属性
-		for (int i = 0; i <= 13; i++)
+		for (int i = 0; i <= 12; i++)
 		{
 			GenerateRamdomPro(role, i, cheating);
 		}
 
+		//特殊
+		GenerateRamdomPro(role, 20, cheating);
 		role.HpInc = cheating ? 7 : Tools.GetRandomInt(3, 7);
 		role.MaxHp = role.HpInc * 3 + 29;
 		int seed = cheating ? 9 : Tools.GetRandomInt(0, 9);
