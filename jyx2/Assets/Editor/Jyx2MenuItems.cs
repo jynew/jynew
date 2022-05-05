@@ -110,7 +110,7 @@ namespace Jyx2Editor
 
             //重新生成MOD资源索引表
             WriteCurrentModIndexFile();
-            
+
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
 
@@ -118,7 +118,7 @@ namespace Jyx2Editor
 
             //设置版本号
             PlayerSettings.bundleVersion = currentDate;
-            
+
             //exe路径
             string exePath = path + $"/jynew.exe";
 
@@ -127,7 +127,7 @@ namespace Jyx2Editor
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
-        
+
         [MenuItem("一键打包/Windows64_Develop")]
         private static void BuildWindows64_Dev()
         {
@@ -140,10 +140,10 @@ namespace Jyx2Editor
 
             if (string.IsNullOrEmpty(path))
                 return;
-            
+
             //重新生成MOD资源索引表
             WriteCurrentModIndexFile();
-            
+
             //重新生成Addressable相关文件
             AddressableAssetSettings.BuildPlayerContent();
 
@@ -151,15 +151,17 @@ namespace Jyx2Editor
 
             //设置版本号
             PlayerSettings.bundleVersion = currentDate;
-            
+
             //exe路径
             string exePath = path + $"/jynew.exe";
 
             //打包
-            BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.Development);
+            BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64,
+                BuildOptions.Development);
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
+
         static string[] GetScenePaths()
         {
             return new string[] {"Assets/0_GameStart.unity", "Assets/0_MainMenu.unity"};
@@ -180,7 +182,7 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
-                                
+
                 //重新生成MOD资源索引表
                 WriteCurrentModIndexFile();
 
@@ -201,7 +203,7 @@ namespace Jyx2Editor
                 BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
-                
+
                 AssetDatabase.Refresh();
             }
             catch (Exception e)
@@ -210,8 +212,8 @@ namespace Jyx2Editor
                 Debug.LogError(e.StackTrace);
             }
         }
-        
-        
+
+
         [MenuItem("一键打包/Android_Develop")]
         private static void BuildAndroid_Dev()
         {
@@ -227,7 +229,7 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
-                                
+
                 //重新生成MOD资源索引表
                 WriteCurrentModIndexFile();
 
@@ -248,7 +250,7 @@ namespace Jyx2Editor
                 BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.Development);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
-                
+
                 AssetDatabase.Refresh();
             }
             catch (Exception e)
@@ -279,7 +281,7 @@ namespace Jyx2Editor
                 if (string.IsNullOrEmpty(path))
                     return;
 
-                                
+
                 //重新生成MOD资源索引表
                 WriteCurrentModIndexFile();
 
@@ -293,7 +295,7 @@ namespace Jyx2Editor
                 PlayerSettings.bundleVersion = currentDate;
 
                 //打包
-                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,BuildOptions.None);
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX, BuildOptions.None);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
 
@@ -305,8 +307,8 @@ namespace Jyx2Editor
                 Debug.LogError(e.StackTrace);
             }
         }
-        
-        
+
+
         [MenuItem("一键打包/MacOS_Develop")]
         private static void BuildMacOS_Dev()
         {
@@ -327,7 +329,7 @@ namespace Jyx2Editor
 
                 if (string.IsNullOrEmpty(path))
                     return;
-                
+
                 //重新生成MOD资源索引表
                 WriteCurrentModIndexFile();
 
@@ -341,7 +343,52 @@ namespace Jyx2Editor
                 PlayerSettings.bundleVersion = currentDate;
 
                 //打包
-                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,BuildOptions.Development);
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.StandaloneOSX,
+                    BuildOptions.Development);
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
+
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
+        }
+
+
+        [MenuItem("一键打包/iOS XCodeProject")]
+        private static void BuildiOSXCodeProject()
+        {
+            //自动运行xLua的编译
+            Generator.GenAll();
+
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.iOS);
+
+                if (string.IsNullOrEmpty(path))
+                    return;
+
+
+                //重新生成MOD资源索引表
+                WriteCurrentModIndexFile();
+
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string outputPath = path + $"/jyxiOSBuild-{currentDate}";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.iOS, BuildOptions.None);
 
                 EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
 
@@ -354,13 +401,55 @@ namespace Jyx2Editor
             }
         }
         
+        [MenuItem("一键打包/iOS XCodeProject Develop")]
+        private static void BuildiOSXCodeProject_Dev()
+        {
+            //自动运行xLua的编译
+            Generator.GenAll();
+
+            //BUILD
+            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+
+            try
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.iOS);
+
+                if (string.IsNullOrEmpty(path))
+                    return;
+
+
+                //重新生成MOD资源索引表
+                WriteCurrentModIndexFile();
+
+                //重新生成Addressable相关文件
+                AddressableAssetSettings.BuildPlayerContent();
+
+                string currentDate = DateTime.Now.ToString("yyyyMMdd");
+                string outputPath = path + $"/jyxiOSBuild-{currentDate}";
+
+                //设置版本号
+                PlayerSettings.bundleVersion = currentDate;
+
+                //打包
+                BuildPipeline.BuildPlayer(GetScenePaths(), outputPath, BuildTarget.iOS, BuildOptions.Development);
+
+                EditorUtility.DisplayDialog("打包完成", "输出文件:" + outputPath, "确定");
+
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
+                Debug.LogError(e.StackTrace);
+            }
+        }
+
         private static void WriteCurrentModIndexFile()
         {
             var globalSettings = AssetDatabase.LoadAssetAtPath<GlobalAssetConfig>("Assets/GlobalAssetConfig.asset");
             MODLoader.WriteModIndexFile(globalSettings.startMod.ModRootDir);
-            
+
             AssetDatabase.Refresh();
         }
-
     }
 }
