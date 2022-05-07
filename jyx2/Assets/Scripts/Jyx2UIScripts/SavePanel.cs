@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using i18n.TranslatorDef;
 using UnityEngine;
 using UnityEngine.UI;
-using Keiwando.NFSO;
 using UnityEngine.SceneManagement;
 using System.Globalization;
 
@@ -41,8 +40,6 @@ public partial class SavePanel : Jyx2_UIBase
 	{
 		InitTrans();
 		BindListener(BackButton_Button, OnBackClick, false);
-		BindListener(ImButton_Button, OnImportClick, false);
-		BindListener(ExButton_Button, OnExportClick, false);
 	}
 
 	private void OnEnable()
@@ -160,14 +157,6 @@ public partial class SavePanel : Jyx2_UIBase
 			{
 				OnBackClick();
 			}
-			else if (GamepadHelper.IsJump())
-			{
-				OnExportClick();
-			}
-			else if (GamepadHelper.IsAction())
-			{
-				OnImportClick();
-			}
 	}
 
 	void RefreshSave()
@@ -240,101 +229,6 @@ public partial class SavePanel : Jyx2_UIBase
 		{
 			Jyx2_UIManager.Instance.HideUI(nameof(SavePanel));
 			closeCallback?.Invoke();
-		}
-	}
-
-	private void OnImportClick()
-	{
-		if (!IsInGameOverPage)
-		{
-#if UNITY_ANDROID
-			for(int i = 0;i<3;i++){
-				string fileName = string.Format(GameRuntimeData.ARCHIVE_FILE_NAME, i);
-				string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR;
-				string sPath = sFolderPath + "/" + fileName;
-				if (File.Exists(sPath))
-				{
-					PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX +i, "import  save data: "+i);
-				}
-			}
-			//NativeFileSOMobile.shared.OpenFile(new SupportedFileType[]{SupportedFileType.Any}, delegate (bool didSelectPath, OpenedFile file) {
-			//	if (didSelectPath) {
-			//		string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR+"/"+file.Name;
-			//		NativeFileSOMobile.shared.SaveFile(new FileToSave(sFolderPath, file+".dat"));
-			//	}
-			//	PlayerPrefs.SetString(ARCHIVE_SUMMARY_PREFIX + SaveIndex, summaryInfo);
-			//	RefreshSave();
-			//});
-#else
-			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
-				delegate (bool didSelectPath, string savePath)
-				{
-					if (didSelectPath)
-					{
-						string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR +
-											 "/";
-						int SaveIndex = -1;
-						if (File.Exists(savePath) && savePath.Contains("archive_") && savePath.Contains(".dat"))
-						{
-							var lines = savePath.Split('\\');
-							File.Copy(savePath, sFolderPath + lines[lines.Length - 1]);
-							try
-							{
-								SaveIndex = int.Parse(savePath.Substring(savePath.Length - 5, 1));
-							}
-							catch
-							{
-							}
-						}
-
-						if (SaveIndex > -1)
-						{
-							PlayerPrefs.SetString(GameRuntimeData.ARCHIVE_SUMMARY_PREFIX + SaveIndex,
-								"import  save data: " + SaveIndex);
-						}
-					}
-				});
-#endif
-			RefreshSave();
-		}
-	}
-
-	private void OnExportClick()
-	{
-		if (!IsInGameOverPage)
-		{
-#if UNITY_ANDROID
-			transform.Find("FileIO/Export/Text").GetComponent<Text>().text = "暂不支持";
-#else
-			NativeFileSOMacWin.shared.SelectSavePath(GetFileToSave(), "", testDirectory,
-				delegate (bool didSelectPath, string savePath)
-				{
-					if (didSelectPath)
-					{
-						ExportSaveData(savePath);
-					}
-				});
-#endif
-		}
-	}
-
-	private FileToSave GetFileToSave()
-	{
-		var testFilePath = Application.persistentDataPath;
-		return new FileToSave(testFilePath, "archive_{0}.dat", SupportedFileType.Any);
-	}
-
-	private void ExportSaveData(string savePath)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			string fileName = string.Format(GameRuntimeData.ARCHIVE_FILE_NAME, i);
-			string sFolderPath = Application.persistentDataPath + "/" + GameRuntimeData.ARCHIVE_FILE_DIR;
-			string sPath = sFolderPath + "/" + fileName;
-			if (File.Exists(sPath))
-			{
-				File.Copy(sPath, string.Format(savePath, i));
-			}
 		}
 	}
 }
