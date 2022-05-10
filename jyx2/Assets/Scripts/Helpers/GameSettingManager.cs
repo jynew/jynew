@@ -481,12 +481,12 @@ public static class GameSettingManager
 		}
 	}
 
-	public static MobileMoveModeType MobileMoveMode = MobileMoveModeType.Click;
+	public static MobileMoveModeType MobileMoveMode = MobileMoveModeType.Joystick;
 
 	public enum MobileMoveModeType
 	{
-		Click = 0, //点击
-		Joystick = 1, //摇杆
+		Joystick = 0, //摇杆
+		Click = 1, //点击
 	}
 
 	#endregion
