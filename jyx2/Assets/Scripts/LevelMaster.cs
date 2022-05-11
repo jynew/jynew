@@ -565,10 +565,13 @@ public class LevelMaster : MonoBehaviour
 					if (_currentMap.IsNoNavAgent())
 					{
 						var dest = hitInfo.point;
+						var sourcePos = _gameMapPlayer.transform.position;
 						if (Vector3.Distance(_gameMapPlayer.transform.position, dest) < 0.1f) return;
-						var speed = GlobalAssetConfig.Instance.playerMoveSpeed;
 						_gameMapPlayer.transform.LookAt(new Vector3(dest.x, _gameMapPlayer.transform.position.y, dest.z));
-						_gameMapPlayer.transform.Translate(_gameMapPlayer.transform.forward * speed * Time.deltaTime, Space.World);
+						//设置位移
+						_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.deltaTime);
+						//计算当前速度
+						var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.deltaTime;
 						SetPlayerSpeed(speed);
 					}
 					else
