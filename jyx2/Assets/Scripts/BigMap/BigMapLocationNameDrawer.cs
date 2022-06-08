@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2;
 using UnityEngine;
 
@@ -21,14 +19,17 @@ public class BigMapLocationNameDrawer : MonoBehaviour
             nameObj.transform.localScale = Vector3.one * 3;
             if (loc.name == GlobalAssetConfig.Instance.defaultHomeName)
             {
-                //---------------------------------------------------------------------------
+                //----------------------------------------------------------------------
+                //修改前的语句：
                 //var name = GameRuntimeData.Instance.Player.Name + "居";
-                //---------------------------------------------------------------------------
+                //----------------------------------------------------------------------
+                //说明：
                 //特定位置的翻译【大地图主角居的名字显示】
-                //---------------------------------------------------------------------------
-                var name = GameRuntimeData.Instance.Player.Name + "居".GetContent(nameof(BigMapLocationNameDrawer));
-                //---------------------------------------------------------------------------
-                //---------------------------------------------------------------------------
+                //----------------------------------------------------------------------
+                var name = GameRuntimeData.Instance.Player.Name + "居".Translate();
+                //----------------------------------------------------------------------
+                //功能来自EZ4i18n.dll
+                //----------------------------------------------------------------------
                 nameObj.GetComponent<TextMesh>().text = name;
             }
             else

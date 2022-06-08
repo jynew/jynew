@@ -9,20 +9,16 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2;
-
 using Jyx2.Battle;
 using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 
 public class BattleStartParams
@@ -42,7 +38,7 @@ public class BattleManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                GameObject go = new GameObject("BattleManager");
+                var go = new GameObject("BattleManager");
                 go.hideFlags = HideFlags.HideInHierarchy;
                 DontDestroyOnLoad(go);
                 _instance = GameUtil.GetOrAddComponent<BattleManager>(go.transform);
@@ -71,10 +67,7 @@ public class BattleManager : MonoBehaviour
         return rangeLogic;
     }
 
-    private RoleInstance _player
-    {
-        get { return GameRuntimeData.Instance.Player; }
-    }
+    private RoleInstance _player => GameRuntimeData.Instance.Player;
 
     #endregion
 
@@ -91,17 +84,14 @@ public class BattleManager : MonoBehaviour
         Debug.Log("StartBattle called");
         if (IsInBattle) return;
         var tempView = _player.View;
-        if (tempView == null)
-        {
-            tempView = customParams.roles[0].View;
-        }
+        if (tempView == null) tempView = customParams.roles[0].View;
 
         if (!BattleboxHelper.Instance.CanEnterBattle(tempView.transform.position)) return;
 
         IsInBattle = true;
-        
+
         LevelMaster.Instance.UpdateMobileControllerUI();
-        
+
         m_battleParams = customParams;
         //初始化战斗model
         m_BattleModel = new BattleFieldModel();
@@ -112,9 +102,7 @@ public class BattleManager : MonoBehaviour
         {
             var brain = Camera.main.GetComponent<CinemachineBrain>();
             if (brain != null)
-            {
                 brain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
-            }
         }
 
         //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
@@ -130,20 +118,24 @@ public class BattleManager : MonoBehaviour
         }
 
         m_BattleModel.InitBattleModel(); //战场初始化 行动顺序排序这些
-        //---------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------
+        //修改前的语句：
         //await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始"); //提示UI
-        //---------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------
+        //说明：
         //特定位置的翻译【战斗开始时候的弹窗提示】
-        //---------------------------------------------------------------------------
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop, "战斗开始".GetContent(nameof(BattleManager))); //提示UI
-        //---------------------------------------------------------------------------
-        //---------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.MiddleTop,
+            "战斗开始".Translate()); //提示UI
+        //-----------------------------------------------------------------------------------------------------------------------------------
+        //功能来自EZ4i18n.dll
+        //-----------------------------------------------------------------------------------------------------------------------------------
 
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
-        
+
         await new BattleLoop(this).StartLoop();
     }
-    
+
 
     public void OnBattleEnd(BattleResult result)
     {
@@ -151,31 +143,35 @@ public class BattleManager : MonoBehaviour
         {
             case BattleResult.Win:
             {
-                string bonusText = CalExpGot(m_battleParams.battleData);
-                //---------------------------------------------------------------------------
+                var bonusText = CalExpGot(m_battleParams.battleData);
+                //-------------------------------------------------------------------------------------------------------
+                //修改前的语句：
                 //GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>", delegate
                 //{
                 //    EndBattle();
                 //    m_battleParams.callback?.Invoke(result);
                 //    m_battleParams = null;
                 //});
-                //---------------------------------------------------------------------------
+                //-------------------------------------------------------------------------------------------------------
+                //说明：
                 //特定位置的翻译【战斗胜利的提示】
-                //---------------------------------------------------------------------------
-                GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>".GetContent(nameof(BattleManager)), delegate
+                //-------------------------------------------------------------------------------------------------------
+                GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>".Translate(),
+                delegate
                 {
                     EndBattle();
                     m_battleParams.callback?.Invoke(result);
                     m_battleParams = null;
                 });
-                //---------------------------------------------------------------------------
-                //---------------------------------------------------------------------------
+                //-------------------------------------------------------------------------------------------------------
+                //功能来自EZ4i18n.dll
+                //-------------------------------------------------------------------------------------------------------
                 break;
             }
             case BattleResult.Lose:
             {
-
-                //---------------------------------------------------------------------------
+                //----------------------------------------------------------------------------
+                //修改前的语句：
                 //GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。", "<color=red><size=80>战斗失败！</size></color>", delegate
                 //{
                 //    EndBattle();
@@ -184,29 +180,30 @@ public class BattleManager : MonoBehaviour
                 //    //    LevelLoader.LoadGameMap("Level_BigMap");
                 //    m_battleParams = null;
                 //});
-                //---------------------------------------------------------------------------
+                //----------------------------------------------------------------------------
+                //说明：
                 //特定位置的翻译【战斗失败的提示】
-                //---------------------------------------------------------------------------
-                GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。".GetContent(nameof(BattleManager)), "<color=red><size=80>战斗失败！</size></color>".GetContent(nameof(BattleManager)), delegate
-                {
-                    EndBattle();
-                    m_battleParams.callback?.Invoke(result);
-                    //if (m_battleParams.backToBigMap) //由dead指令实现返回主界面逻辑
-                    //    LevelLoader.LoadGameMap("Level_BigMap");
-                    m_battleParams = null;
-                });
-                //---------------------------------------------------------------------------
-                //---------------------------------------------------------------------------
+                //----------------------------------------------------------------------------
+                GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。".Translate(),
+                    "<color=red><size=80>战斗失败！</size></color>".Translate(), delegate
+                    {
+                        EndBattle();
+                        m_battleParams.callback?.Invoke(result);
+                        //if (m_battleParams.backToBigMap) //由dead指令实现返回主界面逻辑
+                        //    LevelLoader.LoadGameMap("Level_BigMap");
+                        m_battleParams = null;
+                    });
+                //----------------------------------------------------------------------------
+                //功能来自EZ4i18n.dll
+                //----------------------------------------------------------------------------
                 break;
             }
         }
-        
+
         //所有人至少有1HP
         foreach (var role in GameRuntimeData.Instance.GetTeam())
-        {
             if (role.Hp <= 0)
                 role.Hp = 1;
-        }
     }
 
     //清扫战场
@@ -217,14 +214,10 @@ public class BattleManager : MonoBehaviour
 
         //临时，需要调整
         foreach (var role in m_BattleModel.Roles)
-        {
             //role.LeaveBattle();
             //非KeyRole死亡2秒后尸体消失
             if (role.IsDead() && role.View != null && role.View.gameObject != null && !role.View.m_IsKeyRole)
-            {
                 role.View.gameObject.SetActive(false);
-            }
-        }
 
         rangeLogic = null;
         m_BattleModel.Roles.Clear();
@@ -238,9 +231,9 @@ public class BattleManager : MonoBehaviour
     /// <param name="team"></param>
     public void AddBattleRole(RoleInstance role)
     {
-        int team = role.team;
+        var team = role.team;
         //计算NPC应该站的点
-        BattleBlockData npcStandBlock = FindNearestBattleBlock(role.View.transform.position);
+        var npcStandBlock = FindNearestBattleBlock(role.View.transform.position);
 
         if (npcStandBlock == null)
         {
@@ -249,60 +242,61 @@ public class BattleManager : MonoBehaviour
         }
 
         //加入战场
-        m_BattleModel.AddBattleRole(role, npcStandBlock.BattlePos, team, (team != 0));
+        m_BattleModel.AddBattleRole(role, npcStandBlock.BattlePos, team, team != 0);
         //角色初次加入战场时候，上一回合的生命值就是出场生命值
         role.PreviousRoundHp = role.Hp;
         //待命
         role.View.Idle();
         var enemy = AIManager.Instance.GetNearestEnemy(role);
         if (enemy != null)
-        {
             //面向最近的敌人
             role.View.LookAtWorldPosInBattle(enemy.View.transform.position);
-        }
 
         //死亡的关键角色默认晕眩
-        if (role.View.m_IsKeyRole && role.IsDead())
-        {
-            role.Stun(-1);
-        }
+        if (role.View.m_IsKeyRole && role.IsDead()) role.Stun(-1);
     }
 
-    string CalExpGot(Jyx2ConfigBattle battleData)
+    private string CalExpGot(Jyx2ConfigBattle battleData)
     {
-        List<RoleInstance> alive_teammate = m_BattleModel.Teammates;
-        List<RoleInstance> dead_teammates = m_BattleModel.Dead.Where(r => r.team == 0).ToList();
-        List<RoleInstance> teammates = alive_teammate.Union(dead_teammates).ToList();
-        string rst = "";
+        var alive_teammate = m_BattleModel.Teammates;
+        var dead_teammates = m_BattleModel.Dead.Where(r => r.team == 0).ToList();
+        var teammates = alive_teammate.Union(dead_teammates).ToList();
+        var rst = "";
         foreach (var role in alive_teammate)
         {
-            int expAdd = battleData.Exp / alive_teammate.Count();
+            var expAdd = battleData.Exp / alive_teammate.Count();
             role.ExpGot += expAdd;
         }
 
         foreach (var role in teammates)
         {
             if (role.ExpGot > 0)
-                //---------------------------------------------------------------------------
+            {
+                //--------------------------------------------------------------------------
+                //修改前的语句：
                 //rst += string.Format("{0}获得经验{1}\n", role.Name, role.ExpGot);
-                //---------------------------------------------------------------------------
+                //--------------------------------------------------------------------------
+                //说明:
                 //特定位置的翻译【战斗胜利角色获得经验的提示】
-                //---------------------------------------------------------------------------
-                rst += string.Format("{0}获得经验{1}\n".GetContent(nameof(BattleManager)), role.Name, role.ExpGot);
-                //---------------------------------------------------------------------------
-                //---------------------------------------------------------------------------
+                //--------------------------------------------------------------------------
+                rst += string.Format("{0}获得经验{1}\n".Translate(), role.Name, role.ExpGot);
+                //--------------------------------------------------------------------------
+                //功能来自EZ4i18n.dll
+                //--------------------------------------------------------------------------
+            }
 
             var practiseItem = role.GetXiulianItem();
-            var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
+            var isWugongCanUpgrade = practiseItem != null &&
+                                     !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id) >= 10);
 
             role.Exp += role.ExpGot;
 
             //避免越界
             role.Exp = Tools.Limit(role.Exp, 0, GameConst.MAX_EXP);
-      
+
 
             //升级
-            int change = 0;
+            var change = 0;
             while (role.CanLevelUp())
             {
                 role.LevelUp();
@@ -310,12 +304,15 @@ public class BattleManager : MonoBehaviour
                 if (change == 1)
                 {
                     //---------------------------------------------------------------------------
+                    //修改前的语句：
                     //rst = $"{role.Name}升级了！\n";
                     //---------------------------------------------------------------------------
+                    //说明：
                     //特定位置的翻译【战斗胜利角色升级的提示】
                     //---------------------------------------------------------------------------
-                    rst += string.Format("{0}升级了！\n".GetContent(nameof(BattleManager)), role.Name);
+                    rst += string.Format("{0}升级了！\n".Translate(), role.Name);
                     //---------------------------------------------------------------------------
+                    //功能来自EZ4i18n.dll
                     //---------------------------------------------------------------------------
                 }
             }
@@ -337,27 +334,35 @@ public class BattleManager : MonoBehaviour
                 {
                     role.UseItem(practiseItem);
                     change++;
-                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------
+                    //修改前的语句：
                     //rst += $"{role.Name} 修炼 {practiseItem.Name} 成功\n";
-                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------
+                    //说明：
                     //特定位置的翻译【战斗胜利角色修炼武功提示】
-                    //---------------------------------------------------------------------------
-                    rst += string.Format("{0} 修炼 {1} 成功\n".GetContent(nameof(BattleManager)), role.Name, practiseItem.Name);
-                    //---------------------------------------------------------------------------
-                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------
+                    rst += string.Format("{0} 修炼 {1} 成功\n".Translate(), role.Name,
+                        practiseItem.Name);
+                    //---------------------------------------------------------------
+                    //功能来自EZ4i18n.dll
+                    //---------------------------------------------------------------
                     if (practiseItem.Skill != null)
                     {
                         var level = role.GetWugongLevel(practiseItem.Skill.Id);
                         if (level > 1)
                         {
-                            //---------------------------------------------------------------------------
+                            //-------------------------------------------------
+                            //修改前的语句
                             //rst += string.Format("{0} 升为 ", practiseItem.SkillCast.Name) + level.ToString() + " 级\n";
-                            //---------------------------------------------------------------------------
+                            //-------------------------------------------------
+                            //说明：
                             //特定位置的翻译【战斗胜利角色修炼武功升级提示】
-                            //---------------------------------------------------------------------------
-                            rst += string.Format("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), practiseItem.Skill.Name, level.ToString());
-                            //---------------------------------------------------------------------------
-                            //---------------------------------------------------------------------------
+                            //-------------------------------------------------
+                            rst += string.Format("{0} 升为 {1}级\n".Translate(),
+                                practiseItem.Skill.Name, level.ToString());
+                            //-------------------------------------------------
+                            //功能来自EZ4i18n.dll
+                            //-------------------------------------------------
                         }
                     }
                 }
@@ -376,7 +381,7 @@ public class BattleManager : MonoBehaviour
     /// <param name="pos"></param>
     /// <param name="ignoreRole"></param>
     /// <returns></returns>
-    BattleBlockData FindNearestBattleBlock(Vector3 pos, bool ignoreRole = false)
+    private BattleBlockData FindNearestBattleBlock(Vector3 pos, bool ignoreRole = false)
     {
         BattleBlockData rst = null;
         var list = BattleboxHelper.Instance.GetBattleBlocks();
@@ -443,7 +448,7 @@ public class BattleManager : MonoBehaviour
     public List<BattleBlockVector> GetMoveRange(RoleInstance role, int movedStep)
     {
         //获得角色移动能力
-        int moveAbility = role.GetMoveAbility();
+        var moveAbility = role.GetMoveAbility();
         //绘制周围的移动格子
         var blockList = rangeLogic.GetMoveRange(role.Pos.X, role.Pos.Y, moveAbility - movedStep, false, true);
         return blockList;
@@ -452,7 +457,7 @@ public class BattleManager : MonoBehaviour
     //获取技能的使用范围
     public List<BattleBlockVector> GetSkillUseRange(RoleInstance role, SkillCastInstance skillCast)
     {
-        int castSize = skillCast.GetCastSize();
+        var castSize = skillCast.GetCastSize();
         var coverType = skillCast.GetCoverType();
         var sx = role.Pos.X;
         var sy = role.Pos.Y;
@@ -464,20 +469,21 @@ public class BattleManager : MonoBehaviour
     }
 
     //获取范围内的敌人或者友军
-    public List<RoleInstance> GetRoleInSkillRange(SkillCastInstance skill, IEnumerable<BattleBlockVector> range, int team)
+    public List<RoleInstance> GetRoleInSkillRange(SkillCastInstance skill, IEnumerable<BattleBlockVector> range,
+        int team)
     {
-        List<RoleInstance> result = new List<RoleInstance>();
+        var result = new List<RoleInstance>();
 
         foreach (var pos in range)
         {
-            RoleInstance rolei = m_BattleModel.GetAliveRole(pos);
+            var rolei = m_BattleModel.GetAliveRole(pos);
             if (rolei == null || rolei.IsDead()) continue;
             //打敌人的招式
             if (skill.IsCastToEnemy() && rolei.team == team) continue;
             if (!skill.IsCastToEnemy() && rolei.team != team) continue;
             result.Add(rolei);
         }
-        
+
         return result;
     }
 

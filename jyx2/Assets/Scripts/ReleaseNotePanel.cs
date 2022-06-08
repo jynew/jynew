@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2.MOD;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,14 +12,17 @@ public class ReleaseNotePanel : MonoBehaviour
     
     public async UniTask Show()
     {
-        //---------------------------------------------------------------------------
+        //---------------------------------
+        //修改前的语句：
         //text.text = "载入中..";
-        //---------------------------------------------------------------------------
+        //---------------------------------
+        //说明：
         //特定位置的翻译【载入中文本显示】
-        //---------------------------------------------------------------------------
-        text.text = "载入中…… ".GetContent(nameof(ReleaseNotePanel));
-        //---------------------------------------------------------------------------
-        //---------------------------------------------------------------------------
+        //---------------------------------
+        text.text = "载入中…… ".Translate();
+        //---------------------------------
+        //功能来自EZ4i18n.dll
+        //---------------------------------
 
         var t = await MODLoader.LoadAsset<TextAsset>(Jyx2ResourceHelper.GetAssetRefAddress(refReleaseNote, typeof(TextAsset)));
         text.text = t.text;

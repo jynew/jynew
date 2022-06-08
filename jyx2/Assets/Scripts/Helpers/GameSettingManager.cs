@@ -412,7 +412,15 @@ public static class GameSettingManager
 		if (!GlobalAssetConfig.Instance) return;
 		if (mode is string value)
 		{
-			if (value != "默认")
+			if (value == "ZH_TW")
+			{
+				GlobalAssetConfig.Instance.defaultTranslator = ScriptableObject.CreateInstance<Translator>();
+				GlobalAssetConfig.Instance.defaultTranslator.outPath = Path.Combine(Application.streamingAssetsPath,
+					"Language");
+				GlobalAssetConfig.Instance.defaultTranslator.currentLang =
+					(TranslationUtility.LangFlag)Enum.Parse(typeof(TranslationUtility.LangFlag), value, true);
+			}
+			else if (value != "默认")
 			{
 				GlobalAssetConfig.Instance.defaultTranslator = ScriptableObject.CreateInstance<Translator>();
 				GlobalAssetConfig.Instance.defaultTranslator.outPath = Path.Combine(Application.streamingAssetsPath,
@@ -428,7 +436,7 @@ public static class GameSettingManager
 		}
 		else
 		{
-			Debug.LogError("SetWindowMode: 参数必须是string.");
+			Debug.LogError("SetLanguage: 参数必须是string.");
 		}
 	}
 
