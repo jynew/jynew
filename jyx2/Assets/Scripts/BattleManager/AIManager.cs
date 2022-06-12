@@ -712,7 +712,7 @@ public class AIManager
         {
             foreach (var item in role.Items)
             {
-                var tmp = item.Item;
+                var tmp = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id);
                 if ((int)tmp.ItemType == itemType)
                     items.Add(tmp);
             }

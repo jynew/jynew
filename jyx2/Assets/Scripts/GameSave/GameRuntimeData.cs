@@ -293,11 +293,11 @@ namespace Jyx2
             //获得角色身上的道具
             foreach (var item in role.Items)
             {
-                if (!ItemAdded.Contains(item.Item.Id))
+                if (!ItemAdded.Contains(item.Id))
                 {
                     if (item.Count == 0) item.Count = 1;
-                    AddItem(item.Item.Id, item.Count);
-                    ItemAdded.Add(item.Item.Id);
+                    AddItem(item.Id, item.Count);
+                    ItemAdded.Add(item.Id);
                     if (item.Count > 0 && showGetItem)
                     {
                         //---------------------------------------------------------------------------
@@ -305,7 +305,7 @@ namespace Jyx2
                         //---------------------------------------------------------------------------
                         //特定位置的翻译【得到物品提示】
                         //---------------------------------------------------------------------------
-                        StoryEngine.Instance.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + item.Item.Name + "×" + Math.Abs(item.Count));
+                        StoryEngine.Instance.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id).Name + "×" + Math.Abs(item.Count));
                         //---------------------------------------------------------------------------
                         //---------------------------------------------------------------------------
                     }

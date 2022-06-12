@@ -30,7 +30,7 @@ namespace Jyx2
 
         public SkillInstance(Jyx2ConfigCharacterSkill s)
         {
-            Key = s.Skill.Id;
+            Key = s.Id;
             Level = s.Level;
         }
         

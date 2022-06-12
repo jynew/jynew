@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Reflection;
 using Cysharp.Threading.Tasks;
-
-using Sirenix.OdinInspector;
+using Excel;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using Jyx2.MOD;
-using Jyx2.Middleware;
 
 namespace Jyx2Configs
 {
@@ -22,110 +20,243 @@ namespace Jyx2Configs
                     _instance = new GameConfigDatabase();
                 return _instance;
             }
-            private set
-            {
-                _instance = value;
-            }
         }
 
         private static GameConfigDatabase _instance;
-
-        private GameConfigDatabase()
-        {
-        }
-    #endregion
+        #endregion
 
         private readonly Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> _dataBase =
             new Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>();
 
         private bool _isInited = false;
         
+        /// <summary>
+        /// 载入配置表
+        /// </summary>
+        /// <param name="rootPath">excel的data目录所在路径，为空则默认读取"Configs"</param>
+        /// <returns></returns>
         public async UniTask Init(string rootPath)
         {
             if (_isInited)
                 return;
             
             _isInited = true;
+            _dataBase.Clear();
             int total = 0;
-            total += await Init<Jyx2ConfigCharacter>(rootPath + "/Configs/Characters");
-            total += await Init<Jyx2ConfigItem>(rootPath + "/Configs/Items");
-            total += await Init<Jyx2ConfigSkill>(rootPath + "/Configs/Skills");
-            total += await Init<Jyx2ConfigShop>(rootPath + "/Configs/Shops");
-            total += await Init<Jyx2ConfigMap>(rootPath + "/Configs/Maps");
-            total += await Init<Jyx2ConfigBattle>(rootPath + "/Configs/Battles");
             
-            Debug.Log($"载入完成，总数{total}个配置asset");
+
+            DirectoryInfo dir = new DirectoryInfo(rootPath ?? "Configs");
+            var files = dir.GetFiles("*.xls", SearchOption.AllDirectories);
+            
+            foreach (var file in files)
+            {
+                total += GenerateConfigsFromExcel(file);
+            }
+            
+            Debug.Log($"载入完成，总数{total}个配置");
         }
 
-        public T Get<T>(int id) where T : Jyx2ConfigBase
-        {
-            var type = typeof(T);
-            if (_dataBase.TryGetValue(type, out var db))
-            {
-                if (db.TryGetValue(id, out var asset))
-                {
-                    return (T)asset;
-                }
-            }
-            return null;
-        }
+        /// <summary>
+        /// 根据ID获取Config
+        /// </summary>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Get<T>(string id) where T : Jyx2ConfigBase
         {
             return Get<T>(int.Parse(id));
         }
+        
+        /// <summary>
+        /// 根据ID获取Config
+        /// </summary>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T Get<T>(int id) where T : Jyx2ConfigBase
+        {
+            if(_dataBase.TryGetValue(typeof(T), out var configMap))
+            {
+                if (configMap.TryGetValue(id, out var v))
+                {
+                    return (T)v;
+                }
+            }
 
+            Debug.LogError($"找不到Config:{typeof(T)}, id={id}");
+            return default(T);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public bool Has<T>(string id) where T : Jyx2ConfigBase
         {
             return Get<T>(id) != null;
         }
         
+        /// <summary>
+        /// 获取所有的Config
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public IEnumerable<T> GetAll<T>() where T : Jyx2ConfigBase
         {
-            var type = typeof(T);
-            if (_dataBase.TryGetValue(type, out var db))
+            if (_dataBase.TryGetValue(typeof(T), out var configMap))
             {
-                foreach (var v in db.Values)
+                foreach (var v in configMap)
                 {
-                    yield return (T) v;
+                    yield return (T) v.Value;
                 }
             }
         }
 
         /// <summary>
-        /// 初始化指定类型配置
+        /// 重新载入配置表
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
+        /// <param name="path">excel的data目录所在路径，为空则默认读取"data"</param>
+        /// <returns></returns>
+        public int ReloadAll(string path = null)
+        {
+            _dataBase.Clear();
+            int total = 0;
+            
+
+            DirectoryInfo dir = new DirectoryInfo(path ?? "data");
+            var files = dir.GetFiles("*.xls", SearchOption.AllDirectories);
+            
+            foreach (var file in files)
+            {
+                total += GenerateConfigsFromExcel(file);
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// 销毁
+        /// </summary>
+        public void Dispose()
+        {
+            _dataBase.Clear();
+            _instance = null;
+        }
+
+        /// <summary>
+        /// 获取Config的种类数量
+        /// </summary>
+        /// <returns></returns>
+        public int GetConfigTypeCount()
+        {
+            return _dataBase.Count;
+        }
+
+        /// <summary>
+        /// 生成配置
+        /// </summary>
+        /// <param name="file"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async UniTask<int> Init<T>(string path) where T : Jyx2ConfigBase
+        int GenerateConfigsFromExcel(FileInfo file)
         {
-            if (_dataBase.ContainsKey(typeof(T)))
-            {
-                throw new Exception("类型" + typeof(T) + "已经创建过了，不允许重复创建！");
-            }
-            
-            var overridePaths = await MODLoader.LoadOverrideList(path);
-            if (overridePaths == null || overridePaths.Count == 0)
-                return 0;
-            
-            var assets = await MODLoader.LoadAssets<T>(overridePaths);
+            int total = 0;
+            DataRowCollection collection = ReadExcel(file.FullName, out int col, out int row);
 
-            var db = new Dictionary<int, Jyx2ConfigBase>();
-            _dataBase[typeof(T)] = db;
-            foreach (var asset in assets)
+            //类名
+            string classType = collection[0][0].ToString();
+                
+            //反射找类
+            Type type = Type.GetType(classType);
+            if (type == null)
             {
-                if (db.ContainsKey(asset.Id))
+                Debug.LogError($"找不到{file.FullName}定义的数据类:{classType}");
+                throw new Exception($"找不到{file.FullName}定义的数据类:{classType}");
+            }
+
+            //创建数据库
+            _dataBase[type] = new Dictionary<int, Jyx2ConfigBase>();
+
+            //创建数据
+            //从第4行开始有数据，第一行是类名，第二行是映射变量，第三行是说明。
+            for (int i = 3; i < row; ++i)
+            {
+                var obj = Activator.CreateInstance(type);
+
+                if (!(obj is Jyx2ConfigBase))
                 {
-                    Debug.Log($"ID重复，覆盖写入: {asset.Name}-->{db[asset.Id].Name}");
+                    Debug.LogError($"类{type}没有继承ConfigBase!");
+                    throw new Exception($"类{type}没有继承ConfigBase!");
                 }
-                db[asset.Id] = asset;
-                asset.WarmUp().Forget();
+                
+                var firstElement = collection[i][0].ToString().Trim();
+                if (firstElement.StartsWith("#") || string.IsNullOrEmpty(firstElement)) //不需要打包的行, #开头或者空ID
+                    continue;
+
+                for (int j = 0; j < col; ++j)    
+                {
+                    string colName = collection[1][j].ToString();
+
+                    if (colName.StartsWith("#") || string.IsNullOrEmpty(colName.Trim())) continue; //不需要打包的列，#开头或者空列
+                    
+                    FieldInfo variable = type.GetField(colName);
+                    if (variable == null)
+                    {
+                        Debug.LogError($"{type}找不到字段{colName}");
+                        throw new Exception($"{type}找不到字段{colName}");
+                    }
+                    variable.SetValue(obj, Convert.ChangeType(collection[i][j], variable.FieldType));
+                }
+
+                var config = obj as Jyx2ConfigBase;
+                if (config == null)
+                {
+                    Debug.LogError($"{type} 没有继承Jyx2ConfigBase类");
+                    throw new Exception($"{type} 没有继承Jyx2ConfigBase类");
+                }
+
+
+                if (_dataBase[type].ContainsKey(config.Id))
+                {
+                    Debug.Log($"发现重复的ID，config={type}, id={config.Id}, 覆盖写入");
+                }
+                _dataBase[type][config.Id] = config;
+                total++;
             }
 
-            return db.Count;
+            return total;
+        }
+        
+        /// <summary>
+        /// 读取Excel
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        DataRowCollection ReadExcel(string filePath, out int col, out int row)
+        {
+            FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+            IExcelDataReader excelReader;
+            //1. Reading Excel file
+            if (Path.GetExtension(filePath).ToUpper() == ".XLS")
+            {
+                //1.1 Reading from a binary Excel file ('97-2003 format; *.xls)
+                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+            }
+            else
+            {
+                //1.2 Reading from a OpenXml Excel file (2007 format; *.xlsx)
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            }
+            DataSet result = excelReader.AsDataSet(); 
+            //Tables[0] 下标0表示excel文件中第一张表的数据
+            col = result.Tables[0].Columns.Count;
+            row = result.Tables[0].Rows.Count;
+            stream.Close();
+            return result.Tables[0].Rows; 
         }
     }
-    
-    
 }

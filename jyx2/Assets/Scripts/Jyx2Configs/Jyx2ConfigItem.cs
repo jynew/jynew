@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
-using Jyx2;
 using Jyx2.MOD;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -19,8 +14,6 @@ namespace Jyx2Configs
         Costa = 3, //消耗品
         Anqi = 4, //暗器
     }
-
-    [CreateAssetMenu(menuName = "金庸重制版/配置文件/道具", fileName = "道具ID_道具名")]
     public class Jyx2ConfigItem : Jyx2ConfigBase
     {
         public enum Jyx2ConfigItemEquipmentType
@@ -38,54 +31,46 @@ namespace Jyx2Configs
             消耗品 = 3, 
             暗器 = 4, 
         }
+
+        // [ShowIf(nameof(IsWeapon))]
+        // [BoxGroup(EXTEND_GROUP)][LabelText("武器武功配合加攻击力")]
+        // public int ExtraAttack;
+        //
+        // [ShowIf(nameof(IsWeapon))]
+        // [BoxGroup(EXTEND_GROUP)][LabelText("配合武功")][SerializeReference]
+        // public Jyx2ConfigSkill PairedWugong;
+        //
+        // bool IsWeapon()
+        // {
+        //     return (int)this.EquipmentType == 0;
+        // }
+
         
-        private const string EXTEND_GROUP = "扩展属性";
-        private const string EFFECT_GROUP = "使用效果";
-        private const string CONDITION_GROUP = "使用条件";
-
-        [ShowIf(nameof(IsWeapon))]
-        [BoxGroup(EXTEND_GROUP)][LabelText("武器武功配合加攻击力")]
-        public int ExtraAttack;
-
-        [ShowIf(nameof(IsWeapon))]
-        [BoxGroup(EXTEND_GROUP)][LabelText("配合武功")][SerializeReference]
-        public Jyx2ConfigSkill PairedWugong;
-
-        bool IsWeapon()
-        {
-            return (int)this.EquipmentType == 0;
-        }
-
-
-
-        [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("图标")]
-        public AssetReferenceTexture2D Pic;
+        //图标
+        public int Pic;
 
         private Sprite _sprite;
         public async UniTask<Sprite> GetPic()
         {
-            if (Pic == null || string.IsNullOrEmpty(Pic.AssetGUID)) return null;
-            if (_sprite == null)
-            {
-                _sprite = await MODLoader.LoadAsset<Sprite>(Jyx2ResourceHelper.GetAssetRefAddress(Pic, typeof(Texture2D)));
-            }
+            var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/Jyx2Items/{Pic}");
             return _sprite;
         }
         
-        [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("物品说明")]
+        //物品说明
         public string Desc; 
         
-        [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("物品类型")][EnumPaging]
-        public Jyx2ConfigItemType ItemType; 
+        //物品类型
+        //道具 = 0, 装备 = 1, 经书 = 2, 消耗品 = 3, 暗器 = 4, 
+        public int ItemType; 
         
         public Jyx2ItemType GetItemType()
         {
-            return (Jyx2ItemType) ((int)ItemType);
+            return (Jyx2ItemType) ItemType;
         }
         
-        [ShowIf(nameof(ShowEquipmentType))]
-        [BoxGroup(DEFAULT_GROUP_NAME)] [LabelText("装备类型")][EnumToggleButtons] 
-        public Jyx2ConfigItemEquipmentType EquipmentType;
+        //装备类型
+        //不是装备 = -1, 武器 = 0, 防具 = 1
+        public int EquipmentType;
         
         bool ShowEquipmentType()
         {
@@ -177,7 +162,7 @@ namespace Jyx2Configs
 
         [ShowIf(nameof(IsItemBook))]
         [BoxGroup(CONDITION_GROUP)][LabelText("需内力性质")][EnumToggleButtons]
-        public Jyx2ConfigCharacter.MpTypeEnum NeedMPType;
+        public int NeedMPType;
 
         bool IsItemBook()
         {

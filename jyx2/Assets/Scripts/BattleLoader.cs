@@ -106,15 +106,18 @@ public class BattleLoader : MonoBehaviour
             Debug.LogError("载入了未定义的战斗，id=" + id);
             return;
         }
-        
+
+        var teamMates = battle.TeamMates.Split(',').ToList();
+        var autoTeamMates = battle.AutoTeamMates.Split(',').ToList();
+
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
-        if (battle.AutoTeamMates.Count > 0)
+        if (autoTeamMates.Count > 0)
         {
-            foreach (var v in battle.AutoTeamMates)
+            foreach (var v in autoTeamMates)
             {
-                var roleId = v.Id;
+                var roleId = int.Parse(v);
                 if (roleId == -1) continue;
                 AddRole(roleId, 0); //TODO IS AUTO
                 for (var i = 0; i < m_Roles.Count; i++)
@@ -134,7 +137,7 @@ public class BattleLoader : MonoBehaviour
             //必选人物
             bool MustRoleFunc(RoleInstance r)
             {
-                return battle.TeamMates.Exists(t => t.Id == r.Key);
+                return teamMates.Exists(id => int.Parse(id) == r.Key);
             }
 
             SelectRoleParams selectPram = new SelectRoleParams();
@@ -160,6 +163,9 @@ public class BattleLoader : MonoBehaviour
 
     UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     {
+        var teamMates = battle.TeamMates.Split(',').ToList();
+        var enemies = battle.Enemies.Split(',').ToList();
+        
         if (selectRoles != null)
         {
             foreach (var role in selectRoles)
@@ -167,16 +173,16 @@ public class BattleLoader : MonoBehaviour
                 AddRole(role.GetJyx2RoleId(), 0);
             }
         }
-
+        
         //预配置队友
-        foreach (var v in battle.TeamMates)
+        foreach (var v in teamMates)
         {
-            AddRole(v.Id, 0);
+            AddRole(int.Parse(v), 0);
         }
 
-        foreach (var v in battle.Enemies)
+        foreach (var v in enemies)
         {
-            AddRole(v.Id, 1);
+            AddRole(int.Parse(v), 1);
         }
 
         return InitBattle(callback, battle);

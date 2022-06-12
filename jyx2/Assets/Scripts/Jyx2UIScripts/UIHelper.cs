@@ -167,7 +167,7 @@ public class UIHelper
         StringBuilder sb = new StringBuilder();
         foreach (var tempItem in item.GenerateItems)
         {
-            var cfg = tempItem.Item;
+            var cfg = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(tempItem.Id);
             if (cfg == null)
                 continue;
             sb.Append($"{cfg.Name}:  {tempItem.Count}\n");
