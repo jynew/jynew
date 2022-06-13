@@ -9,11 +9,6 @@ namespace Jyx2Configs
 {
     public class Jyx2ConfigBattle : Jyx2ConfigBase
     {
-        public static Jyx2ConfigBattle Get(int id)
-        {
-            return GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(id);
-        }
-        
         //地图
         public string MapScene;
         
@@ -31,9 +26,5 @@ namespace Jyx2Configs
 
         //敌人
         public string Enemies;
-
-        public override async UniTask WarmUp()
-        {
-        }
     }
 }

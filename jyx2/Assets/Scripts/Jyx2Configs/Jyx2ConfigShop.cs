@@ -8,13 +8,7 @@ namespace Jyx2Configs
         public int Trigger;
 
         //商品列表
-        // public List<Jyx2ConfigShopItem> ShopItems;
         public string ShopItems;
-
-        public override async UniTask WarmUp()
-        {
-            
-        }
     }
     
     public class Jyx2ConfigShopItem

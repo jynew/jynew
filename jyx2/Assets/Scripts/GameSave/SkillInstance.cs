@@ -102,6 +102,7 @@ namespace Jyx2
             foreach (var _level in _levelArr)
             {
                 var _levelArr2 = _level.Split(',');
+                if (_levelArr2.Length != 5) continue;
                 var skillLevel = new Jyx2ConfigSkillLevel();
                 skillLevel.Attack = int.Parse(_levelArr2[0]);
                 skillLevel.SelectRange = int.Parse(_levelArr2[1]);

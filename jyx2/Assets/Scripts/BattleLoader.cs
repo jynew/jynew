@@ -100,7 +100,7 @@ public class BattleLoader : MonoBehaviour
         }
 
         m_Roles = new List<BattlePosRole>();
-        Jyx2ConfigBattle battle = Jyx2ConfigBattle.Get(id);
+        Jyx2ConfigBattle battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(id);
         if (battle == null)
         {
             Debug.LogError("载入了未定义的战斗，id=" + id);

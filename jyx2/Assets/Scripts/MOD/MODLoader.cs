@@ -54,12 +54,6 @@ namespace Jyx2.MOD
 
 
             SaveOverrideList(indexPath, $"{path}/Skills", ".asset");
-            // SaveOverrideList(indexPath, $"{path}/Configs/Characters", ".asset");
-            // SaveOverrideList(indexPath, $"{path}/Configs/Items", ".asset");
-            // SaveOverrideList(indexPath, $"{path}/Configs/Skills", ".asset");
-            // SaveOverrideList(indexPath, $"{path}/Configs/Shops", ".asset");
-            // SaveOverrideList(indexPath, $"{path}/Configs/Maps", ".asset");
-            // SaveOverrideList(indexPath, $"{path}/Configs/Battles", ".asset");
             SaveOverrideList(indexPath, $"{path}/Configs", ".xlsx");
             SaveOverrideList(indexPath, $"{path}/Lua", ".lua");
 #endif

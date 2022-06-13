@@ -171,6 +171,7 @@ public class UIHelper
         foreach (var GenerateItem in GenerateItemArr)
         {
             var GenerateItemArr2 = GenerateItem.Split(',');
+            if (GenerateItemArr2.Length != 2) continue;
             var characterItem = new Jyx2ConfigCharacterItem();
             characterItem.Id = int.Parse(GenerateItemArr2[0]);
             characterItem.Count = int.Parse(GenerateItemArr2[1]);

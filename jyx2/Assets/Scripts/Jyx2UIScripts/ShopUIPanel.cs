@@ -84,6 +84,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		foreach (var shopItemStr in shopItems)
 		{
 			var shopItemArr = shopItemStr.Split(',');
+			if (shopItemArr.Length != 2) continue;
 			var shopItem = new Jyx2ConfigShopItem();
 			shopItem.Id = int.Parse(shopItemArr[0]);
 			shopItem.Count = int.Parse(shopItemArr[1]);

@@ -113,10 +113,6 @@ namespace Jyx2Configs
         /* ------- 分割线 --------*/
         //模型配置
         public ModelAsset Model;
-
-        public override async UniTask WarmUp()
-        {
-        }
     }
 
     public class Jyx2ConfigCharacterSkill

@@ -29,6 +29,8 @@ namespace Jyx2Configs
             new Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>();
 
         private bool _isInited = false;
+
+        public string ModRootDir;
         
         /// <summary>
         /// 载入配置表
@@ -39,7 +41,8 @@ namespace Jyx2Configs
         {
             if (_isInited)
                 return;
-            
+
+            ModRootDir = rootPath;
             _isInited = true;
             _dataBase.Clear();
             int total = 0;

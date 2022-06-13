@@ -9,11 +9,5 @@ namespace Jyx2Configs
         
         //名称
         public string Name;
-
-        /// <summary>
-        /// 资源预热
-        /// </summary>
-        /// <returns></returns>
-        public abstract UniTask WarmUp();
     }
 }

@@ -182,10 +182,5 @@ namespace Jyx2Configs
 
         //练出物品
         public string GenerateItems;
-
-        public override async UniTask WarmUp()
-        {
-            
-        }
     }
 }
