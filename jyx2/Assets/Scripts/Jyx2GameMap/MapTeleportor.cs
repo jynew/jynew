@@ -18,9 +18,9 @@ using UnityEngine;
 
 public class MapTeleportor : MonoBehaviour
 {	
-	[Required]
-	[LabelText("对应地图")]
-	public Jyx2ConfigMap m_GameMap;
+	// [Required]
+	// [LabelText("对应地图")]
+	// public Jyx2ConfigMap m_GameMap;
 
 	[InfoBox("对应指定场景的Level/Triggers下节点")]
 	[LabelText("传送的位置名")] 
@@ -51,7 +51,7 @@ public class MapTeleportor : MonoBehaviour
 		//---------------------------------------------------------------------------
 		//特定位置的翻译【地图传送按钮的文本显示，一般为离开】
 		//---------------------------------------------------------------------------
-		await ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText.GetContent(nameof(MapTeleportor)));
+		await ShowEnterButton(LevelMaster.GetCurrentGameMap().TransportToMap, TransportTriggerName, ButtonText.GetContent(nameof(MapTeleportor)));
 		//---------------------------------------------------------------------------
 		//---------------------------------------------------------------------------
 		UnityTools.HighLightObjects(m_EventTargets, Color.red);
@@ -111,7 +111,7 @@ public class MapTeleportor : MonoBehaviour
 			
 		Assert.IsNotNull(curMap);
 
-		var nextMap = m_GameMap;
+		var nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
 
 		if (nextMap == null)
 		{
@@ -123,7 +123,7 @@ public class MapTeleportor : MonoBehaviour
 		LevelMaster.LastGameMap = curMap;
 			
 		//记录当前世界位置
-		if (curMap.IsWorldMap())
+		if (curMap.Tags.Contains("WORLDMAP"))
 		{
 			Jyx2Player.GetPlayer().RecordWorldInfo();
 		}
@@ -133,10 +133,10 @@ public class MapTeleportor : MonoBehaviour
 		if (!string.IsNullOrEmpty(TransportTriggerName))
 		{
 			para.triggerName = TransportTriggerName;
-		}else if (curMap.IsWorldMap())
+		}else if (curMap.Tags.Contains("WORLDMAP"))
 		{
 			para.triggerName = "Leave";
-		}else if (nextMap.IsWorldMap())
+		}else if (nextMap.Tags.Contains("WORLDMAP"))
 		{
 			para.triggerName = curMap.Name;
 		}

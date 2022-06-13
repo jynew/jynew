@@ -137,7 +137,7 @@ public class GameConst
     public const int MAX_BATTLE_RESULT_LINE_NUM = 7;
 
     //世界地图ID
-    public const int WORLD_MAP_ID = 1000;
+    public const int WORLD_MAP_ID = -1;
 
     public static readonly int[] _levelUpExpList = new int[] { 50, 150, 300, 500, 750, 1050, 1400, 1800, 2250, 2750, 3850, 5050, 6350, 7750, 9250, 10850, 12550, 14350, 16750, 18250, 21400, 24700, 28150, 31750, 35500, 39400, 43450, 47650, 52000, 60000 };
 

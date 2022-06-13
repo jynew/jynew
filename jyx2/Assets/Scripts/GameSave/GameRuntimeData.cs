@@ -567,11 +567,11 @@ namespace Jyx2
         /// <returns></returns>
         public int GetSceneEntranceCondition(int mapId)
         {
-            var gameMap = Jyx2ConfigMap.Get(mapId);
+            var gameMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
             if (gameMap == null) return -1;
             
             //大地图
-            if (gameMap.IsWorldMap())
+            if (gameMap.Tags.Contains("WORLDMAP"))
                 return 0;
 
             //已经有地图打开的纪录

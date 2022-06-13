@@ -123,7 +123,7 @@ public class LevelMaster : MonoBehaviour
 	/// </summary>
 	public bool IsInWorldMap
 	{
-		get { return _currentMap?.IsWorldMap() ?? false; }
+		get { return _currentMap?.Tags.Contains("WORLDMAP") ?? false; }
 	}
 
 	// Use this for initialization
@@ -156,7 +156,7 @@ public class LevelMaster : MonoBehaviour
 		var gameMap = GetCurrentGameMap();
 		if (gameMap != null && !IsInBattle)
 		{
-			if (gameMap.IsWorldMap())//JYX2 临时测试
+			if (gameMap.Tags.Contains("WORLDMAP"))//JYX2 临时测试
 			{
 				var btn = transform.Find("UI/MainUI/BackButton");
 				if (btn != null)
@@ -179,7 +179,7 @@ public class LevelMaster : MonoBehaviour
 		TryBindPlayer().Forget();
 		
 		//大地图不能使用跟随相机（目前好像比较卡？）
-		if (gameMap != null && !gameMap.IsWorldMap() && _gameMapPlayer != null)
+		if (gameMap != null && !gameMap.Tags.Contains("WORLDMAP") && _gameMapPlayer != null)
 		{
 			//初始化跟随相机
 			GameViewPortManager.Instance.InitForLevel(_gameMapPlayer.transform);
@@ -210,7 +210,7 @@ public class LevelMaster : MonoBehaviour
 			}
 		}
 
-		if (gameMap != null && !gameMap.IsWorldMap())
+		if (gameMap != null && !gameMap.Tags.Contains("WORLDMAP"))
 		{
 			//调整摄像机参数
 			UpdateCameraParams();
@@ -231,7 +231,7 @@ public class LevelMaster : MonoBehaviour
 	public void UpdateCameraParams()
 	{
 		//世界地图取默认场景的设置
-		if (_currentMap.IsWorldMap())
+		if (_currentMap.Tags.Contains("WORLDMAP"))
 			return;
 		
 		//调整摄像机参数
@@ -268,18 +268,21 @@ public class LevelMaster : MonoBehaviour
 		if (gameMap == null) return;
 		
 		//首先播放进门音乐
-		AudioManager.PlayMusic(gameMap.InMusic);
-		//如果没有在，则播放出门音乐
-		if (LastGameMap != null)
+		if (gameMap.InMusic != -1)
 		{
-			if (LastGameMap.ForceSetLeaveMusicId != -1)
+			AudioManager.PlayMusic(gameMap.InMusic);
+			//如果没有在，则播放出门音乐
+			if (LastGameMap != null)
 			{
-				AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
-			}
+				if (LastGameMap.ForceSetLeaveMusicId != -1)
+				{
+					AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
+				}
 
-			if (LastGameMap.OutMusic != null)
-			{
-				AudioManager.PlayMusic(LastGameMap.OutMusic);
+				if (LastGameMap.OutMusic != null)
+				{
+					AudioManager.PlayMusic(LastGameMap.OutMusic);
+				}
 			}
 		}
 	}
@@ -314,7 +317,7 @@ public class LevelMaster : MonoBehaviour
 
 		if (loadPara.loadType == LevelLoadPara.LevelLoadType.Load)
 		{
-			if (map.IsWorldMap())
+			if (map.Tags.Contains("WORLDMAP"))
 			{
 				GetPlayer().LoadWorldInfo();
 			}
@@ -326,7 +329,7 @@ public class LevelMaster : MonoBehaviour
 		}
 		else if (loadPara.loadType == LevelLoadPara.LevelLoadType.Entrance)
 		{
-			if (map.IsWorldMap()) //大地图
+			if (map.Tags.Contains("WORLDMAP")) //大地图
 			{
 				GetPlayer().LoadWorldInfo();
 			}
@@ -343,7 +346,7 @@ public class LevelMaster : MonoBehaviour
 		{
 			Transport(loadPara.triggerName);
 
-			if (_currentMap.IsWorldMap())
+			if (_currentMap.Tags.Contains("WORLDMAP"))
 				GetPlayer().LoadBoat();
 		}
 		else if (loadPara.loadType == LevelLoadPara.LevelLoadType.ReturnFromBattle)
@@ -391,7 +394,7 @@ public class LevelMaster : MonoBehaviour
 
 		SetPlayerSpeed(0);
 		var gameMap = GetCurrentGameMap();
-		if (gameMap != null && gameMap.IsWorldMap())
+		if (gameMap != null && gameMap.Tags.Contains("WORLDMAP"))
 		{
 			_playerNavAgent.speed = GlobalAssetConfig.Instance.playerMoveSpeedWorldMap;
 		}
@@ -559,7 +562,7 @@ public class LevelMaster : MonoBehaviour
 				//BY CG: MASK：15:Ground层
 				else if (Physics.Raycast(ray, out hitInfo, 500, 1 << LayerMask.NameToLayer("Ground")))
 				{
-					if (_currentMap.IsNoNavAgent())
+					if (_currentMap.Tags.Contains("NONAVAGENT"))
 					{
 						var dest = hitInfo.point;
 						var sourcePos = _gameMapPlayer.transform.position;
@@ -920,7 +923,7 @@ public class LevelMaster : MonoBehaviour
 			return;
 		}
 
-		if (_currentMap.IsWorldMap())
+		if (_currentMap.Tags.Contains("WORLDMAP"))
 		{
 			GetPlayer().RecordWorldInfo();
 		}

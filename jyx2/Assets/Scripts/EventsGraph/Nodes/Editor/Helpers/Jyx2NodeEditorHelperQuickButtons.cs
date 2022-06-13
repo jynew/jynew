@@ -59,7 +59,7 @@ static public class Jyx2NodeEditorHelperQuickButtons
             return null;
         }
         
-        return $"Assets/Mods/JYX2/Maps/GameMaps/{jyx2Map.MapScene}.unity";
+        return $"{GameConfigDatabase.Instance.ModRootDir}/Maps/GameMaps/{jyx2Map.MapScene}.unity";
     }
     
     /// <summary>
