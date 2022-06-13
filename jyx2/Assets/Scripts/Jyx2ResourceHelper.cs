@@ -72,12 +72,12 @@ public static class Jyx2ResourceHelper
         MODLoader.WriteModIndexFile(t.startMod.ModRootDir);
 
         //技能池
-        // var overridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
-        // var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
-        // if (allSkills != null)
-        // {
-        //     Jyx2SkillDisplayAsset.All = allSkills;
-        // }
+        var overridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
+        var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
+        if (allSkills != null)
+        {
+            Jyx2SkillDisplayAsset.All = allSkills;
+        }
 
         //基础配置表
         await GameConfigDatabase.Instance.Init(t.startMod.ModRootDir);

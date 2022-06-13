@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Jyx2.MOD;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Jyx2Configs
 {
@@ -16,22 +15,6 @@ namespace Jyx2Configs
     }
     public class Jyx2ConfigItem : Jyx2ConfigBase
     {
-        public enum Jyx2ConfigItemEquipmentType
-        {
-            不是装备 = -1,
-            武器 = 0,
-            防具 = 1
-        }
-        
-        public enum Jyx2ConfigItemType
-        {
-            道具 = 0, 
-            装备 = 1, 
-            经书 = 2, 
-            消耗品 = 3, 
-            暗器 = 4, 
-        }
-
         // [ShowIf(nameof(IsWeapon))]
         // [BoxGroup(EXTEND_GROUP)][LabelText("武器武功配合加攻击力")]
         // public int ExtraAttack;
@@ -44,12 +27,10 @@ namespace Jyx2Configs
         // {
         //     return (int)this.EquipmentType == 0;
         // }
-
         
         //图标
         public int Pic;
-
-        private Sprite _sprite;
+        
         public async UniTask<Sprite> GetPic()
         {
             var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/Jyx2Items/{Pic}");
@@ -72,167 +53,139 @@ namespace Jyx2Configs
         //不是装备 = -1, 武器 = 0, 防具 = 1
         public int EquipmentType;
         
-        bool ShowEquipmentType()
-        {
-            return (int)ItemType == 1;
-        }
+        //练出武功
+        public int Skill;
         
-        [ShowIf(nameof(ShowSkill))]
-        [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("练出武功")][SerializeReference]
-        public Jyx2ConfigSkill Skill;
-
-        bool ShowSkill()
-        {
-            return (int)ItemType == 2;
-        }
-
-
-        [BoxGroup(EFFECT_GROUP)][LabelText("加生命")]
+        //加生命
         public int AddHp; 
-
-        [BoxGroup(EFFECT_GROUP)][LabelText("加生命最大值")]
+        
+        //加生命最大值
         public int AddMaxHp; 
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加中毒解毒")]
+        //加中毒解毒
         public int ChangePoisonLevel; 
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加体力")]
+        //加体力
         public int AddTili; 
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("改变内力性质")]
+        //改变内力性质
         public int ChangeMPType; 
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加内力")]
+        //加内力
         public int AddMp;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加内力最大值")]
+        //加内力最大值
         public int AddMaxMp;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加攻击力")]
+        //加攻击力
         public int Attack;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加轻功")]
+        //加轻功
         public int Qinggong;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加防御力")]
+        //加防御力
         public int Defence;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加医疗")]
+        //加医疗
         public int Heal;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加使毒")]
+        //加使毒
         public int UsePoison;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加解毒")]
+        //加解毒
         public int DePoison;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加抗毒")]
+        //加抗毒
         public int AntiPoison;
-
-        [BoxGroup(EFFECT_GROUP)][LabelText("加拳掌")]
+        
+        //加拳掌
         public int Quanzhang;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加御剑")]
+        //加御剑
         public int Yujian;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加耍刀")]
+        //加耍刀
         public int Shuadao;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加特殊兵器")]
+        //加特殊兵器
         public int Qimen;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加暗器技巧")]
+        //加暗器技巧
         public int Anqi;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加武学常识")]
+        //加武学常识
         public int Wuxuechangshi;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加品德")]
+        //加品德
         public int AddPinde;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("左右互搏")]
+        //左右互搏
         public int Zuoyouhubo;
 
-        [BoxGroup(EFFECT_GROUP)][LabelText("加功夫带毒")]
+        //加功夫带毒
         public int AttackPoison;
 
-        [ShowIf(nameof(IsItemBook))]
-        [BoxGroup(CONDITION_GROUP)][LabelText("仅修炼人物")]
+        //仅修炼人物
         public int OnlySuitableRole;
 
-        [ShowIf(nameof(IsItemBook))]
-        [BoxGroup(CONDITION_GROUP)][LabelText("需内力性质")][EnumToggleButtons]
+        //需内力性质
         public int NeedMPType;
-
-        bool IsItemBook()
-        {
-            return (int)this.ItemType == 2;
-        }
-
-        [BoxGroup(CONDITION_GROUP)][LabelText("需内力")]
+        
+        //需内力
         public int ConditionMp;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需攻击力")]
+        //需攻击力
         public int ConditionAttack;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需轻功")]
+        //需轻功
         public int ConditionQinggong;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需用毒")]
+        //需用毒
         public int ConditionPoison;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需医疗")]
+        //需医疗
         public int ConditionHeal;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需解毒")]
+        //需解毒
         public int ConditionDePoison;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需拳掌")]
+        //需拳掌
         public int ConditionQuanzhang;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需御剑")]
+        //需御剑
         public int ConditionYujian;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需耍刀")]
+        //需耍刀
         public int ConditionShuadao;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需特殊兵器")]
+        //需特殊兵器
         public int ConditionQimen;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需暗器")]
+        //需暗器
         public int ConditionAnqi;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需资质")]
+        //需资质
         public int ConditionIQ;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需经验")]
+        //需经验
         public int NeedExp;
 
-        [BoxGroup(CONDITION_GROUP)][LabelText("需自宫")]
-        public bool NeedCastration;
+        //需自宫
+        //-1不需要, 1需要
+        public int NeedCastration;
 
-        [ShowIf(nameof(IsItemBook))]
-        [BoxGroup(EFFECT_GROUP)][LabelText("练出物品需经验")]
+        //练出物品需经验
         public int GenerateItemNeedExp;
 
-        [ShowIf(nameof(IsItemBook))]
-        [BoxGroup(EFFECT_GROUP)][LabelText("需材料")][SerializeReference]
-        public Jyx2ConfigItem GenerateItemNeedCost;
+        //需材料
+        public int GenerateItemNeedCost;
 
-        [ShowIf(nameof(IsItemBook))]
-        [BoxGroup(EFFECT_GROUP)][LabelText("练出物品")]
-        [TableList]
-        public List<Jyx2ConfigCharacterItem> GenerateItems;
+        //练出物品
+        public string GenerateItems;
 
         public override async UniTask WarmUp()
         {
-            //GetPic().Forget();
             
-            //清理缓存
-            if (Application.isEditor)
-            {
-                _sprite = null;
-            }
         }
     }
 }

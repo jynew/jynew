@@ -266,23 +266,20 @@ public class LevelMaster : MonoBehaviour
 	private void PlayMusic(Jyx2ConfigMap gameMap)
 	{
 		if (gameMap == null) return;
-
+		
 		//首先播放进门音乐
-		if (!AudioManager.PlayMusic(gameMap.InMusic))
+		AudioManager.PlayMusic(gameMap.InMusic);
+		//如果没有在，则播放出门音乐
+		if (LastGameMap != null)
 		{
-
-			//如果没有在，则播放出门音乐
-			if (LastGameMap != null)
+			if (LastGameMap.ForceSetLeaveMusicId != -1)
 			{
-				if (LastGameMap.ForceSetLeaveMusicId != -1)
-				{
-					AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
-				}
+				AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
+			}
 
-				if (LastGameMap.OutMusic != null)
-				{
-					AudioManager.PlayMusic(LastGameMap.OutMusic);
-				}
+			if (LastGameMap.OutMusic != null)
+			{
+				AudioManager.PlayMusic(LastGameMap.OutMusic);
 			}
 		}
 	}

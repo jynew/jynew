@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace Jyx2Configs
 {
@@ -22,7 +19,7 @@ namespace Jyx2Configs
         public int Poison;
         
         //技能等级配置
-        public string Levels ;
+        public string Levels;
         
         //技能外观
         public Jyx2SkillDisplayAsset Display;
@@ -33,7 +30,7 @@ namespace Jyx2Configs
         }
     }
     
-    public class Jyx2ConfigSkillLevel 
+    public class Jyx2ConfigSkillLevel
     {
         //攻击力
         public int Attack;

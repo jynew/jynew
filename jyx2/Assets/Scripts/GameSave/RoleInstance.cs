@@ -386,13 +386,11 @@ namespace Jyx2
             var items = Data.Items.Split('|');
             foreach (var item in items)
             {
-                var id = int.Parse(item.Split(',')[0]);
-                var count = int.Parse(item.Split(',')[1]);
-                Items.Add(new Jyx2ConfigCharacterItem()
-                {
-                    Id = id,
-                    Count = count
-                });
+                var itemArr = item.Split(',');
+                var characterItem = new Jyx2ConfigCharacterItem();
+                characterItem.Id = int.Parse(itemArr[0]);
+                characterItem.Count = int.Parse(itemArr[1]);
+                Items.Add(characterItem);
             }
         }
 
@@ -476,10 +474,10 @@ namespace Jyx2
                 {
                     foreach (var wugong in Wugongs)
                     {
-                        if (wugong.Key == item.Skill.Id)
+                        if (wugong.Key == item.Skill)
                             return true;
                     }
-                    int level = GetWugongLevel(item.Skill.Id);
+                    int level = GetWugongLevel(item.Skill);
                     //if (level >= 0 && level < GameConst.MAX_WUGONG_LEVEL)
                     //{
                     //    return true;
@@ -554,18 +552,29 @@ namespace Jyx2
         {
             if (practiseItem == null)
                 return "";
-            if (practiseItem.GenerateItems == null)
+            if (practiseItem.GenerateItems == "")
                 return "";
-            if (practiseItem.GenerateItemNeedCost == null)
+            if (practiseItem.GenerateItemNeedCost == -1)
                 return "";
-            if (!runtime.HaveItemBool(practiseItem.GenerateItemNeedCost.Id))
+            if (!runtime.HaveItemBool(practiseItem.GenerateItemNeedCost))
                 return "";
-            int GenerateItemNeedCount = runtime.Items[practiseItem.GenerateItemNeedCost.Id.ToString()];
+            var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
+            var GenerateItemArr = practiseItem.GenerateItems.Split('|');
+            foreach (var GenerateItem in GenerateItemArr)
+            {
+                var GenerateItemArr2 = GenerateItem.Split(',');
+                var characterItem = new Jyx2ConfigCharacterItem();
+                characterItem .Id = int.Parse(GenerateItemArr2[0]);
+                characterItem .Count = int.Parse(GenerateItemArr2[1]);
+                GenerateItemList.Add(characterItem);
+            }
+            int GenerateItemNeedCount = runtime.Items[practiseItem.GenerateItemNeedCost.ToString()];
             int GenerateItemNeedExp = (7 - IQ / 15) * practiseItem.GenerateItemNeedExp;
-            if (ExpForMakeItem >= GenerateItemNeedExp && GenerateItemNeedCount  >= practiseItem.GenerateItems.Count)
+            
+            if (ExpForMakeItem >= GenerateItemNeedExp && GenerateItemNeedCount  >= GenerateItemList.Count)
             {
                 //随机选择练出的物品
-                var pickItem = Jyx2.Middleware.Tools.GetRandomElement(practiseItem.GenerateItems);
+                var pickItem = Jyx2.Middleware.Tools.GetRandomElement(GenerateItemList);
                 
                 //已经有物品
                 if (runtime.HaveItemBool(pickItem.Id))
@@ -577,7 +586,7 @@ namespace Jyx2
                     runtime.AddItem(pickItem.Id, 1 + Random.Range(0, 3));
                 }
                 
-                runtime.AddItem(practiseItem.GenerateItemNeedCost.Id, -pickItem.Count);
+                runtime.AddItem(practiseItem.GenerateItemNeedCost, -pickItem.Count);
                 ExpForMakeItem = 0;
                 return $"{Name} 制造出 {GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(pickItem.Id).Name}\n";
             }
@@ -640,7 +649,7 @@ namespace Jyx2
             {
                 if (item.Skill != null)
                 {
-                    this.LearnMagic(item.Skill.Id);
+                    this.LearnMagic(item.Skill);
                 }
 
                 this.ExpForItem = 0;
@@ -724,7 +733,7 @@ namespace Jyx2
             //有关联武学的，如已满级则不可修炼
             if (item.Skill != null)
             {
-                int magic_level_index = GetWugongLevel(item.Skill.Id);
+                int magic_level_index = GetWugongLevel(item.Skill);
                 if (magic_level_index == GameConst.MAX_SKILL_LEVEL)
                 {
                     return GameConst.MAX_EXP;

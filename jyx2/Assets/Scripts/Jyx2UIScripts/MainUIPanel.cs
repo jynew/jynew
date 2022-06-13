@@ -202,7 +202,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 					//修炼
 					else if ((int)item.ItemType == 2)
 					{
-						if (item.NeedCastration) //辟邪剑谱和葵花宝典
+						if (item.NeedCastration == 1) //辟邪剑谱和葵花宝典
 						{
 							await GameUtil.ShowYesOrNoCastrate(selectRole, () =>
 							{

@@ -46,7 +46,7 @@ namespace Jyx2Configs
             
 
             DirectoryInfo dir = new DirectoryInfo(rootPath ?? "Configs");
-            var files = dir.GetFiles("*.xls", SearchOption.AllDirectories);
+            var files = dir.GetFiles("*.xlsx", SearchOption.AllDirectories);
             
             foreach (var file in files)
             {

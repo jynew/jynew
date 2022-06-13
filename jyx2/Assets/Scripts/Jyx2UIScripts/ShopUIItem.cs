@@ -57,7 +57,7 @@ public class ShopUIItem : MonoBehaviour
 	{
 		this.index = index;
 		this.shopItem = shopItem;
-		Jyx2ConfigItem item = shopItem.Item;
+		Jyx2ConfigItem item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(shopItem.Id);
 
 		//---------------------------------------------------------------------------
 		//desText.text = $"{item.Name}\n价格：{shopItem.Price}";

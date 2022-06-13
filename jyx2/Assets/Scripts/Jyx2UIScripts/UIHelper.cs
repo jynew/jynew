@@ -161,11 +161,22 @@ public class UIHelper
     //产出
     static string GetOutPut(Jyx2ConfigItem item)
     {
-        if (item.GenerateItems == null)
+        if (item.GenerateItems == "")
             return "";
         
         StringBuilder sb = new StringBuilder();
-        foreach (var tempItem in item.GenerateItems)
+        
+        var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
+        var GenerateItemArr = item.GenerateItems.Split('|');
+        foreach (var GenerateItem in GenerateItemArr)
+        {
+            var GenerateItemArr2 = GenerateItem.Split(',');
+            var characterItem = new Jyx2ConfigCharacterItem();
+            characterItem.Id = int.Parse(GenerateItemArr2[0]);
+            characterItem.Count = int.Parse(GenerateItemArr2[1]);
+            GenerateItemList.Add(characterItem);
+        }
+        foreach (var tempItem in GenerateItemList)
         {
             var cfg = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(tempItem.Id);
             if (cfg == null)
@@ -185,9 +196,9 @@ public class UIHelper
            /* sb.Append($"练出物品需经验:  {item.GenerateItemNeedExp}\n");*/
         }
         
-        if (item.GenerateItemNeedCost != null)
+        if (item.GenerateItemNeedCost != -1)
         {
-            sb.Append($"材料:  {item.GenerateItemNeedCost.Name}\n");
+            sb.Append($"材料:  {GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.GenerateItemNeedCost).Name}\n");
         }
 
         return sb.ToString();
