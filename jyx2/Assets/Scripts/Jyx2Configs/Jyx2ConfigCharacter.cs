@@ -17,7 +17,7 @@ namespace Jyx2Configs
         
         public async UniTask<Sprite> GetPic()
         {
-            var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/head/{Pic}");
+            var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/head/{Pic}.png");
             return _sprite;
         }
 

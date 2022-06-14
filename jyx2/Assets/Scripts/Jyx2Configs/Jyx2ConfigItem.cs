@@ -27,13 +27,10 @@ namespace Jyx2Configs
         // {
         //     return (int)this.EquipmentType == 0;
         // }
-        
-        //图标
-        public int Pic;
-        
+
         public async UniTask<Sprite> GetPic()
         {
-            var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/Jyx2Items/{Pic}");
+            var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/Jyx2Items/{Id}.png");
             return _sprite;
         }
         
