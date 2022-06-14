@@ -115,6 +115,17 @@ public class MapTeleportor : MonoBehaviour
 			//记录当前世界位置
 			Jyx2Player.GetPlayer().RecordWorldInfo();
 		}
+		else if (curMap.Tags.Contains("Leave2"))
+		{
+			if (this.gameObject.name.Equals("Leave2"))
+			{
+				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
+			}
+			else
+			{
+				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(GameConst.WORLD_MAP_ID);
+			}
+		}
 		else
 		{
 			nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
