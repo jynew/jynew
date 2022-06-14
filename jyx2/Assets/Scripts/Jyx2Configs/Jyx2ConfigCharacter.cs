@@ -112,7 +112,13 @@ namespace Jyx2Configs
 
         /* ------- 分割线 --------*/
         //模型配置
-        public ModelAsset Model;
+        public ModelAsset Model
+        {
+            get
+            {
+                return ModelAsset.Get(Name);
+            }
+        }
     }
 
     public class Jyx2ConfigCharacterSkill

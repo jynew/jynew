@@ -25,7 +25,13 @@ namespace Jyx2Configs
         public string Levels ;
         
         //技能外观
-        public Jyx2SkillDisplayAsset Display;
+        public Jyx2SkillDisplayAsset Display
+        {
+            get
+            {
+                return Jyx2SkillDisplayAsset.Get(Name);
+            }
+        }
     }
     
     public class Jyx2ConfigSkillLevel 

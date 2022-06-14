@@ -53,6 +53,7 @@ namespace Jyx2.MOD
             }
 
 
+            SaveOverrideList(indexPath, $"{path}/Models", ".asset");
             SaveOverrideList(indexPath, $"{path}/Skills", ".asset");
             SaveOverrideList(indexPath, $"{path}/Configs", ".xlsx");
             SaveOverrideList(indexPath, $"{path}/Lua", ".lua");
