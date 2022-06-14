@@ -85,5 +85,29 @@ namespace Jyx2Configs
             }
             return null;
         }
+        
+        public static Jyx2ConfigMap GetMapBySceneName(string sceneName)
+        {
+            foreach(var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
+            {
+                if (map.MapScene.Equals(sceneName))
+                {
+                    return map;
+                }
+            }
+            return null;
+        }
+        
+        public static Jyx2ConfigMap GetMapByName(string name)
+        {
+            foreach(var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
+            {
+                if (map.Name.Equals(name))
+                {
+                    return map;
+                }
+            }
+            return null;
+        }
     }
 }

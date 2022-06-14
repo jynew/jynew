@@ -94,7 +94,11 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		ChangePosition(headId);
 		
-		RoleHeadImage_Image.LoadAsyncForget(GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(headId).GetPic());
+		var url = $"Assets/BuildSource/head/{headId}.png";
+        
+		RoleHeadImage_Image.gameObject.SetActive(false);
+		RoleHeadImage_Image.sprite = await MODLoader.LoadAsset<Sprite>(url);
+		RoleHeadImage_Image.gameObject.SetActive(true);
 	}
 
 	//根据对话框最大显示字符以及标点断句分段显示对话 by eaphone at 2021/6/12
