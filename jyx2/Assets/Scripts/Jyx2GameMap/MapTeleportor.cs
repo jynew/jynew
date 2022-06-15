@@ -117,13 +117,13 @@ public class MapTeleportor : MonoBehaviour
 		}
 		else if (curMap.Tags.Contains("Leave2"))
 		{
-			if (this.gameObject.name.Equals("Leave2"))
+			if (this.gameObject.name.Equals("Leave"))
 			{
-				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
+				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(GameConst.WORLD_MAP_ID);
 			}
 			else
 			{
-				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(GameConst.WORLD_MAP_ID);
+				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
 			}
 		}
 		else
