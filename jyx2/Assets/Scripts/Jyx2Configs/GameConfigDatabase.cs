@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Cysharp.Threading.Tasks;
 using Excel;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Jyx2Configs
 {
@@ -31,13 +33,14 @@ namespace Jyx2Configs
         private bool _isInited = false;
 
         public string ModRootDir;
-        
+
         /// <summary>
         /// 载入配置表
         /// </summary>
-        /// <param name="rootPath">excel的data目录所在路径，为空则默认读取"Configs"</param>
+        /// <param name="rootPath"></param>
+        /// <param name="configOverridePaths"></param>
         /// <returns></returns>
-        public async UniTask Init(string rootPath)
+        public async UniTask Init(string rootPath, List<string> configOverridePaths)
         {
             if (_isInited)
                 return;
@@ -47,13 +50,13 @@ namespace Jyx2Configs
             _dataBase.Clear();
             int total = 0;
             
-
-            DirectoryInfo dir = new DirectoryInfo(rootPath ?? "Configs");
-            var files = dir.GetFiles("*.xlsx", SearchOption.AllDirectories);
             
-            foreach (var file in files)
+            foreach (var overridePath in configOverridePaths)
             {
-                total += GenerateConfigsFromExcel(file);
+                var fileName = overridePath.Split('/').Last();
+                var sourcePath = Path.Combine(rootPath, "Configs", fileName);
+                var destPath = Path.Combine(Application.persistentDataPath, fileName);
+                total += await GenerateConfigsFromExcel(sourcePath, destPath);
             }
             
             Debug.Log($"载入完成，总数{total}个配置");
@@ -118,27 +121,6 @@ namespace Jyx2Configs
         }
 
         /// <summary>
-        /// 重新载入配置表
-        /// </summary>
-        /// <param name="path">excel的data目录所在路径，为空则默认读取"data"</param>
-        /// <returns></returns>
-        public int ReloadAll(string path = null)
-        {
-            _dataBase.Clear();
-            int total = 0;
-            
-
-            DirectoryInfo dir = new DirectoryInfo(path ?? "data");
-            var files = dir.GetFiles("*.xls", SearchOption.AllDirectories);
-            
-            foreach (var file in files)
-            {
-                total += GenerateConfigsFromExcel(file);
-            }
-            return total;
-        }
-
-        /// <summary>
         /// 销毁
         /// </summary>
         public void Dispose()
@@ -159,13 +141,17 @@ namespace Jyx2Configs
         /// <summary>
         /// 生成配置
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="sourcePath"></param>
+        /// <param name="destPath"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        int GenerateConfigsFromExcel(FileInfo file)
+        async UniTask<int> GenerateConfigsFromExcel(string sourcePath, string destPath)
         {
             int total = 0;
-            DataRowCollection collection = ReadExcel(file.FullName, out int col, out int row);
+            
+            await CopyFile(sourcePath, destPath);
+            
+            DataRowCollection collection = ReadExcel(destPath, out int col, out int row);
 
             //类名
             string classType = collection[0][0].ToString();
@@ -174,8 +160,8 @@ namespace Jyx2Configs
             Type type = Type.GetType(classType);
             if (type == null)
             {
-                Debug.LogError($"找不到{file.FullName}定义的数据类:{classType}");
-                throw new Exception($"找不到{file.FullName}定义的数据类:{classType}");
+                Debug.LogError($"找不到{sourcePath}定义的数据类:{classType}");
+                throw new Exception($"找不到{sourcePath}定义的数据类:{classType}");
             }
 
             //创建数据库
@@ -231,6 +217,29 @@ namespace Jyx2Configs
             return total;
         }
         
+        /// <summary>
+        /// 拷贝文件到指定目录
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="destPath"></param>
+        async UniTask CopyFile(string sourcePath, string destPath)
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                using (UnityWebRequest request = UnityWebRequest.Get(sourcePath))
+                {
+                    var dh = new DownloadHandlerFile(sourcePath);
+                    dh.removeFileOnAbort = true;
+                    request.downloadHandler = dh;
+                    await request.SendWebRequest();
+                }
+            }
+            else
+            {
+                File.Copy(sourcePath, destPath, true);
+            }
+        }
+
         /// <summary>
         /// 读取Excel
         /// </summary>

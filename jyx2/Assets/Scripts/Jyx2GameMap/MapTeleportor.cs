@@ -115,7 +115,7 @@ public class MapTeleportor : MonoBehaviour
 			//记录当前世界位置
 			Jyx2Player.GetPlayer().RecordWorldInfo();
 		}
-		else if (curMap.Tags.Contains("Leave2"))
+		else
 		{
 			if (this.gameObject.name.Equals("Leave"))
 			{
@@ -125,10 +125,6 @@ public class MapTeleportor : MonoBehaviour
 			{
 				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
 			}
-		}
-		else
-		{
-			nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
 		}
 
 		if (nextMap == null)

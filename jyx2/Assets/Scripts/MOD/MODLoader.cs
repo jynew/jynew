@@ -149,7 +149,7 @@ namespace Jyx2.MOD
             //string rootPath = GlobalAssetConfig.Instance.startMod.ModRootDir;
             string filePath = GlobalAssetConfig.Instance.startMod.ModRootDir +  "/index.txt";
             var content = await Addressables.LoadAssetAsync<TextAsset>(filePath);
-            var fileContentsList = content.text.Split( SplitTag,StringSplitOptions.None);
+            var fileContentsList = content.text.Split(SplitTag, StringSplitOptions.None);
             
             /*if (Application.platform == RuntimePlatform.Android)
             {

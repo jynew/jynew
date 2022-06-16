@@ -1,10 +1,6 @@
 using System;
-using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
-using Sirenix.OdinInspector;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Jyx2Configs
