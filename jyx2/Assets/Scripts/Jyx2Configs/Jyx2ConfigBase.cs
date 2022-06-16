@@ -1,7 +1,11 @@
-using Cysharp.Threading.Tasks;
+using System;
+using ProtoBuf;
 
 namespace Jyx2Configs
 {
+    [Serializable]
+    [ProtoContract]
+    [ProtoInclude(2, typeof(Jyx2ConfigBase))]
     abstract public class Jyx2ConfigBase
     {
         //ID

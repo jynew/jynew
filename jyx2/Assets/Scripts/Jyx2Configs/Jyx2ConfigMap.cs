@@ -1,10 +1,12 @@
 using System;
 using i18n.TranslatorDef;
 using Jyx2;
+using ProtoBuf;
 using UnityEngine;
 
 namespace Jyx2Configs
 {
+    [ProtoContract]
     public class Jyx2ConfigMap : Jyx2ConfigBase
     {
         //地图

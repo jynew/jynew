@@ -88,8 +88,8 @@ public static class Jyx2ResourceHelper
         }
 
         //基础配置表
-        var configOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Configs");
-        await GameConfigDatabase.Instance.Init(t.startMod.ModRootDir, configOverridePaths);
+        var config = await MODLoader.LoadAsset<TextAsset>($"{t.startMod.ModRootDir}/StaticDatas.bin");
+        await GameConfigDatabase.Instance.Init(t.startMod.ModRootDir, config);
 
         //lua
         await LuaManager.InitLuaMapper(t.startMod.ModRootDir);

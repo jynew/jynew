@@ -27,6 +27,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using Object = UnityEngine.Object;
+using Jyx2Configs;
 
 namespace Jyx2.MOD
 {
@@ -55,8 +56,8 @@ namespace Jyx2.MOD
 
             SaveOverrideList(indexPath, $"{path}/Models", ".asset");
             SaveOverrideList(indexPath, $"{path}/Skills", ".asset");
-            SaveOverrideList(indexPath, $"{path}/Configs", ".xlsx");
             SaveOverrideList(indexPath, $"{path}/Lua", ".lua");
+            ExcelTools.GenerateConfigsFromExcel($"{path}/Datas");
 #endif
         }
         
