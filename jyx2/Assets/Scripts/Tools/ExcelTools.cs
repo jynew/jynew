@@ -18,12 +18,12 @@ namespace Jyx2.Middleware
         /// <param name="dirPath"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static void GenerateConfigsFromExcel(string dirPath)
+        public static void GenerateConfigsFromExcel<T>(string dirPath) where T: Jyx2ConfigBase
         {
             var files = Directory.GetFiles(dirPath, "*.xlsx", SearchOption.AllDirectories);
             
-            Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> dataBase =
-                new Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>();
+            Dictionary<Type, Dictionary<int, T>> dataBase =
+                new Dictionary<Type, Dictionary<int, T>>();
             
             foreach (var path in files)
             { 
@@ -41,7 +41,7 @@ namespace Jyx2.Middleware
                 }
 
                 //创建数据库
-                dataBase[type] = new Dictionary<int, Jyx2ConfigBase>();
+                dataBase[type] = new Dictionary<int, T>();
 
                 //创建数据
                 //从第4行开始有数据，第一行是类名，第二行是映射变量，第三行是说明。
@@ -49,7 +49,7 @@ namespace Jyx2.Middleware
                 {
                     var obj = Activator.CreateInstance(type);
 
-                    if (!(obj is Jyx2ConfigBase))
+                    if (!(obj is T))
                     {
                         Debug.LogError($"类{type}没有继承ConfigBase!");
                         throw new Exception($"类{type}没有继承ConfigBase!");
@@ -74,11 +74,11 @@ namespace Jyx2.Middleware
                         variable.SetValue(obj, Convert.ChangeType(collection[i][j], variable.FieldType));
                     }
 
-                    var config = obj as Jyx2ConfigBase;
+                    var config = obj as T;
                     if (config == null)
                     {
-                        Debug.LogError($"{type} 没有继承Jyx2ConfigBase类");
-                        throw new Exception($"{type} 没有继承Jyx2ConfigBase类");
+                        Debug.LogError($"{type} 没有继承{typeof(T)}类");
+                        throw new Exception($"{type} 没有继承{typeof(T)}类");
                     }
 
 
@@ -91,10 +91,7 @@ namespace Jyx2.Middleware
             }
             
             //生成二进制文件
-            using (FileStream fstream = File.Create($"{dirPath}/StaticDatas.bin"))
-            {
-                Serializer.Serialize(fstream, dataBase);
-            }
+            ProtobufSerialize($"{dirPath}/Datas.bytes", dataBase);
         }
         
         /// <summary>
@@ -127,13 +124,37 @@ namespace Jyx2.Middleware
             stream.Close();
             return result.Tables[0].Rows; 
         }
+        
+        #region 序列化和反序列化的方法
 
-        public static Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> LoadBinFile(byte[] data)
+        /// <summary>
+        /// 使用protobuf把对象序列化为Byte数组保存到本地
+        /// </summary>
+        /// <typeparam name="T">需要反序列化的对象类型，必须声明[ProtoContract]特征，且相应属性必须声明[ProtoMember(序号)]特征</typeparam>
+        /// <param name="filePath"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static void ProtobufSerialize<T>(string filePath, T obj)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var memory = new MemoryStream())
             {
-                return Serializer.Deserialize<Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>>(ms);
+                Serializer.Serialize(memory, obj);
+                File.WriteAllBytes(filePath, memory.ToArray());
             }
         }
+
+        /// <summary>
+        /// 使用protobuf反序列化二进制数组为对象
+        /// </summary>
+        /// <typeparam name="T">需要反序列化的对象类型，必须声明[ProtoContract]特征，且相应属性必须声明[ProtoMember(序号)]特征</typeparam>
+        /// <param name="data"></param>
+        public static T ProtobufDeserialize<T>(Byte[] data) where T : class
+        {
+            using (var memory = new MemoryStream(data))
+            {
+                return Serializer.Deserialize<T>(memory);
+            }
+        }
+        #endregion
     }
 }

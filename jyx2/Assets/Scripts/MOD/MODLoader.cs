@@ -57,7 +57,7 @@ namespace Jyx2.MOD
             SaveOverrideList(indexPath, $"{path}/Models", ".asset");
             SaveOverrideList(indexPath, $"{path}/Skills", ".asset");
             SaveOverrideList(indexPath, $"{path}/Lua", ".lua");
-            ExcelTools.GenerateConfigsFromExcel($"{path}/Datas");
+            ExcelTools.GenerateConfigsFromExcel<Jyx2ConfigBase>($"{path}/Configs");
 #endif
         }
         

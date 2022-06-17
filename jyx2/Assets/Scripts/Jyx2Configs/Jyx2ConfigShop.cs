@@ -1,12 +1,16 @@
+using ProtoBuf;
 
 namespace Jyx2Configs
 {
+    [ProtoContract]
     public class Jyx2ConfigShop : Jyx2ConfigBase
     {
         //韦小宝触发器名
+        [ProtoMember(1)]
         public int Trigger;
 
         //商品列表
+        [ProtoMember(2)]
         public string ShopItems;
     }
     

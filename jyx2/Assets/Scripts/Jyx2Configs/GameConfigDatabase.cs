@@ -35,8 +35,9 @@ namespace Jyx2Configs
         /// 载入配置表
         /// </summary>
         /// <param name="rootPath">excel的data目录所在路径，为空则默认读取"Configs"</param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        public async UniTask Init(string rootPath, TextAsset config)
+        public void Init(string rootPath, byte[] data)
         {
             if (_isInited)
                 return;
@@ -44,9 +45,8 @@ namespace Jyx2Configs
             ModRootDir = rootPath;
             _isInited = true;
             _dataBase.Clear();
-
-            byte[] data = config.bytes;
-            _dataBase = ExcelTools.LoadBinFile(data);
+            
+            _dataBase = ExcelTools.ProtobufDeserialize<Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>>(data);
         }
         
         /// <summary>
@@ -81,7 +81,7 @@ namespace Jyx2Configs
         }
 
         /// <summary>
-        /// 
+        /// 是否包含一个值
         /// </summary>
         /// <param name="id"></param>
         /// <typeparam name="T"></typeparam>

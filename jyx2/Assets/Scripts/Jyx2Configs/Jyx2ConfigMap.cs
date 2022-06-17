@@ -10,22 +10,28 @@ namespace Jyx2Configs
     public class Jyx2ConfigMap : Jyx2ConfigBase
     {
         //地图
+        [ProtoMember(1)]
         public string MapScene;
 
         //进门音乐
+        [ProtoMember(2)]
         public int InMusic;
         
         //出门音乐
+        [ProtoMember(3)]
         public int OutMusic;
         
         //跳转场景
+        [ProtoMember(4)]
         public int TransportToMap;
         
         //进入条件
         //0-开局开启，1-开局关闭
+        [ProtoMember(5)]
         public int EnterCondition;
         
         //标签
+        [ProtoMember(6)]
         public string Tags;
 
         /// <summary>
