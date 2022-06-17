@@ -76,8 +76,7 @@ namespace Jyx2Configs
                 }
             }
 
-            Debug.LogError($"找不到Config:{typeof(T)}, id={id}");
-            return default(T);
+            return null;
         }
 
         /// <summary>

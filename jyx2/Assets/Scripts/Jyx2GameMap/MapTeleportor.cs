@@ -42,12 +42,18 @@ public class MapTeleportor : MonoBehaviour
 	async void OnTriggerEnter(Collider other)
 	{
 		if (!triggerEnabled) return;
+		
+		var transportMapId = LevelMaster.GetCurrentGameMap().TransportToMap;
+		if (LevelMaster.GetCurrentGameMap().TransportToMap == -1)
+		{
+			transportMapId = Jyx2ConfigMap.GetMapByName(this.gameObject.name).Id;
+		}
 		//---------------------------------------------------------------------------
 		//await ShowEnterButton(LevelMaster.GetCurrentGameMap().TransportToMap, TransportTriggerName, ButtonText);
 		//---------------------------------------------------------------------------
 		//特定位置的翻译【地图传送按钮的文本显示，一般为离开】
 		//---------------------------------------------------------------------------
-		await ShowEnterButton(LevelMaster.GetCurrentGameMap().TransportToMap, TransportTriggerName, ButtonText.GetContent(nameof(MapTeleportor)));
+		await ShowEnterButton(transportMapId, TransportTriggerName, ButtonText.GetContent(nameof(MapTeleportor)));
 		//---------------------------------------------------------------------------
 		//---------------------------------------------------------------------------
 		UnityTools.HighLightObjects(m_EventTargets, Color.red);
@@ -115,7 +121,7 @@ public class MapTeleportor : MonoBehaviour
 			//记录当前世界位置
 			Jyx2Player.GetPlayer().RecordWorldInfo();
 		}
-		else
+		else if (curMap.Tags.Contains("Leave2"))
 		{
 			if (this.gameObject.name.Equals("Leave"))
 			{
@@ -125,6 +131,10 @@ public class MapTeleportor : MonoBehaviour
 			{
 				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
 			}
+		}
+		else
+		{
+			nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
 		}
 
 		if (nextMap == null)
