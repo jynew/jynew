@@ -66,6 +66,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		while (true)
 		{
+			LoadingText.text = LoadingText.text.Translate();// 游戲后畫面的加載中…… 提示符
 			LoadingText.gameObject.SetActive(!LoadingText.gameObject.activeSelf);
 			yield return new WaitForSeconds(0.5f);
 		}

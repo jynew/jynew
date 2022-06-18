@@ -18,6 +18,8 @@ using Jyx2.MOD;
 using UnityEngine.SceneManagement;
 // 翻译插件
 using EZ4i18n;
+using Sirenix.Utilities;
+using UnityEngine.UI;
 
 public class GameStart : MonoBehaviour
 {
@@ -35,6 +37,12 @@ public class GameStart : MonoBehaviour
 
     private void Start()
     {
+        //TODO:測試用
+        Translator.SetCurLang("English");
+        
+        // 進行啓動頁致謝以及啓動頁作者的翻譯的翻譯
+        introPanel.gameObject.GetComponentsInChildren<Text>().ForEach(c => c.text = c.text.Translate());
+        
         StartAsync().Forget();
     }
 
