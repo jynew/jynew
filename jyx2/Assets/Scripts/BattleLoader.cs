@@ -113,7 +113,8 @@ public class BattleLoader : MonoBehaviour
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
-        if (autoTeamMates.Count > 0)
+        // 自动队友不等于-1则表示有自己或队友
+        if (!autoTeamMates[0].Equals("-1"))
         {
             foreach (var v in autoTeamMates)
             {
