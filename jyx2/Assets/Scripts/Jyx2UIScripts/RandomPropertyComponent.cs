@@ -81,7 +81,7 @@ public class RandomPropertyComponent : MonoBehaviour
             label.color = color;
             BG.gameObject.SetActive(showBg);
         }
-        role.Recover(true);
+        role.Recover();
     }
 
     private string cheatingCode = "baberuth";

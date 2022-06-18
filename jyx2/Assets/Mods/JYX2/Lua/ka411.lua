@@ -14,7 +14,7 @@ Talk(64, "什么我的儿子？", "talkname64", 0);
 Talk(0, "你和瑛姑生的孩子啊！", "talkname0", 1);
 Talk(64, "什么！我有儿子！……", "talkname64", 0);
 Talk(0, "周老前辈，瑛姑如此这般思念你，你始终不肯和他相见，于心何忍？", "talkname0", 1);
-Talk(64, "她在那里？", "talkname64", 0);
+Talk(64, "她在哪里？", "talkname64", 0);
 Talk(0, "他现正居住在黑龙潭，在铁掌山的南边。", "talkname0", 1);
 DarkScence();
 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|移除编号4。场景20-编号04

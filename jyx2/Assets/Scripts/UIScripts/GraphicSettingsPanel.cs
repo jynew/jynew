@@ -23,6 +23,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     public Toggle m_PostToggle;
     public Toggle m_WaterNormalToggle;
     public Toggle m_AntiAliasingToggle;
+    public Toggle m_Vsynctoggle;
 
     public Dropdown m_maxFpsDropdown;
     public Dropdown m_QualityLevelDropdown;
@@ -44,6 +45,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_PostToggle.onValueChanged.AddListener(SetPostProcess);
         m_WaterNormalToggle.onValueChanged.AddListener(SetWaterNormal);
         m_AntiAliasingToggle.onValueChanged.AddListener(SetAntiAliasing);
+        m_Vsynctoggle.onValueChanged.AddListener(SetVSync);
 
         m_maxFpsDropdown.onValueChanged.AddListener(DropdownMaxFps);
         m_QualityLevelDropdown.onValueChanged.AddListener(DropdownQualityLevel);
@@ -68,6 +70,7 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_PostToggle.isOn = _graphicSetting.HasPost == 1;
         m_WaterNormalToggle.isOn = _graphicSetting.HasWaterNormal == 1;
         m_AntiAliasingToggle.isOn = _graphicSetting.HasAntiAliasing == 1;
+        m_Vsynctoggle.isOn = _graphicSetting.Vsync == 1;
 
         InitDropDown(m_maxFpsDropdown, _graphicSetting.MaxFps, "最大fps");
         InitDropDown(m_QualityLevelDropdown, _graphicSetting.QualityLevel, "图形品质");
@@ -171,6 +174,11 @@ public class GraphicSettingsPanel : Jyx2_UIBase
 
     public void SetAntiAliasing(bool value) {
         _graphicSetting.HasAntiAliasing = value ? 1 : 0;
+    }
+
+    public void SetVSync(bool value)
+    {
+        _graphicSetting.Vsync = value ? 1 : 0;
     }
 
     protected override void OnCreate()

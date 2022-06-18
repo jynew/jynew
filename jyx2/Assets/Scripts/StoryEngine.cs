@@ -16,6 +16,7 @@ using Jyx2;
 using System;
 using System.Globalization;
 using Cysharp.Threading.Tasks;
+using EZ4i18n;
 using Jyx2Configs;
 using UnityEngine.Playables;
 
@@ -99,7 +100,7 @@ public class StoryEngine : MonoBehaviour
         }
         catch (Exception e)
         {
-            MessageBox.Create("错误，载入存档失败。请检查版本号和MOD是否匹配。");
+            MessageBox.Create("错误，载入存档失败。请检查版本号和MOD是否匹配。".Translate());
             return true;
         }
     }

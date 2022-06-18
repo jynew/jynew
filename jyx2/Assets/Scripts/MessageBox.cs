@@ -11,7 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-
+using EZ4i18n;
 using Jyx2;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,10 +20,10 @@ public class MessageBox : MonoBehaviour
 {
     public Button m_ConfirmButton;
     public Text m_MessageText;
-	private Action _callback;
+    private Action _callback;
 
 	public static void Create(string msg, Action callback = null, Transform parent = null)
-    {
+	{
         if(parent == null)
         {
             var go = GameObject.Find("Top");
@@ -38,6 +38,8 @@ public class MessageBox : MonoBehaviour
         rt.localScale = Vector3.one;
 
         var messageBox = obj.GetComponent<MessageBox>();
+        messageBox.m_ConfirmButton.GetComponentInChildren<Text>().text =
+	        messageBox.m_ConfirmButton.GetComponentInChildren<Text>().text.Translate();
         messageBox.Show(msg, callback);
     }
 

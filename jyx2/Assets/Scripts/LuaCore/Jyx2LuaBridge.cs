@@ -967,7 +967,10 @@ namespace Jyx2
             {
                 foreach (var role in runtime.GetTeam())
                 {
-                    role.Recover(role.Hurt < 33 && role.Poison <= 0);
+                    if (role.Hurt < 33 && role.Poison <= 0)
+                    {
+                        role.Recover();
+                    }
                 }
             });
         }
@@ -978,7 +981,10 @@ namespace Jyx2
             {
                 foreach (var role in runtime.GetTeam())
                 {
-                    role.Recover(role.Hurt < 50 && role.Poison <= 0);
+                    if (role.Hurt < 50 && role.Poison <= 0)
+                    {
+                        role.Recover();    
+                    }
                 }
             });
         }

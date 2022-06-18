@@ -350,7 +350,7 @@ namespace Jyx2
             role.Xiulianwupin = -1;
 
             TeamId.Remove(roleId);
-            role.Recover(true);
+            role.Recover();
             return true;
         }
 

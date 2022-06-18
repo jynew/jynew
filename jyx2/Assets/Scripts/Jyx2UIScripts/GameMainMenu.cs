@@ -32,11 +32,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	private PanelType m_panelType;
 
-	private int main_menu_index = 0;
+	private int main_menu_index => current_selection;
 
 	private const int NewGameIndex = 0;
 	private const int LoadGameIndex = 1;
-	private const int QuitGameIndex = 2;
+	private const int SettingsIndex = 2;
+	private const int QuitGameIndex = 3;
 
 	async void OnStart()
 	{
@@ -171,7 +172,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		{
 			if (m_panelType == PanelType.NewGamePage)
 			{
-				OnCreateBtnClicked();
+				onButtonClick(); //OnCreateBtnClicked();
 			}
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Y, () =>
@@ -225,6 +226,9 @@ public partial class GameMainMenu : Jyx2_UIBase
 			else if (main_menu_index == LoadGameIndex)
 			{
 				OnLoadGameClicked();
+			}else if (main_menu_index == SettingsIndex)
+			{
+				OpenSettingsPanel();
 			}
 			else if (main_menu_index == QuitGameIndex)
 			{
@@ -330,7 +334,9 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		BindListener(this.NewGameButton_Button, OnNewGameClicked);
 		BindListener(this.LoadGameButton_Button, OnLoadGameClicked);
+		BindListener(this.SettingsButton_Button, OpenSettingsPanel);
 		BindListener(this.QuitGameButton_Button, OnQuitGameClicked);
+		
 		BindListener(this.inputSure_Button, OnCreateBtnClicked, false);
 		BindListener(this.inputBack_Button, OnBackBtnClicked, false);
 		BindListener(this.YesBtn_Button, OnCreateRoleYesClick, false);

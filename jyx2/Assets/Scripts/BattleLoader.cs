@@ -212,10 +212,20 @@ public class BattleLoader : MonoBehaviour
         List<RoleInstance> roles = new List<RoleInstance>();
         foreach (var r in m_Roles)
         {
-            //队友取队伍实例，敌人新生成
-            RoleInstance roleInstance = runtime.GetRoleInTeam(r.roleKey);
+            //从存档中取，否则新生成
+            RoleInstance roleInstance = runtime.GetRole(r.roleKey);
+
+            //如果不是队伍中的，则从存档中拷贝一份
+            if (!runtime.IsRoleInTeam(r.roleKey))
+            {
+                roleInstance = roleInstance.Clone();
+                roleInstance.Recover();
+            }
+            
+            //如果存档中没有记录（理论上不可能？除非是存档过期了，与当前配置表不匹配）
             if (roleInstance == null)
             {
+                Debug.LogError($"载入角色出错，存档中没有该角色，强行从配置表生成。key={r.roleKey}");
                 roleInstance = new RoleInstance(r.roleKey); 
             }
 
