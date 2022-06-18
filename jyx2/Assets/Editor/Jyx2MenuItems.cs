@@ -75,7 +75,7 @@ namespace Jyx2Editor
         [MenuItem("项目快速导航/资源/道具图标")]
         private static void OpenItemsMenu()
         {
-            NavigateToPath("Assets/BuildSource/Jyx2Items/0.png");
+            NavigateToPath("Assets/BuildSource/Items/0.png");
         }
 
         [MenuItem("项目快速导航/资源/音乐")]

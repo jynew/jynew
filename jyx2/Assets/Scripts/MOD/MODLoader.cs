@@ -47,16 +47,19 @@ namespace Jyx2.MOD
 #if UNITY_EDITOR
 
             string indexPath = Path.Combine(path, "index.txt");
-
             if (File.Exists(indexPath))
             {
                 File.Delete(indexPath);
             }
-
-
             SaveOverrideList(indexPath, $"{path}/Models", ".asset");
             SaveOverrideList(indexPath, $"{path}/Skills", ".asset");
             SaveOverrideList(indexPath, $"{path}/Lua", ".lua");
+            
+            string dataPath = Path.Combine(path, "Configs", "Datas.bytes");
+            if (File.Exists(dataPath))
+            {
+                File.Delete(dataPath);
+            }
             ExcelTools.GenerateConfigsFromExcel<Jyx2ConfigBase>($"{path}/Configs");
 #endif
         }
