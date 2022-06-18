@@ -66,6 +66,8 @@ public partial class GameMainMenu
         {
             var btn = child.GetComponent<Button>();
             bottomButtons.Add(btn);
+            // 主界面上方按鈕的翻譯
+            btn.GetComponentInChildren<Text>().text = btn.GetComponentInChildren<Text>().text.Translate();
         }
 
         // 主界面菜單翻譯部分

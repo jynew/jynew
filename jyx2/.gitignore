@@ -66,7 +66,6 @@ data/Scripts/*
 Packages/packages-lock.json
 Assets/Resources/HSFrameWork/lastbuildsysinfo.txt
 Assets/XLua/Gen/*
-Assets/StreamingAssets/*
 Assets/StreamingAssets.meta
 data/Debug/*
 data/Cache/*
@@ -76,6 +75,12 @@ jyx2Win64Build/*
 Assets/BrokenVector*
 Assets/_TerrainAutoUpgrade*
 *.unitypackage.meta
+
+# 重新定义StreamingAssets忽略规则
+Assets/StreamingAssets/build_info
+Assets/StreamingAssets/*.meta
+Assets/StreamingAssets/Language/*
+!Assets/StreamingAssets/Language/*.txt
 
 #wps temp files
 ~$*
