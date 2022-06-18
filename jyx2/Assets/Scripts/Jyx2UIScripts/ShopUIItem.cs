@@ -8,16 +8,13 @@
  * 金庸老先生千古！
  */
 
-using System;
 using Jyx2;
 using Cysharp.Threading.Tasks;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using System.Threading;
 
 public class ShopUIItem : MonoBehaviour
 {
@@ -59,14 +56,7 @@ public class ShopUIItem : MonoBehaviour
 		this.shopItem = shopItem;
 		Jyx2ConfigItem item = shopItem.Item;
 
-		//---------------------------------------------------------------------------
-		//desText.text = $"{item.Name}\n价格：{shopItem.Price}";
-		//---------------------------------------------------------------------------
-		//特定位置的翻译【价格显示】
-		//---------------------------------------------------------------------------
-		desText.text = string.Format("{0}\n价格：{1}".GetContent(nameof(ShopUIItem)), item.Name, shopItem.Price);
-		//---------------------------------------------------------------------------
-		//---------------------------------------------------------------------------
+		desText.text = string.Format("{0}\n价格：{1}".Translate(), item.Name, shopItem.Price);
 		leftNum = shopItem.Count - hasBuyNum;
 		leftNum = Tools.Limit(leftNum, 0, shopItem.Count);
 		itemNum.text = leftNum.ToString();
@@ -85,7 +75,7 @@ public class ShopUIItem : MonoBehaviour
 		//---------------------------------------------------------------------------
 		//特定位置的翻译【花费显示】
 		//---------------------------------------------------------------------------
-		totalCost.text = "花费：".GetContent(nameof(ShopUIItem)) + needCount.ToString();
+		totalCost.text = "花费：".Translate() + needCount.ToString();
 		//---------------------------------------------------------------------------
 		//---------------------------------------------------------------------------
 		totalCost.color = textColor;

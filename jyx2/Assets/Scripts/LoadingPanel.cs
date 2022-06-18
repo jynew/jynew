@@ -7,12 +7,8 @@
  *
  * 金庸老先生千古！
  */
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using i18n.TranslatorDef;
-using Jyx2;
+using EZ4i18n;
 using Jyx2.MOD;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -49,14 +45,17 @@ public class LoadingPanel : MonoBehaviour
             var handle = SceneManager.LoadSceneAsync(GameConst.DefaultMainMenuScene);
             while (!handle.isDone)
             {
-                //---------------------------------------------------------------------------
+                //-------------------------------------------------------------------------------
+                //修改前的语句：
                 //m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
-                //---------------------------------------------------------------------------
+                //-------------------------------------------------------------------------------
+                //说明：
                 //特定位置的翻译【载入中文本显示】
-                //---------------------------------------------------------------------------
-                m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
-                //---------------------------------------------------------------------------
-                //---------------------------------------------------------------------------
+                //-------------------------------------------------------------------------------
+                m_LoadingText.text = "载入中…… ".Translate() + (int)(handle.progress * 100) + "%";
+                //-------------------------------------------------------------------------------
+                //功能来自EZ4i18n.dll
+                //-------------------------------------------------------------------------------
                 await UniTask.WaitForEndOfFrame();
             }
         }
@@ -71,12 +70,15 @@ public class LoadingPanel : MonoBehaviour
                 while (!handle.isDone)
                 {
                     //---------------------------------------------------------------------------
+                    //修改前的语句：
                     //m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
                     //---------------------------------------------------------------------------
+                    //说明：
                     //特定位置的翻译【载入中文本显示】
                     //---------------------------------------------------------------------------
-                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
+                    m_LoadingText.text = "载入中…… ".Translate() + (int)(handle.progress * 100) + "%";
                     //---------------------------------------------------------------------------
+                    //功能来自EZ4i18n.dll
                     //---------------------------------------------------------------------------
                     await UniTask.WaitForEndOfFrame();
                 }
@@ -87,12 +89,15 @@ public class LoadingPanel : MonoBehaviour
                 while (!async.IsDone)
                 {
                     //---------------------------------------------------------------------------
+                    //修改前的语句：
                     //m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
                     //---------------------------------------------------------------------------
+                    //说明：
                     //特定位置的翻译【载入中文本显示】
                     //---------------------------------------------------------------------------
-                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(async.PercentComplete * 100) + "%";
+                    m_LoadingText.text = "载入中…… ".Translate() + (int)(async.PercentComplete * 100) + "%";
                     //---------------------------------------------------------------------------
+                    //功能来自EZ4i18n.dll
                     //---------------------------------------------------------------------------
                     await UniTask.WaitForEndOfFrame();
                 }

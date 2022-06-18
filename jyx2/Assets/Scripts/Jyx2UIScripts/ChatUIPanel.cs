@@ -15,7 +15,6 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using Jyx2Configs;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;

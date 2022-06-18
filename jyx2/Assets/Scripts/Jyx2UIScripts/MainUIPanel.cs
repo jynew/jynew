@@ -13,7 +13,6 @@ using System;
 using System.Linq;
 using Jyx2Configs;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 {

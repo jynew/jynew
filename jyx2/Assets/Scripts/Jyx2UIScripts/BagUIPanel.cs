@@ -8,17 +8,12 @@
  * 金庸老先生千古！
  */
 using Jyx2.Middleware;
-
-using Jyx2;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public partial class BagUIPanel : Jyx2_UIBase
 {
@@ -254,20 +249,23 @@ public partial class BagUIPanel : Jyx2_UIBase
 	void setBtnText()
 	{
 		//---------------------------------------------------------------------------
+		//修改前的语句：
 		//if (m_selectItem==null)return;
 		//if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item)
 		//    UseBtn_Text.text = "卸 下";
 		//else
 		//    UseBtn_Text.text = "使 用";
 		//---------------------------------------------------------------------------
+		//说明：
 		//特定位置的翻译【BagUIPanel右边显示的按钮文字】
 		//---------------------------------------------------------------------------
 		if (m_selectItem == null) return;
 		if (castFromSelectPanel && m_selectItem.GetItem().Id == current_item)
-			UseBtn_Text.text = "卸 下".GetContent(nameof(BagUIPanel));
+			UseBtn_Text.text = "卸 下".Translate();
 		else
-			UseBtn_Text.text = "使 用".GetContent(nameof(BagUIPanel));
+			UseBtn_Text.text = "使 用".Translate();
 		//---------------------------------------------------------------------------
+		//功能来自EZ4i18n.dll
 		//---------------------------------------------------------------------------
 	}
 

@@ -27,7 +27,7 @@ public class GameStart : MonoBehaviour
     {
         Translator.SetDefaultLang("中文"); //设置默认语言为中文，对应 中文.txt
         //设置语言文件读取路径
-        var langPath = Path.Join(Application.streamingAssetsPath, "Language");
+        var langPath = Path.Combine(Application.streamingAssetsPath, "Language");
         Translator.SetLangPath(langPath);
         //获取翻译器单例，同时也是初始化翻译器的一个过程
         Translator.GetInstance();

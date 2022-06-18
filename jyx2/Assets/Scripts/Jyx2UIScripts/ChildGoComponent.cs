@@ -8,7 +8,6 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

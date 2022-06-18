@@ -11,15 +11,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using AClockworkBerry;
-using Cysharp.Threading.Tasks;
-using i18n;
-using i18n.TranslatorDef;
-using Jyx2.MOD;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 
 public static class GameSettingManager
@@ -412,27 +405,6 @@ public static class GameSettingManager
 		if (!GlobalAssetConfig.Instance) return;
 		if (mode is string value)
 		{
-			if (value == "ZH_TW")
-			{
-				GlobalAssetConfig.Instance.defaultTranslator = ScriptableObject.CreateInstance<Translator>();
-				GlobalAssetConfig.Instance.defaultTranslator.outPath = Path.Combine(Application.streamingAssetsPath,
-					"Language");
-				GlobalAssetConfig.Instance.defaultTranslator.currentLang =
-					(TranslationUtility.LangFlag)Enum.Parse(typeof(TranslationUtility.LangFlag), value, true);
-			}
-			else if (value != "默认")
-			{
-				GlobalAssetConfig.Instance.defaultTranslator = ScriptableObject.CreateInstance<Translator>();
-				GlobalAssetConfig.Instance.defaultTranslator.outPath = Path.Combine(Application.streamingAssetsPath,
-					"Language");
-				GlobalAssetConfig.Instance.defaultTranslator.currentLang =
-					(TranslationUtility.LangFlag)Enum.Parse(typeof(TranslationUtility.LangFlag), value, true);
-				GlobalAssetConfig.Instance.defaultTranslator.ReadFromJson();
-			}
-			else
-			{
-				GlobalAssetConfig.Instance.defaultTranslator = null;
-			}
 		}
 		else
 		{
