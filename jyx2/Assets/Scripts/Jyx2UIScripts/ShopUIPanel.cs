@@ -24,7 +24,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 {
 	ChildGoComponent childMgr;
 	int curShopId;
-	List<Jyx2ConfigShopItem> curShopItemList;
+	List<Jyx2ConfigShopItem> curShopItemList = new List<Jyx2ConfigShopItem>();
 	ShopUIItem curSelectItem
 	{
 		get
@@ -84,10 +84,11 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		foreach (var shopItemStr in shopItems)
 		{
 			var shopItemArr = shopItemStr.Split(',');
-			if (shopItemArr.Length != 2) continue;
+			if (shopItemArr.Length != 3) continue;
 			var shopItem = new Jyx2ConfigShopItem();
 			shopItem.Id = int.Parse(shopItemArr[0]);
 			shopItem.Count = int.Parse(shopItemArr[1]);
+			shopItem.Price = int.Parse(shopItemArr[2]);
 			curShopItemList.Add(shopItem);
 		}
 		
