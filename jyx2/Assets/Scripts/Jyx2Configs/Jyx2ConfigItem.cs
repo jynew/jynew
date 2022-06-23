@@ -16,19 +16,6 @@ namespace Jyx2Configs
     [ProtoContract]
     public class Jyx2ConfigItem : Jyx2ConfigBase
     {
-        // [ShowIf(nameof(IsWeapon))]
-        // [BoxGroup(EXTEND_GROUP)][LabelText("武器武功配合加攻击力")]
-        // public int ExtraAttack;
-        //
-        // [ShowIf(nameof(IsWeapon))]
-        // [BoxGroup(EXTEND_GROUP)][LabelText("配合武功")][SerializeReference]
-        // public Jyx2ConfigSkill PairedWugong;
-        //
-        // bool IsWeapon()
-        // {
-        //     return (int)this.EquipmentType == 0;
-        // }
-
         public async UniTask<Sprite> GetPic()
         {
             var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/Items/{Id}.png");

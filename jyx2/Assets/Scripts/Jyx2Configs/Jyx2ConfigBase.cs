@@ -9,6 +9,7 @@ namespace Jyx2Configs
     [ProtoInclude(6, typeof(Jyx2ConfigMap))]
     [ProtoInclude(7, typeof(Jyx2ConfigShop))]
     [ProtoInclude(8, typeof(Jyx2ConfigSkill))]
+    [ProtoInclude(9, typeof(Jyx2ConfigExtra))]
     abstract public class Jyx2ConfigBase
     {
         //ID
