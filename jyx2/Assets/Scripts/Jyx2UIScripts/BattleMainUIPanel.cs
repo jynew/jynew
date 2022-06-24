@@ -8,13 +8,10 @@
  * 金庸老先生千古！
  */
 
-using System;
 using Jyx2;
-using System.Collections;
 using System.Collections.Generic;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum BattleMainUIState 
 {
@@ -76,17 +73,20 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         var color2 = m_currentRole.GetHPColor2();
         var color = m_currentRole.GetMPColor();
         //---------------------------------------------------------------------------
+        //修改前的语句：
         //DetailText_Text.text = ($"体力 {m_currentRole.Tili}/100\n生命 <color={color1}>{m_currentRole.Hp}</color>/<color={color2}>{m_currentRole.MaxHp}</color>\n内力 <color={color}>{m_currentRole.Mp}/{m_currentRole.MaxMp}</color>");
         //---------------------------------------------------------------------------
+        //说明：
         //特定位置的翻译【MainMenu右下角当前版本的翻译】
         //---------------------------------------------------------------------------
         //Who change the UI to Korean, that is shitty. Changing it back
         DetailText_Text.text = (string.Format(
-            "体力 {0}/100\n生命 <color={1}>{2}</color>/<color={3}>{4}</color>\n内力 <color={5}>{6 }/{7}</color>".GetContent(nameof(BattleMainUIPanel)),
+            "体力 {0}/100\n生命 <color={1}>{2}</color>/<color={3}>{4}</color>\n内力 <color={5}>{6 }/{7}</color>".Translate(),
             m_currentRole.Tili, color1, m_currentRole.Hp, color2, m_currentRole.MaxHp, color, m_currentRole.Mp,
             m_currentRole.MaxMp));
 
         //---------------------------------------------------------------------------
+        //功能来自EZ4i18n.dll
         //---------------------------------------------------------------------------
 
         PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());

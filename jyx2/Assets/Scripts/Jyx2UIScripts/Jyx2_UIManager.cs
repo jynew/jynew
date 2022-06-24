@@ -9,15 +9,13 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2;
 using Jyx2.MOD;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public enum UILayer 
 {
@@ -115,7 +113,7 @@ public class Jyx2_UIManager : MonoBehaviour
 
         await BeforeSceneLoad.loadFinishTask;
         
-        string info = string.Format("<b>版本：{0} 模组：{1}</b>".GetContent(nameof(Jyx2_UIManager)),
+        string info = string.Format("<b>版本：{0} 模组：{1}</b>".Translate(),
             Application.version,
             GlobalAssetConfig.Instance.startMod.ModName);
         

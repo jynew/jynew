@@ -8,14 +8,9 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-
-using Jyx2;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System;
-using System.Linq;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
@@ -106,14 +101,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	void RefreshMoney()
 	{
 		int num = runtime.GetMoney();
-		//---------------------------------------------------------------------------
-		//MoneyNum_Text.text = $"持有银两:{num}";
-		//---------------------------------------------------------------------------
-		//特定位置的翻译【持有银两的显示翻译】
-		//---------------------------------------------------------------------------
-		MoneyNum_Text.text = string.Format("持有银两:{0}".GetContent(nameof(ShopUIPanel)), num);
-		//---------------------------------------------------------------------------
-		//---------------------------------------------------------------------------
+		MoneyNum_Text.text = string.Format("持有银两:{0}".Translate(), num);
 	}
 
 	void RefreshChild()

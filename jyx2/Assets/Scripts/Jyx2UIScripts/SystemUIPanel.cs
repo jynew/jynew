@@ -8,10 +8,9 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using Jyx2;
 using UnityEngine;
 using UnityEngine.UI;
@@ -93,37 +92,18 @@ public partial class SystemUIPanel : Jyx2_UIBase
 	async void Save()
 	{
 		showingSavePanel = true;
-
-		//---------------------------------------------------------------------------
-		//await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) => 
-		//{
-		//    var levelMaster = FindObjectOfType<LevelMaster>();
-		//    levelMaster.OnManuelSave(index);
-		//}),"选择存档位");
-		//---------------------------------------------------------------------------
-		//特定位置的翻译【存档时候的Title显示】
-		//---------------------------------------------------------------------------
+		
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		{
 			var levelMaster = FindObjectOfType<LevelMaster>();
 			levelMaster.OnManuelSave(index);
-		}), "选择存档位".GetContent(nameof(SystemUIPanel)));
-		//---------------------------------------------------------------------------
-		//---------------------------------------------------------------------------
+		}), "选择存档位".Translate());
 	}
 
 	async void Load()
 	{
 		showingSavePanel = true;
 
-		//---------------------------------------------------------------------------
-		//await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-		//{
-		//    StoryEngine.DoLoadGame(index);
-		//}),"选择读档位");
-		//---------------------------------------------------------------------------
-		//特定位置的翻译【读档时候的Title显示】
-		//---------------------------------------------------------------------------
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		{
 			var summary = GameSaveSummary.Load(index);
@@ -144,9 +124,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 			{
 				StoryEngine.DoLoadGame(index);
 			}
-		}), "选择读档位".GetContent(nameof(SystemUIPanel)));
-		//---------------------------------------------------------------------------
-		//---------------------------------------------------------------------------
+		}), "选择读档位".Translate());
 	}
 
 	async void GraphicSetting()

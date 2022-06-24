@@ -7,14 +7,9 @@
  *
  * 金庸老先生千古！
  */
-using Jyx2;
 
-using Jyx2;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public partial class BattleOKPanel:Jyx2_UIBase
 {

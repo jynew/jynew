@@ -9,41 +9,54 @@
  */
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Jyx2;
-using Jyx2.Middleware;
 using Jyx2.MOD;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using Image = UnityEngine.UI.Image;
+// 翻译插件
+using EZ4i18n;
+using Sirenix.Utilities;
+using UnityEngine.UI;
 
 public class GameStart : MonoBehaviour
 {
-	public CanvasGroup introPanel;
+    public CanvasGroup introPanel;
 
-	void Start()
-	{
-		StartAsync().Forget();
-	}
+    private void Awake()
+    {
+        Translator.SetDefaultLang("中文"); //设置默认语言为中文，对应 中文.txt
+        //设置语言文件读取路径
+        var langPath = Path.Combine(Application.streamingAssetsPath, "Language");
+        Translator.SetLangPath(langPath);
+        //获取翻译器单例，同时也是初始化翻译器的一个过程
+        Translator.GetInstance();
+    }
 
-	async UniTask StartAsync()
-	{
-		introPanel.gameObject.SetActive(true);
+    private void Start()
+    {
+        //TODO:測試用
+        Translator.SetCurLang("English");
+        
+        // 進行啓動頁致謝以及啓動頁作者的翻譯的翻譯
+        introPanel.gameObject.GetComponentsInChildren<Text>().ForEach(c => c.text = c.text.Translate());
+        
+        StartAsync().Forget();
+    }
 
-		introPanel.alpha = 0;
-		await introPanel.DOFade(1, 1f).SetEase(Ease.Linear);
-		await UniTask.Delay(TimeSpan.FromSeconds(1f));
-		await introPanel.DOFade(0, 1f).SetEase(Ease.Linear).OnComplete(() =>
-		{
-			Destroy(introPanel.gameObject);
-		});
-		
-		await MODManager.Init();
-		BeforeSceneLoad.ColdBind();
-		SceneManager.LoadScene("0_MainMenu");
-	}
+    private async UniTask StartAsync()
+    {
+        introPanel.gameObject.SetActive(true);
+
+        introPanel.alpha = 0;
+        await introPanel.DOFade(1, 1f).SetEase(Ease.Linear);
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        await introPanel.DOFade(0, 1f).SetEase(Ease.Linear).OnComplete(() => { Destroy(introPanel.gameObject); });
+
+        await MODManager.Init();
+        BeforeSceneLoad.ColdBind();
+        SceneManager.LoadScene("0_MainMenu");
+    }
 }

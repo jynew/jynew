@@ -12,15 +12,12 @@ using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using i18n.TranslatorDef;
 using Jyx2.Middleware;
 using UnityEngine.UI;
 
 using Jyx2Configs;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
 using Cysharp.Threading.Tasks;
+using EZ4i18n;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
@@ -69,6 +66,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		while (true)
 		{
+			LoadingText.text = LoadingText.text.Translate();// 游戲后畫面的加載中…… 提示符
 			LoadingText.gameObject.SetActive(!LoadingText.gameObject.activeSelf);
 			yield return new WaitForSeconds(0.5f);
 		}
@@ -247,6 +245,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		m_panelType = PanelType.LoadGamePage;
 		//---------------------------------------------------------------------------
+		//修改前的语句：
 		//await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		//{
 		//    if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
@@ -257,6 +256,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		//    m_panelType = PanelType.Home;
 		//}));
 		//---------------------------------------------------------------------------
+		//说明：
 		//特定位置的翻译【读档时候的Title显示】
 		//---------------------------------------------------------------------------
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
@@ -281,11 +281,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 					OnNewGame();
 				}
 			}
-		}), "选择读档位".GetContent(nameof(GameMainMenu)), new Action(() =>
+		}), "选择读档位".Translate(), new Action(() =>
 		 {
 			 m_panelType = PanelType.Home;
 		 }));
 		//---------------------------------------------------------------------------
+		//功能来自EZ4i18n.dll
 		//---------------------------------------------------------------------------
 	}
 
@@ -329,6 +330,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		BindListener(this.NewGameButton_Button, OnNewGameClicked);
 		BindListener(this.LoadGameButton_Button, OnLoadGameClicked);
+		BindListener(this.SettingGameButton_Button, OpenSettingsPanel);
 		BindListener(this.QuitGameButton_Button, OnQuitGameClicked);
 		BindListener(this.inputSure_Button, OnCreateBtnClicked, false);
 		BindListener(this.inputBack_Button, OnBackBtnClicked, false);

@@ -10,14 +10,10 @@
 using Jyx2;
 using Jyx2.Middleware;
 using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using i18n.TranslatorDef;
+using EZ4i18n;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Globalization;
 
 public partial class SavePanel : Jyx2_UIBase
 {
@@ -171,14 +167,7 @@ public partial class SavePanel : Jyx2_UIBase
 			btn.transform.localScale = Vector3.one;
 			btn.name = i.ToString();
 			Text title = btn.transform.Find("Title").GetComponent<Text>();
-			//---------------------------------------------------------------------------
-			//title.text = "存档" + GameConst.GetUPNumber(i+1);
-			//---------------------------------------------------------------------------
-			//特定位置的翻译【存档界面存档一、存档二、存档三的显示】
-			//---------------------------------------------------------------------------
-			title.text = "存档".GetContent(nameof(SavePanel)) + GameConst.GetUPNumber(i + 1).GetContent(nameof(SavePanel));
-			//---------------------------------------------------------------------------
-			//---------------------------------------------------------------------------
+			title.text = "存档".Translate() + GameConst.GetUPNumber(i + 1);
 
 			var txt = btn.transform.Find("SummaryText").GetComponent<Text>();
 
@@ -186,14 +175,7 @@ public partial class SavePanel : Jyx2_UIBase
 			
 			string summaryInfo = summary.GetBrief();
 
-			//---------------------------------------------------------------------------
-			//txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位" : summaryInfo;
-			//---------------------------------------------------------------------------
-			//特定位置的翻译【SavePanel中没有存档显示空档位的显示问题】
-			//---------------------------------------------------------------------------
-			txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位".GetContent(nameof(SavePanel)) : summaryInfo;
-			//---------------------------------------------------------------------------
-			//---------------------------------------------------------------------------
+			txt.text = string.IsNullOrEmpty(summaryInfo) ? "空档位".Translate() : summaryInfo;
 
 			var date = btn.transform.Find("DateTime").GetComponent<Text>();
 

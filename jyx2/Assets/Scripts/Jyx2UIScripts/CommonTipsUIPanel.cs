@@ -10,10 +10,6 @@
 
 using System;
 using DG.Tweening;
-
-
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
