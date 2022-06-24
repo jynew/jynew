@@ -330,6 +330,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		BindListener(this.NewGameButton_Button, OnNewGameClicked);
 		BindListener(this.LoadGameButton_Button, OnLoadGameClicked);
+		BindListener(this.SettingGameButton_Button, OpenSettingsPanel);
 		BindListener(this.QuitGameButton_Button, OnQuitGameClicked);
 		BindListener(this.inputSure_Button, OnCreateBtnClicked, false);
 		BindListener(this.inputBack_Button, OnBackBtnClicked, false);

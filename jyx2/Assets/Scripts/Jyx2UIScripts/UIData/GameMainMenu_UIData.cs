@@ -17,8 +17,11 @@ public partial class GameMainMenu
 {
     private RectTransform mainPanel_RectTransform;
     private RectTransform homeBtnAndTxtPanel_RectTransform;
+
+    //主菜单四个选项
     private Button NewGameButton_Button;
     private Button LoadGameButton_Button;
+    private Button SettingGameButton_Button;
     private Button QuitGameButton_Button;
     private RectTransform SavePanel_RectTransform;
     private RectTransform savePanelContainer_RectTransform;
@@ -35,15 +38,16 @@ public partial class GameMainMenu
     private RectTransform PropertyRoot_RectTransform;
     private Text LoadingText;
     private ReleaseNotePanel ReleaseNote_Panel;
-
     private List<Button> bottomButtons = new List<Button>();
 
     public void InitTrans()
     {
         mainPanel_RectTransform = transform.Find("mainPanel").GetComponent<RectTransform>();
         homeBtnAndTxtPanel_RectTransform = transform.Find("mainPanel/homeBtnAndTxtPanel").GetComponent<RectTransform>();
+        // 主菜单四个选项
         NewGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/NewGameButton").GetComponent<Button>();
         LoadGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/LoadGameButton").GetComponent<Button>();
+        SettingGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/GameSettingsButton").GetComponent<Button>();
         QuitGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/QuitGameButton").GetComponent<Button>();
         SavePanel_RectTransform = transform.Find("SavePanel").GetComponent<RectTransform>();
         savePanelContainer_RectTransform = transform.Find("SavePanel/savePanelContainer").GetComponent<RectTransform>();
@@ -75,9 +79,8 @@ public partial class GameMainMenu
             NewGameButton_Button.GetComponentInChildren<Text>().text.Translate(); //重新开始
         LoadGameButton_Button.GetComponentInChildren<Text>().text =
             LoadGameButton_Button.GetComponentInChildren<Text>().text.Translate(); //载入游戏
-        transform.Find("mainPanel/homeBtnAndTxtPanel/GameSettingsButton").GetComponentInChildren<Text>().text =
-            transform.Find("mainPanel/homeBtnAndTxtPanel/GameSettingsButton").GetComponentInChildren<Text>().text
-                .Translate(); //游戏设置
+        SettingGameButton_Button.GetComponentInChildren<Text>().text =
+            SettingGameButton_Button.GetComponentInChildren<Text>().text.Translate(); //游戏设置
         QuitGameButton_Button.GetComponentInChildren<Text>().text =
             QuitGameButton_Button.GetComponentInChildren<Text>().text.Translate(); //离开游戏
     }
