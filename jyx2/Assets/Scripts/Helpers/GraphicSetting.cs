@@ -36,6 +36,11 @@ public class GraphicSetting : MonoBehaviour
     /// 是否开启抗锯齿，默认开启
     /// </summary>
     public int HasAntiAliasing { get; set; }
+    
+    /// <summary>
+    /// 是否开启垂直同步，默认开启
+    /// </summary>
+    public int Vsync { get; set; }
 
     /// <summary>
     /// 阴影质量
@@ -85,6 +90,7 @@ public class GraphicSetting : MonoBehaviour
         HasPost = 1;
         HasWaterNormal = 1;
         HasAntiAliasing = 1;
+        Vsync = 1;
 #if UNITY_EDITOR
 
         MaxFps = MaxFpsEnum.Fps200;
@@ -143,6 +149,7 @@ public class GraphicSetting : MonoBehaviour
         QualitySettings.SetQualityLevel((int)QualityLevel, true);
         Shader.globalMaximumLOD = (int)ShaderLodLevel;
         QualitySettings.shadows = ShadowQuality;
+        QualitySettings.vSyncCount = Vsync;
 
         ExecuteAntiAliasing();
         /*
@@ -214,7 +221,7 @@ public class GraphicSetting : MonoBehaviour
 
     public void ExecuteAntiAliasing()
     {
-            QualitySettings.antiAliasing = HasAntiAliasing == 1? 8 : 1;
+            QualitySettings.antiAliasing = HasAntiAliasing == 1? 4 : 1;
     }
 }
 
