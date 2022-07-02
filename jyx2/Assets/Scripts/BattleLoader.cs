@@ -213,8 +213,8 @@ public class BattleLoader : MonoBehaviour
         List<RoleInstance> roles = new List<RoleInstance>();
         foreach (var r in m_Roles)
         {
-            //队友取队伍实例，敌人新生成
-            RoleInstance roleInstance = runtime.GetRoleInTeam(r.roleKey);
+            //从存档中取，否则新生成
+            RoleInstance roleInstance = runtime.GetRole(r.roleKey);
             if (roleInstance == null)
             {
                 roleInstance = new RoleInstance(r.roleKey); 
