@@ -104,7 +104,11 @@ namespace Jyx2
                 {
                     var _skillArr = _skill.Split(',');
                     if (_skillArr.Length != 2) continue;
-                    var wugong = int.Parse(_skillArr[0]);
+                    var id = int.Parse(_skillArr[0]);
+                    var level = int.Parse(_skillArr[1]);
+                    var wugong = new Jyx2ConfigCharacterSkill();
+                    wugong.Id = id;
+                    wugong.Level = level;
                     Wugongs.Add(new SkillInstance(wugong));
                 }
             }
@@ -567,8 +571,8 @@ namespace Jyx2
                 var GenerateItemArr2 = GenerateItem.Split(',');
                 if (GenerateItemArr2.Length != 2) continue;
                 var characterItem = new Jyx2ConfigCharacterItem();
-                characterItem .Id = int.Parse(GenerateItemArr2[0]);
-                characterItem .Count = int.Parse(GenerateItemArr2[1]);
+                characterItem.Id = int.Parse(GenerateItemArr2[0]);
+                characterItem.Count = int.Parse(GenerateItemArr2[1]);
                 GenerateItemList.Add(characterItem);
             }
             int GenerateItemNeedCount = runtime.Items[practiseItem.GenerateItemNeedCost.ToString()];
