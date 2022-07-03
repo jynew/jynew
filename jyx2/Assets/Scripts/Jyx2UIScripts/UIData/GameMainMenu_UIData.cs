@@ -17,6 +17,7 @@ public partial class GameMainMenu
 	private RectTransform homeBtnAndTxtPanel_RectTransform;
 	private Button NewGameButton_Button;
 	private Button LoadGameButton_Button;
+	private Button SettingsButton_Button;
 	private Button QuitGameButton_Button;
 	private RectTransform SavePanel_RectTransform;
 	private RectTransform savePanelContainer_RectTransform;
@@ -42,6 +43,7 @@ public partial class GameMainMenu
 		homeBtnAndTxtPanel_RectTransform = transform.Find("mainPanel/homeBtnAndTxtPanel").GetComponent<RectTransform>();
 		NewGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/NewGameButton").GetComponent<Button>();
 		LoadGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/LoadGameButton").GetComponent<Button>();
+		SettingsButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/GameSettingsButton").GetComponent<Button>();
 		QuitGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/QuitGameButton").GetComponent<Button>();
 		SavePanel_RectTransform = transform.Find("SavePanel").GetComponent<RectTransform>();
 		savePanelContainer_RectTransform = transform.Find("SavePanel/savePanelContainer").GetComponent<RectTransform>();

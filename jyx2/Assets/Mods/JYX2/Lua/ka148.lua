@@ -21,7 +21,7 @@ if AskBattle() == true then goto label0 end;
         Talk(77, "师父，师父！", "talkname77", 0);
         Talk(0, "师太，师太！何苦如此呢？若真不想给我，跟我说一声就行了。唉！", "talkname0", 1);
         Talk(6, "魔教的淫徒，你若玷污了我爱徒们的清白，我做鬼也不饶过…………你！", "talkname6", 0);
-        Talk(77, "师父，师父！可恶的魔教妖邪，替我师父尝命来。", "talkname77", 0);
+        Talk(77, "师父，师父！可恶的魔教妖邪，替我师父偿命来。", "talkname77", 0);
         if TryBattle(21) == true then goto label2 end;
             Dead();
             do return end;
