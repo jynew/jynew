@@ -83,7 +83,7 @@ namespace Jyx2
             Key = roleId;
             BindKey();
             InitData();
-            Recover(true);
+            Recover();
         }
 
         public void BindKey()
@@ -154,18 +154,15 @@ namespace Jyx2
             ResetItems();
         }
 
-        public void Recover(bool condition)
+        public void Recover()
         {
-            if (condition)
-            {
-                SetHPAndRefreshHudBar(MaxHp);
+            SetHPAndRefreshHudBar(MaxHp);
 
-                Mp = MaxMp;
-                Tili = GameConst.MAX_ROLE_TILI;
+            Mp = MaxMp;
+            Tili = GameConst.MAX_ROLE_TILI;
 
-                Hurt = 0;
-                Poison = 0;
-            }
+            Hurt = 0;
+            Poison = 0;
         }
 
         public int GetJyx2RoleId()
@@ -1041,6 +1038,14 @@ namespace Jyx2
                 return this.GetWeapon().ExtraAttack;
             return 0;
 
+        }
+
+
+        public RoleInstance Clone()
+        {
+            var data = ES3.Serialize(this);
+            var newRole = ES3.Deserialize<RoleInstance>(data);
+            return newRole;
         }
     }
 }
