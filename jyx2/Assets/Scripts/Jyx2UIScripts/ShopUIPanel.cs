@@ -77,6 +77,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
+		curShopItemList.Clear();
 		//curShopId = (int)allParams[0];
 		curShopId = LevelMaster.GetCurrentGameMap().Id;
 		var curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
