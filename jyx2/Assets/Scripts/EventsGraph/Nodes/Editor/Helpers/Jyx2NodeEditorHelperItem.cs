@@ -28,6 +28,6 @@ public class Jyx2NodeEditorHelperItem : Jyx2NodeEditorHelperBase
     }
     protected override string PathFormat
     {
-        get => "Assets/BuildSource/Jyx2Items/{0}.png";
+        get => "Assets/BuildSource/Items/{0}.png";
     }
 }

@@ -293,7 +293,7 @@ public class BattleManager : MonoBehaviour
                 //---------------------------------------------------------------------------
 
             var practiseItem = role.GetXiulianItem();
-            var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill.Id)>= 10);
+            var isWugongCanUpgrade = practiseItem != null && !(practiseItem.Skill != null && role.GetWugongLevel(practiseItem.Skill)>= 10);
 
             role.Exp += role.ExpGot;
 
@@ -347,7 +347,7 @@ public class BattleManager : MonoBehaviour
                     //---------------------------------------------------------------------------
                     if (practiseItem.Skill != null)
                     {
-                        var level = role.GetWugongLevel(practiseItem.Skill.Id);
+                        var level = role.GetWugongLevel(practiseItem.Skill);
                         if (level > 1)
                         {
                             //---------------------------------------------------------------------------
@@ -355,7 +355,7 @@ public class BattleManager : MonoBehaviour
                             //---------------------------------------------------------------------------
                             //特定位置的翻译【战斗胜利角色修炼武功升级提示】
                             //---------------------------------------------------------------------------
-                            rst += string.Format("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), practiseItem.Skill.Name, level.ToString());
+                            rst += string.Format("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(practiseItem.Skill).Name, level.ToString());
                             //---------------------------------------------------------------------------
                             //---------------------------------------------------------------------------
                         }

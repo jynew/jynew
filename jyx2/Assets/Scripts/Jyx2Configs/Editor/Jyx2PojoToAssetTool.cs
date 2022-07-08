@@ -84,7 +84,7 @@ public class Jyx2PojoToScriptTool : Editor
 
             c.Id = int.Parse(i.Id);
             c.Name = i.Name;
-            var iconAsset = AssetDatabase.GUIDFromAssetPath($"Assets/BuildSource/Jyx2Items/{c.Id}.png");
+            var iconAsset = AssetDatabase.GUIDFromAssetPath($"Assets/BuildSource/Items/{c.Id}.png");
             c.Pic = new AssetReferenceTexture2D(iconAsset.ToString());
             c.Desc = i.Desc;
             c.ItemType = (Jyx2ConfigItem.Jyx2ConfigItemType) i.ItemType;

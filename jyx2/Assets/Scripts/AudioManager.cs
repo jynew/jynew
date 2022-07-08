@@ -20,6 +20,8 @@ public class AudioManager
     public static void PlayMusic(int id)
     {
         Init();
+        if (id == -1)
+            return;
         PlayMusicAtPath("Assets/BuildSource/Musics/" + id + ".mp3").Forget();
     }
 

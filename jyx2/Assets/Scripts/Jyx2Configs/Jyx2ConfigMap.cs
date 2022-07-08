@@ -1,42 +1,37 @@
 using System;
-using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
-using Sirenix.OdinInspector;
+using ProtoBuf;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.SceneManagement;
-#endif
 
 namespace Jyx2Configs
 {
-    [CreateAssetMenu(menuName = "金庸重制版/配置文件/地图", fileName = "地图ID_地图名")]
+    [ProtoContract]
     public class Jyx2ConfigMap : Jyx2ConfigBase
     {
-        public static Jyx2ConfigMap Get(int id)
-        {
-            
-            return GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(id);
-        }
-        
-        [InfoBox("引用指定场景asset")]
-        [LabelText("地图")]
-        public AssetReference MapScene;
+        //地图
+        [ProtoMember(1)]
+        public string MapScene;
 
-        [LabelText("进门音乐")]
-        public AssetReferenceT<AudioClip> InMusic;
+        //进门音乐
+        [ProtoMember(2)]
+        public int InMusic;
         
-        [LabelText("出门音乐")]
-        public AssetReferenceT<AudioClip> OutMusic;
-
-        [InfoBox("0开局开启  1开局关闭")]
-        [LabelText("进入条件")] 
+        //出门音乐
+        [ProtoMember(3)]
+        public int OutMusic;
+        
+        //跳转场景
+        [ProtoMember(4)]
+        public int TransportToMap;
+        
+        //进入条件
+        //0-开局开启，1-开局关闭
+        [ProtoMember(5)]
         public int EnterCondition;
-
-        [LabelText("标签")] 
+        
+        //标签
+        [ProtoMember(6)]
         public string Tags;
 
         /// <summary>
@@ -67,14 +62,8 @@ namespace Jyx2Configs
             return string.Empty;
         }
 
-        [HideInInspector] public int ForceSetLeaveMusicId = -1;
-        
-        public override async UniTask WarmUp()
-        {
-            _isWorldMap = Tags.Contains("WORLDMAP");
-            _isNoNavAgent = Tags.Contains("NONAVAGENT");
-        }
-        
+        public int ForceSetLeaveMusicId = -1;
+
         public string GetShowName()
         {
             //---------------------------------------------------------------------------
@@ -101,64 +90,28 @@ namespace Jyx2Configs
             return null;
         }
         
-        /// <summary>
-        /// 是否是大地图
-        /// </summary>
-        /// <returns></returns>
-        public bool IsWorldMap() { return _isWorldMap;}
-        private bool _isWorldMap;
-        
-        /// <summary>
-        /// 是否不能寻路
-        /// </summary>
-        /// <returns></returns>
-        public bool IsNoNavAgent() { return _isNoNavAgent;}
-        private bool _isNoNavAgent;
-
-#if UNITY_EDITOR
-
-
-        static Jyx2ConfigMap LoadInEditor(int id)
+        public static Jyx2ConfigMap GetMapBySceneName(string sceneName)
         {
-            string path = "Assets/BuildSource/Configs/Maps";
-            var asset = AssetDatabase.FindAssets($"{id}_*", new string[] {path});
-            var loadPath = AssetDatabase.GUIDToAssetPath(asset[0]);
-            return AssetDatabase.LoadAssetAtPath<Jyx2ConfigMap>(loadPath);
-        }
-        
-        [Button("自动设置地图连接点")]
-        public async UniTask OnAutoSetTransport()
-        {
-            var map = MapScene;
-
-            EditorSceneManager.OpenScene($"Assets/Jyx2Scenes/{map.editorAsset.name}.unity");
-
-            
-            
-            Debug.Log("processing...");
-            //await GameConfigDatabase.Instance.Init();
-
-            var levelMasterbooster = FindObjectOfType<LevelMasterBooster>();
-            if (levelMasterbooster.m_GameMap == null)
+            foreach(var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
             {
-                levelMasterbooster.m_GameMap = this;
-                levelMasterbooster.m_IsBattleMap = false;
-            }
-            
-            foreach (var zone in FindObjectsOfType<MapTeleportor>())
-            {
-                if (zone.m_GameMap == null)
+                if (map.MapScene.Equals(sceneName))
                 {
-                    //zone.m_GameMap = Jyx2ConfigMap.LoadInEditor(zone.TransportMapId);
+                    return map;
                 }
             }
-
-            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-            EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
-            
-            
-            Debug.Log("ok");
+            return null;
         }
-#endif
+        
+        public static Jyx2ConfigMap GetMapByName(string name)
+        {
+            foreach(var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
+            {
+                if (map.Name.Equals(name))
+                {
+                    return map;
+                }
+            }
+            return null;
+        }
     }
 }

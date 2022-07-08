@@ -9,6 +9,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -24,6 +25,12 @@ namespace Jyx2
     [CreateAssetMenu(fileName = "NewModelAsset", menuName = "金庸重制版/角色模型配置文件Model Asset")]
     public class ModelAsset : ScriptableObject
     {
+        public static IList<ModelAsset> All;
+    
+        public static ModelAsset Get(string roleName)
+        {
+            return All.Single(r => r.name == roleName);
+        }
         [BoxGroup("数据", false)]
         public AssetReferenceT<GameObject> View;
         [BoxGroup("数据")] [Header("模型")]

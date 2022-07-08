@@ -17,11 +17,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class MapTeleportor : MonoBehaviour
-{	
-	[Required]
-	[LabelText("对应地图")]
-	public Jyx2ConfigMap m_GameMap;
-
+{
 	[InfoBox("对应指定场景的Level/Triggers下节点")]
 	[LabelText("传送的位置名")] 
 	public string TransportTriggerName;
@@ -46,12 +42,18 @@ public class MapTeleportor : MonoBehaviour
 	async void OnTriggerEnter(Collider other)
 	{
 		if (!triggerEnabled) return;
+		
+		var transportMapId = LevelMaster.GetCurrentGameMap().TransportToMap;
+		if (LevelMaster.GetCurrentGameMap().TransportToMap == -1)
+		{
+			transportMapId = Jyx2ConfigMap.GetMapByName(this.gameObject.name).Id;
+		}
 		//---------------------------------------------------------------------------
-		//await ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText);
+		//await ShowEnterButton(LevelMaster.GetCurrentGameMap().TransportToMap, TransportTriggerName, ButtonText);
 		//---------------------------------------------------------------------------
 		//特定位置的翻译【地图传送按钮的文本显示，一般为离开】
 		//---------------------------------------------------------------------------
-		await ShowEnterButton(m_GameMap.Id, TransportTriggerName, ButtonText.GetContent(nameof(MapTeleportor)));
+		await ShowEnterButton(transportMapId, TransportTriggerName, ButtonText.GetContent(nameof(MapTeleportor)));
 		//---------------------------------------------------------------------------
 		//---------------------------------------------------------------------------
 		UnityTools.HighLightObjects(m_EventTargets, Color.red);
@@ -111,7 +113,29 @@ public class MapTeleportor : MonoBehaviour
 			
 		Assert.IsNotNull(curMap);
 
-		var nextMap = m_GameMap;
+		var nextMap = new Jyx2ConfigMap();
+
+		if (curMap.Tags.Contains("WORLDMAP"))
+		{
+			nextMap = Jyx2ConfigMap.GetMapByName(this.gameObject.name);
+			//记录当前世界位置
+			Jyx2Player.GetPlayer().RecordWorldInfo();
+		}
+		else if (curMap.Tags.Contains("Leave2"))
+		{
+			if (this.gameObject.name.Equals("Leave"))
+			{
+				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(GameConst.WORLD_MAP_ID);
+			}
+			else
+			{
+				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
+			}
+		}
+		else
+		{
+			nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
+		}
 
 		if (nextMap == null)
 		{
@@ -121,22 +145,16 @@ public class MapTeleportor : MonoBehaviour
 			
 		//记录当前地图
 		LevelMaster.LastGameMap = curMap;
-			
-		//记录当前世界位置
-		if (curMap.IsWorldMap())
-		{
-			Jyx2Player.GetPlayer().RecordWorldInfo();
-		}
 
 		LevelMaster.LevelLoadPara para = new LevelMaster.LevelLoadPara();
 		para.loadType = LevelMaster.LevelLoadPara.LevelLoadType.StartAtTrigger;
 		if (!string.IsNullOrEmpty(TransportTriggerName))
 		{
 			para.triggerName = TransportTriggerName;
-		}else if (curMap.IsWorldMap())
+		}else if (curMap.Tags.Contains("WORLDMAP"))
 		{
 			para.triggerName = "Leave";
-		}else if (nextMap.IsWorldMap())
+		}else if (nextMap.Tags.Contains("WORLDMAP"))
 		{
 			para.triggerName = curMap.Name;
 		}

@@ -1,17 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Cysharp.Threading.Tasks;
-
-using Sirenix.OdinInspector;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using Jyx2.MOD;
 using Jyx2.Middleware;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Jyx2Configs
 {
-    public class GameConfigDatabase 
+    public class GameConfigDatabase
     {
         #region Singleton
         public static GameConfigDatabase Instance
@@ -22,110 +19,132 @@ namespace Jyx2Configs
                     _instance = new GameConfigDatabase();
                 return _instance;
             }
-            private set
-            {
-                _instance = value;
-            }
         }
 
         private static GameConfigDatabase _instance;
+        #endregion
 
-        private GameConfigDatabase()
-        {
-        }
-    #endregion
-
-        private readonly Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> _dataBase =
+        private Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> _dataBase =
             new Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>();
 
         private bool _isInited = false;
-        
-        public async UniTask Init(string rootPath)
+
+        public string ModRootDir;
+
+        /// <summary>
+        /// 载入配置表
+        /// </summary>
+        /// <param name="rootPath">excel的data目录所在路径，为空则默认读取"Configs"</param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public void Init(string rootPath, byte[] data)
         {
             if (_isInited)
                 return;
-            
-            _isInited = true;
-            int total = 0;
-            total += await Init<Jyx2ConfigCharacter>(rootPath + "/Configs/Characters");
-            total += await Init<Jyx2ConfigItem>(rootPath + "/Configs/Items");
-            total += await Init<Jyx2ConfigSkill>(rootPath + "/Configs/Skills");
-            total += await Init<Jyx2ConfigShop>(rootPath + "/Configs/Shops");
-            total += await Init<Jyx2ConfigMap>(rootPath + "/Configs/Maps");
-            total += await Init<Jyx2ConfigBattle>(rootPath + "/Configs/Battles");
-            
-            Debug.Log($"载入完成，总数{total}个配置asset");
-        }
 
-        public T Get<T>(int id) where T : Jyx2ConfigBase
-        {
-            var type = typeof(T);
-            if (_dataBase.TryGetValue(type, out var db))
-            {
-                if (db.TryGetValue(id, out var asset))
-                {
-                    return (T)asset;
-                }
-            }
-            return null;
+            ModRootDir = rootPath;
+            _isInited = true;
+            _dataBase.Clear();
+            
+            _dataBase = ExcelTools.ProtobufDeserialize<Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>>(data);
         }
+        
+        /// <summary>
+        /// 根据ID获取Config
+        /// </summary>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Get<T>(string id) where T : Jyx2ConfigBase
         {
             return Get<T>(int.Parse(id));
         }
+        
+        /// <summary>
+        /// 根据ID获取Config
+        /// </summary>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T Get<T>(int id) where T : Jyx2ConfigBase
+        {
+            if(_dataBase.TryGetValue(typeof(T), out var configMap))
+            {
+                if (configMap.TryGetValue(id, out var v))
+                {
+                    return (T)v;
+                }
+            }
 
+            return null;
+        }
+
+        /// <summary>
+        /// 是否包含一个值
+        /// </summary>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public bool Has<T>(string id) where T : Jyx2ConfigBase
         {
             return Get<T>(id) != null;
         }
         
+        /// <summary>
+        /// 获取所有的Config
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public IEnumerable<T> GetAll<T>() where T : Jyx2ConfigBase
         {
-            var type = typeof(T);
-            if (_dataBase.TryGetValue(type, out var db))
+            if (_dataBase.TryGetValue(typeof(T), out var configMap))
             {
-                foreach (var v in db.Values)
+                foreach (var v in configMap)
                 {
-                    yield return (T) v;
+                    yield return (T) v.Value;
                 }
             }
         }
 
         /// <summary>
-        /// 初始化指定类型配置
+        /// 销毁
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async UniTask<int> Init<T>(string path) where T : Jyx2ConfigBase
+        public void Dispose()
         {
-            if (_dataBase.ContainsKey(typeof(T)))
-            {
-                throw new Exception("类型" + typeof(T) + "已经创建过了，不允许重复创建！");
-            }
-            
-            var overridePaths = await MODLoader.LoadOverrideList(path);
-            if (overridePaths == null || overridePaths.Count == 0)
-                return 0;
-            
-            var assets = await MODLoader.LoadAssets<T>(overridePaths);
+            _dataBase.Clear();
+            _instance = null;
+        }
 
-            var db = new Dictionary<int, Jyx2ConfigBase>();
-            _dataBase[typeof(T)] = db;
-            foreach (var asset in assets)
+        /// <summary>
+        /// 获取Config的种类数量
+        /// </summary>
+        /// <returns></returns>
+        public int GetConfigTypeCount()
+        {
+            return _dataBase.Count;
+        }
+
+        /// <summary>
+        /// 拷贝文件到指定目录
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="destPath"></param>
+        async UniTask CopyFile(string sourcePath, string destPath)
+        {
+            if (Application.platform == RuntimePlatform.Android)
             {
-                if (db.ContainsKey(asset.Id))
+                using (UnityWebRequest request = UnityWebRequest.Get(sourcePath))
                 {
-                    Debug.Log($"ID重复，覆盖写入: {asset.Name}-->{db[asset.Id].Name}");
+                    var dh = new DownloadHandlerFile(sourcePath);
+                    dh.removeFileOnAbort = true;
+                    request.downloadHandler = dh;
+                    await request.SendWebRequest();
                 }
-                db[asset.Id] = asset;
-                asset.WarmUp().Forget();
             }
-
-            return db.Count;
+            else
+            {
+                File.Copy(sourcePath, destPath, true);
+            }
         }
     }
-    
-    
 }

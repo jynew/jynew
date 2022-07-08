@@ -1,207 +1,172 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Jyx2;
 using Jyx2.MOD;
-using Sirenix.OdinInspector;
+using ProtoBuf;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.AddressableAssets.ResourceLocators;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Jyx2Configs
 {
-    [CreateAssetMenu(menuName = "金庸重制版/配置文件/角色", fileName = "角色ID_角色名")]
+    [ProtoContract]
     public class Jyx2ConfigCharacter : Jyx2ConfigBase
     {
+        //性别
+        [ProtoMember(1)]
+        public int Sexual;
         
-        /// <summary>
-        /// 设置为中文仅用于odin显示，不要在代码中直接使用
-        /// </summary>
-        public enum SexualType
-        {
-            男 = 0,
-            女 = 1,
-            太监 = 2,
-        }
-
-        /// <summary>
-        /// 设置为中文仅用于odin显示，不要在代码中直接使用
-        /// </summary>
-        //0:阴 1:阳 2:调和
-        public enum MpTypeEnum
-        {
-            阴 = 0,
-            阳 = 1,
-            调和 = 2
-        }
-
-        private const string CGroup1 = "基本配置";
-        private const string CGroup2 = "战斗属性";
-        private const string CGroup3 = "装备";
-        private const string CGroupSkill = "武功";
-        private const string CGroupItems = "道具";
+        //头像
+        [ProtoMember(2)]
+        public int Pic;
         
-        [BoxGroup(CGroup1)][LabelText("性别")][EnumToggleButtons] 
-        public SexualType Sexual;
-        
-        [BoxGroup(CGroup1)][LabelText("头像")]
-        public AssetReferenceTexture2D Pic;
-
-        private Sprite _sprite;
         public async UniTask<Sprite> GetPic()
         {
-            if (Pic == null|| string.IsNullOrEmpty(Pic.AssetGUID)) return null;
-            
-            if (_sprite == null)
-            {
-                var path = Jyx2ResourceHelper.GetAssetRefAddress(Pic, typeof(Texture2D)); //先转换到URL
-                _sprite = await MODLoader.LoadAsset<Sprite>(path); //在MOD列表中过滤
-                
-                //下面代码会可能重入导致出错：
-                //https://forum.unity.com/threads/1-15-1-assetreference-not-allow-loadassetasync-twice.959910/
-                
-                //var head = await Pic.LoadAssetAsync().Task;
-                //_sprite = Sprite.Create(head, new Rect(0, 0, head.width, head.height), Vector2.zero);
-            }
+            var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/head/{Pic}.png");
             return _sprite;
         }
-        
-        [BoxGroup(CGroup1)][LabelText("品德")] 
-        public int Pinde; //品德
-        
-        [BoxGroup(CGroup1)][LabelText("资质")] 
-        public int IQ; //资质
-        
-        /* ------- 分割线 ------- */
-        
-        [InfoBox("必须至少有一个武功", InfoMessageType.Error, "@this.Skills==null || this.Skills.Count == 0")]
-        [InfoBox("注：等级0：对应1级武功，  等级900：对应10级武功")]
-        [BoxGroup(CGroupSkill)] [LabelText("武功")][SerializeReference][TableList]
-        public List<Jyx2ConfigCharacterSkill> Skills;
-        
-        /* ------- 分割线 --------*/
-        [BoxGroup(CGroupItems)] [LabelText("携带道具")][TableList]
-        public List<Jyx2ConfigCharacterItem> Items;
 
-        
-        /* ------- 分割线 --------*/
+        //品德
+        [ProtoMember(3)]
+        public int Pinde;
 
-        [BoxGroup(CGroup2)][LabelText("生命上限")]
+        //资质
+        [ProtoMember(4)]
+        public int IQ;
+        
+        //生命上限
+        [ProtoMember(5)]
         public int MaxHp;
         
-        [BoxGroup(CGroup2)][LabelText("内力上限")]
+        //内力上限
+        [ProtoMember(6)]
         public int MaxMp;
 
-        [BoxGroup(CGroup2)][LabelText("生命增长")] 
+        //生命增长
+        [ProtoMember(7)]
         public int HpInc;
         
-        [BoxGroup(CGroup2)][LabelText("开场等级")]
+        //开场等级
+        [ProtoMember(8)]
         public int Level;
         
-        [BoxGroup(CGroup2)][LabelText("经验")]
+        //经验
+        [ProtoMember(9)]
         public int Exp;
+        
+        //内力性质
+        //0:阴 1:阳 2:调和
+        [ProtoMember(10)]
+        public int MpType;
+        
+        //攻击力
+        [ProtoMember(11)]
+        public int Attack;
+        
+        //轻功
+        [ProtoMember(12)]
+        public int Qinggong;
+        
+        //防御力
+        [ProtoMember(13)]
+        public int Defence;
+        
+        //医疗
+        [ProtoMember(14)]
+        public int Heal;
+        
+        //用毒
+        [ProtoMember(15)]
+        public int UsePoison;
+        
+        //解毒
+        [ProtoMember(16)]
+        public int DePoison;
+        
+        //抗毒
+        [ProtoMember(17)]
+        public int AntiPoison;
+        
+        //拳掌
+        [ProtoMember(18)]
+        public int Quanzhang;
+        
+        //御剑
+        [ProtoMember(19)]
+        public int Yujian;
+        
+        //耍刀
+        [ProtoMember(20)]
+        public int Shuadao;
+        
+        //特殊兵器
+        [ProtoMember(21)]
+        public int Qimen;
+        
+        //暗器技巧
+        [ProtoMember(22)]
+        public int Anqi;
+        
+        //武学常识
+        [ProtoMember(23)]
+        public int Wuxuechangshi;
+        
+        //攻击带毒
+        [ProtoMember(24)]
+        public int AttackPoison;
+        
+        //左右互搏
+        [ProtoMember(25)]
+        public int Zuoyouhubo;
+        
+        /* ------- 分割线 ------- */
+        //所会武功
+        [ProtoMember(26)]
+        public string Skills;
 
-        [BoxGroup(CGroup2)][LabelText("内力性质")][EnumToggleButtons]
-        public MpTypeEnum MpType; //内力性质 ,0:阴 1:阳 2:调和
-        
+        /* ------- 分割线 --------*/
+        //携带道具
+        [ProtoMember(27)]
+        public string Items;
 
-        [BoxGroup(CGroup2)][LabelText("攻击力")]
-        public int Attack; //攻击力
+        //武器
+        [ProtoMember(28)]
+        public int Weapon;
         
-        [BoxGroup(CGroup2)][LabelText("轻功")]
-        public int Qinggong; //轻功
+        //防具
+        [ProtoMember(29)]
+        public int Armor;
         
-        [BoxGroup(CGroup2)][LabelText("防御力")]
-        public int Defence; //防御力
-        
-        [BoxGroup(CGroup2)][LabelText("医疗")]
-        public int Heal; //医疗
-        
-        [BoxGroup(CGroup2)][LabelText("用毒")]
-        public int UsePoison; //用毒
-        
-        [BoxGroup(CGroup2)][LabelText("解毒")]
-        public int DePoison; //解毒
-        
-        [BoxGroup(CGroup2)][LabelText("抗毒")]
-        public int AntiPoison; //抗毒
-        
-        [BoxGroup(CGroup2)][LabelText("拳掌")]
-        public int Quanzhang; //拳掌
-        
-        [BoxGroup(CGroup2)][LabelText("御剑")]
-        public int Yujian; //御剑
-        
-        [BoxGroup(CGroup2)][LabelText("耍刀")]
-        public int Shuadao; //耍刀
-        
-        [BoxGroup(CGroup2)][LabelText("特殊兵器")]
-        public int Qimen;//特殊兵器
-        
-        [BoxGroup(CGroup2)][LabelText("暗器技巧")]
-        public int Anqi; //暗器技巧
-        
-        [BoxGroup(CGroup2)][LabelText("武学常识")]
-        public int Wuxuechangshi; //武学常识
-        
-        [BoxGroup(CGroup2)][LabelText("攻击带毒")]
-        public int AttackPoison; //攻击带毒
-        
-        [BoxGroup(CGroup2)][LabelText("左右互搏")]
-        public int Zuoyouhubo; //左右互搏
         
         /* ------- 分割线 --------*/
-        
-        [BoxGroup(CGroup3)][LabelText("武器")][SerializeReference]
-        public Jyx2ConfigItem Weapon;
-        
-        [BoxGroup(CGroup3)][LabelText("防具")][SerializeReference]
-        public Jyx2ConfigItem Armor;
-        
-        
-        /* ------- 分割线 --------*/
-
-        [BoxGroup("其他")][LabelText("队友离场对话")] 
+        //队友离场对话
+        [ProtoMember(30)]
         public string LeaveStoryId;
 
         /* ------- 分割线 --------*/
-        
-        [BoxGroup("模型配置")] [LabelText("模型配置")] [SerializeReference][InlineEditor]
-        public ModelAsset Model;
-
-        public override async UniTask WarmUp()
+        //模型配置
+        public ModelAsset Model
         {
-            //GetPic().Forget();
-            
-            //清理缓存
-            if (Application.isEditor)
+            get
             {
-                _sprite = null;
+                return ModelAsset.Get(Name);
             }
         }
     }
 
-    [Serializable]
     public class Jyx2ConfigCharacterSkill
     {
-        [LabelText("武功")][SerializeReference][InlineEditor]
-        public Jyx2ConfigSkill Skill;
-
-        [LabelText("等级")] 
+        //ID
+        public int Id;
+        
+        //等级
         public int Level;
     }
     
-    [Serializable]
     public class Jyx2ConfigCharacterItem
     {
-        [LabelText("道具")][SerializeReference][InlineEditor]
-        public Jyx2ConfigItem Item;
-
-        [LabelText("数量")] 
-        public int Count;
+        //ID
+        public int Id;
         
+        //数量
+        public int Count;
     }
 }
 

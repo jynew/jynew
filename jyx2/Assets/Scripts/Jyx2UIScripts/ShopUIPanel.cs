@@ -24,7 +24,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 {
 	ChildGoComponent childMgr;
 	int curShopId;
-	Jyx2ConfigShop curShopData;
+	List<Jyx2ConfigShopItem> curShopItemList = new List<Jyx2ConfigShopItem>();
 	ShopUIItem curSelectItem
 	{
 		get
@@ -77,9 +77,21 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
+		curShopItemList.Clear();
 		//curShopId = (int)allParams[0];
 		curShopId = LevelMaster.GetCurrentGameMap().Id;
-		curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
+		var curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
+		var shopItems = curShopData.ShopItems.Split('|');
+		foreach (var shopItemStr in shopItems)
+		{
+			var shopItemArr = shopItemStr.Split(',');
+			if (shopItemArr.Length != 3) continue;
+			var shopItem = new Jyx2ConfigShopItem();
+			shopItem.Id = int.Parse(shopItemArr[0]);
+			shopItem.Count = int.Parse(shopItemArr[1]);
+			shopItem.Price = int.Parse(shopItemArr[2]);
+			curShopItemList.Add(shopItem);
+		}
 		
 		//only change to first item, when first time showing
 		if (visibleItems.Count > 0 && GamepadHelper.GamepadConnected)
@@ -118,7 +130,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 
 	void RefreshChild()
 	{
-		childMgr.RefreshChildCount(curShopData.ShopItems.Count);
+		childMgr.RefreshChildCount(curShopItemList.Count);
 		List<Transform> childList = childMgr.GetUsingTransList();
 
 		float itemHeight = 0;
@@ -126,9 +138,9 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		for (int i = 0; i < childList.Count; i++)
 		{
 			Transform trans = childList[i];
-			var data = curShopData.ShopItems[i];
+			var data = curShopItemList[i];
 			ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
-			int currentNum = GetHasBuyNum(data.Item.Id);
+			int currentNum = GetHasBuyNum(data.Id);
 			uiItem.Refresh(data, i, currentNum);
 			uiItem.SetSelect(current_selection == i);
 
@@ -144,13 +156,13 @@ public partial class ShopUIPanel : Jyx2_UIBase
 
 	void RefreshProperty()
 	{
-		if (current_selection < 0 || current_selection >= curShopData.ShopItems.Count)
+		if (current_selection < 0 || current_selection >= curShopItemList.Count)
 		{
 			ItemDes_RectTransform.gameObject.SetActive(false);
 			return;
 		}
 		ItemDes_RectTransform.gameObject.SetActive(true);
-		string mainText = UIHelper.GetItemDesText(curShopData.ShopItems[current_selection].Item);
+		string mainText = UIHelper.GetItemDesText(GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(curShopItemList[current_selection].Id));
 		DesText_Text.text = mainText;
 	}
 
@@ -178,8 +190,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		int count = curSelectItem.GetBuyCount();
 		if (count <= 0)
 			return;
-		Jyx2ConfigShopItem item = curShopData.ShopItems[curSelectItem.GetIndex()];
-		Jyx2ConfigItem itemCfg = item.Item;
+		Jyx2ConfigShopItem item = curShopItemList[curSelectItem.GetIndex()];
+		Jyx2ConfigItem itemCfg = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id);
 		if (itemCfg == null)
 			return;
 		int moneyCost = count * item.Price;

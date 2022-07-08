@@ -86,7 +86,7 @@ public class JYX2DebugPanel : MonoBehaviour
         var id = m_ChangeSceneMaps[value - 1].Id;
 
         var curMap = LevelMaster.GetCurrentGameMap();
-        if (!curMap.IsWorldMap())
+        if (!curMap.Tags.Contains("WORLDMAP"))
         {
             string msg = "<color=red>警告：不在大地图上执行传送可能会导致某些剧情中断，强烈建议您退到大地图再执行。是否强行执行？</color>";
             List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
@@ -94,13 +94,13 @@ public class JYX2DebugPanel : MonoBehaviour
             {
                 if (index == 0)
                 {
-                    LevelLoader.LoadGameMap(Jyx2ConfigMap.Get(id));
+                    LevelLoader.LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(id));
                 }
             }));
         }
         else
         {
-            LevelLoader.LoadGameMap(Jyx2ConfigMap.Get(id));
+            LevelLoader.LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(id));
         }
     }
 
@@ -110,7 +110,7 @@ public class JYX2DebugPanel : MonoBehaviour
         var transportName = m_TransportDropdown.options[value].text;
 
         var curMap = LevelMaster.GetCurrentGameMap();
-        if (!curMap.IsWorldMap())
+        if (!curMap.Tags.Contains("WORLDMAP"))
         {
             string msg = "<color=red>警告：不在大地图上执行传送可能会导致某些剧情中断，强烈建议您退到大地图再执行。是否强行执行？</color>";
             List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };

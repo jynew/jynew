@@ -71,16 +71,25 @@ public static class Jyx2ResourceHelper
         //生成MOD的文件索引
         MODLoader.WriteModIndexFile(t.startMod.ModRootDir);
 
+        //模型池
+        var modelOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Models");
+        var allModels = await MODLoader.LoadAssets<ModelAsset>(modelOverridePaths);
+        if (allModels != null)
+        {
+            ModelAsset.All = allModels;
+        }
+        
         //技能池
-        var overridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
-        var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(overridePaths);
+        var skillOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
+        var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(skillOverridePaths);
         if (allSkills != null)
         {
             Jyx2SkillDisplayAsset.All = allSkills;
         }
 
         //基础配置表
-        await GameConfigDatabase.Instance.Init(t.startMod.ModRootDir);
+        var config = await MODLoader.LoadAsset<TextAsset>($"{t.startMod.ModRootDir}/Configs/Datas.bytes");
+        GameConfigDatabase.Instance.Init(t.startMod.ModRootDir, config.bytes);
 
         //lua
         await LuaManager.InitLuaMapper(t.startMod.ModRootDir);

@@ -1,80 +1,57 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Cysharp.Threading.Tasks;
-using Sirenix.OdinInspector;
-using UnityEngine;
+using ProtoBuf;
 
 namespace Jyx2Configs
 {
-    [CreateAssetMenu(menuName = "金庸重制版/配置文件/技能", fileName = "技能ID_技能名")]
+    [ProtoContract]
     public class Jyx2ConfigSkill : Jyx2ConfigBase
     {
-        public enum Jyx2ConfigSkillDamageType
-        {
-            普通 = 0,
-            吸内 = 1,
-            用毒 = 2,
-            解毒 = 3,
-            医疗 = 4
-        }
-
-        public enum Jyx2ConfigSkillCoverType
-        {
-            点攻击 = 0,
-            线攻击 = 1,
-            十字攻击 = 2,
-            面攻击 = 3,
-        }
+        //伤害类型
+        //普通 = 0, 吸内 = 1, 用毒 = 2, 解毒 = 3, 医疗 = 4
+        [ProtoMember(1)]
+        public int DamageType; //伤害类型
         
-        private const string CGroup1 = "基本配置";
-        private const string CGroup2 = "战斗属性";
-        private const string CGroupLevels = "等级配置";
+        //攻击范围类型
+        //点攻击 = 0, 线攻击 = 1, 十字攻击 = 2, 面攻击 = 3,
+        [ProtoMember(2)]
+        public int SkillCoverType;
         
-        [BoxGroup(CGroup2)][LabelText("伤害类型")][EnumPaging]
-        public Jyx2ConfigSkillDamageType DamageType; //伤害类型
-        
-        [BoxGroup(CGroup2)][LabelText("攻击范围类型")][EnumPaging]
-        public Jyx2ConfigSkillCoverType SkillCoverType; //攻击范围
-        
-        [BoxGroup(CGroup2)][LabelText("消耗内力点数")]
+        //消耗内力点数
+        [ProtoMember(3)]
         public int MpCost; 
         
-        [BoxGroup(CGroup2)][LabelText("带毒点数")]
+        //带毒点数
+        [ProtoMember(4)]
         public int Poison;
         
-        [InfoBox("错误：必须设置10个等级信息", InfoMessageType.Error, 
-            "@this.Levels == null || this.Levels.Count != 10")]
-        [BoxGroup(CGroupLevels)] [LabelText("技能等级配置")] [SerializeReference][TableList(ShowIndexLabels = true)]
-        [InfoBox("[Attack]攻击力  [SelectRange]选择范围  [AttackRange]杀伤范围  [AddMp]加内力  [KillMp]杀内力")]
-        public List<Jyx2ConfigSkillLevel> Levels ;
-
-        [InlineEditor] [BoxGroup("技能外观")] [SerializeReference]
-        public Jyx2SkillDisplayAsset Display;
-
-        public override async UniTask WarmUp()
+        //技能等级配置
+        [ProtoMember(5)]
+        public string Levels ;
+        
+        //技能外观
+        public Jyx2SkillDisplayAsset Display
         {
-            
+            get
+            {
+                return Jyx2SkillDisplayAsset.Get(Name);
+            }
         }
     }
-
-    [Serializable]
+    
     public class Jyx2ConfigSkillLevel 
     {
-        //[LabelText("攻击力")]
-        public int Attack; //攻击力
+        //攻击力
+        public int Attack;
+        
+        //移动范围
+        public int SelectRange;
 
-        //[LabelText("选择范围")]
-        public int SelectRange; //移动范围
+        //杀伤范围
+        public int AttackRange;
 
-        //[LabelText("杀伤范围")]
-        public int AttackRange; //杀伤范围
+        //加内力
+        public int AddMp; 
 
-        //[LabelText("加内力")]
-        public int AddMp; //加内力
-
-        //[LabelText("杀伤内力")]
-        public int KillMp; //杀伤内力
+        //杀伤内力
+        public int KillMp;
     }
 }

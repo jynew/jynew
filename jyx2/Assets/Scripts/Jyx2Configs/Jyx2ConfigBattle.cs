@@ -1,42 +1,32 @@
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using Sirenix.OdinInspector;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
+using ProtoBuf;
 
 namespace Jyx2Configs
 {
-    [CreateAssetMenu(menuName = "金庸重制版/配置文件/战斗", fileName = "战斗ID")]
+    [ProtoContract]
     public class Jyx2ConfigBattle : Jyx2ConfigBase
     {
-        public static Jyx2ConfigBattle Get(int id)
-        {
-            return GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(id);
-        }
+        //地图
+        [ProtoMember(1)]
+        public string MapScene;
         
-        [InfoBox("引用指定战斗场景asset")]
-        [LabelText("地图")]
-        public AssetReference MapScene;
-
-        [LabelText("获得经验")] 
+        //获得经验
+        [ProtoMember(2)]
         public int Exp;
         
-        [LabelText("音乐")]
-        public AssetReferenceT<AudioClip> Music; //音乐
-
-        [BoxGroup("战斗人物设置")] [LabelText("队友")] [SerializeReference]
-        public List<Jyx2ConfigCharacter> TeamMates;
+        //音乐
+        [ProtoMember(3)]
+        public int Music; //音乐
         
-        [BoxGroup("战斗人物设置")] [LabelText("自动队友")] [SerializeReference]
-        public List<Jyx2ConfigCharacter> AutoTeamMates;
-        
-        [BoxGroup("战斗人物设置")] [LabelText("敌人")] [SerializeReference]
-        public List<Jyx2ConfigCharacter> Enemies;
+        //队友
+        [ProtoMember(4)]
+        public string TeamMates;
 
-        public override async UniTask WarmUp()
-        {
-            
-        }
+        //自动队友
+        [ProtoMember(5)]
+        public string AutoTeamMates;
+
+        //敌人
+        [ProtoMember(6)]
+        public string Enemies;
     }
 }

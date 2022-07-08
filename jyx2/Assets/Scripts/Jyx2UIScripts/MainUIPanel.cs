@@ -202,7 +202,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 					//修炼
 					else if ((int)item.ItemType == 2)
 					{
-						if (item.NeedCastration) //辟邪剑谱和葵花宝典
+						if (item.NeedCastration == 1) //辟邪剑谱和葵花宝典
 						{
 							await GameUtil.ShowYesOrNoCastrate(selectRole, () =>
 							{
@@ -278,7 +278,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		//执行离开事件
 		foreach (var zone in FindObjectsOfType<MapTeleportor>())
 		{
-			if (zone.m_GameMap.Id == GameConst.WORLD_MAP_ID)
+			if (LevelMaster.GetCurrentGameMap().TransportToMap == GameConst.WORLD_MAP_ID)
 			{
 				zone.DoTransport();
 				break;

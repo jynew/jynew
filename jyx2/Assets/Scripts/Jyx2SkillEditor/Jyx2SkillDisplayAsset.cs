@@ -16,6 +16,11 @@ using UnityEditor;
 public partial class Jyx2SkillDisplayAsset : ScriptableObject
 {
     public static IList<Jyx2SkillDisplayAsset> All;
+    
+    public static Jyx2SkillDisplayAsset Get(string skillName)
+    {
+        return All.Single(s => s.name == skillName);
+    }
 
     private const int MAX_SKILL_DURATION = 5;
     

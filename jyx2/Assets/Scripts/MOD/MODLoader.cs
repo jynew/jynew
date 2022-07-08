@@ -27,6 +27,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using Object = UnityEngine.Object;
+using Jyx2Configs;
 
 namespace Jyx2.MOD
 {
@@ -46,21 +47,20 @@ namespace Jyx2.MOD
 #if UNITY_EDITOR
 
             string indexPath = Path.Combine(path, "index.txt");
-
             if (File.Exists(indexPath))
             {
                 File.Delete(indexPath);
             }
-
-
+            SaveOverrideList(indexPath, $"{path}/Models", ".asset");
             SaveOverrideList(indexPath, $"{path}/Skills", ".asset");
-            SaveOverrideList(indexPath, $"{path}/Configs/Characters", ".asset");
-            SaveOverrideList(indexPath, $"{path}/Configs/Items", ".asset");
-            SaveOverrideList(indexPath, $"{path}/Configs/Skills", ".asset");
-            SaveOverrideList(indexPath, $"{path}/Configs/Shops", ".asset");
-            SaveOverrideList(indexPath, $"{path}/Configs/Maps", ".asset");
-            SaveOverrideList(indexPath, $"{path}/Configs/Battles", ".asset");
             SaveOverrideList(indexPath, $"{path}/Lua", ".lua");
+            
+            string dataPath = Path.Combine(path, "Configs", "Datas.bytes");
+            if (File.Exists(dataPath))
+            {
+                File.Delete(dataPath);
+            }
+            ExcelTools.GenerateConfigsFromExcel<Jyx2ConfigBase>($"{path}/Configs");
 #endif
         }
         
@@ -153,7 +153,7 @@ namespace Jyx2.MOD
             //string rootPath = GlobalAssetConfig.Instance.startMod.ModRootDir;
             string filePath = GlobalAssetConfig.Instance.startMod.ModRootDir +  "/index.txt";
             var content = await Addressables.LoadAssetAsync<TextAsset>(filePath);
-            var fileContentsList = content.text.Split( SplitTag,StringSplitOptions.None);
+            var fileContentsList = content.text.Split(SplitTag, StringSplitOptions.None);
             
             /*if (Application.platform == RuntimePlatform.Android)
             {

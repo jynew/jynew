@@ -8,7 +8,9 @@
  * 金庸老先生千古！
  */
 using System;
+using System.Collections.Generic;
 using Jyx2Configs;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Jyx2
@@ -30,7 +32,7 @@ namespace Jyx2
 
         public SkillInstance(Jyx2ConfigCharacterSkill s)
         {
-            Key = s.Skill.Id;
+            Key = s.Id;
             Level = s.Level;
         }
         
@@ -59,12 +61,13 @@ namespace Jyx2
             {
                 level = GetLevel();
             }
-            if(level > _skill.Levels.Count)
+            
+            if(level > _levels.Count)
             {
                 Debug.LogError("skill level error");
                 return null;
             }
-            return _skill.Levels[level - 1];
+            return _levels[level - 1];
         }
 
         public string Name
@@ -84,12 +87,31 @@ namespace Jyx2
 			{
                 skillT.Poison = _anqi.ChangePoisonLevel;
                 
-				foreach (var sl in _skill.Levels)
+				foreach (var sl in _levels)
 				{
 					sl.Attack = Mathf.Abs(_anqi.AddHp);
 				}
 			}
             return skillT;
+        }
+
+        public List<Jyx2ConfigSkillLevel> GetLevels()
+        {
+            var _levels = new List<Jyx2ConfigSkillLevel>();
+            var _levelArr = _skill.Levels.Split('|');
+            foreach (var _level in _levelArr)
+            {
+                var _levelArr2 = _level.Split(',');
+                if (_levelArr2.Length != 5) continue;
+                var skillLevel = new Jyx2ConfigSkillLevel();
+                skillLevel.Attack = int.Parse(_levelArr2[0]);
+                skillLevel.SelectRange = int.Parse(_levelArr2[1]);
+                skillLevel.AttackRange = int.Parse(_levelArr2[2]);
+                skillLevel.AddMp = int.Parse(_levelArr2[3]);
+                skillLevel.KillMp = int.Parse(_levelArr2[4]);
+                _levels.Add(skillLevel);
+            }
+            return _levels;
         }
 
         public void ResetSkill()
@@ -107,6 +129,20 @@ namespace Jyx2
 				skill=value;
 			}
 		}
+
+        List<Jyx2ConfigSkillLevel> levels;
+
+        List<Jyx2ConfigSkillLevel> _levels
+        {
+            get
+            {
+                levels = GetLevels();
+                return levels;
+            }
+            set {
+                levels = value;
+            }
+        }
 
         public SkillCoverType CoverType
         {

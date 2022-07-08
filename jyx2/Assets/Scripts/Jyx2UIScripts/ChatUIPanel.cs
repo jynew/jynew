@@ -93,9 +93,9 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 	private async UniTask ShowCharacter(int headId)
 	{
 		ChangePosition(headId);
-
+		
 		var url = $"Assets/BuildSource/head/{headId}.png";
-
+        
 		RoleHeadImage_Image.gameObject.SetActive(false);
 		RoleHeadImage_Image.sprite = await MODLoader.LoadAsset<Sprite>(url);
 		RoleHeadImage_Image.gameObject.SetActive(true);

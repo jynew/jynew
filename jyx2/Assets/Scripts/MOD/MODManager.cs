@@ -19,7 +19,7 @@ namespace Jyx2.MOD
 
         public static async UniTask Init()
         {
-            ModsPath = Path.Combine(Application.persistentDataPath, "mods");;
+            ModsPath = Path.Combine(Application.persistentDataPath, "mods");
             if (!Directory.Exists(ModsPath))
             {
                 Directory.CreateDirectory(ModsPath);
@@ -28,9 +28,9 @@ namespace Jyx2.MOD
 
             if (Directory.Exists(ModsPath))
             {
-                UnityWebRequest request = UnityWebRequest.Get(Http);
                 try
                 {
+                    UnityWebRequest request = UnityWebRequest.Get(Http);
                     await request.SendWebRequest();
                     string textString = request.downloadHandler.text;
                     var response = new Response(textString);

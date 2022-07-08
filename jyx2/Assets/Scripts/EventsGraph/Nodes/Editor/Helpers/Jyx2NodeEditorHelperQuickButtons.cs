@@ -58,9 +58,8 @@ static public class Jyx2NodeEditorHelperQuickButtons
         {
             return null;
         }
-
-        return AssetDatabase.GetAssetPath(jyx2Map.MapScene.editorAsset);
-        //return $"Assets/Jyx2Scenes/{jyx2Map.Key}.unity";
+        
+        return $"{GameConfigDatabase.Instance.ModRootDir}/Maps/GameMaps/{jyx2Map.MapScene}.unity";
     }
     
     /// <summary>

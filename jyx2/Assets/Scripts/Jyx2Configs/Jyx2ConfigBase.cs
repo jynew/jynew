@@ -1,25 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using Sirenix.OdinInspector;
-using UnityEngine;
+using ProtoBuf;
 
 namespace Jyx2Configs
 {
-    abstract public class Jyx2ConfigBase : ScriptableObject
+    [ProtoContract]
+    [ProtoInclude(3, typeof(Jyx2ConfigBattle))]
+    [ProtoInclude(4, typeof(Jyx2ConfigCharacter))]
+    [ProtoInclude(5, typeof(Jyx2ConfigItem))]
+    [ProtoInclude(6, typeof(Jyx2ConfigMap))]
+    [ProtoInclude(7, typeof(Jyx2ConfigShop))]
+    [ProtoInclude(8, typeof(Jyx2ConfigSkill))]
+    [ProtoInclude(9, typeof(Jyx2ConfigExtra))]
+    abstract public class Jyx2ConfigBase
     {
-        protected const string DEFAULT_GROUP_NAME = "基本配置";
-        
-        [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("ID")] 
+        //ID
+        [ProtoMember(1)]
         public int Id;
         
-        [BoxGroup(DEFAULT_GROUP_NAME)][LabelText("名称")] 
+        //名称
+        [ProtoMember(2)]
         public string Name;
-
-        /// <summary>
-        /// 资源预热
-        /// </summary>
-        /// <returns></returns>
-        public abstract UniTask WarmUp();
     }
 }

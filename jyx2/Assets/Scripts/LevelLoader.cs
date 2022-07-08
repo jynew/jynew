@@ -32,7 +32,7 @@ namespace Jyx2
         static async UniTask DoLoad(Jyx2ConfigMap map, Action callback)
         {
             LevelMaster.SetCurrentMap(map);
-            await LoadingPanel.Create(map.MapScene);
+            await LoadingPanel.Create($"{GameConfigDatabase.Instance.ModRootDir}/Maps/GameMaps/{map.MapScene}.unity");
             callback?.Invoke();
         }
         
@@ -54,7 +54,7 @@ namespace Jyx2
             var formalMusic = AudioManager.GetCurrentMusic(); //记住当前的音乐，战斗后还原
 
             LevelMaster.IsInBattle = true;
-            await LoadingPanel.Create(battle.MapScene);
+            await LoadingPanel.Create($"{GameConfigDatabase.Instance.ModRootDir}/Maps/BattlesMaps/{battle.MapScene}.unity");
                 
             GameObject obj = new GameObject("BattleLoader");
             var battleLoader = obj.AddComponent<BattleLoader>();
