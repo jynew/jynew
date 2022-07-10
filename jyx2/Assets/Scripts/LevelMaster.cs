@@ -572,13 +572,14 @@ public class LevelMaster : MonoBehaviour
 						_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.deltaTime);
 						//计算当前速度
 						var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.deltaTime;
+						_playerNavAgent.updateRotation = true;
 						SetPlayerSpeed(speed);
 					}
 					else
 					{
 						_playerNavAgent.isStopped = false;
 						_playerNavAgent.updateRotation = true;
-						_playerNavAgent.SetDestination(hitInfo.point);	
+						_playerNavAgent.SetDestination(hitInfo.point);
 					}
 
 					DisplayNavPointer(hitInfo.point);
