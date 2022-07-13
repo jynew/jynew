@@ -26,7 +26,8 @@ namespace Jyx2.Middleware
                 new Dictionary<Type, Dictionary<int, T>>();
             
             foreach (var path in files)
-            { 
+            {
+                if (path.Contains("~$")) continue; //临时文件
                 DataRowCollection collection = ReadExcel(path, out int col, out int row);
 
                 //类名
