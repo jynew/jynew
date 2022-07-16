@@ -54,6 +54,8 @@ public class ColorStringDefine
 
 public class GameConst
 {
+    public const string DEFAULT_GAME_MOD_NAME = "JYX2";
+    
     public const string DefaultMainMenuScene = "0_MainMenu";
     
     public const float MapAngularSpeed = 9999;

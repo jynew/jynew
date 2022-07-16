@@ -67,7 +67,16 @@ namespace Jyx2
 
         public static string GetSummaryFilePath(int index)
         {
-            return string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);
+            //根据MOD区分存档空间
+            var mod = GlobalAssetConfig.Instance.startMod.ModId;
+            if (mod.Equals(GameConst.DEFAULT_GAME_MOD_NAME))
+            {
+                return string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);    
+            }
+            else
+            {
+                return mod + "_" + string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);
+            }
         }
         
         const string ARCHIVE_SUMMARY_FILE_NAME = "archive_summary_{0}.dat";
@@ -200,10 +209,21 @@ namespace Jyx2
 
 
         public const string ARCHIVE_FILE_NAME = "archive_{0}.dat";
-        public const string ARCHIVE_FILE_DIR = "Save";
-        
-        [Obsolete("待删除")]
-        public const string ARCHIVE_SUMMARY_PREFIX = "save_summaryinfo_new_";
+
+        public static string GetArchiveFile(int index)
+        {
+            //根据MOD区分存档空间
+            var mod = GlobalAssetConfig.Instance.startMod.ModId;
+            if (mod.Equals(GameConst.DEFAULT_GAME_MOD_NAME))
+            {
+                return string.Format(ARCHIVE_FILE_NAME, index);    
+            }
+            else
+            {
+                return mod + "_" + string.Format(ARCHIVE_FILE_NAME, index);
+            }
+        }
+
 
         public void GameSave(int index = -1)
         {
@@ -231,13 +251,13 @@ namespace Jyx2
             GameSaveSummary.Save(fileIndex, summary);
             
             //存档
-            string path = string.Format(ARCHIVE_FILE_NAME, fileIndex);
+            var path = GetArchiveFile(fileIndex);
             ES3.Save(nameof(GameRuntimeData), this, path);
         }
 
         public static GameRuntimeData LoadArchive(int fileIndex)
         {
-            string path = string.Format(ARCHIVE_FILE_NAME, fileIndex);
+            var path = GetArchiveFile(fileIndex);
             var runtime =  ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
             _instance = runtime;
             return runtime;
