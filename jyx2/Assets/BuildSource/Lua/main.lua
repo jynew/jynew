@@ -186,7 +186,26 @@ SetFlag = CS.Jyx2.Jyx2LuaBridge.jyx2_SetFlag
 GetFlag = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlag
 SetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_SetFlagInt
 GetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlagInt
-
+--新增函数
+RestFight = CS.Jyx2.Jyx2LuaBridge.RestFight--战斗中休息
+JudgeIQ = CS.Jyx2.Jyx2LuaBridge.JudgeIQ--判断IQ
+AddHeal = CS.Jyx2.Jyx2LuaBridge.AddHeal--增加医疗
+AddDefence = CS.Jyx2.Jyx2LuaBridge.AddDefence--增加防御
+AddQuanzhang = CS.Jyx2.Jyx2LuaBridge.AddQuanzhang--增加拳掌
+AddShuadao = CS.Jyx2.Jyx2LuaBridge.AddShuadao--增加耍刀
+AddYujian = CS.Jyx2.Jyx2LuaBridge.AddYujian--增加御剑
+AddAnqi = CS.Jyx2.Jyx2LuaBridge.AddAnqi--增加暗器
+AddQimen = CS.Jyx2.Jyx2LuaBridge.AddQimen--增加奇门
+AddWuchang = CS.Jyx2.Jyx2LuaBridge.AddWuchang--增加武学常识
+AddAttackPoison = CS.Jyx2.Jyx2LuaBridge.AddAttackPoison--增加功夫带毒
+AddExp = CS.Jyx2.Jyx2LuaBridge.AddExp--增加经验
+JudgeWCH = CS.Jyx2.Jyx2LuaBridge.JudgeWCH--判断武学常识
+JudgeHeal = CS.Jyx2.Jyx2LuaBridge.JudgeHeal--判断医疗
+JudgeQuanzhang = CS.Jyx2.Jyx2LuaBridge.JudgeQuanzhang--判断拳掌
+JudgeYujian = CS.Jyx2.Jyx2LuaBridge.JudgeYujian--判断御剑
+JudgeAttackPoison = CS.Jyx2.Jyx2LuaBridge.JudgeAttackPoison--判断攻击带毒
+JudgeQimen = CS.Jyx2.Jyx2LuaBridge.JudgeQimen--判断奇门
+JudgeDefence = CS.Jyx2.Jyx2LuaBridge.JudgeDefence--判断防御
 function main_getLuaFiles()
 	return {}
 end 

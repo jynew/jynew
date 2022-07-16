@@ -1109,7 +1109,177 @@ namespace Jyx2
         {
 
         }
-
+		//新增函数 by citydream
+		//判断IQ
+        public static bool JudgeIQ(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.IQ >= low && r.IQ <= high; });
+        }
+		//医疗
+        public static void AddHeal(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Heal;
+                r.Heal = Tools.Limit(v0 + value, 0, GameConst.MAX_HEAL);
+                storyEngine.DisplayPopInfo(r.Name + "医疗增加" + (r.Heal - v0));
+                Next();
+            });
+            Wait();
+        }
+        //防御
+        public static void AddDefence(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Defence;
+                r.Defence = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_DEFENCE);
+                storyEngine.DisplayPopInfo(r.Name + "防御增加" + (r.Defence - v0));
+                Next();
+            });
+            Wait();
+        }
+		//拳掌
+        public static void AddQuanzhang(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Quanzhang;
+                r.Quanzhang = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                storyEngine.DisplayPopInfo(r.Name + "拳掌增加" + (r.Quanzhang - v0));
+                Next();
+            });
+            Wait();
+        }
+		//耍刀
+        public static void AddShuadao(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Shuadao;
+                r.Shuadao = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                storyEngine.DisplayPopInfo(r.Name + "耍刀增加" + (r.Shuadao - v0));
+                Next();
+            });
+            Wait();
+        }
+		//御剑
+        public static void AddYujian(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Yujian;
+                r.Yujian = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                storyEngine.DisplayPopInfo(r.Name + "御剑增加" + (r.Yujian - v0));
+                Next();
+            });
+            Wait();
+        }
+		//暗器
+        public static void AddAnqi(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Anqi;
+                r.Anqi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                storyEngine.DisplayPopInfo(r.Name + "暗器增加" + (r.Anqi - v0));
+                Next();
+            });
+            Wait();
+        }
+		//奇门
+        public static void AddQimen(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Qimen;
+                r.Qimen = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                storyEngine.DisplayPopInfo(r.Name + "奇门增加" + (r.Qimen - v0));
+                Next();
+            });
+            Wait();
+        }
+		//武学常识
+        public static void AddWuchang(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Wuxuechangshi;
+                r.Wuxuechangshi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                storyEngine.DisplayPopInfo(r.Name + "武学常识增加" + (r.Wuxuechangshi - v0));
+                Next();
+            });
+            Wait();
+        }
+		//功夫带毒
+        public static void AddAttackPoison(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.AttackPoison;
+                r.AttackPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                storyEngine.DisplayPopInfo(r.Name + "功夫带毒增加" + (r.AttackPoison - v0));
+                Next();
+            });
+            Wait();
+        }
+		//经验
+        public static void AddExp(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Exp;
+                r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
+                storyEngine.DisplayPopInfo(r.Name + "经验增加" + (r.Exp - v0));
+                Next();
+            });
+            Wait();
+        }
+		//判断武学常识
+        public static bool JudgeWCH(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.Wuxuechangshi >= low && r.Wuxuechangshi <= high; });
+        }
+		//判断医疗
+        public static bool JudgeHeal(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.Heal >= low && r.Heal <= high; });
+        }
+		//判断拳掌
+        public static bool JudgeQuanzhang(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.Quanzhang >= low && r.Quanzhang <= high; });
+        }
+		//判断御剑
+        public static bool JudgeYujian(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.Yujian >= low && r.Yujian <= high; });
+        }
+		//判断攻击带毒
+        public static bool JudgeAttackPoison(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.AttackPoison >= low && r.AttackPoison <= high; });
+        }
+		//判断攻击带毒
+        public static bool JudgeQimen(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.Qimen >= low && r.Qimen <= high; });
+        }
+		//判断防御
+        public static bool JudgeDefence(int roleId,int low,int high)
+        {
+            return JudgeRoleValue(roleId, (r) => { return r.Defence >= low && r.Defence <= high; });
+        }
         #region 扩展函数
         public static void jyx2_ReplaceSceneObject(string scene,string path, string replace)
         {
