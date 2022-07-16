@@ -90,12 +90,17 @@ public static class Jyx2ResourceHelper
         //基础配置表
         var config = await MODLoader.LoadAsset<TextAsset>($"{t.startMod.ModRootDir}/Configs/Datas.bytes");
         GameConfigDatabase.Instance.Init(t.startMod.ModRootDir, config.bytes);
-
+        
+        //初始化基础配置
+        GameSettings.Refresh();
+        
         //lua
         await LuaManager.InitLuaMapper(t.startMod.ModRootDir);
         
         //执行lua根文件
         LuaManager.Init(t.rootLuaFile.text);
+        
+        
     }
 
     public static GameObject GetCachedPrefab(string path)

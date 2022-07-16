@@ -153,7 +153,7 @@ namespace Jyx2
                 //吸取内力逻辑
                 if (rst.addMp > 0)
                 {
-                    r1.MaxMp = Tools.Limit(r1.MaxMp + rst.addMaxMp, 0, GameConst.MAX_HPMP);
+                    r1.MaxMp = Tools.Limit(r1.MaxMp + rst.addMaxMp, 0, GameConst.MAX_ROLE_MP);
                     int finalMp = Tools.Limit(r1.Mp + rst.addMp, 0, r1.MaxMp);
                     int deltaMp = finalMp - r1.Mp;
                     if (deltaMp >= 0)

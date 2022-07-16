@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using i18n.TranslatorDef;
+using Jyx2;
 using UnityEngine;
 
 public struct PropertyItem 
@@ -63,74 +64,64 @@ public class GameConst
 
     public const bool SEMI_REAL = false;//游戏是否是半即时制
     public const int ACTION_SP = 1000;//半即时制的情况下 行动一次的花费
-    public const int MAX_ROLE_LEVEL = 30;
+
+    public static int MAX_ROLE_LEVEL => GameSettings.GetInt(nameof(MAX_ROLE_LEVEL));
 
     public const int MAX_EXP = 9999999;
 
     //JYX2最大体力上限
-    public const int MAX_ROLE_TILI = 100;
+    public static int MAX_ROLE_TILI => GameSettings.GetInt(nameof(MAX_ROLE_TILI));
 
-    public const int MAX_POISON = 100;
+    public static int MAX_POISON => GameSettings.GetInt(nameof(MAX_POISON));
 
-    public const int MAX_USE_POISON = 100;
-    public const int MAX_HEAL = 100;
-    public const int MAX_DEPOISON = 100;
-    public const int MAX_ANTIPOISON = 100;
-    public const int MAX_HURT = 100;
+    public static int MAX_USE_POISON => GameSettings.GetInt(nameof(MAX_USE_POISON));
+    public static int MAX_HEAL => GameSettings.GetInt(nameof(MAX_HEAL));
+    public static int MAX_DEPOISON => GameSettings.GetInt(nameof(MAX_DEPOISON));
+    public static int MAX_ANTIPOISON => GameSettings.GetInt(nameof(MAX_ANTIPOISON));
+    public static int MAX_HURT => GameSettings.GetInt(nameof(MAX_HURT));
 
-    public const int GAME_START_MUSIC_ID = 16;
+    public static int GAME_START_MUSIC_ID => GameSettings.GetInt(nameof(GAME_START_MUSIC_ID));
     /// <summary>
     /// 最大角色的武器熟练度
     /// </summary>
-    public const int MAX_ROLE_WEAPON_ATTR = 100;
+    public static int MAX_ROLE_WEAPON_ATTR => GameSettings.GetInt(nameof(MAX_ROLE_WEAPON_ATTR));
 
-    public const int MAX_ROLE_HP = 999;
-    public const int MAX_ROLE_MP = 999;
+    public static int MAX_ROLE_HP => GameSettings.GetInt(nameof(MAX_ROLE_HP));
+    public static int MAX_ROLE_MP => GameSettings.GetInt(nameof(MAX_ROLE_MP));
 
-    public const int MAX_ROLE_ATTACK = 100;
-    public const int MAX_ROLE_DEFENCE = 100;
-    public const int MAX_ROLE_QINGGONG = 100;
-    public const int MAX_ROLE_ATK_POISON = 100;
-    public const int MAX_ROLE_SHENGWANG = 200;
-    public const int MAX_ROLE_PINDE = 100;
+    public static int MAX_ROLE_ATTACK => GameSettings.GetInt(nameof(MAX_ROLE_ATTACK));
+    public static int MAX_ROLE_DEFENCE => GameSettings.GetInt(nameof(MAX_ROLE_DEFENCE));
+    public static int MAX_ROLE_QINGGONG => GameSettings.GetInt(nameof(MAX_ROLE_QINGGONG));
+    public static int MAX_ROLE_ATK_POISON => GameSettings.GetInt(nameof(MAX_ROLE_ATK_POISON));
+    public static int MAX_ROLE_SHENGWANG => GameSettings.GetInt(nameof(MAX_ROLE_SHENGWANG));
+    public static int MAX_ROLE_PINDE => GameSettings.GetInt(nameof(MAX_ROLE_PINDE));
 
-    public const int MAX_ROLE_ZIZHI = 100;
+    public static int MAX_ROLE_ZIZHI => GameSettings.GetInt(nameof(MAX_ROLE_ZIZHI));
 
     /// <summary>
     /// 最大技能等级，每1级是100，最大10级所以是1000
     /// </summary>
-    public const int MAX_SKILL_LEVEL = 100 * (MAX_WUGONG_LEVEL - 1);
+    public static int MAX_SKILL_LEVEL = 100 * (MAX_WUGONG_LEVEL - 1);
 
     /// <summary>
     /// 最大技能等级
     /// </summary>
-    public const int MAX_WUGONG_LEVEL = 10;
-
-    /// <summary>
-    /// 角色的最大武功学习数量
-    /// </summary>
-    public const int MAX_ROLE_WUGONG_COUNT = 10;
-
+    public static int MAX_WUGONG_LEVEL => GameSettings.GetInt(nameof(MAX_WUGONG_LEVEL));
+    
     //银两ID
-    public const int MONEY_ID = 174;
+    public static int MONEY_ID => GameSettings.GetInt(nameof(MONEY_ID));
 
     //最大队伍人数
-    public const int MAX_TEAMCOUNT = 6;
+    public static int MAX_TEAMCOUNT => GameSettings.GetInt(nameof(MAX_TEAMCOUNT));
 
     //最大技能数量
-    public const int MAX_SKILL_COUNT = 10;
-
-    //最大资质
-    public const int MAX_ZIZHI = 100;
-
+    public static int MAX_SKILL_COUNT => GameSettings.GetInt(nameof(MAX_SKILL_COUNT));
+    
     //最大属性
-    public const int MAX_ROLE_ATTRITE = 100;
-
-    //最大生命和内力
-    public const int MAX_HPMP = 999;
+    public static int MAX_ROLE_ATTRIBUTE => GameSettings.GetInt(nameof(MAX_ROLE_ATTRIBUTE));
 
     //最大战斗上场人数
-    public const int MAX_BATTLE_TEAMMATE_COUNT = 6;
+    public static int MAX_BATTLE_TEAMMATE_COUNT = GameSettings.GetInt(nameof(MAX_BATTLE_TEAMMATE_COUNT));
 
     //对话框最大可以显示字符
     public const int MAX_CHAT_CHART_NUM = 156;
@@ -139,7 +130,7 @@ public class GameConst
     public const int MAX_BATTLE_RESULT_LINE_NUM = 7;
 
     //世界地图ID
-    public const int WORLD_MAP_ID = 1000;
+    public static int WORLD_MAP_ID = GameSettings.GetInt(nameof(WORLD_MAP_ID));
 
     public static readonly int[] _levelUpExpList = new int[] { 50, 150, 300, 500, 750, 1050, 1400, 1800, 2250, 2750, 3850, 5050, 6350, 7750, 9250, 10850, 12550, 14350, 16750, 18250, 21400, 24700, 28150, 31750, 35500, 39400, 43450, 47650, 52000, 60000 };
 

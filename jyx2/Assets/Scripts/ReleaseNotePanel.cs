@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class ReleaseNotePanel : MonoBehaviour
 {
-    public AssetReferenceT<TextAsset> refReleaseNote;
+    //public AssetReferenceT<TextAsset> refReleaseNote;
     public Text text;
     
     public async UniTask Show()
@@ -24,7 +24,7 @@ public class ReleaseNotePanel : MonoBehaviour
         //---------------------------------------------------------------------------
         //---------------------------------------------------------------------------
 
-        var t = await MODLoader.LoadAsset<TextAsset>(Jyx2ResourceHelper.GetAssetRefAddress(refReleaseNote, typeof(TextAsset)));
+        var t = await MODLoader.LoadAsset<TextAsset>("Assets/BuildSource/RELEASE_NOTE.txt");
         text.text = t.text;
     }
 

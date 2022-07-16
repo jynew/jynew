@@ -488,7 +488,7 @@ namespace Jyx2
                     //{
                     //    return true;
                     //}
-                    if (level < 0 && this.Wugongs.Count >= GameConst.MAX_ROLE_WUGONG_COUNT)
+                    if (level < 0 && this.Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
                     {
                         return false;
                     }

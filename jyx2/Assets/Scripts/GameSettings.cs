@@ -1,0 +1,77 @@
+﻿using System.Collections.Generic;
+using Jyx2Configs;
+using UnityEngine;
+
+namespace Jyx2
+{
+    /// <summary>
+    /// 游戏设置
+    ///
+    /// 对应配置表“游戏设置.xlsx”
+    /// </summary>
+    public static class GameSettings
+    {
+        public static void Refresh()
+        {
+            _cacheFloat.Clear();
+            _cacheInt.Clear();
+            _cache.Clear();
+
+            TryInit();
+        }
+        
+        public static int GetInt(string key)
+        {
+            if (!_cacheInt.ContainsKey(key))
+            {
+                _cacheInt[key] = int.Parse(GetValue(key));
+            }
+
+            return _cacheInt[key];
+        }
+
+        public static float GetFloat(string key)
+        {
+            if (!_cacheFloat.ContainsKey(key))
+            {
+                _cacheFloat[key] = int.Parse(GetValue(key));
+            }
+
+            return _cacheFloat[key];
+        }
+
+        public static string Get(string key)
+        {
+            return GetValue(key);
+        }
+
+        private static readonly Dictionary<string, float> _cacheFloat = new Dictionary<string, float>();
+        private static readonly Dictionary<string, int> _cacheInt = new Dictionary<string, int>();
+        private static readonly Dictionary<string, string> _cache = new Dictionary<string, string>();
+
+        private static void TryInit()
+        {
+            if (_cache.Count == 0)
+            {
+                var all = _db.GetAll<Jyx2ConfigSettings>();
+                foreach (var kv in all)
+                {
+                    _cache.Add(kv.Name, kv.Value);
+                }
+            }
+        }
+        
+        private static string GetValue(string key)
+        {
+            TryInit();
+
+            if (!_cache.ContainsKey(key))
+            {
+                Debug.LogError($"调用了未定义的游戏设置：{key}");
+            }
+            return _cache[key];
+        }
+
+        private static GameConfigDatabase _db => GameConfigDatabase.Instance;
+    }
+}

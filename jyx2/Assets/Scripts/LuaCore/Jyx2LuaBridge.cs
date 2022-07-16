@@ -565,7 +565,7 @@ namespace Jyx2
             RunInMainThread(() =>
             {
                 var role = runtime.GetRole(roleId);
-                role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ZIZHI);
+                role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ROLE_ZIZHI);
                 storyEngine.DisplayPopInfo(role.Name + "资质增加" + v);
                 Next();
             });
@@ -632,7 +632,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qinggong;
-                r.Qinggong = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Qinggong = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
                 Next();
             });
@@ -646,8 +646,8 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxMp;
-                r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_HPMP);
+                r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_MP);
+                r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
                 storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
                 Next();
             });
@@ -661,7 +661,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Attack;
-                r.Attack = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Attack = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
                 Next();
             });
@@ -675,8 +675,8 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.MaxHp;
-                r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_HPMP);
-                r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_HPMP);
+                r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_HP);
+                r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
                 storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
                 Next();
             });
@@ -1148,7 +1148,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Quanzhang;
-                r.Quanzhang = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Quanzhang = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "拳掌增加" + (r.Quanzhang - v0));
                 Next();
             });
@@ -1161,7 +1161,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Shuadao;
-                r.Shuadao = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Shuadao = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "耍刀增加" + (r.Shuadao - v0));
                 Next();
             });
@@ -1174,7 +1174,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Yujian;
-                r.Yujian = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Yujian = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "御剑增加" + (r.Yujian - v0));
                 Next();
             });
@@ -1187,7 +1187,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Anqi;
-                r.Anqi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Anqi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "暗器增加" + (r.Anqi - v0));
                 Next();
             });
@@ -1200,7 +1200,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Qimen;
-                r.Qimen = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Qimen = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "奇门增加" + (r.Qimen - v0));
                 Next();
             });
@@ -1213,7 +1213,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.Wuxuechangshi;
-                r.Wuxuechangshi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.Wuxuechangshi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "武学常识增加" + (r.Wuxuechangshi - v0));
                 Next();
             });
@@ -1226,7 +1226,7 @@ namespace Jyx2
             {
                 var r = runtime.GetRole(roleId);
                 var v0 = r.AttackPoison;
-                r.AttackPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRITE);
+                r.AttackPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
                 storyEngine.DisplayPopInfo(r.Name + "功夫带毒增加" + (r.AttackPoison - v0));
                 Next();
             });
