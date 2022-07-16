@@ -6,13 +6,14 @@
 
 
 [![license](https://img.shields.io/badge/license-%E9%87%91%E7%BE%A43D%E9%87%8D%E5%88%B6%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
-[![release](https://img.shields.io/badge/release-v0.1%20inner-brightgreen)](https://github.com/jynew/jynew/releases)
+[![release](https://img.shields.io/badge/release-v0.2%20stable-brightgreen)](https://github.com/jynew/jynew/releases)
 [![Unity Version](https://img.shields.io/badge/unity-2020.3.32.f1c1-blue)](https://unity.cn/releases/lts/2020) 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/jynew/jynew/pulls) 
 ![commit](https://img.shields.io/github/last-commit/jynew/jynew)<br>
 ![Contributors](https://img.shields.io/github/contributors-anon/jynew/jynew) 
 ![fork](https://img.shields.io/github/forks/jynew/jynew?style=social)
 ![star](https://img.shields.io/github/stars/jynew/jynew?style=social)
+[![bilibili](https://img.shields.io/badge/videos-bilibili-pink)](https://space.bilibili.com/1232630839) 
  
 
 [包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [B站主页](https://space.bilibili.com/1232630839) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [授权列表](https://github.com/jynew/jynew/wiki/%E9%A1%B9%E7%9B%AE%E7%B4%A0%E6%9D%90%E6%8E%88%E6%9D%83%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
