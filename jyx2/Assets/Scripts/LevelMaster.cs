@@ -519,6 +519,14 @@ public class LevelMaster : MonoBehaviour
 		_playerNavAgent.Warp(fromVector);
 		_playerNavAgent.isStopped = false;
 		_playerNavAgent.updateRotation = true;
+		
+		//寻找最近的点
+		NavMeshHit hit;
+		if (NavMesh.SamplePosition(toVector, out hit, 10, 1 << LayerMask.NameToLayer("Ground")))
+		{
+			toVector = hit.position;
+		}
+		
 		_playerNavAgent.SetDestination(toVector);
 	}
 
