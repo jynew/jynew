@@ -18,6 +18,7 @@ namespace Jyx2Editor
 {
     public class Jyx2MenuItems
     {
+        
         [MenuItem("项目快速导航/技能编辑器")]
         private static void OpenSkillEditor()
         {
