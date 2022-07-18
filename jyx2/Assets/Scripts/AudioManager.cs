@@ -13,6 +13,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Jyx2.MOD;
+using Jyx2.ResourceManagement;
 
 public class AudioManager
 {
@@ -36,7 +37,7 @@ public class AudioManager
 
     private static async UniTask DoPlayMusic(AssetReference asset)
     {
-        var audioClip = await MODLoader.LoadAsset<AudioClip>(Jyx2ResourceHelper.GetAssetRefAddress(asset, typeof(AudioClip)));
+        var audioClip = await ResLoader.LoadAsset<AudioClip>(Jyx2ResourceHelper.GetAssetRefAddress(asset, typeof(AudioClip)));
         if (audioClip != null)
         {
             PlayMusic(audioClip);
@@ -61,7 +62,7 @@ public class AudioManager
             return;
         }
 
-        var audioClip = await MODLoader.LoadAsset<AudioClip>(path);
+        var audioClip = await ResLoader.LoadAsset<AudioClip>(path);
 
         if (audioClip != null)
         {
@@ -119,7 +120,7 @@ public class AudioManager
     {
         Init();
         var soundEffectVolume = GameSettingManager.settings[GameSettingManager.Catalog.SoundEffect];
-        var clip = await MODLoader.LoadAsset<AudioClip>(path);
+        var clip = await ResLoader.LoadAsset<AudioClip>(path);
         AudioSource.PlayClipAtPoint(clip, position, (float)soundEffectVolume);
     }
 }

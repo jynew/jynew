@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using Jyx2;
 using UnityEngine;
 
 public class BootMainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        await BeforeSceneLoad.loadFinishTask;
         Jyx2_UIManager.Instance.GameStart();
     }
 }

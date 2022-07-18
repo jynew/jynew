@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Jyx2.MOD;
 using Jyx2.Middleware;
+using Jyx2.ResourceManagement;
 using Jyx2Configs;
 using ProtoBuf;
 using UnityEngine;
@@ -61,7 +62,8 @@ public static class Jyx2ResourceHelper
         await MODLoader.Init();
         
         //全局配置表
-        var t = await MODLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
+        //var t = await MODLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
+        var t = await ResLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
         if (t != null)
         {
             GlobalAssetConfig.Instance = t;
@@ -72,35 +74,38 @@ public static class Jyx2ResourceHelper
         MODLoader.WriteModIndexFile(t.startMod.ModRootDir);
 
         //模型池
-        var modelOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Models");
-        var allModels = await MODLoader.LoadAssets<ModelAsset>(modelOverridePaths);
+        //var modelOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Models");
+        //var allModels = await MODLoader.LoadAssets<ModelAsset>(modelOverridePaths);
+        
+        
+        var allModels = await ResLoader.LoadAssets<ModelAsset>("Assets/Models/");
         if (allModels != null)
         {
             ModelAsset.All = allModels;
         }
         
         //技能池
-        var skillOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
-        var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(skillOverridePaths);
+        /*var skillOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
+        var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(skillOverridePaths);*/
+        
+        var allSkills = await ResLoader.LoadAssets<Jyx2SkillDisplayAsset>("Assets/Skills/");
         if (allSkills != null)
         {
             Jyx2SkillDisplayAsset.All = allSkills;
         }
 
         //基础配置表
-        var config = await MODLoader.LoadAsset<TextAsset>($"{t.startMod.ModRootDir}/Configs/Datas.bytes");
+        var config = await ResLoader.LoadAsset<TextAsset>($"Assets/Configs/Datas.bytes");
         GameConfigDatabase.Instance.Init(t.startMod.ModRootDir, config.bytes);
         
         //初始化基础配置
         GameSettings.Refresh();
         
         //lua
-        await LuaManager.InitLuaMapper(t.startMod.ModRootDir);
+        await LuaManager.InitLuaMapper();
         
         //执行lua根文件
         LuaManager.Init(t.rootLuaFile.text);
-        
-        
     }
 
     public static GameObject GetCachedPrefab(string path)
@@ -129,7 +134,7 @@ public static class Jyx2ResourceHelper
     public static async UniTask<SceneCoordDataSet> GetSceneCoordDataSet(string sceneName)
     {
         string path = $"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes";
-        var result = await MODLoader.LoadAsset<TextAsset>(path);
+        var result = await ResLoader.LoadAsset<TextAsset>(path);
         using var memory = new MemoryStream(result.bytes);
         return Serializer.Deserialize<SceneCoordDataSet>(memory);
     }
@@ -145,7 +150,7 @@ public static class Jyx2ResourceHelper
             return null;
         }
 
-        return await MODLoader.LoadAsset<Jyx2NodeGraph>(url);
+        return await ResLoader.LoadAsset<Jyx2NodeGraph>(url);
     }
     
     //根据Addressable的Ref查找他实际存储的路径

@@ -9,23 +9,32 @@
  */
 
 using System.Threading.Tasks;
+using Jyx2.ResourceManagement;
 using UnityEngine;
 
 namespace Jyx2
 {
     public static class BeforeSceneLoad
     {
+        static bool RunOnce = false;
+        
         public static void ColdBind()
         {
+            if (RunOnce) return;
+            RunOnce = true;
             DebugInfoManager.Init();
-
             loadFinishTask = StartTasks();
         }
 
         static async Task StartTasks()
         {
+            
+            await ResLoader.Init();
+            await ResLoader.LoadMod("jyx2"); //for test
+            
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
+
         }
 
         public static Task loadFinishTask = null;

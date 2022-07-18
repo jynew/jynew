@@ -106,6 +106,8 @@ namespace Jyx2.MOD
         }
 
 #region 复合MOD加载资源的接口
+
+        [Obsolete("更新到ResLoader")]
         public static async UniTask<T> LoadAsset<T>(string uri) where T : Object
         {
             if (Remap.ContainsKey(uri.ToLower()))
@@ -116,6 +118,7 @@ namespace Jyx2.MOD
             return await Addressables.LoadAssetAsync<T>(uri);
         }
 
+        [Obsolete("更新到ResLoader")]
         public static async UniTask<List<T>> LoadAssets<T>(List<string> uris) where T : Object
         {
             var allAssets = await Addressables.LoadAssetsAsync<T>(uris, null, Addressables.MergeMode.Union);

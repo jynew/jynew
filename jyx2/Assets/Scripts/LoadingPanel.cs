@@ -14,6 +14,7 @@ using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
 using Jyx2.MOD;
+using Jyx2.ResourceManagement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -63,7 +64,11 @@ public class LoadingPanel : MonoBehaviour
         //切换场景
         else
         {
-            if(MODLoader.Remap.ContainsKey(scenePath))
+            m_LoadingText.text = "载入中... ";
+            await ResLoader.LoadScene(scenePath);
+
+
+            /*if (MODLoader.Remap.ContainsKey(scenePath))
             {
                 var assetBundleItem = MODLoader.Remap[scenePath];
                 var handle = SceneManager.LoadSceneAsync(assetBundleItem.Name);
@@ -74,7 +79,8 @@ public class LoadingPanel : MonoBehaviour
                     //---------------------------------------------------------------------------
                     //特定位置的翻译【载入中文本显示】
                     //---------------------------------------------------------------------------
-                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
+                    m_LoadingText.text =
+                        "载入中…… ".GetContent(nameof(LoadingPanel)) + (int) (handle.progress * 100) + "%";
                     //---------------------------------------------------------------------------
                     //---------------------------------------------------------------------------
                     await UniTask.WaitForEndOfFrame();
@@ -90,13 +96,14 @@ public class LoadingPanel : MonoBehaviour
                     //---------------------------------------------------------------------------
                     //特定位置的翻译【载入中文本显示】
                     //---------------------------------------------------------------------------
-                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(async.PercentComplete * 100) + "%";
+                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) +
+                                         (int) (async.PercentComplete * 100) + "%";
                     //---------------------------------------------------------------------------
                     //---------------------------------------------------------------------------
                     await UniTask.WaitForEndOfFrame();
                 }
-            }
-    }
+            }*/
+        }
 
         Destroy(gameObject);
     }

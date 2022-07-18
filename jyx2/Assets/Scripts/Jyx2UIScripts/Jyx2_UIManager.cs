@@ -16,6 +16,7 @@ using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
 using Jyx2.MOD;
+using Jyx2.ResourceManagement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -165,7 +166,7 @@ public class Jyx2_UIManager : MonoBehaviour
             _loadingUIParams[uiName] = allParams;
             string uiPath = string.Format(GameConst.UI_PREFAB_PATH, uiName);
 
-            var prefab = await MODLoader.LoadAsset<GameObject>(uiPath);
+            var prefab = await ResLoader.LoadAsset<GameObject>(uiPath);
             var go = Instantiate(prefab);
             OnUILoaded(go);
         }

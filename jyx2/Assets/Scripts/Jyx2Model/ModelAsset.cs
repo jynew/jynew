@@ -19,6 +19,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 using Jyx2.MOD;
+using Jyx2.ResourceManagement;
 
 namespace Jyx2
 {
@@ -42,7 +43,7 @@ namespace Jyx2
         {
             if (View == null || string.IsNullOrEmpty(View.AssetGUID)) return null;
             
-            return await MODLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
+            return await ResLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
         }
 
         [BoxGroup("数据")] [Header("剑")] [SerializeReference]

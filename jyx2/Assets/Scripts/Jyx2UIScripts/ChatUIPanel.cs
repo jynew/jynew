@@ -20,6 +20,7 @@ using Jyx2Configs;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using Jyx2.MOD;
+using Jyx2.ResourceManagement;
 
 public enum ChatType
 {
@@ -97,7 +98,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		var url = $"Assets/BuildSource/head/{headId}.png";
         
 		RoleHeadImage_Image.gameObject.SetActive(false);
-		RoleHeadImage_Image.sprite = await MODLoader.LoadAsset<Sprite>(url);
+		RoleHeadImage_Image.sprite = await ResLoader.LoadAsset<Sprite>(url);
 		RoleHeadImage_Image.gameObject.SetActive(true);
 	}
 
