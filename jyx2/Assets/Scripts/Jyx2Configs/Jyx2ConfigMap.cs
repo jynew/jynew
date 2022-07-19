@@ -23,7 +23,7 @@ namespace Jyx2Configs
         
         //跳转场景
         [ProtoMember(4)]
-        public int TransportToMap;
+        public string TransportToMap;
         
         //进入条件
         //0-开局开启，1-开局关闭
@@ -46,6 +46,34 @@ namespace Jyx2Configs
                 foreach (var tmp in Tags.Split(','))
                 {
                     if (tmp.StartsWith(tag))
+                    {
+                        var s = tmp.Split(':');
+                        if (s.Length == 2)
+                        {
+                            return s[1];
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.ToString());
+            }
+            return string.Empty;
+        }
+        
+        /// <summary>
+        /// 获取跳转场景数据，以半角的冒号分割
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public string GetTransportToMapValue(string transportToMap)
+        {
+            try
+            {
+                foreach (var tmp in TransportToMap.Split(','))
+                {
+                    if (tmp.StartsWith(transportToMap))
                     {
                         var s = tmp.Split(':');
                         if (s.Length == 2)

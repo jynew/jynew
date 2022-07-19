@@ -8,6 +8,7 @@
  * 金庸老先生千古！
  */
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
@@ -43,8 +44,8 @@ public class MapTeleportor : MonoBehaviour
 	{
 		if (!triggerEnabled) return;
 		
-		var transportMapId = LevelMaster.GetCurrentGameMap().TransportToMap;
-		if (LevelMaster.GetCurrentGameMap().TransportToMap == -1)
+		int transportMapId = -1;
+		if (LevelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
 		{
 			transportMapId = Jyx2ConfigMap.GetMapByName(this.gameObject.name).Id;
 		}
@@ -76,11 +77,18 @@ public class MapTeleportor : MonoBehaviour
 
 		var runtime = GameRuntimeData.Instance;
 		var key = runtime.GetSceneEntranceCondition(mapId);
+		
+		if (key == -1)
+		{
+			return true;
+		}
+		
 		if (key == 0)
 		{
 			return true;
 		}
-		else if (key == 2)
+
+		if (key == 2)
 		{
 			foreach (var role in runtime.GetTeam())
 			{
@@ -121,20 +129,10 @@ public class MapTeleportor : MonoBehaviour
 			//记录当前世界位置
 			Jyx2Player.GetPlayer().RecordWorldInfo();
 		}
-		else if (curMap.Tags.Contains("Leave2"))
-		{
-			if (this.gameObject.name.Equals("Leave"))
-			{
-				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(GameConst.WORLD_MAP_ID);
-			}
-			else
-			{
-				nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
-			}
-		}
+
 		else
 		{
-			nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.TransportToMap);
+			nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.GetTransportToMapValue(this.gameObject.name));
 		}
 
 		if (nextMap == null)
