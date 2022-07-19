@@ -278,7 +278,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		//执行离开事件
 		foreach (var zone in FindObjectsOfType<MapTeleportor>())
 		{
-			if (LevelMaster.GetCurrentGameMap().TransportToMap == GameConst.WORLD_MAP_ID)
+			if (LevelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
 			{
 				zone.DoTransport();
 				break;
