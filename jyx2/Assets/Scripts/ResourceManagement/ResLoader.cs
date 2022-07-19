@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +16,9 @@ namespace Jyx2.ResourceManagement
     /// </summary>
     public class ResLoader
     {
-        private const string AbDir = @"D:/jynew/build_ab_test";
+        private const bool UseAbInEditor = false;
+
+        private static string AbDir => Application.streamingAssetsPath;
         
         private const string BaseAbName = "base_assets";
         
@@ -33,6 +36,13 @@ namespace Jyx2.ResourceManagement
         private static readonly Dictionary<string, (string,string)> _scenesMap = new Dictionary<string, (string,string)>();
         private static readonly List<string> _modList = new List<string>();
 
+
+        private static bool IsEditor()
+        {
+            if (UseAbInEditor) return false;
+            return Application.isEditor;
+        }
+        
         /// <summary>
         /// 初始化资源
         /// </summary>
@@ -45,7 +55,7 @@ namespace Jyx2.ResourceManagement
             _modList.Clear();
 
 
-            if (Application.isEditor)
+            if (IsEditor())
             {
                 
             }
@@ -68,7 +78,7 @@ namespace Jyx2.ResourceManagement
         /// <param name="modId"></param>
         public static async UniTask LoadMod(string modId)
         {
-            if (Application.isEditor)
+            if (IsEditor())
             {
                 _modList.Add(modId);
             }
@@ -107,7 +117,7 @@ namespace Jyx2.ResourceManagement
         /// <returns></returns>
         public static async UniTask<T> LoadAsset<T>(string uri) where T : Object
         {
-            if (Application.isEditor)
+            if (IsEditor())
             {
                 return await LoadAssetInEditor<T>(uri);
             }
@@ -131,7 +141,7 @@ namespace Jyx2.ResourceManagement
 
         public static async UniTask<List<T>> LoadAssets<T>(string prefix) where T : Object
         {
-            if (Application.isEditor)
+            if (IsEditor())
             {
                 return await LoadAssetsInEditor<T>(prefix);
             }
@@ -155,7 +165,7 @@ namespace Jyx2.ResourceManagement
 
         public static async UniTask LoadScene(string path)
         {
-            if (Application.isEditor)
+            if (IsEditor())
             {
                 await LoadSceneInEditor(path);
                 return;
@@ -186,7 +196,7 @@ namespace Jyx2.ResourceManagement
             }
         }
 
-        public static async UniTask<T> LoadAssetInEditor<T>(string uri) where T : Object
+        private static async UniTask<T> LoadAssetInEditor<T>(string uri) where T : Object
         {
             #if UNITY_EDITOR
             if (!uri.ToLower().StartsWith("assets/"))
@@ -208,7 +218,7 @@ namespace Jyx2.ResourceManagement
             #endif
         }
 
-        public static async UniTask<List<T>> LoadAssetsInEditor<T>(string prefix) where T : Object
+        private static async UniTask<List<T>> LoadAssetsInEditor<T>(string prefix) where T : Object
         {
             #if UNITY_EDITOR
             if (!prefix.ToLower().StartsWith("assets/"))
@@ -219,13 +229,13 @@ namespace Jyx2.ResourceManagement
             List<T> rst = new List<T>();
             foreach (var fixedUri in GetFixedModPath(prefix))
             {
-                foreach (var asset in GetAtPath<T>(fixedUri))
+                foreach (var asset in LoadAllAssetsInEditor<T>(fixedUri))
                 { 
                     rst.Add(asset);
                 }
             }
             
-            foreach (var asset in GetAtPath<T>(prefix))
+            foreach (var asset in LoadAllAssetsInEditor<T>(prefix))
             {
                 rst.Add(asset);
             }
@@ -237,7 +247,8 @@ namespace Jyx2.ResourceManagement
             #endif
         }
 
-        public static T[] GetAtPath<T>(string path)
+        #if UNITY_EDITOR
+        private static T[] LoadAllAssetsInEditor<T>(string path)
         {
             if (!Directory.Exists(path)) return new T[0];
             ArrayList al = new ArrayList();
@@ -263,8 +274,9 @@ namespace Jyx2.ResourceManagement
 
             return result;
         }
+        #endif
 
-        public static async UniTask LoadSceneInEditor(string path)
+        private static async UniTask LoadSceneInEditor(string path)
         {
             #if UNITY_EDITOR
             if (!path.ToLower().StartsWith("assets/"))

@@ -18,7 +18,6 @@ using Jyx2;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public enum UILayer 
 {

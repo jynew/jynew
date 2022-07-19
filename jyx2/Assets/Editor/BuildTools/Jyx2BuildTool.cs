@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using CSObjectWrapEditor;
 using UnityEditor;
-using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using XLua;
 
@@ -168,15 +167,6 @@ namespace Jyx2Editor.BuildTool
             }
 
             AssetDatabase.SaveAssets();
-
-            //清理之前生成的缓存文件
-            // GenDataHelper.ClearAllCache();
-            
-            //重新生成Addressable相关文件
-            AddressableAssetSettings.BuildPlayerContent();
-
-            //强制GENDATA
-            // GenDataMenuCmd.GenerateDataForce();
 
             //生成luaWrap
             DelegateBridge.Gen_Flag = true;

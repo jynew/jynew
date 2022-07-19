@@ -6,7 +6,6 @@ using i18n.TranslatorDef;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class ReleaseNotePanel : MonoBehaviour

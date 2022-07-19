@@ -11,7 +11,6 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 

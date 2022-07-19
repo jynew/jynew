@@ -23,7 +23,6 @@ using Jyx2.ResourceManagement;
 using Jyx2Configs;
 using ProtoBuf;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -129,11 +128,6 @@ public static class Jyx2ResourceHelper
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)
     {
         string url = $"Assets/BuildSource/EventsGraph/{id}.asset";
-        var rst = await Addressables.LoadResourceLocationsAsync(url).Task;
-        if (rst.Count == 0)
-        {
-            return null;
-        }
 
         return await ResLoader.LoadAsset<Jyx2NodeGraph>(url);
     }

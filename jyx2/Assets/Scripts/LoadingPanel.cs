@@ -16,7 +16,6 @@ using Jyx2;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 

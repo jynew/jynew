@@ -16,9 +16,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
-using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 
 namespace Jyx2

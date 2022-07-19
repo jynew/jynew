@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.IO;
+using Jyx2.Middleware;
 using Jyx2.MOD;
+using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -30,6 +33,11 @@ public class MODRootConfig : ScriptableObject
     [Button("生成索引")]
     void GenerateIndexFile()
     {
-        //MODLoader.WriteModIndexFile(ModRootDir);
+        string dataPath = Path.Combine(ModRootDir, "Configs", "Datas.bytes");
+        if (File.Exists(dataPath))
+        {
+            File.Delete(dataPath);
+        }
+        ExcelTools.GenerateConfigsFromExcel<Jyx2ConfigBase>($"{ModRootDir}/Configs");
     }
 }

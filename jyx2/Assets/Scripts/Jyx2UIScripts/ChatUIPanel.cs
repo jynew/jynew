@@ -15,12 +15,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using Jyx2Configs;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
-using Jyx2.MOD;
 using Jyx2.ResourceManagement;
+using Sirenix.Utilities;
 
 public enum ChatType
 {
@@ -268,9 +266,10 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			if (image != null)
 			{
 				image.gameObject.SetActive(GamepadHelper.GamepadConnected);
-				Sprite[] iconSprite = getGamepadIconSprites(i);
-
-				image.sprite = iconSprite?.FirstOrDefault();
+				UniTask.Void(async () =>
+				{
+					image.sprite = await getGamepadIconSprites(currentIndex);	
+				});
 			}
 			selectionItem.transform.SetParent(Container_RectTransform, false);
 			BindListener(selectionItem, delegate
@@ -293,7 +292,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		SelectionPanel_RectTransform.gameObject.SetActive(true);
 	}
 
-	public static Sprite[] getGamepadIconSprites(int i)
+	public static async UniTask<Sprite> getGamepadIconSprites(int i)
 	{
 		string iconPath;
 		switch (i)
@@ -315,10 +314,14 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 				break;
 		}
 
-		var iconSprite = !string.IsNullOrWhiteSpace(iconPath) ?
-			Addressables.LoadAssetAsync<Sprite[]>(iconPath)
-				.Result : null;
-		return iconSprite;
+		if (iconPath.IsNullOrWhitespace())
+		{
+			return null;
+		}
+		else
+		{
+			return await ResLoader.LoadAsset<Sprite>(iconPath);
+		}
 	}
 
 	public void DoShowAnimator()
