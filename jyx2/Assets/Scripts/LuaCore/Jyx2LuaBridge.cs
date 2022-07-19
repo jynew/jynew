@@ -1766,10 +1766,15 @@ namespace Jyx2
         public static int GetTeamTotalHp()
         {
             int totalHp = 0;
-            foreach (var role in runtime.GetTeam())
+            RunInMainThread(() =>
             {
-                totalHp += role.Hp;
-            }
+                foreach (var role in runtime.GetTeam())
+                {
+                    totalHp += role.Hp;
+                }
+                Next();
+            });
+            Wait();
             return totalHp;
         }
 
@@ -1780,6 +1785,61 @@ namespace Jyx2
         public static List<int> GetTeamId()
         {
             return runtime.GetTeamId();
+        }
+        
+        /// <summary>
+        /// 指定角色使用物品
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="itemId"></param>
+        public static void roleUseItem(int roleId, int itemId)
+        {
+            RunInMainThread(() =>
+            {
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+                var role = runtime.GetRole(roleId);
+                //武器
+                if ((int)item.EquipmentType == 0)
+                {
+                    role.Weapon = itemId;
+                }
+                //防具
+                else if ((int)item.EquipmentType == 1)
+                {
+                    role.Armor = itemId;
+                }
+                role.UseItem(item);
+                runtime.SetItemUser(itemId, roleId);
+                Next();
+            });
+            Wait();
+        }
+        
+        /// <summary>
+        /// 指定角色卸下物品（装备）
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="itemId"></param>
+        public static void roleUnequipItem(int roleId, int itemId)
+        {
+            RunInMainThread(() =>
+            {
+                var role = runtime.GetRole(roleId);
+                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+                //武器
+                if ((int)item.EquipmentType == 0)
+                {
+                    role.Weapon = -1;
+                }
+                //防具
+                else if ((int)item.EquipmentType == 1)
+                {
+                    role.Armor = -1;
+                }
+                role.UnequipItem(item);
+                Next();
+            });
+            Wait();
         }
     }
 }
