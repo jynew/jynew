@@ -32,8 +32,7 @@ namespace Jyx2
         {
             return All.Single(r => r.name == roleName);
         }
-        [BoxGroup("数据", false)]
-        public AssetReferenceT<GameObject> View;
+
         [BoxGroup("数据")] [Header("模型")]
         [InlineEditor(InlineEditorModes.LargePreview, Expanded = true)]
         [OnValueChanged("AutoBindModelData")]
@@ -41,9 +40,7 @@ namespace Jyx2
 
         public async UniTask<GameObject> GetView()
         {
-            if (View == null || string.IsNullOrEmpty(View.AssetGUID)) return null;
-            
-            return await ResLoader.LoadAsset<GameObject>(Jyx2ResourceHelper.GetAssetRefAddress(View, typeof(GameObject)));
+            return m_View;
         }
 
         [BoxGroup("数据")] [Header("剑")] [SerializeReference]

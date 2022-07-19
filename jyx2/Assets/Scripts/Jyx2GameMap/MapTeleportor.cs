@@ -169,7 +169,7 @@ public class MapTeleportor : MonoBehaviour
 		LevelLoader.LoadGameMap(nextMap, para, () =>
 		{
 			var player = LevelMaster.Instance.GetPlayer();
-			player.OnSceneLoad().Forget();
+			player?.OnSceneLoad().Forget();
 		});
 	}
 }

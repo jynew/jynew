@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,6 +31,7 @@ namespace Jyx2.ResourceManagement
         /// </summary>
         private static readonly Dictionary<string, (string,string)> _assetsMap = new Dictionary<string, (string,string)>();
         private static readonly Dictionary<string, (string,string)> _scenesMap = new Dictionary<string, (string,string)>();
+        private static readonly List<string> _modList = new List<string>();
 
         /// <summary>
         /// 初始化资源
@@ -38,14 +42,23 @@ namespace Jyx2.ResourceManagement
             _modScenes.Clear();
             _assetsMap.Clear();
             _scenesMap.Clear();
-            
-            //加载基础包
-            var ab = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, BaseAbName));
-            foreach (var assetName in ab.GetAllAssetNames())
+            _modList.Clear();
+
+
+            if (Application.isEditor)
             {
-                _assetsMap[assetName.ToLower()] = ("", assetName.ToLower());
+                
             }
-            _modAssets[""] = ab;
+            else
+            {
+                //加载基础包
+                var ab = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, BaseAbName));
+                foreach (var assetName in ab.GetAllAssetNames())
+                {
+                    _assetsMap[assetName.ToLower()] = ("", assetName.ToLower());
+                }
+                _modAssets[""] = ab;
+            }
         }
 
 
@@ -55,27 +68,34 @@ namespace Jyx2.ResourceManagement
         /// <param name="modId"></param>
         public static async UniTask LoadMod(string modId)
         {
-            AssetBundle modAssetsAb = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, $"{modId}_mod"));
-            AssetBundle modScenesAb = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, $"{modId}_maps"));
-            _modAssets[modId] = modAssetsAb;
-            _modScenes[modId] = modScenesAb;
-            
-            foreach (var assetName in modAssetsAb.GetAllAssetNames())
+            if (Application.isEditor)
             {
-                string prefix = $"assets/mods/{modId}/";
-                var url = assetName.Replace(prefix, "assets/");
-
-                _assetsMap[url] = (modId, assetName);
+                _modList.Add(modId);
             }
-            
-            
-            foreach (var sceneName in modScenesAb.GetAllScenePaths())
+            else
             {
-                var lowSceneName = sceneName.ToLower();
-                string prefix = $"assets/mods/{modId}/";
+                AssetBundle modAssetsAb = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, $"{modId}_mod"));
+                AssetBundle modScenesAb = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, $"{modId}_maps"));
+                _modAssets[modId] = modAssetsAb;
+                _modScenes[modId] = modScenesAb;
+            
+                foreach (var assetName in modAssetsAb.GetAllAssetNames())
+                {
+                    string prefix = $"assets/mods/{modId}/";
+                    var url = assetName.Replace(prefix, "assets/");
 
-                var url = lowSceneName.Replace(prefix, "assets/");
-                _scenesMap[url] = (modId, sceneName);
+                    _assetsMap[url] = (modId, assetName);
+                }
+            
+            
+                foreach (var sceneName in modScenesAb.GetAllScenePaths())
+                {
+                    var lowSceneName = sceneName.ToLower();
+                    string prefix = $"assets/mods/{modId}/";
+
+                    var url = lowSceneName.Replace(prefix, "assets/");
+                    _scenesMap[url] = (modId, sceneName);
+                }
             }
         }
 
@@ -87,6 +107,11 @@ namespace Jyx2.ResourceManagement
         /// <returns></returns>
         public static async UniTask<T> LoadAsset<T>(string uri) where T : Object
         {
+            if (Application.isEditor)
+            {
+                return await LoadAssetInEditor<T>(uri);
+            }
+            
             if (!uri.ToLower().StartsWith("assets/"))
             {
                 uri = "assets/" + uri;
@@ -106,6 +131,11 @@ namespace Jyx2.ResourceManagement
 
         public static async UniTask<List<T>> LoadAssets<T>(string prefix) where T : Object
         {
+            if (Application.isEditor)
+            {
+                return await LoadAssetsInEditor<T>(prefix);
+            }
+            
             List<T> rst = new List<T>();
             foreach (var kv in _assetsMap)
             {
@@ -125,6 +155,12 @@ namespace Jyx2.ResourceManagement
 
         public static async UniTask LoadScene(string path)
         {
+            if (Application.isEditor)
+            {
+                await LoadSceneInEditor(path);
+                return;
+            }
+
             path = path.ToLower();
             if (_scenesMap.ContainsKey(path))
             {
@@ -136,5 +172,116 @@ namespace Jyx2.ResourceManagement
                 Debug.LogError($"不存在的scene：{path}");
             }
         }
+
+        #region editor mode
+
+
+        private static IEnumerable<string> GetFixedModPath(string uri)
+        {
+            //先检查MOD
+            for (int i=_modList.Count-1;i>=0;--i)
+            {
+                var modId = _modList[i];
+                yield return uri.ToLower().Replace("assets/",$"assets/mods/{modId}/");
+            }
+        }
+
+        public static async UniTask<T> LoadAssetInEditor<T>(string uri) where T : Object
+        {
+            #if UNITY_EDITOR
+            if (!uri.ToLower().StartsWith("assets/"))
+            {
+                uri = "assets/" + uri;
+            }
+            foreach (var fixedUri in GetFixedModPath(uri))
+            {
+                var loadAsset = AssetDatabase.LoadAssetAtPath<T>(fixedUri);
+                if (loadAsset != null)
+                    return loadAsset;
+            }
+
+            //再本体
+            return AssetDatabase.LoadAssetAtPath<T>(uri);
+            
+            #else
+            return null;
+            #endif
+        }
+
+        public static async UniTask<List<T>> LoadAssetsInEditor<T>(string prefix) where T : Object
+        {
+            #if UNITY_EDITOR
+            if (!prefix.ToLower().StartsWith("assets/"))
+            {
+                prefix = "assets/" + prefix;
+            }
+
+            List<T> rst = new List<T>();
+            foreach (var fixedUri in GetFixedModPath(prefix))
+            {
+                foreach (var asset in GetAtPath<T>(fixedUri))
+                { 
+                    rst.Add(asset);
+                }
+            }
+            
+            foreach (var asset in GetAtPath<T>(prefix))
+            {
+                rst.Add(asset);
+            }
+
+            return rst;
+            
+            #else
+            return null;
+            #endif
+        }
+
+        public static T[] GetAtPath<T>(string path)
+        {
+            if (!Directory.Exists(path)) return new T[0];
+            ArrayList al = new ArrayList();
+            
+            string[] fileEntries = Directory.GetFiles(path);
+            foreach (string fileName in fileEntries)
+            {
+                int index = fileName.LastIndexOf("/");
+                string localPath = path;
+
+                if (index > 0)
+                    localPath += fileName.Substring(index);
+
+                Object t = AssetDatabase.LoadAssetAtPath(localPath, typeof(T));
+
+                if (t != null)
+                    al.Add(t);
+            }
+
+            T[] result = new T[al.Count];
+            for (int i = 0; i < al.Count; i++)
+                result[i] = (T) al[i];
+
+            return result;
+        }
+
+        public static async UniTask LoadSceneInEditor(string path)
+        {
+            #if UNITY_EDITOR
+            if (!path.ToLower().StartsWith("assets/"))
+            {
+                path = "assets/" + path;
+            }
+            foreach (var fixedUri in GetFixedModPath(path))
+            {
+                if (File.Exists(fixedUri))
+                {
+                    await EditorSceneManager.LoadSceneAsyncInPlayMode(fixedUri,
+                        new LoadSceneParameters() {loadSceneMode = LoadSceneMode.Single});
+                    return;
+                }
+            }
+            #endif
+        }
+        #endregion
     }
 }

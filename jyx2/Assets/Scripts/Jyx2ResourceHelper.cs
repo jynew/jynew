@@ -58,26 +58,16 @@ public static class Jyx2ResourceHelper
         }
 
         _isInited = true;
-        
-        await MODLoader.Init();
-        
+
         //全局配置表
-        //var t = await MODLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
         var t = await ResLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
         if (t != null)
         {
             GlobalAssetConfig.Instance = t;
             t.OnLoad();
         }
-
-        //生成MOD的文件索引
-        MODLoader.WriteModIndexFile(t.startMod.ModRootDir);
-
+        
         //模型池
-        //var modelOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Models");
-        //var allModels = await MODLoader.LoadAssets<ModelAsset>(modelOverridePaths);
-        
-        
         var allModels = await ResLoader.LoadAssets<ModelAsset>("Assets/Models/");
         if (allModels != null)
         {
@@ -85,9 +75,6 @@ public static class Jyx2ResourceHelper
         }
         
         //技能池
-        /*var skillOverridePaths = await MODLoader.LoadOverrideList($"{t.startMod.ModRootDir}/Skills");
-        var allSkills = await MODLoader.LoadAssets<Jyx2SkillDisplayAsset>(skillOverridePaths);*/
-        
         var allSkills = await ResLoader.LoadAssets<Jyx2SkillDisplayAsset>("Assets/Skills/");
         if (allSkills != null)
         {
@@ -139,8 +126,6 @@ public static class Jyx2ResourceHelper
         return Serializer.Deserialize<SceneCoordDataSet>(memory);
     }
 
-
-
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(int id)
     {
         string url = $"Assets/BuildSource/EventsGraph/{id}.asset";
@@ -151,22 +136,5 @@ public static class Jyx2ResourceHelper
         }
 
         return await ResLoader.LoadAsset<Jyx2NodeGraph>(url);
-    }
-    
-    //根据Addressable的Ref查找他实际存储的路径
-    public static string GetAssetRefAddress(AssetReference reference, Type type)
-    {
-        foreach (var locator in Addressables.ResourceLocators)
-        {
-            if (locator.Locate(reference.AssetGUID, type, out var locs))
-            {
-                foreach (var loc in locs)
-                {
-                    return loc.ToString();
-                }
-            }
-        }
-
-        return "";
     }
 }

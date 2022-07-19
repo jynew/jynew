@@ -26,24 +26,6 @@ public class AudioManager
         PlayMusicAtPath("Assets/BuildSource/Musics/" + id + ".mp3").Forget();
     }
 
-    public static bool PlayMusic(AssetReference asset)
-    {
-        Init();
-        if (string.IsNullOrEmpty(asset.AssetGUID))
-            return false;
-        DoPlayMusic(asset).Forget();
-        return true;
-    }
-
-    private static async UniTask DoPlayMusic(AssetReference asset)
-    {
-        var audioClip = await ResLoader.LoadAsset<AudioClip>(Jyx2ResourceHelper.GetAssetRefAddress(asset, typeof(AudioClip)));
-        if (audioClip != null)
-        {
-            PlayMusic(audioClip);
-        }
-    }
-
     public static void PlayMusic(AudioClip audioClip)
     {
         Init();

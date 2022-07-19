@@ -15,7 +15,6 @@ using Cysharp.Threading.Tasks;
 using Jyx2;
 using Jyx2Configs;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Jyx2
 {
@@ -33,6 +32,7 @@ namespace Jyx2
         {
             LevelMaster.SetCurrentMap(map);
             await LoadingPanel.Create($"Assets/Maps/GameMaps/{map.MapScene}.unity");
+            await UniTask.WaitForEndOfFrame();
             callback?.Invoke();
         }
         

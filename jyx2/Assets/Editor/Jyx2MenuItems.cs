@@ -448,7 +448,7 @@ namespace Jyx2Editor
         private static void WriteCurrentModIndexFile()
         {
             var globalSettings = AssetDatabase.LoadAssetAtPath<GlobalAssetConfig>("Assets/GlobalAssetConfig.asset");
-            MODLoader.WriteModIndexFile(globalSettings.startMod.ModRootDir);
+            //MODLoader.WriteModIndexFile(globalSettings.startMod.ModRootDir);
 
             AssetDatabase.Refresh();
         }
