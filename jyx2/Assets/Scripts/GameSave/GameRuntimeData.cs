@@ -279,6 +279,11 @@ namespace Jyx2
             get { return GetRole(0); }
         }
 
+        //获取队伍角色Id列表
+        public List<int> GetTeamId()
+        {
+            return TeamId;
+        }
 
         //获取队伍所有角色
         public IEnumerable<RoleInstance> GetTeam()

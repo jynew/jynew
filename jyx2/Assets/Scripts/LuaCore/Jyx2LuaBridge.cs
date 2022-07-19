@@ -1741,5 +1741,45 @@ namespace Jyx2
 
 
         #endregion
+        
+        /// <summary>
+        /// 获取队伍人数
+        /// </summary>
+        /// <returns></returns>
+        public static int GetTeamMembersCount() {
+            return runtime.GetTeamMembersCount();
+        }
+        
+        /// <summary>
+        /// 获取指定角色等级
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public static int GetRoleLevel(int roleId) {
+            return runtime.GetRole(roleId).Level;
+        }
+
+        /// <summary>
+        /// 获取队伍生命总和
+        /// </summary>
+        /// <returns></returns>
+        public static int GetTeamTotalHp()
+        {
+            int totalHp = 0;
+            foreach (var role in runtime.GetTeam())
+            {
+                totalHp += role.Hp;
+            }
+            return totalHp;
+        }
+
+        /// <summary>
+        /// 获取队伍角色Id列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<int> GetTeamId()
+        {
+            return runtime.GetTeamId();
+        }
     }
 }
