@@ -206,6 +206,13 @@ JudgeYujian = CS.Jyx2.Jyx2LuaBridge.JudgeYujian--判断御剑
 JudgeAttackPoison = CS.Jyx2.Jyx2LuaBridge.JudgeAttackPoison--判断攻击带毒
 JudgeQimen = CS.Jyx2.Jyx2LuaBridge.JudgeQimen--判断奇门
 JudgeDefence = CS.Jyx2.Jyx2LuaBridge.JudgeDefence--判断防御
+GetTeamMembersCount = CS.Jyx2.Jyx2LuaBridge.GetTeamMembersCount--获取队伍人数
+GetRoleLevel = CS.Jyx2.Jyx2LuaBridge.GetRoleLevel--获取指定角色等级
+GetTeamTotalHp = CS.Jyx2.Jyx2LuaBridge.GetTeamTotalHp--获取队伍生命总和
+GetTeamId = CS.Jyx2.Jyx2LuaBridge.GetTeamId--获取队伍角色Id列表
+RoleUseItem = CS.Jyx2.Jyx2LuaBridge.RoleUseItem--指定角色使用物品
+RoleUnequipItem = CS.Jyx2.Jyx2LuaBridge.RoleUnequipItem--指定角色卸下物品（装备）
+ShowMessage = CS.Jyx2.Jyx2LuaBridge.ShowMessage
 function main_getLuaFiles()
 	return {}
 end 
