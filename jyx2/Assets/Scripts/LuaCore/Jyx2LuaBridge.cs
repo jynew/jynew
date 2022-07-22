@@ -694,6 +694,15 @@ namespace Jyx2
         {
 
         }
+        
+        public static void ShowMessage(string message)
+        {
+            RunInMainThread(() =>
+            {
+                MessageBox.Create(message, Next);
+            });
+            Wait();
+        }
 
         public static void ShowEthics()
         {
@@ -1792,7 +1801,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="itemId"></param>
-        public static void roleUseItem(int roleId, int itemId)
+        public static void RoleUseItem(int roleId, int itemId)
         {
             RunInMainThread(() =>
             {
@@ -1820,7 +1829,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="itemId"></param>
-        public static void roleUnequipItem(int roleId, int itemId)
+        public static void RoleUnequipItem(int roleId, int itemId)
         {
             RunInMainThread(() =>
             {
