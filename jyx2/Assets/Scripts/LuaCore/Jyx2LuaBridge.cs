@@ -1702,7 +1702,7 @@ namespace Jyx2
 
         private static int _selectResult;
 
-        private static bool ShowYesOrNoSelectPanel(string selectMessage)
+        public static bool ShowYesOrNoSelectPanel(string selectMessage)
         {
             async void Action()
             {
