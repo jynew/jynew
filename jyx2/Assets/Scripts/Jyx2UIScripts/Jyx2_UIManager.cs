@@ -113,6 +113,8 @@ public class Jyx2_UIManager : MonoBehaviour
     {
         await ShowUIAsync(nameof(GameMainMenu));
 
+        await UniTask.WaitForEndOfFrame();
+        
         await RuntimeEnvSetup.Setup();
         
         string info = string.Format("<b>版本：{0} 模组：{1}</b>".GetContent(nameof(Jyx2_UIManager)),

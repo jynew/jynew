@@ -101,7 +101,7 @@ public class GlobalAssetConfig : ScriptableObject
             }
         }
 
-        CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("ModSetting");
+        CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("ModSetting.asset");
     }
 }
 
