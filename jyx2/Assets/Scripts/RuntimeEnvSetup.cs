@@ -47,7 +47,6 @@ namespace Jyx2
                 CurrentModId = GlobalAssetConfig.Instance.startModId;
             }
         }
-        
 
         public static string CurrentModId { get; set; } = "";
     }

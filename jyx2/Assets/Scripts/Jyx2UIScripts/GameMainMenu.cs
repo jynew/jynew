@@ -469,7 +469,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenModPanel()
 	{
-		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanel)).Forget();
+		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanelNew)).Forget();
 	}
 	
 	bool isXSelection = false;

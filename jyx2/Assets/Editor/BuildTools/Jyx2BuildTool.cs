@@ -74,6 +74,10 @@ namespace Jyx2Editor.BuildTool
                 throw new System.Exception(
                     string.Format("{0} is Unknown Build Platform ! Build Failture!", buildTarget));
             }
+                    
+            
+            //生成ab包
+            BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, buildTarget);
 
             //设置参数
             SetBuildParams(buildTargetGroup);
