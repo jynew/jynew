@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using i18n;
 using i18n.TranslatorDef;
+using Jyx2;
 using Jyx2.ResourceManagement;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class GlobalAssetConfig : ScriptableObject
 {
     public static GlobalAssetConfig Instance { get; set; }= null;
 
-    [HideInInspector] public MODRootConfig CurrentModConfig { get; set; } = null;
+    
     
     [BoxGroup("游戏MOD")] [LabelText("初始MOD ID")]
     public string startModId;
@@ -78,9 +79,7 @@ public class GlobalAssetConfig : ScriptableObject
     
     [BoxGroup("角色控制")] [LabelText("大地图移动速度")]
     public float playerMoveSpeedWorldMap = 20f;
-
-    [HideInInspector] public List<StoryIdNameFix> StoryIdNameFixes => CurrentModConfig.StoryIdNameFixes;
-
+    
     [BoxGroup("预缓存Prefab")]
     [HideLabel]
     public List<GameObject> CachedPrefabs;
@@ -100,9 +99,8 @@ public class GlobalAssetConfig : ScriptableObject
                 CachePrefabDict.Add(prefab.name, prefab);
             }
         }
-
-        CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("ModSetting.asset");
     }
+
 }
 
 [Serializable]
