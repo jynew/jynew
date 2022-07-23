@@ -127,7 +127,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		{
 			var summary = GameSaveSummary.Load(index);
-			if (summary.ModId != null && !summary.ModId.Equals(GlobalAssetConfig.Instance.startMod.ModId))
+			if (summary.ModId != null && !summary.ModId.Equals(RuntimeEnvSetup.CurrentModId))
 			{
 				HidePanel();
 				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};

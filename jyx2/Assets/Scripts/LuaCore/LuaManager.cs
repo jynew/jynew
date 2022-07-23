@@ -9,15 +9,12 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using XLua;
-using Jyx2.MOD;
-using Jyx2.Middleware;
+using Jyx2.ResourceManagement;
 
 namespace Jyx2
 {
@@ -197,13 +194,16 @@ namespace Jyx2
             __luaMapper = null;
         }
 
-        public static async UniTask InitLuaMapper(string rootPath)
+        public static async UniTask InitLuaMapper()
         {
             /*            if (Application.isEditor) //编辑器模式下不需要缓存，直接读取文件
                             return;*/
-            var overridePaths = await MODLoader.LoadOverrideList($"{rootPath}/Lua");
+            //var overridePaths = await MODLoader.LoadOverrideList($"{rootPath}/Lua");
             
-            var assets = await MODLoader.LoadAssets<TextAsset>(overridePaths);
+            //var assets = await MODLoader.LoadAssets<TextAsset>(overridePaths);
+
+
+            var assets = await ResLoader.LoadAssets<TextAsset>("Assets/Lua/");
 
             __luaMapper = new Dictionary<string, byte[]>();
             foreach (var a in assets)

@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 /// <summary>
@@ -237,7 +236,7 @@ public class GameEventManager : MonoBehaviour
             }
             else
             {
-                var eventLuaPath = string.Format(GlobalAssetConfig.Instance.startMod.LuaFilePatten, eventId);
+                var eventLuaPath = string.Format("ka{0}", eventId);
                 Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
             }
         }

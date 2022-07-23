@@ -46,7 +46,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		//显示loading
 		var c = StartCoroutine(ShowLoading());
-		await BeforeSceneLoad.loadFinishTask;
+		await RuntimeEnvSetup.Setup();
 		StopCoroutine(c);
 		LoadingText.gameObject.SetActive(false);
 		homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
@@ -266,7 +266,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
 		{
 			var summary = GameSaveSummary.Load(index);
-			if (summary.ModId != null && !summary.ModId.Equals(GlobalAssetConfig.Instance.startMod.ModId))
+			if (summary.ModId != null && !summary.ModId.Equals(RuntimeEnvSetup.CurrentModId))
 			{
 				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
 				string msg = "该存档MOD不匹配，载入可能导致数据错乱，是否继续？";
@@ -469,7 +469,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenModPanel()
 	{
-		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanel)).Forget();
+		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanelNew)).Forget();
 	}
 	
 	bool isXSelection = false;

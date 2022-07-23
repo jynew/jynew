@@ -16,8 +16,8 @@ using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
 using Jyx2.MOD;
+using Jyx2.ResourceManagement;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public enum UILayer 
 {
@@ -113,11 +113,13 @@ public class Jyx2_UIManager : MonoBehaviour
     {
         await ShowUIAsync(nameof(GameMainMenu));
 
-        await BeforeSceneLoad.loadFinishTask;
+        await UniTask.WaitForEndOfFrame();
+        
+        await RuntimeEnvSetup.Setup();
         
         string info = string.Format("<b>版本：{0} 模组：{1}</b>".GetContent(nameof(Jyx2_UIManager)),
             Application.version,
-            GlobalAssetConfig.Instance.startMod.ModName);
+            RuntimeEnvSetup.CurrentModId);
         
         await ShowUIAsync(nameof(GameInfoPanel), info);
         
@@ -165,7 +167,7 @@ public class Jyx2_UIManager : MonoBehaviour
             _loadingUIParams[uiName] = allParams;
             string uiPath = string.Format(GameConst.UI_PREFAB_PATH, uiName);
 
-            var prefab = await MODLoader.LoadAsset<GameObject>(uiPath);
+            var prefab = await ResLoader.LoadAsset<GameObject>(uiPath);
             var go = Instantiate(prefab);
             OnUILoaded(go);
         }
