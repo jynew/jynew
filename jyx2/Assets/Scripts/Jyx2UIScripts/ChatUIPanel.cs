@@ -174,9 +174,9 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 
 		//先找替换修正的
-		if (GlobalAssetConfig.Instance.StoryIdNameFixes != null)
+		if (RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes != null)
 		{
-			var find = GlobalAssetConfig.Instance.StoryIdNameFixes.SingleOrDefault(p => p.Id == headId);
+			var find = RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes.SingleOrDefault(p => p.Id == headId);
 			if (find != null)
 			{
 				return find.Name;

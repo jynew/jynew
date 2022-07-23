@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Jyx2.ResourceManagement;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ namespace Jyx2
     public static class RuntimeEnvSetup
     {
         private static bool _isSetup;
-
+        public static MODRootConfig CurrentModConfig { get; set; } = null;
+        public static string CurrentModId { get; set; } = "";
+        
         public static async UniTask Setup()
         {
             if (_isSetup) return;
@@ -24,19 +27,24 @@ namespace Jyx2
             if (t != null)
             {
                 GlobalAssetConfig.Instance = t;
+                await t.OnLoad();
             }
+
             
-            LoadCurrentMod();
+            await LoadCurrentMod();
             
             await ResLoader.Init();
-            await ResLoader.LoadMod(CurrentModId); //for test
+            await ResLoader.LoadMod(CurrentModId); 
             
+
+      
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
-            await t.OnLoad();
         }
+        
+        
 
-        private static void LoadCurrentMod()
+        private static async UniTask LoadCurrentMod()
         {
             if (PlayerPrefs.HasKey("CURRENT_MOD"))
             {
@@ -46,8 +54,10 @@ namespace Jyx2
             {
                 CurrentModId = GlobalAssetConfig.Instance.startModId;
             }
+            
+            CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("ModSetting.asset");
         }
 
-        public static string CurrentModId { get; set; } = "";
+      
     }
 }

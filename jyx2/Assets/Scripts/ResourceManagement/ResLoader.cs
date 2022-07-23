@@ -16,6 +16,9 @@ namespace Jyx2.ResourceManagement
     /// </summary>
     public class ResLoader
     {
+        /// <summary>
+        /// 调试接口，打开即在editor下使用assetbundle调试，需要先build
+        /// </summary>
         private const bool UseAbInEditor = false;
 
         private static string AbDir => Application.streamingAssetsPath;
