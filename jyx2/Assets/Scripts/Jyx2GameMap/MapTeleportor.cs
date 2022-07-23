@@ -33,7 +33,7 @@ public class MapTeleportor : MonoBehaviour
 
 	private async void Start()
 	{
-		await BeforeSceneLoad.loadFinishTask;
+		await RuntimeEnvSetup.Setup();
 		triggerEnabled = true;
 	}
 

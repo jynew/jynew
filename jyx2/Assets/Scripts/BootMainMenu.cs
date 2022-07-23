@@ -9,7 +9,6 @@ public class BootMainMenu : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        await BeforeSceneLoad.loadFinishTask;
         Jyx2_UIManager.Instance.GameStart();
     }
 }

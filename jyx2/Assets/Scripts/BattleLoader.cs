@@ -53,7 +53,7 @@ public class BattleLoader : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        await BeforeSceneLoad.loadFinishTask;
+        await RuntimeEnvSetup.Setup();
 
         if (IsTestCase)
         {

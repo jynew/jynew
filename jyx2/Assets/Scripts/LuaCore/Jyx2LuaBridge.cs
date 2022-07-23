@@ -1099,7 +1099,7 @@ namespace Jyx2
         {
             RunInMainThread(() => {
                 
-                var eventLuaPath = string.Format(GlobalAssetConfig.Instance.startMod.LuaFilePatten, UnityEngine.Random.Range(801, 820).ToString());
+                var eventLuaPath = string.Format("ka{0}", UnityEngine.Random.Range(801, 820).ToString());
                 Jyx2.LuaExecutor.Execute(eventLuaPath, null);
             });
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using i18n;
 using i18n.TranslatorDef;
+using Jyx2.ResourceManagement;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,8 +13,10 @@ public class GlobalAssetConfig : ScriptableObject
 {
     public static GlobalAssetConfig Instance { get; set; }= null;
 
-    [BoxGroup("游戏MOD")] [LabelText("启动MOD")]
-    public MODRootConfig startMod;
+    [HideInInspector] public MODRootConfig CurrentModConfig { get; set; } = null;
+    
+    [BoxGroup("游戏MOD")] [LabelText("初始MOD ID")]
+    public string startModId;
 
     [BoxGroup("基础配置")] [LabelText("Lua引导文件")]
     [InfoBox("这里定义所有的lua到C#的公共绑定和一些公用函数")]
@@ -76,8 +79,7 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("角色控制")] [LabelText("大地图移动速度")]
     public float playerMoveSpeedWorldMap = 20f;
 
-
-    [HideInInspector] public List<StoryIdNameFix> StoryIdNameFixes => startMod.StoryIdNameFixes;
+    [HideInInspector] public List<StoryIdNameFix> StoryIdNameFixes => CurrentModConfig.StoryIdNameFixes;
 
     [BoxGroup("预缓存Prefab")]
     [HideLabel]
@@ -85,10 +87,8 @@ public class GlobalAssetConfig : ScriptableObject
 
     public readonly Dictionary<string, GameObject> CachePrefabDict = new Dictionary<string, GameObject>();
     
-    
-    
 
-    public void OnLoad()
+    public async UniTask OnLoad()
     {
         //将prefab放置在Dictionary中，用来提高查找速度
         if (CachedPrefabs != null)
@@ -100,6 +100,8 @@ public class GlobalAssetConfig : ScriptableObject
                 CachePrefabDict.Add(prefab.name, prefab);
             }
         }
+
+        CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("ModSetting");
     }
 }
 

@@ -58,14 +58,6 @@ public static class Jyx2ResourceHelper
 
         _isInited = true;
 
-        //全局配置表
-        var t = await ResLoader.LoadAsset<GlobalAssetConfig>("GlobalAssetConfig.asset");
-        if (t != null)
-        {
-            GlobalAssetConfig.Instance = t;
-            t.OnLoad();
-        }
-        
         //模型池
         var allModels = await ResLoader.LoadAssets<ModelAsset>("Assets/Models/");
         if (allModels != null)
@@ -82,7 +74,7 @@ public static class Jyx2ResourceHelper
 
         //基础配置表
         var config = await ResLoader.LoadAsset<TextAsset>($"Assets/Configs/Datas.bytes");
-        GameConfigDatabase.Instance.Init(t.startMod.ModRootDir, config.bytes);
+        GameConfigDatabase.Instance.Init(config.bytes);
         
         //初始化基础配置
         GameSettings.Refresh();
@@ -91,7 +83,7 @@ public static class Jyx2ResourceHelper
         await LuaManager.InitLuaMapper();
         
         //执行lua根文件
-        LuaManager.Init(t.rootLuaFile.text);
+        LuaManager.Init(GlobalAssetConfig.Instance.rootLuaFile.text);
     }
 
     public static GameObject GetCachedPrefab(string path)

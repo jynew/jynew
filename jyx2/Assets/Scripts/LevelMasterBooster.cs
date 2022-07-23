@@ -25,16 +25,12 @@ public class LevelMasterBooster : MonoBehaviour
     [LabelText("模拟移动端")] public bool m_MobileSimulate;
 
     [LabelText("战斗地图")] public bool m_IsBattleMap = false;
-    
-    GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
+
+    private GameRuntimeData runtime => GameRuntimeData.Instance;
 
     private async void Awake()
     {
-#if UNITY_EDITOR
-        BeforeSceneLoad.ColdBind();
-#endif
-        
-        await BeforeSceneLoad.loadFinishTask;
+        await RuntimeEnvSetup.Setup();
 
         //实例化LevelMaster
         LevelMaster levelMaster = Jyx2ResourceHelper.CreatePrefabInstance(ConStr.LevelMaster).GetComponent<LevelMaster>();
@@ -52,7 +48,7 @@ public class LevelMasterBooster : MonoBehaviour
 
     private async void Start()
     {
-        await BeforeSceneLoad.loadFinishTask;
+        await RuntimeEnvSetup.Setup();
 
         if (GameRuntimeData.Instance == null)
         {

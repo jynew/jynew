@@ -45,7 +45,7 @@ public class Jyx2SkillEditor : MonoBehaviour
         player.IsInBattle = true;
         //Container.TryResolve<IXLsReloader>()?.Do();
 
-        await BeforeSceneLoad.loadFinishTask;
+        await RuntimeEnvSetup.Setup();
         
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SkillEditorUIPanel),player,enemys);
     }

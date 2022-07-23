@@ -292,7 +292,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		this.gameObject.SetActive(false);
 		var s = new UniTaskCompletionSource();
 
-		var eventPath = string.Format(GlobalAssetConfig.Instance.startMod.LuaFilePatten, story);
+		var eventPath = string.Format("ka{0}", story);
 		
 		Jyx2.LuaExecutor.Execute(eventPath, () =>
 		{
