@@ -68,7 +68,7 @@ namespace Jyx2
         public static string GetSummaryFilePath(int index)
         {
             //根据MOD区分存档空间
-            var mod = GlobalAssetConfig.Instance.startMod.ModId;
+            var mod = RuntimeEnvSetup.CurrentModId;
             if (mod.Equals(GameConst.DEFAULT_GAME_MOD_NAME))
             {
                 return string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);    
@@ -213,7 +213,7 @@ namespace Jyx2
         public static string GetArchiveFile(int index)
         {
             //根据MOD区分存档空间
-            var mod = GlobalAssetConfig.Instance.startMod.ModId;
+            var mod = RuntimeEnvSetup.CurrentModId;
             if (mod.Equals(GameConst.DEFAULT_GAME_MOD_NAME))
             {
                 return string.Format(ARCHIVE_FILE_NAME, index);    
@@ -245,8 +245,8 @@ namespace Jyx2
             GameSaveSummary summary = new GameSaveSummary()
             {
                 Summary = GenerateSaveSummaryInfo(),
-                ModId = GlobalAssetConfig.Instance.startMod.ModId,
-                ModName = GlobalAssetConfig.Instance.startMod.ModName,
+                ModId = RuntimeEnvSetup.CurrentModId,
+                ModName = RuntimeEnvSetup.CurrentModId,
             };
             GameSaveSummary.Save(fileIndex, summary);
             

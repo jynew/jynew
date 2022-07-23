@@ -34,7 +34,7 @@ public class MapTeleportor : MonoBehaviour
 
 	private async void Start()
 	{
-		await BeforeSceneLoad.loadFinishTask;
+		await RuntimeEnvSetup.Setup();
 		triggerEnabled = true;
 	}
 
@@ -167,7 +167,7 @@ public class MapTeleportor : MonoBehaviour
 		LevelLoader.LoadGameMap(nextMap, para, () =>
 		{
 			var player = LevelMaster.Instance.GetPlayer();
-			player.OnSceneLoad().Forget();
+			player?.OnSceneLoad().Forget();
 		});
 	}
 }

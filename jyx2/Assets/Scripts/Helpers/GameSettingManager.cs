@@ -19,7 +19,6 @@ using i18n;
 using i18n.TranslatorDef;
 using Jyx2.MOD;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 
 public static class GameSettingManager

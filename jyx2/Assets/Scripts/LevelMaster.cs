@@ -357,6 +357,9 @@ public class LevelMaster : MonoBehaviour
 
 			PlayerSpawnAt(loadPara.Pos);
 			PlayerSpawnRotate(loadPara.Rotate);
+			
+			
+			SetPlayerCanController(true);
 		}
 	}
 
@@ -562,10 +565,13 @@ public class LevelMaster : MonoBehaviour
 				//NPC层
 				if (Physics.Raycast(ray, out RaycastHit hitInfo, 500, 1 << LayerMask.NameToLayer("NPC")))
 				{
-					var dist = Vector3.Distance(runtime.Player.View.transform.position, hitInfo.transform.position);
-					Debug.Log("on npc clicked, dist = " + dist);
+					if (runtime.Player.View != null)
+					{
+						var dist = Vector3.Distance(runtime.Player.View.transform.position, hitInfo.transform.position);
+						Debug.Log("on npc clicked, dist = " + dist);
 					
-					//现在没有直接地图上点击NPC的实现
+						//现在没有直接地图上点击NPC的实现	
+					}
 				}
 				//BY CG: MASK：15:Ground层
 				else if (Physics.Raycast(ray, out hitInfo, 500, 1 << LayerMask.NameToLayer("Ground")))

@@ -42,8 +42,7 @@ public class GameStart : MonoBehaviour
 			Destroy(introPanel.gameObject);
 		});
 		
-		await MODManager.Init();
-		BeforeSceneLoad.ColdBind();
+		//await MODManager.Init();
 		SceneManager.LoadScene("0_MainMenu");
 	}
 }

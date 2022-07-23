@@ -29,20 +29,17 @@ namespace Jyx2Configs
 
         private bool _isInited = false;
 
-        public string ModRootDir;
 
         /// <summary>
         /// 载入配置表
         /// </summary>
-        /// <param name="rootPath">excel的data目录所在路径，为空则默认读取"Configs"</param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public void Init(string rootPath, byte[] data)
+        public void Init(byte[] data)
         {
             if (_isInited)
                 return;
-
-            ModRootDir = rootPath;
+            
             _isInited = true;
             _dataBase.Clear();
             

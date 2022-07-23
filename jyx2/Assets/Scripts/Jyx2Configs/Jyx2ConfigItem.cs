@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Jyx2.MOD;
+using Jyx2.ResourceManagement;
 using ProtoBuf;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Jyx2Configs
     {
         public async UniTask<Sprite> GetPic()
         {
-            var _sprite = await MODLoader.LoadAsset<Sprite>($"Assets/BuildSource/Items/{Id}.png");
+            var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/Items/{Id}.png");
             return _sprite;
         }
         
