@@ -4,4 +4,5 @@ jyx2_FixMapObject("万烛山庄开门", 1);
 jyx2_ReplaceSceneObject("", "NPC/金露", "1");
 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 LightScence();
+PlayMusic(12);
 do return end;
