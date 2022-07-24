@@ -786,7 +786,10 @@ public class AIManager
     {
         if (r2.Poison > r1.DePoison + 20)
         {
-            GameUtil.DisplayPopinfo("中毒太重无法解毒");
+            if (!BattleManager.Instance.IsInBattle)
+            {
+                GameUtil.DisplayPopinfo("中毒太重无法解毒"); 
+            }
             return 0;
         }
         int add = (r1.DePoison / 3) + UnityEngine.Random.Range(0, 10) - UnityEngine.Random.Range(0, 10);
