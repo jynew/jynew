@@ -236,7 +236,7 @@ public class GameEventManager : MonoBehaviour
             }
             else
             {
-                var eventLuaPath = string.Format("ka{0}", eventId);
+                var eventLuaPath = string.Format(RuntimeEnvSetup.CurrentModConfig.LuaFilePatten, eventId);
                 Jyx2.LuaExecutor.Execute(eventLuaPath, OnFinishEvent);
             }
         }
