@@ -36,7 +36,7 @@ namespace Jyx2
             await ResLoader.Init();
             await ResLoader.LoadMod(CurrentModId); 
             
-
+            CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("ModSetting.asset");
       
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
@@ -54,8 +54,6 @@ namespace Jyx2
             {
                 CurrentModId = GlobalAssetConfig.Instance.startModId;
             }
-            
-            CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("ModSetting.asset");
         }
 
       
