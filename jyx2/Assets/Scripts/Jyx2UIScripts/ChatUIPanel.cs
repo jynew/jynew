@@ -15,11 +15,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using Jyx2Configs;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
-using Jyx2.MOD;
+using Jyx2.ResourceManagement;
+using Sirenix.Utilities;
 
 public enum ChatType
 {
@@ -97,7 +96,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		var url = $"Assets/BuildSource/head/{headId}.png";
         
 		RoleHeadImage_Image.gameObject.SetActive(false);
-		RoleHeadImage_Image.sprite = await MODLoader.LoadAsset<Sprite>(url);
+		RoleHeadImage_Image.sprite = await ResLoader.LoadAsset<Sprite>(url);
 		RoleHeadImage_Image.gameObject.SetActive(true);
 	}
 
@@ -175,9 +174,9 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		}
 
 		//先找替换修正的
-		if (GlobalAssetConfig.Instance.StoryIdNameFixes != null)
+		if (RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes != null)
 		{
-			var find = GlobalAssetConfig.Instance.StoryIdNameFixes.SingleOrDefault(p => p.Id == headId);
+			var find = RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes.SingleOrDefault(p => p.Id == headId);
 			if (find != null)
 			{
 				return find.Name;
@@ -267,9 +266,10 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			if (image != null)
 			{
 				image.gameObject.SetActive(GamepadHelper.GamepadConnected);
-				Sprite[] iconSprite = getGamepadIconSprites(i);
-
-				image.sprite = iconSprite?.FirstOrDefault();
+				UniTask.Void(async () =>
+				{
+					image.sprite = await getGamepadIconSprites(currentIndex);	
+				});
 			}
 			selectionItem.transform.SetParent(Container_RectTransform, false);
 			BindListener(selectionItem, delegate
@@ -292,7 +292,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		SelectionPanel_RectTransform.gameObject.SetActive(true);
 	}
 
-	public static Sprite[] getGamepadIconSprites(int i)
+	public static async UniTask<Sprite> getGamepadIconSprites(int i)
 	{
 		string iconPath;
 		switch (i)
@@ -314,10 +314,14 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 				break;
 		}
 
-		var iconSprite = !string.IsNullOrWhiteSpace(iconPath) ?
-			Addressables.LoadAssetAsync<Sprite[]>(iconPath)
-				.Result : null;
-		return iconSprite;
+		if (iconPath.IsNullOrWhitespace())
+		{
+			return null;
+		}
+		else
+		{
+			return await ResLoader.LoadAsset<Sprite>(iconPath);
+		}
 	}
 
 	public void DoShowAnimator()

@@ -12,7 +12,7 @@ public class BigMapLocationNameDrawer : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        await BeforeSceneLoad.loadFinishTask;
+        await RuntimeEnvSetup.Setup();
         var allLocs = FindObjectsOfType<MapTeleportor>();
         foreach (var loc in allLocs)
         {

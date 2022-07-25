@@ -515,7 +515,7 @@ public class BattleRole : Jyx2AnimationBattleRole
 
     private async void Start()
     {
-        await BeforeSceneLoad.loadFinishTask;
+        await RuntimeEnvSetup.Setup();
         
         //场景没有LevelMaster
         if (LevelMaster.Instance == null && DataInstance == null) this.CreateRoleInstance(m_RoleKey);

@@ -15,7 +15,6 @@ using Cysharp.Threading.Tasks;
 using Jyx2;
 using Jyx2Configs;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Jyx2
 {
@@ -32,7 +31,8 @@ namespace Jyx2
         static async UniTask DoLoad(Jyx2ConfigMap map, Action callback)
         {
             LevelMaster.SetCurrentMap(map);
-            await LoadingPanel.Create($"{GameConfigDatabase.Instance.ModRootDir}/Maps/GameMaps/{map.MapScene}.unity");
+            await LoadingPanel.Create($"Assets/Maps/GameMaps/{map.MapScene}.unity");
+            await UniTask.WaitForEndOfFrame();
             callback?.Invoke();
         }
         
@@ -54,7 +54,7 @@ namespace Jyx2
             var formalMusic = AudioManager.GetCurrentMusic(); //记住当前的音乐，战斗后还原
 
             LevelMaster.IsInBattle = true;
-            await LoadingPanel.Create($"{GameConfigDatabase.Instance.ModRootDir}/Maps/BattlesMaps/{battle.MapScene}.unity");
+            await LoadingPanel.Create($"Assets/Maps/BattlesMaps/{battle.MapScene}.unity");
                 
             GameObject obj = new GameObject("BattleLoader");
             var battleLoader = obj.AddComponent<BattleLoader>();
