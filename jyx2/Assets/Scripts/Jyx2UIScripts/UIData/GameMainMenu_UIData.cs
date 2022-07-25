@@ -34,6 +34,7 @@ public partial class GameMainMenu
 	private RectTransform PropertyRoot_RectTransform;
 	private Text LoadingText;
 	private ReleaseNotePanel ReleaseNote_Panel;
+	private GameObject MainMenuTitles;
 
 	List<Button> bottomButtons = new List<Button>();
 
@@ -60,7 +61,9 @@ public partial class GameMainMenu
 		PropertyRoot_RectTransform = transform.Find("StartNewRolePanel/PropertyRoot").GetComponent<RectTransform>();
 		LoadingText = transform.Find("mainPanel/LoadingText").GetComponent<Text>();
 		ReleaseNote_Panel = transform.Find("ReleaseNotePanel").GetComponent<ReleaseNotePanel>();
-
+		MainMenuTitles = transform.Find("BG").gameObject;
+		
+		
 		//bottom buttons
 		foreach (Transform child in transform.Find("mainPanel/ExtendPanel"))
 		{
