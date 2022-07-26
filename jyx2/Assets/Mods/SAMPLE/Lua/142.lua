@@ -1,4 +1,4 @@
-Talk(0, "糟糕！没完没了了是吧！");
+Talk(0, "咦？这群狼似乎在围着一匹死去的野狼，没想到狼这么凶残的动物也还是这么重感情，再想到我自己，还真是倍感凄凉啊。。。");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (10)", "1");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (11)", "1");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (12)", "1");
@@ -25,8 +25,5 @@ if TryBattle(142) == true then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (17)", "");
     jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (18)", "");
     jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (19)", "");
-    Talk(0, "这匹死去的野狼肚子全都腐烂了，咦！这是什么？一个断裂的小针头！是十字形状！");
-    AddItem(126, 1);
-    AddItem(126, 1);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
