@@ -5,7 +5,7 @@ if AskBattle() == true then goto label0 end;
     do return end;
 ::label0::
     Talk(0, "那就来比试比试吧！");
-    if TryBattle(0) == false then goto label1 end;
+    if TryBattle(10) == false then goto label1 end;
         LightScence();
         Talk(10, "小子，你还有两下子，我何某说到做到，这瓶子酒你拿去，地地道道的塞外玉石榴。");
         ModifyEvent(-2, -2, -2, -2, 17, -1, -1, -2, -2, -2, -2, -2, -2);

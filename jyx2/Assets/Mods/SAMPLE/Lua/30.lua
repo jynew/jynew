@@ -15,7 +15,7 @@ Talk(0, "刘灯剑，没想到你是这种人。");
 Talk(20, "你是谁？");
 Talk(0, "我一直以为万烛书苑的掌门是仁义之士，今天就让我借着这烛光，看清看清你这张丑恶的脸。");
 Talk(20, "你这小子满嘴胡言乱语，让你先看看老子的剑！");
-if TryBattle(1) == true then goto label0 end;
+if TryBattle(20) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
