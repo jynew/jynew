@@ -21,6 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Jyx2.ResourceManagement;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
@@ -44,12 +45,25 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	async void OnStart()
 	{
+		MainMenuTitles.SetActive(false);
 		//显示loading
 		var c = StartCoroutine(ShowLoading());
-		await RuntimeEnvSetup.Setup();
 		StopCoroutine(c);
+		await RuntimeEnvSetup.Setup();
+		
 		LoadingText.gameObject.SetActive(false);
 		homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
+
+		var res = await ResLoader.LoadAsset<GameObject>("MainMenuBg.prefab");
+		if (res != null)
+		{
+			var newMainMenuBg = Instantiate(res, this.transform, false);
+			newMainMenuBg.transform.SetAsFirstSibling();
+		}
+		else
+		{
+			MainMenuTitles.gameObject.SetActive(true);
+		}
 
 		JudgeShowReleaseNotePanel();
 	}
