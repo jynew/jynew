@@ -1,4 +1,4 @@
-Talk(113, "这房间里飘出一股女人的香味，这个味道好熟悉啊，进去看看。");
+Talk(100, "这房间里飘出一股女人的香味，这个味道好熟悉啊，进去看看。");
 DarkScence();
 jyx2_FixMapObject("万烛山庄开门", 1);
 jyx2_ReplaceSceneObject("", "NPC/金露", "1");

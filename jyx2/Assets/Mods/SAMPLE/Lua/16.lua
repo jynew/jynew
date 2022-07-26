@@ -1,17 +1,18 @@
-Talk(0, "怎么样朱兄，找到什么线索了吗？");
-Talk(2, "我还是毫无头绪，我看还是让我跟你一起调查吧。");
-if AskJoin () == true then goto label0 end;
-    Talk(0, "朱兄，我们还是各自去找线索，到时候再一起交流。");
+Talk(10, "又是你，还是想尝尝玉石榴酒吗？");
+if AskBattle() == true then goto label0 end;
+    Talk(0, "我还是不喝了吧……");
     ModifyEvent(-2, -2, -2, -2, 16, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;
 ::label0::
-    if TeamIsFull() == false then goto label1 end;
-        Talk(2, "你的队伍已满，我无法加入。");
+    Talk(0, "那就来比试比试吧！");
+    if TryBattle(10) == false then goto label1 end;
+        LightScence();
+        Talk(10, "小子，你还有两下子，我何某说到做到，这瓶子酒你拿去，地地道道的塞外玉石榴。");
+        ModifyEvent(-2, -2, -2, -2, 17, -1, -1, -2, -2, -2, -2, -2, -2);
+        AddItem(126, 1);
         do return end;
 ::label1::
-    Talk(113, "这家伙虽然脑袋不好用，但是好歹也多个帮手");
-    Talk(0, "好啊，求之不得，我们一起去探寻真相吧。");
-    jyx2_ReplaceSceneObject("","NPC/乔峰","");
-    LightScence();
-    Join(2);
+        LightScence();
+        Talk(10, "看来你还没有口福，哈哈哈哈哈。");
+        ModifyEvent(-2, -2, -2, -2, 16, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
