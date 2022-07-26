@@ -1,18 +1,7 @@
-Talk(1, "又是你，还是想尝尝玉石榴酒吗？");
-if AskBattle() == true then goto label0 end;
-    Talk(0, "我还是不喝了吧……");
-    ModifyEvent(-2, -2, -2, -2, 12, -1, -1, -2, -2, -2, -2, -2, -2);
-    do return end;
-::label0::
-    Talk(0, "那就来比试比试吧！");
-    if TryBattle(0) == false then goto label1 end;
-        LightScence();
-        Talk(1, "小子，你还有两下子，我何某说到做到，这瓶子酒你拿去，地地道道的塞外玉石榴。");
-        ModifyEvent(-2, -2, -2, -2, 13, -1, -1, -2, -2, -2, -2, -2, -2);
-        AddItem(126, 1);
-        do return end;
-::label1::
-        LightScence();
-        Talk(1, "看来你还没有口福，哈哈哈哈哈。");
-        ModifyEvent(-2, -2, -2, -2, 12, -1, -1, -2, -2, -2, -2, -2, -2);
+Talk(110, "少侠，有打听到莫师父的死因吗？");
+Talk(0, "你问我？");
+Talk(110, "…啊？");
+Talk(0, "我是说…你问我…就问对了，我有个外号叫“渡城小仁杰”，我一定会想办法调查出真相，然后报告张大侠，到时候你就可以去给莫掌门报仇了。");
+Talk(110, "那就拜托了！");
+Talk(100, "这个大徒弟……就完全没有自己去调查的想法吗？");
 do return end;
