@@ -1,4 +1,4 @@
-if JudgeEventNum(4, -1) == false then goto label0 end;
+if JudgeEventNum(4, 0) == true then goto label0 end;
     Talk(100, "奇怪，我的夫人金露怎么不见了……");
     do return end;
 ::label0::
