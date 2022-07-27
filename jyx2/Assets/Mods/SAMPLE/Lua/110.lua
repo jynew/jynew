@@ -14,4 +14,5 @@ if AskJoin () == true then goto label0 end;
     jyx2_ReplaceSceneObject("","NPC/乔峰","");
     LightScence();
     Join(11);
+    ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
