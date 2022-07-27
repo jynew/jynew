@@ -19,4 +19,4 @@ if ShowYesOrNoSelectPanel("是否埋葬尸体？") == true then goto label0 end;
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 3, -2, -2, 4, -1, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
-    do return end;
+do return end;
