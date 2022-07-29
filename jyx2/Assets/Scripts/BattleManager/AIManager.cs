@@ -755,7 +755,10 @@ public class AIManager
         SkillCastResult rst = new SkillCastResult();
         if (r2.Hurt > r1.Heal + 20)
         {
-            GameUtil.DisplayPopinfo("受伤太重无法医疗");
+            if (!BattleManager.Instance.IsInBattle)
+            {
+                GameUtil.DisplayPopinfo("受伤太重无法医疗");
+            }
             return rst;
         }
         //增加生命 = 医疗能力 * a + random(5);
