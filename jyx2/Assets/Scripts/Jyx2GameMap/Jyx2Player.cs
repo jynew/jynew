@@ -351,8 +351,9 @@ public class Jyx2Player : MonoBehaviour
         WorldMapSaveData worldData = runtime.WorldData;
         worldData.WorldPosition = this.transform.position;
         worldData.WorldRotation = this.transform.rotation;
+        if (_boat == null) return;
         worldData.BoatWorldPos = _boat.transform.position;
-        worldData.BoatRotate = _boat.transform.rotation;
+        worldData.BoatRotate = _boat.transform.rotation; 
         worldData.OnBoat = IsOnBoat ? 1 : 0;
     }
 
@@ -376,7 +377,7 @@ public class Jyx2Player : MonoBehaviour
         var runtime = GameRuntimeData.Instance;
         if (runtime.WorldData == null)
             return; //首次进入
-        
+        if (_boat == null) return;
         _boat.transform.position = runtime.WorldData.BoatWorldPos;
         _boat.transform.rotation = runtime.WorldData.BoatRotate;
     }
