@@ -9,6 +9,7 @@ if JudgeEventNum(2, 0) == true then goto label0 end;
     Talk(0, "婆婆，您能帮我找下四蛇儿吗，我想我已经知道自己的死因了，但是联系不上他。");
     Talk(1100, "让我秦婆婆祝您一臂之力吧。");
 
+    jyx2_ReplaceSceneObject("", "NPC/五毒弟子", "1");
     Talk(101, "来了来了，莫掌门是查出自己的死因了吗？");
     Talk(0, "是的，终于查清了。");
     Talk(101, "那请问你是怎么死的呢？");
@@ -26,6 +27,7 @@ if JudgeEventNum(2, 0) == true then goto label0 end;
     Talk(101, "只有最后一天了，你可得抓紧查清楚。");
     Talk(0, "你知道答案你告诉我不就得了。");
     Talk(101, "这个一定得你自己弄清楚，我现在忙着呢，我先走了，你要是能找到答案，我会来找你的。");
+    jyx2_ReplaceSceneObject("", "NPC/五毒弟子", "");
     Talk(0, "喂！");
     ModifyEvent(-2, -2, -2, -2, 103, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
