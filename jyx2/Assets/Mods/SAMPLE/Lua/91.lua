@@ -11,7 +11,7 @@ if AskJoin () == true then goto label0 end;
     Talk(0, "真是怕了你。");
     Talk(90, "走走走，带我闯荡江湖去。");
     DarkScence();
-    jyx2_ReplaceSceneObject("", "NPC/王语嫣", "");
+    jyx2_ReplaceSceneObject("", "NPC/阿紫", "");
     LightScence();
     Join(90);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);

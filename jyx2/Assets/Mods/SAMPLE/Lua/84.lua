@@ -1,11 +1,11 @@
 if JudgeEventNum(3, 0) == true then goto label0 end;
     Talk(180, "江湖险恶，你们资历尚浅，可要万事小心。");
-    Talk(0, "师傅，我帮您去喂鸽子吧。");
+    Talk(0, "好的，师傅放心！");
     do return end;
 ::label0::
     if InTeam(80) == true then goto label1 end;
         Talk(180, "江湖险恶，你们资历尚浅，可要万事小心。");
-        Talk(0, "师傅，我帮您去喂鸽子吧。");
+        Talk(0, "好的，师傅放心！");
         do return end;
 ::label1::
         Talk(180, "江湖险恶，你们资历尚浅，可要万事小心。");
@@ -16,4 +16,5 @@ if JudgeEventNum(3, 0) == true then goto label0 end;
         Talk(0, "什么秘密？");
         Talk(180, "这个秘密只有茶恩寺的寿眉大师能够破解，你们可以去请教请教他。");
         ModifyEvent(-2, -2, -2, -2, 85, -1, -1, -2, -2, -2, -2, -2, -2);
+        ModifyEvent(3, 6, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
