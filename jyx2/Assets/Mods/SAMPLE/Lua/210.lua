@@ -36,4 +36,5 @@ if TryBattle(20) == true then goto label0 end;
     ModifyEvent(-2, 2, -2, -2, 213, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, -2, -2, -2, 211, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(0, 3, -2, -2, 5, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(8, 5, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
