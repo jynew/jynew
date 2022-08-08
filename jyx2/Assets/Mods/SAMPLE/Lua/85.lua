@@ -37,4 +37,6 @@ if JudgeEventNum(4, 0) == true then goto label0 end;
                 Talk(0, "我明白了，万万没想到是这样的答案。");
                 Talk(180, "这只是推测，你可不要冲动。");
                 ModifyEvent(-2, -2, -2, -2, 86, -1, -1, -2, -2, -2, -2, -2, -2);
+                ModifyEvent(1, 4, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);
+                ModifyEvent(6, 2, -2, -2, 66, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
