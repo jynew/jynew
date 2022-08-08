@@ -1,9 +1,9 @@
-Talk(0, "糟糕！还有野狼！");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (5)", "1");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (6)", "1");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (7)", "1");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (8)", "1");
 jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (9)", "1");
+Talk(0, "糟糕！还有野狼！");
 if TryBattle(141) == true then goto label0 end;
     Dead();
     do return end;
