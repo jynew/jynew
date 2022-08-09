@@ -22,5 +22,5 @@ if InTeam(80) == true then goto label0 end;
     Talk(80, "这。。。这多不好意思，那我谢谢了。");
     AddItem(80, 1);
     ModifyEvent(-2, -2, -2, -2, 78, -1, -1, -2, -2, -2, -2, -2, -2);
-    ModifyEvent(8, 3, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(8, 3, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼，徐谦，E
 do return end;
