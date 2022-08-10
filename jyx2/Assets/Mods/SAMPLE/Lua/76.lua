@@ -6,4 +6,5 @@ if InTeam(70) == true then goto label0 end;
     DarkScence();
     jyx2_FixMapObject("罂粟谷开门", 1);
     LightScence();
+    ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

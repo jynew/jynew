@@ -16,7 +16,7 @@ if InTeam(11) == true then goto label0 end;
     if TryBattle(60) == true then goto label1 end;
         Dead();
         do return end;
-::label::
+::label1::
         LightScence();
         Talk(60, "外患未除，内忧又扰，这是天要亡我也！");
         Talk(0, "这都是你自己一手造成的！");
@@ -27,10 +27,11 @@ if InTeam(11) == true then goto label0 end;
         Talk(60, "大仇？我们的仇敌，是蓝隼国啊！");
         AddItem(168, 1);
         AddItem(169, 1);
-        ModifyEvent(-2, -2, -2, 67, -1, -1, -1, -2, -2, -2, -2, -2, -2);--将军府，王远，E
-        ModifyEvent(-2, 1, -2, 63, -1, -1, -1, -2, -2, -2, -2, -2, -2);--将军府，守门弟子，C
+        ModifyEvent(-2, -2, -2, -2, 67, -1, -1, -2, -2, -2, -2, -2, -2);--将军府，王远，E
+        ModifyEvent(-2, 1, -2, -2, 63, -1, -1, -2, -2, -2, -2, -2, -2);--将军府，守门弟子，C
         ModifyEvent(5, 5, -2, -2, 59, -1, -1, -2, -2, -2, -2, -2, -2);--怡麟楼，万霜霜，C
         ModifyEvent(8, 6, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼蓝色门开条件之一
-        ModifyEvent(8, 7, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼，徐谦，J条件之一
+        ModifyEvent(8, 1, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼，徐谦，J
+        jyx2_ReplaceSceneObject("8", "NPC/岳不群", "");--鸽子楼，徐谦，J
         ModifyEvent(10, 2, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--滨湖茅庐，秦婆婆，C
 do return end;

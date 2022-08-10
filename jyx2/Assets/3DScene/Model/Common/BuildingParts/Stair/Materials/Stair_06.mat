@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Stair_06
-  m_Shader: {fileID: 4800000, guid: 63cfec4886679d44099dc4fa6ca9dfbc, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 82e96482862eb17419415ffc7dd0660d, type: 3}
+  m_ShaderKeywords: _DISSOLVE_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -32,6 +32,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -83,13 +87,17 @@ Material:
     - _ASEOutlineWidth: 0.04
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DISSOLVE: 0
     - _DetailNormalMapScale: 1
+    - _DissolveRatio: 0
     - _DstBlend: 0
     - _Factor: 0.5
     - _FlashIntensity: 0.6
     - _FlashScale: 0.5
     - _FlashSpeedX: 0.5
     - _FlashSpeedY: 0
+    - _GlobalWind: 0.5
+    - _Gloss: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -112,8 +120,10 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Outline: 0.03
+    - _OutlineRandomFactor: 0.05
     - _OutlineSize: 0.02
     - _Parallax: 0.02
+    - _PulseFrequency: 3
     - _RimIntensity: 0
     - _RimPower: 1
     - _RimSize: 1.5
@@ -121,14 +131,19 @@ Material:
     - _ShadowIntensity: 0.4
     - _Shininess: 0.275
     - _SmoothnessTextureChannel: 0
+    - _Specular: 0
     - _SpecularHighlights: 1
     - _SpecularIntensity: 0
+    - _SpeedTurbulence: 0.5
     - _SrcBlend: 1
     - _Steps: 3
     - _ToonEffect: 0.5
     - _ToonRimStep: 1
+    - _Turbulence: 1
     - _UVSec: 0
     - _Visibility: 1
+    - _WindMain: 2
+    - _WorkDistance: 5
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
@@ -137,9 +152,11 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 0}
+    - _OffsetScale: {r: 0, g: 0, b: 0, a: 0}
     - _OutColor: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0.15824135, g: 0.2174831, b: 0.26415092, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _TheFlashColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
