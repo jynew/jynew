@@ -13,6 +13,6 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
     Talk(0, "怎么？");
     Talk(122, "你身上散发出来的味道，好像我死去的夫君。。。");
     Talk(0, "别发骚了，滚。");
-    AddItem(168, 1);
+    AddItem(22, 1);
     ModifyEvent(-2, -2, -2, -2, 215, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

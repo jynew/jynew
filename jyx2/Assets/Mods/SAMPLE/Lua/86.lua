@@ -1,4 +1,4 @@
-if UseItem(168) == true then goto label2 end;
+if UseItem(141) == true then goto label2 end;
         do return end;
 ::label2::
         Talk(0, "我突然想起，我在野狼谷的一只死狼的肚子里发现了这么一枚奇怪的毒针，就是这个！");

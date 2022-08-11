@@ -53,9 +53,9 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
             Talk(31, "原以为莫穿林死后，渡城再无真侠士，看来江湖辈有人才出，我可以放心归去了。");
             Talk(80, "爹！你去哪了？");
             jyx2_ReplaceSceneObject("", "NPC/方丈", "");
-            AddItem(168, 1);
-            AddItem(169, 1);
-            AddItem(170, 1);
+            AddItem(32, 1);
+            AddItem(33, 1);
+            AddItem(30, 10);
             ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
             ModifyEvent(-2, 2, -2, -2, 39, -1, -1, -2, -2, -2, -2, -2, -2);--茶恩寺，虚安，B
             ModifyEvent(7, 3, -2, -2, 79, -1, -1, -2, -2, -2, -2, -2, -2);--罂粟谷，粟兰，D
