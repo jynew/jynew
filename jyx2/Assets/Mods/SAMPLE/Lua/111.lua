@@ -9,5 +9,5 @@ if ShowYesOrNoSelectPanel("是否购买槟榔？") == true then goto label0 end;
 ::label1::
         Talk(0, "来几颗尝尝。");
         AddItemWithoutHint(174, -100);
-        AddItem(168, 10);
+        AddItem(110, 10);
 do return end;

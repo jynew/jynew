@@ -6,6 +6,6 @@ if InTeam(11) == true then goto label0 end;
     Talk(11, "是的，我们莫桥山庄的兄弟们多次来寿眉大师这里求医问药。");
     Talk(132, "原来是莫桥山庄的朱少侠，这里有一些药品是住持大师送给莫桥山庄的，还请收下。");
     Talk(11, "那就谢谢了！");
-    AddItem(168, 10);
+    AddItem(30, 10);
     ModifyEvent(-2, -2, -2, -2, 34, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

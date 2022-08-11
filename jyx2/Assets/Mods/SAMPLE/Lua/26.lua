@@ -1,4 +1,4 @@
-if UseItem(126) == true then goto label0 end;
+if UseItem(10) == true then goto label0 end;
     do return end;
 ::label0::
     Talk(121, "这香味…是玉石榴！你从哪里搞到的？");

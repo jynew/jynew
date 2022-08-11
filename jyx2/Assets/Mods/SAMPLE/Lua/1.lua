@@ -15,7 +15,7 @@ if ShowYesOrNoSelectPanel("是否埋葬尸体？") == true then goto label0 end;
     jyx2_ReplaceSceneObject("", "Player/丐帮弟子", "1");
     jyx2_ReplaceSceneObject("13", "FX/ExitLight (1)", "1");--野狼洞开洞
     jyx2_ReplaceSceneObject("13", "Triggers/Leave2", "1");
-    AddItem(168, 1);
+    AddItem(0, 1);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 3, -2, -2, 4, -1, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
