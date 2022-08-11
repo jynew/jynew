@@ -1,19 +1,22 @@
 Talk(180, "嘿嘿，我可不陪你了。");
-Talk(82, "涂涂尔颂，你这招挑拨离间才玩得到位，这几个渡城的高手都被你弄废了，我今天还真是没打过瘾。");
+Talk(61, "涂涂尔颂，你这招挑拨离间才玩得到位，这几个渡城的高手都被你弄废了，我今天还真是没打过瘾。");
 Talk(180, "敌人已全部倒下，听大人指令。");
-Talk(82, "屠城！");
+Talk(61, "屠城！");
+jyx2_WalkFromTo(-1, 13);
 Talk(0, "谁说全部倒下了？");
 Talk(180, "哟哟，忘了还有一个。大人，这家伙你可以打过瘾。");
 Talk(0, "想进渡城，除非从老子的尸体上跨过去！");
-Talk(82, "这是个什么东西，我喜欢！");
+Talk(61, "这是个什么东西，我喜欢！");
 if TryBattle(61) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
     LightScence();
-    Talk(82, "没想到渡城还有这种高手，下次再来。");
+    Talk(61, "没想到渡城还有这种高手，下次再来。");
     Talk(180, "好的好的！");
     Talk(0, "滚！");
+    jyx2_ReplaceSceneObject("", "NPC/岳不群", "");
+    jyx2_ReplaceSceneObject("", "NPC/雪怪", "");
     jyx2_ReplaceSceneObject("", "NPC/五毒弟子", "1");
     Talk(101, "漂亮啊漂亮！");
     Talk(0, "你。。。你终于出现了。");
