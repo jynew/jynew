@@ -24,7 +24,7 @@ if InTeam(80) == true then goto label0 end;
     Talk(0, "好的，师傅放心！");
     Talk(180, "我也没教过你们武功，这个你们可以拿去学学。");
     DarkScence();
-    AddItem(168, 1);
+    AddItem(80, 1);
     ModifyEvent(-2, -2, -2, -2, 84, -1, -1, -2, -2, -2, -2, -2, -2);
     LightScence();
 do return end;

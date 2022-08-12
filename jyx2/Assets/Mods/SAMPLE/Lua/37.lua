@@ -14,7 +14,7 @@ if InTeam(30) == true then goto label0 end;
     Talk(30, "好的！");
     Talk(31, "助人不一定只能动拳头，这个你拿去学学。");
     Talk(30, "好的！");
-    AddItem(69, 1);
+    AddItem(31, 1);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, -2, -2, -2, 38, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

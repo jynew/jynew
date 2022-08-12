@@ -1,4 +1,4 @@
-if UseItem(126) == true then goto label0 end;
+if UseItem(90) == true then goto label0 end;
     do return end;
 ::label0::
     Talk(155, "啊？这是金角黄牛肉！");
