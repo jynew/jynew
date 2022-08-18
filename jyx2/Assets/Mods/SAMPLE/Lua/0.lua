@@ -34,8 +34,8 @@ Talk(101, "那实在不好意思，可能最近渡城一带太平安稳，没有
 Talk(100, "……");
 Talk(101, "那我就先告辞了，七天后我会再来找你，等你好消息，出发吧大侠。");
 jyx2_ReplaceSceneObject("", "NPC/五毒弟子", "");
-jyx2_ReplaceSceneObject("", "NPC/杨逍 (1)", "");
-jyx2_ReplaceSceneObject("", "Player/丐帮弟子", "1");
+jyx2_ReplaceSceneObject("", "NPC/莫穿林 (1)", "");
+jyx2_ReplaceSceneObject("", "Player/陶六一", "1");
 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(-2, 1, -2, -2, 1, -2, -2, -2, -2, -2, -2, -2, -2);
 do return end;

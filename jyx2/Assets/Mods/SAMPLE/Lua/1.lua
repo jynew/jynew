@@ -5,14 +5,14 @@ if ShowYesOrNoSelectPanel("是否埋葬尸体？") == true then goto label0 end;
 ::label0::
     Talk(0, "自己亲手埋自己，还真是别有一翻滋味在心头。");
     Talk(0, "奇怪，我的脖子后面有一个很小很小的十字形状针孔，这一定就是致死的原因吧！");
-    jyx2_ReplaceSceneObject("", "Player/丐帮弟子", "");
+    jyx2_ReplaceSceneObject("", "Player/陶六一", "");
     jyx2_PlayTimelineSimple("[Timeline]1_埋葬", false);
     jyx2_Wait(5.4);
     DarkScence();
-    jyx2_ReplaceSceneObject("", "NPC/杨逍", "");
+    jyx2_ReplaceSceneObject("", "NPC/莫穿林", "");
     jyx2_ReplaceSceneObject("", "Dynamic/Grave", "1");
     jyx2_FixMapObject("主角移动", 1);
-    jyx2_ReplaceSceneObject("", "Player/丐帮弟子", "1");
+    jyx2_ReplaceSceneObject("", "Player/陶六一", "1");
     jyx2_ReplaceSceneObject("13", "FX/ExitLight (1)", "1");--野狼洞开洞
     jyx2_ReplaceSceneObject("13", "Triggers/Leave2", "1");
     AddItem(0, 1);
