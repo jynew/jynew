@@ -310,11 +310,11 @@ public partial class GameMainMenu : Jyx2_UIBase
 	public void OnQuitGameClicked()
 	{
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+		UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+		Application.Quit();
 #endif
-    }
+	}
 
 	public void OnCreateBtnClicked()
 	{
