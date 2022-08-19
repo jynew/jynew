@@ -60,4 +60,5 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
             ModifyEvent(-2, 2, -2, -2, 39, -1, -1, -2, -2, -2, -2, -2, -2);--茶恩寺，虚安，B
             ModifyEvent(7, 3, -2, -2, 79, -1, -1, -2, -2, -2, -2, -2, -2);--罂粟谷，粟兰，D
             ModifyEvent(8, 4, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼，徐谦，G
+            ModifyEvent(5, 5, -2, -2, 515, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
