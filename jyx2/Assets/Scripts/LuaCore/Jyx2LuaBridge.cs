@@ -1083,7 +1083,6 @@ namespace Jyx2
             {
                 if (LevelMaster.Instance.IsInWorldMap)
                 {
-                    storyEngine.DisplayPopInfo("大地图中无法打开商店，需到客栈中使用");
                     Next();
                     return;
                 }
@@ -1092,7 +1091,6 @@ namespace Jyx2
                 var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
                 if (!hasData)
                 {
-                    storyEngine.DisplayPopInfo($"地图{mapId}没有配置商店，可在excel/JYX2小宝商店.xlsx中查看");
                     Next();
                     return;
                 }
