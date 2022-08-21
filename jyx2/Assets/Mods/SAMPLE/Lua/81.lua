@@ -15,7 +15,7 @@ if JudgeEventNum(2, 0) == true then goto label0 end;
 ::label2::
         Talk(0, "好啊，我们得去跟师傅说一声。");
         DarkScence();
-        jyx2_ReplaceSceneObject("", "NPC/石破天", "");
+        jyx2_ReplaceSceneObject("", "NPC/童四二", "");
         LightScence();
         Join(80);
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
