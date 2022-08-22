@@ -78,9 +78,10 @@ namespace Jyx2.ResourceManagement
         /// <summary>
         /// 加载MOD
         /// </summary>
-        /// <param name="modId"></param>
-        public static async UniTask LoadMod(string modId)
+        /// <param name="currentModId"></param>
+        public static async UniTask LoadMod(string currentModId)
         {
+            var modId = currentModId.ToLower();
             if (IsEditor())
             {
                 _modList.Add(modId);
