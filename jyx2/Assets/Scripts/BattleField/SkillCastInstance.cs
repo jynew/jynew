@@ -147,7 +147,7 @@ namespace Jyx2
 
         public virtual bool IsCastToEnemy()
         {
-            if (Data.GetSkill().DamageType >= 3)
+            if (Data.GetSkill().DamageType == 3 || Data.GetSkill().DamageType == 4)
             {
                 return false;
             }
