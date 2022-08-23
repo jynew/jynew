@@ -61,6 +61,7 @@ public class LevelMaster : MonoBehaviour
 	private Jyx2Player _gameMapPlayer;
 	
 	NavMeshAgent _playerNavAgent;
+	NavMeshPath _cachePath;
 	GameObject _navPointer;
 
 	//寻路终点图标
@@ -535,10 +536,12 @@ public class LevelMaster : MonoBehaviour
 
 	void OnClickControlPlayer()
 	{
+		if (_playerNavAgent == null)
+			return;
 		SetPlayerSpeed(_playerNavAgent.velocity.magnitude);
 
 
-		if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
+		if (!_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
 
 		//到达目的地了
 		if (!_playerNavAgent.pathPending && _playerNavAgent.enabled && !_playerNavAgent.isStopped && _playerNavAgent.remainingDistance <= _playerNavAgent.stoppingDistance)
@@ -593,7 +596,16 @@ public class LevelMaster : MonoBehaviour
 					{
 						_playerNavAgent.isStopped = false;
 						_playerNavAgent.updateRotation = true;
-						_playerNavAgent.SetDestination(hitInfo.point);
+						if (_playerNavAgent.SetDestination(hitInfo.point))
+						{
+							if (_cachePath == null)
+								_cachePath = new NavMeshPath();
+
+							bool isPathValid = _playerNavAgent.CalculatePath(_playerNavAgent.destination, _cachePath);
+							if (isPathValid)
+								_playerNavAgent.SetPath(_cachePath);
+						}
+
 					}
 
 					DisplayNavPointer(hitInfo.point);
