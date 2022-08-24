@@ -48,11 +48,16 @@ public class ModPanelNew : Jyx2_UIBase
 
     public void OnClose()
     {
-        if (m_Dropdown.value != 0)
+        var selectMod = m_Dropdown.options[m_Dropdown.value].text;
+        if(selectMod != RuntimeEnvSetup.CurrentModId)
         {
-            PlayerPrefs.SetString("CURRENT_MOD", m_Dropdown.options[m_Dropdown.value].text);
+            PlayerPrefs.SetString("CURRENT_MOD", selectMod);
             PlayerPrefs.Save();
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit();
+#endif
         }
         this.Hide();
     }
