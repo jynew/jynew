@@ -5,13 +5,15 @@ if TryBattle(161) == true then goto label1 end;
     Dead();
     do return end;
 ::label1::
+        LightScence();
+        jyx2_ReplaceSceneObject("", "NPC/苏星河", "1");
+        jyx2_ReplaceSceneObject("", "NPC/Brown_bear_prefab", "");
         Talk(30, "这不是隋仙人吗？");
         Talk(123, "多谢少侠相救，我到这里采药，被这大黑熊围了几天。");
         Talk(0, "怪不得不见您在隋仙堂卖药，原来是被困在这里了。");
         Talk(123, "真是感谢救命之恩！");
         Talk(0, "你赶紧回去吧，你的夫人还在担心你。");
         Talk(123, "好的，少侠随时来隋仙堂做客！");
-        jyx2_ReplaceSceneObject("", "NPC/Brown_bear_prefab", "");
         jyx2_ReplaceSceneObject("", "NPC/苏星河", "");
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
         jyx2_ReplaceSceneObject("12", "NPC/苏星河", "1");
