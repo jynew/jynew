@@ -46,7 +46,7 @@ namespace Jyx2
                 return;
             }
 
-            var luaEnv = LuaManager.GetLuaEnv() as LuaEnv;
+            var luaEnv = LuaManager.GetLuaEnv();
 
             Debug.Log("执行lua: " + path);
 

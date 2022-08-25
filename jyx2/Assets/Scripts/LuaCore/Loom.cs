@@ -164,10 +164,8 @@ public class Loom : MonoBehaviour
             {
                 _currentDelayed.Clear();
                 _currentDelayed.AddRange(_delayed.Where(d => d.time <= Time.time));
-                for (int i = 0; i < _currentDelayed.Count; i++)
-                {
-                    _delayed.Remove(_currentDelayed[i]);
-                }
+                if(_currentDelayed.Count > 0)
+                    _delayed.RemoveAll(d => d.time <= Time.time);
             }
 
             for (int i = 0; i < _currentDelayed.Count; i++)
