@@ -31,9 +31,9 @@ namespace Jyx2
             return _inited;
         }
 
-        public static object GetLuaEnv()
+        public static LuaEnv GetLuaEnv()
         {
-            return luaEnv as object;
+            return luaEnv;
         }
 
         private static void Clear()
