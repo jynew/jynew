@@ -24,7 +24,7 @@ if InTeam(11) == true then goto label0 end;
 ::label2::
             Talk(0, "这样也好，多了一个帮手。");
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/虚竹", "");
+            jyx2_ReplaceSceneObject("", "NPC/虚寂", "");
             LightScence();
             Join(30);
             ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);

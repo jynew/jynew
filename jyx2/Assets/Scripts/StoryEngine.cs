@@ -92,7 +92,7 @@ public class StoryEngine : MonoBehaviour
             {
                 throw new Exception("存档中的地图找不到！");
             }
-            
+            LevelMaster.LastGameMap = null;
             LevelLoader.LoadGameMap(map, loadPara,
                 () => { LevelMaster.Instance.TryBindPlayer().Forget(); });
             return true;

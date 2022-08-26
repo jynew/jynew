@@ -264,28 +264,27 @@ public class LevelMaster : MonoBehaviour
 		}
 	}
 
-	private void PlayMusic(Jyx2ConfigMap gameMap)
+	private void PlayMusic(Jyx2ConfigMap currentMap)
 	{
-		if (gameMap == null) return;
+		if (currentMap == null) return;
 		
-		//首先播放进门音乐
-		if (gameMap.InMusic != -1)
+		//有上一张图的出门音乐就放该音乐
+		if (LastGameMap != null)
 		{
-			AudioManager.PlayMusic(gameMap.InMusic);
-			//如果没有在，则播放出门音乐
-			if (LastGameMap != null)
+			if (LastGameMap.ForceSetLeaveMusicId != -1)
 			{
-				if (LastGameMap.ForceSetLeaveMusicId != -1)
-				{
-					AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
-				}
-
-				if (LastGameMap.OutMusic != null)
-				{
-					AudioManager.PlayMusic(LastGameMap.OutMusic);
-				}
+				AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
+				return;
+			}
+			if (LastGameMap.OutMusic != -1)
+			{
+				AudioManager.PlayMusic(LastGameMap.OutMusic);
+				return;
 			}
 		}
+		//没有就放进门的
+		AudioManager.PlayMusic(currentMap.InMusic);
+
 	}
 
 	public void PlayMusicAtPath(string musicPath)
