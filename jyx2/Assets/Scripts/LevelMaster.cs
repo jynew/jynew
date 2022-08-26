@@ -268,23 +268,24 @@ public class LevelMaster : MonoBehaviour
 	{
         if (currentMap == null) return;
 
-		//有上张图强制播放的出门音乐就放该音乐
-        if (LastGameMap != null && LastGameMap.ForceSetLeaveMusicId != -1)
+		//有上一张图的出门音乐就放该音乐
+        if (LastGameMap != null)
         {
-            AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
-            return;
+			if (LastGameMap.ForceSetLeaveMusicId != -1)
+			{
+                AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
+				return;
+            }
+			if(LastGameMap.OutMusic != -1)
+			{
+                AudioManager.PlayMusic(LastGameMap.OutMusic);
+				return;
+            }
         }
+		//没有就放进门的
+        AudioManager.PlayMusic(currentMap.InMusic);
 
-        if (currentMap.InMusic != -1)
-		{
-            AudioManager.PlayMusic(currentMap.InMusic);
-        }
-		else if(LastGameMap != null)
-		{
-			AudioManager.PlayMusic(LastGameMap.OutMusic);
-		}
-
-	}
+    }
 
 	public void PlayMusicAtPath(string musicPath)
 	{
