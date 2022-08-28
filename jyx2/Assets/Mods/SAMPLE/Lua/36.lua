@@ -9,7 +9,7 @@ if InTeam(11) == true then goto label0 end;
         do return end;
 ::label1::
       if TeamIsFull() == false then goto label2 end;
-            Talk(70, "你的队伍已满，我无法加入。");
+            Talk(30, "你的队伍已满，我无法加入。");
             do return end;
 ::label2::
             Talk(0, "这样也好，多了一个帮手。");
