@@ -296,7 +296,7 @@ public class AIManager
             //用毒算分
             if (skill is PoisonSkillCastInstance)
             {
-                score = Mathf.Min(GameConst.MAX_POISON - targetRole.Poison, caster.UsePoison) * 0.5;
+                score = Mathf.Min(GameConst.MAX_POISON - targetRole.Poison, caster.UsePoison) * 0.1;
                 if (targetRole.Hp < 10)
                 {
                     score = 1;
@@ -310,7 +310,7 @@ public class AIManager
                 {
                     score = targetRole.Hp * 1.25;
                 }
-                score *= 0.5;//暗器分值略低
+                score *= 0.1;//暗器分值略低
             }
         }
 
