@@ -17,4 +17,5 @@ Talk(1180, "送给你吧。。。莫穿林。");
 AddItem(182, 1);
 jyx2_ReplaceSceneObject("", "Dynamic/影子", "");
 jyx2_ReplaceSceneObject("", "Dynamic/无名指法", "");
+ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
