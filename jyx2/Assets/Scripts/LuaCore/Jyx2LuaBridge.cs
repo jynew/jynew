@@ -566,7 +566,7 @@ namespace Jyx2
             {
                 var role = runtime.GetRole(roleId);
                 role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ROLE_ZIZHI);
-                storyEngine.DisplayPopInfo(role.Name + "资质增加" + v);
+                storyEngine.DisplayPopInfo(role.Name + "资质" + (v > 0 ? "增加" : "减少") + Math.Abs(v));
                 Next();
             });
             Wait();
