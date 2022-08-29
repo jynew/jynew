@@ -3,7 +3,6 @@ using System.IO;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using Jyx2.ResourceManagement;
-using UnityEditor;
 using UnityEngine;
 
 namespace Jyx2
@@ -55,7 +54,6 @@ namespace Jyx2
                     Debug.Log("File Watcher! Reload success! -> " + dirPath);
                 }); 
             }
-            AssetDatabase.Refresh();
 #endif
       
             GameSettingManager.Init();
