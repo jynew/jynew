@@ -157,5 +157,51 @@ namespace Jyx2.Middleware
             }
         }
         #endregion
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// 缓存所有FileSystemWatcher，防止重复
+        /// </summary>
+        private static Dictionary<string, FileSystemWatcher> _cacheWatchers;
+
+        /// <summary>
+        /// 监听Configs目录下的所有Excel文件，当更改时，触发委托
+        /// </summary>
+        /// <param name="dirPath"></param>
+        /// <param name="action"></param>
+        public static void WatchConfig(string dirPath, Action action)
+        {
+            if (!Application.isEditor)
+            {
+                Debug.LogError("[WatchConfig] Available in Unity Editor mode only!");
+                return;
+            }
+            if (_cacheWatchers == null)
+                _cacheWatchers = new Dictionary<string, FileSystemWatcher>();
+            FileSystemWatcher watcher;
+            if (!Directory.Exists(dirPath))
+            {
+                Debug.LogError($"[WatchConfig] Not found Dir: {dirPath}");
+                return;
+            }
+            if (!_cacheWatchers.TryGetValue(dirPath, out watcher))
+            {
+                _cacheWatchers[dirPath] = watcher = new FileSystemWatcher(dirPath);
+                Debug.Log($"Watching Config Dir: {dirPath}");
+            }
+
+            watcher.IncludeSubdirectories = false;
+            watcher.Path = dirPath;
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            watcher.Filter = "*";
+            watcher.EnableRaisingEvents = true;
+            watcher.InternalBufferSize = 2048;
+            watcher.Changed += (sender, e) =>
+            {
+                Debug.Log($"Config changed: {e.FullPath}");
+                action?.Invoke();
+            };
+        }
+#endif
     }
 }
