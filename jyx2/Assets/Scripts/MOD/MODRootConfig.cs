@@ -30,8 +30,8 @@ public class MODRootConfig : ScriptableObject
     public List<StoryIdNameFix> StoryIdNameFixes;
 
 
-    [Button("生成索引")]
-    void GenerateIndexFile()
+    [Button("生成配置表")]
+    public void GenerateConfigs()
     {
         string dataPath = Path.Combine(ModRootDir, "Configs", "Datas.bytes");
         if (File.Exists(dataPath))
