@@ -4,6 +4,7 @@ using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2Configs;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -29,9 +30,9 @@ public class MODRootConfig : ScriptableObject
     [HideLabel]
     public List<StoryIdNameFix> StoryIdNameFixes;
 
-
-    [Button("生成索引")]
-    void GenerateIndexFile()
+#if UNITY_EDITOR
+    [Button("生成配置表")]
+    public void GenerateConfigs()
     {
         string dataPath = Path.Combine(ModRootDir, "Configs", "Datas.bytes");
         if (File.Exists(dataPath))
@@ -39,5 +40,7 @@ public class MODRootConfig : ScriptableObject
             File.Delete(dataPath);
         }
         ExcelTools.GenerateConfigsFromExcel<Jyx2ConfigBase>($"{ModRootDir}/Configs");
+        AssetDatabase.Refresh();
     }
+#endif
 }

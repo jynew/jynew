@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using Cysharp.Threading.Tasks;
+using Jyx2.Middleware;
 using Jyx2.ResourceManagement;
 using UnityEngine;
 
@@ -37,6 +39,22 @@ namespace Jyx2
             await ResLoader.LoadMod(CurrentModId); 
             
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
+            
+#if UNITY_EDITOR
+            var dirPath = $"Assets/Mods/{CurrentModId}/Configs";
+            if (!File.Exists($"{dirPath}/Datas.bytes"))
+            {
+                CurrentModConfig.GenerateConfigs();
+            }
+            else
+            {
+                ExcelTools.WatchConfig(dirPath, () =>
+                {
+                    CurrentModConfig.GenerateConfigs();
+                    Debug.Log("File Watcher! Reload success! -> " + dirPath);
+                }); 
+            }
+#endif
       
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
