@@ -43,7 +43,7 @@ public class ModPanelNew : Jyx2_UIBase
         }
         
         //暂不支持自由扩展MOD
-        return new List<string> {"jyx2", "sample"};
+        return new List<string> {"JYX2", "SAMPLE"};
     }
 
     public void OnClose()
