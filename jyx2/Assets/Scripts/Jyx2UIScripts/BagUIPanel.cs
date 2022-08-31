@@ -120,6 +120,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 		foreach (var kv in dicSort)
 		{
+			
 			string id = kv.Key;
 			int count = kv.Value.count;
 
