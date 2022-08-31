@@ -116,17 +116,10 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 		float itemHeight = 0;
 
-		var items = GameRuntimeData.Instance.Items;
-		foreach (var kv in items)
-		{
-			Debug.Log("-items---" + kv.Key);
-		}
-
 		var dicSort = from itemPair in m_itemsData orderby itemPair.Value.getTime select itemPair;
 
 		foreach (var kv in dicSort)
 		{
-			Debug.Log("-dicSort---" + kv.Key);
 			string id = kv.Key;
 			int count = kv.Value.count;
 
