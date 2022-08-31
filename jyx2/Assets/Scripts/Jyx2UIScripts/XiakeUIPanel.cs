@@ -420,7 +420,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 	async UniTask SelectFromBag(Action<int> Callback, Func<Jyx2ConfigItem, bool> filter, int current_itemId)
 	{
 		this.gameObject.SetActive(false);
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), runtime.Items, new Action<int>((itemId) =>
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), runtime.ItemExtSaveDatas, new Action<int>((itemId) =>
 		{
 			this.gameObject.SetActive(true);
 			if (itemId != -1 && !m_currentRole.CanUseItem(itemId))

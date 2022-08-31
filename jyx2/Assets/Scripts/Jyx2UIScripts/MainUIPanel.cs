@@ -130,7 +130,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	async void OnBagBtnClick()
 	{
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>(OnUseItem));
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.ItemExtSaveDatas, new Action<int>(OnUseItem));
 	}
 
 	async void OnUseItem(int id)
