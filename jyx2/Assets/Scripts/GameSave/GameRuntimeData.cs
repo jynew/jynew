@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using ES3Types;
 using i18n.TranslatorDef;
+using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 
@@ -120,6 +121,8 @@ namespace Jyx2
         [SerializeField] public Dictionary<string, int> EventCounter = new Dictionary<string, int>();
         [SerializeField] public Dictionary<string, int> MapPic = new Dictionary<string, int>();
         [SerializeField] private List<int> ItemAdded = new List<int>(); //已经添加的角色物品
+        [SerializeField] public Dictionary<string, ItemExtSaveData> ItemExtSaveDatas = new Dictionary<string, ItemExtSaveData>();
+
         #endregion
 
         #region JYX2
@@ -260,6 +263,16 @@ namespace Jyx2
             var path = GetArchiveFile(fileIndex);
             var runtime =  ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
             _instance = runtime;
+            var itemExtSaveDatas = _instance.ItemExtSaveDatas;
+            foreach (var pair in _instance.Items)
+            {
+                if (!itemExtSaveDatas.ContainsKey(pair.Key))
+                {
+                    itemExtSaveDatas[pair.Key] = new ItemExtSaveData();
+                }
+                itemExtSaveDatas[pair.Key].count = pair.Value;
+
+            }
             return runtime;
         }
 
@@ -451,17 +464,22 @@ namespace Jyx2
                     return;
                 }
                 Items[id] = count;
+                ItemExtSaveDatas[id] = new ItemExtSaveData();
+                ItemExtSaveDatas[id].getTime = Tools.GetSecondsSince1970();
             }
             else
             {
                 Items[id] += count;
+                ItemExtSaveDatas[id].count += count;
                 if(Items[id] == 0)
                 {
                     Items.Remove(id);
+                    ItemExtSaveDatas.Remove(id);
                 }else if(Items[id] < 0)
                 {
                     Debug.LogError("物品扣成负的了,id=" + id + ",count=" + count);
                     Items.Remove(id);
+                    ItemExtSaveDatas.Remove(id);
                 }
             }
         }
