@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using Jyx2.ResourceManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Jyx2
 {
@@ -70,7 +71,20 @@ namespace Jyx2
             }
             else
             {
+#if UNITY_EDITOR
+                var path = SceneManager.GetActiveScene().path;
+                if (path.Contains("Assets/Mods/"))
+                {
+
+                    CurrentModId = path.Split('/')[2];
+                }
+                else
+                {
+                    CurrentModId = GlobalAssetConfig.Instance.startModId;
+                }
+#else
                 CurrentModId = GlobalAssetConfig.Instance.startModId;
+#endif
             }
         }
 
