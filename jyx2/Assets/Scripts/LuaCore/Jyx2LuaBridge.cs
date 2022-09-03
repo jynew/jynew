@@ -1033,14 +1033,18 @@ namespace Jyx2
                     return;
                 }
 
+                var stringBuilder = new System.Text.StringBuilder();
+                var token = nameof(Jyx2LuaBridge);
+                int displayCount = Mathf.Abs(count);
                 if (count < 0)
                 {
+                    displayCount = Mathf.Min(displayCount, runtime.GetItemCount(itemId));
                     //---------------------------------------------------------------------------
                     //storyEngine.DisplayPopInfo("失去物品:" + item.Name + "×" + Math.Abs(count));
                     //---------------------------------------------------------------------------
                     //特定位置的翻译【得到物品提示】
                     //---------------------------------------------------------------------------
-                    storyEngine.DisplayPopInfo("失去物品：".GetContent(nameof(Jyx2LuaBridge)) + item.Name + "×" + Math.Abs(count));
+                    stringBuilder.Append("失去物品：".GetContent(token));
                     //---------------------------------------------------------------------------
                     //---------------------------------------------------------------------------
                 }
@@ -1051,10 +1055,14 @@ namespace Jyx2
                     //---------------------------------------------------------------------------
                     //特定位置的翻译【得到物品提示】
                     //---------------------------------------------------------------------------
-                    storyEngine.DisplayPopInfo("得到物品：".GetContent(nameof(Jyx2LuaBridge)) + item.Name + "×" + Math.Abs(count));
+                    stringBuilder.Append("得到物品：".GetContent(token));
                     //---------------------------------------------------------------------------
                     //---------------------------------------------------------------------------
                 }
+                stringBuilder.Append(item.Name);
+                stringBuilder.Append("×");
+                stringBuilder.Append(displayCount);
+                storyEngine.DisplayPopInfo(stringBuilder.ToString());
 
                 runtime.AddItem(itemId, count);
             });
