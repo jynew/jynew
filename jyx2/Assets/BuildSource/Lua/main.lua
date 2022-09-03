@@ -214,6 +214,7 @@ RoleUseItem = CS.Jyx2.Jyx2LuaBridge.RoleUseItem--指定角色使用物品
 RoleUnequipItem = CS.Jyx2.Jyx2LuaBridge.RoleUnequipItem--指定角色卸下物品（装备）
 ShowMessage = CS.Jyx2.Jyx2LuaBridge.ShowMessage
 ShowYesOrNoSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowYesOrNoSelectPanel
+ShowSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowSelectPanel
 function main_getLuaFiles()
 	return {}
 end 

@@ -1727,6 +1727,25 @@ namespace Jyx2
             Wait();
             return _selectResult == 0;
         }
+        
+        public static int ShowSelectPanel(string selectMessage, params string[] selectionContent)
+        {
+            async void Action()
+            {
+                storyEngine.BlockPlayerControl = true;
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selectionContent.ToList(), new Action<int>((index) =>
+                {
+                    _selectResult = index;
+                    storyEngine.BlockPlayerControl = false;
+                    Next();
+                }));
+            }
+
+            RunInMainThread(Action);
+
+            Wait();
+            return _selectResult;
+        }
 
         private static bool JudgeRoleValue(int roleId, Predicate<RoleInstance> judge)
         {
