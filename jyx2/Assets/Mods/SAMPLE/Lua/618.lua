@@ -17,7 +17,7 @@ if TryBattle(61) == true then goto label0 end;
     Talk(0, "滚！");
     jyx2_ReplaceSceneObject("", "NPC/岳不群", "");
     jyx2_ReplaceSceneObject("", "NPC/雪怪", "");
-    jyx2_ReplaceSceneObject("", "NPC/五毒弟子", "1");
+    jyx2_ReplaceSceneObject("", "NPC/四蛇儿", "1");
     Talk(101, "漂亮啊漂亮！");
     Talk(0, "你。。。你终于出现了。");
     Talk(101, "这次你不但找到了答案，还孤身抗敌守住了城门，真是让鬼都为你感动落泪啊。");
