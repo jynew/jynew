@@ -3,7 +3,6 @@ if TryBattle(181) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
-    Talk(0, "这家伙好凶！");
     AddItem(181, 10);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

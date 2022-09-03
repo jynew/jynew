@@ -11,6 +11,7 @@ if ShowYesOrNoSelectPanel("是否挖掘坟墓？") == true then goto label0 end;
     DarkScence();
     jyx2_ReplaceSceneObject("", "NPC/莫穿林 (2)", "1");
     jyx2_ReplaceSceneObject("", "Dynamic/Grave/Tomb", "");
+    jyx2_FixMapObject("挖坟移动", 1);
     jyx2_ReplaceSceneObject("", "Player/陶六一", "1");
     LightScence();
     Talk(0, "并没有什么线索，明明是自己埋的还挖开，我想我脑子坏掉了。");
