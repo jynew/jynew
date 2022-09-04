@@ -13,4 +13,5 @@ if AskRest() == true then goto label0 end;
 	    jyx2_MovePlayer("休息后", "Level/Dynamic");
         SetRoleFace(3);
         LightScence();
+        Talk(0, "神清气爽，开始新的旅途。");
 do return end;

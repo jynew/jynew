@@ -1728,12 +1728,12 @@ namespace Jyx2
             return _selectResult == 0;
         }
         
-        public static int ShowSelectPanel(string selectMessage, params string[] selectionContent)
+        public static int ShowSelectPanel(int roleId, string selectMessage, params string[] selectionContent)
         {
             async void Action()
             {
                 storyEngine.BlockPlayerControl = true;
-                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selectionContent.ToList(), new Action<int>((index) =>
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, roleId.ToString(), selectMessage, selectionContent.ToList(), new Action<int>((index) =>
                 {
                     _selectResult = index;
                     storyEngine.BlockPlayerControl = false;
