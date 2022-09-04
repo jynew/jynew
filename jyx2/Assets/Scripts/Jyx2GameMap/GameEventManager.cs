@@ -145,7 +145,7 @@ public class GameEventManager : MonoBehaviour
     {
         if (curEvent.m_UseItemEventId == NO_EVENT) return;
 
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.ItemExtSaveDatas, new Action<int>((itemId) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
             if (itemId == -1) //取消使用
                 return;

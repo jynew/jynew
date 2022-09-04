@@ -25,7 +25,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 	public override UILayer Layer => UILayer.NormalUI;
 
 	Action<int> m_callback;
-	Dictionary<string, ItemExtSaveData> m_itemsData;
+	Dictionary<string, (int, int)> m_itemsData;
 	Jyx2ItemUI m_selectItem;
 	Func<Jyx2ConfigItem, bool> m_filter = null;
 	private bool castFromSelectPanel = false;
@@ -65,7 +65,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
-		m_itemsData = (Dictionary<string, ItemExtSaveData>)allParams[0];
+		m_itemsData = (Dictionary<string, (int, int)>)allParams[0];
 		if (allParams.Length > 1)
 			m_callback = (Action<int>)allParams[1];
 		if (allParams.Length > 2)
@@ -116,13 +116,13 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 		float itemHeight = 0;
 
-		var dicSort = from itemPair in m_itemsData orderby itemPair.Value.getTime select itemPair;
+		var dicSort = from itemPair in m_itemsData orderby itemPair.Value.Item2 select itemPair;
 
 		foreach (var kv in dicSort)
 		{
 			
 			string id = kv.Key;
-			int count = kv.Value.count;
+			int count = kv.Value.Item1;
 
 			var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
 			if (item == null)

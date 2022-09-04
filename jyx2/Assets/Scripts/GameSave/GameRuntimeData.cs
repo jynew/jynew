@@ -115,13 +115,12 @@ namespace Jyx2
         [SerializeField] public WorldMapSaveData WorldData; //世界地图信息
         
         [SerializeField] public Dictionary<string, string> KeyValues = new Dictionary<string, string>(); //主键值对数据
-        [SerializeField] public Dictionary<string, int> Items = new Dictionary<string, int>(); //JYX2物品，{ID，数量}
+        [SerializeField] public Dictionary<string, (int, int)> Items = new Dictionary<string, (int, int)>(); //JYX2物品，{ID，数量，获取时间}
         [SerializeField] public Dictionary<string, int> ItemUser= new Dictionary<string, int>(); //物品使用人，{物品ID，人物ID}
         [SerializeField] public Dictionary<string, int> ShopItems= new Dictionary<string, int>(); //小宝商店物品，{ID，数量}
         [SerializeField] public Dictionary<string, int> EventCounter = new Dictionary<string, int>();
         [SerializeField] public Dictionary<string, int> MapPic = new Dictionary<string, int>();
         [SerializeField] private List<int> ItemAdded = new List<int>(); //已经添加的角色物品
-        [SerializeField] public Dictionary<string, ItemExtSaveData> ItemExtSaveDatas = new Dictionary<string, ItemExtSaveData>();
 
         #endregion
 
@@ -263,16 +262,6 @@ namespace Jyx2
             var path = GetArchiveFile(fileIndex);
             var runtime =  ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
             _instance = runtime;
-            var itemExtSaveDatas = _instance.ItemExtSaveDatas;
-            foreach (var pair in _instance.Items)
-            {
-                if (!itemExtSaveDatas.ContainsKey(pair.Key))
-                {
-                    itemExtSaveDatas[pair.Key] = new ItemExtSaveData();
-                }
-                itemExtSaveDatas[pair.Key].count = pair.Value;
-
-            }
             return runtime;
         }
 
@@ -463,23 +452,18 @@ namespace Jyx2
                     Debug.LogError("扣了不存在的物品,id=" + id + ",count=" + count);
                     return;
                 }
-                Items[id] = count;
-                ItemExtSaveDatas[id] = new ItemExtSaveData();
-                ItemExtSaveDatas[id].getTime = Tools.GetSecondsSince1970();
+                Items[id] = (count, Tools.GetSecondsSince1970());
             }
             else
             {
-                Items[id] += count;
-                ItemExtSaveDatas[id].count += count;
-                if(Items[id] == 0)
+                Items[id] = (Items[id].Item1 + count, Tools.GetSecondsSince1970());
+                if(Items[id].Item1 == 0)
                 {
                     Items.Remove(id);
-                    ItemExtSaveDatas.Remove(id);
-                }else if(Items[id] < 0)
+                }else if(Items[id].Item1 < 0)
                 {
                     Debug.LogError("物品扣成负的了,id=" + id + ",count=" + count);
                     Items.Remove(id);
-                    ItemExtSaveDatas.Remove(id);
                 }
             }
         }
@@ -494,7 +478,7 @@ namespace Jyx2
         public int GetItemCount(int id)
         {
             if (Items.ContainsKey(id.ToString()))
-                return Items[id.ToString()];
+                return Items[id.ToString()].Item1;
             return 0;
         }
 
