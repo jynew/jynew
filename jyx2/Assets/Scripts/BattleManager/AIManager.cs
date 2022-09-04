@@ -701,7 +701,7 @@ public class AIManager
             foreach (var kv in GameRuntimeData.Instance.Items)
             {
                 string id = kv.Key;
-                int count = kv.Value;
+                int count = kv.Value.Item1;
 
                 var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
                 if ((int)item.ItemType == itemType)

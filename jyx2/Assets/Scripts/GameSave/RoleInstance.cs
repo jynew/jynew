@@ -575,7 +575,7 @@ namespace Jyx2
                 characterItem.Count = int.Parse(GenerateItemArr2[1]);
                 GenerateItemList.Add(characterItem);
             }
-            int GenerateItemNeedCount = runtime.Items[practiseItem.GenerateItemNeedCost.ToString()];
+            int GenerateItemNeedCount = runtime.Items[practiseItem.GenerateItemNeedCost.ToString()].Item1;
             int GenerateItemNeedExp = (7 - IQ / 15) * practiseItem.GenerateItemNeedExp;
             
             if (ExpForMakeItem >= GenerateItemNeedExp && GenerateItemNeedCount  >= GenerateItemList.Count)
