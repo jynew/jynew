@@ -45,5 +45,7 @@ if TryBattle(61) == true then goto label0 end;
         do return end;
 ::label1::
         Talk(0, "以陶六一的灵魂活下去。");
+        jyx2_PlayTimelineSimple("[Timeline]6_选择陶六一的灵魂", false);
+        jyx2_Wait(40);
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
