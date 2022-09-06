@@ -146,6 +146,13 @@ namespace Jyx2
             GameObject obj = GameObject.Instantiate(pre);
             obj.transform.rotation = parent.rotation;
             obj.transform.position = parent.position + offset;
+
+            var rotator = obj.GetComponent<RotateBlockParticles>();
+            if(rotator != null)
+            {
+                rotator.AdjustRotation(Source.transform, parent);
+            }
+
             if (Math.Abs(scale - 1) > 0.001)
             {
                 var scaleComponent = obj.AddComponent<ScaleParticles>();
