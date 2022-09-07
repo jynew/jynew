@@ -116,7 +116,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 
 		float itemHeight = 0;
 
-		var dicSort = from itemPair in m_itemsData orderby itemPair.Value.Item2 select itemPair;
+		var dicSort = m_itemsData.OrderBy(itemPair => itemPair.Value.Item2); //Item2 为获取道具的时间戳
 
 		foreach (var kv in dicSort)
 		{
@@ -279,13 +279,13 @@ public partial class BagUIPanel : Jyx2_UIBase
 	{
 		foreach (var btn in m_Filters)
 		{
-			btn.GetComponent<Image>().color = Color.white;
+			btn.image.color = Color.white;
 		}
 
 		int index = (int)_filter;
 
 		//高亮的边框颜色等于文字颜色
-		m_Filters[index].GetComponent<Image>().color = m_Filters[index].GetComponentInChildren<Text>().color;
+		m_Filters[index].image.color = m_Filters[index].GetComponentInChildren<Text>().color;
 	}
 
 	#region 手柄支持代码
