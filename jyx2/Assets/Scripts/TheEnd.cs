@@ -17,15 +17,9 @@ public class TheEnd : Jyx2_UIBase
 
     private Vector3 t;
     private Vector3 i;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         if (phase == 1)
         {
