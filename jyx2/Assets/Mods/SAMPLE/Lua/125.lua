@@ -4,7 +4,7 @@ Talk(123, "这朵千彩花送给少侠。");
 AddItem(122, 1);
 Talk(0, "这真是太感谢了。");
 Talk(123, "少侠如果需要我帮忙，请随时召唤。");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "好的！");
     ModifyEvent(-2, -2, -2, -2, 126, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;

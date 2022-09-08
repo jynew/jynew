@@ -1,5 +1,5 @@
 Talk(123, "少侠如果需要我帮忙，请随时召唤。");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "好的！");
     do return end;
 ::label0::

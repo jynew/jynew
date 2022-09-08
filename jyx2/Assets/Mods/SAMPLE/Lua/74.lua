@@ -3,7 +3,7 @@ Talk(0, "他已经被我打败了！");
 Talk(70, "连萨擎苍你都能打过，看不出来你这么厉害啊。");
 Talk(0, "你看不出来的事还多着呢。");
 Talk(70, "有幸结识如此潇洒威武的少侠，如果需要帮助，随时可以叫我。");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "罢了。");
     ModifyEvent(-2, -2, -2, -2, 75, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;

@@ -9,4 +9,6 @@ if InTeam(80) == true then goto label0 end;
     Leave(80);
     jyx2_ReplaceSceneObject("", "NPC/童四二", "1");
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 6, -2, -2, 715, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(1000, 0, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
