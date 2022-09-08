@@ -7,7 +7,7 @@ Talk(90, "好你个大头头，我是你的小宝贝。");
 Talk(0, "小。。。小宝贝。");
 Talk(100, "我天，好有罪恶感。");
 Talk(90, "这就对了，你不是说要带我去天涯海角吗，六一哥哥现在就带我去玩儿吧。");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "我现在忙得狠，下次吧。");
     Talk(90, "你这个负心汉！~");
     ModifyEvent(-2, -2, -2, -2, 91, -1, -1, -2, -2, -2, -2, -2, -2);

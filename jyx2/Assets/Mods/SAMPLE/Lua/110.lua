@@ -1,6 +1,6 @@
 Talk(0, "怎么样朱兄，找到什么线索了吗？");
 Talk(11, "我还是毫无头绪，我看还是让我跟你一起调查吧。");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "朱兄，我们还是各自去找线索，到时候再一起交流。");
     do return end;
 ::label0::

@@ -1,5 +1,5 @@
 Talk(80, "六一，还需要我的帮助吗？");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "暂时还不用。");
     do return end;
 ::label0::

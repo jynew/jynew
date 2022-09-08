@@ -1247,6 +1247,19 @@ namespace Jyx2
             });
             Wait();
         }
+        //抗毒
+        public static void AddAntiPoison(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.AntiPoison;
+                r.AntiPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
+                storyEngine.DisplayPopInfo(r.Name + "抗毒增加" + (r.AttackPoison - v0));
+                Next();
+            });
+            Wait();
+        }
 		//经验
         public static void AddExp(int roleId, int value)
         {
@@ -1285,7 +1298,7 @@ namespace Jyx2
         {
             return JudgeRoleValue(roleId, (r) => { return r.AttackPoison >= low && r.AttackPoison <= high; });
         }
-		//判断攻击带毒
+		//判断奇门
         public static bool JudgeQimen(int roleId,int low,int high)
         {
             return JudgeRoleValue(roleId, (r) => { return r.Qimen >= low && r.Qimen <= high; });

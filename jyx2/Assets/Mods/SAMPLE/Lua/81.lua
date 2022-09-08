@@ -5,7 +5,7 @@ if JudgeEventNum(2, 0) == true then goto label0 end;
     Talk(80, "六一你最近在忙些什么，感觉你怪怪的，好像变了一个人似的。");
     Talk(0, "我在调查莫桥山庄掌门人莫穿林是怎么死的。");
     Talk(80, "听上去好好玩啊，我也跟你一起吧。");
-    if AskJoin () == true then goto label1 end;
+    if AskJoin() == true then goto label1 end;
         Talk(0, "你还是在家先帮师傅干干活吧。");
         do return end;
 ::label1::

@@ -13,7 +13,7 @@ Talk(0, "你说会不会是他们陷害了莫掌门呢。");
 Talk(11, "小兄弟，你真厉害，你这么一提醒，我真是犹如醍醐灌顶，茅塞顿开。");
 Talk(0, "实不相瞒，莫掌门死的事情，渡城的百姓们感到非常悲痛，推荐我当了民间调查队的队长。");
 Talk(11, "那我可以和你一起调查吗？");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "朱兄，我们还是各自去找线索，到时候再一起交流。");
     ModifyEvent(-2, -2, -2, -2, 110, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;

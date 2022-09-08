@@ -215,6 +215,7 @@ RoleUnequipItem = CS.Jyx2.Jyx2LuaBridge.RoleUnequipItem--指定角色卸下物�
 ShowMessage = CS.Jyx2.Jyx2LuaBridge.ShowMessage
 ShowYesOrNoSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowYesOrNoSelectPanel
 ShowSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowSelectPanel
+AddAntiPoison = CS.Jyx2.Jyx2LuaBridge.AddAntiPoison
 function main_getLuaFiles()
 	return {}
 end 
