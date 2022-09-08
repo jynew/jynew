@@ -44,14 +44,7 @@ public class DebugInfoManager : MonoBehaviour
             frames = 0;
             lastInterval = timeNow;
         }
-        m_FpsText.text = "FPS=" + string.Format("{0:f2}", fps);
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        m_FpsText.text = string.Format("FPS={0:f2}", fps);
     }
 
     // Update is called once per frame

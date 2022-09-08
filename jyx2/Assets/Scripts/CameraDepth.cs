@@ -19,10 +19,4 @@ public class CameraDepth : MonoBehaviour
     {
         GetComponent<Camera>().depthTextureMode |= DepthTextureMode.Depth;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

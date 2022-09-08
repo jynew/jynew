@@ -27,15 +27,8 @@ public class GameSettingsPanel : Jyx2_UIBase
         GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
     }
 
-
-    // Update is called once per frame
     protected override void OnCreate()
     {
-        
-    }
-
-    void Update()
-    {
-        
+       
     }
 }

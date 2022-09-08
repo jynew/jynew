@@ -30,12 +30,6 @@ namespace Jyx2.Battle
             CreateBattleGround(16, 12, cellWidth/2,cellHeight/2);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public void CreateBattleGround(int xCount,int yCount,float xPivot = 0.0f,float yPivot = 0.0f)
         {
             ClearBattleGround();

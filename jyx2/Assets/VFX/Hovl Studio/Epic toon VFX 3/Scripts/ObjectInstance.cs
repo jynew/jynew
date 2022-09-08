@@ -18,11 +18,6 @@ public class ObjectInstance : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-
-    }
-
     void RepeatInstance()
     {
         var instance = Instantiate(prefab, transform.position, new Quaternion());

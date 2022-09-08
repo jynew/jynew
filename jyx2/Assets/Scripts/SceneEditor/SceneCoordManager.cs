@@ -41,11 +41,6 @@ public class SceneCoordManager : MonoBehaviour {
     {
         InitSceneSize();
     }
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
     
     //存储逻辑数据
     List<BattleBlockData> battleBlocks = new List<BattleBlockData>();
