@@ -1,6 +1,7 @@
 if UseItem(50) == true then goto label0 end;
     do return end;
 ::label0::
+    PlayMusic(3);
     Talk(0, "你看看这个！");
     Talk(70, "这破杯子是什么玩意儿？");
     Talk(0, "这是初五晚上，也就是莫穿林掌门死前，在怡麟楼喝酒时用的杯子。");
