@@ -1660,6 +1660,11 @@ namespace Jyx2
             jyx2_Wait(1);
             LightScence();
         }
+        
+        public static void BackToMainMenu()
+        {
+            LoadingPanel.Create(null).Forget();
+        }
 
         public static void jyx2_SetFlag(string flagKey, string value)
         {
