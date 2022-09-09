@@ -1,5 +1,5 @@
 Talk(70, "有幸结识如此潇洒威武的少侠，如果需要帮助，随时可以叫我。");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "罢了。");
     do return end;
 ::label0::

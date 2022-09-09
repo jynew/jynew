@@ -1,0 +1,32 @@
+Talk(80, "六一兄，你来啦！");
+Talk(0, "四二近来可好。");
+Talk(80, "我在这里很开心，和娘亲学了不少功夫呢。");
+Talk(170, "四二学东西还挺快呢。");
+Talk(80, "那时娘亲你教得好，哈哈。");
+Talk(0, "四二，我最近遇到了一些困难。");
+Talk(80, "需不需要我来帮忙？");
+if AskJoin() == true then goto label0 end;
+    Talk(0, "你还是先陪陪娘吧。");
+    Talk(80, "也好，兄弟有需要再来找我。");
+    do return end;
+::label0::
+    if TeamIsFull() == false then goto label1 end;
+        Talk(80, "你的队伍已满，我无法加入。");
+        do return end;
+::label1::
+    Talk(0, "我正有此意，看你能不能够再帮助兄弟一把。");
+    Talk(80, "我也很想出去帮助六一兄，但是。。。娘亲。。。");
+    Talk(170, "孩子，你长大了，也不能一直守在娘的身边，你想做什么你就去吧。");
+    Talk(80, "太好了，谢谢娘亲。");
+    Talk(0, "那我也谢谢前辈了！");
+    Talk(80, "告诉你一个秘密，我娘传授了我一种独门绝技，可以抵抗各种毒素，现在什么我已经变得百度不侵了。");
+    Talk(0, "哇，那太好了。");
+    DarkScence();
+    jyx2_ReplaceSceneObject("", "NPC/童四二", "");
+    LightScence();
+    Join(80);
+    AddAnqi(80, 30);
+    AddAttackPoison(80, 30);
+    AddAntiPoison(80, 100);
+    ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
+do return end;

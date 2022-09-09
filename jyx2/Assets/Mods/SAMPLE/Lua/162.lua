@@ -1,7 +1,7 @@
 Talk(123, "救命啊！救命啊！");
 Talk(0, "啊！树上有人！");
 Talk(30, "终于可以打架了！虽然只是一头巨型黑熊。");
-if TryBattle(161) == true then goto label1 end;
+if TryBattle(165) == true then goto label1 end;
     Dead();
     do return end;
 ::label1::

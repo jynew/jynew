@@ -4,7 +4,7 @@ if InTeam(11) == true then goto label0 end;
     do return end;
 ::label0::
     Talk(30, "有架打了吗？让我也出一份力吧！");
-    if AskJoin () == true then goto label1 end;
+    if AskJoin() == true then goto label1 end;
         Talk(0, "那个，我们现在还没到要打架的时候，到时候我再来叫你啊。");
         do return end;
 ::label1::

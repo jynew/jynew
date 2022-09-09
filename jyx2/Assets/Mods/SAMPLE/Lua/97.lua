@@ -1,5 +1,5 @@
 Talk(90, "六一哥哥，想我了吧，快带我去玩吧！");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "我现在忙得狠，下次吧。");
     Talk(90, "哼！");
     do return end;

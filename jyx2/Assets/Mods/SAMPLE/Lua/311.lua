@@ -1,5 +1,5 @@
 Talk(30, "怎么样，兄弟，还是少不了我这个扛打高手吧！");
-if AskJoin () == true then goto label0 end;
+if AskJoin() == true then goto label0 end;
     Talk(0, "那个，我们现在还没到要打架的时候，到时候我再来叫你啊。");
     do return end;
 ::label0::
