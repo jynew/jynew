@@ -43,6 +43,8 @@ public partial class GameMainMenu : Jyx2_UIBase
 	private const int SettingsIndex = 2;
 	private const int QuitGameIndex = 3;
 
+	private string m_newName;
+
 	async void OnStart()
 	{
 		MainMenuTitles.SetActive(false);
@@ -316,22 +318,29 @@ public partial class GameMainMenu : Jyx2_UIBase
 #endif
 	}
 
-	public void OnCreateBtnClicked()
+	private void setPlayerName()
 	{
-		string newName = this.NameInput_InputField.text;
-
 		//todo:去掉特殊符号
-		if (string.IsNullOrWhiteSpace(newName))
+		if (string.IsNullOrWhiteSpace(m_newName))
 			return;
 
 		m_panelType = PanelType.PropertyPage;
 		//todo:给玩家提示
 		RoleInstance role = GameRuntimeData.Instance.Player;
-		role.Name = newName;
+		role.Name = m_newName;
+		m_randomProperty.ShowComponent();
+	}
 
+	public void OnCreateBtnClicked()
+	{
+		if (m_newName == null)
+		{
+			m_newName = this.NameInput_InputField.text;
+		}
+		setPlayerName();
+		
 		this.InputNamePanel_RectTransform.gameObject.SetActive(false);
 		this.StartNewRolePanel_RectTransform.gameObject.SetActive(true);
-		m_randomProperty.ShowComponent();
 		// generate random property at randomP panel first show
 		// added by eaphone at 2021/05/23
 		OnCreateRoleNoClick();
@@ -343,8 +352,18 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 		m_panelType = PanelType.NewGamePage;
 		this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
-		this.InputNamePanel_RectTransform.gameObject.SetActive(true);
-		NameInput_InputField.ActivateInputField();
+
+		if (RuntimeEnvSetup.CurrentModConfig.PlayerName != null)
+		{
+			m_newName = RuntimeEnvSetup.CurrentModConfig.PlayerName;
+			setPlayerName();
+			this.StartNewRolePanel_RectTransform.gameObject.SetActive(true);
+		}
+		else
+		{
+			this.InputNamePanel_RectTransform.gameObject.SetActive(true);
+			NameInput_InputField.ActivateInputField();
+		}
 	}
 
 	private void RegisterEvent()
