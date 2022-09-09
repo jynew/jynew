@@ -348,12 +348,13 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	void OnNewGame()
 	{
-		var runtime = GameRuntimeData.CreateNew();
+		GameRuntimeData.CreateNew();
 
 		m_panelType = PanelType.NewGamePage;
 		this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
 
-		if (RuntimeEnvSetup.CurrentModConfig.PlayerName != null)
+		Debug.Log(RuntimeEnvSetup.CurrentModConfig.PlayerName);
+		if (!string.IsNullOrEmpty(RuntimeEnvSetup.CurrentModConfig.PlayerName))
 		{
 			m_newName = RuntimeEnvSetup.CurrentModConfig.PlayerName;
 			setPlayerName();

@@ -1663,7 +1663,12 @@ namespace Jyx2
         
         public static void BackToMainMenu()
         {
-            LoadingPanel.Create(null).Forget();
+            RunInMainThread(() =>
+            {
+                LoadingPanel.Create(null).Forget();
+                Next();
+            });
+            Wait();
         }
 
         public static void jyx2_SetFlag(string flagKey, string value)
