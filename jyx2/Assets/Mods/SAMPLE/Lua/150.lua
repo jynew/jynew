@@ -14,6 +14,7 @@ Talk(180, "最关键的是，真正的陶六一已经死了。");
 Talk(0, "陶六一，是你杀死的？");
 Talk(180, "哼，好奇害死猫，那小子看到了不该看的东西，已经被我推到野狼谷下喂狼去了。");
 Talk(100, "我头好疼，我好像想起什么了，这。。。。这是什么，这是陶六一的记忆吗？");
+PlayMusic(4);
 jyx2_PlayTimelineSimple("[Timeline]15_鸽子楼", false);
 jyx2_Wait(4);
 jyx2_PlayTimelineSimple("[Timeline]15_野狼谷", false);
