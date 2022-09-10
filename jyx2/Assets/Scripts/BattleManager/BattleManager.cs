@@ -330,7 +330,7 @@ public class BattleManager : MonoBehaviour
                 role.ExpForItem = Tools.Limit(role.ExpForItem, 0, GameConst.MAX_EXP);
                 role.ExpForMakeItem = Tools.Limit(role.ExpForMakeItem, 0, GameConst.MAX_EXP);
 
-                bool isWugongCanUpgrade = role.GetWugongLevel(practiseItem.Skill) < GameConst.MAX_SKILL_LEVEL;
+                bool isWugongCanUpgrade = role.GetWugongLevel(practiseItem.Skill) < GameConst.MAX_WUGONG_LEVEL;
                 //修炼秘籍
                 while (role.CanFinishedItem() && isWugongCanUpgrade)
                 {
