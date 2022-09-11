@@ -155,6 +155,9 @@ public partial class SkillEditorUIPanel:Jyx2_UIBase
             case SkillCoverType.RECT:
                 blocks = skillEditor.faceTrans;
                 break;
+            case SkillCoverType.RHOMBUS:
+                blocks = skillEditor.faceTrans;
+                break;
             case SkillCoverType.LINE:
                 blocks = skillEditor.lineTrans;
                 break;

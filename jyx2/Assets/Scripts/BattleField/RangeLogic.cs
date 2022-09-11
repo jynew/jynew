@@ -623,6 +623,19 @@ namespace Jyx2
 						}
 					}
 					break;
+				case SkillCoverType.RHOMBUS:
+				{
+					for (int i = tx - coversize; i <= tx + coversize; ++i)
+					{
+						for (int j = ty - coversize; j <= ty + coversize; ++j)
+						{
+							if (i < 0 || j < 0) continue;
+							if (Math.Abs(i - tx) + Math.Abs(j - ty) > coversize) continue;
+							rst.Add(new BattleBlockVector(i, j));
+						}
+					}
+					break;
+				}
 				default:
 					throw new ArgumentOutOfRangeException(nameof(covertype), covertype, null);
 			}

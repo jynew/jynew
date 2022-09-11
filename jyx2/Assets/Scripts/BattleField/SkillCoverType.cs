@@ -38,6 +38,11 @@ namespace Jyx2
         /// 矩形面攻击
         /// </summary>
         RECT = 3,
+        
+        /// <summary>
+        /// 菱形面攻击
+        /// </summary>
+        RHOMBUS = 4,
 
         /// <summary>
         /// 无效
