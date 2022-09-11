@@ -217,6 +217,8 @@ ShowYesOrNoSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowYesOrNoSelectPanel
 ShowSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowSelectPanel
 AddAntiPoison = CS.Jyx2.Jyx2LuaBridge.AddAntiPoison
 BackToMainMenu =CS.Jyx2.Jyx2LuaBridge.BackToMainMenu
+ScreenVignette = CS.Jyx2.Jyx2LuaBridge.ScreenVignette
+
 function main_getLuaFiles()
 	return {}
 end 

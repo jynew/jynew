@@ -1,3 +1,4 @@
+ScreenVignette(true)
 Talk(100, "这...这不是我吗？");
 Talk(100, "我为什么可以看到我自己？");
 Talk(100, "我...我怎么死了？!");
@@ -32,10 +33,12 @@ ShowMessage("陶六一，男，19岁（男死尸一具）");
 Talk(100, "这不只有一个吗？你要我选择个啥？");
 Talk(101, "那实在不好意思，可能最近渡城一带太平安稳，没有什么死尸，你就将就着用吧。");
 Talk(100, "……");
-Talk(101, "那我就先告辞了，七天后我会再来找你，等你好消息，出发吧大侠。");
+Talk(101, "那我就先告辞了，七天后我会再来找你，等你好消息，出发吧莫大侠。");
 jyx2_ReplaceSceneObject("", "NPC/四蛇儿", "");
 jyx2_ReplaceSceneObject("", "NPC/莫穿林 (1)", "");
 jyx2_ReplaceSceneObject("", "Player/陶六一", "1");
 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(-2, 1, -2, -2, 1, -2, -2, -2, -2, -2, -2, -2, -2);
+ScreenVignette(false)
+Talk(0, "这身行头也太奇怪了吧…… 行吧，赶紧先<color=orange>查明自己是怎么死</color>的要紧")
 do return end;

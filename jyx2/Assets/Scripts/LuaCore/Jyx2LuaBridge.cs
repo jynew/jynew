@@ -22,6 +22,7 @@ using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2Configs;
 using Jyx2.Middleware;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace Jyx2
 {
@@ -1896,6 +1897,33 @@ namespace Jyx2
                 role.UnequipItem(item);
                 Next();
             });
+            Wait();
+        }
+
+
+        /// <summary>
+        /// 开启/关闭屏幕后处理中的边缘阴影
+        /// 要求场景中必须已正确配置 PostProcessVolumn，并具有预先配置好的Vignette组件
+        /// </summary>
+        /// <param name="isOn"></param>
+        public static void ScreenVignette(bool isOn)
+        {
+            RunInMainThread((() =>
+            {
+                var postProcess = GameObject.FindObjectOfType<PostProcessVolume>();
+                if (postProcess == null)
+                {
+                    Debug.LogError("错误：调用ScreenVignette的场景必须包含PostProcessVolumn组件");
+                    Next();
+                    return;
+                }
+
+                if (postProcess.profile.TryGetSettings<Vignette>(out var vignette))
+                {
+                    vignette.active = isOn;    
+                }
+                Next();
+            }));
             Wait();
         }
     }
