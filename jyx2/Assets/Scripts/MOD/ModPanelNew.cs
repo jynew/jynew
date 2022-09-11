@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Jyx2;
 using Sirenix.Utilities;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -73,4 +73,20 @@ public class ModPanelNew : Jyx2_UIBase
         ModChangedSuggestLabel.gameObject.SetActive(selectMod != RuntimeEnvSetup.CurrentModId);
     }
     
+    
+    public void OnUploadMod()
+    {
+        
+    }
+
+    public void OnOpenURL(string url)
+    {
+        Jyx2.Middleware.Tools.openURL(url);
+    }
+
+
+    public void OnOpenSteamWorkshop()
+    {
+        
+    }
 }
