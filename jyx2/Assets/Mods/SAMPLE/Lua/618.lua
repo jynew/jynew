@@ -40,7 +40,7 @@ if TryBattle(61) == true then goto label0 end;
     if ShowSelectPanel(0, "请选择以谁的灵魂活下去？", "莫穿林的灵魂", "陶六一的灵魂") == 1 then goto label1 end;
         Talk(0, "以莫穿林的灵魂活下去。");
         PlayMusic(1);
-        jyx2_PlayTimelineSimple("[Timeline]6_选择莫穿林的灵魂", false);
+        jyx2_PlayTimelineSimple("[Timeline]6_选择莫穿林的灵魂", false, "", true);
         jyx2_Wait(80);
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
         BackToMainMenu();
@@ -48,7 +48,7 @@ if TryBattle(61) == true then goto label0 end;
 ::label1::
         Talk(0, "以陶六一的灵魂活下去。");
         PlayMusic(2);
-        jyx2_PlayTimelineSimple("[Timeline]6_选择陶六一的灵魂", false);
+        jyx2_PlayTimelineSimple("[Timeline]6_选择陶六一的灵魂", false, "", true);
         jyx2_Wait(67);
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
         BackToMainMenu();
