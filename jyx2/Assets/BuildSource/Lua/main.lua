@@ -187,7 +187,7 @@ GetFlag = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlag
 SetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_SetFlagInt
 GetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlagInt
 --新增函数
-RestFight = CS.Jyx2.Jyx2LuaBridge.RestFight--战斗中休息
+RestFight = CS.Jyx2.Jyx2LuaBridge.RestFight--野外休息
 JudgeIQ = CS.Jyx2.Jyx2LuaBridge.JudgeIQ--判断IQ
 AddHeal = CS.Jyx2.Jyx2LuaBridge.AddHeal--增加医疗
 AddDefence = CS.Jyx2.Jyx2LuaBridge.AddDefence--增加防御
@@ -212,13 +212,31 @@ GetTeamTotalHp = CS.Jyx2.Jyx2LuaBridge.GetTeamTotalHp--获取队伍生命总和
 GetTeamId = CS.Jyx2.Jyx2LuaBridge.GetTeamId--获取队伍角色Id列表
 RoleUseItem = CS.Jyx2.Jyx2LuaBridge.RoleUseItem--指定角色使用物品
 RoleUnequipItem = CS.Jyx2.Jyx2LuaBridge.RoleUnequipItem--指定角色卸下物品（装备）
-ShowMessage = CS.Jyx2.Jyx2LuaBridge.ShowMessage
-ShowYesOrNoSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowYesOrNoSelectPanel
-ShowSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowSelectPanel
-AddAntiPoison = CS.Jyx2.Jyx2LuaBridge.AddAntiPoison
-BackToMainMenu =CS.Jyx2.Jyx2LuaBridge.BackToMainMenu
-ScreenVignette = CS.Jyx2.Jyx2LuaBridge.ScreenVignette
-
+ShowMessage = CS.Jyx2.Jyx2LuaBridge.ShowMessage--显示信息确认框
+ShowYesOrNoSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowYesOrNoSelectPanel--显示选择框
+ShowSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowSelectPanel--选择函数
+AddAntiPoison = CS.Jyx2.Jyx2LuaBridge.AddAntiPoison--加抗毒
+BackToMainMenu =CS.Jyx2.Jyx2LuaBridge.BackToMainMenu--返回主菜单
+ScreenVignette = CS.Jyx2.Jyx2LuaBridge.ScreenVignette--屏幕边缘阴影
+JoinWithoutHint = CS.Jyx2.Jyx2LuaBridge.JoinWithoutHint--入队不提示
+LeaveWithoutHint = CS.Jyx2.Jyx2LuaBridge.LeaveWithoutHint--离队不提示
+EnterPond = CS.Jyx2.Jyx2LuaBridge.EnterPond--进黑龙潭
+LeavePond = CS.Jyx2.Jyx2LuaBridge.LeavePond--出黑龙潭
+AddExpWithoutHint = CS.Jyx2.Jyx2LuaBridge.AddExpWithoutHint--增加经验不提示
+ShowMessageSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowMessageSelectPanel--显示二选一框
+GetCurrentGameMapid = CS.Jyx2.Jyx2LuaBridge.GetCurrentGameMapid--获取当前地图编号
+RestTeam = CS.Jyx2.Jyx2LuaBridge.RestTeam--全队恢复
+GetTeamTotalLevel = CS.Jyx2.Jyx2LuaBridge.GetTeamTotalLevel--获取队伍等级总和
+AddHpWithoutHint = CS.Jyx2.Jyx2LuaBridge.AddHpWithoutHint  --加血不提示
+AddMpWithoutHint = CS.Jyx2.Jyx2LuaBridge.AddMpWithoutHint --加内力不提示
+AddLevelreturnUper = CS.Jyx2.Jyx2LuaBridge.AddLevelreturnUper --加等级并返回实际增加的值
+GetTeamMaxLevel = CS.Jyx2.Jyx2LuaBridge.GetTeamMaxLevel--获取队伍最大等级
+GetCurrentEventID = CS.Jyx2.Jyx2LuaBridge.GetCurrentEventID--获取当前事件ID
+JudgePointEventNum = CS.Jyx2.Jyx2LuaBridge.JudgePointEventNum--判断指定触发器的交互事件
+RestTeamPlus = CS.Jyx2.Jyx2LuaBridge.RestTeamPlus--全队恢复（含计数器）
+RestFightPlus = CS.Jyx2.Jyx2LuaBridge.RestFightPlus--野外休息（含计数器）
+RestPlus = CS.Jyx2.Jyx2LuaBridge.RestPlus--休息（含计数器）
+TryBattlePlus = CS.Jyx2.Jyx2LuaBridge.TryBattlePlus--战斗（含计数器）
 function main_getLuaFiles()
 	return {}
 end 
