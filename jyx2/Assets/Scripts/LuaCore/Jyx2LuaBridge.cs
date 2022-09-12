@@ -201,7 +201,25 @@ namespace Jyx2
 
             Wait();
         }
-
+		/// 获取当前事件ID--by citydream
+        public static int GetCurrentEventID()
+        {
+			int eventId = 0;
+            RunInMainThread(() =>
+            {
+                var evt = GameEvent.GetCurrentGameEvent();
+				if (evt == null)
+                    {
+                        Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                        Next();
+                        return;
+                    }
+                    eventId = int.Parse(evt.name); //当前事件
+                Next();
+            });
+            Wait();
+			return eventId;
+        }
 
         //询问是否战斗
         public static bool AskBattle()
@@ -246,7 +264,41 @@ namespace Jyx2
             Wait();
             return isWin;
         }
+        //战斗（含计数器）--by citydream
+        public static bool TryBattlePlus(int battleId)
+        {
+            if(isQuickBattle)
+            {
+                return ShowYesOrNoSelectPanel("是否战斗胜利？");
+            }
 
+            bool isWin = false;
+            RunInMainThread(() => {
+                
+                //记录当前地图和位置
+                Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
+                var pos = LevelMaster.Instance.GetPlayerPosition();
+                var rotate = LevelMaster.Instance.GetPlayerOrientation();
+                
+                LevelLoader.LoadBattle(battleId, (ret) =>
+                {
+                    LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
+                    {
+                        //还原当前地图和位置
+                        loadType = LevelMaster.LevelLoadPara.LevelLoadType.ReturnFromBattle,
+                        Pos = pos,
+                        Rotate = rotate,
+                    }, () =>
+                    {
+                        isWin = (ret == BattleResult.Win);
+                        Next();
+                    });
+                });
+            });
+            Wait();
+			Add3EventNum(70,998,1,0,0);//战斗计数器
+            return isWin;			
+        }
         //替换当前的出门音乐
         public static void ChangeMMapMusic(int musicId)
         {
@@ -275,7 +327,25 @@ namespace Jyx2
             });
             Wait();
         }
-        
+        ///角色加入，同时获得对方身上的物品。不提示--by citydream
+        public static void JoinWithoutHint(int roleId)
+        {
+            RunInMainThread(() => {
+                
+                if (runtime.JoinRoleToTeam(roleId, true))
+                {
+                    RoleInstance role = runtime.GetRole(roleId);
+					if (role.Hp <= 0)
+					{
+						role.Hp = 1;
+					}
+                  //  storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
+                }
+                
+                Next();
+            });
+            Wait();
+        }
         public static void Dead()
         {
             //防止死亡后传送到enterTrigger再次触发事件。临时处理办法
@@ -318,7 +388,21 @@ namespace Jyx2
             });
             Wait();
         }
+		///离队，不提示--by citydream
+        public static void LeaveWithoutHint(int roleId)
+        {
+            RunInMainThread(() => {
 
+                if (runtime.LeaveTeam(roleId))
+                {
+                    RoleInstance role = runtime.GetRole(roleId);
+                   // storyEngine.DisplayPopInfo(role.Name + "离队。");
+                }
+                
+                Next();
+            });
+            Wait();
+        }
         public static void ZeroAllMP()
         {
             RunInMainThread(() => {
@@ -654,7 +738,36 @@ namespace Jyx2
             });
             Wait();
         }
-
+		///加内力不提示--by citydream
+        public static void AddMpWithoutHint(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.MaxMp;
+                r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_MP);
+                r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
+               // storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
+                Next();
+            });
+            Wait();
+        }
+		///加等级并返回实际增加的值--by citydream
+        public static int AddLevelreturnUper(int roleId, int value)
+        {
+			int Uper = 0;
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Level;
+                r.Level = Tools.Limit(r.Level + value, 0, GameConst.MAX_ROLE_LEVEL);
+                //storyEngine.DisplayPopInfo(r.Name + "等级增加" + (r.Level - v0));
+				Uper = r.Level - v0;
+                Next();
+            });
+            Wait();
+			return Uper;
+        }
         //武力（原始属性）
         public static void AddAttack(int roleId, int value)
         {
@@ -683,7 +796,20 @@ namespace Jyx2
             });
             Wait();
         }
-
+		///加生命不提示--by citydream
+        public static void AddHpWithoutHint(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.MaxHp;
+                r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_HP);
+                r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
+               // storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
+                Next();
+            });
+            Wait();
+        }
         //设置角色内力属性
         public static void SetPersonMPPro(int roleId, int value)
         {
@@ -736,7 +862,32 @@ namespace Jyx2
             Wait();
             return result;
         }
-
+		///判断指定触发器的交互事件--by citydream
+        public static bool JudgePointEventNum(int eventIndex, int EventId, int value)
+        {
+            bool result = false;
+            RunInMainThread(() => {
+                var evt = GameEvent.GetCurrentSceneEvent(eventIndex.ToString());
+                if(evt != null)
+                {
+                    if (EventId == 0)
+					{
+						result = (evt.m_InteractiveEventId == value);
+					}
+					else if (EventId == 1)
+					{
+						result = (evt.m_UseItemEventId == value);
+					}
+					else if (EventId == 2)
+					{
+						result = (evt.m_EnterEventId == value);
+					}
+                }
+                Next();
+            });
+            Wait();
+            return result;
+        }
         //打开所有场景
         public static void OpenAllScene()
         {
@@ -829,7 +980,18 @@ namespace Jyx2
             Talk(0,"历经千辛万苦，我终于打败群雄，得到这武林盟主之位及神杖。但是“圣堂”在哪呢？为什么没人告诉我，难道大家都不知道。这会儿又有的找了。","talkname0", 1);
             AddItem(143,1);
         }
-
+		///进黑龙潭--by citydream
+        public static void EnterPond()
+        {
+			var rad=new System.Random();
+			int j=rad.Next(1,5);
+			jyx2_WalkFromTo(-1,j);
+		}
+		///出黑龙潭--by citydream
+        public static void LeavePond()
+        {
+			jyx2_WalkFromTo(-1,0);
+		}
         //所有人离队
         public static void AllLeave()
         {
@@ -976,7 +1138,44 @@ namespace Jyx2
                 }
             });
         }
-
+		///休息（含计数器）--by citydream
+		public static void RestPlus()
+        {
+            RunInMainThread(() =>
+            {
+                foreach (var role in runtime.GetTeam())
+                {
+                    if (role.Hurt < 33 && role.Poison <= 0)
+                    {
+                        role.Recover();
+                    }
+                }
+            });
+			Add3EventNum(70,997,1,0,0);//休息计数器
+        }
+		///全队恢复--by citydream
+        public static void RestTeam()
+        {
+            RunInMainThread(() =>
+            {
+                foreach (var role in runtime.GetTeam())
+                {
+                        role.Recover();    
+                }
+            });
+        }
+		///全队恢复（含计数器）--by citydream
+        public static void RestTeamPlus()
+        {
+            RunInMainThread(() =>
+            {
+                foreach (var role in runtime.GetTeam())
+                {
+                        role.Recover();    
+                }
+            });
+			Add3EventNum(70,997,1,0,0);//休息计数器
+        }
         public static void RestFight()
         {
             RunInMainThread(() =>
@@ -990,7 +1189,21 @@ namespace Jyx2
                 }
             });
         }
-
+		///野外休息（含计数器）--by citydream
+        public static void RestFightPlus()
+        {
+            RunInMainThread(() =>
+            {
+                foreach (var role in runtime.GetTeam())
+                {
+                    if (role.Hurt < 50 && role.Poison <= 0)
+                    {
+                        role.Recover();    
+                    }
+                }
+            });
+			Add3EventNum(70,997,1,0,0);//休息计数器
+        }
         public static void LightScence()
         {
             RunInMainThread(() =>
@@ -1270,6 +1483,19 @@ namespace Jyx2
                 var v0 = r.Exp;
                 r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
                 storyEngine.DisplayPopInfo(r.Name + "经验增加" + (r.Exp - v0));
+                Next();
+            });
+            Wait();
+        }
+		///增加经验，不提示--by citydream
+        public static void AddExpWithoutHint(int roleId, int value)
+        {
+            RunInMainThread(() =>
+            {
+                var r = runtime.GetRole(roleId);
+                var v0 = r.Exp;
+                r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
+               // storyEngine.DisplayPopInfo(r.Name + "经验增加" + (r.Exp - v0));
                 Next();
             });
             Wait();
@@ -1773,7 +1999,26 @@ namespace Jyx2
             Wait();
             return _selectResult == 0;
         }
-        
+        ///显示二选一框--by citydream
+		public static bool ShowMessageSelectPanel(string selectMessage, string YesMessage, string NoMessage)
+        {
+            async void Action()
+            {
+                List<string> selectionContent = new List<string>() {YesMessage, NoMessage};
+                storyEngine.BlockPlayerControl = true;
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selectionContent, new Action<int>((index) =>
+                {
+                    _selectResult = index;
+                    storyEngine.BlockPlayerControl = false;
+                    Next();
+                }));
+            }
+
+            RunInMainThread(Action);
+
+            Wait();
+            return _selectResult == 0;
+        }
         public static int ShowSelectPanel(int roleId, string selectMessage, params string[] selectionContent)
         {
             async void Action()
@@ -1829,7 +2074,18 @@ namespace Jyx2
         public static int GetTeamMembersCount() {
             return runtime.GetTeamMembersCount();
         }
-        
+        ///获取当前地图编号--by citydream
+        public static int GetCurrentGameMapid() 
+		{
+			int mapid = 0;
+			RunInMainThread(() => 
+			{
+			mapid = LevelMaster.GetCurrentGameMap().Id;
+				Next();
+            });
+			Wait();
+			return mapid;
+        }
         /// <summary>
         /// 获取指定角色等级
         /// </summary>
@@ -1857,7 +2113,39 @@ namespace Jyx2
             Wait();
             return totalHp;
         }
-
+		/// 获取队伍等级总和--by citydream
+        public static int GetTeamTotalLevel()
+        {
+            int totalLevel = 0;
+            RunInMainThread(() =>
+            {
+                foreach (var role in runtime.GetTeam())
+                {
+                    totalLevel += role.Level;
+                }
+                Next();
+            });
+            Wait();
+            return totalLevel;
+        }
+		/// 获取队伍最大等级--by citydream
+        public static int GetTeamMaxLevel()
+        {
+            int TeamMaxLevel = 0;
+            RunInMainThread(() =>
+            {
+                foreach (var role in runtime.GetTeam())
+                {
+                    if (role.Level > TeamMaxLevel)
+					{
+					TeamMaxLevel = role.Level;
+					}
+                }
+                Next();
+            });
+            Wait();
+            return TeamMaxLevel;
+        }
         /// <summary>
         /// 获取队伍角色Id列表
         /// </summary>
