@@ -329,6 +329,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		RoleInstance role = GameRuntimeData.Instance.Player;
 		role.Name = m_newName;
 		m_randomProperty.ShowComponent();
+		DoGeneratePlayerRole();
 	}
 
 	public void OnCreateBtnClicked()

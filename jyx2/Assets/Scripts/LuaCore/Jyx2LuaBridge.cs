@@ -1418,7 +1418,7 @@ namespace Jyx2
         /// 简单模式播放timeline，播放完毕后直接关闭
         /// </summary>
         /// <param name="timelineName"></param>
-        public static void jyx2_PlayTimelineSimple(string timelineName, bool hidePlayer = false)
+        public static void jyx2_PlayTimelineSimple(string timelineName, bool hidePlayer = false, string hideGameObject = "", bool hideUI = false)
         {
             RunInMainThread(() =>
             {
@@ -1429,6 +1429,18 @@ namespace Jyx2
                 {
                     var player = LevelMaster.Instance.GetPlayer();
                     player.gameObject.SetActive(false);
+                }
+
+                if (!string.IsNullOrEmpty(hideGameObject))
+                {
+                    string path = "Level/" + hideGameObject;
+                    GameObject obj = GameObject.Find(path);
+                    obj.gameObject.SetActive(false);
+                }
+
+                if (hideUI)
+                {
+                    GameObject.Find("MainCanvas").transform.Find("MainUI").gameObject.SetActive(false); 
                 }
                 
                 if (timeLineObj == null)
@@ -1447,6 +1459,16 @@ namespace Jyx2
                     {
                         var player = LevelMaster.Instance.GetPlayer();
                         player.gameObject.SetActive(true);
+                    }
+                    if (!string.IsNullOrEmpty(hideGameObject))
+                    {
+                        string path = "Level/" + hideGameObject;
+                        GameObject obj = GameObject.Find(path);
+                        obj.gameObject.SetActive(true);
+                    }
+                    if (hideUI)
+                    {
+                        GameObject.Find("MainCanvas").transform.Find("MainUI").gameObject.SetActive(true); 
                     }
                 });
             });
