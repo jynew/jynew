@@ -11,3 +11,12 @@ util.hotfix_ex(CS.Jyx2.RoleInstance, "LevelUp", function(self)
         self.Wuxuechangshi = self.Wuxuechangshi + 1
     end
 end)
+
+--[[TODO：
+例子
+
+ 直接定义函数的例子
+ 修改UI的例子
+ 新建UI的例子
+ 修改战斗参数的例子
+]]
