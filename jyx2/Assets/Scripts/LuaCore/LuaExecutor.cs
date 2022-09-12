@@ -21,28 +21,29 @@ namespace Jyx2
 {
     public class LuaExecutor
     {
-        static bool _executing = false;
-        
-        public static void Execute(string path, Action callback = null)
+        public static async UniTask Execute(string path)
         {
-            if (_executing)
+            /*if (CurrentEventSource != null)
             {
-                Debug.LogError("错误：在一个lua未结束的时候，启动另一个lua线程, path=" + path);
+                Debug.LogError("错误：一个lua未完成的情况下，执行了另一个lua");
                 return;
-            }
+            }*/
+
             
             var chunk = LuaManager.LoadLua(path);
             string luaContent = Encoding.UTF8.GetString(chunk).Trim('\n').Trim('\r');
-            ExecuteLuaAsync(luaContent, callback, path);
+            await ExecuteLuaAsync(luaContent, path);
         }
 
-        public static void ExecuteLuaAsync(string luaContent, Action callback = null, string path = "")
+        public static readonly Stack<UniTaskCompletionSource<string>> CurrentEventSourceStack =
+            new Stack<UniTaskCompletionSource<string>>();
+
+        public static async UniTask ExecuteLuaAsync(string luaContent, string path = "")
         {
             //BY CG:JYX2的特殊情况，有空文件
             if (luaContent.Equals("do return end;"))
             {
                 //Debug.Log("识别到空的lua文件，直接跳过:" + path);
-                callback?.Invoke();
                 return;
             }
 
@@ -50,30 +51,29 @@ namespace Jyx2
 
             Debug.Log("执行lua: " + path);
 
-            _executing = true;
-            Loom.RunAsync(() =>
+            
+            string template =
+                $"local function temp_lua_func()\r\n {luaContent}\r\n end\r\n util.coroutine_call(combine(temp_lua_func, LuaExecFinished))();\r\n";
+            
+            var cs = new UniTaskCompletionSource<string>();
+            CurrentEventSourceStack.Push(cs);
+
+            try
             {
-                try
-                {
-                    luaEnv.DoString(luaContent);
-                    Debug.Log("lua执行完毕: " + path);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("lua执行错误：" + e.ToString());
-                    Debug.LogError(e.StackTrace);
-                }
-                
-                _executing = false;
-                if (callback != null)
-                {
-                    Loom.QueueOnMainThread(_ => { callback(); }, null);
-                }
-            });
+                luaEnv.DoString(template);
+                await cs.Task;
+                Debug.Log("lua执行完毕: " + path);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("lua执行错误：" + e.ToString());
+                Debug.LogError(e.StackTrace);
+            }
         }
 		
-		public static bool isExcutling(){
-			return _executing;
-		}
+		public static bool IsExecuting()
+        {
+            return CurrentEventSourceStack.Count > 0;
+        }
     }
 }

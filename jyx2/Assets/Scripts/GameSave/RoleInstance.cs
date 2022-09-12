@@ -161,9 +161,10 @@ namespace Jyx2
             ResetSkillCasts();
             ResetItems();
         }
-
+        
         public void Recover()
         {
+            Debug.Log($"role:{Name} recover called!");
             SetHPAndRefreshHudBar(MaxHp);
 
             Mp = MaxMp;

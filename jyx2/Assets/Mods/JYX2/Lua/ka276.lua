@@ -13,7 +13,7 @@ Talk(0, "竟有如此狼心狗肺的家伙，不要让我遇上，不然一定�
 Talk(26, "哈！哈！哈！就凭你，哈……！", "talkname26", 0);
 Talk(0, "啊…………", "talkname0", 1);
 PlayAnimation(-1, 5974, 5992);
-jyx2_PlayTimeline("[Timeline]ka37_药王山庄_晕倒", 0, false);
+jyx2_PlayTimeline("[Timeline]ka37_药王山庄_晕倒", 0, false, "");
 jyx2_Wait(2);
 DarkScence();
 jyx2_StopTimeline("[Timeline]ka37_药王山庄_晕倒");
@@ -23,7 +23,7 @@ AddItemWithoutHint(179, -1);
 AddItemWithoutHint(180, -1);
 ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_ReplaceSceneObject("", "NPC/renwoxing", "");--任我行逃走
-jyx2_PlayTimeline("[Timeline]ka37_药王山庄_苏醒", 0, false);
+jyx2_PlayTimeline("[Timeline]ka37_药王山庄_苏醒", 0, false, "");
 LightScence();
 jyx2_Wait(2);
 PlayAnimation(-1, 6014, 6024);
