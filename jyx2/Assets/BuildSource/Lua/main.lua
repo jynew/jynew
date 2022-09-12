@@ -128,7 +128,6 @@ GetFlag = luaBridge.jyx2_GetFlag
 SetFlagInt = luaBridge.jyx2_SetFlagInt
 GetFlagInt = luaBridge.jyx2_GetFlagInt
 
---新增函数
 RestFight = luaBridge.RestFight--战斗中休息
 JudgeIQ = luaBridge.JudgeIQ--判断IQ
 AddHeal = luaBridge.AddHeal--增加医疗
@@ -161,6 +160,11 @@ BackToMainMenu =luaBridge.BackToMainMenu
 ScreenVignette = luaBridge.ScreenVignette
 
 PreloadLua = luaBridge.PreloadLua --重新加载预加载的lua文件，一般用于调试hotfix使用
+
+RestTeamPlus = luaBridge.RestTeamPlus--全队恢复（含计数器）
+RestFightPlus = luaBridge.RestFightPlus--野外休息（含计数器）
+RestPlus = luaBridge.RestPlus--休息（含计数器）
+TryBattlePlus = luaBridge.TryBattlePlus--战斗（含计数器）
 
 function main_getLuaFiles()
 	return {}

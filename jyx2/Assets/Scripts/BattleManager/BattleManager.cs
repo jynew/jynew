@@ -162,7 +162,7 @@ public class BattleManager : MonoBehaviour
                 //---------------------------------------------------------------------------
                 //特定位置的翻译【战斗胜利的提示】
                 //---------------------------------------------------------------------------
-                GameUtil.ShowFullSuggest(bonusText, "<color=yellow><size=50>战斗胜利</size></color>".GetContent(nameof(BattleManager)), delegate
+                GameUtil.ShowFullSuggest(bonusText, "<color=yellow>战斗胜利</color>".GetContent(nameof(BattleManager)), delegate
                 {
                     EndBattle();
                     m_battleParams.callback?.Invoke(result);
@@ -187,7 +187,7 @@ public class BattleManager : MonoBehaviour
                 //---------------------------------------------------------------------------
                 //特定位置的翻译【战斗失败的提示】
                 //---------------------------------------------------------------------------
-                GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。".GetContent(nameof(BattleManager)), "<color=red><size=80>战斗失败！</size></color>".GetContent(nameof(BattleManager)), delegate
+                GameUtil.ShowFullSuggest("胜败乃兵家常事，请大侠重新来过。".GetContent(nameof(BattleManager)), "<color=red>战斗失败！</color>".GetContent(nameof(BattleManager)), delegate
                 {
                     EndBattle();
                     m_battleParams.callback?.Invoke(result);

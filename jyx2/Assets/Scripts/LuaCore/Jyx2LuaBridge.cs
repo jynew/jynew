@@ -203,7 +203,19 @@ namespace Jyx2
                 ExecuteCurEvent().Forget();
             }
         }
-
+		/// 获取当前事件ID--by citydream
+        public static int GetCurrentEventID()
+        {
+			int eventId = 0;
+            var evt = GameEvent.GetCurrentGameEvent();
+            if (evt == null)
+            {
+                Debug.LogError("内部错误：当前的eventId为空，但是指定修改当前event");
+                return -1;
+            }
+            eventId = int.Parse(evt.name); //当前事件
+			return eventId;
+        }
 
         //询问是否战斗
         public static void AskBattle(Action<bool> callback)
@@ -258,7 +270,39 @@ namespace Jyx2
             await UniTask.WaitUntil(() => finished);
             return rst;
         }
+        //战斗（含计数器）--by citydream
+        public static void TryBattlePlus(int battleId, Action<bool> callback)
+        {
+            if(isQuickBattle)
+            {
+                ShowYesOrNoSelectPanel("是否战斗胜利？", callback).Forget();
+                return;
+            }
 
+            bool isWin = false;
+
+            //记录当前地图和位置
+            Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
+            var pos = LevelMaster.Instance.GetPlayerPosition();
+            var rotate = LevelMaster.Instance.GetPlayerOrientation();
+            
+            LevelLoader.LoadBattle(battleId, (ret) =>
+            {
+                LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
+                {
+                    //还原当前地图和位置
+                    loadType = LevelMaster.LevelLoadPara.LevelLoadType.ReturnFromBattle,
+                    Pos = pos,
+                    Rotate = rotate,
+                }, () =>
+                {
+                    isWin = (ret == BattleResult.Win);
+                    callback(isWin);
+                });
+            });
+     
+			Add3EventNum(70,998,1,0,0);//战斗计数器
+        }
         //替换当前的出门音乐
         public static void ChangeMMapMusic(int musicId)
         {
@@ -279,7 +323,19 @@ namespace Jyx2
                 storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
             }
         }
-        
+        ///角色加入，同时获得对方身上的物品。不提示--by citydream
+        public static void JoinWithoutHint(int roleId)
+        {
+            if (runtime.JoinRoleToTeam(roleId, true))
+            {
+                RoleInstance role = runtime.GetRole(roleId);
+                if (role.Hp <= 0)
+                {
+                    role.Hp = 1;
+                }
+                //  storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
+            }
+        }
         public static void Dead()
         {
             //防止死亡后传送到enterTrigger再次触发事件。临时处理办法
@@ -310,7 +366,15 @@ namespace Jyx2
                 storyEngine.DisplayPopInfo(role.Name + "离队。");
             }
         }
-
+		///离队，不提示--by citydream
+        public static void LeaveWithoutHint(int roleId)
+        {
+            if (runtime.LeaveTeam(roleId))
+            {
+                RoleInstance role = runtime.GetRole(roleId);
+                // storyEngine.DisplayPopInfo(role.Name + "离队。");
+            }
+        }
         public static void ZeroAllMP()
         {
             foreach (var r in runtime.GetTeam())
@@ -613,7 +677,26 @@ namespace Jyx2
             r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
             storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
         }
-
+		///加内力不提示--by citydream
+        public static void AddMpWithoutHint(int roleId, int value)
+        {
+            var r = runtime.GetRole(roleId);
+            var v0 = r.MaxMp;
+            r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_MP);
+            r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
+            // storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
+        }
+		///加等级并返回实际增加的值--by citydream
+        public static int AddLevelreturnUper(int roleId, int value)
+        {
+			int Uper = 0;
+            var r = runtime.GetRole(roleId);
+            var v0 = r.Level;
+            r.Level = Tools.Limit(r.Level + value, 0, GameConst.MAX_ROLE_LEVEL);
+            //storyEngine.DisplayPopInfo(r.Name + "等级增加" + (r.Level - v0));
+            Uper = r.Level - v0;
+			return Uper;
+        }
         //武力（原始属性）
         public static void AddAttack(int roleId, int value)
         {
@@ -632,7 +715,15 @@ namespace Jyx2
             r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
             storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
         }
-
+		///加生命不提示--by citydream
+        public static void AddHpWithoutHint(int roleId, int value)
+        {
+            var r = runtime.GetRole(roleId);
+            var v0 = r.MaxHp;
+            r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_HP);
+            r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
+            // storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
+        }
         //设置角色内力属性
         public static void SetPersonMPPro(int roleId, int value)
         {
@@ -670,7 +761,28 @@ namespace Jyx2
             }
             return result;
         }
-
+		///判断指定触发器的交互事件--by citydream
+        public static bool JudgePointEventNum(int eventIndex, int EventId, int value)
+        {
+            bool result = false;
+            var evt = GameEvent.GetCurrentSceneEvent(eventIndex.ToString());
+            if(evt != null)
+            {
+                if (EventId == 0)
+                {
+                    result = (evt.m_InteractiveEventId == value);
+                }
+                else if (EventId == 1)
+                {
+                    result = (evt.m_UseItemEventId == value);
+                }
+                else if (EventId == 2)
+                {
+                    result = (evt.m_EnterEventId == value);
+                }
+            }
+            return result;
+        }
         //打开所有场景
         public static void OpenAllScene()
         {
@@ -768,7 +880,18 @@ namespace Jyx2
             await TalkAsync(0,"历经千辛万苦，我终于打败群雄，得到这武林盟主之位及神杖。但是“圣堂”在哪呢？为什么没人告诉我，难道大家都不知道。这会儿又有的找了。","talkname0", 1);
             AddItem(143,1);
         }
-
+		///进黑龙潭--by citydream
+        public static void EnterPond()
+        {
+			var rad=new System.Random();
+			int j=rad.Next(1,5);
+			jyx2_WalkFromToAsync(-1,j).Forget();
+		}
+		///出黑龙潭--by citydream
+        public static void LeavePond()
+        {
+			jyx2_WalkFromToAsync(-1,0).Forget();
+		}
         //所有人离队
         public static void AllLeave()
         {
@@ -896,7 +1019,35 @@ namespace Jyx2
                 }
             }
         }
-
+		///休息（含计数器）--by citydream
+		public static void RestPlus()
+        {
+            foreach (var role in runtime.GetTeam())
+            {
+                if (role.Hurt < 33 && role.Poison <= 0)
+                {
+                    role.Recover();
+                }
+            }
+			Add3EventNum(70,997,1,0,0);//休息计数器
+        }
+		///全队恢复--by citydream
+        public static void RestTeam()
+        {
+            foreach (var role in runtime.GetTeam())
+            {
+                role.Recover();    
+            }
+        }
+		///全队恢复（含计数器）--by citydream
+        public static void RestTeamPlus()
+        {
+            foreach (var role in runtime.GetTeam())
+            {
+                role.Recover();    
+            }
+			Add3EventNum(70,997,1,0,0);//休息计数器
+        }
         public static void RestFight()
         {
             foreach (var role in runtime.GetTeam())
@@ -907,7 +1058,21 @@ namespace Jyx2
                 }
             }
         }
-
+        
+        ///野外休息（含计数器）--by citydream
+        public static void RestFightPlus()
+        {
+            foreach (var role in runtime.GetTeam())
+            {
+                if (role.Hurt < 50 && role.Poison <= 0)
+                {
+                    role.Recover();    
+                }
+            }
+        
+            Add3EventNum(70,997,1,0,0);//休息计数器
+        }
+        
         private static async UniTask LightSceneAsync()
         {
             bool finished = false;
@@ -1130,6 +1295,14 @@ namespace Jyx2
             r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
             storyEngine.DisplayPopInfo(r.Name + "经验增加" + (r.Exp - v0));
         }
+		///增加经验，不提示--by citydream
+        public static void AddExpWithoutHint(int roleId, int value)
+        {
+            var r = runtime.GetRole(roleId);
+            var v0 = r.Exp;
+            r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
+            // storyEngine.DisplayPopInfo(r.Name + "经验增加" + (r.Exp - v0));
+        }
 		//判断武学常识
         public static bool JudgeWCH(int roleId,int low,int high)
         {
@@ -1224,6 +1397,17 @@ namespace Jyx2
             }
             LevelMaster.Instance.PlayerWarkFromTo(fromObj.transform.position,toObj.transform.position, callback);
         }
+
+        public static async UniTask jyx2_WalkFromToAsync(int fromName, int toName)
+        {
+            bool finished = false;
+            jyx2_WalkFromTo(fromName, toName, () =>
+            {
+                finished = true;
+            });
+            await UniTask.WaitUntil(() => finished);
+        }
+        
 
         /// <param name="playableDirector"></param>
         private static void TimeLineNext(PlayableDirector playableDirector)
@@ -1553,7 +1737,7 @@ namespace Jyx2
 
         private static int _selectResult;
 
-        public static async UniTask ShowYesOrNoSelectPanel(string selectMessage, Action<bool> callback)
+        private static async UniTask ShowYesOrNoSelectPanel(string selectMessage, Action<bool> callback)
         {
             List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
             storyEngine.BlockPlayerControl = true;
@@ -1565,8 +1749,7 @@ namespace Jyx2
                     callback(_selectResult == 0);
                 }));
         }
-
-
+        
         public static void ShowSelectPanel(int roleId, string selectMessage, LuaTable content, Action<int> callback)
         {
             UniTask.Void(async () =>
@@ -1575,6 +1758,23 @@ namespace Jyx2
                 List<string> selections = content.Cast<List<string>>();
                 
                 await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, roleId.ToString(), selectMessage, selections, new Action<int>((index) =>
+                {
+                    storyEngine.BlockPlayerControl = false;
+                    callback(index);
+                }));
+            });
+        }
+        
+        
+        ///显示二选一框--by citydream
+        public static void ShowMessageSelectPanel(string selectMessage, string YesMessage, string NoMessage, Action<int> callback)
+        {
+            UniTask.Void(async () =>
+            {
+                storyEngine.BlockPlayerControl = true;
+                List<string> selections = new List<string>() {YesMessage, NoMessage};
+                
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selections, new Action<int>((index) =>
                 {
                     storyEngine.BlockPlayerControl = false;
                     callback(index);
@@ -1610,7 +1810,11 @@ namespace Jyx2
         public static int GetTeamMembersCount() {
             return runtime.GetTeamMembersCount();
         }
-        
+        ///获取当前地图编号--by citydream
+        public static int GetCurrentGameMapid() 
+		{
+            return LevelMaster.GetCurrentGameMap().Id;
+        }
         /// <summary>
         /// 获取指定角色等级
         /// </summary>
@@ -1632,6 +1836,31 @@ namespace Jyx2
                 totalHp += role.Hp;
             }
             return totalHp;
+        }
+		/// 获取队伍等级总和--by citydream
+        public static int GetTeamTotalLevel()
+        {
+            int totalLevel = 0;
+            foreach (var role in runtime.GetTeam())
+            {
+                totalLevel += role.Level;
+            }
+            return totalLevel;
+        }
+
+        /// 获取队伍最大等级--by citydream
+        public static int GetTeamMaxLevel()
+        {
+            int TeamMaxLevel = 0;
+
+            foreach (var role in runtime.GetTeam())
+            {
+                if (role.Level > TeamMaxLevel)
+                {
+                    TeamMaxLevel = role.Level;
+                }
+            }
+            return TeamMaxLevel;
         }
 
         /// <summary>
