@@ -7,7 +7,7 @@ if AskJoin() == true then goto label0 end;
         Talk(70, "你的队伍已满，我无法加入。");
         do return end;
 ::label1::
-    Talk(0, "我还有未完成的事情，那你随我一起吧。");
+    Talk(0, "我还有未完成的事情，那你就随我一起吧。");
     DarkScence();
     jyx2_ReplaceSceneObject("", "NPC/王语嫣", "");
     LightScence();

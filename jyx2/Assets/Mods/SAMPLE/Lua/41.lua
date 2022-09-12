@@ -11,5 +11,5 @@ if AskBattle() == true then goto label0 end;
         do return end;
 ::label1::
         LightScence();
-        Talk(40, "萨擎苍：哈哈，你还得多练练，随时可以来找我切磋。");
+        Talk(40, "哈哈，你还得多练练，随时可以来找我切磋。");
 do return end;

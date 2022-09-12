@@ -1,5 +1,5 @@
 if InTeam(80) == true then goto label0 end;
-    Talk(170, "请离开吧。。。");
+    Talk(170, "请离开吧……");
     do return end;
 ::label0::
     Talk(80, "阿姨，我又来啦。");
