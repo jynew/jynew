@@ -357,9 +357,6 @@ public class LevelMaster : MonoBehaviour
 
 			PlayerSpawnAt(loadPara.Pos);
 			PlayerSpawnRotate(loadPara.Rotate);
-			
-			
-			SetPlayerCanController(true);
 		}
 	}
 
