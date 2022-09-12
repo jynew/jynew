@@ -8,7 +8,7 @@ if AskJoin() == true then goto label0 end;
         Talk(11, "你的队伍已满，我无法加入。");
         do return end;
 ::label1::
-    Talk(100, "这家伙虽然脑袋不好用，但是好歹也多个帮手");
+    Talk(100, "这家伙虽然脑袋不好用，但是好歹也多个帮手。");
     Talk(0, "好啊，求之不得，我们一起去探寻真相吧。");
     DarkScence();
     jyx2_ReplaceSceneObject("", "NPC/朱云天", "");

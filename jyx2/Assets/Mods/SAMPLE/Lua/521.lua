@@ -3,7 +3,7 @@ if ShowYesOrNoSelectPanel("是否购买消息？") == true then goto label0 end;
     do return end;
 ::label0::
     if JudgeMoney(100) == true then goto label1 end;
-        Talk(158, "走，走，走，没钱就不要再呆在这！");
+        Talk(158, "走，走，走，没钱就不要再待在这！");
         do return end;
 ::label1::
         Talk(0, "讲讲重点。");
