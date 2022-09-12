@@ -170,6 +170,7 @@ public class Jyx2_UIManager : MonoBehaviour
 
             var prefab = await ResLoader.LoadAsset<GameObject>(uiPath);
             var go = Instantiate(prefab);
+            
             OnUILoaded(go);
         }
     }

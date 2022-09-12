@@ -106,15 +106,15 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		if (_currentShowIndex >= _currentText.Length - 1)
 		{
 			Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-			_callback?.Invoke();
-			_callback = null;
-
 			if (_interactivePanel)
 			{
 				_interactivePanel.SetActive(true);
 				_interactivePanel = null;
 			}
-
+			var c = _callback;
+			_callback = null;
+			
+			c?.Invoke();
 			return;
 		}
 		var finalS = _currentText;

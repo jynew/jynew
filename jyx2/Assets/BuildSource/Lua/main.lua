@@ -17,207 +17,150 @@
 
 --注释后面标记的是对应的指令号
 
---0=0|1|0|0|0|
---NOTHING TO DO
---1=1|4|0|0|0|Talk(#1, "talk(#0)", "talkname#1", #2); --对话
-Talk = CS.Jyx2.Jyx2LuaBridge.Talk
---2=2|3|0|0|0|AddItemWithoutHint(#0, #1); --获得物品,不显示提示
-AddItemWithoutHint = CS.Jyx2.Jyx2LuaBridge.AddItemWithoutHint
---3=3|14|0|0|0|ModifyEvent(#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #a, #b, #c); --修改地图事件
-ModifyEvent = CS.Jyx2.Jyx2LuaBridge.ModifyEvent
---4=4|4|1|2|3|if UseItem(#0) == bool then goto label#x end;
-UseItem = CS.Jyx2.Jyx2LuaBridge.UseItem
---5=5|3|1|1|2|if AskBattle() == bool then goto label#x end; --询问是否战斗
-AskBattle = CS.Jyx2.Jyx2LuaBridge.AskBattle
---6=6|5|1|2|3|if TryBattle(#0) == bool then goto label#x end; --战斗
-TryBattle = CS.Jyx2.Jyx2LuaBridge.TryBattle
---7=7|1|0|0|0|do return end;
---NOTHING TO DO
---8=8|2|0|0|0|ChangeMMapMusic(#0); --改变大地图音乐
-ChangeMMapMusic = CS.Jyx2.Jyx2LuaBridge.ChangeMMapMusic
---9=9|3|1|1|2|if AskJoin () == bool then goto label#x end; --询问角色是否加入
-AskJoin = CS.Jyx2.Jyx2LuaBridge.AskJoin
---10=a|2|0|0|0|Join(#0); --角色加入
-Join = CS.Jyx2.Jyx2LuaBridge.Join
---11=b|3|1|1|2|if AskRest() == bool then goto  label#x end; --询问是否进行休息
-AskRest = CS.Jyx2.Jyx2LuaBridge.AskRest
---12=c|1|0|0|0|Rest(); --休息
-Rest = CS.Jyx2.Jyx2LuaBridge.Rest
---13=d|1|0|0|0|LightScence(); --场景变亮
-LightScence = CS.Jyx2.Jyx2LuaBridge.LightScence
---14=e|1|0|0|0|DarkScence(); --场景变暗
-DarkScence = CS.Jyx2.Jyx2LuaBridge.DarkScence
---15=f|2|0|0|0|Dead(); --死亡（gameover）
-Dead = CS.Jyx2.Jyx2LuaBridge.Dead
---16=10|4|1|2|3|if InTeam(#0) == bool then goto label#x end; --判断是否在队伍里
-InTeam = CS.Jyx2.Jyx2LuaBridge.InTeam
---17=11|6|0|0|0|SetScenceMap(#0, #1, #2, #3, #4); --改变地图要素
-SetScenceMap = CS.Jyx2.Jyx2LuaBridge.SetScenceMap
---18=12|4|1|2|3|if HaveItem(#0) == bool then goto label#x end; --判断是否拥有道具
-HaveItem = CS.Jyx2.Jyx2LuaBridge.HaveItem
---19=13|3|0|0|0|SetScencePosition2(#0, #1);
-SetScencePosition2 = CS.Jyx2.Jyx2LuaBridge.SetScencePosition2
---20=14|3|1|1|2|if TeamIsFull() == bool then goto label#x end; --判断队伍是否满员
-TeamIsFull = CS.Jyx2.Jyx2LuaBridge.TeamIsFull
---21=15|2|0|0|0|Leave(#0); --离队
-Leave = CS.Jyx2.Jyx2LuaBridge.Leave
---22=16|1|0|0|0|ZeroAllMP(); --全队清空内力
-ZeroAllMP = CS.Jyx2.Jyx2LuaBridge.ZeroAllMP
---23=17|3|0|0|0|SetOneUsePoi(#0, #1);  --设置用毒能力
-SetOneUsePoi = CS.Jyx2.Jyx2LuaBridge.SetOneUsePoi
---24=18|1|0|0|0|
---NOTHING TO DO
---25=19|5|0|0|0|ScenceFromTo(#0, #1, #2, #3); --移动视角
-ScenceFromTo = CS.Jyx2.Jyx2LuaBridge.ScenceFromTo
---26=1a|6|0|0|0|Add3EventNum(#0, #1, #2, #3, #5) --修改事件
-Add3EventNum = CS.Jyx2.Jyx2LuaBridge.Add3EventNum
---27=1b|4|0|0|0|PlayAnimation(#0, #1, #2); --播放动画
-PlayAnimation = CS.Jyx2.Jyx2LuaBridge.PlayAnimation
---28=1c|6|1|4|5|if JudgeEthics(#0, #1, #2) == bool then goto label#x end; --判断道德
-JudgeEthics = CS.Jyx2.Jyx2LuaBridge.JudgeEthics
---29=1d|6|1|4|5|if JudgeAttack(#0, #1, #2) == bool then goto label#x end; --判断攻击力
-JudgeAttack = CS.Jyx2.Jyx2LuaBridge.JudgeAttack
---30=1e|5|0|0|0|WalkFromTo(#0, #1, #2, #3); --主角行走
-WalkFromTo = CS.Jyx2.Jyx2LuaBridge.WalkFromTo
---31=1f|4|1|2|3|if JudgeMoney(#0) == bool then goto label#x end; --判断金钱
-JudgeMoney = CS.Jyx2.Jyx2LuaBridge.JudgeMoney
---32=20|3|0|0|0|AddItem(#0, #1); --添加道具，显示提示
-AddItem = CS.Jyx2.Jyx2LuaBridge.AddItem
---33=21|4|0|0|0|LearnMagic2(#0, #1, #2); --学会武功
-LearnMagic2 = CS.Jyx2.Jyx2LuaBridge.LearnMagic2
---34=22|3|0|0|0|AddAptitude(#0, #1);  --增加资质
-AddAptitude = CS.Jyx2.Jyx2LuaBridge.AddAptitude
---35=23|5|0|0|0|SetOneMagic(#0, #1, #2, #3); --设置角色的武功
-SetOneMagic = CS.Jyx2.Jyx2LuaBridge.SetOneMagic
---36=24|4|1|2|3|if JudgeSexual(#0) == bool then goto label#x end; --判断性别
-JudgeSexual = CS.Jyx2.Jyx2LuaBridge.JudgeSexual
---37=25|2|0|0|0|AddEthics(#0); --增加道德
-AddEthics = CS.Jyx2.Jyx2LuaBridge.AddEthics
---38=26|5|0|0|0|ChangeScencePic(#0, #1, #2, #3); --换场景贴图
-ChangeScencePic = CS.Jyx2.Jyx2LuaBridge.ChangeScencePic
---39=27|2|0|0|0|OpenScene(#0); 
-OpenScene = CS.Jyx2.Jyx2LuaBridge.OpenScene
---40=28|2|0|0|0|SetRoleFace(#0);
-SetRoleFace = CS.Jyx2.Jyx2LuaBridge.SetRoleFace
---41=29|4|0|0|0|NPCGetItem(#0, #1, #2); --NPC角色获得道具
-NPCAddItem = CS.Jyx2.Jyx2LuaBridge.NPCGetItem
---42=2a|3|1|1|2|if JudgeFemaleInTeam() == bool then goto label#x end; --判断队伍里是否有女性
-JudgeFemaleInTeam = CS.Jyx2.Jyx2LuaBridge.JudgeFemaleInTeam
---43=2b|4|1|2|3|if HaveItem(#0) == bool then goto label#x end; --判断是否拥有道具
---ALREADY DEFINED
---44=2c|7|0|0|0|Play2Amination(#0, #1, #2, #3, #4, #5, #6);
-Play2Amination = CS.Jyx2.Jyx2LuaBridge.Play2Amination
---45=2d|3|0|0|0|AddSpeed(#0, #1);
-AddSpeed = CS.Jyx2.Jyx2LuaBridge.AddSpeed --加速度
---46=2e|3|0|0|0|AddMP(#0, #1);
-AddMp = CS.Jyx2.Jyx2LuaBridge.AddMp --加内力
---47=2f|3|0|0|0|AddAttack(#0, #1);
-AddAttack = CS.Jyx2.Jyx2LuaBridge.AddAttack --加攻击力
---48=30|3|0|0|0|AddHP(#0, #1);
-AddHp = CS.Jyx2.Jyx2LuaBridge.AddHp  --加血
---49=31|3|0|0|0|SetPersonMPPro(#0,#1);
-SetPersonMPPro = CS.Jyx2.Jyx2LuaBridge.SetPersonMPPro
---50=32|8|0|0|0|instruct_50(#0, #1, #2, #3, #4, #5, #6);
-instruct_50 = CS.Jyx2.Jyx2LuaBridge.instruct_50
---51=33|1|0|0|0|AskSoftStar();
-AskSoftStar = CS.Jyx2.Jyx2LuaBridge.AskSoftStar
---52=34|1|0|0|0|ShowEthics();
-ShowEthics = CS.Jyx2.Jyx2LuaBridge.ShowEthics
---53=35|1|0|0|0|ShowRepute();
-ShowRepute = CS.Jyx2.Jyx2LuaBridge.ShowRepute
---54=36|1|0|0|0|OpenAllScene();
-OpenAllScene = CS.Jyx2.Jyx2LuaBridge.OpenAllScene
---55=37|5|1|3|4|if JudgeEventNum(#0, #1) == bool then goto label#x end;
-JudgeEventNum = CS.Jyx2.Jyx2LuaBridge.JudgeEventNum
---56=38|2|0|0|0|AddRepute(#0);  --增加声望
-AddRepute = CS.Jyx2.Jyx2LuaBridge.AddRepute
---57=39|1|0|0|0|instruct_57();
-instruct_57 = CS.Jyx2.Jyx2LuaBridge.instruct_57
---58=3a|1|0|0|0|FightForTop();
-FightForTop = CS.Jyx2.Jyx2LuaBridge.FightForTop
---59=3b|1|0|0|0|AllLeave();
-AllLeave = CS.Jyx2.Jyx2LuaBridge.AllLeave
---60=3c|6|1|4|5|JudgeScenePic(#0, #1, #2, #3, #4);
-JudgeScenePic = CS.Jyx2.Jyx2LuaBridge.JudgeScenePic
---61=3d|3|1|1|2|if Judge14BooksPlaced() == bool then goto label#x end; --这个写法太蠢了，待调整
-Judge14BooksPlaced = CS.Jyx2.Jyx2LuaBridge.Judge14BooksPlaced
---62=3e|7|0|0|0|EndAmination(#0, #1, #2, #3, #4, #5, #6); --结局动画
-EndAmination = CS.Jyx2.Jyx2LuaBridge.EndAmination
---63=3f|3|0|0|0|SetSexual(#0, #1); --只有一处，用别的方法比较好
-SetSexual = CS.Jyx2.Jyx2LuaBridge.SetSexual
---64=40|1|0|0|0|WeiShop();
-WeiShop = CS.Jyx2.Jyx2LuaBridge.WeiShop
---65=41|1|0|0|0|
---NOTHING TO DO
---66=42|2|0|0|0|PlayMusic(#0);
-PlayMusic = CS.Jyx2.Jyx2LuaBridge.PlayMusic 
---67=43|2|0|0|0|PlayWave(#0);
-PlayWave = CS.Jyx2.Jyx2LuaBridge.PlayWave
---68=44|8|0|0|0|Talk(#0, "talk(#1)", "talk(#2)", #3, #4, #5);
---ALREADY DEFINED
---69=45|4|0|0|0|ResetName(#0, #1, #2);
---没有调用
---70=46|3|0|0|0|ShowTitle("talk(#0)", #1);
---没有调用
---71=47|4|0|0|0|JumpScence(#0, #1, #2);
---没有调用
---72=48|6|0|0|0|SetAttribute(#0, #1, #2, #3, #4);
---没有调用
+util = require 'xlua.util'
+
+luaBridge = CS.Jyx2.Jyx2LuaBridge
+
+function combine(func1, func2)
+	return function()
+		local rst = func1()
+		func2(rst)
+	end
+end
+
+--系统预留函数，不要在lua中调用
+LuaExecFinished = luaBridge.LuaExecFinished
+
+--带延迟回调的函数
+Talk = util.async_to_sync(luaBridge.Talk)
+TryBattle = util.async_to_sync(luaBridge.TryBattle)
+AskBattle = util.async_to_sync(luaBridge.AskBattle)
+AskJoin = util.async_to_sync(luaBridge.AskJoin)
+AskRest = util.async_to_sync(luaBridge.AskRest)
+LightScence = util.async_to_sync(luaBridge.LightScence)
+DarkScence = util.async_to_sync(luaBridge.DarkScence)
+ShowEthics = util.async_to_sync(luaBridge.ShowEthics)
+ShowRepute = util.async_to_sync(luaBridge.ShowRepute)
+
+ShowMessage = util.async_to_sync(luaBridge.ShowMessage)
+ShowYesOrNoSelectPanel = util.async_to_sync(luaBridge.ShowYesOrNoSelectPanel)
+WeiShop = util.async_to_sync(luaBridge.WeiShop)
+AskSoftStar = util.async_to_sync(luaBridge.AskSoftStar)
+
+jyx2_WalkFromTo = util.async_to_sync(luaBridge.jyx2_WalkFromTo)
+jyx2_Wait = util.async_to_sync(luaBridge.jyx2_Wait)
 
 
---扩展函数
-jyx2_ReplaceSceneObject = CS.Jyx2.Jyx2LuaBridge.jyx2_ReplaceSceneObject
-jyx2_MovePlayer = CS.Jyx2.Jyx2LuaBridge.jyx2_MovePlayer
-jyx2_CameraFollow = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollow
-jyx2_CameraFollowPlayer = CS.Jyx2.Jyx2LuaBridge.jyx2_CameraFollowPlayer
-jyx2_WalkFromTo = CS.Jyx2.Jyx2LuaBridge.jyx2_WalkFromTo
-jyx2_PlayTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_PlayTimeline
-jyx2_StopTimeline = CS.Jyx2.Jyx2LuaBridge.jyx2_StopTimeline
-jyx2_Wait = CS.Jyx2.Jyx2LuaBridge.jyx2_Wait
-jyx2_SwitchRoleAnimation = CS.Jyx2.Jyx2LuaBridge.jyx2_SwitchRoleAnimation
-jyx2_FixMapObject = CS.Jyx2.Jyx2LuaBridge.jyx2_FixMapObject
-jyx2_CheckEventCount = CS.Jyx2.Jyx2LuaBridge.jyx2_CheckEventCount
-jyx2_CheckBookAndRepute=CS.Jyx2.Jyx2LuaBridge.jyx2_CheckBookAndRepute
-jyx2_SetTimelineSpeed = CS.Jyx2.Jyx2LuaBridge.jyx2_SetTimelineSpeed
-jyx2_PlayTimelineSimple = CS.Jyx2.Jyx2LuaBridge.jyx2_PlayTimelineSimple
-jyx2_ShowEndScene = CS.Jyx2.Jyx2LuaBridge.jyx2_ShowEndScene
+--以下是不带延迟回调的函数
+AddItemWithoutHint = luaBridge.AddItemWithoutHint
+ModifyEvent = luaBridge.ModifyEvent
+UseItem = luaBridge.UseItem
+ChangeMMapMusic = luaBridge.ChangeMMapMusic
+Join = luaBridge.Join
+Rest = luaBridge.Rest
+Dead = luaBridge.Dead
+InTeam = luaBridge.InTeam
+SetScenceMap = luaBridge.SetScenceMap
+HaveItem = luaBridge.HaveItem
+SetScencePosition2 = luaBridge.SetScencePosition2
+TeamIsFull = luaBridge.TeamIsFull
+Leave = luaBridge.Leave
+ZeroAllMP = luaBridge.ZeroAllMP
+SetOneUsePoi = luaBridge.SetOneUsePoi
+ScenceFromTo = luaBridge.ScenceFromTo
+Add3EventNum = luaBridge.Add3EventNum
+PlayAnimation = luaBridge.PlayAnimation
+JudgeEthics = luaBridge.JudgeEthics
+JudgeAttack = luaBridge.JudgeAttack
+WalkFromTo = luaBridge.WalkFromTo
+JudgeMoney = luaBridge.JudgeMoney
+AddItem = luaBridge.AddItem
+LearnMagic2 = luaBridge.LearnMagic2
+AddAptitude = luaBridge.AddAptitude
+SetOneMagic = luaBridge.SetOneMagic
+JudgeSexual = luaBridge.JudgeSexual
+AddEthics = luaBridge.AddEthics
+ChangeScencePic = luaBridge.ChangeScencePic
+OpenScene = luaBridge.OpenScene
+SetRoleFace = luaBridge.SetRoleFace
+NPCAddItem = luaBridge.NPCGetItem
+JudgeFemaleInTeam = luaBridge.JudgeFemaleInTeam
+Play2Amination = luaBridge.Play2Amination
+AddSpeed = luaBridge.AddSpeed
+AddMp = luaBridge.AddMp
+AddAttack = luaBridge.AddAttack
+AddHp = luaBridge.AddHp
+SetPersonMPPro = luaBridge.SetPersonMPPro
+instruct_50 = luaBridge.instruct_50
 
-SetFlag = CS.Jyx2.Jyx2LuaBridge.jyx2_SetFlag
-GetFlag = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlag
-SetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_SetFlagInt
-GetFlagInt = CS.Jyx2.Jyx2LuaBridge.jyx2_GetFlagInt
+OpenAllScene = luaBridge.OpenAllScene
+JudgeEventNum = luaBridge.JudgeEventNum
+AddRepute = luaBridge.AddRepute
+instruct_57 = luaBridge.instruct_57
+FightForTop = luaBridge.FightForTop
+AllLeave = luaBridge.AllLeave
+JudgeScenePic = luaBridge.JudgeScenePic
+Judge14BooksPlaced = luaBridge.Judge14BooksPlaced
+EndAmination = luaBridge.EndAmination
+SetSexual = luaBridge.SetSexual
+PlayMusic = luaBridge.PlayMusic
+PlayWave = luaBridge.PlayWave
+
+
+jyx2_ReplaceSceneObject = luaBridge.jyx2_ReplaceSceneObject
+jyx2_MovePlayer = luaBridge.jyx2_MovePlayer
+jyx2_CameraFollow = luaBridge.jyx2_CameraFollow
+jyx2_CameraFollowPlayer = luaBridge.jyx2_CameraFollowPlayer
+
+jyx2_PlayTimeline = luaBridge.jyx2_PlayTimeline
+jyx2_StopTimeline = luaBridge.jyx2_StopTimeline
+
+jyx2_SwitchRoleAnimation = luaBridge.jyx2_SwitchRoleAnimation
+jyx2_FixMapObject = luaBridge.jyx2_FixMapObject
+jyx2_CheckEventCount = luaBridge.jyx2_CheckEventCount
+jyx2_CheckBookAndRepute=luaBridge.jyx2_CheckBookAndRepute
+jyx2_SetTimelineSpeed = luaBridge.jyx2_SetTimelineSpeed
+jyx2_PlayTimelineSimple = luaBridge.jyx2_PlayTimelineSimple
+jyx2_ShowEndScene = luaBridge.jyx2_ShowEndScene
+
+SetFlag = luaBridge.jyx2_SetFlag
+GetFlag = luaBridge.jyx2_GetFlag
+SetFlagInt = luaBridge.jyx2_SetFlagInt
+GetFlagInt = luaBridge.jyx2_GetFlagInt
+
 --新增函数
-RestFight = CS.Jyx2.Jyx2LuaBridge.RestFight--战斗中休息
-JudgeIQ = CS.Jyx2.Jyx2LuaBridge.JudgeIQ--判断IQ
-AddHeal = CS.Jyx2.Jyx2LuaBridge.AddHeal--增加医疗
-AddDefence = CS.Jyx2.Jyx2LuaBridge.AddDefence--增加防御
-AddQuanzhang = CS.Jyx2.Jyx2LuaBridge.AddQuanzhang--增加拳掌
-AddShuadao = CS.Jyx2.Jyx2LuaBridge.AddShuadao--增加耍刀
-AddYujian = CS.Jyx2.Jyx2LuaBridge.AddYujian--增加御剑
-AddAnqi = CS.Jyx2.Jyx2LuaBridge.AddAnqi--增加暗器
-AddQimen = CS.Jyx2.Jyx2LuaBridge.AddQimen--增加奇门
-AddWuchang = CS.Jyx2.Jyx2LuaBridge.AddWuchang--增加武学常识
-AddAttackPoison = CS.Jyx2.Jyx2LuaBridge.AddAttackPoison--增加功夫带毒
-AddExp = CS.Jyx2.Jyx2LuaBridge.AddExp--增加经验
-JudgeWCH = CS.Jyx2.Jyx2LuaBridge.JudgeWCH--判断武学常识
-JudgeHeal = CS.Jyx2.Jyx2LuaBridge.JudgeHeal--判断医疗
-JudgeQuanzhang = CS.Jyx2.Jyx2LuaBridge.JudgeQuanzhang--判断拳掌
-JudgeYujian = CS.Jyx2.Jyx2LuaBridge.JudgeYujian--判断御剑
-JudgeAttackPoison = CS.Jyx2.Jyx2LuaBridge.JudgeAttackPoison--判断攻击带毒
-JudgeQimen = CS.Jyx2.Jyx2LuaBridge.JudgeQimen--判断奇门
-JudgeDefence = CS.Jyx2.Jyx2LuaBridge.JudgeDefence--判断防御
-GetTeamMembersCount = CS.Jyx2.Jyx2LuaBridge.GetTeamMembersCount--获取队伍人数
-GetRoleLevel = CS.Jyx2.Jyx2LuaBridge.GetRoleLevel--获取指定角色等级
-GetTeamTotalHp = CS.Jyx2.Jyx2LuaBridge.GetTeamTotalHp--获取队伍生命总和
-GetTeamId = CS.Jyx2.Jyx2LuaBridge.GetTeamId--获取队伍角色Id列表
-RoleUseItem = CS.Jyx2.Jyx2LuaBridge.RoleUseItem--指定角色使用物品
-RoleUnequipItem = CS.Jyx2.Jyx2LuaBridge.RoleUnequipItem--指定角色卸下物品（装备）
-ShowMessage = CS.Jyx2.Jyx2LuaBridge.ShowMessage
-ShowYesOrNoSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowYesOrNoSelectPanel
-ShowSelectPanel = CS.Jyx2.Jyx2LuaBridge.ShowSelectPanel
-AddAntiPoison = CS.Jyx2.Jyx2LuaBridge.AddAntiPoison
-BackToMainMenu =CS.Jyx2.Jyx2LuaBridge.BackToMainMenu
-ScreenVignette = CS.Jyx2.Jyx2LuaBridge.ScreenVignette
+RestFight = luaBridge.RestFight--战斗中休息
+JudgeIQ = luaBridge.JudgeIQ--判断IQ
+AddHeal = luaBridge.AddHeal--增加医疗
+AddDefence = luaBridge.AddDefence--增加防御
+AddQuanzhang = luaBridge.AddQuanzhang--增加拳掌
+AddShuadao = luaBridge.AddShuadao--增加耍刀
+AddYujian = luaBridge.AddYujian--增加御剑
+AddAnqi = luaBridge.AddAnqi--增加暗器
+AddQimen = luaBridge.AddQimen--增加奇门
+AddWuchang = luaBridge.AddWuchang--增加武学常识
+AddAttackPoison = luaBridge.AddAttackPoison--增加功夫带毒
+AddExp = luaBridge.AddExp--增加经验
+JudgeWCH = luaBridge.JudgeWCH--判断武学常识
+JudgeHeal = luaBridge.JudgeHeal--判断医疗
+JudgeQuanzhang = luaBridge.JudgeQuanzhang--判断拳掌
+JudgeYujian = luaBridge.JudgeYujian--判断御剑
+JudgeAttackPoison = luaBridge.JudgeAttackPoison--判断攻击带毒
+JudgeQimen = luaBridge.JudgeQimen--判断奇门
+JudgeDefence = luaBridge.JudgeDefence--判断防御
+GetTeamMembersCount = luaBridge.GetTeamMembersCount--获取队伍人数
+GetRoleLevel = luaBridge.GetRoleLevel--获取指定角色等级
+GetTeamTotalHp = luaBridge.GetTeamTotalHp--获取队伍生命总和
+GetTeamId = luaBridge.GetTeamId--获取队伍角色Id列表
+RoleUseItem = luaBridge.RoleUseItem--指定角色使用物品
+RoleUnequipItem = luaBridge.RoleUnequipItem--指定角色卸下物品（装备）
+
+ShowSelectPanel = luaBridge.ShowSelectPanel
+AddAntiPoison = luaBridge.AddAntiPoison
+BackToMainMenu =luaBridge.BackToMainMenu
+ScreenVignette = luaBridge.ScreenVignette
+
+PreloadLua = luaBridge.PreloadLua --重新加载预加载的lua文件，一般用于调试hotfix使用
 
 function main_getLuaFiles()
 	return {}

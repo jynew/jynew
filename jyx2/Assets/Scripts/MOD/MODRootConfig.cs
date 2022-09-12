@@ -26,6 +26,8 @@ public class MODRootConfig : ScriptableObject
     [LabelText("LUA文件名配置")] public string LuaFilePatten = "ka{0}";
 
     [LabelText("主角姓名")] public string PlayerName;
+
+    [LabelText("预加载的lua文件（比如热更新）")] public List<string> PreloadedLua;
     
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
