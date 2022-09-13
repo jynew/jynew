@@ -46,7 +46,7 @@ ShowMessageSelectPanel = util.async_to_sync(luaBridge.ShowMessageSelectPanel)--�
 ShowYesOrNoSelectPanel = util.async_to_sync(luaBridge.ShowYesOrNoSelectPanel)--显示选择框
 WeiShop = util.async_to_sync(luaBridge.WeiShop)--小宝商店
 AskSoftStar = util.async_to_sync(luaBridge.AskSoftStar)--软体宝宝对话
-
+ShowSelectPanel = util.async_to_sync(luaBridge.ShowSelectPanel)--选择函数
 jyx2_WalkFromTo = util.async_to_sync(luaBridge.jyx2_WalkFromTo)--主角走路
 jyx2_Wait = util.async_to_sync(luaBridge.jyx2_Wait)--等待（秒）
 
@@ -154,7 +154,7 @@ GetTeamId = luaBridge.GetTeamId--获取队伍角色Id列表
 RoleUseItem = luaBridge.RoleUseItem--指定角色使用物品
 RoleUnequipItem = luaBridge.RoleUnequipItem--指定角色卸下物品（装备）
 
-ShowSelectPanel = luaBridge.ShowSelectPanel--选择函数
+
 AddAntiPoison = luaBridge.AddAntiPoison--加抗毒
 BackToMainMenu =luaBridge.BackToMainMenu--返回主菜单
 ScreenVignette = luaBridge.ScreenVignette--屏幕边缘阴影
