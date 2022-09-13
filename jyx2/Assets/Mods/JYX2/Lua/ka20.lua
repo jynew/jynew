@@ -11,7 +11,6 @@ jyx2_ReplaceSceneObject("","NPC/yanji","1"); --刷出阎基
 jyx2_PlayTimeline("[Timeline]ka20_阎基居_苏醒", 0, true, "");
 LightScence();
 jyx2_Wait(1.5);
-jyx2_StopTimeline("[Timeline]ka20_阎基居_苏醒");
 Talk(4, "原本预备对付苗人凤的悲酥清风，居然先让你受用了！", "talkname4", 0);
 PlayAnimation(-1, 6026, 6036);
 Talk(0, "你……你……", "talkname0", 1);
@@ -19,6 +18,7 @@ Talk(4, "江湖上最近盛传有个年轻小毛头到处找“十四天书”�
 Talk(0, "你真卑鄙。", "talkname0", 1);
 Talk(4, "我阎基做事向来只求结果，不问方法。怎么？还不拿出来，要大爷我亲自动手吗？要知道书对死人是没有意义的。", "talkname4", 0);
 Talk(0, "倒要看看死的是你还是我。", "talkname0", 1);
+jyx2_StopTimeline("[Timeline]ka20_阎基居_苏醒");
 if TryBattle(1) == false then goto label0 end;
     LightScence();
     Talk(4, "想不到少侠武功如此盖世，连西夏的悲酥清风都对你没有作用，“十四天书”的确该是少侠所有。", "talkname4", 0);
