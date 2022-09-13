@@ -220,7 +220,7 @@ namespace Jyx2
         //询问是否战斗
         public static void AskBattle(Action<bool> callback)
         {
-            ShowYesOrNoSelectPanel("是否与之过招？", callback).Forget();
+            ShowYesOrNoSelectPanel("是否与之过招？", callback);
         }
 
         private static bool _battleResult = false;
@@ -231,7 +231,7 @@ namespace Jyx2
         {
             if(isQuickBattle)
             {
-                ShowYesOrNoSelectPanel("是否战斗胜利？", callback).Forget();
+                ShowYesOrNoSelectPanel("是否战斗胜利？", callback);
                 return;
             }
 
@@ -275,7 +275,7 @@ namespace Jyx2
         {
             if(isQuickBattle)
             {
-                ShowYesOrNoSelectPanel("是否战斗胜利？", callback).Forget();
+                ShowYesOrNoSelectPanel("是否战斗胜利？", callback);
                 return;
             }
 
@@ -311,7 +311,7 @@ namespace Jyx2
 
         public static void AskJoin(Action<bool> callback)
         {
-            ShowYesOrNoSelectPanel("是否要求加入？", callback).Forget();
+            ShowYesOrNoSelectPanel("是否要求加入？", callback);
         }
 
         //角色加入，同时获得对方身上的物品
@@ -984,7 +984,7 @@ namespace Jyx2
      
         public static void AskRest(Action<bool> callback)
         {
-            ShowYesOrNoSelectPanel("是否休息？<color=red>（温馨提示：受伤太重或中毒不回复）</color>", callback).Forget();
+            ShowYesOrNoSelectPanel("是否休息？<color=red>（温馨提示：受伤太重或中毒不回复）</color>", callback);
         }
 
         private static async UniTask DarkSceneAsync()
@@ -1190,7 +1190,7 @@ namespace Jyx2
         {
             UniTask.Void(async () =>
             {
-                var eventLuaPath = string.Format("ka{0}", UnityEngine.Random.Range(801, 820).ToString());
+                var eventLuaPath = string.Format(RuntimeEnvSetup.CurrentModConfig.LuaFilePatten, UnityEngine.Random.Range(801, 820).ToString());
                 await Jyx2.LuaExecutor.Execute(eventLuaPath);
                 callback();
             });
@@ -1737,17 +1737,20 @@ namespace Jyx2
 
         private static int _selectResult;
 
-        private static async UniTask ShowYesOrNoSelectPanel(string selectMessage, Action<bool> callback)
+        public static void ShowYesOrNoSelectPanel(string selectMessage, Action<bool> callback)
         {
-            List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
-            storyEngine.BlockPlayerControl = true;
-            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage,
-                selectionContent, new Action<int>((index) =>
-                {
-                    _selectResult = index;
-                    storyEngine.BlockPlayerControl = false;
-                    callback(_selectResult == 0);
-                }));
+            UniTask.Void(async () =>
+            {
+                List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
+                storyEngine.BlockPlayerControl = true;
+                await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage,
+                    selectionContent, new Action<int>((index) =>
+                    {
+                        _selectResult = index;
+                        storyEngine.BlockPlayerControl = false;
+                        callback(_selectResult == 0);
+                    }));
+            });
         }
         
         public static void ShowSelectPanel(int roleId, string selectMessage, LuaTable content, Action<int> callback)
