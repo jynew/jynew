@@ -1190,7 +1190,7 @@ namespace Jyx2
         {
             UniTask.Void(async () =>
             {
-                var eventLuaPath = string.Format(GlobalAssetConfig.Instance.startModId, UnityEngine.Random.Range(801, 820).ToString());
+                var eventLuaPath = string.Format("ka{0}", UnityEngine.Random.Range(801, 820).ToString());
                 await Jyx2.LuaExecutor.Execute(eventLuaPath);
                 callback();
             });
