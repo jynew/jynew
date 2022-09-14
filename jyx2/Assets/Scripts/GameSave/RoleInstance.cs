@@ -164,7 +164,6 @@ namespace Jyx2
         
         public void Recover()
         {
-            Debug.Log($"role:{Name} recover called!");
             SetHPAndRefreshHudBar(MaxHp);
 
             Mp = MaxMp;
