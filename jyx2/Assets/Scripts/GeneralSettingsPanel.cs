@@ -79,6 +79,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         InitVolumeSlider();
         InitSoundEffectSlider();
         InitViewportSetting();
+        InitDifficultyDropdown();
         InitLanguageSetting();
         InitDebugModeSetting();
         InitMobileMoveModeSetting();
@@ -91,6 +92,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         volumeSlider.onValueChanged.AddListener(SetVolume);
         soundEffectSlider.onValueChanged.AddListener(SetSoundEffect);
         viewportDropdown.onValueChanged.AddListener(SetViewport);
+        difficultyDropdown.onValueChanged.AddListener(SetDifficulty);
         languageDropdown.onValueChanged.AddListener(SetLanguage);
         debugModeDropdown.onValueChanged.AddListener(SetDebugMode);
         mobileMoveModeDropdown.onValueChanged.AddListener(SetMobileMoveMode);
@@ -149,6 +151,11 @@ public class GeneralSettingsPanel : Jyx2_UIBase
 
     public void InitDifficultyDropdown()
     {
+        var setting = gameSetting[GameSettingManager.Catalog.Difficulty];
+        if (setting is int value)
+        {
+            difficultyDropdown.value = value;
+        }
     }
 
     void InitVolumeSlider()
@@ -232,6 +239,11 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Viewport, index);
     }
     
+    private void SetDifficulty(int index)
+    {
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Difficulty, index);
+    }
+    
     private void SetLanguage(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Language, languageDropdown.options[index].text);
@@ -246,11 +258,10 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.MobileMoveMode, index);
     }
-
-    /*游戏难度，暂未实现*/
+    
     public void SetGameDifficulty(int index)
     {
-
+        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Difficulty, index);
     }
 
     protected override void OnCreate()
