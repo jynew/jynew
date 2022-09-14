@@ -214,7 +214,7 @@ public static class GameSettingManager
 				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_FULLSCREEN, (int)value);
 				break;
 			case Catalog.Difficulty:
-				Debug.Log("难度设置未实现。");
+				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_Difficulty, (int)value);
 				break;
 			case Catalog.SoundEffect:
 				PlayerPrefs.SetFloat(GameConst.PLAYER_PREF_SOUND_EFFECT, (float)value);
@@ -360,12 +360,9 @@ public static class GameSettingManager
 
 	private static int GetDifficulty()
 	{
-		return 0;
-	}
-
-	/*游戏难度，暂未实现*/
-	public static void SetDifficulty(int index)
-	{
+		return PlayerPrefs.HasKey(GameConst.PLAYER_PREF_Difficulty)
+			? PlayerPrefs.GetInt(GameConst.PLAYER_PREF_Difficulty)
+			: 0;
 	}
 
 	#endregion
