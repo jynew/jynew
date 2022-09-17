@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using IFix;
 using Jyx2.Middleware;
 using UnityEngine;
 using UniRx;
@@ -118,6 +119,7 @@ namespace Jyx2
         }
 
 
+#if !INJECTFIX_PATCH_ENABLE
         void InitData()
         {
             //CG 初始化
@@ -155,6 +157,46 @@ namespace Jyx2
 
             ResetItems();
         }
+#else
+        [IFix.Patch]
+        void InitData()
+        {
+            //CG 初始化
+            Name = Data.Name;
+            Sex = (int)Data.Sexual;
+            Level = Data.Level;
+            Exp = Data.Exp;
+            Hp = Data.MaxHp;
+            PreviousRoundHp = Hp;
+            MaxHp = Data.MaxHp;
+            Mp = Data.MaxMp;
+            MaxMp = Data.MaxMp + 1000;
+            Tili = GameConst.MAX_ROLE_TILI;
+            Weapon = Data.Weapon;
+            Armor = Data.Armor;
+            MpType = Data.MpType;
+            Attack = Data.Attack;
+            Qinggong = Data.Qinggong;
+            Defence = Data.Defence;
+            Heal = Data.Heal;
+            UsePoison = Data.UsePoison;
+            DePoison = Data.DePoison;
+            AntiPoison = Data.AntiPoison;
+            Quanzhang = Data.Quanzhang;
+            Yujian = Data.Yujian;
+            Shuadao = Data.Shuadao;
+            Qimen = Data.Qimen;
+            Anqi = Data.Anqi;
+            Wuxuechangshi = Data.Wuxuechangshi;
+            Pinde = Data.Pinde;
+            AttackPoison = Data.AttackPoison;
+            Zuoyouhubo = Data.Zuoyouhubo;
+            IQ = Data.IQ;
+            HpInc = Data.HpInc;
+
+            ResetItems();
+        }
+#endif
 
         public void ResetForBattle()
         {
