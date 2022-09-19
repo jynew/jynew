@@ -14,6 +14,7 @@ using System.Linq;
 using Jyx2Configs;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Text;
 
 public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 {
@@ -45,6 +46,9 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	});
 	private bool initialized;
 
+
+	private StringBuilder coordinateBuilder = new StringBuilder();
+
 	public override void Update()
 	{
 		base.Update();
@@ -58,15 +62,29 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182));
 		if (Compass.gameObject.activeSelf)
 		{
-			var p = LevelMaster.Instance.GetPlayerPosition();
-			var pString = (p.x + 242).ToString("F0") + "," + (p.z + 435).ToString("F0");
-			if (!LevelMaster.Instance.GetPlayer().IsOnBoat)
+			var player = LevelMaster.Instance.GetPlayer();
+			if (player == null)
+				return;
+			coordinateBuilder.Clear();
+
+            int offsetX = 242, offsetZ = 435;
+			var playerPosition = player.transform.position;
+            coordinateBuilder.Append(Mathf.Floor(playerPosition.x + offsetX));
+            coordinateBuilder.Append(",");
+            coordinateBuilder.Append(Mathf.Floor(playerPosition.z + offsetZ));
+
+            if (!player.IsOnBoat)
 			{
-				var b = LevelMaster.Instance.GetPlayer().GetBoatPosition();
-				pString += "(" + (b.x + 242).ToString("F0") + "," + (b.z + 435).ToString("F0") + ")";
-			}
-			Compass.text = pString;
-		}
+				var boatPosition = player.GetBoatPosition();
+				coordinateBuilder.Append("(");
+				coordinateBuilder.Append(Mathf.Round(boatPosition.x + offsetX));
+				coordinateBuilder.Append(",");
+                coordinateBuilder.Append(Mathf.Round(boatPosition.z + offsetZ));
+                coordinateBuilder.Append(")");
+
+            }
+			Compass.text = coordinateBuilder.ToString();
+        }
 	}
 
 	protected override void OnShowPanel(params object[] allParams)
