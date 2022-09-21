@@ -863,9 +863,17 @@ namespace IFix.Editor
             EditorUtility.DisplayProgressBar("Generate Patch for Edtior", "patching...", 0);
             try
             {
-                if (!PlayerPrefs.HasKey("CURRENT_MOD"))
-                    throw new Exception("CURRENT_MOD could not be found in PlayerPrefs");
-                string currentModId = PlayerPrefs.GetString("CURRENT_MOD");
+                string currentModId = "";
+                if (PlayerPrefs.HasKey("CURRENT_MOD"))
+                {
+                    currentModId = PlayerPrefs.GetString("CURRENT_MOD");
+                }
+                else
+                {
+                    var t = Resources.Load<GlobalAssetConfig>("GlobalAssetConfig");
+                    currentModId = t.startModId;
+                }
+                
                 string patchDir = $"Assets/Mods/{currentModId}/Patch";
                 if(!Directory.Exists(patchDir))
                 {
