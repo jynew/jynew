@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Jyx2;
 
 public interface IUIAnimator
 {
