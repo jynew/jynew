@@ -122,6 +122,10 @@ namespace Jyx2Editor
 
             //打包
             BuildPipeline.BuildPlayer(GetScenePaths(), exePath, BuildTarget.StandaloneWindows64, BuildOptions.None);
+            
+#if UNITY_2019_3_OR_NEWER
+            EditorUtility.RequestScriptReload();
+#endif
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
