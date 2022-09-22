@@ -185,9 +185,6 @@ namespace IFix.Editor
                 {
                     injected = true;
                 }
-#if UNITY_2019_3_OR_NEWER
-                EditorUtility.RequestScriptReload();
-#endif
             }
         }
 
