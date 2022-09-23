@@ -49,7 +49,7 @@ AskSoftStar = util.async_to_sync(luaBridge.AskSoftStar)--软体宝宝对话
 ShowSelectPanel = util.async_to_sync(luaBridge.ShowSelectPanel)--选择函数
 jyx2_WalkFromTo = util.async_to_sync(luaBridge.jyx2_WalkFromTo)--主角走路
 jyx2_Wait = util.async_to_sync(luaBridge.jyx2_Wait)--等待（秒）
-TryBattlePlus = util.async_to_sync(luaBridge.TryBattlePlus)--战斗（含计数器）
+
 
 --以下是不带延迟回调的函数
 AddItemWithoutHint = luaBridge.AddItemWithoutHint--获得物品,不显示提示
@@ -165,9 +165,6 @@ LeavePond = luaBridge.LeavePond--出黑龙潭
 AddExpWithoutHint = luaBridge.AddExpWithoutHint--增加经验不提示
 PreloadLua = luaBridge.PreloadLua --重新加载预加载的lua文件，一般用于调试hotfix使用
 
-RestTeamPlus = luaBridge.RestTeamPlus--全队恢复（含计数器）
-RestFightPlus = luaBridge.RestFightPlus--野外休息（含计数器）
-RestPlus = luaBridge.RestPlus--休息（含计数器）
 
 GetCurrentGameMapid = luaBridge.GetCurrentGameMapid--获取当前地图编号
 RestTeam = luaBridge.RestTeam--全队恢复

@@ -226,7 +226,8 @@ namespace Jyx2
         private static bool _battleResult = false;
 
         public static bool isQuickBattle = false;
-        //开始一场战斗
+   
+	   //开始一场战斗
         public static void TryBattle(int battleId, Action<bool> callback)
         {
             if(isQuickBattle)
@@ -269,39 +270,6 @@ namespace Jyx2
             });
             await UniTask.WaitUntil(() => finished);
             return rst;
-        }
-        //战斗（含计数器）--by citydream
-        public static void TryBattlePlus(int battleId, Action<bool> callback)
-        {
-            if(isQuickBattle)
-            {
-                ShowYesOrNoSelectPanel("是否战斗胜利？", callback);
-                return;
-            }
-
-            bool isWin = false;
-
-            //记录当前地图和位置
-            Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
-            var pos = LevelMaster.Instance.GetPlayerPosition();
-            var rotate = LevelMaster.Instance.GetPlayerOrientation();
-            
-            LevelLoader.LoadBattle(battleId, (ret) =>
-            {
-                LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
-                {
-                    //还原当前地图和位置
-                    loadType = LevelMaster.LevelLoadPara.LevelLoadType.ReturnFromBattle,
-                    Pos = pos,
-                    Rotate = rotate,
-                }, () =>
-                {
-                    isWin = (ret == BattleResult.Win);
-                    callback(isWin);
-                });
-            });
-     
-			Add3EventNum(70,998,1,0,0);//战斗计数器
         }
         //替换当前的出门音乐
         public static void ChangeMMapMusic(int musicId)
@@ -1019,18 +987,7 @@ namespace Jyx2
                 }
             }
         }
-		///休息（含计数器）--by citydream
-		public static void RestPlus()
-        {
-            foreach (var role in runtime.GetTeam())
-            {
-                if (role.Hurt < 33 && role.Poison <= 0)
-                {
-                    role.Recover();
-                }
-            }
-			Add3EventNum(70,997,1,0,0);//休息计数器
-        }
+
 		///全队恢复--by citydream
         public static void RestTeam()
         {
@@ -1039,15 +996,7 @@ namespace Jyx2
                 role.Recover();    
             }
         }
-		///全队恢复（含计数器）--by citydream
-        public static void RestTeamPlus()
-        {
-            foreach (var role in runtime.GetTeam())
-            {
-                role.Recover();    
-            }
-			Add3EventNum(70,997,1,0,0);//休息计数器
-        }
+
         public static void RestFight()
         {
             foreach (var role in runtime.GetTeam())
@@ -1059,20 +1008,7 @@ namespace Jyx2
             }
         }
         
-        ///野外休息（含计数器）--by citydream
-        public static void RestFightPlus()
-        {
-            foreach (var role in runtime.GetTeam())
-            {
-                if (role.Hurt < 50 && role.Poison <= 0)
-                {
-                    role.Recover();    
-                }
-            }
-        
-            Add3EventNum(70,997,1,0,0);//休息计数器
-        }
-        
+       
         private static async UniTask LightSceneAsync()
         {
             bool finished = false;
