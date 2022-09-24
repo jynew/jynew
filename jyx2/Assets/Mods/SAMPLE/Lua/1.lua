@@ -4,7 +4,7 @@ if ShowYesOrNoSelectPanel("是否埋葬尸体？") == true then goto label0 end;
     do return end;
 ::label0::
     Talk(0, "自己亲手埋自己，还真是别有一翻滋味在心头。");
-    Talk(0, "奇怪，我的脖子后面有一个很小很小的十字形针孔，这一定就是致死的原因吧！");
+    Talk(0, "奇怪，我的脖子后面有<color=orange>一个很小很小的十字形针孔</color>，这一定就是致死的原因吧！");
     jyx2_FixMapObject("主角移动", 1);
     jyx2_PlayTimelineSimple("[Timeline]1_埋葬", true);
     jyx2_Wait(5.4);

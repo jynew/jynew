@@ -29,4 +29,5 @@ if AskJoin() == true then goto label0 end;
     AddAttackPoison(80, 30);
     AddAntiPoison(80, 100);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 3, -2, -2, 720, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
