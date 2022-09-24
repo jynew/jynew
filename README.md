@@ -19,7 +19,7 @@
 [包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [B站主页](https://space.bilibili.com/1232630839) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [授权列表](https://github.com/jynew/jynew/wiki/%E9%A1%B9%E7%9B%AE%E7%B4%A0%E6%9D%90%E6%8E%88%E6%9D%83%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
 
 《群侠传，启动！》 是一个开放源代码的武侠RPG游戏框架，旨在致敬经典游戏《金庸群侠传》，并为此类游戏爱好者提供一个二次创作与交流的平台。
-你可以在本作中体验样例工程《渡城残魂转》，扮演灵魂穿越附身于小乞丐的莫桥山庄掌门人“莫穿林”，解开自己死亡之谜。
+你可以体验样例工程《渡城残魂转》，扮演灵魂穿越附身于小乞丐的莫桥山庄掌门人“莫穿林”，解开自己死亡之谜。
 
 你亦可使用本框架制作游戏MOD，并上传到创意工坊。
 
@@ -38,6 +38,12 @@
 
 
 ## 样例MOD：渡城残魂传
+
+- 约3-4个小时的主线游戏剧情体验，可最终通关并解开自己死亡之谜，以及掩盖在该谜底下的阴谋
+- 多游戏结局
+- 多名风格各异的可入队队友
+- 十余种可学习武学
+- 上百种不同道具
 
 ### 游戏画面截图
 
