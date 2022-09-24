@@ -1,8 +1,8 @@
-# 金庸群侠传3D重制版
+# 群侠传，启动！
 
-[English HomePage](https://github.com/jynew/jynew/wiki/Heros-of-Jin-Yong-3D-Remastered)
+![主宣传图](https://user-images.githubusercontent.com/7448857/192084760-017f3789-81ff-4a67-81bf-8d8c4df1cac5.png)
 
-![主宣传图-616-353](https://user-images.githubusercontent.com/7448857/145429032-4cb357f9-077d-4450-acb2-bea62e9910d6.jpg)
+![button-steam-available-fixed-22](https://user-images.githubusercontent.com/7448857/192085415-7c1b8d34-d1ac-4f86-8d5e-969747c7a798.png)(https://store.steampowered.com/app/2098790/_/)
 
 
 [![license](https://img.shields.io/badge/license-%E9%87%91%E7%BE%A43D%E9%87%8D%E5%88%B6%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
@@ -18,23 +18,45 @@
 
 [包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [B站主页](https://space.bilibili.com/1232630839) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [授权列表](https://github.com/jynew/jynew/wiki/%E9%A1%B9%E7%9B%AE%E7%B4%A0%E6%9D%90%E6%8E%88%E6%9D%83%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
 
-金庸群侠传3D重制版是一个回合制战棋战斗开放世界RPG游戏。它是一个非盈利游戏项目，项目目标为重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。你可以在PC、MAC或移动手机平台(或其他支持平台)游玩。
+《群侠传，启动！》 是一个开放源代码的武侠RPG游戏框架，旨在致敬经典游戏《金庸群侠传》，并为此类游戏爱好者提供一个二次创作与交流的平台。
+你可以在本作中体验样例工程《渡城残魂转》，扮演灵魂穿越附身于小乞丐的莫桥山庄掌门人“莫穿林”，解开自己死亡之谜。
+
+你亦可使用本框架制作游戏MOD，并上传到创意工坊。
+
+一切均免费，纯粹用爱发电。非常欢迎感兴趣的朋友加入。
+但未经允许，不允许在本项目及其MOD以外任何场景使用本项目任何素材、资源（包括商用/非商用）！否则将上本项目的耻辱榜。具体可以关注本项目相关开源协议。
+
+## 项目目标
+
+* 使用Unity引擎重制并致敬经典游戏《金庸群侠传》DOS版；
+* 提供统一的平台，支持重制《金群》的一系列MOD或二次开发；
+* 提供开放的能力给社区，有兴趣贡献力量的朋友可以让这个作品更加完善；
+* 提供一个完备的单机游戏结构供有兴趣学习开发游戏的朋友进行参考；
 
 > 我们承诺：本项目除了爱好者的自愿捐款以外，不会在任何渠道取得收入。最终的代码、资源、包体都仅供学习使用，请勿用于任何商业目的。一切再度商用均不被本项目允许和授权，如果有任何侵犯您的权益，欢迎与我们取得联系。
 > 
 
 
-## 项目目标
+## 样例MOD：渡城残魂传
 
-* 使用Unity引擎重制并致敬经典游戏《金庸群侠传》DOS版；
-* 后续支持重制《金群》的一系列MOD或二次开发；
-* 提供开放的能力给社区，有兴趣贡献力量的朋友可以让这个作品更加完善；
-* 提供一个完备的单机游戏结构供有兴趣学习开发游戏的朋友进行参考；
+### 游戏画面截图
 
-------
+![Screenshot1](https://user-images.githubusercontent.com/7448857/192085025-b38ca9f9-726b-458b-aab3-7e5ec36df1ca.png)
+![Screenshot3](https://user-images.githubusercontent.com/7448857/192085027-ba8beebf-8743-48fb-bc1d-f315b256e2a7.png)
+
+---------
+
+## 样例MOD：金庸群侠传3D重制版
+
+[English HomePage](https://github.com/jynew/jynew/wiki/Heros-of-Jin-Yong-3D-Remastered)
+
+![主宣传图-616-353](https://user-images.githubusercontent.com/7448857/145429032-4cb357f9-077d-4450-acb2-bea62e9910d6.jpg)
 
 
-## 游戏画面截图
+金庸群侠传3D重制版是一个回合制战棋战斗开放世界RPG游戏。它是一个非盈利游戏项目，项目目标为重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。你可以在PC、MAC或移动手机平台(或其他支持平台)游玩。
+
+
+### 游戏画面截图
 
 ![1 (1)](https://user-images.githubusercontent.com/7448857/144630410-bc1676eb-b548-41ea-ae54-90c72e9d066d.png)
 ![2 (1)](https://user-images.githubusercontent.com/7448857/144630415-c2c3b37e-6008-49d9-a690-fc25d995f21c.png)
@@ -42,6 +64,8 @@
 ![4 (1)](https://user-images.githubusercontent.com/7448857/144630403-e35a6772-2442-465c-8a23-c1f5ae0037bc.png)
 ![5 (1)](https://user-images.githubusercontent.com/7448857/144630913-bb59a38f-4cb2-4312-b5e4-6051d38c3a84.png)
 ![6 (1)](https://user-images.githubusercontent.com/7448857/144630919-b21370e1-0783-417e-99c3-763e9563d06a.png)
+
+---------
 
 ## 开发计划
 
@@ -62,7 +86,7 @@
 - [x] 支持多端输出，一键打包
 - [x] 所有代码和资源全部开源，不依赖闭源库（标准第三方库除外）
 - [ ] 优化游戏运行性能和代码质量（考虑使用URP渲染管线）
-- [ ] 提供MOD启动器，提供金群MOD开发环境和样例
+- [x] 提供MOD启动器，提供金群MOD开发环境和样例
 - [ ] 提供联机战斗对战、ONLINE网络游戏模式的样例和DEMO
 
 ## 技术实现简介
