@@ -8,7 +8,8 @@ if AskBattle() == true then goto label0 end;
         jyx2_FixMapObject("罂粟谷守门弟子让路", 1);
         LightScence();
         Talk(71, "看你还挺帅，我们谷主应该喜欢。");
-        ModifyEvent(-2, -2, -2, -2, 713, -1, -1, -2, -2, -2, -2, -2, -2);
+        ModifyEvent(-2, 5, -2, -2, 713, -1, -1, -2, -2, -2, -2, -2, -2);
+        ModifyEvent(-2, 7, -2, -2, 713, -1, -1, -2, -2, -2, -2, -2, -2);
         do return end;
 ::label1::
         LightScence();
