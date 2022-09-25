@@ -11,7 +11,7 @@ if JudgeIQ(0, 80, 100) == true then goto label0 end;
     ModifyEvent(-2, 3, -2, -2, 721, -1, -1, -2, -2, -2, -2, -2, -2);
     do return end;
 ::label0::
-    Talk(0, "多谢粟掌门。");
+    Talk(0, "多谢粟谷主。");
     LearnMagic2(0, 72, 0);
     AddItem(73, 1);
     ModifyEvent(-2, 3, -2, -2, 721, -1, -1, -2, -2, -2, -2, -2, -2);
