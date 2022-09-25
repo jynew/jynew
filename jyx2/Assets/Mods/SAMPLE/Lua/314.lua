@@ -1,0 +1,16 @@
+Talk(30, "这块土感觉有点松松的，是不是埋了什么东西。");
+Talk(30, "我挖开看看。");
+jyx2_PlayTimelineSimple("[Timeline]3_虚寂挖书", false);
+jyx2_Wait(2);
+jyx2_ReplaceSceneObject("", "Dynamic/驱魔神掌", "1");
+Talk(30, "咦，里面有一本书！");
+Talk(0, "这是驱魔神掌啊！是寿眉大师的个人绝学。");
+Talk(30, "我终于明白师祖离开之前那句话的意思了。");
+Talk(0, "什么话？");
+Talk(30, "<color=orange>残阳映佛光，驱魔定城疆。</color>夕阳下大佛像的影子后，藏着驱魔神掌！");
+Talk(0, "原来是这样啊。");
+AddItem(35, 1);
+jyx2_ReplaceSceneObject("", "Dynamic/驱魔神掌", "");
+ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
+ModifyEvent(-2, 0, -2, -2, 315, -1, -1, -2, -2, -2, -2, -2, -2);
+do return end;
