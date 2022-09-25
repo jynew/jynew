@@ -6,6 +6,7 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
         Talk(31, "阿弥陀佛。");
         do return end;
 ::label1::
+        jyx2_ReplaceSceneObject("", "NPC/童四二", "1");
         Talk(80, "寿眉大师，我有一事请教。");
         Talk(31, "阿弥陀佛。");
         Talk(80, "听师父说，这一对玉镯子有个秘密，只有大师您能够破解。");
@@ -57,6 +58,7 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
                 AddItem(32, 1);
                 AddItem(33, 1);
                 AddItem(30, 10);
+                jyx2_ReplaceSceneObject("", "NPC/童四二", "");
                 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
                 ModifyEvent(-2, 2, -2, -2, 39, -1, -1, -2, -2, -2, -2, -2, -2);--茶恩寺，虚安，B
                 ModifyEvent(7, 3, -2, -2, 79, -1, -1, -2, -2, -2, -2, -2, -2);--罂粟谷，粟兰，D
@@ -71,6 +73,7 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
                 AddItem(32, 1);
                 AddItem(33, 1);
                 AddItem(30, 10);
+                jyx2_ReplaceSceneObject("", "NPC/童四二", "");
                 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
                 ModifyEvent(-2, 0, -2, -2, 313, -1, -1, -2, -2, -2, -2, -2, -2);
                 ModifyEvent(-2, 2, -2, -2, 39, -1, -1, -2, -2, -2, -2, -2, -2);--茶恩寺，虚安，B
