@@ -3,4 +3,6 @@ if UseItem(11) == true then goto label0 end;
 ::label0::
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
     AddItem(12, 1);
+    AddItem(13, 1);
+    AddItem(14, 1);
 do return end;
