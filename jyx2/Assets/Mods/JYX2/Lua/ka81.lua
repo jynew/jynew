@@ -20,6 +20,7 @@ if TryBattle(11) == true then goto label0 end;
 	jyx2_ReplaceSceneObject("", "NPC/weiyixiao", "1");--韦一笑出现    
 	jyx2_ReplaceSceneObject("", "NPC/yintianzheng", "1"); --殷天正出现
     ModifyEvent(-2, 0, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
+	jyx2_ReplaceSceneObject("", "Triggers/Leave", "1");--by citydream 显示出口可以离开	
     LightScence();
     ScenceFromTo(29, 48, 29, 35);
 	jyx2_CameraFollow("Level/NPC/fanyao");
@@ -28,6 +29,5 @@ if TryBattle(11) == true then goto label0 end;
     Talk(70, "华山派和崆峒派各位，请将顶上的魔教余孽一概诛灭了。武当派从西往东搜索，峨嵋派从东往西搜索，别让魔教有一人漏网。昆仑派预备火种，焚烧魔教巢穴。少林弟子各取法器，诵念往生经文，替六派殉难英雄，魔教教众超渡，化除冤孽。", "talkname70", 0);
     ScenceFromTo(29, 35, 29, 48);
 	jyx2_CameraFollowPlayer();
-	jyx2_ReplaceSceneObject("", "Triggers/Leave", "1");--by citydream 显示出口可以离开
     AddRepute(4);
 do return end;
