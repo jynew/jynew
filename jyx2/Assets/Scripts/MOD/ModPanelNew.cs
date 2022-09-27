@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Jyx2;
+using Jyx2.MOD;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,23 +28,13 @@ public class ModPanelNew : Jyx2_UIBase
 
     public List<string> LoadModList()
     {
-        if (Application.isEditor || !Application.isMobilePlatform)
+        List<string> mods = new List<string>();
+        foreach (var mod in MODManager.Instance.GetAllModProviders<MODProviderBase>())
         {
-            if (File.Exists("modlist.txt"))
-            {
-                List<string> rst = new List<string>();
-                var lines = File.ReadAllLines("modlist.txt");
-                foreach (var line in lines)
-                {
-                    if (line.IsNullOrWhitespace()) continue;
-                    rst.Add(line);
-                }
-                return rst;
-            }
+            mods = mods.Union(mod.GetInstalledMods()).ToList();
         }
-        
-        //暂不支持自由扩展MOD
-        return new List<string> {"JYX2", "SAMPLE"};
+
+        return mods;
     }
 
     public void OnClose()

@@ -59,6 +59,9 @@ public static class Jyx2ResourceHelper
         }
 
         _isInited = true;
+        
+        //初始化MOD管理器
+        MODManager.Instance.Init();
 
         //模型池
         var allModels = await ResLoader.LoadAssets<ModelAsset>("Assets/Models/");
