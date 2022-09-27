@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Jyx2;
 using Jyx2.MOD;
 using Sirenix.Utilities;
@@ -14,24 +15,24 @@ public class ModPanelNew : Jyx2_UIBase
     public Dropdown m_Dropdown;
     public GameObject ModChangedSuggestLabel;
 
-    public void Start()
+    public async void Start()
     {
         m_Dropdown.onValueChanged.RemoveAllListeners();
         m_Dropdown.onValueChanged.AddListener(OnValueChanged);
         m_Dropdown.ClearOptions();
-        m_Dropdown.AddOptions(LoadModList());
+        m_Dropdown.AddOptions(await LoadModList());
         m_Dropdown.value = m_Dropdown.options.FindIndex(o => o.text == RuntimeEnvSetup.CurrentModId);
         
         ModChangedSuggestLabel.gameObject.SetActive(false);
     }
 
 
-    public List<string> LoadModList()
+    public async UniTask<List<string>> LoadModList()
     {
         List<string> mods = new List<string>();
         foreach (var mod in MODManager.Instance.GetAllModProviders<MODProviderBase>())
         {
-            mods = mods.Union(mod.GetInstalledMods()).ToList();
+            mods = mods.Union(await mod.GetInstalledMods()).ToList();
         }
 
         return mods;

@@ -2,6 +2,7 @@
 using System.IO;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
+using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,27 +34,32 @@ namespace Jyx2
                 await t.OnLoad();
             }
 
+            //初始化MOD管理器
+            MODManager.Instance.Init();
             
             await LoadCurrentMod();
             
             await ResLoader.Init();
-            await ResLoader.LoadMod(CurrentModId); 
-            
+            MODManager.Instance.LoadMod(CurrentModId, "Steam");
+
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
             
 #if UNITY_EDITOR
             var dirPath = $"Assets/Mods/{CurrentModId}/Configs";
-            if (!File.Exists($"{dirPath}/Datas.bytes"))
+            if (Directory.Exists(dirPath))
             {
-                CurrentModConfig.GenerateConfigs();
-            }
-            else
-            {
-                ExcelTools.WatchConfig(dirPath, () =>
+                if (!File.Exists($"{dirPath}/Datas.bytes"))
                 {
                     CurrentModConfig.GenerateConfigs();
-                    Debug.Log("File Watcher! Reload success! -> " + dirPath);
-                }); 
+                }
+                else
+                {
+                    ExcelTools.WatchConfig(dirPath, () =>
+                    {
+                        CurrentModConfig.GenerateConfigs();
+                        Debug.Log("File Watcher! Reload success! -> " + dirPath);
+                    }); 
+                } 
             }
 #endif
       

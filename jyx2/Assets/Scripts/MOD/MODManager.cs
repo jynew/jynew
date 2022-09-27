@@ -35,6 +35,8 @@ namespace Jyx2.MOD
             }
             _isInited = true;
             
+            _platforms.Clear();
+            
             //注册平台
             RegisterMODPlatform(new SteamMODProvider() { Name = "Steam" });
             RegisterMODPlatform(new PCLocalMODProvider() { Name = "PC" });
