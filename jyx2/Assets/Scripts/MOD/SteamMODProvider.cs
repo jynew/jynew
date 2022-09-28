@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Jyx2.Middleware;
 using Jyx2.ResourceManagement;
+using Sirenix.Utilities;
 using Steamworks;
 using UnityEngine;
 
@@ -22,13 +25,13 @@ namespace Jyx2.MOD
             }
         }
         
-        private Dictionary<string, Steamworks.Ugc.Item> _items = new Dictionary<string, Steamworks.Ugc.Item>();
+        private Dictionary<string, ModItem> _items = new Dictionary<string, ModItem>();
 
         /// <summary>
-        /// 获取安装的MOD列表
+        /// 获取已安装的Mod列表
         /// </summary>
         /// <returns></returns>
-        public override async UniTask<List<string>> GetInstalledMods()
+        public override async UniTask<Dictionary<string, ModItem>> GetInstalledMods()
         {
             if (SteamClient.IsValid)
             {
@@ -42,34 +45,48 @@ namespace Jyx2.MOD
                     if (entry.IsInstalled)
                     {
                         Debug.Log($"Found Installed Item: {entry.Title}");
-                        _items.Add(entry.Title, entry);
+                        
+                        var modPath = Path.Combine(entry.Directory, XmlFileName);
+                        var xmlObj = GetModItem(modPath);
+                        var modItem = new ModItem
+                        {
+                            ModId = xmlObj.ModId,
+                            Name = entry.Title ?? xmlObj.Name,
+                            Version = xmlObj.Version,
+                            Author = entry.Owner.Name ?? xmlObj.Author,
+                            Description = entry.Description ?? xmlObj.Description,
+                            Directory = entry.Directory,
+                            PreviewImageUrl = entry.PreviewImageUrl ?? xmlObj.PreviewImageUrl
+                        };
+                        _items.Add(xmlObj.ModId, modItem);
                     }
                 }
             }
-            return _items.Keys.ToList();
+            return _items;
+        }
+
+        /// <summary>
+        /// 获取Mod文件夹路径
+        /// </summary>
+        /// <param name="modId"></param>
+        /// <returns></returns>
+        public override string GetModDirPath(string modId)
+        {
+            if (_items.ContainsKey(modId))
+            {
+                return _items[modId].Directory;
+            }
+            return "";
         }
         
         /// <summary>
-        /// 获取MOD的文件夹路径
-        /// </summary>
-        /// <param name="modName"></param>
-        /// <returns></returns>
-        public string GetModPath(string modName)
-        {
-            if (_items.ContainsKey(modName))
-            {
-                return _items[modName].Directory;
-            }
-            return null;
-        }
- 
-        /// <summary>
-        /// 加载MOD
+        /// 加载Mod
         /// </summary>
         /// <param name="modId"></param>
         public override async UniTask LoadMod(string modId)
         {
-            await ResLoader.LoadMod(modId, GetModPath(modId));
+            var modDirPath = GetModDirPath(modId);
+            await ResLoader.LoadMod(modId, modDirPath);
         }
     }
 }

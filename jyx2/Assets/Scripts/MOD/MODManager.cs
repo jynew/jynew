@@ -38,29 +38,29 @@ namespace Jyx2.MOD
             _platforms.Clear();
             
             //注册平台
-            RegisterMODPlatform(new SteamMODProvider() { Name = "Steam" });
-            RegisterMODPlatform(new PCLocalMODProvider() { Name = "PC" });
+            RegisterModPlatform(new SteamMODProvider() { Name = "Steam" });
+            RegisterModPlatform(new PCLocalMODProvider() { Name = "PC" });
 #if UNITY_ANDROID
-            RegisterMODPlatform(new AndroidMODProvider());
+            RegisterModPlatform(new AndroidMODProvider());
 #endif
         }
 
         /// <summary>
-        /// 注册MOD平台
+        /// 注册Mod平台
         /// </summary>
         /// <param name="t"></param>
         /// <typeparam name="T"></typeparam>
-        public void RegisterMODPlatform<T>(T t) where T : MODProviderBase
+        public void RegisterModPlatform<T>(T t) where T : MODProviderBase
         {
             if (t == null)
             {
-                Debug.LogError("MOD平台注册失败，传入的MOD平台为空");
+                Debug.LogError("Mod平台注册失败，传入的Mod平台为空");
                 return;
             }
             
             if (_platforms.ContainsKey(t.Name))
             {
-                Debug.LogError("MOD平台注册失败，已经存在同名的平台");
+                Debug.LogError("Mod平台注册失败，已经存在同名的平台");
                 return;
             }
             
@@ -69,7 +69,7 @@ namespace Jyx2.MOD
 
         
         /// <summary>
-        /// 获取所有的MOD提供器
+        /// 获取所有的Mod提供器
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -85,7 +85,7 @@ namespace Jyx2.MOD
         }
         
         /// <summary>
-        /// 用指定的MOD加载器加载MOD，需要记住每个MODID是由哪个ModProvider提供的
+        /// 用指定的Mod加载器加载Mod，需要记住每个ModId是由哪个ModProvider提供的
         /// </summary>
         /// <param name="modId"></param>
         /// <param name="modProviderName"></param>
@@ -93,10 +93,10 @@ namespace Jyx2.MOD
         {
             if (!_platforms.ContainsKey(modProviderName))
             {
-                Debug.LogError("MOD加载失败，不存在名为" + modProviderName + "的MOD提供器");
+                Debug.LogError("Mod加载失败，不存在名为" + modProviderName + "的Mod提供器");
                 return;
             }
-            
+
             _platforms[modProviderName].LoadMod(modId);
         }
         
@@ -105,7 +105,7 @@ namespace Jyx2.MOD
         /// 获取平台数量
         /// </summary>
         /// <returns></returns>
-        public int GetMODPlatformCount()
+        public int GetModPlatformCount()
         {
             return _platforms.Count;
         }
