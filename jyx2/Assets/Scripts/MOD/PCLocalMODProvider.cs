@@ -1,36 +1,50 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
-using Jyx2.ResourceManagement;
-using Sirenix.Utilities;
+using Jyx2.Middleware;
 using UnityEngine;
 
 namespace Jyx2.MOD
 {
     public class PCLocalMODProvider: MODProviderBase
     {
-        private static string ModDir => Application.streamingAssetsPath;
-        
-        public override async UniTask<List<string>> GetInstalledMods()
-        {
-            if (File.Exists("modlist.txt"))
-            {
-                List<string> rst = new List<string>();
-                var lines = File.ReadAllLines("modlist.txt");
-                foreach (var line in lines)
-                {
-                    if (line.IsNullOrWhitespace()) continue;
-                    rst.Add(line);
-                }
-                return rst;
-            }
+        private string ModDir => "mods";
 
-            return new List<string>();
-        }
-        
-        public override async UniTask LoadMod(string modId)
+        public override async UniTask<Dictionary<string, ModItem>> GetInstalledMods()
         {
-            await ResLoader.LoadMod(modId, ModDir);
+            if (!Directory.Exists(ModDir))
+            {
+                Debug.LogError("Mods Directory not found");
+                return null;
+            }
+            List<string> modPaths = new List<string>();
+            FileTools.GetAllFilePath(ModDir, modPaths, new List<string>()
+            {
+                ".xml"
+            });
+            if (modPaths.Count == 0)
+            {
+                Debug.LogError("Mod xml file not found");
+                return null;
+            }
+            foreach (var modPath in modPaths)
+            {
+                var xmlObj = GetModItem(modPath);
+                var modItem = new ModItem
+                {
+                    ModId = xmlObj.ModId,
+                    Name = xmlObj.Name,
+                    Version = xmlObj.Version,
+                    Author = xmlObj.Author,
+                    Description = xmlObj.Description,
+                    Directory = xmlObj.Directory ?? Path.Combine(ModDir, xmlObj.ModId),
+                    PreviewImageUrl = xmlObj.PreviewImageUrl
+                };
+                _items.Add(xmlObj.ModId, modItem);
+                
+            }
+            
+            return _items;
         }
     }
 }

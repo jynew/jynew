@@ -40,7 +40,7 @@ namespace Jyx2
             await LoadCurrentMod();
             
             await ResLoader.Init();
-            MODManager.Instance.LoadMod(CurrentModId, "Steam");
+            await MODManager.Instance.LoadMod(CurrentModId, "Steam");
 
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
             

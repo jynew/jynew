@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Jyx2.MOD
@@ -89,7 +90,7 @@ namespace Jyx2.MOD
         /// </summary>
         /// <param name="modId"></param>
         /// <param name="modProviderName"></param>
-        public void LoadMod(string modId, string modProviderName)
+        public async UniTask LoadMod(string modId, string modProviderName)
         {
             if (!_platforms.ContainsKey(modProviderName))
             {
@@ -97,7 +98,7 @@ namespace Jyx2.MOD
                 return;
             }
 
-            _platforms[modProviderName].LoadMod(modId);
+            await _platforms[modProviderName].LoadMod(modId);
         }
         
         

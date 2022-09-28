@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml.Serialization;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
+using Jyx2.ResourceManagement;
 using UnityEngine;
 
 namespace Jyx2.MOD
@@ -12,10 +13,7 @@ namespace Jyx2.MOD
     {
         //名字
         public string Name;
-        
-        //xml文件名
-        public string XmlFileName = "mod.xml";
-        
+
         //xml类
         [XmlType]
         public class ModItem
@@ -41,12 +39,25 @@ namespace Jyx2.MOD
             [XmlAttribute]
             public string PreviewImageUrl;
         }
+
+        protected Dictionary<string, ModItem> _items = new Dictionary<string, ModItem>();
         
         //获取所有安装的Mod
         public virtual UniTask<Dictionary<string, ModItem>> GetInstalledMods() { return new UniTask<Dictionary<string, ModItem>>(); }
         
-        //获取Mod文件夹路径
-        public virtual string GetModDirPath(string modId) { return ""; }
+        /// <summary>
+        /// 获取Mod文件夹路径
+        /// </summary>
+        /// <param name="modId"></param>
+        /// <returns></returns>
+        public virtual string GetModDirPath(string modId)
+        {
+            if (_items.ContainsKey(modId))
+            {
+                return _items[modId].Directory;
+            }
+            return "";
+        }
         
         /// <summary>
         /// 获取ModItem
@@ -56,6 +67,7 @@ namespace Jyx2.MOD
         public virtual ModItem GetModItem(string modPath)
         {
             ModItem modItem = new ModItem();
+            
             if (File.Exists(modPath))
             {
                 var xmlContent = File.ReadAllText(modPath);
@@ -72,11 +84,17 @@ namespace Jyx2.MOD
                     }
                 }
             }
-
             return modItem;
         }
         
-        //加载指定的Mod
-        public virtual UniTask LoadMod(string modId) { return new UniTask(); }
+        /// <summary>
+        /// 加载指定的Mod
+        /// </summary>
+        /// <param name="modId"></param>
+        public virtual async UniTask LoadMod(string modId)
+        {
+            var modDirPath = GetModDirPath(modId);
+            await ResLoader.LoadMod(modId, modDirPath);
+        }
     }
 }
