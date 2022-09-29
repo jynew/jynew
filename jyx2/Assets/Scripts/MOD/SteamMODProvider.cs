@@ -33,13 +33,13 @@ namespace Jyx2.MOD
                 var query = Steamworks.Ugc.Query.All.WhereUserSubscribed();
                 var result = await query.GetPageAsync(1);
                 
-                Debug.Log($"Found {result.Value.TotalCount} subscribed items");
+                Debug.Log($"[SteamMODProvider] Found {result.Value.TotalCount} subscribed items");
                 
                 foreach (Steamworks.Ugc.Item entry in result.Value.Entries)
                 {
                     if (entry.IsInstalled)
                     {
-                        Debug.Log($"Found Installed Item: {entry.Title}");
+                        Debug.Log($"[SteamMODProvider] Found Installed Item: {entry.Title}");
                         
                         List<string> modPaths = new List<string>();
                         FileTools.GetAllFilePath(entry.Directory, modPaths, new List<string>()
@@ -48,7 +48,7 @@ namespace Jyx2.MOD
                         });
                         if (modPaths.Count == 0)
                         {
-                            Debug.LogError("Mod xml file not found");
+                            Debug.LogError("[SteamMODProvider] Mod xml file not found");
                             return null;
                         }
                         foreach (var modPath in modPaths)
@@ -64,7 +64,7 @@ namespace Jyx2.MOD
                                 Directory = entry.Directory,
                                 PreviewImageUrl = entry.PreviewImageUrl ?? xmlObj.PreviewImageUrl
                             };
-                            _items.Add(xmlObj.ModId, modItem);
+                            _items.Add(xmlObj.ModId.ToLower(), modItem);
                         }
                     }
                 }

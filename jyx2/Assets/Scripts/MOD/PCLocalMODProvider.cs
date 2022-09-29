@@ -14,7 +14,7 @@ namespace Jyx2.MOD
         {
             if (!Directory.Exists(ModDir))
             {
-                Debug.LogError("Mods Directory not found");
+                Debug.LogError("[PCLocalMODProvider] Mods Directory not found");
                 return null;
             }
             List<string> modPaths = new List<string>();
@@ -24,7 +24,7 @@ namespace Jyx2.MOD
             });
             if (modPaths.Count == 0)
             {
-                Debug.LogError("Mod xml file not found");
+                Debug.LogError("[PCLocalMODProvider] Mod xml file not found");
                 return null;
             }
             foreach (var modPath in modPaths)
@@ -40,7 +40,7 @@ namespace Jyx2.MOD
                     Directory = xmlObj.Directory ?? Path.Combine(ModDir, xmlObj.ModId),
                     PreviewImageUrl = xmlObj.PreviewImageUrl
                 };
-                _items.Add(xmlObj.ModId, modItem);
+                _items.Add(xmlObj.ModId.ToLower(), modItem);
                 
             }
             

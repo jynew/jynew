@@ -52,6 +52,7 @@ namespace Jyx2.MOD
         /// <returns></returns>
         public virtual string GetModDirPath(string modId)
         {
+            modId = modId.ToLower();
             if (_items.ContainsKey(modId))
             {
                 return _items[modId].Directory;
