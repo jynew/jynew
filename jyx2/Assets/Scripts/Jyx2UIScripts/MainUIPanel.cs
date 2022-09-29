@@ -59,7 +59,11 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 			initialized = true;
 		}
 
-		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && Jyx2LuaBridge.HaveItem(182));
+		ShowCompass(Jyx2LuaBridge.jyx2_GetFlagInt("获得罗盘") == 1);
+	}
+	public void ShowCompass(bool flag)
+	{
+		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && flag);
 		if (Compass.gameObject.activeSelf)
 		{
 			var player = LevelMaster.Instance.GetPlayer();
@@ -67,24 +71,24 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 				return;
 			coordinateBuilder.Clear();
 
-            int offsetX = 242, offsetZ = 435;
+			int offsetX = 242, offsetZ = 435;
 			var playerPosition = player.transform.position;
-            coordinateBuilder.Append(Mathf.Floor(playerPosition.x + offsetX));
-            coordinateBuilder.Append(",");
-            coordinateBuilder.Append(Mathf.Floor(playerPosition.z + offsetZ));
+			coordinateBuilder.Append(Mathf.Floor(playerPosition.x + offsetX));
+			coordinateBuilder.Append(",");
+			coordinateBuilder.Append(Mathf.Floor(playerPosition.z + offsetZ));
 
-            if (!player.IsOnBoat)
+			if (!player.IsOnBoat)
 			{
 				var boatPosition = player.GetBoatPosition();
 				coordinateBuilder.Append("(");
 				coordinateBuilder.Append(Mathf.Round(boatPosition.x + offsetX));
 				coordinateBuilder.Append(",");
-                coordinateBuilder.Append(Mathf.Round(boatPosition.z + offsetZ));
-                coordinateBuilder.Append(")");
+				coordinateBuilder.Append(Mathf.Round(boatPosition.z + offsetZ));
+				coordinateBuilder.Append(")");
 
-            }
+			}
 			Compass.text = coordinateBuilder.ToString();
-        }
+		}
 	}
 
 	protected override void OnShowPanel(params object[] allParams)
