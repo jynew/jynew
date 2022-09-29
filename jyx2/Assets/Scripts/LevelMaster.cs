@@ -658,11 +658,11 @@ public class LevelMaster : MonoBehaviour
 		
 		if (IsAxisControlEnable() && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
 		{
-			OnManuelMove(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+			OnManuelMove(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized);
 		}
 		else if (IsJoystickControlEnable() && (m_Joystick.axisX.axisValue != 0 || m_Joystick.axisY.axisValue != 0))
 		{
-			OnManuelMove(-m_Joystick.axisX.axisValue, m_Joystick.axisY.axisValue);
+			OnManuelMove(new Vector2(-m_Joystick.axisX.axisValue, m_Joystick.axisY.axisValue).normalized);
 		}
 		else
 		{
@@ -678,7 +678,6 @@ public class LevelMaster : MonoBehaviour
 			}
 		}
 	}
-
 
 	//手动控制跟随相机
 	void OnManualControlPlayerFollowViewport()
@@ -786,8 +785,10 @@ public class LevelMaster : MonoBehaviour
 	private Vector3 _tempDestV = Vector3.zero;
 	private float _tempH = 0;
 	private float _tempV = 0;
-	void OnManuelMove(float h, float v)
+	void OnManuelMove(Vector2 input)
 	{
+		float h = input.x;
+		float v = input.y;
 		//Debug.Log($"h={h},v={v}");
 		_playerNavAgent.updateRotation = false;
 
