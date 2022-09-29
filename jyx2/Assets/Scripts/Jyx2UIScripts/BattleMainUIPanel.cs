@@ -118,7 +118,8 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
 
     private void OnGiveUpBtnClick()
     {
-        BattleManager.Instance.OnBattleEnd(BattleResult.Lose);
+        MessageBox.Create("TODO");
+        //BattleManager.Instance.OnBattleEnd(BattleResult.Lose);
     }
 
 
