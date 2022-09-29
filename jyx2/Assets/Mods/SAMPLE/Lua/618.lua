@@ -16,7 +16,7 @@ if TryBattle(61) == true then goto label0 end;
     Talk(180, "好的好的！");
     Talk(0, "滚！");
     jyx2_ReplaceSceneObject("", "NPC/岳不群", "");
-    jyx2_ReplaceSceneObject("", "NPC/雪怪", "");
+    jyx2_ReplaceSceneObject("", "NPC/伏格多", "");
     jyx2_ReplaceSceneObject("", "NPC/四蛇儿", "1");
     Talk(101, "漂亮啊漂亮！");
     Talk(0, "你……你终于出现了。");
