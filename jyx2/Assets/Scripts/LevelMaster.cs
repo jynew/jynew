@@ -396,11 +396,11 @@ public class LevelMaster : MonoBehaviour
 		var gameMap = GetCurrentGameMap();
 		if (gameMap != null && gameMap.Tags.Contains("WORLDMAP"))
 		{
-			_playerNavAgent.speed = GlobalAssetConfig.Instance.playerMoveSpeedWorldMap;
+			_playerNavAgent.speed = GameSettings.GetFloat("PLAYER_MOVE_SPEED_WORLD_MAP");
 		}
 		else
 		{
-			_playerNavAgent.speed = GlobalAssetConfig.Instance.playerMoveSpeed;
+			_playerNavAgent.speed = GameSettings.GetFloat("PLAYER_MOVE_SPEED");
 		}
 
 		_playerNavAgent.angularSpeed = GameConst.MapAngularSpeed;
