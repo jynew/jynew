@@ -19,6 +19,6 @@ jyx2_ReplaceSceneObject("", "NPC/何云多", "1");
 ModifyEvent(-2, 1, -2, -2, 617, -1, -1, -2, -2, -2, -2, -2, -2);
 ModifyEvent(-2, 11, -2, -2, -1, -1, 618, -2, -2, -2, -2, -2, -2);
 jyx2_ReplaceSceneObject("", "NPC/岳不群", "1");
-jyx2_ReplaceSceneObject("", "NPC/雪怪", "1");
+jyx2_ReplaceSceneObject("", "NPC/伏格多", "1");
 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
