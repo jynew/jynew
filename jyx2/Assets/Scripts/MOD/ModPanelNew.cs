@@ -33,7 +33,7 @@ public class ModPanelNew : Jyx2_UIBase
         var selectMod = RuntimeEnvSetup.ModDic.FirstOrDefault(q => q.Value.Name == _options[m_Dropdown.value]).Key;
         if(selectMod != RuntimeEnvSetup.CurrentModId)
         {
-            PlayerPrefs.SetString("CURRENT_MOD", selectMod);
+            PlayerPrefs.SetString("CURRENT_MOD_ID", selectMod);
             PlayerPrefs.Save();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

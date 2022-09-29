@@ -94,9 +94,9 @@ namespace Jyx2
 
         private static async UniTask LoadCurrentMod()
         {
-            if (PlayerPrefs.HasKey("CURRENT_MOD"))
+            if (PlayerPrefs.HasKey("CURRENT_MOD_ID"))
             {
-                CurrentModId = PlayerPrefs.GetString("CURRENT_MOD");
+                CurrentModId = PlayerPrefs.GetString("CURRENT_MOD_ID");
             }
             else
             {
