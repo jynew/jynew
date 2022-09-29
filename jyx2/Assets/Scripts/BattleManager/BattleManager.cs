@@ -174,6 +174,7 @@ namespace Jyx2
                     break;
                 }
                 case BattleResult.Lose:
+                case BattleResult.Surrender:
                 {
 
                     //---------------------------------------------------------------------------

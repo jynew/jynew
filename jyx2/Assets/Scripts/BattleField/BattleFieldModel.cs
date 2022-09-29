@@ -21,6 +21,7 @@ namespace Jyx2
         Win,
         Lose,
         InProgress,
+        Surrender,
     }
     
     /// <summary>
@@ -67,6 +68,9 @@ namespace Jyx2
 
         //战斗结果回调
         public Action<BattleResult> Callback;
+
+        private bool _IsSurrendered = false;
+
 
         //初始化战场
         public void InitBattleModel() 
@@ -115,6 +119,10 @@ namespace Jyx2
         //战斗是否结束
         public BattleResult GetBattleResult()
         {
+            //投降了
+            if (_IsSurrendered)
+                return BattleResult.Surrender;
+
             Dictionary<int, int> teamCount = new Dictionary<int, int>();
             foreach(var role in Roles)
             {
@@ -137,6 +145,12 @@ namespace Jyx2
             //敌方有角色，失败
             return BattleResult.Lose;
         }
+
+        public void SetIsSurrendered(bool _isSurrendered)
+        {
+            _IsSurrendered = _isSurrendered;
+        }
+
         
         //角色排序
         void SortRole() 

@@ -1,11 +1,11 @@
 /*
- * ½ğÓ¹ÈºÏÀ´«3DÖØÖÆ°æ
+ * é‡‘åº¸ç¾¤ä¾ ä¼ 3Dé‡åˆ¶ç‰ˆ
  * https://github.com/jynew/jynew
  *
- * ÕâÊÇ±¾¿ªÔ´ÏîÄ¿ÎÄ¼şÍ·£¬ËùÓĞ´úÂë¾ùÊ¹ÓÃMITĞ­Òé¡£
- * µ«ÓÎÏ·ÄÚ×ÊÔ´ºÍµÚÈı·½²å¼ş¡¢dllµÈÇë×ĞÏ¸ÔÄ¶ÁLICENSEÏà¹ØÊÚÈ¨Ğ­ÒéÎÄµµ¡£
+ * è¿™æ˜¯æœ¬å¼€æºé¡¹ç›®æ–‡ä»¶å¤´ï¼Œæ‰€æœ‰ä»£ç å‡ä½¿ç”¨MITåè®®ã€‚
+ * ä½†æ¸¸æˆå†…èµ„æºå’Œç¬¬ä¸‰æ–¹æ’ä»¶ã€dllç­‰è¯·ä»”ç»†é˜…è¯»LICENSEç›¸å…³æˆæƒåè®®æ–‡æ¡£ã€‚
  *
- * ½ğÓ¹ÀÏÏÈÉúÇ§¹Å£¡
+ * é‡‘åº¸è€å…ˆç”Ÿåƒå¤ï¼
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -20,7 +20,6 @@ public partial class BattleMainUIPanel
 	private Text DetailText_Text;
 	private Image PreImage_Image;
 	private Toggle AutoBattle_Toggle;
-	private Button GiveUp_Button;
 	private RectTransform HUDItem_RectTransform;
 
 	public void InitTrans()
@@ -31,7 +30,6 @@ public partial class BattleMainUIPanel
 		DetailText_Text = transform.Find("CurrentRole/DetailText").GetComponent<Text>();
 		PreImage_Image = transform.Find("CurrentRole/HeadAvataPre/Mask/PreImage").GetComponent<Image>();
 		AutoBattle_Toggle = transform.Find("AutoBattle").GetComponent<Toggle>();
-		GiveUp_Button = transform.Find("GiveUp").GetComponent<Button>();
 		HUDItem_RectTransform = transform.Find("Prefabs/HUDItem").GetComponent<RectTransform>();
 
 	}

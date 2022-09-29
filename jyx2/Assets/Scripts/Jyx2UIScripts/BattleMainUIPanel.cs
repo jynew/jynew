@@ -38,8 +38,6 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         AutoBattle_Toggle.isOn = false;//默认取消
         AutoBattle_Toggle.gameObject.SetActive(false);
         AutoBattle_Toggle.onValueChanged.AddListener(OnAutoBattleValueChange);
-
-        BindListener(GiveUp_Button, OnGiveUpBtnClick);
     }
 
     protected override void OnShowPanel(params object[] allParams)
@@ -116,14 +114,7 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         }
     }
 
-    private void OnGiveUpBtnClick()
-    {
-        MessageBox.Create("TODO");
-        //BattleManager.Instance.OnBattleEnd(BattleResult.Lose);
-    }
-
-
-    public override void Update()
+	public override void Update()
 	{
         //battle action ui handles update by itself, this is calling it twice
 

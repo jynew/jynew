@@ -53,7 +53,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		BindListener(Item_Button, OnUseItemClick);
 		BindListener(Wait_Button, OnWaitClick);
 		BindListener(Rest_Button, OnRestClick);
-		BindListener(Cancel_Button, OnCancelClick);
+        BindListener(Surrender_Button, OnSurrenderClick);
+        BindListener(Cancel_Button, OnCancelClick);
 	}
 
 	protected override bool captureGamepadAxis { get { return true; } }
@@ -508,4 +509,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		TryCallback(new BattleLoop.ManualResult() { aiResult = new AIResult() { IsRest = true } });
 	}
+
+	void OnSurrenderClick()
+	{
+        TryCallback(new BattleLoop.ManualResult() { IsSurrender = true });
+    }
 }
