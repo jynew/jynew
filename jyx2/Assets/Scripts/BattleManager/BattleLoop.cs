@@ -372,7 +372,7 @@ namespace Jyx2.Battle
             {
                 var ret = await WaitForPlayerInput(role, moveRange, isSelectMove);
 
-                if(ret.IsSurrender)
+                if(ret.isSurrender)
                 {
                     _manager.GetModel().SetIsSurrendered(true);
                     break;
@@ -415,7 +415,7 @@ namespace Jyx2.Battle
             public AIResult aiResult = null;
             public bool isWait = false;
             public bool isAuto = false;
-            public bool IsSurrender = false;
+            public bool isSurrender = false;
         }
         
         //等待玩家输入
