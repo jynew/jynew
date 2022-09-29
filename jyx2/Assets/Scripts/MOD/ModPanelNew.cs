@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using Jyx2;
+using Jyx2.MOD;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,43 +14,23 @@ public class ModPanelNew : Jyx2_UIBase
 {
     public Dropdown m_Dropdown;
     public GameObject ModChangedSuggestLabel;
+    private List<string> _options;
 
-    public void Start()
+    public async void Start()
     {
         m_Dropdown.onValueChanged.RemoveAllListeners();
         m_Dropdown.onValueChanged.AddListener(OnValueChanged);
         m_Dropdown.ClearOptions();
-        m_Dropdown.AddOptions(LoadModList());
-        m_Dropdown.value = m_Dropdown.options.FindIndex(o => o.text == RuntimeEnvSetup.CurrentModId);
+        _options = RuntimeEnvSetup.ModDic.Values.Select(x => x.Name).ToList();
+        m_Dropdown.AddOptions(_options);
+        m_Dropdown.value = m_Dropdown.options.FindIndex(o => RuntimeEnvSetup.ModDic.FirstOrDefault(q => q.Value.Name == o.text).Key == RuntimeEnvSetup.CurrentModId);
         
         ModChangedSuggestLabel.gameObject.SetActive(false);
     }
 
-
-    public List<string> LoadModList()
-    {
-        if (Application.isEditor || !Application.isMobilePlatform)
-        {
-            if (File.Exists("modlist.txt"))
-            {
-                List<string> rst = new List<string>();
-                var lines = File.ReadAllLines("modlist.txt");
-                foreach (var line in lines)
-                {
-                    if (line.IsNullOrWhitespace()) continue;
-                    rst.Add(line);
-                }
-                return rst;
-            }
-        }
-        
-        //暂不支持自由扩展MOD
-        return new List<string> {"JYX2", "SAMPLE"};
-    }
-
     public void OnClose()
     {
-        var selectMod = m_Dropdown.options[m_Dropdown.value].text;
+        var selectMod = RuntimeEnvSetup.ModDic.FirstOrDefault(q => q.Value.Name == _options[m_Dropdown.value]).Key;
         if(selectMod != RuntimeEnvSetup.CurrentModId)
         {
             PlayerPrefs.SetString("CURRENT_MOD", selectMod);

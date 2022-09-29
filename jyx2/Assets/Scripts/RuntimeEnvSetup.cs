@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
+using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +18,7 @@ namespace Jyx2
     {
         private static bool _isSetup;
         public static MODRootConfig CurrentModConfig { get; set; } = null;
+        public static Dictionary<string, MODProviderBase.ModItem> ModDic { get; set; } = null;
         public static string CurrentModId { get; set; } = "";
         
         public static async UniTask Setup()
@@ -33,27 +37,33 @@ namespace Jyx2
                 await t.OnLoad();
             }
 
-            
+            //初始化MOD管理器
+            MODManager.Instance.Init();
+
+            await LoadMods();
             await LoadCurrentMod();
             
             await ResLoader.Init();
-            await ResLoader.LoadMod(CurrentModId); 
-            
+            await MODManager.Instance.LoadMod(CurrentModId, "Steam");
+
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
             
 #if UNITY_EDITOR
             var dirPath = $"Assets/Mods/{CurrentModId}/Configs";
-            if (!File.Exists($"{dirPath}/Datas.bytes"))
+            if (Directory.Exists(dirPath))
             {
-                CurrentModConfig.GenerateConfigs();
-            }
-            else
-            {
-                ExcelTools.WatchConfig(dirPath, () =>
+                if (!File.Exists($"{dirPath}/Datas.bytes"))
                 {
                     CurrentModConfig.GenerateConfigs();
-                    Debug.Log("File Watcher! Reload success! -> " + dirPath);
-                }); 
+                }
+                else
+                {
+                    ExcelTools.WatchConfig(dirPath, () =>
+                    {
+                        CurrentModConfig.GenerateConfigs();
+                        Debug.Log("File Watcher! Reload success! -> " + dirPath);
+                    }); 
+                } 
             }
 #endif
       
@@ -61,6 +71,25 @@ namespace Jyx2
             await Jyx2ResourceHelper.Init();
         }
         
+        public static async UniTask LoadMods()
+        {
+            foreach (var mod in MODManager.Instance.GetAllModProviders<MODProviderBase>())
+            {
+                var dic = await mod.GetInstalledMods();
+                //合并到总的mod字典
+                if (ModDic == null)
+                {
+                    ModDic = dic;
+                }
+                else
+                {
+                    foreach (var kv in dic)
+                    {
+                        ModDic[kv.Key] = kv.Value;
+                    }
+                }
+            }
+        }
         
 
         private static async UniTask LoadCurrentMod()

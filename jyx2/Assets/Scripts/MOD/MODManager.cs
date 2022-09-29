@@ -1,218 +1,123 @@
-using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
-using Jyx2.Middleware;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Jyx2.MOD
 {
-    public static class MODManager
+    public class MODManager
     {
-        public static readonly List<ModEntry> ModEntries = new List<ModEntry>();
-        public static readonly string Http = "http://42.192.48.70:3001/getPassMods";
-        public static string ModsPath { get; private set; }
-
-        public static async UniTask Init()
+        #region Singleton
+        //单例模式
+        public static MODManager Instance
         {
-            ModsPath = Path.Combine(Application.persistentDataPath, "mods");
-            if (!Directory.Exists(ModsPath))
+            get
             {
-                Directory.CreateDirectory(ModsPath);
-                Debug.Log($"已创建Mods文件夹：{ModsPath}。");
-            }
-
-            if (Directory.Exists(ModsPath))
-            {
-                try
+                if (_instance == null)
                 {
-                    UnityWebRequest request = UnityWebRequest.Get(Http);
-                    await request.SendWebRequest();
-                    string textString = request.downloadHandler.text;
-                    var response = new Response(textString);
-                    var modMetas = response.data;
-                    foreach (var modMeta in modMetas)
-                    {
-                        var filePath = Path.Combine(ModsPath, modMeta.id);
-                        var modEntry = new ModEntry(modMeta, filePath);
+                    _instance = new MODManager();
+                }
+                return _instance;
+            }
+        }
+        
+        private static MODManager _instance;
+        #endregion
+        
+        private Dictionary<string, MODProviderBase> _platforms = new Dictionary<string, MODProviderBase>();
+        
+        private bool _isInited = false;
+        
+        public void Init()
+        {
+            if (_isInited)
+            {
+                return;
+            }
+            _isInited = true;
+            
+            _platforms.Clear();
+            
+            //注册平台
+            RegisterModPlatform(new SteamMODProvider() { Name = "Steam" });
+            RegisterModPlatform(new PCLocalMODProvider() { Name = "PC" });
 #if UNITY_ANDROID
-                    if (modMeta.platform == "Android")
-                    {
-                        ModEntries.Add(modEntry); 
-                    }
+            RegisterModPlatform(new AndroidMODProvider());
 #endif
-#if UNITY_STANDALONE_WIN
-                        if (modMeta.platform == "Windows")
-                        {
-                            ModEntries.Add(modEntry);
-                        }
-#endif
-#if UNITY_STANDALONE_OSX
-                    if (modMeta.platform == "MacOS")
-                    {
-                        ModEntries.Add(modEntry);
-                    }
-#endif
-                    }
-                
-                    var pathList = new List<string>();
-                    FileTools.GetAllFilePath(ModsPath, pathList, new List<string>() { ".json" });
-                    foreach (var jsonPath in pathList)
-                    {
-                        var jsonString = File.ReadAllText(jsonPath, Encoding.UTF8);
-                        var modMeta = new ModMeta(jsonString);
-                        var filePath = Path.Combine(ModsPath, modMeta.id);
-                        var modEntry = new ModEntry(modMeta, filePath);
-                        ModEntries.Add(modEntry);
-                    }
-                }
-                catch (Exception e)
+        }
+
+        /// <summary>
+        /// 注册Mod平台
+        /// </summary>
+        /// <param name="t"></param>
+        /// <typeparam name="T"></typeparam>
+        public void RegisterModPlatform<T>(T t) where T : MODProviderBase
+        {
+            if (t == null)
+            {
+                Debug.LogError("Mod平台注册失败，传入的Mod平台为空");
+                return;
+            }
+            
+            if (_platforms.ContainsKey(t.Name))
+            {
+                Debug.LogError("Mod平台注册失败，已经存在同名的平台");
+                return;
+            }
+            
+            _platforms.Add(t.Name, t);
+        }
+
+        
+        /// <summary>
+        /// 获取所有的Mod提供器
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IEnumerable<T> GetAllModProviders<T>() where T : MODProviderBase
+        {
+            foreach (var platform in _platforms.Values)
+            {
+                if (platform is T)
                 {
-                    Debug.LogError(e);
+                    yield return platform as T;
                 }
             }
         }
-
-        [Serializable]
-        public class ModMeta
+        
+        /// <summary>
+        /// 用指定的Mod加载器加载Mod，需要记住每个ModId是由哪个ModProvider提供的
+        /// </summary>
+        /// <param name="modId"></param>
+        /// <param name="modProviderName"></param>
+        public async UniTask LoadMod(string modId, string modProviderName)
         {
-            public string platform;
-            public string name;
-            public string id;
-            public string version;
-            public string latestVersion;
-            public string tags;
-            public string uri;
-            public List<ModMeta> dependencies = new List<ModMeta>();
-            public string description;
-            public string poster;
-            public string createDate;
-            public string updateDate;
-
-            public bool Equals(ModMeta other)
+            if (!_platforms.ContainsKey(modProviderName))
             {
-                return id.Equals(other?.id);
+                Debug.LogError("Mod加载失败，不存在名为" + modProviderName + "的Mod提供器");
+                return;
             }
 
-            public static implicit operator bool(ModMeta exists)
-            {
-                return exists != null;
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj)) return false;
-                return obj is ModMeta modMeta && Equals(modMeta);
-            }
-
-            public override int GetHashCode()
-            {
-                return id.GetHashCode();
-            }
-            
-            public ModMeta(string jsonString)
-            {
-                InitData(jsonString);
-            }
-
-            void InitData(string jsonString)
-            {
-                try
-                {
-                    var modMeta = JsonUtility.FromJson<ModMeta>(jsonString);
-                    name = modMeta.name;
-                    id = modMeta.id;
-                    version = modMeta.version;
-                    latestVersion = modMeta.latestVersion;
-                    tags = modMeta.tags;
-                    uri = modMeta.uri;
-                    dependencies = modMeta.dependencies;
-                    description = modMeta.description;
-                    poster = modMeta.poster;
-                    createDate = modMeta.createDate;
-                    updateDate = modMeta.updateDate;
-                }
-                catch (Exception exception)
-                {
-                    Debug.LogException(exception);
-                }
-            }
+            await _platforms[modProviderName].LoadMod(modId);
         }
-
-        [Serializable]
-        public class Response
+        
+        
+        /// <summary>
+        /// 获取平台数量
+        /// </summary>
+        /// <returns></returns>
+        public int GetModPlatformCount()
         {
-            public int code;
-            public string msg;
-            public List<ModMeta> data = new List<ModMeta>();
-            
-            public Response(string jsonString)
-            {
-                InitData(jsonString);
-            }
-
-            void InitData(string jsonString)
-            {
-                try
-                {
-                    var response = JsonUtility.FromJson<Response>(jsonString);
-                    code = response.code;
-                    msg = response.msg;
-                    data = response.data;
-                }
-                catch (Exception exception)
-                {
-                    Debug.LogException(exception);
-                }
-            }
+            return _platforms.Count;
         }
-
-        public class ModEntry
+        
+        /// <summary>
+        /// 销毁
+        /// </summary>
+        public void Dispose()
         {
-            public ModMeta ModMeta;
-            public readonly string Path;
-            public readonly Dictionary<string, string> Dependencies = new Dictionary<string, string>();
-
-            public ModEntry(ModMeta modMeta, string path)
-            {
-                ModMeta = modMeta;
-                Path = path;
-                
-                if (modMeta.dependencies == null || modMeta.dependencies.Count == 0) return;
-
-                var regex = new Regex(@"(.*)-(\d+\.\d+\.\d+).*");
-                foreach (var dependency in modMeta.dependencies)
-                {
-                    var match = regex.Match(dependency.id);
-                    if (match.Success)
-                    {
-                        Dependencies.Add(match.Groups[1].Value, match.Groups[2].Value);
-                        continue;
-                    }
-                    if (!Dependencies.ContainsKey(dependency.id)) Dependencies.Add(dependency.id, null);
-                }
-            }
-
-            private bool _active;
-            
-            public bool Active
-            {
-                get
-                {
-                    return PlayerPrefs.GetInt(ModMeta.name) == 1 || _active;
-                }
-                set
-                {
-                    PlayerPrefs.SetInt(ModMeta.name, value ? 1 : 0);
-                    PlayerPrefs.Save();
-                    _active = value;
-                }
-            }
+            _platforms.Clear();
+            _instance = null;
         }
     }
-
 }

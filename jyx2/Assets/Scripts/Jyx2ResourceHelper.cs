@@ -10,17 +10,10 @@
 
 
 using Jyx2;
-using Lean.Pool;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using IFix.Core;
 using Jyx2.EventsGraph;
-using Jyx2.MOD;
-using Jyx2.Middleware;
 using Jyx2.ResourceManagement;
 using Jyx2Configs;
 using ProtoBuf;
@@ -50,7 +43,7 @@ public static class Jyx2ResourceHelper
 {
     private static bool _isInited = false;
     
-    public static async Task Init()
+    public static async UniTask Init()
     {
         //已经初始化过了
         if (_isInited)
@@ -59,7 +52,8 @@ public static class Jyx2ResourceHelper
         }
 
         _isInited = true;
-
+        
+        
         //模型池
         var allModels = await ResLoader.LoadAssets<ModelAsset>("Assets/Models/");
         if (allModels != null)

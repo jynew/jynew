@@ -74,12 +74,13 @@ namespace Jyx2.ResourceManagement
             }
         }
 
-        
+
         /// <summary>
         /// 加载MOD
         /// </summary>
         /// <param name="currentModId"></param>
-        public static async UniTask LoadMod(string currentModId)
+        /// <param name="dir"></param>
+        public static async UniTask LoadMod(string currentModId, string dir)
         {
             var modId = currentModId.ToLower();
             if (IsEditor())
@@ -88,8 +89,8 @@ namespace Jyx2.ResourceManagement
             }
             else
             {
-                AssetBundle modAssetsAb = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, $"{modId}_mod"));
-                AssetBundle modScenesAb = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, $"{modId}_maps"));
+                AssetBundle modAssetsAb = await AssetBundle.LoadFromFileAsync(Path.Combine(dir, $"{modId}_mod"));
+                AssetBundle modScenesAb = await AssetBundle.LoadFromFileAsync(Path.Combine(dir, $"{modId}_maps"));
                 _modAssets[modId] = modAssetsAb;
                 _modScenes[modId] = modScenesAb;
             
