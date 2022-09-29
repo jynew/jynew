@@ -73,13 +73,6 @@ public class GlobalAssetConfig : ScriptableObject
     [BoxGroup("地图设置")] [LabelText("默认主角居名字")] 
     public string defaultHomeName;
 
-
-    [BoxGroup("角色控制")] [LabelText("主角移动速度")]
-    public float playerMoveSpeed = 7.5f;
-    
-    [BoxGroup("角色控制")] [LabelText("大地图移动速度")]
-    public float playerMoveSpeedWorldMap = 20f;
-    
     [BoxGroup("预缓存Prefab")]
     [HideLabel]
     public List<GameObject> CachedPrefabs;
