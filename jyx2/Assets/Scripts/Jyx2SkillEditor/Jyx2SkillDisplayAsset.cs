@@ -19,7 +19,12 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
     
     public static Jyx2SkillDisplayAsset Get(string skillName)
     {
-        return All.Single(s => s.name == skillName);
+        var displayAsset = All.FirstOrDefault(s => s.name == skillName);
+        if(displayAsset == null)
+        {
+            Debug.LogErrorFormat("目标技能展现配置不存在, 技能名:[{0}]", skillName);
+        }
+        return displayAsset;
     }
 
     private const int MAX_SKILL_DURATION = 5;
