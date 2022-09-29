@@ -861,9 +861,9 @@ namespace IFix.Editor
             try
             {
                 string currentModId = "";
-                if (PlayerPrefs.HasKey("CURRENT_MOD"))
+                if (PlayerPrefs.HasKey("CURRENT_MOD_ID"))
                 {
-                    currentModId = PlayerPrefs.GetString("CURRENT_MOD");
+                    currentModId = PlayerPrefs.GetString("CURRENT_MOD_ID");
                 }
                 else
                 {
