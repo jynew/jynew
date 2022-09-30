@@ -322,4 +322,13 @@ public class Jyx2_UIManager : MonoBehaviour
             HideUI(item.Key);
         }
     }
+
+    public bool IsUIOpen(string uiName)
+    {
+        if (!m_uiDic.ContainsKey(uiName))
+            return false;
+        if (m_uiDic[uiName] == null)
+            return false;
+        return m_uiDic[uiName].gameObject.activeSelf;
+    }
 }

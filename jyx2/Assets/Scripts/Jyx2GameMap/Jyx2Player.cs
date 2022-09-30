@@ -32,7 +32,7 @@ public class Jyx2Player : MonoBehaviour
     /// </summary>
     const float PLAYER_INTERACTIVE_ANGLE = 120f;
 
-    private bool canControl = true;
+    private bool _isControlEnable = true;
     public PlayerLocomotionController locomotionController => _locomotionController;
     [SerializeField]
     private PlayerLocomotionController _locomotionController;
@@ -65,6 +65,7 @@ public class Jyx2Player : MonoBehaviour
 
     NavMeshAgent _navMeshAgent;
     Jyx2Boat _boat;
+
 
     GameEventManager evtManager
     {
@@ -164,10 +165,25 @@ public class Jyx2Player : MonoBehaviour
         }
     }
 
-    public void CanControl(bool isOn)
+    public void SetPlayerControlEnable(bool isEnable)
     {
-        canControl = isOn;
+        _isControlEnable = isEnable;
     }
+
+    public bool CanControlPlayer
+    {
+        get
+        {
+            if (!_isControlEnable)
+                return false;
+            if (Jyx2_UIManager.Instance.IsUIOpen(nameof(GameOver)))
+                return false;
+            if (StoryEngine.Instance != null && StoryEngine.Instance.BlockPlayerControl)
+                return false;
+            return true;
+        }
+    }
+
 
     void Update()
     {
@@ -178,7 +194,7 @@ public class Jyx2Player : MonoBehaviour
             _boat.transform.rotation = this.transform.rotation;
         }
 
-        if (!canControl)
+        if (!CanControlPlayer)
             return;
 
         _locomotionController.OnUpdate();
