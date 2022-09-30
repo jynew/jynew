@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !UNITY_ANDROID
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
@@ -73,3 +74,4 @@ namespace Jyx2.MOD
         }
     }
 }
+#endif

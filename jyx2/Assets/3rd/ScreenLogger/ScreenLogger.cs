@@ -197,7 +197,7 @@ namespace AClockworkBerry
 
         void OnGUI()
         {
-            if (!ShowLog) return;
+            if (!ShowLog && !Debug.isDebugBuild) return;
             if (!ShowInEditor && Application.isEditor) return;
 
 			if (styleChanged) InitStyles();
