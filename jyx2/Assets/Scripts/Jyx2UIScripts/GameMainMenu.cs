@@ -279,24 +279,24 @@ public partial class GameMainMenu : Jyx2_UIBase
 		//---------------------------------------------------------------------------
 		//特定位置的翻译【读档时候的Title显示】
 		//---------------------------------------------------------------------------
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((archiveIndex) =>
 		{
-			var summary = GameSaveSummary.Load(index);
+			var summary = GameSaveSummary.Load(archiveIndex);
 			if (summary.ModId != null && !summary.ModId.Equals(RuntimeEnvSetup.CurrentModId))
 			{
 				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
 				string msg = "该存档MOD不匹配，载入可能导致数据错乱，是否继续？";
-				Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
+				Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((selection) =>
 				{
-					if (index == 0)
+					if (selection == 0)
 					{
-						StoryEngine.DoLoadGame(index);
+						StoryEngine.DoLoadGame(archiveIndex);
 					}
 				})).Forget();
 			}
 			else
 			{
-				if (!StoryEngine.DoLoadGame(index) && m_panelType == PanelType.LoadGamePage)
+				if (!StoryEngine.DoLoadGame(archiveIndex) && m_panelType == PanelType.LoadGamePage)
 				{
 					OnNewGame();
 				}
