@@ -213,8 +213,8 @@ public class GameEventManager : MonoBehaviour
         {
             // fix drag motion continuous move the player when scene is playing
             // modified by eaphone at 2021/05/31
-            levelMaster.SetPlayerCanController(false);
-            levelMaster.StopPlayerNavigation();
+            levelMaster.GetPlayer().locomotionController.playerControllable = false;
+            levelMaster.GetPlayer().locomotionController.StopPlayerNavigation();
         }
         
         SetCurrentGameEvent(curEvent);
@@ -252,7 +252,7 @@ public class GameEventManager : MonoBehaviour
         var levelMaster = LevelMaster.Instance;
         if (levelMaster != null)
         {
-            levelMaster.SetPlayerCanController(true);
+            levelMaster.GetPlayer().locomotionController.playerControllable = true;
         }
 
         if (curEvent != null)
