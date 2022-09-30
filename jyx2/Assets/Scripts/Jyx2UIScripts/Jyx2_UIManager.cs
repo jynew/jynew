@@ -127,7 +127,7 @@ public class Jyx2_UIManager : MonoBehaviour
         GraphicSetting.GlobalSetting.Execute();
     }
 
-    Transform GetUIParent(UILayer layer) 
+    public Transform GetUIParent(UILayer layer) 
     {
         switch (layer) 
         {

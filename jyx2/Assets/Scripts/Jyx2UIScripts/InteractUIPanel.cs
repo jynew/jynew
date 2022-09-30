@@ -58,7 +58,7 @@ public partial class InteractUIPanel : Jyx2_UIBase
 	protected override void handleGamepadButtons()
 	{
 		if (gameObject.activeSelf)
-			if (LevelMaster.Instance?.IsPlayerCanControl() ?? true)
+			if (LevelMaster.Instance?.GetPlayer().locomotionController.playerControllable ?? true)
 			{
 				if (Input.GetKeyDown(KeyCode.Space) || GamepadHelper.IsConfirm())
 				{

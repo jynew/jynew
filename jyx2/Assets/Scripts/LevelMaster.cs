@@ -54,28 +54,12 @@ public class LevelMaster : MonoBehaviour
 	public bool MobileSimulate = false;
 	public GameObject m_MobileRotateSlider;
 	public bl_HUDText HUDRoot;
-	public GameObject navPointerPrefab; //寻路图标prefab
 	public ETCTouchPad m_TouchPad;
 	public ETCJoystick m_Joystick;
 
 	private Jyx2Player _gameMapPlayer;
 	
 	NavMeshAgent _playerNavAgent;
-	NavMeshPath _cachePath;
-	GameObject _navPointer;
-
-	//寻路终点图标
-	GameObject navPointer
-	{
-		get
-		{
-			var result = _navPointer;
-			if (result == null)
-				result = Instantiate(navPointerPrefab);
-			return result;
-		}
-		set { _navPointer = value; }
-	}
 
 	CameraHelper m_CameraHelper;
 
@@ -90,12 +74,9 @@ public class LevelMaster : MonoBehaviour
 	[HideInInspector]
 	public bool IsInited = false;
 
-	[Header("Lock Direction")]
-	public float unlockDegee = 10f;
-
 	//BattleHelper m_BattleHelper;
 
-	bool IsMobilePlatform()
+	public bool IsMobilePlatform()
 	{
 		return MobileSimulate || Application.isMobilePlatform;
 	}
@@ -169,9 +150,6 @@ public class LevelMaster : MonoBehaviour
 			//播放音乐
 			PlayMusic(gameMap);
 		}
-
-		navPointer = Instantiate(navPointerPrefab);
-		navPointer.SetActive(false);
 
 		//刷新界面控制器
 		UpdateMobileControllerUI();
@@ -300,7 +278,7 @@ public class LevelMaster : MonoBehaviour
 		}
 		else
 		{
-			m_Joystick.gameObject.SetActive(IsJoystickControlEnable());
+			m_Joystick.gameObject.SetActive(IsMobilePlatform() && !(GameSettingManager.MobileMoveMode == GameSettingManager.MobileMoveModeType.Click));
 		}
 		
 		m_TouchPad.gameObject.SetActive(BattleManager.Instance.IsInBattle && IsMobilePlatform()); //移动平台显示战斗旋转
@@ -352,8 +330,8 @@ public class LevelMaster : MonoBehaviour
 		else if (loadPara.loadType == LevelLoadPara.LevelLoadType.ReturnFromBattle)
 		{
 			//从战斗回来的，先不能触发对话逻辑
-			SetPlayerCanController(false);
-			StopPlayerNavigation();
+			GetPlayer().locomotionController.playerControllable = false;
+			GetPlayer().locomotionController.StopPlayerNavigation();
 
 			PlayerSpawnAt(loadPara.Pos);
 			PlayerSpawnRotate(loadPara.Rotate);
@@ -447,398 +425,9 @@ public class LevelMaster : MonoBehaviour
 
 	void Update()
 	{
-		TryClearNavPointer();
-		PlayerControl();
-
 		GamePadUpdate();
 	}
 
-	void PlayerControl()
-	{
-		if (BattleManager.Instance.IsInBattle)
-			return;
-
-		//timeline不允许角色移动
-		if (StoryEngine.Instance != null && StoryEngine.Instance.BlockPlayerControl)
-		{
-			SetPlayerSpeed(0);
-			return;
-		}
-
-		if (_gameMapPlayer == null)
-			return;
-		
-		if (GameViewPortManager.Instance.GetViewportType() != GameViewPortManager.ViewportType.Follow || IsInWorldMap)
-		{
-			//鼠标点击控制
-			OnClickControlPlayer();
-
-			//手动操作
-			OnManualControlPlayer();
-		}
-		else
-		{
-			//手动操作跟随视角
-			OnManualControlPlayerFollowViewport();
-		}
-	}
-
-	bool _CanController = true;
-	public void SetPlayerCanController(bool CanController)
-	{
-		_CanController = CanController;
-		var player = GetPlayer();
-		player.CanControl(CanController);
-
-		var interactUI = FindObjectOfType<InteractUIPanel>();
-		if (interactUI != null)
-		{
-			interactUI.gameObject.SetActive(CanController);
-		}
-	}
-
-	/// <summary>
-	/// 玩家是否拥有角色控制权
-	/// </summary>
-	/// <returns></returns>
-	public bool IsPlayerCanControl()
-	{
-		return _CanController;
-	}
-
-	private Action _OnArriveDestination;
-	public void PlayerWarkFromTo(Vector3 fromVector, Vector3 toVector, Action callback)
-	{
-		if (_playerNavAgent == null)
-		{
-			callback?.Invoke();
-			return;
-		}
-		SetPlayerCanController(false);
-		_OnArriveDestination = callback;
-		_playerNavAgent.Warp(fromVector);
-		_playerNavAgent.isStopped = false;
-		_playerNavAgent.updateRotation = true;
-		
-		//寻找最近的点
-		NavMeshHit hit;
-		if (NavMesh.SamplePosition(toVector, out hit, 10, 1 << LayerMask.NameToLayer("Ground")))
-		{
-			toVector = hit.position;
-		}
-		
-		_playerNavAgent.SetDestination(toVector);
-	}
-
-	void OnClickControlPlayer()
-	{
-		if (_playerNavAgent == null)
-			return;
-		SetPlayerSpeed(_playerNavAgent.velocity.magnitude);
-
-
-		if (!_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
-
-		//到达目的地了
-		if (!_playerNavAgent.pathPending && _playerNavAgent.enabled && !_playerNavAgent.isStopped && _playerNavAgent.remainingDistance <= _playerNavAgent.stoppingDistance)
-		{
-			_playerNavAgent.isStopped = true;
-			if (_OnArriveDestination != null)
-			{
-				_OnArriveDestination.Invoke();
-				_OnArriveDestination = null;
-				SetPlayerCanController(true);
-			}
-		}
-		if (!_CanController)
-			return;
-
-		//在editor上可以寻路
-		if (IsClickControlEnable())
-		{
-			//点击寻路
-			if ((Input.GetMouseButton(0) || Input.GetMouseButton(1)) && !UnityTools.IsPointerOverUIObject())
-			{
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-				//NPC层
-				if (Physics.Raycast(ray, out RaycastHit hitInfo, 500, 1 << LayerMask.NameToLayer("NPC")))
-				{
-					if (runtime.Player.View != null)
-					{
-						var dist = Vector3.Distance(runtime.Player.View.transform.position, hitInfo.transform.position);
-						Debug.Log("on npc clicked, dist = " + dist);
-					
-						//现在没有直接地图上点击NPC的实现	
-					}
-				}
-				//BY CG: MASK：15:Ground层
-				else if (Physics.Raycast(ray, out hitInfo, 500, 1 << LayerMask.NameToLayer("Ground")))
-				{
-					if (_currentMap.Tags.Contains("NONAVAGENT"))
-					{
-						var dest = hitInfo.point;
-						var sourcePos = _gameMapPlayer.transform.position;
-						if (Vector3.Distance(_gameMapPlayer.transform.position, dest) < 0.1f) return;
-						_gameMapPlayer.transform.LookAt(new Vector3(dest.x, _gameMapPlayer.transform.position.y, dest.z));
-						//设置位移
-						_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.deltaTime);
-						//计算当前速度
-						var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.deltaTime;
-						_playerNavAgent.updateRotation = true;
-						SetPlayerSpeed(speed);
-					}
-					else
-					{
-						_playerNavAgent.isStopped = false;
-						_playerNavAgent.updateRotation = true;
-						if (_playerNavAgent.SetDestination(hitInfo.point))
-						{
-							if (_cachePath == null)
-								_cachePath = new NavMeshPath();
-
-							bool isPathValid = _playerNavAgent.CalculatePath(_playerNavAgent.destination, _cachePath);
-							if (isPathValid)
-								_playerNavAgent.SetPath(_cachePath);
-						}
-
-					}
-
-					DisplayNavPointer(hitInfo.point);
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// 是否可以点击移动
-	/// </summary>
-	/// <returns></returns>
-	private bool IsClickControlEnable()
-	{
-		if (!IsMobilePlatform()) return true;
-		if (IsMobileClickControl()) return true;
-		return false;
-	}
-
-	/// <summary>
-	/// 是否可以虚拟摇杆移动
-	/// </summary>
-	/// <returns></returns>
-	private bool IsJoystickControlEnable()
-	{
-		return IsMobilePlatform() && !IsMobileClickControl();
-	}
-
-	/// <summary>
-	/// 是否可以标准输入移动
-	/// </summary>
-	/// <returns></returns>
-	private bool IsAxisControlEnable()
-	{
-		return true;
-	}
-
-	private bool IsMobileClickControl()
-	{
-		return IsMobilePlatform() && GameSettingManager.MobileMoveMode == GameSettingManager.MobileMoveModeType.Click;
-	}
-
-	public void ForceSetEnable(bool forceDisable)
-	{
-		_forceDisable = forceDisable;
-	}
-
-	private bool _forceDisable = false;
-
-	void OnManualControlPlayer()
-	{
-		if (!_CanController || _forceDisable)//掉本调用自动寻路的时候 不能手动控制
-			return;
-		
-		if (IsAxisControlEnable() && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
-		{
-			OnManuelMove(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized);
-		}
-		else if (IsJoystickControlEnable() && (m_Joystick.axisX.axisValue != 0 || m_Joystick.axisY.axisValue != 0))
-		{
-			OnManuelMove(new Vector2(-m_Joystick.axisX.axisValue, m_Joystick.axisY.axisValue).normalized);
-		}
-		else
-		{
-			if (!_playerNavAgent.updateRotation)
-			{
-				SetPlayerSpeed(0);
-			}
-
-			//如果被锁方向，在这解锁
-			if (m_IsLockingDirection)
-			{
-				m_IsLockingDirection = false;
-			}
-		}
-	}
-
-	//手动控制跟随相机
-	void OnManualControlPlayerFollowViewport()
-	{
-		if (!_CanController || _forceDisable)//掉本调用自动寻路的时候 不能手动控制
-			return;
-
-		_playerNavAgent.updateRotation = false;
-
-		if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-		{
-			OnManuelMove2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-		}
-		else if (m_Joystick.axisX.axisValue != 0 || m_Joystick.axisY.axisValue != 0)
-		{
-			OnManuelMove2(-m_Joystick.axisX.axisValue, m_Joystick.axisY.axisValue);
-		}
-		else
-		{
-			SetPlayerSpeed(0);
-		}
-
-		if (Input.GetKey(KeyCode.Q))
-		{
-			_gameMapPlayer.transform.RotateAround(_gameMapPlayer.transform.position, Vector3.up, -5);
-		}
-
-		if (Input.GetKey(KeyCode.E))
-		{
-			_gameMapPlayer.transform.RotateAround(_gameMapPlayer.transform.position, Vector3.up, 5);
-		}
-
-		//鼠标滑屏
-		if ((Input.GetMouseButton(0) || Input.GetMouseButton(1)) && !UnityTools.IsPointerOverUIObject())
-		{
-			_gameMapPlayer.transform.RotateAround(_gameMapPlayer.transform.position, Vector3.up, 15 * Input.GetAxis("Mouse X"));
-		}
-
-		//鼠标滚轮
-		if (Input.GetAxis("Mouse ScrollWheel") != 0)
-		{
-			var vcam = GameViewPortManager.Instance.GetFollowVCam();
-			if (vcam != null)
-			{
-				var c = vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-				c.ShoulderOffset = new Vector3(c.ShoulderOffset.x, c.ShoulderOffset.y, c.ShoulderOffset.z + Input.GetAxis("Mouse ScrollWheel") * 10);
-			}
-		}
-	}
-
-	void OnManuelMove2(float h, float v)
-	{
-		_playerNavAgent.updateRotation = false;
-
-		Vector3 forward = Vector3.zero;
-		//尝试只使用摄像机的朝向来操作角色移动
-		forward = Camera.main.transform.forward;//m_Player.position - Camera.main.transform.position;
-		forward.y = 0;
-		forward.Normalize();
-
-		Vector3 right = RotateRound(forward, Vector3.zero, Vector3.up, 90);
-		right.y = 0;
-		right.Normalize();
-
-		var dest = _gameMapPlayer.transform.position + right * h + forward * v;
-		if (_tempDestH == Vector3.zero) _tempDestH = right * h;
-		if (_tempDestV == Vector3.zero) _tempDestV = forward * v;
-		if (m_IsLockingDirection)
-		{
-			dest = _gameMapPlayer.transform.position + _tempDestH + _tempDestV;
-			Vector3 cur_dir = new Vector3(h, v, 0).normalized;
-			Vector3 old_dir = new Vector3(_tempH, _tempV, 0).normalized;
-			if (Vector3.Angle(cur_dir, old_dir) > unlockDegee)
-			{
-				m_IsLockingDirection = false;
-			}
-			//Debug.Log("LockingDirection");
-		}
-		else
-		{
-			_tempDestH = right * h;
-			_tempDestV = forward * v;
-			_tempH = h;
-			_tempV = v;
-			//Debug.Log("UnLockingDirection");
-		}
-
-		var sourcePos = _gameMapPlayer.transform.position;
-		var maxSpeed = _playerNavAgent.speed;
-
-		//设置位移
-		_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.deltaTime * maxSpeed);
-
-		//计算当前速度
-		var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.deltaTime;
-		SetPlayerSpeed(speed);
-
-		if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
-		_playerNavAgent.isStopped = true;
-		_playerNavAgent.ResetPath();
-	}
-
-	public bool m_IsLockingDirection = false;
-	private Vector3 _tempDestH = Vector3.zero;
-	private Vector3 _tempDestV = Vector3.zero;
-	private float _tempH = 0;
-	private float _tempV = 0;
-	void OnManuelMove(Vector2 input)
-	{
-		float h = input.x;
-		float v = input.y;
-		//Debug.Log($"h={h},v={v}");
-		_playerNavAgent.updateRotation = false;
-
-		Vector3 forward = Vector3.zero;
-		//尝试只使用摄像机的朝向来操作角色移动
-		forward = Camera.main.transform.forward;//m_Player.position - Camera.main.transform.position;
-		forward.y = 0;
-		forward.Normalize();
-
-		Vector3 right = RotateRound(forward, Vector3.zero, Vector3.up, 90);
-		right.y = 0;
-		right.Normalize();
-
-		var dest = _gameMapPlayer.transform.position + right * h + forward * v;
-		if (_tempDestH == Vector3.zero) _tempDestH = right * h;
-		if (_tempDestV == Vector3.zero) _tempDestV = forward * v;
-		if (m_IsLockingDirection)
-		{
-			dest = _gameMapPlayer.transform.position + _tempDestH + _tempDestV;
-			Vector3 cur_dir = new Vector3(h, v, 0).normalized;
-			Vector3 old_dir = new Vector3(_tempH, _tempV, 0).normalized;
-			if (Vector3.Angle(cur_dir, old_dir) > unlockDegee)
-			{
-				m_IsLockingDirection = false;
-			}
-			//Debug.Log("LockingDirection");
-		}
-		else
-		{
-			_tempDestH = right * h;
-			_tempDestV = forward * v;
-			_tempH = h;
-			_tempV = v;
-			//Debug.Log("UnLockingDirection");
-		}
-		_gameMapPlayer.transform.LookAt(new Vector3(dest.x, _gameMapPlayer.transform.position.y, dest.z));
-		var sourcePos = _gameMapPlayer.transform.position;
-		var maxSpeed = _playerNavAgent.speed;
-
-		//设置位移
-		_gameMapPlayer.transform.position = Vector3.Lerp(_gameMapPlayer.transform.position, dest, Time.deltaTime * maxSpeed);
-
-		//计算当前速度
-		var speed = (_gameMapPlayer.transform.position - sourcePos).magnitude / Time.deltaTime;
-		SetPlayerSpeed(speed);
-
-		if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
-		_playerNavAgent.isStopped = true;
-		_playerNavAgent.ResetPath();
-	}
 	private Vector3 _tempCameraPosition;
 
 	public static Vector3 RotateRound(Vector3 position, Vector3 center, Vector3 axis, float angle)
@@ -848,36 +437,10 @@ public class LevelMaster : MonoBehaviour
 		return resultVec3;
 	}
 
-	//主角停止导航，停留在原地
-	public void StopPlayerNavigation()
-	{
-		if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
-
-		_playerNavAgent.isStopped = true;
-
-	}
-
 	#region 导航标志
-	float _navDisplayTime;
 	private bool gamepadConnected;
 	private Button interactiveButton;
-
-	//显示导航标志
-	void DisplayNavPointer(Vector3 pos)
-	{
-		navPointer.transform.position = pos + new Vector3(0, 0.2f, 0);
-		_navDisplayTime = Time.time;
-		navPointer.SetActive(true);
-	}
-
-	//隐藏导航标志
-	void TryClearNavPointer()
-	{
-		if (navPointer.activeSelf && Time.time - _navDisplayTime > 1)
-		{
-			navPointer.SetActive(false);
-		}
-	}
+	
 	#endregion
 
 
@@ -927,14 +490,6 @@ public class LevelMaster : MonoBehaviour
 	{
 		_playerNavAgent.Warp(position);
 		_gameMapPlayer.transform.position = position;
-	}
-
-	// implement change player facing. 0:top-right, 1:down-right, 2:top-left, 3:down-left
-	// modify by eaphone at 2021/6/5
-	public void SetRotation(int ro)
-	{
-		int[] roationSet = { -90, 0, 180, 90 };
-		_gameMapPlayer.transform.rotation = Quaternion.Euler(Vector3.up * roationSet[ro]);
 	}
 
 	//手动存档
