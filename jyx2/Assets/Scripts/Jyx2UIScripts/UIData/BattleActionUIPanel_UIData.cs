@@ -37,7 +37,7 @@ public partial class BattleActionUIPanel
 		Item_Button = transform.Find("LeftActions/Item").GetComponent<Button>();
 		Wait_Button = transform.Find("LeftActions/Wait").GetComponent<Button>();
 		Rest_Button = transform.Find("LeftActions/Rest").GetComponent<Button>();
-		Surrender_Button = transform.Find("LeftActions/Surrender").GetComponent<Button>();
+		Surrender_Button = transform.Find("Surrender").GetComponent<Button>();
 		Skills_RectTransform = transform.Find("Skills").GetComponent<RectTransform>();
 		SkillItem_RectTransform = transform.Find("Prefabs/SkillItem").GetComponent<RectTransform>();
 		Cancel_Button = transform.Find("Cancel").GetComponent<Button>();

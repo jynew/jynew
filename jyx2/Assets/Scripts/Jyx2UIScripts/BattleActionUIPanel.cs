@@ -20,6 +20,7 @@ using Jyx2.Battle;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
+using i18n.TranslatorDef;
 
 public partial class BattleActionUIPanel : Jyx2_UIBase
 {
@@ -512,6 +513,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	void OnSurrenderClick()
 	{
-		TryCallback(new BattleLoop.ManualResult() { isSurrender = true });
+		Action onConfirm = () => TryCallback(new BattleLoop.ManualResult() { isSurrender = true });
+
+		MessageBox.ConfirmOrCancel("确定投降并放弃本场战斗?".GetContent(nameof(BattleActionUIPanel)), onConfirm);
 	}
 }
