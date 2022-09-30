@@ -33,6 +33,9 @@ public class Jyx2Player : MonoBehaviour
     const float PLAYER_INTERACTIVE_ANGLE = 120f;
 
     private bool canControl = true;
+    public PlayerLocomotionController locomotionController => _locomotionController;
+    [SerializeField]
+    private PlayerLocomotionController _locomotionController;
 
     public static Jyx2Player GetPlayer()
     {
@@ -145,8 +148,9 @@ public class Jyx2Player : MonoBehaviour
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _boat = FindObjectOfType<Jyx2Boat>();
-
         _gameEventLayerMask = LayerMask.GetMask("GameEvent");
+        
+        _locomotionController.Init(_navMeshAgent);
     }
 
     void Start()
@@ -177,6 +181,7 @@ public class Jyx2Player : MonoBehaviour
         if (!canControl)
             return;
 
+        _locomotionController.OnUpdate();
         //BigMapIdleJudge();
         
         //判断交互范围

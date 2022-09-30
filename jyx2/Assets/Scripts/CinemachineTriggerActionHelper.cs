@@ -41,7 +41,7 @@ public class CinemachineTriggerActionHelper : UIBehaviour
         {
             LevelMaster levelMaster = GameObject.FindObjectOfType<LevelMaster>();
             //开启方向锁
-            levelMaster.m_IsLockingDirection = true;
+            levelMaster.GetPlayer().locomotionController.isLockingDirection = true;
         }
         if(m_UnlockTarget)
         {
@@ -65,7 +65,7 @@ public class CinemachineTriggerActionHelper : UIBehaviour
         {
             LevelMaster levelMaster = GameObject.FindObjectOfType<LevelMaster>();
             //开启方向锁
-            levelMaster.m_IsLockingDirection = true;
+            levelMaster.GetPlayer().locomotionController.isLockingDirection = true;
         }
         if (m_UnlockTarget)
         {

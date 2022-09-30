@@ -328,21 +328,21 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
 		{
-			if (LevelMaster.Instance.IsPlayerCanControl())
+			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
 			{
 				OnSystemBtnClick();
 			}
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.X, () =>
 		{
-			if (LevelMaster.Instance.IsPlayerCanControl())
+			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
 			{
 				OnXiakeBtnClick();
 			}
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.B, () =>
 		{
-			if (LevelMaster.Instance.IsPlayerCanControl())
+			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
 			{
 				OnBagBtnClick();
 			}

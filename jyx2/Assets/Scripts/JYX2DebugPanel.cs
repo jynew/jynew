@@ -39,7 +39,11 @@ public class JYX2DebugPanel : MonoBehaviour
         LevelMaster lm = LevelMaster.Instance;
         if (lm != null)
         {
-            lm.ForceSetEnable(!_debugPanelSwitchOff);
+            var player = lm.GetPlayer();
+            if (player != null)
+            {
+                player.locomotionController.forceDisable = !_debugPanelSwitchOff;
+            }
         }
 
         _debugPanelSwitchOff = !_debugPanelSwitchOff;

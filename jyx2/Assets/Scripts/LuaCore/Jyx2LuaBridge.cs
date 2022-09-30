@@ -935,7 +935,7 @@ namespace Jyx2
         public static void SetRoleFace(int dir)
         {
             var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
-            levelMaster.SetRotation(dir);
+            levelMaster.GetPlayer().locomotionController.SetRotation(dir);
         }
 
         public static void NPCGetItem(int roleId,int itemId,int count)
@@ -1331,7 +1331,7 @@ namespace Jyx2
                 callback();
                 return;
             }
-            LevelMaster.Instance.PlayerWarkFromTo(fromObj.transform.position,toObj.transform.position, callback);
+            LevelMaster.Instance.GetPlayer().locomotionController.PlayerWarkFromTo(fromObj.transform.position,toObj.transform.position, callback);
         }
 
         public static async UniTask jyx2_WalkFromToAsync(int fromName, int toName)
@@ -1473,7 +1473,7 @@ namespace Jyx2
                 DoPlayTimeline(playableDirector, obj.gameObject);
             }
 
-            LevelMaster.Instance.SetPlayerCanController(false);
+            LevelMaster.Instance.GetPlayer().locomotionController.playerControllable = false;
         }
 
         static void DoPlayTimeline(PlayableDirector playableDirector, GameObject player, bool isMovePlayer = false)
@@ -1525,7 +1525,7 @@ namespace Jyx2
             clonePlayer = null;
 
             playableDiretor.GetComponent<PlayableDirectorHelper>().ClearTempObjects();
-            LevelMaster.Instance.SetPlayerCanController(true);
+            LevelMaster.Instance.GetPlayer().locomotionController.playerControllable = true;
         }
 
         public static void jyx2_Wait(float duration,Action callback)
