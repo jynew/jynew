@@ -18,7 +18,7 @@ namespace Jyx2
     {
         private static bool _isSetup;
         public static MODRootConfig CurrentModConfig { get; set; } = null;
-        public static Dictionary<string, MODProviderBase.ModItem> ModDic { get; set; } = null;
+        public static Dictionary<string, MODProviderBase.ModItem> ModDic { get; set; } = new();
         public static string CurrentModId { get; set; } = "";
         
         public static async UniTask Setup()
@@ -44,8 +44,16 @@ namespace Jyx2
             await LoadCurrentMod();
             
             await ResLoader.Init();
-            await MODManager.Instance.LoadMod(CurrentModId, "Steam");
-
+            
+            //TODO: 此处还需进行修改
+            if (Application.isMobilePlatform)
+            {
+                await MODManager.Instance.LoadMod(CurrentModId, "Android");
+            }
+            else{
+                await MODManager.Instance.LoadMod(CurrentModId, "Steam");
+            }
+            
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
             
 #if UNITY_EDITOR
@@ -77,16 +85,9 @@ namespace Jyx2
             {
                 var dic = await mod.GetInstalledMods();
                 //合并到总的mod字典
-                if (ModDic == null)
+                foreach (var kv in dic)
                 {
-                    ModDic = dic;
-                }
-                else
-                {
-                    foreach (var kv in dic)
-                    {
-                        ModDic[kv.Key] = kv.Value;
-                    }
+                    ModDic[kv.Key] = kv.Value;
                 }
             }
         }
