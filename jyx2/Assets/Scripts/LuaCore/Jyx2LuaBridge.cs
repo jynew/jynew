@@ -706,17 +706,17 @@ namespace Jyx2
         
         public static void ShowMessage(string message, Action callback)
         {
-            MessageBox.Create(message, callback);
+            MessageBox.ShowMessage(message, callback);
         }
 
         public static void ShowEthics(Action callback)
         {
-            MessageBox.Create("你现在的品德指数为" + runtime.Player.Pinde, callback);
+            MessageBox.ShowMessage("你现在的品德指数为" + runtime.Player.Pinde, callback);
         }
 
         public static void ShowRepute(Action callback)
         {
-            MessageBox.Create("你现在的个人声望指数为" + runtime.Player.Shengwang, callback);
+            MessageBox.ShowMessage("你现在的个人声望指数为" + runtime.Player.Shengwang, callback);
         }
 
         public static bool JudgeEventNum(int eventIndex, int value)

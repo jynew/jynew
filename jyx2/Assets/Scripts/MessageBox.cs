@@ -18,52 +18,117 @@ using UnityEngine.UI;
 
 public class MessageBox : MonoBehaviour
 {
-    public Button m_ConfirmButton;
-    public Text m_MessageText;
-	private Action _callback;
+    [SerializeField]
+    private Button m_ConfirmButton;
 
-	public static void Create(string msg, Action callback = null, Transform parent = null)
+    [SerializeField]
+    private Button m_CancelButton;
+
+    [SerializeField]
+    private LayoutGroup m_ButtonLayout;
+
+    [SerializeField]
+    private Text m_MessageText;
+
+	private Action _onCofirom;
+    private Action _onCancel;
+
+    private void Awake()
     {
-        if(parent == null)
-        {
-            var go = GameObject.Find("Top");
-            parent = go.transform;
-        }
-
-        var obj = Jyx2ResourceHelper.CreatePrefabInstance("MessageBox");
-        obj.transform.SetParent(parent);
-
-        var rt = obj.GetComponent<RectTransform>();
-        rt.localPosition = Vector3.zero;
-        rt.localScale = Vector3.one;
-
-        var messageBox = obj.GetComponent<MessageBox>();
-        messageBox.Show(msg, callback);
+        m_ConfirmButton.onClick.AddListener(OnConfirmBtnClick);
+        m_CancelButton.onClick.AddListener(OnCancelBtnClick);
     }
 
-    public void Show(string msg, Action callback)
+    private void OnDestroy()
+    {
+        m_ConfirmButton.onClick.RemoveListener(OnConfirmBtnClick);
+        m_CancelButton.onClick.RemoveListener(OnCancelBtnClick);
+    }
+
+    private static MessageBox CreateMessageBox(UILayer uiLayer = UILayer.Top)
+    {
+        var parent = Jyx2_UIManager.Instance.GetUIParent(uiLayer);
+        var obj = Jyx2ResourceHelper.CreatePrefabInstance("MessageBox");
+        obj.transform.SetParent(parent, false);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = Vector3.one;
+
+        return obj.GetComponent<MessageBox>();
+    }
+
+
+    public static void ShowMessage(string msg, Action onConfirm = null, UILayer uiLayer = UILayer.Top)
+    {
+        var msgBox = CreateMessageBox(uiLayer);
+        if(msgBox != null)
+        {
+            msgBox.SetMessage(msg, onConfirm);
+        }
+    }
+
+    public static void ConfirmOrCancel(string msg, Action onConfirm = null, Action onCancel = null, UILayer uiLayer = UILayer.Top)
+    {
+        var msgBox = CreateMessageBox(uiLayer);
+        if (msgBox != null)
+        {
+            msgBox.SetConfirmOrCancel(msg, onConfirm, onCancel);
+        }
+    }
+
+
+    private void SetMessage(string msg, Action onConfirm)
+    {
+        m_CancelButton.gameObject.SetActive(false);
+        m_ButtonLayout.SetLayoutHorizontal();
+        SetMessageBoxData(msg, onConfirm, null);
+    }
+
+
+    private void SetConfirmOrCancel(string msg, Action onConfrim, Action onCancel)
+    {
+        m_CancelButton.gameObject.SetActive(true);
+        m_ButtonLayout.SetLayoutHorizontal();
+        SetMessageBoxData(msg, onConfrim, onCancel);
+    }
+
+    private void SetMessageBoxData(string msg, Action onConfrim, Action onCancel)
     {
         m_MessageText.text = msg;
-        _callback = callback;
-        m_ConfirmButton.onClick.RemoveAllListeners();
-		m_ConfirmButton.onClick.AddListener(() =>
-		{
-			closeAndCallback();
-		});
+        _onCofirom = onConfrim;
+        _onCancel = onCancel;
     }
 
-	private void closeAndCallback()
+    private void OnConfirmBtnClick()
 	{
-		Jyx2ResourceHelper.ReleasePrefabInstance(this.gameObject);
-		if (_callback != null)
-			_callback();
-	}
+        _onCofirom?.Invoke();
+        DestroyMessageBox();
+    }
 
-	private void Update()
+    private void OnCancelBtnClick()
+    {
+        _onCancel?.Invoke();
+        DestroyMessageBox();
+    }
+
+    private void DestroyMessageBox()
+    {
+        _onCofirom = null;
+        _onCancel = null;
+        Jyx2ResourceHelper.ReleasePrefabInstance(gameObject);
+    }
+
+    private void Update()
 	{
         if (gameObject.activeSelf)
-            if (GamepadHelper.IsConfirm()
-                || GamepadHelper.IsCancel())
-                closeAndCallback();
+        {
+            if (GamepadHelper.IsConfirm())
+            {
+                OnConfirmBtnClick();
+            }
+            else if (GamepadHelper.IsCancel())
+            {
+                OnCancelBtnClick();
+            }
+        }
 	}
 }
