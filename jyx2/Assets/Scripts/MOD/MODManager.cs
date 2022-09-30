@@ -8,41 +8,38 @@ namespace Jyx2.MOD
     public class MODManager
     {
         #region Singleton
+
         //单例模式
         public static MODManager Instance
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = new MODManager();
-                }
+                if (_instance == null) _instance = new MODManager();
                 return _instance;
             }
         }
-        
+
         private static MODManager _instance;
+
         #endregion
-        
-        private Dictionary<string, MODProviderBase> _platforms = new Dictionary<string, MODProviderBase>();
-        
+
+        private Dictionary<string, MODProviderBase> _platforms = new();
+
         private bool _isInited = false;
-        
+
         public void Init()
         {
-            if (_isInited)
-            {
-                return;
-            }
+            if (_isInited) return;
             _isInited = true;
-            
+
             _platforms.Clear();
-            
+
             //注册平台
+#if UNITY_ANDROID
+            RegisterModPlatform(new AndroidMODProvider() { Name = "Android" });
+#else
             RegisterModPlatform(new SteamMODProvider() { Name = "Steam" });
             RegisterModPlatform(new PCLocalMODProvider() { Name = "PC" });
-#if UNITY_ANDROID
-            RegisterModPlatform(new AndroidMODProvider());
 #endif
         }
 
@@ -58,17 +55,17 @@ namespace Jyx2.MOD
                 Debug.LogError("Mod平台注册失败，传入的Mod平台为空");
                 return;
             }
-            
+
             if (_platforms.ContainsKey(t.Name))
             {
                 Debug.LogError("Mod平台注册失败，已经存在同名的平台");
                 return;
             }
-            
+
             _platforms.Add(t.Name, t);
         }
 
-        
+
         /// <summary>
         /// 获取所有的Mod提供器
         /// </summary>
@@ -77,14 +74,10 @@ namespace Jyx2.MOD
         public IEnumerable<T> GetAllModProviders<T>() where T : MODProviderBase
         {
             foreach (var platform in _platforms.Values)
-            {
                 if (platform is T)
-                {
                     yield return platform as T;
-                }
-            }
         }
-        
+
         /// <summary>
         /// 用指定的Mod加载器加载Mod，需要记住每个ModId是由哪个ModProvider提供的
         /// </summary>
@@ -100,8 +93,8 @@ namespace Jyx2.MOD
 
             await _platforms[modProviderName].LoadMod(modId);
         }
-        
-        
+
+
         /// <summary>
         /// 获取平台数量
         /// </summary>
@@ -110,7 +103,7 @@ namespace Jyx2.MOD
         {
             return _platforms.Count;
         }
-        
+
         /// <summary>
         /// 销毁
         /// </summary>
