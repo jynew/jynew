@@ -32,6 +32,7 @@ public class MessageBox : MonoBehaviour
 
 	private Action _onCofirom;
     private Action _onCancel;
+    private Action _onClose;
 
     private void Awake()
     {
@@ -75,12 +76,16 @@ public class MessageBox : MonoBehaviour
         }
     }
 
-
-    private void SetMessage(string msg, Action onConfirm)
+    /// <summary>
+    /// Lua那边的协程要通过OnClose回调Resume回去
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="OnClose"></param>
+    private void SetMessage(string msg, Action OnClose)
     {
         m_CancelButton.gameObject.SetActive(false);
         m_ButtonLayout.SetLayoutHorizontal();
-        SetMessageBoxData(msg, onConfirm, null);
+        SetMessageBoxData(msg, null, null, OnClose);
     }
 
 
@@ -91,11 +96,12 @@ public class MessageBox : MonoBehaviour
         SetMessageBoxData(msg, onConfrim, onCancel);
     }
 
-    private void SetMessageBoxData(string msg, Action onConfrim, Action onCancel)
+    private void SetMessageBoxData(string msg, Action onConfrim, Action onCancel, Action onClose = null)
     {
         m_MessageText.text = msg;
         _onCofirom = onConfrim;
         _onCancel = onCancel;
+        _onClose = onClose;
     }
 
     private void OnConfirmBtnClick()
@@ -112,6 +118,8 @@ public class MessageBox : MonoBehaviour
 
     private void DestroyMessageBox()
     {
+        _onClose?.Invoke();
+        _onClose = null;
         _onCofirom = null;
         _onCancel = null;
         Jyx2ResourceHelper.ReleasePrefabInstance(gameObject);
