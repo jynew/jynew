@@ -30,7 +30,7 @@ public class MessageBox : MonoBehaviour
     [SerializeField]
     private Text m_MessageText;
 
-	private Action _onCofirom;
+    private Action _onConfirm;
     private Action _onCancel;
     private Action _onClose;
 
@@ -89,24 +89,24 @@ public class MessageBox : MonoBehaviour
     }
 
 
-    private void SetConfirmOrCancel(string msg, Action onConfrim, Action onCancel)
+    private void SetConfirmOrCancel(string msg, Action onConfirm, Action onCancel)
     {
         m_CancelButton.gameObject.SetActive(true);
         m_ButtonLayout.SetLayoutHorizontal();
-        SetMessageBoxData(msg, onConfrim, onCancel);
+        SetMessageBoxData(msg, onConfirm, onCancel);
     }
 
-    private void SetMessageBoxData(string msg, Action onConfrim, Action onCancel, Action onClose = null)
+    private void SetMessageBoxData(string msg, Action onConfirm, Action onCancel, Action onClose = null)
     {
         m_MessageText.text = msg;
-        _onCofirom = onConfrim;
+        _onConfirm = onConfirm;
         _onCancel = onCancel;
         _onClose = onClose;
     }
 
     private void OnConfirmBtnClick()
 	{
-        _onCofirom?.Invoke();
+        _onConfirm?.Invoke();
         DestroyMessageBox();
     }
 
@@ -120,7 +120,7 @@ public class MessageBox : MonoBehaviour
     {
         _onClose?.Invoke();
         _onClose = null;
-        _onCofirom = null;
+        _onConfirm = null;
         _onCancel = null;
         Jyx2ResourceHelper.ReleasePrefabInstance(gameObject);
     }

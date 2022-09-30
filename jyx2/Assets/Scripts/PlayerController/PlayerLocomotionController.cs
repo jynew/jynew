@@ -42,7 +42,7 @@ public class PlayerLocomotionController
 	    set
 	    {
 		    _playerControllable = value;
-		    gameMapPlayer.CanControl(_playerControllable);
+		    gameMapPlayer.SetPlayerControlEnable(_playerControllable);
 
 		    var interactUI = GameObject.FindObjectOfType<InteractUIPanel>();
 		    if (interactUI != null)
