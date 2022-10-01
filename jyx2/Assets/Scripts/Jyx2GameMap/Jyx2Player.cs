@@ -196,8 +196,6 @@ public class Jyx2Player : MonoBehaviour
 
         if (!CanControlPlayer)
             return;
-
-        _locomotionController.OnUpdate();
         //BigMapIdleJudge();
         
         //判断交互范围
