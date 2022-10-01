@@ -398,6 +398,11 @@ namespace Jyx2
 
         public RoleInstance GetRole(int roleId)
         {
+            if(!AllRoles.ContainsKey(roleId))
+            {
+                Debug.LogError("无法获取RoleInstance, roleId: " + roleId);
+                return null;
+            }
             return AllRoles[roleId];
         }
 

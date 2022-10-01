@@ -20,12 +20,21 @@ namespace Jyx2
         public static MODRootConfig CurrentModConfig { get; set; } = null;
         public static Dictionary<string, MODProviderBase.ModItem> ModDic { get; set; } = new Dictionary<string, MODProviderBase.ModItem>();
         public static string CurrentModId { get; set; } = "";
+
+        public static bool IsLoading { get; private set; } = false;
         
         public static async UniTask Setup()
         {
             if (_isSetup) return;
-            
-            _isSetup = true;
+
+            if(IsLoading)
+            {
+                //同时调用了Setup的地方都应该挂起
+               await UniTask.WaitUntil(() => _isSetup);
+               return;
+            }
+
+            IsLoading = true;
             
             DebugInfoManager.Init();
             
@@ -77,6 +86,8 @@ namespace Jyx2
       
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
+            _isSetup = true;
+            IsLoading = false;
         }
         
         public static async UniTask LoadMods()
