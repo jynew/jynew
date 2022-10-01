@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using ES3Types;
 using i18n.TranslatorDef;
@@ -30,6 +31,8 @@ namespace Jyx2
         public static GameSaveSummary Load(int index)
         {
             var summaryInfoFilePath = GetSummaryFilePath(index);
+            
+
             GameSaveSummary rst = new GameSaveSummary();
             //适配之前的存档
             try
@@ -40,7 +43,19 @@ namespace Jyx2
             }
             catch (Exception e)
             {
-                
+                try
+                {
+                    // TODO:没读取到则兼容旧版本
+                    var oldSummaryInfoFilePath = RuntimeEnvSetup.CurrentModId + "_" +
+                                                 string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);
+                    rst.Summary = ES3.Load<string>("summary", oldSummaryInfoFilePath);
+                    rst.ModId = ES3.Load<string>("modId", oldSummaryInfoFilePath);
+                    rst.ModName = ES3.Load<string>("modName", oldSummaryInfoFilePath);
+                }
+                catch (Exception ee)
+                {
+                    // ignored
+                }
             }
             
             return rst;
@@ -68,16 +83,13 @@ namespace Jyx2
 
         public static string GetSummaryFilePath(int index)
         {
-            //根据MOD区分存档空间
-            var mod = RuntimeEnvSetup.CurrentModId;
-            if (mod.Equals(GameConst.DEFAULT_GAME_MOD_NAME))
-            {
-                return string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);    
-            }
-            else
-            {
-                return mod + "_" + string.Format(ARCHIVE_SUMMARY_FILE_NAME, index);
-            }
+            var modDir = RuntimeEnvSetup.CurrentModConfig.ModRootDir;
+#if UNITY_EDITOR
+            // 如果是编辑器
+            modDir = RuntimeEnvSetup.CurrentModConfig.ModRootDir.Replace("Assets/","");
+#endif
+            // 所有mod都存储到单独的目录
+            return Path.Combine(modDir, string.Format(ARCHIVE_SUMMARY_FILE_NAME, index));
         }
         
         const string ARCHIVE_SUMMARY_FILE_NAME = "archive_summary_{0}.dat";
@@ -214,10 +226,13 @@ namespace Jyx2
 
         public static string GetArchiveFile(int index)
         {
-            //根据MOD区分存档空间
-            var mod = RuntimeEnvSetup.CurrentModId;
+            var modDir = RuntimeEnvSetup.CurrentModConfig.ModRootDir;
+#if UNITY_EDITOR
+            // 如果是编辑器
+            modDir = RuntimeEnvSetup.CurrentModConfig.ModRootDir.Replace("Assets/","");
+#endif
             // 所有mod都存储到单独的目录
-            return Path.Combine(RuntimeEnvSetup.CurrentModConfig.ModRootDir, string.Format(ARCHIVE_FILE_NAME, index));
+            return Path.Combine(modDir, string.Format(ARCHIVE_FILE_NAME, index));
         }
 
 
@@ -231,8 +246,19 @@ namespace Jyx2
         public static DateTime? GetSaveDate(int index)
 		{
             var summaryInfoFilePath = GameSaveSummary.GetSummaryFilePath(index);
-            return ES3.FileExists(summaryInfoFilePath) ?
-                 ((DateTime?) ES3.GetTimestamp(summaryInfoFilePath)) : null;
+            if (ES3.FileExists(summaryInfoFilePath))
+            {
+                return (DateTime?)ES3.GetTimestamp(summaryInfoFilePath);
+            }
+
+            // TODO:没读取到则兼容旧版本
+            var oldSummaryInfoFilePath = RuntimeEnvSetup.CurrentModId + "_" + $"archive_summary_{index}.dat";
+            if (ES3.FileExists(oldSummaryInfoFilePath))
+            {
+                return (DateTime?)ES3.GetTimestamp(oldSummaryInfoFilePath);
+            }
+
+            return null;
         }
 
 		private void SaveToFile(int fileIndex)
@@ -254,8 +280,19 @@ namespace Jyx2
         public static GameRuntimeData LoadArchive(int fileIndex)
         {
             var path = GetArchiveFile(fileIndex);
-            // TODO:兼容旧版本存档，下个版本应该取消兼容
-            var runtime = Directory.Exists(path) ? ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path) : ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), RuntimeEnvSetup.CurrentModId + "_" + string.Format(ARCHIVE_FILE_NAME, index));
+
+            GameRuntimeData runtime;
+
+            if (ES3.FileExists(path))
+            {
+                runtime = ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
+            }
+            else
+            {
+                // TODO:兼容旧版本存档，下个版本应该取消兼容，并删除原来的存档
+                var oldSavePath = RuntimeEnvSetup.CurrentModId + "_" + string.Format(ARCHIVE_FILE_NAME, fileIndex);
+                runtime = ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), oldSavePath);
+            }
             
             _instance = runtime;
             return runtime;
