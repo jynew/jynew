@@ -4,8 +4,8 @@ using Jyx2;
 using UnityEngine;
 using UnityEngine.AI;
 
-[Serializable]
-public class PlayerLocomotionController
+
+public class PlayerLocomotionController:MonoBehaviour
 {
 	public GameObject navPointerPrefab; //寻路图标prefab
 	public float unlockDegree = 10f;
@@ -91,14 +91,14 @@ public class PlayerLocomotionController
 	    navPointer.SetActive(false);
     }
 
-    // Update is called once per frame
-    public void OnUpdate()
+	// 放Jyx2Player里OnUpdate会在触发剧情的情况下停止更新，还是先独立出来
+	void Update()
     {
-        PlayerControl();
+        UpdatePlayerControl();
         TryClearNavPointer();
     }
     
-    private void PlayerControl()
+    private void UpdatePlayerControl()
     {
         if (BattleManager.Instance.IsInBattle)
             return;

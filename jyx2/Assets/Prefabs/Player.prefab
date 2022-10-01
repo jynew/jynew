@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3279224452319450221}
   - component: {fileID: 1359699952816380582}
   - component: {fileID: 5774305923639009425}
+  - component: {fileID: -8837897953080121422}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -99,13 +100,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4c7218c4d328544ba9f8c445f3fd11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _locomotionController:
-    navPointerPrefab: {fileID: 1613908073751994, guid: b14eaf554645b7e4e99d40e234e50930,
-      type: 3}
-    unlockDegree: 10
+  _locomotionController: {fileID: -8837897953080121422}
   m_Animancer: {fileID: 6823037285151171485}
   m_Animator: {fileID: 4683237163795035701}
   IsOnBoat: 0
+--- !u!114 &-8837897953080121422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041393706886160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12eede25b186fba45b0dd207ec9362ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navPointerPrefab: {fileID: 1613908073751994, guid: b14eaf554645b7e4e99d40e234e50930,
+    type: 3}
+  unlockDegree: 10
 --- !u!1001 &3686721250965430163
 PrefabInstance:
   m_ObjectHideFlags: 0
