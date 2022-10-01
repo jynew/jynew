@@ -216,14 +216,8 @@ namespace Jyx2
         {
             //根据MOD区分存档空间
             var mod = RuntimeEnvSetup.CurrentModId;
-            if (mod.Equals(GameConst.DEFAULT_GAME_MOD_NAME))
-            {
-                return string.Format(ARCHIVE_FILE_NAME, index);    
-            }
-            else
-            {
-                return mod + "_" + string.Format(ARCHIVE_FILE_NAME, index);
-            }
+            // 所有mod都存储到单独的目录
+            return Path.Combine(RuntimeEnvSetup.CurrentModConfig.ModRootDir, string.Format(ARCHIVE_FILE_NAME, index));
         }
 
 
@@ -260,7 +254,9 @@ namespace Jyx2
         public static GameRuntimeData LoadArchive(int fileIndex)
         {
             var path = GetArchiveFile(fileIndex);
-            var runtime =  ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
+            // TODO:兼容旧版本存档，下个版本应该取消兼容
+            var runtime = Directory.Exists(path) ? ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path) : ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), RuntimeEnvSetup.CurrentModId + "_" + string.Format(ARCHIVE_FILE_NAME, index));
+            
             _instance = runtime;
             return runtime;
         }
