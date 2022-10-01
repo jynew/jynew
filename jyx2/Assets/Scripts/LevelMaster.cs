@@ -58,6 +58,7 @@ public class LevelMaster : MonoBehaviour
 	public ETCJoystick m_Joystick;
 
 	private Jyx2Player _gameMapPlayer;
+	private Image m_BlackCover;
 	
 	NavMeshAgent _playerNavAgent;
 
@@ -107,6 +108,20 @@ public class LevelMaster : MonoBehaviour
 	{
 		get { return _currentMap?.Tags.Contains("WORLDMAP") ?? false; }
 	}
+
+	public Image BlackCover
+    {
+		get
+        {
+			if(m_BlackCover == null)
+            {
+				m_BlackCover = transform.Find("UI/BlackCover")?.GetComponent<Image>();
+            }
+			return m_BlackCover;
+        }
+    }
+
+	public bool IsFadingScene => BlackCover != null && BlackCover.gameObject.activeSelf;
 
 	// Use this for initialization
 	void Start()

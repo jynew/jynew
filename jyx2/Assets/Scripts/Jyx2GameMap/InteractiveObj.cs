@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
+[Obsolete("不再需要直接点击物体交互了")]
 public class InteractiveObj : MonoBehaviour
 {
     GameObject[] m_renderGameObjects;

@@ -132,8 +132,7 @@ public static class Jyx2Console
                 foreach (var obj in evt.m_EventTargets)
                 {
                     if (obj == null) continue;
-                    var o = obj.GetComponent<InteractiveObj>();
-                    if (o != null && "韦小宝" == o.name)
+                    if ("韦小宝" == obj.name)
                     {
                         isTalkedToWei = evt.m_InteractiveEventId == 938;
 

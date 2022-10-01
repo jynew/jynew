@@ -180,6 +180,8 @@ public class Jyx2Player : MonoBehaviour
                 return false;
             if (StoryEngine.Instance != null && StoryEngine.Instance.BlockPlayerControl)
                 return false;
+            if (LevelMaster.Instance != null && LevelMaster.Instance.IsFadingScene)
+                return false;
             return true;
         }
     }
@@ -285,10 +287,10 @@ public class Jyx2Player : MonoBehaviour
         {
             var target = targets[i];
 
-            if (CanSee(target) && SetInteractiveGameEvent(target))
+            if (CanSee(target) && TryGetInteractiveGameEvent(target, out GameEvent evt))
             {
                 //找到第一个可交互的物体，则结束
-                return target.GetComponent<GameEvent>();
+                return evt;
             }
         }
 
@@ -307,25 +309,31 @@ public class Jyx2Player : MonoBehaviour
             var isInTrigger = target.bounds.Contains(transform.position + targetDirection * _navMeshAgent.radius);
             if(isInTrigger) 
             {
+#if UNITY_EDITOR
                 Debug.DrawLine(transform.position, target.transform.position, Color.green);
                 //Debug.Log("Inside trigger: " + target.transform.name);
-
+#endif
                 return true;
             }
             else
             {
                 //判断主角与目标之间有无其他collider遮挡。忽略trigger。
                 RaycastHit hit;
-                if(Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore)) {
+                if(Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore)) 
+                {
                     //Debug.Log("Hit. hit: " + hit.transform.name + " target:" + target.transform.name);
                     if(hit.transform.GetInstanceID() != target.transform.GetInstanceID())
                     {
+#if UNITY_EDITOR
                         Debug.DrawLine(transform.position, hit.point, Color.red);
+#endif
                         return false;
                     }
                 }
+#if UNITY_EDITOR
                 //Debug.Log("Outside trigger: " + target.transform.name);
                 Debug.DrawLine(transform.position, target.transform.position, Color.green);
+#endif
                 return true;
 
             }
@@ -335,18 +343,18 @@ public class Jyx2Player : MonoBehaviour
         return false;
     }
 
-    bool SetInteractiveGameEvent(Collider c)
+    bool TryGetInteractiveGameEvent(Collider collider, out GameEvent evt)
     {
-        var evt = c.GetComponent<GameEvent>(); 
+        evt = collider.GetComponent<GameEvent>(); 
         if (evt == null)
             return false;
 
         //有进入触发事件
-        if (evt.m_EnterEventId != GameEvent.NO_EVENT)
+        if (evt.IsTriggerEnterEvent)
             return false;
 
         //没有交互触发事件
-        if (evt.m_InteractiveEventId == GameEvent.NO_EVENT && evt.m_UseItemEventId == GameEvent.NO_EVENT)
+        if (!evt.IsInteractiveOrUseItemEvent)
             return false;
 
 
