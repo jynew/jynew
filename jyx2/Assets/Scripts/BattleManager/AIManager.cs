@@ -285,14 +285,24 @@ public class AIManager
             }
 
             //医疗算分
-            if (skill is HealSkillCastInstance)
+            if (skill.GetDamageType() == 4)
             {
-                if (targetRole.Hp < 0.2 * targetRole.MaxHp)
+                if (skill is HealSkillCastInstance)
                 {
-                    score = result.heal;
+                    if (targetRole.Hp < 0.2 * targetRole.MaxHp)
+                    {
+                        score = result.heal;
+                    }
+                }
+                else
+                {
+                    if (targetRole.Hp < 0.5 * targetRole.MaxHp)
+                    {
+                        score = result.heal;
+                    }
                 }
             }
-            
+
             //用毒算分
             if (skill is PoisonSkillCastInstance)
             {
