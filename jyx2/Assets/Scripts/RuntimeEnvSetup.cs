@@ -18,7 +18,7 @@ namespace Jyx2
     {
         private static bool _isSetup;
         public static MODRootConfig CurrentModConfig { get; set; } = null;
-        public static Dictionary<string, MODProviderBase.ModItem> ModDic { get; set; } = new();
+        public static Dictionary<string, MODProviderBase.ModItem> ModDic { get; set; } = new Dictionary<string, MODProviderBase.ModItem>();
         public static string CurrentModId { get; set; } = "";
         
         public static async UniTask Setup()

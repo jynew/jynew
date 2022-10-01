@@ -23,7 +23,7 @@ namespace Jyx2.MOD
 
         #endregion
 
-        private Dictionary<string, MODProviderBase> _platforms = new();
+        private Dictionary<string, MODProviderBase> _platforms = new Dictionary<string, MODProviderBase>();
 
         private bool _isInited = false;
 
