@@ -11,12 +11,12 @@ namespace Jyx2.MOD
     {
         private string ModDir => "mods";
 
-        public override async UniTask<Dictionary<string, ModItem>> GetInstalledMods()
+        public override async UniTask GetInstalledMods()
         {
             if (!Directory.Exists(ModDir))
             {
                 Debug.LogError("[PCLocalMODProvider] Mods Directory not found");
-                return null;
+                return;
             }
             List<string> modPaths = new List<string>();
             FileTools.GetAllFilePath(ModDir, modPaths, new List<string>()
@@ -26,7 +26,7 @@ namespace Jyx2.MOD
             if (modPaths.Count == 0)
             {
                 Debug.LogError("[PCLocalMODProvider] Mod xml file not found");
-                return null;
+                return;
             }
             foreach (var modPath in modPaths)
             {
@@ -41,11 +41,8 @@ namespace Jyx2.MOD
                     Directory = xmlObj.Directory ?? Path.Combine(ModDir, xmlObj.ModId),
                     PreviewImageUrl = xmlObj.PreviewImageUrl
                 };
-                _items.Add(xmlObj.ModId.ToLower(), modItem);
-                
+                Items[xmlObj.ModId.ToLower()] = modItem;
             }
-            
-            return _items;
         }
     }
 }

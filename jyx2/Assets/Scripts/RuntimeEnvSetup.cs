@@ -18,7 +18,6 @@ namespace Jyx2
     {
         private static bool _isSetup;
         public static MODRootConfig CurrentModConfig { get; set; } = null;
-        public static Dictionary<string, MODProviderBase.ModItem> ModDic { get; set; } = new Dictionary<string, MODProviderBase.ModItem>();
         public static string CurrentModId { get; set; } = "";
 
         public static bool IsLoading { get; private set; } = false;
@@ -94,12 +93,7 @@ namespace Jyx2
         {
             foreach (var mod in MODManager.Instance.GetAllModProviders<MODProviderBase>())
             {
-                var dic = await mod.GetInstalledMods();
-                //合并到总的mod字典
-                foreach (var kv in dic)
-                {
-                    ModDic[kv.Key] = kv.Value;
-                }
+                await mod.GetInstalledMods();
             }
         }
         

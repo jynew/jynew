@@ -40,22 +40,22 @@ namespace Jyx2.MOD
             public string PreviewImageUrl;
         }
 
-        protected Dictionary<string, ModItem> _items = new Dictionary<string, ModItem>();
+        public static Dictionary<string, ModItem> Items { get; set; } = new Dictionary<string, ModItem>();
         
         //获取所有安装的Mod
-        public virtual UniTask<Dictionary<string, ModItem>> GetInstalledMods() { return new UniTask<Dictionary<string, ModItem>>(); }
-        
+        public virtual async UniTask GetInstalledMods() {}
+
         /// <summary>
         /// 获取Mod文件夹路径
         /// </summary>
         /// <param name="modId"></param>
         /// <returns></returns>
-        public virtual string GetModDirPath(string modId)
+        public string GetModDirPath(string modId)
         {
             modId = modId.ToLower();
-            if (_items.ContainsKey(modId))
+            if (Items.ContainsKey(modId))
             {
-                return _items[modId].Directory;
+                return Items[modId].Directory;
             }
             return "";
         }
@@ -65,7 +65,7 @@ namespace Jyx2.MOD
         /// </summary>
         /// <param name="modPath"></param>
         /// <returns></returns>
-        public virtual ModItem GetModItem(string modPath)
+        public ModItem GetModItem(string modPath)
         {
             ModItem modItem = new ModItem();
             
@@ -92,7 +92,7 @@ namespace Jyx2.MOD
         /// 加载指定的Mod
         /// </summary>
         /// <param name="modId"></param>
-        public virtual async UniTask LoadMod(string modId)
+        public async UniTask LoadMod(string modId)
         {
             var modDirPath = GetModDirPath(modId);
             await ResLoader.LoadMod(modId, modDirPath);
