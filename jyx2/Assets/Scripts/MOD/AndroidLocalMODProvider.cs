@@ -13,13 +13,13 @@ namespace Jyx2.MOD
     {
         private string ModDir => "/storage/emulated/0/Wuxia_MODs";
 
-        public override async UniTask<Dictionary<string, ModItem>> GetInstalledMods()
+        public override async UniTask GetInstalledMods()
         {
             if (!Directory.Exists(ModDir))
             {
                 Debug.LogError("[AndroidLocalMODProvider] Mods Directory not found");
                 Directory.CreateDirectory(ModDir);
-                return null;
+                return;
             }
 
             // 调用弹窗显示
@@ -33,7 +33,7 @@ namespace Jyx2.MOD
             if (modPaths.Count == 0)
             {
                 Debug.LogError("[AndroidLocalMODProvider] Mod xml file not found");
-                return null;
+                return;
             }
 
             foreach (var modPath in modPaths)
@@ -49,10 +49,8 @@ namespace Jyx2.MOD
                     Directory = xmlObj.Directory ?? Path.Combine(ModDir, xmlObj.ModId),
                     PreviewImageUrl = xmlObj.PreviewImageUrl
                 };
-                _items.Add(xmlObj.ModId.ToLower(), modItem);
+                Items[xmlObj.ModId.ToLower()] = modItem;
             }
-
-            return _items;
         }
 
         /// <summary>
