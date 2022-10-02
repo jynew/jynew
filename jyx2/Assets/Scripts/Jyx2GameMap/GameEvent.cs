@@ -28,7 +28,7 @@ public class GameEvent : MonoBehaviour
 
         //以后如果有其他的在中间拓展
 
-        Highest = 1 << 31,
+        Highest = 1 << 30,
     }
 
     static public GameEvent GetCurrentGameEvent()
