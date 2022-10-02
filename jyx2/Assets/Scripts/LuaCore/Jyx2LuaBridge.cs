@@ -964,7 +964,7 @@ namespace Jyx2
         
         public static void DarkScence(Action callback)
         {
-            var blackCover = LevelMaster.Instance.transform.Find("UI/BlackCover");
+            var blackCover = LevelMaster.Instance.BlackCover;
             if (blackCover == null)
             {
                 Debug.LogError("DarkScence error，找不到LevelMaster/UI/BlackCover");
@@ -973,8 +973,7 @@ namespace Jyx2
             }
 
             blackCover.gameObject.SetActive(true);
-            var img = blackCover.GetComponent<Image>();
-            img.DOFade(1, 1).OnComplete(() => callback());
+            blackCover.DOFade(1, 1).OnComplete(() => callback());
         }
 
         public static void Rest()
@@ -1018,16 +1017,22 @@ namespace Jyx2
         
         public static void LightScence(Action callback)
         {
-            var blackCover = LevelMaster.Instance.transform.Find("UI/BlackCover");
+            var blackCover = LevelMaster.Instance.BlackCover;
             if (blackCover == null)
             {
-                Debug.LogError("DarkScence error，找不到LevelMaster/UI/BlackCover");
+                Debug.LogError("LightScene error，找不到LevelMaster/UI/BlackCover");
                 callback();
                 return;
             }
 
-            var img = blackCover.GetComponent<Image>();
-            img.DOFade(0, 1).OnComplete(() =>
+            if (!blackCover.gameObject.activeSelf)
+            {
+                Debug.Log("已经是SceneLight状态，不必再延迟逻辑了");
+                callback();
+                return;
+            }
+
+            blackCover.DOFade(0, 1).OnComplete(() =>
             {
                 blackCover.gameObject.SetActive(false);
                 callback();

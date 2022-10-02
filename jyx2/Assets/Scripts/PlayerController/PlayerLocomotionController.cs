@@ -157,7 +157,7 @@ public class PlayerLocomotionController:MonoBehaviour
 				playerControllable = true;
 			}
 		}
-		if (!LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
+		if (!LevelMaster.Instance.GetPlayer().CanControlPlayer)
 			return;
  
 		//在editor上可以寻路

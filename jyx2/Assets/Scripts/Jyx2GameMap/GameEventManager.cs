@@ -8,14 +8,9 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// 统一管理所有的事件触发
@@ -23,41 +18,24 @@ using UnityEngine.UI;
 public class GameEventManager : MonoBehaviour
 {
     GameEvent curEvent = null;
-    const int NO_EVENT = -1;
-
-    bool isEmptyEvent(GameEvent evt)
-    {
-        return IsNoEvent(evt.m_EnterEventId) && IsNoEvent(evt.m_InteractiveEventId) && IsNoEvent(evt.m_UseItemEventId);
-    }
-
-    bool isInteractiveOrUseItemEvent(GameEvent evt)
-    {
-        if (evt == null) return false;
-        return !IsNoEvent(evt.m_InteractiveEventId) || !IsNoEvent(evt.m_UseItemEventId);
-    }
-
-    bool isEnterEvent(GameEvent evt)
-    {
-        if (evt == null)
-            return false;
-        return IsNoEvent(evt.m_EnterEventId);
-    }
 
     public bool OnTriggerEvent(GameEvent evt)
     {
-        if (isEmptyEvent(evt))
+        if (evt == null)
+            return false;
+
+        if (evt.IsEmptyEvent)
             return false;
 
         if (evt == curEvent)
             return false;
 
-        //如果已经有一个交互事件占位了，并且自己事件不是立刻触发事件，则让一下优先级
-        if (!isEnterEvent(evt) && isInteractiveOrUseItemEvent(curEvent))
+        //新来的事件优先级更高才触发
+        if (curEvent != null && evt.PriorityOrder > curEvent.PriorityOrder)
             return false;
 
-
         //关闭之前的事件
-        if (curEvent != null && curEvent != evt)
+        if (curEvent != null)
         {
             OnExitEvent(curEvent);
         }
@@ -74,12 +52,12 @@ public class GameEventManager : MonoBehaviour
             curEvent = null;
         }
 
-        if (isEmptyEvent(evt))
-        {
+        if (evt.IsEmptyEvent)
             return;
-        }
 
-        UnityTools.DisHighLightObjects(evt.m_EventTargets);
+        if(evt.HasEventTargets)
+            UnityTools.DisHighLightObjects(evt.m_EventTargets);
+
         Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
     }
 
@@ -99,51 +77,30 @@ public class GameEventManager : MonoBehaviour
     /// </summary>
     async void ShowInteractUIPanel(GameEvent evt)
     {
-        var uiParams = new List<object>();
-        int buttonCount = 0;
-        
-        if (!IsNoEvent(evt.m_InteractiveEventId))
-        {
-            uiParams.Add(curEvent.m_InteractiveInfo);
-            uiParams.Add(new Action(() =>
-            {
-                ExecuteJyx2Event(curEvent.m_InteractiveEventId);
-            }));
-            buttonCount++;
-        }
+        if (evt.IsEmptyEvent)
+            return;
 
-        //使用道具
-        if (!IsNoEvent(evt.m_UseItemEventId))
-        {
-            uiParams.Add(curEvent.m_UseItemInfo);
-            uiParams.Add(new Action(() =>
-            {
-                OnClickedUseItemButton();
-            }));
-            buttonCount++;
-        }
+        Action OnInteract = () => ExecuteJyx2Event(curEvent.m_InteractiveEventId);
+        Action OnUseItem = () => OnClickedUseItemButton();
 
-        if (buttonCount == 1)
+        if (evt.IsInteractiveEvent && evt.IsUseItemEvent)
         {
-            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), uiParams[0], uiParams[1]);
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), GameEvent.InteractText, OnInteract, GameEvent.UseItemText, OnUseItem);
         }
-        else if (buttonCount == 2)
+        else if (evt.IsInteractiveEvent)
         {
-            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), uiParams[0], uiParams[1], uiParams[2], uiParams[3]);
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), GameEvent.InteractText, OnInteract);
         }
-    }
-
-    Button GetUseItemButton()
-    {
-        var root = GameObject.Find("LevelMaster/UI");
-        var btn = root.transform.Find("UseItemButton").GetComponent<Button>();
-        return btn;
+        else if(evt.IsUseItemEvent)
+        {
+            await Jyx2_UIManager.Instance.ShowUIAsync(nameof(InteractUIPanel), GameEvent.UseItemText, OnUseItem);
+        }
     }
 
 
     async void OnClickedUseItemButton()
     {
-        if (curEvent.m_UseItemEventId == NO_EVENT) return;
+        if (!curEvent.IsUseItemEvent) return;
 
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
         {
@@ -155,37 +112,19 @@ public class GameEventManager : MonoBehaviour
         }));
     }
 
-    public void OnClicked(GameEvent evt)
-    {
-        if (evt.m_InteractiveEventId == NO_EVENT) return;
-
-        curEvent = evt;
-        ExecuteJyx2Event(evt.m_InteractiveEventId);
-    }
-
-
-    bool IsNoEvent(int eventId)
-    {
-        if (eventId == NO_EVENT) return true;
-        if (eventId < 0)
-            return true;
-        return false;
-    }
-
-
     bool TryTrigger(GameEvent evt)
     {
         //直接触发
-        if (!IsNoEvent(evt.m_EnterEventId) && !LuaExecutor.IsExecuting())
+        if (evt.IsTriggerEnterEvent && !LuaExecutor.IsExecuting())
         {
             ExecuteJyx2Event(evt.m_EnterEventId);
             return true;
         }
 
         //既没有交互事件，也不是使用道具事件的情况
-        if (IsNoEvent(evt.m_InteractiveEventId) && IsNoEvent(evt.m_UseItemEventId)) return false;
+        if (!evt.IsInteractiveOrUseItemEvent) return false;
 
-        if (evt.m_EventTargets == null || evt.m_EventTargets.Length == 0) return false;
+        if (!evt.HasEventTargets) return false;
 
         //显示交互面板
         ShowInteractUIPanel(evt);
@@ -275,6 +214,7 @@ public class GameEventManager : MonoBehaviour
             _currentEvt = evt.name;
         }
     }
+
     public static GameEvent GetCurrentGameEvent()
     {
         return GetGameEventByID(_currentEvt);
@@ -285,12 +225,8 @@ public class GameEventManager : MonoBehaviour
         if (string.IsNullOrEmpty(id))
             return null;
 
-        foreach (var evt in FindObjectsOfType<GameEvent>())
-        {
-            if (evt.name == id)
-                return evt;
-        }
-
-        return null;
+        var allEvents = FindObjectsOfType<GameEvent>();
+        var result = Array.Find(allEvents, element => element.name == id);
+        return result;
 	}
 }
