@@ -27,7 +27,7 @@ namespace Jyx2.MOD
         /// 获取已安装的Mod列表
         /// </summary>
         /// <returns></returns>
-        public override async UniTask<Dictionary<string, ModItem>> GetInstalledMods()
+        public override async UniTask GetInstalledMods()
         {
             if (SteamClient.IsValid)
             {
@@ -50,7 +50,7 @@ namespace Jyx2.MOD
                         if (modPaths.Count == 0)
                         {
                             Debug.LogError("[SteamMODProvider] Mod xml file not found");
-                            return null;
+                            return;
                         }
                         foreach (var modPath in modPaths)
                         {
@@ -65,12 +65,11 @@ namespace Jyx2.MOD
                                 Directory = entry.Directory,
                                 PreviewImageUrl = entry.PreviewImageUrl ?? xmlObj.PreviewImageUrl
                             };
-                            _items.Add(xmlObj.ModId.ToLower(), modItem);
+                            Items[xmlObj.ModId.ToLower()] = modItem;
                         }
                     }
                 }
             }
-            return _items;
         }
     }
 }
