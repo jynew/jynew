@@ -66,6 +66,12 @@ namespace Jyx2
             }
             catch (Exception e)
             {
+                if(IsExecuting())
+                {
+                    //异常情况有时候不会执行到Lua代码末尾，要手动结束掉对应的UniTaskCompletionSource
+                    if (CurrentEventSourceStack.Peek() == cs)
+                        Jyx2LuaBridge.LuaExecFinished(template);
+                }
                 Debug.LogError("lua执行错误：" + e.ToString());
                 Debug.LogError(e.StackTrace);
             }
