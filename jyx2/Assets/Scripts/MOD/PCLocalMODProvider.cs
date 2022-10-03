@@ -38,7 +38,7 @@ namespace Jyx2.MOD
                     Version = xmlObj.Version,
                     Author = xmlObj.Author,
                     Description = xmlObj.Description,
-                    Directory = xmlObj.Directory ?? Path.Combine( ModDir, xmlObj.ModId),
+                    Directory = xmlObj.Directory ?? Path.Combine(ModDir, xmlObj.ModId),
                     PreviewImageUrl = xmlObj.PreviewImageUrl
                 };
                 Items[xmlObj.ModId.ToLower()] = modItem;
