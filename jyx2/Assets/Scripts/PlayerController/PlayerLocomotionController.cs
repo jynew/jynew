@@ -407,22 +407,31 @@ public class PlayerLocomotionController:MonoBehaviour
 		    callback?.Invoke();
 		    return;
 	    }
-	    playerControllable = false;
-	    _OnArriveDestination = callback;
-	    _playerNavAgent.Warp(fromVector);
-	    _playerNavAgent.isStopped = false;
-	    _playerNavAgent.updateRotation = true;
-		
-	    //寻找最近的点
-	    NavMeshHit hit;
-	    if (NavMesh.SamplePosition(toVector, out hit, 10, 1 << LayerMask.NameToLayer("Ground")))
-	    {
-		    toVector = hit.position;
-	    }
-		
-	    _playerNavAgent.SetDestination(toVector);
-    }
-    
+		if (!NavMesh.SamplePosition(toVector, out NavMeshHit hit, 10, 1 << NavMesh.GetAreaFromName("Walkable")))
+		{
+			Debug.LogError("Navemesh 采样点失败, 目标点不在导航网格上");
+			callback?.Invoke();
+			return;
+		}
+		toVector = hit.position;
+		playerControllable = false;
+		_OnArriveDestination = callback;
+		_playerNavAgent.Warp(fromVector);
+		_playerNavAgent.isStopped = false;
+		_playerNavAgent.updateRotation = true;
+		bool isDestinationReachable = _playerNavAgent.SetDestination(toVector);
+		if (!isDestinationReachable)
+		{
+			Debug.LogError("SetDestination设置自动寻路终点失败，无法到达的目标点");
+			_playerNavAgent.isStopped = true;
+			_OnArriveDestination = null;
+			playerControllable = true;
+			_playerNavAgent.updateRotation = false;
+			callback?.Invoke();
+			return;
+		}
+	}
+
     private void SetPlayerSpeed(float speed)
     {
         if (gameMapPlayer == null)
