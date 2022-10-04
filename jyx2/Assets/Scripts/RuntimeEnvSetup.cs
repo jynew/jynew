@@ -52,7 +52,7 @@ namespace Jyx2
             await LoadCurrentMod();
             
             await ResLoader.Init();
-            
+
             //TODO: 此处还需进行修改
             if (Application.isMobilePlatform)
             {
@@ -61,7 +61,7 @@ namespace Jyx2
             else{
                 await MODManager.Instance.LoadMod(CurrentModId, "Steam");
             }
-            
+
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
             
 #if UNITY_EDITOR
