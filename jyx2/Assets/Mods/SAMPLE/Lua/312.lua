@@ -18,7 +18,7 @@ if InTeam(11) == true then goto label0 end;
         Talk(0, "调查莫掌门的死因？听上去也是善义之事，需要打架吗？");
         Talk(11, "这个……");
         Talk(0, "调查过程中肯定会遇到些磕磕碰碰，打架是难免的。");
-        Talk(30, "那我来帮助你们吧，我去跟师父说一声就是！");
+        Talk(30, "那太好了，我来帮助你们吧，我去跟师祖说一声就是！");
         if AskJoin() == true then goto label2 end;
             Talk(0, "那个，我们现在还没到要打架的时候，到时候我再来叫你啊。");
             jyx2_ReplaceSceneObject("", "NPC/朱云天", "");

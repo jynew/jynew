@@ -4,7 +4,7 @@ Talk(170, "你们记住了吗？接下来我演示一遍，你们跟着模仿。
 jyx2_PlayTimelineSimple("[Timeline]7_粟兰传功", false, "NPC/粟兰");
 jyx2_Wait(7.8);
 Talk(80, "娘，我学会了。");
-LearnMagic2(80, 72, 0);
+LearnMagic2(80, 72, 1);
 Talk(170, "好，孺子可教也。");
 if JudgeIQ(0, 80, 100) == true then goto label0 end;
     Talk(0, "我资质愚钝，看来是无缘学会了。");
@@ -12,7 +12,7 @@ if JudgeIQ(0, 80, 100) == true then goto label0 end;
     do return end;
 ::label0::
     Talk(0, "多谢粟谷主。");
-    LearnMagic2(0, 72, 0);
+    LearnMagic2(0, 72, 1);
     AddItem(73, 1);
     ModifyEvent(-2, 3, -2, -2, 721, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
