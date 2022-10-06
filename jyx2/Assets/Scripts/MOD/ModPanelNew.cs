@@ -6,8 +6,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2;
 using Jyx2.MOD;
+using Jyx2Configs;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ModPanelNew : Jyx2_UIBase
@@ -35,13 +37,21 @@ public class ModPanelNew : Jyx2_UIBase
         {
             PlayerPrefs.SetString("CURRENT_MOD_ID", selectMod);
             PlayerPrefs.Save();
+            RebootGame();
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+            //UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+            //Application.Quit();
 #endif
         }
         this.Hide();
+    }
+
+
+    void RebootGame()
+    {
+        RuntimeEnvSetup.ForceClear();
+        SceneManager.LoadScene("0_MainMenu");
     }
 
     protected override void OnCreate()

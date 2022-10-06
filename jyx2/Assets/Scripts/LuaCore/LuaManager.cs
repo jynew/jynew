@@ -35,9 +35,8 @@ namespace Jyx2
             return luaEnv;
         }
 
-        private static void Clear()
+        public static void Clear()
         {
-
             _inited = false;
 
             //ConfigManager.Reset();

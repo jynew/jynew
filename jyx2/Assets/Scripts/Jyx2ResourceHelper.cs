@@ -41,19 +41,8 @@ namespace Jyx2
 
 public static class Jyx2ResourceHelper
 {
-    private static bool _isInited = false;
-    
     public static async UniTask Init()
     {
-        //已经初始化过了
-        if (_isInited)
-        {
-            return;
-        }
-
-        _isInited = true;
-        
-        
         //模型池
         var allModels = await ResLoader.LoadAssets<ModelAsset>("Assets/Models/");
         if (allModels != null)

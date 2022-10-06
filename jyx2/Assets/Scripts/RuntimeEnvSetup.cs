@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
+using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,6 +22,16 @@ namespace Jyx2
         public static string CurrentModId { get; set; } = "";
 
         public static bool IsLoading { get; private set; } = false;
+
+        public static void ForceClear()
+        {
+            _isSetup = false;
+            CurrentModConfig = null;
+            CurrentModId = "";
+            IsLoading = false;
+            LuaManager.Clear();
+            GameConfigDatabase.ForceClear();
+        }
         
         public static async UniTask Setup()
         {

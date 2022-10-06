@@ -51,6 +51,10 @@ namespace Jyx2.ResourceManagement
         /// </summary>
         public static async UniTask Init()
         {
+            foreach(var ab in _modAssets.Values)
+                ab.Unload(true);
+            foreach(var ab in _modScenes.Values)
+                ab.Unload(true);
             _modAssets.Clear();
             _modScenes.Clear();
             _assetsMap.Clear();

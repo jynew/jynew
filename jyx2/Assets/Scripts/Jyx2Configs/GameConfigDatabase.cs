@@ -29,6 +29,10 @@ namespace Jyx2Configs
 
         private bool _isInited = false;
 
+        public static void ForceClear()
+        {
+            _instance = null;
+        }
 
         /// <summary>
         /// 载入配置表

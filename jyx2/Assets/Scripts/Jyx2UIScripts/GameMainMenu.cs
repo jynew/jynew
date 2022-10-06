@@ -287,7 +287,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((archiveIndex) =>
 		{
 			var summary = GameSaveSummary.Load(archiveIndex);
-			if (summary.ModId != null && !summary.ModId.Equals(RuntimeEnvSetup.CurrentModId))
+			if (summary.ModId != null && !summary.ModId.ToLower().Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
 			{
 				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
 				string msg = "该存档MOD不匹配，载入可能导致数据错乱，是否继续？";
