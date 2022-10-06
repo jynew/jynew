@@ -16,6 +16,12 @@ public class BigMapLocationNameDrawer : MonoBehaviour
         var allLocs = FindObjectsOfType<MapTeleportor>();
         foreach (var loc in allLocs)
         {
+            //禁止地点名称
+            if (Jyx2LuaBridge.jyx2_GetFlagInt($"BanLocationName.{loc.name}") == 1)
+            {
+                continue;
+            }
+            
             var nameObj = Instantiate(m_NameTextPrefab);
             nameObj.transform.position = loc.transform.position + Vector3.up * 6;
             nameObj.transform.localScale = Vector3.one * 3;
