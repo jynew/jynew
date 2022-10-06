@@ -13,4 +13,5 @@ if AskJoin() == true then goto label0 end;
     LightScence();
     Join(123);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
+    ModifyEvent(-2, 1, -2, -2, 129, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;
