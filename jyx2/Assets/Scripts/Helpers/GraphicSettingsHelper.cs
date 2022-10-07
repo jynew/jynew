@@ -8,6 +8,7 @@
  * 金庸老先生千古！
  */
 
+using Jyx2;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -34,60 +35,60 @@ public class GraphicSettingsHelper
         if (mainCamera == null) return;
 
         m_MainCamera = mainCamera;
-        if (PlayerPrefs.HasKey(m_fogkey))
+        if (Jyx2_PlayerPrefs.HasKey(m_fogkey))
         {
-            m_bFog = PlayerPrefs.GetInt(m_fogkey) == 1;
+            m_bFog = Jyx2_PlayerPrefs.GetInt(m_fogkey) == 1;
         }
         else
         {
             m_bFog = RenderSettings.fog;
-            PlayerPrefs.SetInt(m_fogkey, m_bFog ? 1 : 0);
-            PlayerPrefs.Save();
+            Jyx2_PlayerPrefs.SetInt(m_fogkey, m_bFog ? 1 : 0);
+            Jyx2_PlayerPrefs.Save();
         }
 
-        if (PlayerPrefs.HasKey(m_postkey))
+        if (Jyx2_PlayerPrefs.HasKey(m_postkey))
         {
-            m_bPost = PlayerPrefs.GetInt(m_postkey) == 1;
+            m_bPost = Jyx2_PlayerPrefs.GetInt(m_postkey) == 1;
         }
         else
         {
             var post = m_MainCamera.GetComponent<PostProcessLayer>();
             m_bPost = post.enabled;
-            PlayerPrefs.SetInt(m_postkey, m_bPost ? 1 : 0);
-            PlayerPrefs.Save();
+            Jyx2_PlayerPrefs.SetInt(m_postkey, m_bPost ? 1 : 0);
+            Jyx2_PlayerPrefs.Save();
         }
 
-        if (PlayerPrefs.HasKey(m_qualitykey))
+        if (Jyx2_PlayerPrefs.HasKey(m_qualitykey))
         {
-            m_iQuality = PlayerPrefs.GetInt(m_qualitykey);
+            m_iQuality = Jyx2_PlayerPrefs.GetInt(m_qualitykey);
         }
         else
         {
             m_iQuality = QualitySettings.GetQualityLevel();
-            PlayerPrefs.SetInt(m_qualitykey, m_iQuality);
-            PlayerPrefs.Save();
+            Jyx2_PlayerPrefs.SetInt(m_qualitykey, m_iQuality);
+            Jyx2_PlayerPrefs.Save();
         }
 
-        if (PlayerPrefs.HasKey(m_shaderLODKey))
+        if (Jyx2_PlayerPrefs.HasKey(m_shaderLODKey))
         {
-            m_iShaderLOD = PlayerPrefs.GetInt(m_shaderLODKey);
+            m_iShaderLOD = Jyx2_PlayerPrefs.GetInt(m_shaderLODKey);
         }
         else
         {
             m_iShaderLOD = Shader.globalMaximumLOD;
-            PlayerPrefs.SetInt(m_shaderLODKey, m_iShaderLOD);
-            PlayerPrefs.Save();
+            Jyx2_PlayerPrefs.SetInt(m_shaderLODKey, m_iShaderLOD);
+            Jyx2_PlayerPrefs.Save();
         }
 
-        if (PlayerPrefs.HasKey(m_maxFrameRateKey))
+        if (Jyx2_PlayerPrefs.HasKey(m_maxFrameRateKey))
         {
-            m_iMaxFrameRate = PlayerPrefs.GetInt(m_maxFrameRateKey);
+            m_iMaxFrameRate = Jyx2_PlayerPrefs.GetInt(m_maxFrameRateKey);
         }
         else
         {
             m_iMaxFrameRate = Application.targetFrameRate;
-            PlayerPrefs.SetInt(m_maxFrameRateKey, m_iMaxFrameRate);
-            PlayerPrefs.Save();
+            Jyx2_PlayerPrefs.SetInt(m_maxFrameRateKey, m_iMaxFrameRate);
+            Jyx2_PlayerPrefs.Save();
         }
 
         DoSettings();

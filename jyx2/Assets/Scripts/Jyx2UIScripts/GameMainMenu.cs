@@ -77,7 +77,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	void JudgeShowReleaseNotePanel()
 	{
-		//每个更新显示一次
+		//每个更新显示一次 这里就不用Jyx2_PlayerPrefs了
 		string key = "RELEASENOTE_" + Application.version;
 		if (!PlayerPrefs.HasKey(key))
 		{
