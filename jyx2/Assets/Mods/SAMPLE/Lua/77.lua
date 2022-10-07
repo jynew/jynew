@@ -24,5 +24,5 @@ if InTeam(80) == true then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/童四二 (1)", "");
     AddItem(70, 1);
     ModifyEvent(-2, -2, -2, -2, 78, -1, -1, -2, -2, -2, -2, -2, -2);
-    ModifyEvent(8, 3, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼，徐谦，E
+    SetFlagInt("玉镯奇缘", 1);
 do return end;

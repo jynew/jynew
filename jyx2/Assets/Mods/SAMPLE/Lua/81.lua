@@ -1,4 +1,4 @@
-if JudgeEventNum(2, 0) == true then goto label0 end;
+if GetFlagInt("见过徐谦") == 1 then goto label0 end;
     Talk(80, "快去见师父吧，师父可担心你了。");
     do return end;
 ::label0::

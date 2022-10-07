@@ -1,4 +1,4 @@
-if JudgeEventNum(6, 0) == true then goto label0 end;
+if GetFlagInt("徐谦提示") == 1 then goto label0 end;
     Talk(31, "阿弥陀佛。");
     do return end;
 ::label0::
@@ -62,7 +62,7 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
                 ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
                 ModifyEvent(-2, 2, -2, -2, 39, -1, -1, -2, -2, -2, -2, -2, -2);--茶恩寺，虚安，B
                 ModifyEvent(7, 3, -2, -2, 79, -1, -1, -2, -2, -2, -2, -2, -2);--罂粟谷，粟兰，D
-                ModifyEvent(8, 4, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼，徐谦，G
+                SetFlagInt("寿眉归隐", 1);
                 ModifyEvent(5, 5, -2, -2, 515, -1, -1, -2, -2, -2, -2, -2, -2);
                 do return end;
 ::label3::
@@ -78,6 +78,6 @@ if JudgeEventNum(6, 0) == true then goto label0 end;
                 ModifyEvent(-2, 0, -2, -2, 313, -1, -1, -2, -2, -2, -2, -2, -2);
                 ModifyEvent(-2, 2, -2, -2, 39, -1, -1, -2, -2, -2, -2, -2, -2);--茶恩寺，虚安，B
                 ModifyEvent(7, 3, -2, -2, 79, -1, -1, -2, -2, -2, -2, -2, -2);--罂粟谷，粟兰，D
-                ModifyEvent(8, 4, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--鸽子楼，徐谦，G
+                SetFlagInt("寿眉归隐", 1);
                 ModifyEvent(5, 5, -2, -2, 515, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

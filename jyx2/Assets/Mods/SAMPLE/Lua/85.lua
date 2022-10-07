@@ -1,8 +1,8 @@
-if JudgeEventNum(4, 0) == true then goto label0 end;
+if GetFlagInt("寿眉归隐") == 1 then goto label0 end;
     Talk(180, "玉镯子的秘密只有茶恩寺的寿眉大师能够破解，你们可以去请教请教他。");
     do return end;
 ::label0::
-    if JudgeEventNum(5, 0) == true then goto label1 end;
+    if GetFlagInt("挑灯看剑") == 1 then goto label1 end;
         Talk(180, "万烛山庄的刘灯剑最近有点奇怪啊。");
         do return end;
 ::label1::

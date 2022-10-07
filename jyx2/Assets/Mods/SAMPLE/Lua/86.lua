@@ -21,6 +21,6 @@ if UseItem(141) == true then goto label2 end;
         Talk(0, "我明白了，万万没想到是这样的答案。");
         Talk(180, "这只是推测，你可不要冲动。");
         ModifyEvent(-2, -2, -2, -2, 87, -1, -1, -2, -2, -2, -2, -2, -2);
-        ModifyEvent(1, 4, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);
+        SetFlagInt("十字针之谜", 1);
         ModifyEvent(6, 2, -2, -2, 66, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

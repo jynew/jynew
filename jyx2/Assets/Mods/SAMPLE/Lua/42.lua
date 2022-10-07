@@ -34,5 +34,5 @@ if TryBattle(40) == true then goto label0 end;
     ModifyEvent(7, 1, -2, -2, 74, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(5, 5, -2, -2, 514, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(10, 1, -2, -2, 102, -1, -1, -2, -2, -2, -2, -2, -2);
-    ModifyEvent(10, 2, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);--滨湖茅庐，秦婆婆，B
+    SetFlagInt("战胜萨擎苍", 1);
 do return end;

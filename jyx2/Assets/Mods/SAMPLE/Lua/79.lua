@@ -12,5 +12,5 @@ if InTeam(80) == true then goto label0 end;
     ModifyEvent(-2, 3, -2, -2, 723, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 6, -2, -2, 717, -1, -1, -2, -2, -2, -2, -2, -2);
     ModifyEvent(-2, 0, -2, -2, -1, -1, 718, -2, -2, -2, -2, -2, -2);
-    ModifyEvent(1000, 0, -2, -2, 0, -1, -1, -2, -2, -2, -2, -2, -2);
+    SetFlagInt("四二认母", 1);
 do return end;
