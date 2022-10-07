@@ -1,10 +1,10 @@
-if JudgeEventNum(4, 0) == true then goto label0 end;
+if GetFlagInt("寿眉归隐") == 1 then goto label0 end;
     do return end;
 ::label0::
-    if JudgeEventNum(5, 0) == true then goto label1 end;
+    if GetFlagInt("挑灯看剑") == 1 then goto label1 end;
         do return end;
 ::label1::
-        if JudgeEventNum(6, 0) == true then goto label2 end;
+        if GetFlagInt("挑落将军") == 1 then goto label2 end;
             do return end;
 ::label2::
             jyx2_FixMapObject("鸽子楼开门", 1);

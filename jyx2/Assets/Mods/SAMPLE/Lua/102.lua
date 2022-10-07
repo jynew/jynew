@@ -1,4 +1,4 @@
-if JudgeEventNum(2, 0) == true then goto label0 end;
+if GetFlagInt("战胜萨擎苍") == 1 then goto label0 end;
     Talk(0, "婆婆，你能帮我找下四蛇儿吗，我实在是没头绪了。");
     Talk(1100, "既然莫掌门开口了，那我试试。");
 
@@ -6,7 +6,7 @@ if JudgeEventNum(2, 0) == true then goto label0 end;
     Talk(1100, "这家伙没在附近，也可能是故意躲着我呢。");
     do return end;
 ::label0::
-    if JudgeEventNum(3, 0) == true then goto label1 end;
+    if GetFlagInt("挑落将军") == 1 then goto label1 end;
         Talk(0, "婆婆，你能帮我找下四蛇儿吗，我好像知道自己是怎么死的了。");
         Talk(1100, "既然莫掌门开口了，那我试试。");
 

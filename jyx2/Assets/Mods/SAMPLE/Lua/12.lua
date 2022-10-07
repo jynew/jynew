@@ -1,4 +1,4 @@
-if JudgeEventNum(4, 0) == true then goto label0 end;
+if GetFlagInt("十字针之谜") == 1 then goto label0 end;
     Talk(110, "少侠，有打听到莫师父的死因吗？");
     Talk(0, "你问我？");
     Talk(110, "……啊？");

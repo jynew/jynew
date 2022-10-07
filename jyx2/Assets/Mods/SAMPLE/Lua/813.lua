@@ -1,4 +1,4 @@
-if JudgeEventNum(0, 0) == true then goto label0 end;
+if GetFlagInt("四二认母") == 1 then goto label0 end;
     Talk(0, "四二，你先回鸽子楼，帮我照顾好师父，我过些日子就回来。");
     Leave(80);
     ModifyEvent(8, 0, -2, -2, 814, -1, -1, -2, -2, -2, -2, -2, -2);

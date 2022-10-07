@@ -1,4 +1,4 @@
-if JudgeEventNum(6, 0) == true then goto label0 end;
+if GetFlagInt("水果摊之惑") == 1 then goto label0 end;
     Talk(122, "灯哥已被你废了武功，你还来做什么？");
     Talk(0, "意思我还影响了你和那老头子的生活质量了。");
     do return end;
