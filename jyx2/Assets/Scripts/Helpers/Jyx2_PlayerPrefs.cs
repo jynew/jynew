@@ -114,14 +114,18 @@ namespace Jyx2
         public static void DeleteAll()
         {
             m_PrefsData.Clear();
+#if UNITY_EDITOR
             Save();
+#endif
         }
 
         public static void DeleteKey(string key)
         {
             CheckInit();
             m_PrefsData.DeleteKey(key);
+#if UNITY_EDITOR
             Save();
+#endif
         }
 
 
@@ -134,9 +138,9 @@ namespace Jyx2
         public static void Save()
         {
             CheckInit();
-            var jsonText = JsonConvert.SerializeObject(m_PrefsData, Formatting.Indented);
             try
             {
+                var jsonText = JsonConvert.SerializeObject(m_PrefsData, Formatting.Indented);
                 File.WriteAllText(SavePath, jsonText);
             }
             catch (Exception ex)
@@ -197,6 +201,9 @@ namespace Jyx2
             {
                 dic.Add(key, val);
             }
+#if UNITY_EDITOR
+            Save();
+#endif
         }
 
         private static T GetValue<T>(Dictionary<string, T> dic, string key, T defaultValue)
