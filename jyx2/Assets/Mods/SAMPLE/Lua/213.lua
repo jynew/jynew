@@ -49,4 +49,5 @@ if InTeam(90) == true then goto label0 end;
             Talk(90, "谢谢六一哥哥帮母亲报仇，我现在心情好乱，我得把娘带回去。");
             SetFlagInt("妞妞复仇", 1);
             ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
+            ModifyEvent(-2, 5, -2, -2, 218, -1, -1, -2, -2, -2, -2, -2, -2);
 do return end;

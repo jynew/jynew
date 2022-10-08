@@ -13,6 +13,6 @@ if InTeam(90) == true then goto label0 end;
         jyx2_ReplaceSceneObject("", "Dynamic/Tank_2", "");
         AddItem(24, 1);
         ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
-        ModifyEvent(9, 1, -2, -2, 910, -1, -1, -2, -2, -2, -2, -2, -2);
+        ModifyEvent(9, 1, -2, -2, 99, 910, -1, -2, -2, -2, -2, -2, -2);
 do return end;
 
