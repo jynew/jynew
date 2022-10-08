@@ -8,6 +8,7 @@
  * 金庸老先生千古！
  */
 
+using Jyx2;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -121,9 +122,9 @@ public class GraphicSetting : MonoBehaviour
             var prefsKey = $"{className}-{propName}";
             var intValue = (int)info.GetValue(this);
 
-            PlayerPrefs.SetInt(prefsKey, intValue);
+            Jyx2_PlayerPrefs.SetInt(prefsKey, intValue);
         }
-        PlayerPrefs.Save();
+        Jyx2_PlayerPrefs.Save();
     }
 
     public void Load()
@@ -135,9 +136,9 @@ public class GraphicSetting : MonoBehaviour
         {
             var propName = info.Name;
             var prefsKey = $"{className}-{propName}";
-            if (PlayerPrefs.HasKey(prefsKey))
+            if (Jyx2_PlayerPrefs.HasKey(prefsKey))
             {
-                var value = PlayerPrefs.GetInt(prefsKey);
+                var value = Jyx2_PlayerPrefs.GetInt(prefsKey);
                 info.SetValue(this, value);
             }
         }

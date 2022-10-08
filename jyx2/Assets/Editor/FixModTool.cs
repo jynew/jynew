@@ -8,6 +8,7 @@ public class FixModTool
     static void FixLaunchMod()
     {
         PlayerPrefs.DeleteKey("CURRENT_MOD_ID");
+        Jyx2.Jyx2_PlayerPrefs.DeleteKey("CURRENT_MOD_ID");
         Debug.Log("ok");
     }
 }

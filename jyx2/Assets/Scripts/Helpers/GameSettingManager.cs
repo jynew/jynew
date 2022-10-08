@@ -17,6 +17,7 @@ using AClockworkBerry;
 using Cysharp.Threading.Tasks;
 using i18n;
 using i18n.TranslatorDef;
+using Jyx2;
 using Jyx2.MOD;
 using UnityEngine;
 using UnityEngine.Events;
@@ -208,28 +209,28 @@ public static class GameSettingManager
 		switch (setting)
 		{
 			case Catalog.Resolution:
-				PlayerPrefs.SetString(GameConst.PLAYER_PREF_RESOLUTION, (string)value);
+				Jyx2_PlayerPrefs.SetString(GameConst.PLAYER_PREF_RESOLUTION, (string)value);
 				break;
 			case Catalog.Fullscreen:
-				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_FULLSCREEN, (int)value);
+				Jyx2_PlayerPrefs.SetInt(GameConst.PLAYER_PREF_FULLSCREEN, (int)value);
 				break;
 			case Catalog.Difficulty:
-				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_Difficulty, (int)value);
+				Jyx2_PlayerPrefs.SetInt(GameConst.PLAYER_PREF_Difficulty, (int)value);
 				break;
 			case Catalog.SoundEffect:
-				PlayerPrefs.SetFloat(GameConst.PLAYER_PREF_SOUND_EFFECT, (float)value);
+				Jyx2_PlayerPrefs.SetFloat(GameConst.PLAYER_PREF_SOUND_EFFECT, (float)value);
 				break;
 			case Catalog.Volume:
-				PlayerPrefs.SetFloat(GameConst.PLAYER_PREF_VOLUME, (float)value);
+				Jyx2_PlayerPrefs.SetFloat(GameConst.PLAYER_PREF_VOLUME, (float)value);
 				break;
 			case Catalog.Viewport:
-				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_VIEWPORT_TYPE, (int)value);
+				Jyx2_PlayerPrefs.SetInt(GameConst.PLAYER_PREF_VIEWPORT_TYPE, (int)value);
 				break;
 			case Catalog.DebugMode:
-				PlayerPrefs.SetInt(GameConst.PLAYER_PREF_DEBUGMODE, (int)value);
+				Jyx2_PlayerPrefs.SetInt(GameConst.PLAYER_PREF_DEBUGMODE, (int)value);
 				break;
 			case Catalog.MobileMoveMode:
-				PlayerPrefs.SetInt(GameConst.PLAYER_MOBILE_MOVE_MODE, (int)value);
+				Jyx2_PlayerPrefs.SetInt(GameConst.PLAYER_MOBILE_MOVE_MODE, (int)value);
 				break;
 		}
 		Debug.Log($"Update validation：{Enum.GetName(typeof(Catalog), setting)}, value {GetSettings()[setting]}。");
@@ -255,7 +256,7 @@ public static class GameSettingManager
 		catch(Exception e)
 		{
 			Debug.LogError(e.ToString());
-			PlayerPrefs.DeleteKey(GameConst.PLAYER_PREF_RESOLUTION);
+			Jyx2_PlayerPrefs.DeleteKey(GameConst.PLAYER_PREF_RESOLUTION);
 		}
 		
 		return Vector2Int.zero;
@@ -265,9 +266,9 @@ public static class GameSettingManager
 	{
 		var key = GameConst.PLAYER_PREF_RESOLUTION;
 
-		if (PlayerPrefs.HasKey(key))
+		if (Jyx2_PlayerPrefs.HasKey(key))
 		{
-			var value = PlayerPrefs.GetString(key);
+			var value = Jyx2_PlayerPrefs.GetString(key);
 			var resolution = ParseResolution(value);
 			if (resolution != Vector2Int.zero)
 			{
@@ -298,8 +299,8 @@ public static class GameSettingManager
 	/// </summary>
 	private static string GetResolution()
 	{
-		var result = PlayerPrefs.HasKey(GameConst.PLAYER_PREF_RESOLUTION)
-			? PlayerPrefs.GetString(GameConst.PLAYER_PREF_RESOLUTION)
+		var result = Jyx2_PlayerPrefs.HasKey(GameConst.PLAYER_PREF_RESOLUTION)
+			? Jyx2_PlayerPrefs.GetString(GameConst.PLAYER_PREF_RESOLUTION)
 			: GetDefaultResolution();
 
 		return result;
@@ -322,9 +323,9 @@ public static class GameSettingManager
 	{
 		float result = 1;
 		var key = GameConst.PLAYER_PREF_VOLUME;
-		if (PlayerPrefs.HasKey(key))
+		if (Jyx2_PlayerPrefs.HasKey(key))
 		{
-			result = PlayerPrefs.GetFloat(key);
+			result = Jyx2_PlayerPrefs.GetFloat(key);
 		}
 
 		return result;
@@ -337,7 +338,7 @@ public static class GameSettingManager
 	private static int GetFullscreen()
 	{
 		const string key = GameConst.PLAYER_PREF_FULLSCREEN;
-		return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : 1;
+		return Jyx2_PlayerPrefs.HasKey(key) ? Jyx2_PlayerPrefs.GetInt(key) : 1;
 	}
 
 	private static void SetFullScreen(object mode)
@@ -360,8 +361,8 @@ public static class GameSettingManager
 
 	private static int GetDifficulty()
 	{
-		return PlayerPrefs.HasKey(GameConst.PLAYER_PREF_Difficulty)
-			? PlayerPrefs.GetInt(GameConst.PLAYER_PREF_Difficulty)
+		return Jyx2_PlayerPrefs.HasKey(GameConst.PLAYER_PREF_Difficulty)
+			? Jyx2_PlayerPrefs.GetInt(GameConst.PLAYER_PREF_Difficulty)
 			: 0;
 	}
 
@@ -373,9 +374,9 @@ public static class GameSettingManager
 	{
 		float result = 1;
 		var key = GameConst.PLAYER_PREF_SOUND_EFFECT;
-		if (PlayerPrefs.HasKey(key))
+		if (Jyx2_PlayerPrefs.HasKey(key))
 		{
-			result = PlayerPrefs.GetFloat(key);
+			result = Jyx2_PlayerPrefs.GetFloat(key);
 		}
 
 		return result;
@@ -388,7 +389,7 @@ public static class GameSettingManager
 	private static int GetViewportType()
 	{
 		const string key = GameConst.PLAYER_PREF_VIEWPORT_TYPE;
-		return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : (int)GameViewPortManager.ViewportType.Topdown;
+		return Jyx2_PlayerPrefs.HasKey(key) ? Jyx2_PlayerPrefs.GetInt(key) : (int)GameViewPortManager.ViewportType.Topdown;
 	}
 
 	#endregion
@@ -399,7 +400,7 @@ public static class GameSettingManager
 	private static string GetLanguage()
 	{
 		const string key = GameConst.PLAYER_PREF_LANGUAGE;
-		return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetString(key) : "默认";
+		return Jyx2_PlayerPrefs.GetString(key, "默认");
 	}
 	
 
@@ -435,9 +436,9 @@ public static class GameSettingManager
 	{
 		int result = 0;
 		var key = GameConst.PLAYER_PREF_DEBUGMODE;
-		if (PlayerPrefs.HasKey(key))
+		if (Jyx2_PlayerPrefs.HasKey(key))
 		{
-			result = PlayerPrefs.GetInt(key);
+			result = Jyx2_PlayerPrefs.GetInt(key);
 		}
 
 		return result;
@@ -458,9 +459,9 @@ public static class GameSettingManager
 	{
 		int result = 0;
 		var key = GameConst.PLAYER_MOBILE_MOVE_MODE;
-		if (PlayerPrefs.HasKey(key))
+		if (Jyx2_PlayerPrefs.HasKey(key))
 		{
-			result = PlayerPrefs.GetInt(key);
+			result = Jyx2_PlayerPrefs.GetInt(key);
 		}
 
 		return result;
