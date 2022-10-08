@@ -17,7 +17,6 @@ if InTeam(11) == true then goto label0 end;
         Dead();
         do return end;
 ::label1::
-        LightScence();
         Talk(60, "外患未除，内忧又扰，这是天要亡我也！");
         Talk(0, "这都是你自己一手造成的！");
         Talk(60, "一手造成，所以你就砍断我一只手？");

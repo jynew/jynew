@@ -11,7 +11,6 @@ if TryBattle(61) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
-    LightScence();
     Talk(61, "没想到渡城还有这种高手，下次再来。");
     Talk(180, "好的好的！");
     Talk(0, "滚！");
