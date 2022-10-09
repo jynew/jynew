@@ -31,7 +31,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 	public override UILayer Layer => UILayer.NormalUI;
 	public override bool IsOnly => true;
 
-	Action _callback;
+	Action _onTalkEnd;
 	ChatType _currentShowType = ChatType.None;
 	string _currentText;//存一下要显示的文字 当文字要显示的时候 用一个指针显示当前显示到的索引 分多次显示，点击显示接下来的
 	int _currentShowIndex = 0;
@@ -69,19 +69,12 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 				ShowSelection((string)allParams[1], (string)allParams[2], (List<string>)allParams[3], (Action<int>)allParams[4]);
 				break;
 		}
-
-		//临时将触发按钮隐藏
-		var panel = FindObjectOfType<InteractUIPanel>();
-		if (panel != null && panel.gameObject.activeSelf)
-		{
-			_interactivePanel = panel.gameObject;
-			panel.gameObject.SetActive(false);
-		}
 	}
 
 	protected override void OnHidePanel()
 	{
 		base.OnHidePanel();
+		selectionCallback = null;
 	}
 
 
@@ -106,15 +99,10 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		if (_currentShowIndex >= _currentText.Length - 1)
 		{
 			Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-			if (_interactivePanel)
-			{
-				_interactivePanel.SetActive(true);
-				_interactivePanel = null;
-			}
-			var c = _callback;
-			_callback = null;
-			
-			c?.Invoke();
+			var talkEndCallback = _onTalkEnd;
+			_onTalkEnd = null;
+
+            talkEndCallback?.Invoke();
 			return;
 		}
 		var finalS = _currentText;
@@ -147,7 +135,7 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 	public void Show(int headId, string msg, int type, Action callback)
 	{
 		_currentText = $"{msg}";
-		_callback = callback;
+		_onTalkEnd = callback;
 		SelectionPanel_RectTransform.gameObject.SetActive(false);
 
 		HeadAvataPre_RectTransform.gameObject.SetActive(!(type == 2 || type == 3));
@@ -221,37 +209,48 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 
 	protected override void handleGamepadButtons()
 	{
-		if (gameObject.activeSelf)
-			if (GamepadHelper.IsConfirm())
+		if (!gameObject.activeSelf)
+			return;
+        if (GamepadHelper.IsConfirm())
+        {
+			if (_currentShowType != ChatType.Selection)
 			{
-				if (selectionContentCount > 1)
-				{
-					Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-					selectionCallback?.Invoke(0);
-				}
-				else
-				{
-					OnMainBgClick();
-				}
-			}
-			else if (GamepadHelper.IsCancel())
-			{
-				if (selectionContentCount > 1)
-				{
-					Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-					selectionCallback?.Invoke(1);
-				}
-			}
-			else if (Input.GetKeyDown(KeyCode.Space))
-				OnMainBgClick();
-	}
+                OnMainBgClick();
+				return;
+            }
+            if (selectionContentCount > 1)
+            {
+                InvokeSelection(0);
+            }
+        }
+        else if (GamepadHelper.IsCancel())
+        {
+			if (_currentShowType != ChatType.Selection)
+				return;
+            if (selectionContentCount > 1)
+            {
+				InvokeSelection(1);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+            OnMainBgClick();
+    }
 
-	public void ShowSelection(string roleId, string msg, List<string> selectionContent, Action<int> callback)
+	private void InvokeSelection(int iSelection)
+	{
+        Action<int> tmpSelectionCalback = selectionCallback;
+		selectionCallback = null;
+        Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
+        tmpSelectionCalback?.Invoke(iSelection);
+    }
+
+
+	public void ShowSelection(string roleId, string msg, List<string> selectionContent, Action<int> OnChooseSelection)
 	{
 		ShowCharacter(int.Parse(roleId)).Forget();
 		MainContent_Text.text = $"{msg}";
 
-		selectionCallback = callback;
+		selectionCallback = OnChooseSelection;
 		selectionContentCount = selectionContent.Count;
 
 		ClearChildren(Container_RectTransform.transform);
@@ -275,19 +274,19 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			BindListener(selectionItem, delegate
 			{
 				Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-				callback?.Invoke(currentIndex);
+				OnChooseSelection?.Invoke(currentIndex);
 			}, false);
 		}
 
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Y, () =>
 		{
 			Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-			callback?.Invoke(0);
+			OnChooseSelection?.Invoke(0);
 		});
 		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.N, () =>
 		{
 			Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-			callback?.Invoke(1);
+			OnChooseSelection?.Invoke(1);
 		});
 		SelectionPanel_RectTransform.gameObject.SetActive(true);
 	}
