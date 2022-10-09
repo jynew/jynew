@@ -11,7 +11,6 @@ if AskBattle() == true then goto label0 end;
     do return end;
 ::label0::
     if TryBattle(90) == false then goto label1 end;
-        LightScence();
         Talk(91, "我牛不三说到做到，这些牛肉都给你。");
         ModifyEvent(-2, -2, -2, -2, 95, -1, -1, -2, -2, -2, -2, -2, -2);
         AddItem(90, 1);

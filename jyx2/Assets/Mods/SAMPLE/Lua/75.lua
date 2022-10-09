@@ -9,7 +9,7 @@ if AskJoin() == true then goto label0 end;
 ::label1::
     Talk(0, "我确实还有未完成的事情，不如就请佟掌门助我一臂之力吧。");
     DarkScence();
-    jyx2_ReplaceSceneObject("", "NPC/王语嫣", "");
+    jyx2_ReplaceSceneObject("", "NPC/佟雯", "");
     LightScence();
     Join(70);
     ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);

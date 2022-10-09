@@ -14,7 +14,6 @@ if TryBattle(142) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
-    LightScence();
     jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (10)", "");
     jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (11)", "");
     jyx2_ReplaceSceneObject("", "NPC/Wolf_prefab (12)", "");
