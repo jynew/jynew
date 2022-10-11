@@ -19,19 +19,19 @@ public class GameEventManager : MonoBehaviour
 {
     GameEvent curEvent = null;
 
-    public bool OnTriggerEvent(GameEvent evt)
+    public bool OnTriggerEvent(GameEvent newEvent)
     {
-        if (evt == null)
+        if (newEvent == null)
             return false;
 
-        if (evt.IsEmptyEvent)
+        if (newEvent.IsEmptyEvent)
             return false;
 
-        if (evt == curEvent)
+        if (newEvent == curEvent)
             return false;
 
         //新来的事件优先级更高才触发
-        if (curEvent != null && evt.PriorityOrder > curEvent.PriorityOrder)
+        if (curEvent != null && curEvent.PriorityOrder >= newEvent.PriorityOrder)
             return false;
 
         //关闭之前的事件
@@ -41,8 +41,8 @@ public class GameEventManager : MonoBehaviour
         }
 
         //设置当前事件
-        curEvent = evt;
-        return TryTrigger(evt);
+        curEvent = newEvent;
+        return TryTrigger(newEvent);
     }
 
     public void OnExitEvent(GameEvent evt)
