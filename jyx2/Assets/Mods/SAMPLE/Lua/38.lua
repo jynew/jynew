@@ -50,7 +50,6 @@ if GetFlagInt("徐谦提示") == 1 then goto label0 end;
             Dead();
             do return end;
 ::label2::
-            LightScence();
             if InTeam(30) == true then goto label3 end;
                 Talk(31, "原以为莫穿林死后，渡城再无真侠士，看来江湖辈有人才出，我可以放心归去了。");
                 Talk(80, "爹！你去哪了？");

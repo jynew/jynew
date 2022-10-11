@@ -1459,7 +1459,16 @@ namespace CSObjectWrapEditor
         {
             LuaCallCSharp = new List<Type>();
 
-            CSharpCallLua = new List<Type>();
+            CSharpCallLua = new List<Type>()
+            {
+                typeof(Action<int>),
+                typeof(Action<string>),
+                typeof(Action<float>),
+                typeof(Action<bool>),
+                typeof(Action<long>),
+                typeof(Action<uint>),
+                typeof(Action<ulong>),
+            };
 
             GCOptimizeList = new List<Type>();
 

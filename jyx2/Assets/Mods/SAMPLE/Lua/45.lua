@@ -6,12 +6,10 @@ if AskBattle() == true then goto label0 end;
     do return end;
 ::label0::
     if TryBattle(41) == false then goto label1 end;
-        LightScence();
         Talk(41, "小兄弟还有两下子嘛。");
         Talk(42, "哥，看来我们的翔云双飞剑还得再琢磨琢磨。");
         do return end;
 ::label1::
-        LightScence();
         Talk(41, "哈哈哈，我们兄弟联手，所向披靡！");
         Talk(42, "你想想怎么破解，下次再来练吧。");
 do return end;

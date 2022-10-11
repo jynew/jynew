@@ -19,7 +19,6 @@ if TryBattle(20) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
-    LightScence();
     Talk(0, "醉灯剑法，也不过如此嘛。");
     Talk(20, "你这一招一式，分明是得于莫穿林的真传，你到底是什么人？");
     Talk(100, "老子就是莫穿林……");

@@ -18,7 +18,6 @@ if TryBattle(40) == true then goto label0 end;
     Dead();
     do return end;
 ::label0::
-    LightScence();
     Talk(40, "为何不杀我？");
     Talk(0, "对于一个武痴来说，废了武功应该是比死更好的惩罚。");
     Talk(40, "确实如此，你还不如杀了我。");
