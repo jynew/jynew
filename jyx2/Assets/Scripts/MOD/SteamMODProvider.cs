@@ -49,8 +49,8 @@ namespace Jyx2.MOD
                         });
                         if (modPaths.Count == 0)
                         {
-                            Debug.LogError("[SteamMODProvider] Mod xml file not found");
-                            return;
+                            Debug.LogWarning("[SteamMODProvider] Mod xml file not found, ModName:" + entry.Title);
+                            continue;
                         }
                         foreach (var modPath in modPaths)
                         {
