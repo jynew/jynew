@@ -28,6 +28,12 @@ namespace Jyx2.Middleware
             {
                 DirectoryInfo _dir = new DirectoryInfo(_path);
 
+                if(!_dir.Exists)
+                {
+                    UnityEngine.Debug.LogError("目标文件夹不存在, 路径:" + _path);
+                    return;
+                }
+
                 // GetFileSystemInfos方法可以获取到指定目录下的所有文件以及子文件夹
                 FileSystemInfo[] _files = _dir.GetFileSystemInfos();
 
