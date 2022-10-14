@@ -287,7 +287,8 @@ namespace Jyx2
         {
             if (runtime.JoinRoleToTeam(roleId, true))
             {
-                RoleInstance role = runtime.GetRole(roleId);
+                if (!TryFindRole(roleId, out var role))
+                    return;
                 storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
             }
         }
@@ -296,7 +297,8 @@ namespace Jyx2
         {
             if (runtime.JoinRoleToTeam(roleId, true))
             {
-                RoleInstance role = runtime.GetRole(roleId);
+                if (!TryFindRole(roleId, out var role))
+                    return;
                 if (role.Hp <= 0)
                 {
                     role.Hp = 1;
@@ -330,18 +332,15 @@ namespace Jyx2
         {
             if (runtime.LeaveTeam(roleId))
             {
-                RoleInstance role = runtime.GetRole(roleId);
+                if (!TryFindRole(roleId, out var role))
+                    return;
                 storyEngine.DisplayPopInfo(role.Name + "离队。");
             }
         }
 		///离队，不提示--by citydream
         public static void LeaveWithoutHint(int roleId)
         {
-            if (runtime.LeaveTeam(roleId))
-            {
-                RoleInstance role = runtime.GetRole(roleId);
-                // storyEngine.DisplayPopInfo(role.Name + "离队。");
-            }
+            runtime.LeaveTeam(roleId);
         }
         public static void ZeroAllMP()
         {
@@ -354,15 +353,9 @@ namespace Jyx2
         //设置用毒
         public static void SetOneUsePoi(int roleId, int v)
         {
-            var role = runtime.GetRole(roleId);
-            if (role != null)
-            {
-                role.UsePoison = v;
-            }
-            else
-            {
-                Debug.LogError("设置用毒，但角色不在队伍，roleId =" + roleId);
-            }
+            if (!TryFindRole(roleId, out var role))
+                return;
+            role.UsePoison = v;
         }
         
         public static void ScenceFromTo(int x,int y,int x2,int y2)
@@ -554,7 +547,7 @@ namespace Jyx2
 
             if (role == null)
             {
-                role = runtime.GetRole(roleId);
+                TryFindRole(roleId, out role);
             }
 
             if (role == null)
@@ -576,7 +569,8 @@ namespace Jyx2
         //增加资质
         public static void AddAptitude(int roleId,int v)
         {
-            var role = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var role))
+                return;
             role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ROLE_ZIZHI);
             storyEngine.DisplayPopInfo(role.Name + "资质" + (v > 0 ? "增加" : "减少") + Math.Abs(v));
         }
@@ -587,7 +581,7 @@ namespace Jyx2
 
             if (role == null)
             {
-                role = runtime.GetRole(roleId);
+                TryFindRole(roleId, out role);
             }
 
             if (role == null)
@@ -630,7 +624,8 @@ namespace Jyx2
         //增加轻功
         public static void AddSpeed(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Qinggong;
             r.Qinggong = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
@@ -639,7 +634,8 @@ namespace Jyx2
         //内力
         public static void AddMp(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.MaxMp;
             r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_MP);
             r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
@@ -648,7 +644,8 @@ namespace Jyx2
 		///加内力不提示--by citydream
         public static void AddMpWithoutHint(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.MaxMp;
             r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_MP);
             r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
@@ -657,18 +654,19 @@ namespace Jyx2
 		///加等级并返回实际增加的值--by citydream
         public static int AddLevelreturnUper(int roleId, int value)
         {
-			int Uper = 0;
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return 0;
             var v0 = r.Level;
             r.Level = Tools.Limit(r.Level + value, 0, GameConst.MAX_ROLE_LEVEL);
             //storyEngine.DisplayPopInfo(r.Name + "等级增加" + (r.Level - v0));
-            Uper = r.Level - v0;
+            int Uper = r.Level - v0;
 			return Uper;
         }
         //武力（原始属性）
         public static void AddAttack(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Attack;
             r.Attack = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
@@ -677,7 +675,8 @@ namespace Jyx2
         //生命
         public static void AddHp(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.MaxHp;
             r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_HP);
             r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
@@ -686,7 +685,8 @@ namespace Jyx2
 		///加生命不提示--by citydream
         public static void AddHpWithoutHint(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.MaxHp;
             r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_HP);
             r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
@@ -695,8 +695,9 @@ namespace Jyx2
         //设置角色内力属性
         public static void SetPersonMPPro(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
-            r.MpType = value;
+            if (!TryFindRole(roleId, out var role))
+                return;
+            role.MpType = value;
         }
 
         public static void instruct_50(int p1,int p2,int p3,int p4,int p5,int p6,int p7)
@@ -913,11 +914,9 @@ namespace Jyx2
 
         public static void SetSexual(int roleId,int sexual)
         {
-            var role = runtime.GetRole(roleId);
-            if(role != null)
-            {
-                role.Sex = sexual;
-            }
+            if (!TryFindRole(roleId, out var role))
+                return;
+            role.Sex = sexual;
         }
 
         public static void PlayMusic(int id)
@@ -1148,10 +1147,24 @@ namespace Jyx2
         {
             return JudgeRoleValue(roleId, (r) => { return r.IQ >= low && r.IQ <= high; });
         }
+
+        private static bool TryFindRole(int roleId, out RoleInstance role)
+        {
+            role = runtime.GetRole(roleId);
+            bool isSuccess = role != null;
+            if(!isSuccess)
+            {
+                Debug.LogWarningFormat("找不到ID为{0}的目标角色", roleId);
+            }
+            return isSuccess;
+        }
+
+
 		//医疗
         public static void AddHeal(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Heal;
             r.Heal = Tools.Limit(v0 + value, 0, GameConst.MAX_HEAL);
             storyEngine.DisplayPopInfo(r.Name + "医疗增加" + (r.Heal - v0));
@@ -1159,7 +1172,8 @@ namespace Jyx2
         //防御
         public static void AddDefence(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Defence;
             r.Defence = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_DEFENCE);
             storyEngine.DisplayPopInfo(r.Name + "防御增加" + (r.Defence - v0));
@@ -1167,7 +1181,8 @@ namespace Jyx2
 		//拳掌
         public static void AddQuanzhang(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Quanzhang;
             r.Quanzhang = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "拳掌增加" + (r.Quanzhang - v0));
@@ -1175,7 +1190,8 @@ namespace Jyx2
 		//耍刀
         public static void AddShuadao(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Shuadao;
             r.Shuadao = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "耍刀增加" + (r.Shuadao - v0));
@@ -1183,7 +1199,8 @@ namespace Jyx2
 		//御剑
         public static void AddYujian(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Yujian;
             r.Yujian = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "御剑增加" + (r.Yujian - v0));
@@ -1191,7 +1208,8 @@ namespace Jyx2
 		//暗器
         public static void AddAnqi(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Anqi;
             r.Anqi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "暗器增加" + (r.Anqi - v0));
@@ -1199,7 +1217,8 @@ namespace Jyx2
 		//奇门
         public static void AddQimen(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Qimen;
             r.Qimen = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "奇门增加" + (r.Qimen - v0));
@@ -1207,7 +1226,8 @@ namespace Jyx2
 		//武学常识
         public static void AddWuchang(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Wuxuechangshi;
             r.Wuxuechangshi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "武学常识增加" + (r.Wuxuechangshi - v0));
@@ -1215,7 +1235,8 @@ namespace Jyx2
 		//功夫带毒
         public static void AddAttackPoison(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.AttackPoison;
             r.AttackPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "功夫带毒增加" + (r.AttackPoison - v0));
@@ -1223,7 +1244,8 @@ namespace Jyx2
         //抗毒
         public static void AddAntiPoison(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.AntiPoison;
             r.AntiPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
             storyEngine.DisplayPopInfo(r.Name + "抗毒增加" + (r.AttackPoison - v0));
@@ -1231,18 +1253,19 @@ namespace Jyx2
 		//经验
         public static void AddExp(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
-            var v0 = r.Exp;
-            r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
-            storyEngine.DisplayPopInfo(r.Name + "经验增加" + (r.Exp - v0));
+            if (!TryFindRole(roleId, out var role))
+                return;
+            var v0 = role.Exp;
+            role.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
+            storyEngine.DisplayPopInfo(role.Name + "经验增加" + (role.Exp - v0));
         }
 		///增加经验，不提示--by citydream
         public static void AddExpWithoutHint(int roleId, int value)
         {
-            var r = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var r))
+                return;
             var v0 = r.Exp;
             r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
-            // storyEngine.DisplayPopInfo(r.Name + "经验增加" + (r.Exp - v0));
         }
 		//判断武学常识
         public static bool JudgeWCH(int roleId,int low,int high)
@@ -1728,11 +1751,10 @@ namespace Jyx2
 
         private static bool JudgeRoleValue(int roleId, Predicate<RoleInstance> judge)
         {
-            bool result = false;
             var role = runtime.GetRoleInTeam(roleId);
             if(role == null)
             {
-                role = runtime.GetRole(roleId);
+                TryFindRole(roleId, out role);
             }
             if (role == null)
             {
@@ -1740,7 +1762,7 @@ namespace Jyx2
                 return false;
             }
 
-            result = judge(role);
+            bool result = judge(role);
             return result;
         }
 
@@ -1765,7 +1787,9 @@ namespace Jyx2
         /// <param name="roleId"></param>
         /// <returns></returns>
         public static int GetRoleLevel(int roleId) {
-            return runtime.GetRole(roleId).Level;
+            if (!TryFindRole(roleId, out var role))
+                return 0;
+            return role.Level;
         }
 
         /// <summary>
@@ -1824,7 +1848,8 @@ namespace Jyx2
         public static void RoleUseItem(int roleId, int itemId)
         {
             var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
-            var role = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var role))
+                return;
             //武器
             if ((int)item.EquipmentType == 0)
             {
@@ -1846,7 +1871,8 @@ namespace Jyx2
         /// <param name="itemId"></param>
         public static void RoleUnequipItem(int roleId, int itemId)
         {
-            var role = runtime.GetRole(roleId);
+            if (!TryFindRole(roleId, out var role))
+                return;
             var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
             //武器
             if ((int)item.EquipmentType == 0)
