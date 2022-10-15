@@ -41,8 +41,22 @@ public class GameStart : MonoBehaviour
 		{
 			Destroy(introPanel.gameObject);
 		});
-		
+
+		Application.logMessageReceived += OnErrorMsg;
+
 		//await MODManager.Init();
 		SceneManager.LoadScene("0_MainMenu");
+	}
+
+	private void OnErrorMsg(string condition, string stackTrace, LogType logType)
+	{
+		if (logType == LogType.Exception)
+		{
+			UnityEngine.Debug.LogWarningFormat("Exception版本:{0}, 触发时间:{1}", Application.version, DateTime.Now);
+		}
+		else if (logType == LogType.Error)
+		{
+			UnityEngine.Debug.LogWarningFormat("Error版本:{0}, 触发时间:{1}", Application.version, DateTime.Now);
+		}
 	}
 }
