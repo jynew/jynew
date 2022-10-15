@@ -166,9 +166,9 @@ public class Reporter : MonoBehaviour
 	bool showGraph;
 
 	//show or hide logs
-	bool showLog = true;
+	bool showLog = false;
 	//show or hide warnings
-	bool showWarning = true;
+	bool showWarning = false;
 	//show or hide errors
 	bool showError = true;
 
@@ -424,9 +424,9 @@ public class Reporter : MonoBehaviour
 		showMemory = (PlayerPrefs.GetInt("Reporter_showMemory") == 1) ? true : false;
 		showFps = (PlayerPrefs.GetInt("Reporter_showFps") == 1) ? true : false;
 		showGraph = (PlayerPrefs.GetInt("Reporter_showGraph") == 1) ? true : false;
-		showLog = (PlayerPrefs.GetInt("Reporter_showLog", 1) == 1) ? true : false;
-		showWarning = (PlayerPrefs.GetInt("Reporter_showWarning", 1) == 1) ? true : false;
-		showError = (PlayerPrefs.GetInt("Reporter_showError", 1) == 1) ? true : false;
+		//showLog = (PlayerPrefs.GetInt("Reporter_showLog", 1) == 1) ? true : false;
+		//showWarning = (PlayerPrefs.GetInt("Reporter_showWarning", 1) == 1) ? true : false;
+		//showError = (PlayerPrefs.GetInt("Reporter_showError", 1) == 1) ? true : false;
 		filterText = PlayerPrefs.GetString("Reporter_filterText");
 		size.x = size.y = PlayerPrefs.GetFloat("Reporter_size", 32);
 
@@ -1177,8 +1177,13 @@ public class Reporter : MonoBehaviour
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal((showError) ? buttonActiveStyle : nonStyle);
 		if (GUILayout.Button(errorContent, nonStyle, GUILayout.Width(size.x * 2), GUILayout.Height(size.y * 2))) {
-			showError = !showError;
-			calculateCurrentLog();
+#if UNITY_EDITOR
+            showError = !showError;
+#else
+			//有玩家不会开报错日志，release模式下默认给他锁死显示
+			showError = true; 
+#endif
+            calculateCurrentLog();
 		}
 		if (GUILayout.Button(logsErrorText, nonStyle, GUILayout.Width(size.x * 2), GUILayout.Height(size.y * 2))) {
 			showError = !showError;
