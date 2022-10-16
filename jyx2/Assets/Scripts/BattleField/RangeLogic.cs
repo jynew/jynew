@@ -404,8 +404,7 @@ namespace Jyx2
 		/// <param name="ignoreRole">是否可以穿人，默认关闭</param>
 		/// <returns></returns>
 		public List<BattleBlockVector> GetMoveRange(int x, int y, int mobility,
-			bool ignoreRole,
-			bool forDisplay)
+			bool ignoreRole)
 		{
 			var rst = new List<BattleBlockVector>();
 			var visited = new HashSet<int>();
@@ -425,7 +424,7 @@ namespace Jyx2
 				{
 					X = xx,
 					Y = yy,
-					Inaccessible = currentNode.Inaccessbiel
+					Inaccessible = currentNode.Inaccessible
 				});
 
 				var nearBlocks = GetNearBlocks(xx, yy);
@@ -435,14 +434,12 @@ namespace Jyx2
 					int y2 = b.Y;
 					int dcost = 1;
 
-					if (!forDisplay)
-					{
-						if (Exists != null && !Exists(x2, y2))
-							continue;
+					bool isNodeObstacled = !ignoreRole && HasRole != null && HasRole(x2, y2);
+					bool isNodeNotExisted = Exists != null && !Exists(x2, y2);
 
-						if (!ignoreRole && HasRole != null && HasRole(x2, y2))
-							continue;
-					}
+					if (isNodeNotExisted || isNodeObstacled)
+						continue;
+
 
 					if (cost + dcost <= mobility && !visited.Contains(GetBlockHash(x2, y2)))
 					{
@@ -451,8 +448,7 @@ namespace Jyx2
 							X = x2,
 							Y = y2,
 							Cost = cost + dcost,
-							Inaccessbiel = (Exists != null && !Exists(x2, y2))
-								|| (!ignoreRole && HasRole != null && HasRole(x2, y2))
+                            Inaccessible = isNodeNotExisted || isNodeObstacled,
 						};
 
 						searchQueue.Enqueue(node);
@@ -650,6 +646,6 @@ namespace Jyx2
 		public int Y;
 		public int Cost;
 		public MoveSearchHelper front;
-		public bool Inaccessbiel;
+		public bool Inaccessible;
 	}
 }
