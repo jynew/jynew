@@ -175,6 +175,8 @@ AddLevelreturnUper = luaBridge.AddLevelreturnUper --加等级并返回实际增�
 GetTeamMaxLevel = luaBridge.GetTeamMaxLevel--获取队伍最大等级
 GetCurrentEventID = luaBridge.GetCurrentEventID--获取当前事件ID
 JudgePointEventNum = luaBridge.JudgePointEventNum--判断指定触发器的交互事件
+GetMoneyCount = luaBridge.GetMoneyCount--获取金钱数量
+GetImbalancedRandomInt = luaBridge.GetImbalancedRandomInt--获取不平衡随机数
 function main_getLuaFiles()
 	return {}
 end 

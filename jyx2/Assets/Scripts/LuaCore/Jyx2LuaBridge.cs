@@ -1043,6 +1043,17 @@ namespace Jyx2
         {
             return (runtime.GetItemCount(GameConst.MONEY_ID) >= money);
         }
+        
+        public static int GetMoneyCount()
+        {
+            return runtime.GetItemCount(GameConst.MONEY_ID);
+        }
+        
+        //生成a到b直接不均匀分布的随机数,靠近a的部分概率大，靠近b的部分概率小
+        public static int GetImbalancedRandomInt(int a, int b)
+        {
+            return Tools.GetImbalancedRandomInt(a, b);
+        }
 
         /// <summary>
         /// 添加（减少）物品，并显示提示
