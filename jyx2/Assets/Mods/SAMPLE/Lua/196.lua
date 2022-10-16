@@ -13,7 +13,7 @@ local items = {
   [11] = 37,
   [12] = 30,
   [13] = 63,
-  [14] = 195,
+  [14] = 71,
   [15] = 194,
   [16] = 193,
   [17] = 192,
@@ -32,7 +32,7 @@ if ShowSelectPanel(0, "要抽一抽吗？", {"是", "否"}) == 0 then goto label
 ::label1::
         AddItem(174, -100);
         Talk(1193, "恭喜你，抽中了一件珍宝！");
-        AddItem(items[GetImbalancedRandomInt(0, 19)], 1);
+        AddItem(items[GetImbalancedRandomInt(0, #items)], 1);
 do return end;
 
 

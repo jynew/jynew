@@ -117,21 +117,20 @@ namespace Jyx2
             }
             else
             {
-#if UNITY_EDITOR
-                var path = SceneManager.GetActiveScene().path;
-                if (path.Contains("Assets/Mods/"))
-                {
-
-                    CurrentModId = path.Split('/')[2];
-                }
-                else
-                {
-                    CurrentModId = GlobalAssetConfig.Instance.startModId;
-                }
-#else
                 CurrentModId = GlobalAssetConfig.Instance.startModId;
-#endif
             }
+#if UNITY_EDITOR
+            var path = SceneManager.GetActiveScene().path;
+            if (path.Contains("Assets/Mods/"))
+            {
+
+                CurrentModId = path.Split('/')[2];
+            }
+            else
+            {
+                CurrentModId = GlobalAssetConfig.Instance.startModId;
+            }
+#endif
         }
 
       
