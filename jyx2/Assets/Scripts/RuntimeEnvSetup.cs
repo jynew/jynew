@@ -64,17 +64,19 @@ namespace Jyx2
             
             await ResLoader.Init();
 
-            //TODO: 此处还需进行修改
-            if (Application.isMobilePlatform)
-            {
-                await MODManager.Instance.LoadMod(CurrentModId, "Android");
-            }
-            else{
-                await MODManager.Instance.LoadMod(CurrentModId, "Steam");
-            }
-
+#if UNITY_EDITOR
+            await MODManager.Instance.LoadMod(CurrentModId, "PC");
+#elif UNITY_STANDALONE
+            await MODManager.Instance.LoadMod(CurrentModId, "Steam");
+#elif UNITY_ANDROID
+            await MODManager.Instance.LoadMod(CurrentModId, "Android");
+#elif UNITY_IPHONE
+            await MODManager.Instance.LoadMod(CurrentModId, "IOS");
+#else
+            Debug.LogError("当前平台还不支持Mod");
+#endif
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
-            
+
 #if UNITY_EDITOR
             var dirPath = $"Assets/Mods/{CurrentModId}/Configs";
             if (Directory.Exists(dirPath))
