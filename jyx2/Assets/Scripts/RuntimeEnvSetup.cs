@@ -113,14 +113,6 @@ namespace Jyx2
 
         private static async UniTask LoadCurrentMod()
         {
-            if (Jyx2_PlayerPrefs.HasKey("CURRENT_MOD_ID"))
-            {
-                CurrentModId = Jyx2_PlayerPrefs.GetString("CURRENT_MOD_ID");
-            }
-            else
-            {
-                CurrentModId = GlobalAssetConfig.Instance.startModId;
-            }
 #if UNITY_EDITOR
             var path = SceneManager.GetActiveScene().path;
             if (path.Contains("Assets/Mods/"))
@@ -130,11 +122,13 @@ namespace Jyx2
             }
             else
             {
-                CurrentModId = GlobalAssetConfig.Instance.startModId;
+                CurrentModId = Jyx2_PlayerPrefs.GetString("CURRENT_MOD_ID", GlobalAssetConfig.Instance.startModId);
             }
+#else
+                CurrentModId = Jyx2_PlayerPrefs.GetString("CURRENT_MOD_ID", GlobalAssetConfig.Instance.startModId);
 #endif
         }
 
-      
+
     }
 }
