@@ -40,7 +40,7 @@ namespace Jyx2.ResourceManagement
         private static readonly List<string> _modList = new List<string>();
 
 
-        private static bool IsEditor()
+        public static bool IsEditor()
         {
             if (UseAbInEditor) return false;
             return Application.isEditor;
@@ -61,6 +61,7 @@ namespace Jyx2.ResourceManagement
             _scenesMap.Clear();
             _modList.Clear();
 
+            await Resources.UnloadUnusedAssets();
 
             if (IsEditor())
             {

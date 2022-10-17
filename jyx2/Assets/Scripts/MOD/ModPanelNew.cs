@@ -51,6 +51,7 @@ public class ModPanelNew : Jyx2_UIBase
     void RebootGame()
     {
         RuntimeEnvSetup.ForceClear();
+        Jyx2_UIManager.Instance.CloseAllUI();
         SceneManager.LoadScene("0_MainMenu");
     }
 
