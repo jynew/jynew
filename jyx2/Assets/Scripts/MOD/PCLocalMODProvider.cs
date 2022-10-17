@@ -9,7 +9,21 @@ namespace Jyx2.MOD
 {
     public class PCLocalMODProvider: MODProviderBase
     {
-        private string ModDir => "mods";
+        private string ModDir
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if(!ResourceManagement.ResLoader.IsEditor())
+                {
+                    return Path.Combine(Application.dataPath, "StreamingAssets");
+                }
+                return "mods";
+#else
+                return "mods";
+#endif
+            }
+        }
 
         public override async UniTask GetInstalledMods()
         {

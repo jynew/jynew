@@ -296,6 +296,33 @@ public class Jyx2_UIManager : MonoBehaviour
             uibase.Hide();
     }
 
+    public void HideAllUI()
+    {
+        foreach (var item in m_uiDic)
+        {
+            HideUI(item.Key);
+        }
+    }
+
+
+    public void CloseAllUI()
+    {
+        //Keys仍然会引用Dictionary内部元素迭代 用一个新List暂存来遍历
+        var uiNames = m_uiDic.Keys.ToList(); 
+        foreach (var uiName in uiNames)
+        {
+            if(m_uiDic.ContainsKey(uiName))
+            {
+                HideUI(uiName);
+                Destroy(m_uiDic[uiName].gameObject);
+                m_uiDic.Remove(uiName);
+            }
+        }
+    }
+
+
+
+
     public void SetMainUIActive(bool active) 
     {
         if (m_currentMainUI == null)
@@ -314,14 +341,6 @@ public class Jyx2_UIManager : MonoBehaviour
         return Camera.main;
     }
 
-    //关闭所有的UI
-    public void CloseAllUI() 
-    {
-        foreach (var item in m_uiDic)
-        {
-            HideUI(item.Key);
-        }
-    }
 
     public bool IsUIOpen(string uiName)
     {
