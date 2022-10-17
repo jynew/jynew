@@ -97,10 +97,10 @@ public class StoryEngine : MonoBehaviour
                 () => { LevelMaster.Instance.TryBindPlayer().Forget(); });
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             MessageBox.ShowMessage("错误，载入存档失败。请检查版本号和MOD是否匹配。");
-            Debug.LogError("存档异常" + e.Message);
+            Debug.LogErrorFormat("存档异常:{0}" , ex);
             return true;
         }
     }

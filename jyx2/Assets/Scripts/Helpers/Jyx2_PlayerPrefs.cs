@@ -153,46 +153,53 @@ namespace Jyx2
         #region Get & Set API
         public static float GetFloat(string key, float defaultValue = 0)
         {
+            CheckInit();
             return GetValue(m_PrefsData.m_FloatDic, key, defaultValue);
         }
 
         public static int GetInt(string key, int defaultValue = 0)
         {
+            CheckInit();
             return GetValue(m_PrefsData.m_IntDic, key, defaultValue);
         }
 
 
         public static string GetString(string key, string defaultValue = "")
         {
+            CheckInit();
             return GetValue(m_PrefsData.m_StringDic, key, defaultValue);
         }
 
         public static bool GetBool(string key, bool defaultValue = false)
         {
+            CheckInit();
             return GetValue(m_PrefsData.m_BoolDic, key, defaultValue);
         }
 
         public static void SetFloat(string key, float value)
         {
+            CheckInit();
             SetValue(m_PrefsData.m_FloatDic, key, value);
         }
         public static void SetInt(string key, int value)
         {
+            CheckInit();
             SetValue(m_PrefsData.m_IntDic, key, value);
         }
         public static void SetString(string key, string value)
         {
+            CheckInit();
             SetValue(m_PrefsData.m_StringDic, key, value);
         }
 
         public static void SetBool(string key, bool value)
         {
+            CheckInit();
             SetValue(m_PrefsData.m_BoolDic, key, value);
         }
 
         private static void SetValue<T>(Dictionary<string, T> dic, string key, T val)
         {
-            CheckInit();
             if (dic.ContainsKey(key))
             {
                 dic[key] = val;
@@ -208,7 +215,6 @@ namespace Jyx2
 
         private static T GetValue<T>(Dictionary<string, T> dic, string key, T defaultValue)
         {
-            CheckInit();
             if (dic.ContainsKey(key))
                 return dic[key];
             return defaultValue;
