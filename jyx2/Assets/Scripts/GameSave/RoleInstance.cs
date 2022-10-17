@@ -93,7 +93,7 @@ namespace Jyx2
 
             if (_data == null)
             {
-                Assert.Fail();
+                Assert.Fail("无法获取角色配置，配置不存在，Id:" + Key);
             }
             
             //初始化武功列表
