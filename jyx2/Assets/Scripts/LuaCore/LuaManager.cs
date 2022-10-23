@@ -53,7 +53,8 @@ namespace Jyx2
 
             if (luaEnv != null)
             {
-                luaEnv.FullGc();
+                luaEnv.Dispose();
+                //luaEnv.FullGc();
                 //HSUtils.Log ("★★★Destroying lua state..");
                 luaEnv = null;
             }
@@ -114,10 +115,6 @@ namespace Jyx2
                     foreach (var lua in RuntimeEnvSetup.CurrentModConfig.PreloadedLua)
                     {
                         Debug.Log($"preloading {lua}...");
-                        foreach(var n in __luaMapper)
-                        {
-                            Debug.Log("mapper:" + n.Key);
-                        }
                         if (__luaMapper.ContainsKey(lua))
                         {
                             
