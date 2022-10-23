@@ -259,6 +259,10 @@ public class BattleLoader : MonoBehaviour
             battleData = battleData,
             callback = callback,
         };
+
+        //测试LuaEvent 用于Lua侧做拓展逻辑
+        //Jyx2LuaBridge.DispatchLuaEvent("OnBeforeBattle", startParam);
+
         await BattleManager.Instance.StartBattle(startParam);
     }
 

@@ -1929,5 +1929,43 @@ namespace Jyx2
             LuaManager.PreloadLua();
         }
 
+        #region Lua侧事件派发
+
+        private static LuaFunction GetDispatchFunc()
+        {
+            var func = LuaManager.GetLuaEnv().Global.Get<LuaFunction>("LuaEventDispatcher_DispatchEvent");
+            if (func == null)
+            {
+                Debug.LogWarning("无法获取Lua侧事件派发函数, 可能是因为初始化尚未完成");
+            }
+            return func;
+        }
+
+        //泛型避免装箱
+        public static void DispatchLuaEvent<T1>(string Event, T1 p1)
+        {
+            var func = GetDispatchFunc();
+            if (func == null)
+                return;
+            func.Action(Event, p1);
+        }
+
+        public static void DispatchLuaEvent<T1, T2>(string Event, T1 p1, T2 p2)
+        {
+            var func = GetDispatchFunc();
+            if (func == null)
+                return;
+            func.Action(Event, p1, p2);
+        }
+
+        public static void DispatchLuaEvent<T1, T2, T3>(string Event, T1 p1, T2 p2, T3 p3)
+        {
+            var func = GetDispatchFunc();
+            if (func == null)
+                return;
+            func.Action(Event, p1, p2, p3);
+        }
+
+        #endregion
     }
 }

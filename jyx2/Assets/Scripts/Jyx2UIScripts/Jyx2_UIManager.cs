@@ -318,6 +318,8 @@ public class Jyx2_UIManager : MonoBehaviour
                 m_uiDic.Remove(uiName);
             }
         }
+        m_normalUIStack.Clear();
+        m_PopUIStack.Clear();
     }
 
 

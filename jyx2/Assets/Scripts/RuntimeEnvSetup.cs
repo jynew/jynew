@@ -98,6 +98,7 @@ namespace Jyx2
       
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
+            LuaManager.LuaMod_Init();
             _isSetup = true;
             IsLoading = false;
         }
