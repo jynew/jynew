@@ -21,6 +21,8 @@ util = require 'xlua.util'
 
 luaBridge = CS.Jyx2.Jyx2LuaBridge
 
+LuaEventDispatcher = require 'luaevent'
+
 function combine(func1, func2)
 	return function()
 		local rst = func1()
@@ -177,6 +179,7 @@ GetCurrentEventID = luaBridge.GetCurrentEventID--获取当前事件ID
 JudgePointEventNum = luaBridge.JudgePointEventNum--判断指定触发器的交互事件
 GetMoneyCount = luaBridge.GetMoneyCount--获取金钱数量
 GetImbalancedRandomInt = luaBridge.GetImbalancedRandomInt--获取不平衡随机数
+
 function main_getLuaFiles()
 	return {}
 end 
