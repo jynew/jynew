@@ -37,6 +37,7 @@ namespace Jyx2
 
         public static void Clear()
         {
+            LuaMod_DeInit();
             _inited = false;
 
             //ConfigManager.Reset();
@@ -52,7 +53,8 @@ namespace Jyx2
 
             if (luaEnv != null)
             {
-                luaEnv.FullGc();
+                luaEnv.Dispose();
+                //luaEnv.FullGc();
                 //HSUtils.Log ("★★★Destroying lua state..");
                 luaEnv = null;
             }
@@ -66,6 +68,15 @@ namespace Jyx2
 
             
             luaEnv = new LuaEnv();
+
+            luaEnv.AddLoader((ref string filename) =>
+            {
+                //require时默认去baseasset下加载lua
+                var luaFile = ResLoader.LoadAssetSync<TextAsset>($"Assets/BuildSource/Lua/{filename}.lua");
+                if (luaFile != null)
+                    return Encoding.UTF8.GetBytes(luaFile.text);
+                return null;
+            });
 
             //jit interpreter
             if (LuaManager.LUAJIT_ENABLE)
@@ -106,6 +117,7 @@ namespace Jyx2
                         Debug.Log($"preloading {lua}...");
                         if (__luaMapper.ContainsKey(lua))
                         {
+                            
                             await LuaExecutor.Execute(lua);
                         }
                         
@@ -213,6 +225,15 @@ namespace Jyx2
             }
         }
 
+        public static void LuaMod_Init()
+        {
+            Call("LuaMod_Init");
+        }
+
+        public static void LuaMod_DeInit()
+        {
+            Call("LuaMod_DeInit");
+        }
 
         #region private
         private static void ClearLuaMapper()
@@ -252,7 +273,12 @@ namespace Jyx2
                 return _cachedFunc[name];
             }
             var func = luaEnv.Global.Get<LuaFunction>(name); // TODO:XLua fix
-            _cachedFunc.Add(name, func);
+            if(func != null)
+                _cachedFunc.Add(name, func);
+            else
+            {
+                Debug.LogWarning("尝试获取不存在的Lua函数, function name :" + name);
+            }
             return func;
         }
         #endregion
