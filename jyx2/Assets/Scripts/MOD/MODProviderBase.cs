@@ -50,7 +50,7 @@ namespace Jyx2.MOD
         /// </summary>
         /// <param name="modId"></param>
         /// <returns></returns>
-        public string GetModDirPath(string modId)
+        public static string GetModDirPath(string modId)
         {
             modId = modId.ToLower();
             if (Items.ContainsKey(modId))

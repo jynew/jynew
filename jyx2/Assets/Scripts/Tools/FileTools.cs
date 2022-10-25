@@ -7,6 +7,8 @@
  *
  * 金庸老先生千古！
  */
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -30,7 +32,7 @@ namespace Jyx2.Middleware
 
                 if(!_dir.Exists)
                 {
-                    UnityEngine.Debug.LogError("目标文件夹不存在, 路径:" + _path);
+                    UnityEngine.Debug.LogWarning("目标文件夹不存在, 路径:" + _path);
                     return;
                 }
 
@@ -76,6 +78,21 @@ namespace Jyx2.Middleware
                     }
                 }
             }
+        }
+
+        public static async UniTask<byte[]> ReadAllBytesAsync(string path)
+        {
+            using FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096);
+            long length = fileStream.Length;
+            if (length > int.MaxValue)
+            {
+                throw new IOException("File is too larger, more than 2GB, path:" + path);
+            }
+
+            int fileLength = (int)length;
+            byte[] array = new byte[fileLength];
+            await fileStream.ReadAsync(array, 0, fileLength);
+            return array;
         }
     }
 }
