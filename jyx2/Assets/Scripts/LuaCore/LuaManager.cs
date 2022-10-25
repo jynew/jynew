@@ -283,7 +283,7 @@ namespace Jyx2
                     var fileName = Path.GetFileNameWithoutExtension(path);
                     if(__luaMapper.ContainsKey(fileName))
                     {
-                        Debug.Log("Lua文件[{0}]的逻辑将会被AB外的同名文件重载掉");
+                        Debug.LogFormat("Lua文件[{0}]的逻辑将会被AB外的同名文件重载掉", fileName);
                     }
                     __luaMapper[fileName] = await FileTools.ReadAllBytesAsync(path);
                 }
