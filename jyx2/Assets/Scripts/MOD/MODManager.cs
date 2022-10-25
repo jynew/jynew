@@ -94,6 +94,13 @@ namespace Jyx2.MOD
             await _platforms[modProviderName].LoadMod(modId);
         }
 
+        public string GetCurrentModLuaDirectory()
+        {
+            var curModId = RuntimeEnvSetup.CurrentModId;
+            var modDir = MODProviderBase.GetModDirPath(curModId);
+            return $"{modDir}/Lua";
+        }
+
 
         /// <summary>
         /// 获取平台数量

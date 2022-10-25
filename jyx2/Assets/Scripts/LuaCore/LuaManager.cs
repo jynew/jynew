@@ -15,6 +15,9 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using XLua;
 using Jyx2.ResourceManagement;
+using Jyx2.Middleware;
+using Jyx2.MOD;
+using System.IO;
 
 namespace Jyx2
 {
@@ -257,7 +260,40 @@ namespace Jyx2
             {
                 __luaMapper[a.name] = Encoding.UTF8.GetBytes(a.text);
             }
+
+            await InitMapperFromMod();
         }
+
+        private static async UniTask InitMapperFromMod()
+        {
+            try
+            {
+                var curModDir = MODManager.Instance.GetCurrentModLuaDirectory();
+                var luaFilePaths = new List<string>();
+                var luafilter = new List<string>() { ".lua" };
+                FileTools.GetAllFilePath(curModDir, luaFilePaths, luafilter);
+
+                Debug.Log("加载当前mod的lua重载文件, 路径:" + curModDir);
+
+                if (luaFilePaths.Count == 0)
+                    return;
+
+                foreach (var path in luaFilePaths)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(path);
+                    if(__luaMapper.ContainsKey(fileName))
+                    {
+                        Debug.Log("Lua文件[{0}]的逻辑将会被AB外的同名文件重载掉");
+                    }
+                    __luaMapper[fileName] = await FileTools.ReadAllBytesAsync(path);
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError("读取Mod文件夹的Lua文件异常:" + ex.Message);
+            }
+        }
+
 
         
         private static bool _inited = false;
