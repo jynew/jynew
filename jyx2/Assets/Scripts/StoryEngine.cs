@@ -94,7 +94,8 @@ public class StoryEngine : MonoBehaviour
             }
             LevelMaster.LastGameMap = null;
             LevelLoader.LoadGameMap(map, loadPara,
-                () => { LevelMaster.Instance.TryBindPlayer().Forget(); });
+                () => { LuaExecutor.Clear(); 
+                        LevelMaster.Instance.TryBindPlayer().Forget(); });
             return true;
         }
         catch (Exception ex)

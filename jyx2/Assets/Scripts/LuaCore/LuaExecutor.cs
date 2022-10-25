@@ -81,5 +81,11 @@ namespace Jyx2
         {
             return CurrentEventSourceStack.Count > 0;
         }
+
+        public static void Clear()
+        {
+            if (CurrentEventSourceStack.Count > 0)
+                CurrentEventSourceStack.Clear();
+        }
     }
 }
