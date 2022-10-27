@@ -16,7 +16,7 @@ namespace Jyx2.MOD
 #if UNITY_EDITOR
                 if(!ResourceManagement.ResLoader.IsEditor())
                 {
-                    return Path.Combine(Application.dataPath, "StreamingAssets");
+                    return Application.streamingAssetsPath;
                 }
                 return "mods";
 #else
