@@ -96,6 +96,7 @@ namespace Jyx2Editor.BuildTool
             EnsureModExportDirectoryExist(config.ModId);
             BuildAssetBundlesByNames(config, mapBundleName, modBundleName);
             GenerateModXmlFile(config);
+            EditorUtility.DisplayDialog("提示", "导出完毕", "确定");
         }
 
 
