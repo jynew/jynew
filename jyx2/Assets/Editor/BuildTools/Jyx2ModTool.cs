@@ -4,12 +4,23 @@ using Sirenix.Serialization;
 using Sirenix.Utilities;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
 
 namespace Jyx2Editor.BuildTool
 {
+    struct ModBuildItem
+    {
+        public string ModId;
+
+        public string ModBundleName;
+
+        public string MapBundleName;
+    }
+
+    
     class Jyx2ModExportWindow:OdinEditorWindow
     {
         [MenuItem("Game Tools/Mod导出")]
@@ -23,7 +34,7 @@ namespace Jyx2Editor.BuildTool
         protected void Awake()
         {
             m_ExportPath = EditorPrefs.GetString("Jyx2_ModExportPath", Application.dataPath);
-            m_BuildTargetPlatForm = (BuildTarget)EditorPrefs.GetInt("Jyx2_ModExportBuildTarget", (int)BuildTarget.StandaloneWindows64);
+            m_BuildTargetPlatForm = (BuildTarget)EditorPrefs.GetInt("Jyx2_ModExportBuildTarget", (int)BuildTarget.StandaloneWindows);
         }
 
         protected override void OnDestroy()
@@ -33,25 +44,29 @@ namespace Jyx2Editor.BuildTool
             EditorPrefs.SetInt("Jyx2_ModExportBuildTarget", (int)m_BuildTargetPlatForm);
         }
 
-        [OdinSerialize]
-        [VerticalGroup("ExportVertical")]
-        [FolderPath(AbsolutePath = true)]
-        [LabelText("Mod导出路径")]
-        private string m_ExportPath;
 
         [AssetSelector]
         [OdinSerialize]
-        [VerticalGroup("ExportVertical")]
+        //[VerticalGroup("ExportVertical")]
         [LabelText("Mod配置文件")]
         private List<MODRootConfig> m_AllModConfigs = new List<MODRootConfig>();
 
         [OdinSerialize]
-        [VerticalGroup("ExportVertical")]
+        //[VerticalGroup("ExportVertical")]
         [LabelText("导出平台")]
         private BuildTarget m_BuildTargetPlatForm = BuildTarget.StandaloneWindows64;
 
-        [VerticalGroup("ExportVertical")]
+        [OdinSerialize]
+        [FolderPath(AbsolutePath = true)]
+        [LabelText("Mod导出路径")]
+        private string m_ExportPath;
+
+        private List<ModBuildItem> m_BundleItemsToBuild = new List<ModBuildItem>();
+
+
+        //[VerticalGroup("ExportVertical")]
         [Button(ButtonHeight = 30, Name = "导出Mod")]
+        
         private void ExportAll()
         {
             if(m_AllModConfigs.Count == 0)
@@ -64,14 +79,31 @@ namespace Jyx2Editor.BuildTool
                 EditorUtility.DisplayDialog("提示", "无效的导出路径，请修改后重试", "确定");
                 return;
             }
-            foreach(var modConfig in m_AllModConfigs)
+            var allBundles = AssetDatabase.GetAllAssetBundleNames().ToList();
+            if (!allBundles.Contains("base_assets"))
             {
-                ExportSingleMod(modConfig);
+                var msg = string.Format("未找到名为base_assets的基础资源包，导出失败");
+                EditorUtility.DisplayDialog("提示", msg, "确定");
+                return;
             }
-            EditorUtility.DisplayDialog("提示", "导出完毕", "确定");
+
+
+            ClearModBuildItems();
+            foreach (var modConfig in m_AllModConfigs)
+            {
+                RegisterModForExport(modConfig);
+            }
+            
+            //Assetbundle 打包
+            BuildAllAssetBundles();
+
+            //将打好分到对应文件夹
+            MoveModBundlesToModFolder();
+
+            EditorUtility.DisplayDialog("提示", "导出结束", "确定");
         }
 
-        private void ExportSingleMod(MODRootConfig config)
+        private void RegisterModForExport(MODRootConfig config)
         {
             if (string.IsNullOrEmpty(config.ModId))
             {
@@ -80,8 +112,9 @@ namespace Jyx2Editor.BuildTool
                 return;
             }
             var allBundles = AssetDatabase.GetAllAssetBundleNames().ToHashSet();
-            var mapBundleName = GetModMapBundleName(config.ModId);
-            var modBundleName = GetModMainBundleName(config.ModId);
+            var modId = config.ModId.ToLower();
+            var mapBundleName = GetModMapBundleName(modId);
+            var modBundleName = GetModMainBundleName(modId);
             if(!allBundles.Contains(mapBundleName))
             {
                 var msg = string.Format("未找到[{0}]的地图资源包，请将相关Scene移动到名字为[{1}]的AssetBundle中", config.ModName, mapBundleName);
@@ -94,9 +127,27 @@ namespace Jyx2Editor.BuildTool
                 EditorUtility.DisplayDialog("提示", msg, "确定");
                 return;
             }
-            EnsureModExportDirectoryExist(config.ModId);
-            BuildAssetBundlesByNames(config, mapBundleName, modBundleName);
+            EnsureModExportDirectoryExist(modId);
             GenerateModXmlFile(config);
+            AddModToBuildList(modId, mapBundleName, modBundleName);
+        }
+
+        private void ClearModBuildItems()
+        {
+            m_BundleItemsToBuild.Clear();
+        }
+
+        private void AddModToBuildList(string modId, string mapBundleName, string modBundleName)
+        {
+            if (m_BundleItemsToBuild.Exists(element => element.ModId == modId))
+                return;
+            var item = new ModBuildItem()
+            {
+                ModId = modId,
+                MapBundleName = mapBundleName,
+                ModBundleName = modBundleName,
+            };
+            m_BundleItemsToBuild.Add(item);
         }
 
 
@@ -105,6 +156,7 @@ namespace Jyx2Editor.BuildTool
             modId = modId.ToLower();
             return $"{modId}_maps";
         }
+
 
         private string GetModMainBundleName(string modId)
         {
@@ -124,33 +176,54 @@ namespace Jyx2Editor.BuildTool
                 return;
             Directory.CreateDirectory(dir);
         }
-
-        private void BuildAssetBundlesByNames(MODRootConfig modConfig, params string[] assetBundleNames)
+        
+        private string[] GetValidAssetPathsInBundle(string bundle)
         {
-            if (assetBundleNames == null || assetBundleNames.Length == 0)
-            {
+            var results = AssetDatabase.GetAssetPathsFromAssetBundle(bundle).
+                Where(assetPath => Path.GetExtension(assetPath) != ".cs").ToArray();
+            return results;
+        }
+        
+        private void BuildAllAssetBundles()
+        {
+            if (m_BundleItemsToBuild.Count == 0)
                 return;
-            }
+
 
             var builds = new List<AssetBundleBuild>();
-            
-            foreach (var assetBundle in assetBundleNames)
+
+            //先把基础包放进去
+            var baseBuild = new AssetBundleBuild();
+            baseBuild.assetBundleName = "base_assets";
+            baseBuild.assetNames = GetValidAssetPathsInBundle("base_assets");
+            builds.Add(baseBuild);
+
+            //再放mod
+            foreach (var bundleItem in m_BundleItemsToBuild)
             {
-                var assetPaths = AssetDatabase.GetAssetPathsFromAssetBundle(assetBundle);
+                var modBuild = BundleName2BundleBuild(bundleItem.ModBundleName);
+                var mapbuild = BundleName2BundleBuild(bundleItem.MapBundleName);
 
-                AssetBundleBuild build = new AssetBundleBuild();
-                build.assetBundleName = assetBundle;
-                build.assetNames = assetPaths;
-
-                builds.Add(build);
-                Debug.Log("assetBundle to build:" + build.assetBundleName);
+                builds.Add(modBuild);
+                builds.Add(mapbuild);
+                
+                Debug.Log("assetBundle to build:" + modBuild.assetBundleName);
+                Debug.Log("assetBundle to build:" + mapbuild.assetBundleName);
             }
-            var bunbleExportFolder = GetModExportDirectory(modConfig.ModId.ToString());
-            BuildPipeline.BuildAssetBundles(bunbleExportFolder, 
+            BuildPipeline.BuildAssetBundles(m_ExportPath, 
                                             builds.ToArray(), 
-                                            BuildAssetBundleOptions.ChunkBasedCompression, 
+                                            BuildAssetBundleOptions.ChunkBasedCompression,
                                             m_BuildTargetPlatForm);
         }
+
+        private AssetBundleBuild BundleName2BundleBuild(string bundleName)
+        {
+            var assetPaths = GetValidAssetPathsInBundle(bundleName);
+            AssetBundleBuild build = new AssetBundleBuild();
+            build.assetBundleName = bundleName;
+            build.assetNames = assetPaths;
+            return build;
+        }    
 
         private void GenerateModXmlFile(MODRootConfig config)
         {
@@ -161,6 +234,20 @@ namespace Jyx2Editor.BuildTool
 
             var xmlPath = Path.Combine(GetModExportDirectory(modId), "mod.xml");
             File.WriteAllText(xmlPath, xmlBuilder.ToString());
+        }
+
+        private void MoveModBundlesToModFolder()
+        {
+            foreach (var bundleItem in m_BundleItemsToBuild)
+            {
+                var modFolder = GetModExportDirectory(bundleItem.ModId);
+                var modId = bundleItem.ModId.ToLower();
+                var files = Directory.GetFiles(m_ExportPath, "*" + bundleItem.ModId + "*", SearchOption.TopDirectoryOnly);
+                foreach(var file in files)
+                {
+                    File.Move(file, Path.Combine(modFolder, Path.GetFileName(file)));
+                }
+            }
         }
     }
 }
