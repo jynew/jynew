@@ -66,6 +66,8 @@ public class Jyx2Player : MonoBehaviour
     NavMeshAgent _navMeshAgent;
     Jyx2Boat _boat;
 
+    private float m_InteractDelayTime;
+
 
     GameEventManager evtManager
     {
@@ -150,7 +152,7 @@ public class Jyx2Player : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _boat = FindObjectOfType<Jyx2Boat>();
         _gameEventLayerMask = LayerMask.GetMask("GameEvent");
-        
+        m_InteractDelayTime = Time.time + 0.1f;
         _locomotionController.Init(_navMeshAgent);
     }
 
@@ -199,6 +201,10 @@ public class Jyx2Player : MonoBehaviour
         if (!CanControlPlayer)
             return;
         //BigMapIdleJudge();
+
+        //延迟下交互触发 不然加载后的第一帧 交互和对话会同时触发
+        if (m_InteractDelayTime >= Time.time)
+            return;
         
         //判断交互范围
         Debug.DrawRay(transform.position, transform.forward, Color.yellow);
