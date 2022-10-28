@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Serialization;
 using Sirenix.Utilities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -245,7 +246,10 @@ namespace Jyx2Editor.BuildTool
                 var files = Directory.GetFiles(m_ExportPath, "*" + bundleItem.ModId + "*", SearchOption.TopDirectoryOnly);
                 foreach(var file in files)
                 {
-                    File.Move(file, Path.Combine(modFolder, Path.GetFileName(file)));
+                    var destination = Path.Combine(modFolder, Path.GetFileName(file));
+                    if (File.Exists(destination))
+                        File.Delete(destination);
+                    File.Move(file, destination);
                 }
             }
         }
