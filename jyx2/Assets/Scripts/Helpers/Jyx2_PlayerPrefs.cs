@@ -55,8 +55,12 @@ namespace Jyx2
 
     public static class Jyx2_PlayerPrefs
     {
-        private static readonly string SavePath = Path.Combine(Application.persistentDataPath, "PlayerPrefs/Jyx2_PlayerPrefs.json");
-
+        private static readonly string SavePath = Path.Combine(Application.persistentDataPath,
+#if UNITY_EDITOR
+            "PlayerPrefs/Jyx2_PlayerPrefs_Editor.json");
+#else
+            "PlayerPrefs/Jyx2_PlayerPrefs.json");
+#endif
         private static Jyx2_PlayerPrefsData m_PrefsData = new Jyx2_PlayerPrefsData();
 
         private static bool m_Init = false;
@@ -150,7 +154,7 @@ namespace Jyx2
             }
         }
 
-        #region Get & Set API
+#region Get & Set API
         public static float GetFloat(string key, float defaultValue = 0)
         {
             CheckInit();
@@ -220,7 +224,7 @@ namespace Jyx2
             return defaultValue;
         }
 
-        #endregion
+#endregion
     }
 
 }

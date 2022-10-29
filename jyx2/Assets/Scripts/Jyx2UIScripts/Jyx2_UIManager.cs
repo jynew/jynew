@@ -290,11 +290,10 @@ public class Jyx2_UIManager : MonoBehaviour
         {
             PopUI(uibase, m_PopUIStack);
         }
-        else if (uibase.Layer == UILayer.MainUI)
-            uibase.Hide();
         else
             uibase.Hide();
     }
+    
 
     public void HideAllUI()
     {
@@ -320,19 +319,6 @@ public class Jyx2_UIManager : MonoBehaviour
         }
         m_normalUIStack.Clear();
         m_PopUIStack.Clear();
-    }
-
-
-
-
-    public void SetMainUIActive(bool active) 
-    {
-        if (m_currentMainUI == null)
-            return;
-        if (active)
-            m_currentMainUI.Show();
-        else
-            m_currentMainUI.Hide();
     }
 
     public Camera GetUICamera() 
