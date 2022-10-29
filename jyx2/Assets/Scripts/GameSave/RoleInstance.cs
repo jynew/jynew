@@ -286,13 +286,7 @@ namespace Jyx2
             Yujian = checkUp(Yujian, 20, 3);
             Shuadao = checkUp(Shuadao, 20, 3);
             Anqi = checkUp(Anqi, 20, 3);
-			if (RuntimeEnvSetup.CurrentModId == "plus")
-			{
-				if(IQ > 50 && Wuxuechangshi < 50 )//by citydream 升级武学常识
-				{
-					Wuxuechangshi += 1;
-				}
-			}
+
             this.Limit(1, 1, 1);
 
             Debug.Log($"{this.Name}升到{this.Level}级！");
@@ -352,13 +346,7 @@ namespace Jyx2
             {
                 value += Random.Range(0, max_inc);
             }
-			if (RuntimeEnvSetup.CurrentModId == "plus")
-			{
-				if (value < limit)
-				{
-					value += Random.Range(0, 2);//modified by citydream
-				}
-			}
+
             return value;
         }
 
