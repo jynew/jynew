@@ -1,0 +1,5631 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1351212051, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
+  m_Name: HOTAS
+  m_EditorClassIdentifier: 
+  controllerName: HOTAS
+  description: 
+  templateGuid: 061a00cf-d8c2-4f8d-8cb5-a15a010bc53e
+  className: HOTASTemplate
+  elementIdentifiers:
+  - _id: 0
+    _name: Stick X
+    _positiveName: Stick Right
+    _negativeName: Stick Left
+    _elementType: 0
+    _scriptingName: stickX
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 1
+    _name: Stick Y
+    _positiveName: Stick Up
+    _negativeName: Stick Down
+    _elementType: 0
+    _scriptingName: stickY
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 2
+    _name: Stick Rotate
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: stickRotate
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 78
+    _name: Stick Mini Stick 1 X
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: stickMiniStick1X
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 79
+    _name: Stick Mini Stick 1 Y
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: stickMiniStick1Y
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 80
+    _name: Stick Mini Stick 1 Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickMiniStick1Press
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 81
+    _name: Stick Mini Stick 2 X
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: stickMiniStick2X
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 82
+    _name: Stick Mini Stick 2 Y
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: stickMiniStick2Y
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 83
+    _name: Stick Mini Stick 2 Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickMiniStick2Press
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 3
+    _name: Stick Trigger
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickTrigger
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 4
+    _name: Stick Trigger (Stage 2)
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickTriggerStage2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 5
+    _name: Stick Pinky Button
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickPinkyButton
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 154
+    _name: Stick Pinky Trigger
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickPinkyTrigger
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 6
+    _name: Stick Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 7
+    _name: Stick Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 8
+    _name: Stick Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 9
+    _name: Stick Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 10
+    _name: Stick Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 11
+    _name: Stick Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 12
+    _name: Stick Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 13
+    _name: Stick Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 14
+    _name: Stick Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 15
+    _name: Stick Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickButton10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 18
+    _name: Stick Base Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 19
+    _name: Stick Base Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 20
+    _name: Stick Base Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 21
+    _name: Stick Base Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 22
+    _name: Stick Base Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 23
+    _name: Stick Base Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 24
+    _name: Stick Base Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 25
+    _name: Stick Base Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 26
+    _name: Stick Base Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 27
+    _name: Stick Base Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 161
+    _name: Stick Base Button 11
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton11
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 162
+    _name: Stick Base Button 12
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickBaseButton12
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 28
+    _name: Stick Hat 1 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 29
+    _name: Stick Hat 1 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1UpRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 30
+    _name: Stick Hat 1 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 31
+    _name: Stick Hat 1 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1DownRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 32
+    _name: Stick Hat 1 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 33
+    _name: Stick Hat 1 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1DownLeft
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 34
+    _name: Stick Hat 1 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 35
+    _name: Stick Hat 1 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat1Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 36
+    _name: Stick Hat 2 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 37
+    _name: Stick Hat 2 Up-right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Up_right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 38
+    _name: Stick Hat 2 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 39
+    _name: Stick Hat 2 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Down_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 40
+    _name: Stick Hat 2 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 41
+    _name: Stick Hat 2 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Down_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 42
+    _name: Stick Hat 2 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 43
+    _name: Stick Hat 2 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat2Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 84
+    _name: Stick Hat 3 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 85
+    _name: Stick Hat 3 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Up_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 86
+    _name: Stick Hat 3 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 87
+    _name: Stick Hat 3 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Down_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 88
+    _name: Stick Hat 3 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 89
+    _name: Stick Hat 3 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Down_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 90
+    _name: Stick Hat 3 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 91
+    _name: Stick Hat 3 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat3Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 92
+    _name: Stick Hat 4 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 93
+    _name: Stick Hat 4 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Up_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 94
+    _name: Stick Hat 4 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 95
+    _name: Stick Hat 4 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Down_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 96
+    _name: Stick Hat 4 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 97
+    _name: Stick Hat 4 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Down_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 98
+    _name: Stick Hat 4 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 99
+    _name: Stick Hat 4 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: stickHat4Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 44
+    _name: Mode 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: mode1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 45
+    _name: Mode 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: mode2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 46
+    _name: Mode 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: mode3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 49
+    _name: Throttle 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttle1Axis
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 155
+    _name: Throttle 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttle2Axis
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 166
+    _name: Throttle 1 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttle1MinDetent
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 167
+    _name: Throttle 2 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttle2MinDetent
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 50
+    _name: Throttle Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 51
+    _name: Throttle Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 52
+    _name: Throttle Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 53
+    _name: Throttle Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 54
+    _name: Throttle Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 55
+    _name: Throttle Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 56
+    _name: Throttle Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 57
+    _name: Throttle Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 58
+    _name: Throttle Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 59
+    _name: Throttle Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleButton10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 60
+    _name: Throttle Base Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 61
+    _name: Throttle Base Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 62
+    _name: Throttle Base Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 63
+    _name: Throttle Base Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 64
+    _name: Throttle Base Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 65
+    _name: Throttle Base Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 66
+    _name: Throttle Base Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 67
+    _name: Throttle Base Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 68
+    _name: Throttle Base Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 69
+    _name: Throttle Base Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 132
+    _name: Throttle Base Button 11
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton11
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 133
+    _name: Throttle Base Button 12
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton12
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 134
+    _name: Throttle Base Button 13
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton13
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 135
+    _name: Throttle Base Button 14
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton14
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 136
+    _name: Throttle Base Button 15
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleBaseButton15
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 70
+    _name: Throttle Slider 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleSlider1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 71
+    _name: Throttle Slider 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleSlider2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 72
+    _name: Throttle Slider 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleSlider3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 73
+    _name: Throttle Slider 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleSlider4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 74
+    _name: Throttle Dial 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleDial1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 142
+    _name: Throttle Dial 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleDial2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 143
+    _name: Throttle Dial 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleDial3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 144
+    _name: Throttle Dial 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleDial4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 75
+    _name: Throttle Mini Stick X
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleMiniStickX
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 76
+    _name: Throttle Mini Stick Y
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: throttleMiniStickY
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 77
+    _name: Throttle Mini Stick Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleMiniStickPress
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 145
+    _name: Throttle Wheel 1 Forward
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel1Forward
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 146
+    _name: Throttle Wheel 1 Back
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel1Back
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 147
+    _name: Throttle Wheel 1 Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel1Press
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 148
+    _name: Throttle Wheel 2 Forward
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel2Forward
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 149
+    _name: Throttle Wheel 2 Back
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel2Back
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 150
+    _name: Throttle Wheel 2 Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel2Press
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 151
+    _name: Throttle Wheel 3 Forward
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel3Forward
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 152
+    _name: Throttle Wheel 3 Back
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel3Back
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 153
+    _name: Throttle Wheel 3 Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleWheel3Press
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 100
+    _name: Throttle Hat 1 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 101
+    _name: Throttle Hat 1 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Up_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 102
+    _name: Throttle Hat 1 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 103
+    _name: Throttle Hat 1 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Down_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 104
+    _name: Throttle Hat 1 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 105
+    _name: Throttle Hat 1 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Down_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 106
+    _name: Throttle Hat 1 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 107
+    _name: Throttle Hat 1 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat1Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 108
+    _name: Throttle Hat 2 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 109
+    _name: Throttle Hat 2 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Up_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 110
+    _name: Throttle Hat 2 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 111
+    _name: Throttle Hat 2 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Down_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 112
+    _name: Throttle Hat 2 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 113
+    _name: Throttle Hat 2 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Down_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 114
+    _name: Throttle Hat 2 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 115
+    _name: Throttle Hat 2 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat2Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 116
+    _name: Throttle Hat 3 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 117
+    _name: Throttle Hat 3 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Up_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 118
+    _name: Throttle Hat 3 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 119
+    _name: Throttle Hat 3 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Down_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 120
+    _name: Throttle Hat 3 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 121
+    _name: Throttle Hat 3 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Down_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 122
+    _name: Throttle Hat 3 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 123
+    _name: Throttle Hat 3 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat3Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 124
+    _name: Throttle Hat 4 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 125
+    _name: Throttle Hat 4 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Up_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 126
+    _name: Throttle Hat 4 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 127
+    _name: Throttle Hat 4 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Down_Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 128
+    _name: Throttle Hat 4 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 129
+    _name: Throttle Hat 4 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Down_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 130
+    _name: Throttle Hat 4 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 131
+    _name: Throttle Hat 4 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttleHat4Up_Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 168
+    _name: Left Pedal
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: leftPedal
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 169
+    _name: Right Pedal
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: rightPedal
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 170
+    _name: Slide Pedals
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: slidePedals
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 171
+    _name: Stick
+    _positiveName: 
+    _negativeName: 
+    _elementType: 5
+    _scriptingName: stick
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 172
+    _name: Stick Mini Stick 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 2
+    _scriptingName: stickMiniStick1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 173
+    _name: Stick Mini Stick 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 2
+    _scriptingName: stickMiniStick2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 174
+    _name: Stick Hat 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: stickHat1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 175
+    _name: Stick Hat 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: stickHat2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 176
+    _name: Stick Hat 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: stickHat3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 177
+    _name: Stick Hat 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: stickHat4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 178
+    _name: Throttle 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: throttle1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 179
+    _name: Throttle 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: throttle2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 180
+    _name: Throttle Mini Stick
+    _positiveName: 
+    _negativeName: 
+    _elementType: 2
+    _scriptingName: throttleMiniStick
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 181
+    _name: Throttle Hat 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: throttleHat1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 182
+    _name: Throttle Hat 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: throttleHat2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 183
+    _name: Throttle Hat 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: throttleHat3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 184
+    _name: Throttle Hat 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: throttleHat4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  joysticks:
+  - id: 0
+    name: CH FighterStick
+    joystickGuid: 626d7c4b-f15c-4571-957f-a273e029c17e
+    fileGuid: 1fa459b73e5712a4a95e3e71655b8767
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 84
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 86
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 88
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 90
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 92
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 94
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 96
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 98
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+  - id: 1
+    name: CH Pro Throttle
+    joystickGuid: eb43ada3-3513-41a4-9ef1-05348138a1d8
+    fileGuid: cb1b9179d02576242ba9b5f2f3cd6c0d
+    elementIdentifierMappings:
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 75
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 76
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 101
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 103
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 105
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 107
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 108
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 110
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 112
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 114
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 116
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 118
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 120
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 122
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 124
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 126
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 128
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 130
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 77
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+  - id: 2
+    name: Saitek X45
+    joystickGuid: da803b47-4e06-4f41-af1a-04db144ecab6
+    fileGuid: 9b3a2bb648ad56f439c49e68956d9895
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 44
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 45
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 46
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 47
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 48
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 49
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 50
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 51
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 74
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 142
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 108
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 110
+      joystickId: 38
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 112
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 114
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 41
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 42
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 43
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+  - id: 3
+    name: Saitek X52
+    joystickGuid: ec284627-3b35-4731-9c0c-788dc7700743
+    fileGuid: 2a9e7ff84ddd8e746aaad83f49422399
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 56
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 38
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 74
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 142
+      joystickId: 41
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 145
+      joystickId: 42
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 146
+      joystickId: 43
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 147
+      joystickId: 44
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 45
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 101
+      joystickId: 46
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 47
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 103
+      joystickId: 48
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 49
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 105
+      joystickId: 50
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 51
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 107
+      joystickId: 52
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 75
+      joystickId: 57
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 76
+      joystickId: 58
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 77
+      joystickId: 59
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 53
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 54
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 62
+      joystickId: 55
+      joystickId2: 0
+      splitAxis: 0
+  - id: 4
+    name: Saitek X52 Pro
+    joystickGuid: d8985c95-8123-41d8-9997-2b42cb2abe38
+    fileGuid: c48f5bea066ef4e4da2721d090b16aed
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 56
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 38
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 74
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 142
+      joystickId: 41
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 145
+      joystickId: 42
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 146
+      joystickId: 43
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 147
+      joystickId: 44
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 45
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 101
+      joystickId: 46
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 47
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 103
+      joystickId: 48
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 49
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 105
+      joystickId: 50
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 51
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 107
+      joystickId: 52
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 75
+      joystickId: 57
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 76
+      joystickId: 58
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 77
+      joystickId: 59
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 148
+      joystickId: 53
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 149
+      joystickId: 62
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 150
+      joystickId: 63
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 151
+      joystickId: 64
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 152
+      joystickId: 65
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 153
+      joystickId: 66
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 54
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 55
+      joystickId2: 0
+      splitAxis: 0
+  - id: 5
+    name: Saitek X-55 Rhino Stick
+    joystickGuid: 0e155f1d-ee21-45b1-b4e6-42bbd3a29a80
+    fileGuid: f7b2846204f0d004a8b874b9ec76fd82
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 154
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 84
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 85
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 86
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 87
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 88
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 89
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 90
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 91
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+  - id: 6
+    name: Saitek X-55 Rhino Throttle
+    joystickGuid: bcb1ba29-5b37-46b4-8029-f1fbe4f1bd85
+    fileGuid: ef930b86d6724c346999c4d74a9a97d6
+    elementIdentifierMappings:
+    - templateId: 49
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 155
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 74
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 142
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 143
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 144
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 55
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 56
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 145
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 146
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 62
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 63
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 64
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 65
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 66
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 67
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 68
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 69
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 132
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 133
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 134
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 135
+      joystickId: 38
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 75
+      joystickId: 49
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 76
+      joystickId: 50
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 101
+      joystickId: 41
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 103
+      joystickId: 42
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 105
+      joystickId: 43
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 107
+      joystickId: 44
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 108
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 109
+      joystickId: 45
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 110
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 111
+      joystickId: 46
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 112
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 113
+      joystickId: 47
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 114
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 115
+      joystickId: 48
+      joystickId2: 0
+      splitAxis: 0
+  - id: 7
+    name: Saitek JI3 Cyborg 3D Gold
+    joystickGuid: 6e9e03d9-b0be-4105-b1cb-f2fa09f56d03
+    fileGuid: 781efbf224353364d9476bc90f3ba38f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 8
+    name: Mad Catz C.Y.B.O.R.G V1
+    joystickGuid: 91f16b9d-5d2f-4c8c-89ab-a0840901cd9a
+    fileGuid: 10f138a68fc210146abb61e0f19f8433
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 9
+    name: Thrustmaster HOTAS Warthog Joystick
+    joystickGuid: ffb9683b-ea6e-4ff6-b0e1-694d33876f72
+    fileGuid: 9809fd086825ed548be96453cc73d514
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 154
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 84
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 85
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 86
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 87
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 88
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 89
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 90
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 91
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 92
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 94
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 96
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 98
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+  - id: 10
+    name: Thrustmaster HOTAS Warthog Throttle
+    joystickGuid: 6e386ae1-c15b-4bf2-b5ff-0e523a44110e
+    fileGuid: bf496c1269e18af47861cbffb62c2636
+    elementIdentifierMappings:
+    - templateId: 49
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 155
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 71
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 62
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 63
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 64
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 65
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 66
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 67
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 68
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 69
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 132
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 133
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 134
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 135
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 136
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 75
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 76
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 77
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 55
+      joystickId: 38
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 56
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 57
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 58
+      joystickId: 41
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 59
+      joystickId: 42
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 108
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 109
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 110
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 111
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 112
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 113
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 114
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 115
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 166
+      joystickId: 43
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 167
+      joystickId: 44
+      joystickId2: 0
+      splitAxis: 0
+  - id: 11
+    name: Thrustmaster T.16000M
+    joystickGuid: f9166a6e-926e-4a12-8abc-d623ff193e3d
+    fileGuid: 39c79777d7cf36242a843da13f704d9f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 24
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 25
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 161
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 162
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+  - id: 12
+    name: Thrustmaster T.Flight Hotas X
+    joystickGuid: d0aae5f0-144b-405f-bf8a-079caac6242a
+    fileGuid: f6fb8bb24a87a9e47b993b0be9b3800e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 55
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+  - id: 13
+    name: Thrustmaster USB Joystick
+    joystickGuid: f33c72f3-51a2-4369-9ab3-7a7f077ca790
+    fileGuid: 6edf15f9b85364e4ea2dacfcb876addc
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+  - id: 14
+    name: Logitech Extreme 3D Pro
+    joystickGuid: 2a651030-1113-4292-a2e7-d5d37135f720
+    fileGuid: 7c86271a5aa17a8459191b8f7fd6c98f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+  - id: 17
+    name: Logitech WingMan Attack 2
+    joystickGuid: 01a7ea54-2b95-4e24-bf39-d907195ca476
+    fileGuid: 92890da0643b2394e9f4aa2231ac78bf
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+  - id: 16
+    name: Logitech Attack 3
+    joystickGuid: e18da850-201b-42bd-b35a-eda7927ae20f
+    fileGuid: 7e9b5836ed400864b81cb0175ae50e21
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 15
+    name: Microsoft SideWinder 3D Pro
+    joystickGuid: 98c83081-e7a8-44a7-9f3e-22e184dd5c98
+    fileGuid: 2d4ceaf2efcfc1146ade149a97a1364e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 18
+    name: Microsoft SideWinder Precision Pro
+    joystickGuid: 017678a7-256a-4b32-a9ae-e5fc1aaf1f53
+    fileGuid: 228192069e855894ea68d577ba449e4f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 19
+    name: Microsoft SideWinder Force Feedback Pro
+    joystickGuid: c4bf7bca-acf3-4580-a0e2-d68e94bcf638
+    fileGuid: c7eae5af8577fdc4cb28c1b4eef8990e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 20
+    name: Saitek ST290 Pro
+    joystickGuid: d508c2d1-4ea2-4bb3-a90d-83164c0f9523
+    fileGuid: 52a7405c6e6693d49a2f7efa62d41ead
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 21
+    name: Saitek Cyborg Evo
+    joystickGuid: 7ecda8cd-29fb-481e-9ef4-6c243620c899
+    fileGuid: f4dd06702b43a5647b740fa002a8fe27
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 22
+    name: Microsoft SideWinder Joystick
+    joystickGuid: e4b24a19-53f4-473a-8548-59f6ed442772
+    fileGuid: 4a44f7dfc47d2a544ac3c7497f0b7973
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+  - id: 23
+    name: Thrustmaster TWCS Throttle
+    joystickGuid: f3506772-fad6-4917-b7ef-581bee2159d7
+    fileGuid: 05c3d0c75cbd74947a8e2b366e776b68
+    elementIdentifierMappings:
+    - templateId: 75
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 76
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 74
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 101
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 103
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 113
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 107
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 108
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 110
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 112
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 114
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 116
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 118
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 120
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 122
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 77
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 168
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 169
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 170
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+  - id: 24
+    name: Thrustmaster T.Flight Hotas 4
+    joystickGuid: ee5daca0-3791-45d2-b979-bbbfdf5085f8
+    fileGuid: 495ca4e700b67094da44a69256bf8938
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 168
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 169
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 170
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+  - id: 25
+    name: Saitek X-56 Rhino Stick
+    joystickGuid: d8e96a10-f86a-4364-aaa0-5d99fa017573
+    fileGuid: faaaddd7598d81745872208f0fb1a9d3
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 78
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 79
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 80
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 154
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 84
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 85
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 86
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 87
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 88
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 89
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 90
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 91
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+  - id: 26
+    name: Saitek X-56 Rhino Throttle
+    joystickGuid: b47b59cb-38e7-4c11-b9bd-b2839d7803f4
+    fileGuid: 58b12e276280b164ba6cdf3783035565
+    elementIdentifierMappings:
+    - templateId: 49
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 155
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 74
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 142
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 143
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 144
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 75
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 76
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 77
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 55
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 56
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 145
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 146
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 62
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 63
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 64
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 65
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 66
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 67
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 68
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 69
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 132
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 133
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 134
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 135
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 100
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 101
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 102
+      joystickId: 38
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 103
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 104
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 105
+      joystickId: 41
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 106
+      joystickId: 42
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 107
+      joystickId: 43
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 108
+      joystickId: 44
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 109
+      joystickId: 45
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 110
+      joystickId: 46
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 111
+      joystickId: 47
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 112
+      joystickId: 48
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 113
+      joystickId: 49
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 114
+      joystickId: 50
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 115
+      joystickId: 51
+      joystickId2: 0
+      splitAxis: 0
+  - id: 27
+    name: CH FlightStick Pro
+    joystickGuid: 672b88ce-f98b-4535-9603-09d2f4e530ac
+    fileGuid: 78fc0032fa6200749ab3b81dbd732c1f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+  - id: 28
+    name: CH CombatStick USB
+    joystickGuid: 030d0f5e-b700-461d-81ee-834c9acbfae9
+    fileGuid: 87c5910af6e23be42a447b364d70df44
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 29
+    name: Thrustmaster T.Flight Stick X
+    joystickGuid: 8d4d6231-4d6d-4f3c-9cbd-89a96c0cdaf1
+    fileGuid: 72f9d507f6cb1ef4ea6988ea95cf367a
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 24
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 25
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+  - id: 30
+    name: VKB-Sim Gladiator MKII
+    joystickGuid: 59462056-360b-4027-b3f8-6e3b050766c9
+    fileGuid: df86f8a4434a18143ae01af07586426b
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 170
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 168
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 169
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 24
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 25
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 161
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 162
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+  - id: 31
+    name: Microsoft SideWinder Precision 2
+    joystickGuid: be29f7f1-266e-417a-bd70-37d12dccb739
+    fileGuid: b30ad908be1266e4eabb9e05de547164
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 32
+    name: Sony PS4 Flight Stick
+    joystickGuid: a75d195b-27a8-41ac-97db-2bd5a649a817
+    fileGuid: 22d64389a3ac78245a2d54f8ae889fb3
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 49
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 50
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 51
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 52
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 55
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 168
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 169
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 170
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 74
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 142
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 70
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 78
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 79
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+  specialElements:
+  - elementIdentifierId: 171
+    data: '{"eid_axisX":0,"eid_axisY":1,"eid_axisZ":2}'
+  - elementIdentifierId: 172
+    data: '{"eid_axisX":78,"eid_axisY":79,"eid_button":80}'
+  - elementIdentifierId: 173
+    data: '{"eid_axisX":81,"eid_axisY":82,"eid_button":83}'
+  - elementIdentifierId: 174
+    data: '{"eid_up":28,"eid_upRight":29,"eid_right":30,"eid_downRight":31,"eid_down":32,"eid_downLeft":33,"eid_left":34,"eid_upLeft":35}'
+  - elementIdentifierId: 175
+    data: '{"eid_up":36,"eid_upRight":37,"eid_right":38,"eid_downRight":39,"eid_down":40,"eid_downLeft":41,"eid_left":42,"eid_upLeft":43}'
+  - elementIdentifierId: 176
+    data: '{"eid_up":84,"eid_upRight":85,"eid_right":86,"eid_downRight":87,"eid_down":88,"eid_downLeft":89,"eid_left":90,"eid_upLeft":91}'
+  - elementIdentifierId: 177
+    data: '{"eid_up":92,"eid_upRight":93,"eid_right":94,"eid_downRight":95,"eid_down":96,"eid_downLeft":97,"eid_left":98,"eid_upLeft":99}'
+  - elementIdentifierId: 178
+    data: '{"eid_axis":49,"eid_minDetent":166}'
+  - elementIdentifierId: 179
+    data: '{"eid_axis":155,"eid_minDetent":167}'
+  - elementIdentifierId: 180
+    data: '{"eid_axisX":75,"eid_axisY":76,"eid_button":77}'
+  - elementIdentifierId: 181
+    data: '{"eid_up":100,"eid_upRight":101,"eid_right":102,"eid_downRight":103,"eid_down":104,"eid_downLeft":105,"eid_left":106,"eid_upLeft":107}'
+  - elementIdentifierId: 182
+    data: '{"eid_up":108,"eid_upRight":109,"eid_right":110,"eid_downRight":111,"eid_down":112,"eid_downLeft":113,"eid_left":114,"eid_upLeft":115}'
+  - elementIdentifierId: 183
+    data: '{"eid_up":116,"eid_upRight":117,"eid_right":118,"eid_downRight":119,"eid_down":120,"eid_downLeft":121,"eid_left":122,"eid_upLeft":123}'
+  - elementIdentifierId: 184
+    data: '{"eid_up":124,"eid_upRight":125,"eid_right":126,"eid_downRight":127,"eid_down":128,"eid_downLeft":129,"eid_left":130,"eid_upLeft":131}'
+  elementIdentifierIdCounter: 185
+  joystickIdCounter: 33
