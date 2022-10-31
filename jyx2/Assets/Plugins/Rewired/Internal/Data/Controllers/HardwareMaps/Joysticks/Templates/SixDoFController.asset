@@ -1,0 +1,1195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1351212051, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
+  m_Name: SixDoFController
+  m_EditorClassIdentifier: 
+  controllerName: 6 DoF Controller
+  description: 'A controller that allows up to 6-degrees of freedom: Translate X,
+    Y, Z and rotate X, Y, Z.'
+  templateGuid: 2599beb3-522b-43dd-a4ef-93fd60e5eafa
+  className: SixDofControllerTemplate
+  elementIdentifiers:
+  - _id: 1
+    _name: Horizontal
+    _positiveName: Right
+    _negativeName: Left
+    _elementType: 0
+    _scriptingName: positionX
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 2
+    _name: Vertical
+    _positiveName: Up
+    _negativeName: Down
+    _elementType: 0
+    _scriptingName: positionY
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 0
+    _name: Forward/Back
+    _positiveName: Forward
+    _negativeName: Back
+    _elementType: 0
+    _scriptingName: positionZ
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 3
+    _name: Rotate X
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: rotationX
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 5
+    _name: Rotate Y
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: rotationY
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 4
+    _name: Rotate Z
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: rotationZ
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 6
+    _name: Throttle 1
+    _positiveName: Throttle 1 Up
+    _negativeName: Throttle 1 Down
+    _elementType: 0
+    _scriptingName: throttle1Axis
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 50
+    _name: Throttle 1 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttle1MinDetent
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 7
+    _name: Throttle 2
+    _positiveName: Throttle 2 Up
+    _negativeName: Throttle 2 Down
+    _elementType: 0
+    _scriptingName: throttle2Axis
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 51
+    _name: Throttle 2 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: throttle2MinDetent
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 8
+    _name: Extra Axis 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: extraAxis1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 9
+    _name: Extra Axis 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: extraAxis2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 10
+    _name: Extra Axis 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: extraAxis3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 11
+    _name: Extra Axis 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: extraAxis4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 12
+    _name: Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 13
+    _name: Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 14
+    _name: Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 15
+    _name: Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 16
+    _name: Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 17
+    _name: Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 18
+    _name: Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 19
+    _name: Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 20
+    _name: Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 21
+    _name: Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 22
+    _name: Button 11
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button11
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 23
+    _name: Button 12
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button12
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 24
+    _name: Button 13
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button13
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 25
+    _name: Button 14
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button14
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 26
+    _name: Button 15
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button15
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 27
+    _name: Button 16
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button16
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 28
+    _name: Button 17
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button17
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 29
+    _name: Button 18
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button18
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 30
+    _name: Button 19
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button19
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 31
+    _name: Button 20
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button20
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 55
+    _name: Button 21
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button21
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 56
+    _name: Button 22
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button22
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 57
+    _name: Button 23
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button23
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 58
+    _name: Button 24
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button24
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 59
+    _name: Button 25
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button25
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 60
+    _name: Button 26
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button26
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 61
+    _name: Button 27
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button27
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 62
+    _name: Button 28
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button28
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 63
+    _name: Button 29
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button29
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 64
+    _name: Button 30
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button30
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 65
+    _name: Button 31
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button31
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 66
+    _name: Button 32
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: button32
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 32
+    _name: Hat 1 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 33
+    _name: Hat 1 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1UpRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 34
+    _name: Hat 1 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 35
+    _name: Hat 1 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1DownRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 36
+    _name: Hat 1 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 37
+    _name: Hat 1 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1DownLeft
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 38
+    _name: Hat 1 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 39
+    _name: Hat 1 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat1UpLeft
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 40
+    _name: Hat 2 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2Up
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 41
+    _name: Hat 2 Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2UpRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 42
+    _name: Hat 2 Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2Right
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 43
+    _name: Hat 2 Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2DownRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 44
+    _name: Hat 2 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2Down
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 45
+    _name: Hat 2 Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2DownLeft
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 46
+    _name: Hat 2 Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2Left
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 47
+    _name: Hat 2 Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: hat2UpLeft
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 48
+    _name: Hat 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: hat1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 49
+    _name: Hat 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: hat2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 52
+    _name: Throttle 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: throttle1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 53
+    _name: Throttle 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: throttle2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 54
+    _name: Stick
+    _positiveName: 
+    _negativeName: 
+    _elementType: 9
+    _scriptingName: stick
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  joysticks:
+  - id: 0
+    name: 3Dconnexion KMJ Emulator
+    joystickGuid: 8afbb479-1c0f-42db-8c21-cefbd3a4c2c8
+    fileGuid: 70783f06a0182a643bde17f845c1b4b3
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+  - id: 1
+    name: 3Dconnexion Space Navigator
+    joystickGuid: 9a06677a-c580-4875-ab68-10c1968478ce
+    fileGuid: d13d1bbf4510c45419ee6a683921f11c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+  - id: 3
+    name: 3Dconnexion Space Explorer
+    joystickGuid: dbe24966-c584-4d4e-8d1a-2c70d8b019a7
+    fileGuid: 15a7e6233f6ae4044b27ab1368afde34
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 24
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 25
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+  - id: 4
+    name: 3Dconnexion SpacePilot Pro
+    joystickGuid: 338893d0-35d9-4ac3-a342-aac32395ddf2
+    fileGuid: 1f6828ee3e5f79e42a6ec393edcf8875
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 24
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 25
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 55
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 56
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 57
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 58
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 59
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 62
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 63
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 64
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 65
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+  - id: 5
+    name: 3Dconnexion SpaceMouse Module
+    joystickGuid: fe65a7ec-3cfd-4c68-8b66-6399a3de3b90
+    fileGuid: 7ad725ead4528fe49a591f901be858ad
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+  - id: 6
+    name: 3DConnexion SpaceMouse
+    joystickGuid: 151f35f4-43ab-4ae2-b8b9-d0ba9e626684
+    fileGuid: b3133b6889cce86478ecabb569e5220e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+  - id: 2
+    name: 3DRudder
+    joystickGuid: 4c2437d8-438b-400f-bd43-16ba0aadfcc1
+    fileGuid: 3c01df426ab1b5940995688f8e8b8049
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+  - id: 7
+    name: 3Dconnexion SpaceMouse Pro
+    joystickGuid: c346ee03-55e4-4c61-bf3c-7d55b25ae034
+    fileGuid: ce2be3f343d4db94ca65986d73d65058
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 24
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 25
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  specialElements:
+  - elementIdentifierId: 48
+    data: '{"eid_up":32,"eid_upRight":33,"eid_right":34,"eid_downRight":35,"eid_down":36,"eid_downLeft":37,"eid_left":38,"eid_upLeft":39}'
+  - elementIdentifierId: 49
+    data: '{"eid_up":40,"eid_upRight":41,"eid_right":42,"eid_downRight":43,"eid_down":44,"eid_downLeft":45,"eid_left":46,"eid_upLeft":47}'
+  - elementIdentifierId: 52
+    data: '{"eid_axis":6,"eid_minDetent":50}'
+  - elementIdentifierId: 53
+    data: '{"eid_axis":7,"eid_minDetent":51}'
+  - elementIdentifierId: 54
+    data: '{"eid_positionX":1,"eid_positionY":2,"eid_positionZ":0,"eid_rotationX":3,"eid_rotationY":5,"eid_rotationZ":4}'
+  elementIdentifierIdCounter: 67
+  joystickIdCounter: 8

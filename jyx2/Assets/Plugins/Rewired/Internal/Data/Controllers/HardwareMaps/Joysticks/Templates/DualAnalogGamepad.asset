@@ -1,0 +1,6983 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1351212051, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
+  m_Name: DualAnalogGamepad
+  m_EditorClassIdentifier: 
+  controllerName: Gamepad
+  description: Template for a dual stick game pad with up to 6 action buttons, 2 shoulder
+    buttons, 2 triggers, and 3 center buttons.
+  templateGuid: 83b427e4-086f-47f3-bb06-be266abd1ca5
+  className: GamepadTemplate
+  elementIdentifiers:
+  - _id: 0
+    _name: Left Stick X
+    _positiveName: Left Stick Right
+    _negativeName: Left Stick Left
+    _elementType: 0
+    _scriptingName: leftStickX
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 1
+    _name: Left Stick Y
+    _positiveName: Left Stick Up
+    _negativeName: Left Stick Down
+    _elementType: 0
+    _scriptingName: leftStickY
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 2
+    _name: Right Stick X
+    _positiveName: Right Stick Right
+    _negativeName: Right Stick Left
+    _elementType: 0
+    _scriptingName: rightStickX
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 3
+    _name: Right Stick Y
+    _positiveName: Right Stick Up
+    _negativeName: Right Stick Down
+    _elementType: 0
+    _scriptingName: rightStickY
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 4
+    _name: Action Bottom Row 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: actionBottomRow1
+    _alternateScriptingName: a
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 5
+    _name: Action Bottom Row 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: actionBottomRow2
+    _alternateScriptingName: b
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 6
+    _name: Action Bottom Row 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: actionBottomRow3
+    _alternateScriptingName: c
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 7
+    _name: Action Top Row 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: actionTopRow1
+    _alternateScriptingName: x
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 8
+    _name: Action Top Row 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: actionTopRow2
+    _alternateScriptingName: y
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 9
+    _name: Action Top Row 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: actionTopRow3
+    _alternateScriptingName: z
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 10
+    _name: Left Shoulder 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftShoulder1
+    _alternateScriptingName: leftBumper
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 11
+    _name: Left Shoulder 2
+    _positiveName: Left Shoulder 2
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: leftShoulder2
+    _alternateScriptingName: leftTrigger
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 1
+    _editorElementTypeOverride: 1
+  - _id: 12
+    _name: Right Shoulder 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightShoulder1
+    _alternateScriptingName: rightBumper
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 13
+    _name: Right Shoulder 2
+    _positiveName: Right Shoulder 2
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: rightShoulder2
+    _alternateScriptingName: rightTrigger
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 1
+    _editorElementTypeOverride: 1
+  - _id: 14
+    _name: Center 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: center1
+    _alternateScriptingName: back
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 15
+    _name: Center 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: center2
+    _alternateScriptingName: start
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 16
+    _name: Center 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: center3
+    _alternateScriptingName: guide
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 17
+    _name: Left Stick Button
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftStickButton
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 18
+    _name: Right Stick Button
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightStickButton
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 19
+    _name: D-Pad Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadUp
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 20
+    _name: D-Pad Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 21
+    _name: D-Pad Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadDown
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 22
+    _name: D-Pad Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadLeft
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 23
+    _name: Left Stick
+    _positiveName: 
+    _negativeName: 
+    _elementType: 2
+    _scriptingName: leftStick
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 24
+    _name: Right Stick
+    _positiveName: 
+    _negativeName: 
+    _elementType: 2
+    _scriptingName: rightStick
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 25
+    _name: D-Pad
+    _positiveName: 
+    _negativeName: 
+    _elementType: 4
+    _scriptingName: dPad
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  joysticks:
+  - id: 0
+    name: Xbox 360 Controller
+    joystickGuid: d74a350e-fe8b-4e9e-bbcd-efff16d34115
+    fileGuid: 05f66480300b88645aebf9962934d554
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+  - id: 1
+    name: Logitech Dual Action
+    joystickGuid: 886dd9d4-58ce-4212-90f5-2967676e7823
+    fileGuid: 1f82de0297b149644bfe83407c1f4e5c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 2
+    name: GGE909 Recoil
+    joystickGuid: d74cc9ec-a991-4e27-b6c2-b2f50e86f9cf
+    fileGuid: e6e9df3e9f7255b4e921898470665e24
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 3
+    name: Nyko AirFlo EX
+    joystickGuid: ace58550-b1f6-4a3d-8f9b-b9c8331d05c6
+    fileGuid: 0abf19c79e122564ea3bc13997aa6a0c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 4
+    name: Saitek P880
+    joystickGuid: d57b39e3-3d12-4750-84b0-7a28c5341e88
+    fileGuid: 2b7ee0c33df0529408f498728b85f0c3
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 5
+    name: Saitek P990
+    joystickGuid: 34bb2e2c-85c5-47eb-9b77-833c2aac4ec3
+    fileGuid: 900f3cdee29d1094ab71941e4388d65e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 6
+    name: Logitech F310 (X)
+    joystickGuid: d9623ff0-6911-4028-b7a5-b98faa6d2c55
+    fileGuid: c8e7ee694c990d14aa843d0b82d1552d
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 7
+    name: Logitech F310 (D)
+    joystickGuid: 027f7200-e0ea-480d-a1be-a51f201d19b9
+    fileGuid: 8806bfb92931c4544a7ebd42e9cb53ce
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 8
+    name: Logitech F710 (X)
+    joystickGuid: 80f1d64b-b462-41cc-8c6d-452e72a2dee6
+    fileGuid: 25d5197998148774d93d9d5b6ba675a2
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 9
+    name: Logitech F710 (D)
+    joystickGuid: 38648087-ec8f-44f5-b70f-66306a581ebe
+    fileGuid: 98e7e439b7575794c912c559cbd3ea87
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 10
+    name: Sabrent 12 Button Gamepad
+    joystickGuid: 64803b30-552d-4846-b16b-c16105b46a87
+    fileGuid: 0a099d60095729a4c824d288142da34b
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 19
+    name: Sony DualShock 2 (PS2 Adapter)
+    joystickGuid: c3ad3cad-c7cf-4ca8-8c2e-e3df8d9960bb
+    fileGuid: 2caab1cb4e6f06f4a9716c1dd9957888
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 11
+    name: Sony DualShock 3
+    joystickGuid: 71dfe6c8-9e81-428f-a58e-c7e664b7fbed
+    fileGuid: dd2c1503536274001bdc3d5d6be8a98f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 12
+    name: Sony DualShock 4
+    joystickGuid: cd9718bf-a87a-44bc-8716-60a0def28a9f
+    fileGuid: a25f0c1e102b54019bf551294306b277
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 13
+    name: Xbox One Controller
+    joystickGuid: 19002688-7406-4f4a-8340-8d25335406c8
+    fileGuid: 5d47793e65ad5314e8955046fa11f359
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 14
+    name: Sony Playstation Vita
+    joystickGuid: d2aef070-7caa-42ff-b2dc-daac7e4a62b4
+    fileGuid: 48092104093e47246aacaddecb6c81f2
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+  - id: 15
+    name: Logitech RumblePad 2 USB
+    joystickGuid: 6242b853-3858-48dc-a89c-d2ac3716e0f0
+    fileGuid: b57975934979d6648a55b7ced4876c3a
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 16
+    name: Red Samurai Wireless Gamepad
+    joystickGuid: f73916b4-2936-40e3-8964-4180d4eb17ea
+    fileGuid: 354b5611a5b35c84f9ed9aab314b3937
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 17
+    name: iOS Mfi Gamepad
+    joystickGuid: 3d919cfa-468e-49f4-bce9-f6c43f2e7e62
+    fileGuid: ab34c8825048ddb46a02e63d10928a47
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+  - id: 18
+    name: Nvidia Shield Controller (original)
+    joystickGuid: 69636ddb-16c2-4272-81a3-d03828644356
+    fileGuid: e34a98c39b9ad0d4fa35be4bed909998
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 81
+    name: Nvidia Shield Controller (2017 model)
+    joystickGuid: 041eed16-8846-4c94-9e38-addd4b9ce00b
+    fileGuid: 1061f9c39091cf242bd6958aca060c2d
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 20
+    name: OUYA Gamepad
+    joystickGuid: df6fcab5-d1fb-4797-ace1-580617ddc45e
+    fileGuid: d1fc5cad96c798246a95282448296d08
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+  - id: 21
+    name: Radio Shack PC Gaming Controller
+    joystickGuid: 56d68b57-0fb5-4215-8349-82f20f7f854e
+    fileGuid: e5bc394572819a648b90d8483652b557
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 22
+    name: Mad Catz C.T.R.L.R
+    joystickGuid: 137320b3-9897-4c36-a3d9-761c5c861c0d
+    fileGuid: 2fc2bee364a1e1646ae4a645bf762f91
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 23
+    name: idroid:con Snakebyte (M1)
+    joystickGuid: 098e3f17-e7be-445c-8426-5929d538e9b1
+    fileGuid: 64d65c436e6c76b439242af365b23920
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 24
+    name: idroid:con Snakebyte (M2)
+    joystickGuid: 4c97e729-2c5f-41fb-9548-e475c2e857f4
+    fileGuid: 142410a998465ef4099aaeee5610474a
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 25
+    name: Amazon Fire Game Controller
+    joystickGuid: 0d786fc9-84b5-4910-a0fe-b57a9cf7f28a
+    fileGuid: 14f342bd8308100479b8029fe6e86765
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+  - id: 26
+    name: Google Nexus Player Gamepad
+    joystickGuid: 5354a895-5a9d-45a2-8800-4f8f5dacb148
+    fileGuid: 0b6c51a2bf6a17248be8a58431acf8a1
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 27
+    name: GameStick Controller
+    joystickGuid: 47aaa5a4-617e-4650-a38a-1ad2e44f6335
+    fileGuid: 5511e294250c2fc42b735f1cc4d94be4
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 28
+    name: ipega Wireless Gamepad Controller
+    joystickGuid: a3e49a2f-b952-429f-b940-d4c6b5a81298
+    fileGuid: 71c1dcbfc357cde4a931acdac705470e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+  - id: 29
+    name: ipega BLUETOOTH Classic GamePad
+    joystickGuid: 560d9f5b-e8cd-4753-996d-782342f723fd
+    fileGuid: 8a320167d6be8bb4cbefb4f77e0ae23f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 30
+    name: 8Bitdo NES30
+    joystickGuid: 7939b1e7-3422-475c-ba5a-c47b303de2e3
+    fileGuid: f582cc7332b3acc44b2602257d6b8f6a
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 3
+      splitAxis: 1
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 2
+      splitAxis: 1
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 34
+    name: ipega Multi-Media Bluetooth Controller
+    joystickGuid: 186e538e-f995-409e-9dac-68a0afa714c4
+    fileGuid: 8781775f3250cb84e837f9a6d789b942
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 35
+    name: SteelSeries Free
+    joystickGuid: 064116a9-00d3-42c6-8875-e671b003dd0e
+    fileGuid: 1ba49b42a7c859a4fa4efbf57bef7d28
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+  - id: 36
+    name: Nyko Playpad Pro
+    joystickGuid: 4954a9ce-5a79-4b91-9059-eee8f17ff272
+    fileGuid: 467dcd0bc018415409ef89ef0a127cef
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 37
+    name: Nyko Playpad
+    joystickGuid: d16498f7-43b9-45c5-875a-83840f918e29
+    fileGuid: 456200858fc98d94592f4616ef3360ce
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 38
+    name: Gamecube Controller (Mayflash USB 2-port)
+    joystickGuid: e420e480-00bb-4bd4-b871-95f5f9f1a90d
+    fileGuid: 81f1ed74960dd9b48bfd5de10f395e96
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 39
+    name: Buffalo BGCFC801 NES Gamepad
+    joystickGuid: 7b244879-85b5-4b91-bcab-81c92f94d818
+    fileGuid: f37439def9763f043bc4b3dcebb0b52e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 3
+      splitAxis: 1
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 2
+      splitAxis: 1
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 40
+    name: MadCatz Micro C.T.R.L.R
+    joystickGuid: 0edfca03-23f0-4065-9435-27159bc75247
+    fileGuid: f24f41c79902d444cb9c85b30e5e17d6
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 3
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 2
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 41
+    name: Buffalo BSGP801 SNES Gamepad
+    joystickGuid: b25f3e47-d587-4d7c-8ccb-d834e35213fa
+    fileGuid: 2b887b409c566ef47a6bb5ecdb6833c0
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 3
+      splitAxis: 1
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 2
+      splitAxis: 1
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 42
+    name: Unity Preconfigured Gamepad
+    joystickGuid: 28e8a061-b376-4f1d-b6c6-6ca4a406059c
+    fileGuid: 210ce8f0c7c11b144bbed6b1b2ee612f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 45
+    name: Samsung Smartphone GamePad
+    joystickGuid: a97355b3-3c44-4f03-ad96-03a9e804c777
+    fileGuid: a7a3b1e248b756a41a43d848a4d6bb4c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+  - id: 47
+    name: Mayflash WiiU Pro Controller Adapter
+    joystickGuid: 470d8395-1fd3-4452-a86a-61cd3c2a6c87
+    fileGuid: b7555beb916fdb240946a8c456314f1c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 48
+    name: Moga Hero Power
+    joystickGuid: 6cb24ae0-a911-48ea-b11c-36bfeaa54fba
+    fileGuid: f8d6a9fae36bf8049bfe2a826adf5c13
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 49
+    name: Moga Pro Power
+    joystickGuid: 7e615592-9d24-4aa0-b12d-a854a726f37c
+    fileGuid: 202c7fe068759a44ba37902aacf581ba
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 50
+    name: SteelSeries Stratus XL (HID)
+    joystickGuid: 47b2af4b-4ed7-47cc-bac1-0ca5f40dd13b
+    fileGuid: adb1c7c9e4af1214e8aad8c668439293
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 51
+    name: '[STANDARDIZED GAMEPAD]'
+    joystickGuid: 04c23ab3-2b99-4404-a5c4-f0df7e62938f
+    fileGuid: 770a22fe483520746b98d10d6bfa723b
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 52
+    name: Razer Serval
+    joystickGuid: 4545b6f0-ce10-45be-bdee-52a2b0c1a96c
+    fileGuid: 1ccbc3795f0f144f6a61bcc35c4ea0cd
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 53
+    name: SteelSeries Stratus XL (MFi)
+    joystickGuid: 7ab64ae8-6c60-4fb5-850b-2ca9d245c887
+    fileGuid: 46e756e6a26ac41e0866892fbdaef490
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+  - id: 54
+    name: SteelSeries Nimbus (MFi)
+    joystickGuid: 09747016-5765-45a1-ac7b-fbf9c9ec3e2a
+    fileGuid: aad0ba8612167154c8221413c776cf26
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+  - id: 95
+    name: SteelSeries Nimbus+ (MFi)
+    joystickGuid: abda0c32-72f9-4918-90f5-cbe7edbd1c43
+    fileGuid: 6edd643fa9960c543ac4e3f29998a38a
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+  - id: 55
+    name: Thrustmaster Score-A
+    joystickGuid: f8d438bf-b248-4ff6-810c-084db03a5f7f
+    fileGuid: a651c1f2b3c166240955b7d410965076
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 56
+    name: XiaoMi Wireless Game Controller
+    joystickGuid: 1bcfc2c1-ee2c-4789-b1eb-bc871da34436
+    fileGuid: f11698b2b8346ac49a3d8d65d06b2627
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 57
+    name: Horipad Ultimate (MFi)
+    joystickGuid: 9c2ba5e1-d64d-4559-bbd6-09250ab87c9c
+    fileGuid: 63de6a6dd78215f47aac0880102bd423
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+  - id: 58
+    name: 8Bitdo FC30 Pro
+    joystickGuid: 84054a74-6b31-4342-9286-67f2ca931127
+    fileGuid: 2de1da9406378ec4895e7e41ba110568
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 72
+    name: 8Bitdo SNES30 and SFC30
+    joystickGuid: 7939b1e7-3422-475c-ba5a-c47b303de2e4
+    fileGuid: fa485c60aeeb46a4487bfa7fb7359a75
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 3
+      splitAxis: 1
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 2
+      splitAxis: 1
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 60
+    name: 8Bitdo Zero (wireless)
+    joystickGuid: 549c2612-815f-4656-a242-815f36e62bf4
+    fileGuid: 0c4661ff643806645a81195682e61a0e
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 3
+      splitAxis: 1
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 2
+      splitAxis: 1
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 65
+    name: Satechi ST-UBGC
+    joystickGuid: a8481053-229b-4e89-95bc-729069d577c0
+    fileGuid: 861f879f8377fa442997d510f0405e0f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 61
+    name: Zhidong N
+    joystickGuid: f814f772-c01d-4ef6-b037-07ba80df860f
+    fileGuid: b186918a3dc573d418a27db01de28d97
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 67
+    name: Zhidong N (Android Mode)
+    joystickGuid: 5fd2d100-cf24-463a-8292-b571955d97e5
+    fileGuid: 87aa295af3d3b82448809f03e665bd40
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 66
+    name: Zhidong V+ (Direct Input mode)
+    joystickGuid: 3f146646-34da-4f9d-9946-a6e405a8640b
+    fileGuid: 72e492b3613040a42a1e0f65b46977e4
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 68
+    name: Zhidong V+ (XInput mode)
+    joystickGuid: cc7eb367-06ed-4992-a67b-ee90e83d177b
+    fileGuid: 7e7529bbaedef4b4dae64ce9a394cadf
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 69
+    name: Zhidong N (XInput mode)
+    joystickGuid: 7a1d6431-06b0-4fd1-8597-5934d5d7ff63
+    fileGuid: 62fbf5c15be04534ba5481b7e58fdd23
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 70
+    name: Thrustmaster Dual Analog 3
+    joystickGuid: 8bf3582e-cc1c-4c09-9c69-a8ea04050d16
+    fileGuid: c70965609466c8f4eb3b220d97a0c0fb
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+  - id: 73
+    name: Elecom JC-U3312
+    joystickGuid: 1b32ce5f-55cb-432a-8fed-0c0aff612414
+    fileGuid: d7472ca496136ab4c9bdc72e2c3b3128
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+  - id: 74
+    name: Oculus Touch - Left
+    joystickGuid: af791365-96f2-4160-9ed6-b0b4f59259d0
+    fileGuid: 7b69f30fe572e6e40bc8ea5937acac47
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 75
+    name: Oculus Touch - Right
+    joystickGuid: bea8fcd6-2b0e-47d5-b690-ee611d811ed4
+    fileGuid: cf80366decf286845a889ef8bd8c39d1
+    elementIdentifierMappings:
+    - templateId: 2
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+  - id: 76
+    name: Oculus Remote
+    joystickGuid: c372a74c-32b5-4926-94e1-b74cc6cf20c3
+    fileGuid: 52bff7a274246f641a58d7c22b604e32
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 1
+      joystickId2: 3
+      splitAxis: 1
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 2
+      splitAxis: 1
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+  - id: 77
+    name: OpenVR Controller - Left (Unity)
+    joystickGuid: 9e887770-ca98-4794-b301-6c5ab57c7f8a
+    fileGuid: 850ae8baf1914314eb043f9bf01c1872
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+  - id: 78
+    name: OpenVR Controller - Right (Unity)
+    joystickGuid: 3eaa61f6-1f57-4d16-ab11-af7fc74b5640
+    fileGuid: bb64fb959113f5447a64cd4bb517fd18
+    elementIdentifierMappings:
+    - templateId: 2
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+  - id: 79
+    name: Nintendo Switch Joy-Con (L)
+    joystickGuid: 3eb01142-da0e-4a86-8ae8-a15c2b1f2a04
+    fileGuid: 9ec45b94bd8c5c145be4ea6830db80be
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+  - id: 80
+    name: Nintendo Switch Joy-Con (R)
+    joystickGuid: 605dc720-1b38-473d-a459-67d5857aa6ea
+    fileGuid: 80487ad48e254e343a231e8344cb22b4
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+  - id: 83
+    name: Nintendo Switch Joy-Con (Dual)
+    joystickGuid: 521b808c-0248-4526-bc10-f1d16ee76bf1
+    fileGuid: 737eae044d53fc94b9c28b110fbb6019
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 84
+    name: Nintendo Switch Joy-Con (Attached)
+    joystickGuid: 1fbdd13b-0795-4173-8a95-a2a75de9d204
+    fileGuid: c2c9ba16ad481a743b4a1857caf45c8c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 82
+    name: Nintendo Switch Pro Controller
+    joystickGuid: 7bf3154b-9db8-4d52-950f-cd0eed8a5819
+    fileGuid: bab987e4a193e39429f4d1826e07fad8
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 85
+    name: Atari Jaguar Gamepad
+    joystickGuid: f1a9b442-f42a-450a-bc75-5e7998658fd3
+    fileGuid: 8c63fd25535ce7c48baac52091effb5f
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+  - id: 86
+    name: Mayflash N64 Adapter (2-port)
+    joystickGuid: 108946f0-7404-4d3e-a427-6b7f33103f28
+    fileGuid: 8731720e2f07247409ad527524844284
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+  - id: 87
+    name: GameSir G3 Series
+    joystickGuid: 81e23f98-9a7c-4d66-8dcd-65eb0bf151be
+    fileGuid: b5c24589e9394e9469e02e159cd4b300
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 88
+    name: GameSir G4 Series
+    joystickGuid: fb783f0c-18d9-4eda-add6-b5f57d9e9918
+    fileGuid: b5c24589e9394e9469e02e159cd4b300
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 89
+    name: 8Bitdo RB8-64
+    joystickGuid: 9236c24c-5b45-40fb-b6bc-5b5269fa33dc
+    fileGuid: 0b0721dbd1ad3554a8ac4e4928b8547a
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+  - id: 90
+    name: Steam Controller (emulated)
+    joystickGuid: 2694f4b9-9d84-4f55-9ee8-78fbba744b7d
+    fileGuid: 5c669fd16bb10994dbff55501bb6e4e9
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 91
+    name: 8Bitdo SN30 Pro / SF30 Pro
+    joystickGuid: 6d33fb97-9b0b-4100-a015-668acb50eeeb
+    fileGuid: 2c3abc1af66b5a048846463a3436068a
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 92
+    name: Thrustmaster FireStorm Dual Power
+    joystickGuid: 03647eb4-aecd-4cf0-a7a4-1f677da5cdc9
+    fileGuid: 5dfd51f303db12c47adb859f6c94a7ef
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+  - id: 93
+    name: Stadia Gamepad
+    joystickGuid: cadc4137-a139-4baa-bcbc-faddb8fd03b1
+    fileGuid: 4454cb89c8ca0994493486094e90e9f1
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+  - id: 94
+    name: Sony Aim Controller
+    joystickGuid: 65ea105c-6390-4d11-a49b-13a402b1f2d9
+    fileGuid: b647750ae970617478e5d358cf1b0dbf
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 96
+    name: Sony DualSense
+    joystickGuid: 5286706d-19b4-4a45-b635-207ce78d8394
+    fileGuid: 3cab29e88959c2d42911cf27a48f2163
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  specialElements:
+  - elementIdentifierId: 23
+    data: '{"eid_axisX":0,"eid_axisY":1,"eid_button":17}'
+  - elementIdentifierId: 24
+    data: '{"eid_axisX":2,"eid_axisY":3,"eid_button":18}'
+  - elementIdentifierId: 25
+    data: '{"eid_up":19,"eid_right":20,"eid_down":21,"eid_left":22}'
+  elementIdentifierIdCounter: 26
+  joystickIdCounter: 97

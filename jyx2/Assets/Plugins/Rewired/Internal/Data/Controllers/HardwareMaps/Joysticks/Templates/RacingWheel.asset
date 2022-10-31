@@ -1,0 +1,2127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1351212051, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
+  m_Name: RacingWheel
+  m_EditorClassIdentifier: 
+  controllerName: Racing Wheel
+  description: 
+  templateGuid: 104e31d8-9115-4dd5-a398-2e54d35e6c83
+  className: RacingWheelTemplate
+  elementIdentifiers:
+  - _id: 0
+    _name: Wheel
+    _positiveName: Wheel Right
+    _negativeName: Wheel Left
+    _elementType: 0
+    _scriptingName: wheel
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 1
+    _name: Accelerator
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: accelerator
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 2
+    _name: Brake
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: brake
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 3
+    _name: Clutch
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: clutch
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 4
+    _name: Shift Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shiftDown
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 5
+    _name: Shift Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shiftUp
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 6
+    _name: Wheel Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 7
+    _name: Wheel Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 8
+    _name: Wheel Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 9
+    _name: Wheel Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 10
+    _name: Wheel Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 11
+    _name: Wheel Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 12
+    _name: Wheel Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 13
+    _name: Wheel Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 14
+    _name: Wheel Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 15
+    _name: Wheel Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheelButton10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 16
+    _name: Console Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 17
+    _name: Console Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 18
+    _name: Console Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 19
+    _name: Console Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 20
+    _name: Console Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 21
+    _name: Console Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 22
+    _name: Console Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 23
+    _name: Console Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 24
+    _name: Console Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 25
+    _name: Console Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 26
+    _name: Shifter 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter1
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 27
+    _name: Shifter 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter2
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 28
+    _name: Shifter 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter3
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 29
+    _name: Shifter 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter4
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 30
+    _name: Shifter 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter5
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 31
+    _name: Shifter 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter6
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 32
+    _name: Shifter 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter7
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 33
+    _name: Shifter 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter8
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 34
+    _name: Shifter 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter9
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 35
+    _name: Shifter 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: shifter10
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 44
+    _name: Reverse Gear
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: reverseGear
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 36
+    _name: Select
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: select
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 37
+    _name: Start
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: start
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 38
+    _name: System Button
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: systemButton
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 43
+    _name: Horn
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: horn
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 39
+    _name: D-Pad Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadUp
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 40
+    _name: D-Pad Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadRight
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 41
+    _name: D-Pad Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadDown
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 42
+    _name: D-Pad Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: dPadLeft
+    _alternateScriptingName: 
+    _excludeFromExport: 1
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  - _id: 45
+    _name: D-Pad
+    _positiveName: 
+    _negativeName: 
+    _elementType: 4
+    _scriptingName: dPad
+    _alternateScriptingName: 
+    _excludeFromExport: 0
+    _useEditorElementTypeOverride: 0
+    _editorElementTypeOverride: 0
+  joysticks:
+  - id: 0
+    name: Logitech G25
+    joystickGuid: 12ed988a-b95b-4175-91e5-22b870f4b3f1
+    fileGuid: 6aeba615ab8394c43b0f67bc9be1c6da
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+  - id: 1
+    name: Logitech G27
+    joystickGuid: 96405233-2f1c-4aa5-a73a-ae2cdf580633
+    fileGuid: 5b4ec7826eed24222ba948f77f2fa65c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 18
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 22
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 23
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+  - id: 2
+    name: Logitech G29
+    joystickGuid: 57379f00-0b2b-4f01-8bc5-5e9bef307350
+    fileGuid: 54338de8d46db2449af94046055c161c
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+  - id: 12
+    name: Logitech G920
+    joystickGuid: 0f5ba315-3e83-4237-8374-28bea596914d
+    fileGuid: 0709046a0fd63764babf9e69b062bbee
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+  - id: 9
+    name: Thrustmaster FFB Wheel
+    joystickGuid: a50d2bcc-7649-462b-9461-74510dbea474
+    fileGuid: 1f79a2aea78f58646aa6348d3a97b1a3
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 3
+    name: Thrustmaster F430
+    joystickGuid: 4ceadb5b-316a-4994-9d98-a644fa515a75
+    fileGuid: 1eebf7efc8bda234282ef13ff5a825a3
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+  - id: 4
+    name: ThrustMaster T150
+    joystickGuid: 4d577f61-89a2-4c3f-92eb-e313214907b3
+    fileGuid: b4d506bcfb54a344c9f3f68bea11d657
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 5
+    name: Thrustmaster T300 RS
+    joystickGuid: 5a29807c-5915-4af3-8841-cb4c40c15541
+    fileGuid: f2dd8718315e730418fc148089a673ec
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 10
+    name: Thrustmaster T500 RS
+    joystickGuid: e46e540d-2ae9-4198-91a3-b988efc45b28
+    fileGuid: 2d5946819e6a7604e9215e4ec1cda8b1
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 8
+    name: Thrustmaster TH8A Shifter
+    joystickGuid: 7eca62aa-762d-4c58-bf20-f767320dc7bd
+    fileGuid: 559012aaa7bf4a047bca356093787995
+    elementIdentifierMappings:
+    - templateId: 26
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+  - id: 11
+    name: Thrustmaster T3PA Pedals
+    joystickGuid: 630123dd-9f69-4cf2-9ad5-79d557318d66
+    fileGuid: a60184a06f4e6b74eaa1a61a47f602d3
+    elementIdentifierMappings:
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+  - id: 6
+    name: Fanatec Porsche 911 Turbo S
+    joystickGuid: fe653e2a-aeba-426c-8856-954f37d4d84c
+    fileGuid: 5172655583bc9c94f8f5eca9f44266aa
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 26
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+  - id: 7
+    name: Saitek Heavy Equip Wheel & Pedal
+    joystickGuid: 8a78ec94-5674-420e-9e15-abbee68d11ce
+    fileGuid: 2ee88f97f16cab24bbd1e996a9721812
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 13
+    name: Logitech MOMO
+    joystickGuid: f26d10b0-4488-4ed0-8d11-a7d9b71d1d50
+    fileGuid: d604681f0d3a82d488e5cc5650c38595
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+  - id: 14
+    name: Logitech Driving Force GT
+    joystickGuid: a6b952df-1dee-4b0b-92d2-d124f230e9b1
+    fileGuid: 61b8b45ce0d7f6840b81320de46d0284
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+  - id: 15
+    name: Thrustmaster FreeStyler Bike
+    joystickGuid: c87a944a-9bc7-4043-ab22-75ce682c0362
+    fileGuid: bd7d5c0c34396c348ac8c50237ce7919
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+  - id: 16
+    name: XInput Wheel
+    joystickGuid: 49d3b7cb-2572-454e-bdd1-ea83e1d744e8
+    fileGuid: 8fbde7dec15699945a8797cfc0cf37f2
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  - id: 17
+    name: Thrustmaster Ferrari 458
+    joystickGuid: 82fe0c2a-80b7-4226-8cda-22b5f6bc6014
+    fileGuid: bd7bc65f4bae14b4cae2fed6714f46ae
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 5
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+  - id: 18
+    name: Sony PS4 Steering Wheel
+    joystickGuid: 1b5a521b-6833-4c54-ab6c-bac653c93e9c
+    fileGuid: 973630cd12acc694a9d661dd9c3c53e2
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 6
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 10
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 11
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 12
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+  specialElements:
+  - elementIdentifierId: 45
+    data: '{"eid_up":39,"eid_right":40,"eid_down":41,"eid_left":42,"eid_press":-1}'
+  elementIdentifierIdCounter: 46
+  joystickIdCounter: 19
