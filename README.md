@@ -142,6 +142,7 @@
 以下插件仅供学习使用，若希望使用它还请自行购买重新导入：<br>
 [Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
 , [GPU Instancer](https://assetstore.unity.com/packages/tools/utilities/gpu-instancer-117566)
+, [Rewired](https://assetstore.unity.com/packages/tools/utilities/rewired-21676)
 
 ## 社区
 
