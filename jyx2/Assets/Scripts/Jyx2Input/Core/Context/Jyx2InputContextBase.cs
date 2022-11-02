@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Jyx2.InputCore
 {
@@ -25,6 +26,18 @@ namespace Jyx2.InputCore
         public virtual void OnUpdate()
         {
            
+        }
+
+        public static GameObject CurrentSelect
+        {
+            get
+            {
+                return EventSystem.current?.currentSelectedGameObject;
+            }
+            set
+            {
+                EventSystem.current?.SetSelectedGameObject(value);
+            }
         }
     }
 }

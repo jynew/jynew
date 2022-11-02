@@ -117,53 +117,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 		return ColorStringDefine.main_menu_selected;
 	}
 
-	protected override bool captureGamepadAxis
-	{
-		get { return true; }
-	}
-
-
-	protected override void handleGamepadButtons()
-	{
-		if (m_panelType != PanelType.NewGamePage
-			&& m_panelType != PanelType.LoadGamePage
-			&& m_panelType != PanelType.PropertyPage
-			&& !ReleaseNote_Panel.gameObject.activeSelf)
-			base.handleGamepadButtons();
-		else
-		{
-			if (gameObject.activeSelf)
-				if (GamepadHelper.IsConfirm())
-				{
-					if (m_panelType == PanelType.NewGamePage)
-					{
-						OnCreateBtnClicked();
-					}
-					else if (m_panelType == PanelType.PropertyPage)
-					{
-						OnCreateRoleYesClick();
-					}
-				}
-				else if (GamepadHelper.IsCancel())
-				{
-					if (m_panelType == PanelType.NewGamePage
-						|| m_panelType == PanelType.LoadGamePage) //save/ load panel has its own logic to close/ hide themself
-					{
-						OnBackBtnClicked();
-					}
-					else if (m_panelType == PanelType.PropertyPage)
-					{
-						OnCreateRoleNoClick();
-					}
-					else if (ReleaseNote_Panel.gameObject.activeSelf)
-					{
-						ReleaseNote_Panel.gameObject.SetActive(false);
-					}
-				}
-		}
-	}
-
-
 
 	protected override void OnShowPanel(params object[] allParams)
 	{
@@ -171,93 +124,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 		OnStart();
 		AudioManager.PlayMusic(16);
 		m_panelType = PanelType.Home;
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
-		{
-			OnDirectionalDown();
-		});
-
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
-		{
-			OnDirectionalUp();
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
-		{
-			onButtonClick();
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
-		{
-			if (m_panelType == PanelType.NewGamePage || m_panelType == PanelType.LoadGamePage)//save/ load panel has its own logic to close/ hide themself
-			{
-				OnBackBtnClicked();
-			}
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Return, () =>
-		{
-			if (m_panelType == PanelType.NewGamePage)
-			{
-				onButtonClick(); //OnCreateBtnClicked();
-			}
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Y, () =>
-		{
-			if (m_panelType == PanelType.PropertyPage)
-			{
-				OnCreateRoleYesClick();
-			}
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.N, () =>
-		{
-			if (m_panelType == PanelType.PropertyPage)
-			{
-				OnCreateRoleNoClick();
-			}
-		});
-	}
-
-	private void toggleButtonOutline(Button button, bool on)
-	{
-		var outline = button?.gameObject.GetComponentInChildren<Outline>();
-		if (outline != null)
-			outline.enabled = on;
-	}
-
-	int current_selection_x = 3;
-
-	private void selectBottomButton(int index)
-	{
-		current_selection_x = index;
-		isXSelection = index > -1;
-
-		for (var i = 0; i < bottomButtons.Count; i++)
-		{
-			var button = bottomButtons[i];
-			toggleButtonOutline(button, i == current_selection_x);
-		}
-
-		if (index > -1)
-			changeCurrentSelection(-1);
-	}
-
-	private void onButtonClick()
-	{
-		if (m_panelType == PanelType.Home)
-		{
-			if (main_menu_index == NewGameIndex)
-			{
-				OnNewGameClicked();
-			}
-			else if (main_menu_index == LoadGameIndex)
-			{
-				OnLoadGameClicked();
-			}else if (main_menu_index == SettingsIndex)
-			{
-				OpenSettingsPanel();
-			}
-			else if (main_menu_index == QuitGameIndex)
-			{
-				OnQuitGameClicked();
-			}
-		}
 	}
 
 	public void OnNewGameClicked()
@@ -271,23 +137,11 @@ public partial class GameMainMenu : Jyx2_UIBase
 	public async void OnLoadGameClicked()
 	{
 		m_panelType = PanelType.LoadGamePage;
-		//---------------------------------------------------------------------------
-		//await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
-		//{
-		//    if (!StoryEngine.DoLoadGame(index) && m_panelType==PanelType.LoadGamePage){
-		//        OnNewGame();
-		//    }
-		//}),"选择读档位", new Action(() =>
-		//{
-		//    m_panelType = PanelType.Home;
-		//}));
-		//---------------------------------------------------------------------------
-		//特定位置的翻译【读档时候的Title显示】
-		//---------------------------------------------------------------------------
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((archiveIndex) =>
 		{
 			var summary = GameSaveSummary.Load(archiveIndex);
-			if (summary.ModId != null && !summary.ModId.ToLower().Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
+			var modId = summary.ModId.ToLower();
+			if (!modId.Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
 			{
 				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
 				string msg = "该存档MOD不匹配，载入可能导致数据错乱，是否继续？";
@@ -485,14 +339,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 	protected override void OnHidePanel()
 	{
 		base.OnHidePanel();
-		//释放资源
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
-		//GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Return);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Y);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.N);
 	}
 
 	public void OnOpenURL(string url)
@@ -515,39 +361,4 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanelNew)).Forget();
 	}
-	
-	bool isXSelection = false;
-
-	protected override void OnDirectionalLeft()
-	{
-		var nextSelectionX = (current_selection_x <= 0) ? bottomButtons.Count - 1 : current_selection_x - 1;
-
-		selectBottomButton(nextSelectionX);
-	}
-
-	protected override void OnDirectionalRight()
-	{
-		var nextSelectionX = (current_selection_x >= bottomButtons.Count - 1) ? 0 : current_selection_x + 1;
-
-		selectBottomButton(nextSelectionX);
-	}
-
-	protected override void changeCurrentSelection(int num)
-	{
-		base.changeCurrentSelection(num);
-
-		if (num > -1)
-			selectBottomButton(-1);
-	}
-
-	protected override void buttonClickAt(int position)
-	{
-		if (!isXSelection)
-			base.buttonClickAt(position);
-		else
-		{
-			bottomButtons[current_selection_x]?.onClick?.Invoke();
-		}
-	}
-
 }

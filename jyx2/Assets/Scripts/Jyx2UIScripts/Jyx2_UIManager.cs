@@ -17,6 +17,7 @@ using i18n.TranslatorDef;
 using Jyx2;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
+using Rewired.Integration.UnityUI;
 using UnityEngine;
 
 public enum UILayer 
@@ -41,6 +42,10 @@ public class Jyx2_UIManager : MonoBehaviour
                 obj.gameObject.name = "MainCanvas";
                 _instace = obj.GetComponent<Jyx2_UIManager>();
                 _instace.Init();
+                
+                var rewiredInputModule = obj.GetComponentInChildren<RewiredStandaloneInputModule>();
+                rewiredInputModule.RewiredInputManager = FindObjectOfType<Rewired.InputManager>();
+                
                 DontDestroyOnLoad(_instace);
             }
             return _instace;

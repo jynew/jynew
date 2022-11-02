@@ -1,4 +1,5 @@
 ﻿using Jyx2;
+using Jyx2.InputCore.UI;
 using Jyx2.Util;
 using Rewired;
 using Sirenix.OdinInspector;
@@ -47,12 +48,23 @@ namespace Jyx2.InputCore
                 return;
             }
             m_Contexts.Add(inputContext);
+            
+            if (inputContext is Jyx2Input_UIContext uiContext)
+            {
+                uiContext.TrySelectMyUIObject();
+            }
         }
 
         public void RemoveInputContext(IJyx2_InputContext inputContext)
         {
             if (inputContext == null)
                 return;
+            
+            if(CurrentContext == inputContext && inputContext is Jyx2Input_UIContext uiContext)
+            {
+                uiContext.TryStoreLastSelect();
+            }
+            
             m_Contexts.Remove(inputContext);
         }
 

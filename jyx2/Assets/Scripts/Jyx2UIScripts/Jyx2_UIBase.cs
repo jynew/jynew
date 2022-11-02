@@ -190,9 +190,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			{
 				callback();
 			});
-			var nav = Navigation.defaultNavigation;
-			nav.mode = Navigation.Mode.None;
-			button.navigation = nav;
 		}
 	}
 
