@@ -9,7 +9,7 @@ namespace Jyx2.InputCore
 {
     [AddComponentMenu("")]
     [DisallowMultipleComponent]
-    public class Jyx2InputContextBase:MonoBehaviour,IJyx2InputContext
+    public class Jyx2InputContextBase:MonoBehaviour,IJyx2_InputContext
     {
         
         protected virtual void OnEnable()

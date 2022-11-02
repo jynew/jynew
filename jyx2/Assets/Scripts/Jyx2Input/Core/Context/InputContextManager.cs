@@ -10,10 +10,10 @@ namespace Jyx2.InputCore
 {
     public class InputContextManager : Singleton<InputContextManager>
     {
-        private List<IJyx2InputContext> m_Contexts = new List<IJyx2InputContext>();
+        private List<IJyx2_InputContext> m_Contexts = new List<IJyx2_InputContext>();
         
 
-        public IJyx2InputContext CurrentContext
+        public IJyx2_InputContext CurrentContext
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Jyx2.InputCore
             base.Init();
         }
 
-        public void AddInputContext(IJyx2InputContext inputContext)
+        public void AddInputContext(IJyx2_InputContext inputContext)
         {
             if (inputContext == null)
                 return;
@@ -49,7 +49,7 @@ namespace Jyx2.InputCore
             m_Contexts.Add(inputContext);
         }
 
-        public void RemoveInputContext(IJyx2InputContext inputContext)
+        public void RemoveInputContext(IJyx2_InputContext inputContext)
         {
             if (inputContext == null)
                 return;
