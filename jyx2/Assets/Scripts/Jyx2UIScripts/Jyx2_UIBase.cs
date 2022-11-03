@@ -126,7 +126,7 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			LevelMaster.Instance.GetPlayer().locomotionController.playerControllable = true;
 		}
 
-		VisibilityToggled.Invoke(this, false);
+		VisibilityToggled?.Invoke(this, false);
 	}
 
 	protected Button[] activeButtons

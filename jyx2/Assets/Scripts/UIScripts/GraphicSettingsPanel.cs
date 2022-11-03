@@ -7,17 +7,15 @@
  *
  * 金庸老先生千古！
  */
+using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
-using Object = System.Object;
-using StylizedWater;
 
-public class GraphicSettingsPanel : Jyx2_UIBase
+public class GraphicSettingsPanel : Jyx2_UIBase,ISettingChildPanel
 {
     public Toggle m_FogToggle;
     public Toggle m_PostToggle;
@@ -30,8 +28,6 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     public Dropdown m_ShaderLodLevelropdown;
     public Dropdown m_ShadowQualityDropdown;
     public Dropdown m_ShadowShowLevelDropdown;
-
-    public Button m_CloseButton;
 
     private GraphicSetting _graphicSetting;
     // Start is called before the first frame update
@@ -52,18 +48,19 @@ public class GraphicSettingsPanel : Jyx2_UIBase
         m_ShaderLodLevelropdown.onValueChanged.AddListener(DropdownShaderLodLevel);
         m_ShadowQualityDropdown.onValueChanged.AddListener(DropdownShadowQuality);
         m_ShadowShowLevelDropdown.onValueChanged.AddListener(DropdownShadowShowLevel);
-
-
-        m_CloseButton.onClick.AddListener(Close);
     }
 
-    void Close()
+    public void ApplySetting()
     {
         _graphicSetting.Save();
         _graphicSetting.Execute();
-        Jyx2_UIManager.Instance.HideUI(nameof(GameSettingsPanel));
     }
-    
+
+    public void SetVisibility(bool isVisible)
+    {
+        gameObject.SetActive(isVisible);
+    }
+
     public void InitUI()
     {
         m_FogToggle.isOn = _graphicSetting.HasFog == 1;
@@ -185,17 +182,4 @@ public class GraphicSettingsPanel : Jyx2_UIBase
     {
         IsBlockControl = true;
     }
-
-	protected override void handleGamepadButtons()
-	{
-		//only allow close setting for now, so at least this UI can be closed via gamepad
-        if (gameObject.activeSelf)
-		{
-            if(GamepadHelper.IsConfirm() 
-                ||GamepadHelper.IsCancel())
-			{
-                Close();
-			}
-		}
-	}
 }
