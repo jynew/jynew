@@ -26,30 +26,50 @@ namespace Jyx2.InputCore
 
         private bool IsLoading => Jyx2_UIManager.Instance.IsUIOpen(nameof(LoadingPanel));
 
+        public override void Init()
+        {
+            base.Init();
+            Jyx2_Input.OnControllerChange += OnControllerChange;
+        }
 
         public override void DeInit()
         {
             base.DeInit();
             m_Contexts.Clear();
+            Jyx2_Input.OnControllerChange -= OnControllerChange;
         }
 
-        public override void Init()
+        private void OnControllerChange(Controller lastActiveController)
         {
-            base.Init();
-        }
-
-        public void AddInputContext(IJyx2_InputContext inputContext)
-        {
-            if (inputContext == null)
+            if (lastActiveController == null)
                 return;
-            if (m_Contexts.Contains(inputContext))
+            if(lastActiveController.type != ControllerType.Keyboard
+                && lastActiveController.type == ControllerType.Joystick)
             {
-                Debug.LogError("Try add duplicate context:" + inputContext);
                 return;
             }
-            m_Contexts.Add(inputContext);
+            if (CurrentContext is Jyx2Input_UIContext uiContext && uiContext.NoValidSelect)
+            {
+                uiContext.TrySelectMyUIObject();
+            }
+        }
+
+
+        public void AddInputContext(IJyx2_InputContext newContext)
+        {
+            if (newContext == null)
+                return;
+            if (m_Contexts.Contains(newContext))
+            {
+                Debug.LogError("Try add duplicate context:" + newContext);
+                return;
+            }
+
+            TryStoreLastSelectObject(CurrentContext);
+
+            m_Contexts.Add(newContext);
             
-            if (inputContext is Jyx2Input_UIContext uiContext)
+            if (newContext is Jyx2Input_UIContext uiContext)
             {
                 uiContext.TrySelectMyUIObject();
             }
@@ -59,13 +79,29 @@ namespace Jyx2.InputCore
         {
             if (inputContext == null)
                 return;
-            
-            if(CurrentContext == inputContext && inputContext is Jyx2Input_UIContext uiContext)
+
+            TryStoreLastSelectObject(inputContext);
+
+            m_Contexts.Remove(inputContext);
+
+            TrySelectCurrentContextUIObject();
+        }
+        
+        private void TryStoreLastSelectObject(IJyx2_InputContext contextToStore)
+        {
+            if (CurrentContext == contextToStore && contextToStore is Jyx2Input_UIContext uiContext)
             {
                 uiContext.TryStoreLastSelect();
             }
-            
-            m_Contexts.Remove(inputContext);
+        }
+        
+
+        private void TrySelectCurrentContextUIObject()
+        {
+            if (m_Contexts.Count > 0 && CurrentContext is Jyx2Input_UIContext newUIContext)
+            {
+                newUIContext.TrySelectMyUIObject();
+            }
         }
 
 

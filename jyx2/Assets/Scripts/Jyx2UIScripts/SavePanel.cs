@@ -42,39 +42,6 @@ public partial class SavePanel : Jyx2_UIBase
 		BindListener(BackButton_Button, OnBackClick, false);
 	}
 
-	private void OnEnable()
-	{
-		if (!IsInGameOverPage)
-		{
-			GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
-		}
-
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.UpArrow, () =>
-		{
-			OnDirectionalUp();
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.DownArrow, () =>
-		{
-			OnDirectionalDown();
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Space, () =>
-		{
-			if (current_selection != -1)
-			{
-				OnSaveItemClick(current_selection);
-			}
-		});
-	}
-
-	private void OnDisable()
-	{
-		current_selection = -1;
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.DownArrow);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.UpArrow);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Space);
-	}
-
 	public void Show()
 	{
 		InitTrans();
@@ -83,8 +50,6 @@ public partial class SavePanel : Jyx2_UIBase
 			StoryEngine.DoLoadGame(index);
 		}), "");
 	}
-
-	volatile static int _current_selection = 0;
 
 	protected override void OnShowPanel(params object[] allParams)
 	{
@@ -101,62 +66,6 @@ public partial class SavePanel : Jyx2_UIBase
 		(ImButton_Button.gameObject).SetActive(!isHouse);
 		(ExButton_Button.gameObject).SetActive(!isHouse);
 		RefreshSave();
-		current_selection = _current_selection;
-		hiliteSaveItem();
-	}
-
-	protected override bool resetCurrentSelectionOnShow => false;
-
-	void ChangeSelection(int num)
-	{
-		current_selection += num;
-		_current_selection = current_selection;
-		hiliteSaveItem();
-	}
-
-	private void hiliteSaveItem()
-	{
-		for (int i = 0; i < GameConst.SAVE_COUNT; i++)
-		{
-			var btn = SaveParent_RectTransform.gameObject.transform.GetChild(i).GetComponent<Button>();
-			var text = btn.transform.Find("SummaryText").GetComponent<Text>();
-			text.color = i == current_selection
-				? ColorStringDefine.save_selected
-				: ColorStringDefine.save_normal;
-			text.fontStyle = FontStyle.Bold;
-		}
-	}
-
-	protected override bool captureGamepadAxis
-	{
-		get { return true; }
-	}
-
-	protected override void OnDirectionalDown()
-	{
-		if (current_selection < 2) ChangeSelection(1);
-
-	}
-
-	protected override void OnDirectionalUp()
-	{
-		if (current_selection > 0) ChangeSelection(-1);
-	}
-
-	protected override void handleGamepadButtons()
-	{
-		if (gameObject.activeSelf)
-			if (GamepadHelper.IsConfirm())
-			{
-				if (current_selection != -1)
-				{
-					OnSaveItemClick(current_selection);
-				}
-			}
-			else if (GamepadHelper.IsCancel())
-			{
-				OnBackClick();
-			}
 	}
 
 	void RefreshSave()
@@ -203,10 +112,8 @@ public partial class SavePanel : Jyx2_UIBase
 
 			date.text = dateText;
 
-			BindListener(btn, new Action(() =>
-			{
-				OnSaveItemClick(int.Parse(btn.name));
-			}), false);
+			int btnIdx = i;
+			BindListener(btn, () => OnSaveItemClick(btnIdx), false);
 		}
 	}
 
@@ -223,7 +130,7 @@ public partial class SavePanel : Jyx2_UIBase
 		cb?.Invoke(index);
 	}
 
-	private void OnBackClick()
+	public void OnBackClick()
 	{
 		if (!IsInGameOverPage)
 		{

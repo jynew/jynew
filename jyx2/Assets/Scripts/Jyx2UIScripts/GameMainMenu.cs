@@ -239,7 +239,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		BindListener(this.YesBtn_Button, OnCreateRoleYesClick, false);
 		BindListener(this.NoBtn_Button, OnCreateRoleNoClick, false);
 	}
-	private void OnCreateRoleYesClick()
+	public void OnCreateRoleYesClick()
 	{
 		//reset mode, fix bug or quit game and new game again on main menu goes straight to property panel
 		m_panelType = PanelType.Home;
@@ -268,7 +268,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 			player.OnSceneLoad().Forget();
 		});
 	}
-	private void OnCreateRoleNoClick()
+	public void OnCreateRoleNoClick()
 	{
 		DoGeneratePlayerRole();
 	}
@@ -316,7 +316,10 @@ public partial class GameMainMenu : Jyx2_UIBase
 			int value = 0;
 			if (cheating) //秘籍
 			{
-				value = item.DefaulMax;
+				if (i == 0) //作弊状况下内力性质永远中性调和
+					value = (int)Jyx2_MpType.Neutral;
+				else
+					value = item.DefaulMax;
 			}
 			else
 			{

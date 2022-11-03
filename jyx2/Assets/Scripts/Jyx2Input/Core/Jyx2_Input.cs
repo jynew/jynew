@@ -44,7 +44,7 @@ namespace Jyx2.InputCore
             return CurrentPlayer.GetAnyButtonDown();
         }
 
-
+        #region poll actions
         public static bool GetButtonDown(int actionId)
         {
             if (!IsPlayerValid)
@@ -66,7 +66,7 @@ namespace Jyx2.InputCore
             return CurrentPlayer.GetAxis(actionId);
         }
         
-        public static Vector2 GetAxis(int xActionId, int yActionId)
+        public static Vector2 GetAxis2D(int xActionId, int yActionId)
         {
             if (!IsPlayerValid)
                 return Vector2.zero;
@@ -80,6 +80,32 @@ namespace Jyx2.InputCore
             return CurrentPlayer.GetButton(actionId);
         }
 
+        public static bool GetButtonDown(Jyx2PlayerAction actionId)
+        {
+            return GetButtonDown((int)actionId);
+        }
+
+        public static bool GetButtonUp(Jyx2PlayerAction actionId)
+        {
+            return GetButtonUp((int)actionId);
+        }
+
+        public static float GetAxis(Jyx2PlayerAction actionId)
+        {
+            return GetAxis((int)actionId);
+        }
+
+        public static Vector2 GetAxis2D(Jyx2PlayerAction xActionId, Jyx2PlayerAction yActionId)
+        {
+            return GetAxis2D((int)xActionId, (int)yActionId);
+        }
+
+        public static bool GetButton(Jyx2PlayerAction actionId)
+        {
+            return GetButton((int)actionId);
+        }
+
+        #endregion
         public static RController GetLastActiveController()
         {
             if (!IsPlayerValid)

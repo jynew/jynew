@@ -12,7 +12,7 @@ namespace Jyx2.InputCore.UI
         [SerializeField]
         private GameObject m_LastSelect;
 
-        protected bool NoValidSelect
+        public bool NoValidSelect
         {
             get
             {
