@@ -52,6 +52,8 @@ public class GraphicSettingsPanel : Jyx2_UIBase,ISettingChildPanel
 
     public void ApplySetting()
     {
+        if (_graphicSetting == null)
+            return;
         _graphicSetting.Save();
         _graphicSetting.Execute();
     }
@@ -126,7 +128,6 @@ public class GraphicSettingsPanel : Jyx2_UIBase,ISettingChildPanel
     {
         var value = SetDropDown(m_ShadowShowLevelDropdown, index, _graphicSetting.ShadowShowLevel);
         if (value == null) return;
-
         _graphicSetting.ShadowShowLevel = (ShadowShowLevelEnum)value;
     }
 

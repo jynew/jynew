@@ -72,7 +72,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
     void Start()
     {
         Debug.Log("GeneralSettingsPanel Start()");
-        _graphicSetting = GraphicSetting.GlobalSetting;
 
         InitWindowDropdown();
         InitResolutionDropdown();
@@ -103,8 +102,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
 
     public void ApplySetting()
     {
-        _graphicSetting.Save();
-        _graphicSetting.Execute();
+        
     }
 
     public void SetVisibility(bool isVisible)
