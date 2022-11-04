@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Jyx2.InputCore.UI
 {
@@ -11,6 +12,11 @@ namespace Jyx2.InputCore.UI
 
         [SerializeField]
         private GameObject m_LastSelect;
+
+        [SerializeField]
+        [LabelText("手动控制激活时的UI对象选择")]
+        private bool m_ManualControlSelect = false;
+        
 
         public bool NoValidSelect
         {
@@ -29,7 +35,9 @@ namespace Jyx2.InputCore.UI
         
         public void TrySelectMyUIObject()
         {
-            if(m_LastSelect != null && CurrentSelect != m_LastSelect)
+            if (m_ManualControlSelect)
+                return;
+            if (m_LastSelect != null && CurrentSelect != m_LastSelect)
             {
                 CurrentSelect = m_LastSelect;
                 return;
@@ -40,6 +48,8 @@ namespace Jyx2.InputCore.UI
 
         public void TryStoreLastSelect()
         {
+            if (m_ManualControlSelect)
+                return;
             var selectObject = CurrentSelect;
             if (selectObject == null)
             {
