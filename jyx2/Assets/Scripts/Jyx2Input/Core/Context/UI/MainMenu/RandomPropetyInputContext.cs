@@ -20,7 +20,7 @@ namespace Jyx2.InputCore.UI
         
         private void InitKeyboardCheatInput()
         {
-            var cheatCommands = new[] { KeyCode.B, KeyCode.A, KeyCode.B, KeyCode.Y, KeyCode.R, KeyCode.U, KeyCode.T, KeyCode.H };
+            var cheatCommands = new[] { KeyCode.B, KeyCode.A, KeyCode.B, KeyCode.E, KeyCode.R, KeyCode.U, KeyCode.T, KeyCode.H };
             var keys = new HashSet<KeyCode>(cheatCommands);
             var cheatEvent = MakeKeycodeStream(keys).Buffer(cheatCommands.Length, 1)
                                                      .Where(xs => xs.SequenceEqual(cheatCommands));
