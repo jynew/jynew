@@ -38,7 +38,13 @@ namespace Jyx2.InputCore
 
         [LabelText("UI右选项切换")]
         UISwitchRight = 9,
-        
+
+        [LabelText("特殊UI确认YES")]
+        UI_Yes = 10,
+
+        [LabelText("特殊UI否认NO")]
+        UI_No = 11,
+
     }
     
     public class Jyx2ActionConst
@@ -53,5 +59,7 @@ namespace Jyx2.InputCore
         public const int UIClose = (int)Jyx2PlayerAction.UIClose;
         public const int UISwitchLeft = (int)Jyx2PlayerAction.UISwitchLeft;
         public const int UISwitchRight = (int)Jyx2PlayerAction.UISwitchRight;
+        public const int UI_Yes = (int)Jyx2PlayerAction.UI_Yes;
+        public const int UI_No = (int)Jyx2PlayerAction.UI_No;
     }
 }

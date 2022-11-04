@@ -330,7 +330,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	}
 	
 
-	private void OnBackBtnClicked()
+	public void OnBackBtnClicked()
 	{
 		this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
 		this.InputNamePanel_RectTransform.gameObject.SetActive(false);

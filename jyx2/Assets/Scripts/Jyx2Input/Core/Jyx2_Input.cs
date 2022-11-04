@@ -52,6 +52,14 @@ namespace Jyx2.InputCore
             return CurrentPlayer.GetButtonDown(actionId);
         }
 
+        //主要给Axis模拟按键用，比如GetButtonDown("MoveHorizontal") 表示向右 GetNegativeButtonDown("MoveHorizontal") 表示向左
+        public static bool GetNegativeButtonDown(int actionId)
+        {
+            if (!IsPlayerValid)
+                return false;
+            return CurrentPlayer.GetNegativeButtonDown(actionId);
+        }
+
         public static bool GetButtonUp(int actionId)
         {
             if (!IsPlayerValid)
@@ -65,7 +73,15 @@ namespace Jyx2.InputCore
                 return 0;
             return CurrentPlayer.GetAxis(actionId);
         }
-        
+
+        public static float GetAxisRaw(int actionId)
+        {
+            if (!IsPlayerValid)
+                return 0;
+            return CurrentPlayer.GetAxisRaw(actionId);
+        }
+
+
         public static Vector2 GetAxis2D(int xActionId, int yActionId)
         {
             if (!IsPlayerValid)
@@ -100,12 +116,63 @@ namespace Jyx2.InputCore
             return GetAxis2D((int)xActionId, (int)yActionId);
         }
 
+        public static float GetAxisRaw(Jyx2PlayerAction actionId)
+        {
+            return GetAxisRaw((int)actionId);
+        }
+
         public static bool GetButton(Jyx2PlayerAction actionId)
         {
             return GetButton((int)actionId);
         }
 
+        public static bool GetButtonDown(string buttonName)
+        {
+            if (!IsPlayerValid)
+                return false;
+            return CurrentPlayer.GetButtonDown(buttonName);
+        }
+
+        public static bool GetButton(string buttonName)
+        {
+            if (!IsPlayerValid)
+                return false;
+            return CurrentPlayer.GetButton(buttonName);
+        }
+
+        public static bool GetButtonUp(string buttonName)
+        {
+            if (!IsPlayerValid)
+                return false;
+            return CurrentPlayer.GetButtonUp(buttonName);
+        }
+
         #endregion
+
+        #region UI Direction 
+        
+        public static bool IsUIMoveLeft()
+        {
+           return  GetNegativeButtonDown(Jyx2ActionConst.UIHorizontal);
+        }
+
+        public static bool IsUIMoveRight()
+        {
+            return GetButtonDown(Jyx2ActionConst.UIHorizontal);
+        }
+
+        public static bool IsUIMoveUp()
+        {
+            return GetButtonDown(Jyx2ActionConst.UIVertical);
+        }
+
+        public static bool IsUIMoveDown()
+        {
+            return GetNegativeButtonDown(Jyx2ActionConst.UIVertical);
+        }
+
+        #endregion
+
         public static RController GetLastActiveController()
         {
             if (!IsPlayerValid)
