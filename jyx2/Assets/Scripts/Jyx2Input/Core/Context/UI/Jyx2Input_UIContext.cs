@@ -31,18 +31,22 @@ namespace Jyx2.InputCore.UI
                 return false;
             }
         }
+
+        public bool IsFirstSelectValid => m_FirstSelect != null && m_FirstSelect.activeInHierarchy;
+
+        public bool IsLastSelectValid => m_LastSelect != null && m_LastSelect.activeInHierarchy;
         
         
         public void TrySelectMyUIObject()
         {
             if (m_ManualControlSelect)
                 return;
-            if (m_LastSelect != null && CurrentSelect != m_LastSelect)
+            if (IsLastSelectValid && CurrentSelect != m_LastSelect)
             {
                 CurrentSelect = m_LastSelect;
                 return;
             }
-            if (m_FirstSelect != null && CurrentSelect != m_FirstSelect)
+            if (IsFirstSelectValid && CurrentSelect != m_FirstSelect)
                 CurrentSelect = m_FirstSelect;
         }
 

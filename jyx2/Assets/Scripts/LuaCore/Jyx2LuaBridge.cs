@@ -1873,6 +1873,8 @@ namespace Jyx2
             }
             role.UseItem(item);
             runtime.SetItemUser(itemId, roleId);
+
+            Jyx2.Jyx2LuaBridge.DispatchLuaEvent("OnRoleUseItem", roleId, itemId);
         }
         
         /// <summary>

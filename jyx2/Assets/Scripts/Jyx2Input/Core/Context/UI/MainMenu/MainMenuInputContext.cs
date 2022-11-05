@@ -6,7 +6,10 @@ namespace Jyx2.InputCore.UI
     {
         public override void OnUpdate()
         {
-            base.OnUpdate();
+            if(NoValidSelect)
+            {
+                TrySelectMyUIObject();
+            }
         }
     }
 }
