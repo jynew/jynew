@@ -23,7 +23,7 @@ using Jyx2Configs;
 /// JYX工具类
 /// </summary>
 
-public class GameUtil
+public static class GameUtil
 {
     /// <summary>
     /// 选择角色
@@ -88,6 +88,14 @@ public class GameUtil
             Time.timeScale = 1;
     }
 
+    public static void BetterSetActive(this GameObject go, bool isActive)
+    {
+        if (go == null || go.activeSelf == isActive)
+            return;
+        go.SetActive(isActive);
+    }
+
+
     public static Component GetOrAddComponent(Transform trans,string type)
     {
         Component com = trans.GetComponent(type);
@@ -109,7 +117,7 @@ public class GameUtil
         return com;
     }
     
-    public static T GetOrAddComponent<T>(GameObject go) where T:Component
+    public static T GetOrAddComponent<T>(this GameObject go) where T:Component
     {
         return GetOrAddComponent<T>(go.transform);
     }
