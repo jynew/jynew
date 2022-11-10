@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
@@ -45,36 +46,47 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	async void Save()
 	{
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((index) =>
+		Action<int> OnSave = (idx) =>
 		{
-			if(LevelMaster.Instance != null)
-                LevelMaster.Instance.OnManuelSave(index);
-		}), "选择存档位".GetContent(nameof(SystemUIPanel)));
+			if (LevelMaster.Instance != null)
+				LevelMaster.Instance.OnManuelSave(idx);
+		};
+
+		var titleText = "选择存档位".GetContent(nameof(SystemUIPanel));
+
+
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), OnSave, titleText);
 	}
 
 	async void Load()
 	{
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((archiveIndex) =>
+		Action<int> OnLoadSelect = (archiveIndex) =>
 		{
 			var summary = GameSaveSummary.Load(archiveIndex);
-			if (summary.ModId != null && !summary.ModId.ToLower().Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
+			if (!summary.ModId.ToLower().Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
 			{
 				HidePanel();
-				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
+				List<string> selectionContent = new List<string>() { "是", "否" };
 				string msg = "该存档MOD不匹配，载入可能导致数据错乱，是否继续？";
-				Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((selection) =>
-				{
-					if (selection == 0)
-					{
-						StoryEngine.DoLoadGame(archiveIndex);
-					}
-				})).Forget();
+                Action<int> onChatSelect = (selection) =>
+                {
+                    if (selection == 0)
+                    {
+                        StoryEngine.DoLoadGame(archiveIndex);
+                    }
+                };
+
+                Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, onChatSelect).Forget();
 			}
 			else
 			{
 				StoryEngine.DoLoadGame(archiveIndex);
 			}
-		}), "选择读档位".GetContent(nameof(SystemUIPanel)));
+		};
+
+		var titleText = "选择读档位".GetContent(nameof(SystemUIPanel));
+
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), OnLoadSelect, titleText);
 
 	}
 
@@ -87,7 +99,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 	async void Quit2MainMenu()
 	{
 		HidePanel();
-		List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+		List<string> selectionContent = new List<string>() { "是", "否" };
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", "将丢失未保存进度，是否继续？", selectionContent, new Action<int>((index) =>
 		{
 			if (index == 0)

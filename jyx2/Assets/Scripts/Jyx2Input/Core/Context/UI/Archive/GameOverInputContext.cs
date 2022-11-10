@@ -2,20 +2,20 @@
 
 namespace Jyx2.InputCore.UI
 {
-    public class SavePanelInputContext : Jyx2Input_UIContext
+    public class GameOverInputContext : Jyx2Input_UIContext
     {
-        private SavePanel m_SavePanel;
+        private GameOver m_GameOverPanel;
 
         private void Start()
         {
-            m_SavePanel = GetComponent<SavePanel>();
+            m_GameOverPanel = GetComponent<GameOver>();
         }
 
         public override void OnUpdate()
         {
             if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIClose))
             {
-                m_SavePanel?.OnBackClick();
+                m_GameOverPanel?.BackToMainMenu();
             }
         }
     }
