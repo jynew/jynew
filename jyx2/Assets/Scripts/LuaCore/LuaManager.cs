@@ -25,6 +25,10 @@ namespace Jyx2
     {
         public const bool LUAJIT_ENABLE = false;
 
+        /// <summary>
+        /// 是否在editor中调试时热加载lua（可以不重启游戏进行编辑）
+        /// </summary>
+        public const bool HOTRELOAD_LUA_IN_EDITOR = true;
 
         public LuaManager() { }
 
@@ -199,11 +203,12 @@ namespace Jyx2
 
         public static byte[] LoadLua(string path)
         {
-            //BY CG：在unity编辑模式下，方便调试，不用repack lua
-/*            if (Application.isEditor)
+            //在unity编辑模式下，方便调试，不用repack lua
+            if (HOTRELOAD_LUA_IN_EDITOR && Application.isEditor)
             {
-                return File.ReadAllBytes("Assets/BuildSource/Lua/" + path + ".lua");
-            }*/
+                var curMod = RuntimeEnvSetup.CurrentModConfig.ModId;
+                return File.ReadAllBytes($"Assets/Mods/{curMod}/Lua/" + path + ".lua");
+            }
 
             //处理文件名格式
             if (!path.Contains("/"))
