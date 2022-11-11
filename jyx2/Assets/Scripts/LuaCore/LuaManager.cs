@@ -25,6 +25,10 @@ namespace Jyx2
     {
         public const bool LUAJIT_ENABLE = false;
 
+        /// <summary>
+        /// 是否在editor中调试时热加载lua（可以不重启游戏进行编辑）
+        /// </summary>
+        public const bool HOTRELOAD_LUA_IN_EDITOR = true;
 
         public LuaManager() { }
 
@@ -118,7 +122,7 @@ namespace Jyx2
                     foreach (var lua in RuntimeEnvSetup.CurrentModConfig.PreloadedLua)
                     {
                         Debug.Log($"preloading {lua}...");
-                        if (__luaMapper.ContainsKey(lua))
+                        if (_luaMapper.ContainsKey(lua))
                         {
                             
                             await LuaExecutor.Execute(lua);
@@ -199,11 +203,12 @@ namespace Jyx2
 
         public static byte[] LoadLua(string path)
         {
-            //BY CG：在unity编辑模式下，方便调试，不用repack lua
-/*            if (Application.isEditor)
+            //在unity编辑模式下，方便调试，不用repack lua
+            if (HOTRELOAD_LUA_IN_EDITOR && Application.isEditor)
             {
-                return File.ReadAllBytes("Assets/BuildSource/Lua/" + path + ".lua");
-            }*/
+                var curMod = RuntimeEnvSetup.CurrentModConfig.ModId;
+                return File.ReadAllBytes($"Assets/Mods/{curMod}/Lua/" + path + ".lua");
+            }
 
             //处理文件名格式
             if (!path.Contains("/"))
@@ -213,13 +218,13 @@ namespace Jyx2
 
             path = path.Split('/').Last();
             
-            if (__luaMapper.ContainsKey(path))
+            if (_luaMapper.ContainsKey(path))
             {
-                string code = Encoding.UTF8.GetString(__luaMapper[path]);
+                string code = Encoding.UTF8.GetString(_luaMapper[path]);
                 
                 Debug.Log(code);
                 
-                return __luaMapper[path];
+                return _luaMapper[path];
             }
             else
             {
@@ -241,24 +246,17 @@ namespace Jyx2
         #region private
         private static void ClearLuaMapper()
         {
-            __luaMapper = null;
+            _luaMapper = null;
         }
 
         public static async UniTask InitLuaMapper()
         {
-            /*            if (Application.isEditor) //编辑器模式下不需要缓存，直接读取文件
-                            return;*/
-            //var overridePaths = await MODLoader.LoadOverrideList($"{rootPath}/Lua");
-            
-            //var assets = await MODLoader.LoadAssets<TextAsset>(overridePaths);
-
-
             var assets = await ResLoader.LoadAssets<TextAsset>("Assets/Lua/");
 
-            __luaMapper = new Dictionary<string, byte[]>();
+            _luaMapper = new Dictionary<string, byte[]>();
             foreach (var a in assets)
             {
-                __luaMapper[a.name] = Encoding.UTF8.GetBytes(a.text);
+                _luaMapper[a.name] = Encoding.UTF8.GetBytes(a.text);
             }
 
             await InitMapperFromMod();
@@ -281,11 +279,11 @@ namespace Jyx2
                 foreach (var path in luaFilePaths)
                 {
                     var fileName = Path.GetFileNameWithoutExtension(path);
-                    if(__luaMapper.ContainsKey(fileName))
+                    if(_luaMapper.ContainsKey(fileName))
                     {
                         Debug.LogFormat("Lua文件[{0}]的逻辑将会被AB外的同名文件重载掉", fileName);
                     }
-                    __luaMapper[fileName] = await FileTools.ReadAllBytesAsync(path);
+                    _luaMapper[fileName] = await FileTools.ReadAllBytesAsync(path);
                 }
             }
             catch(Exception ex)
@@ -299,7 +297,7 @@ namespace Jyx2
         private static bool _inited = false;
         private static LuaEnv luaEnv;
 
-        private static Dictionary<string, byte[]> __luaMapper = null;
+        private static Dictionary<string, byte[]> _luaMapper = null;
 
         private static Dictionary<string, LuaFunction> _cachedFunc = new Dictionary<string, LuaFunction>();
         private static LuaFunction getCachedFunction(string name)

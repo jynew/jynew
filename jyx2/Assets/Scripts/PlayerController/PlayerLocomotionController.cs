@@ -465,7 +465,7 @@ public class PlayerLocomotionController:MonoBehaviour
 	    if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
 
 	    _playerNavAgent.isStopped = true;
-
+	    
     }
     
     private void DisplayNavPointer(Vector3 pos)
