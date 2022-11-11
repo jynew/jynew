@@ -13,19 +13,23 @@ public class ScreenLoggerHotkeyManager : MonoBehaviour
     /// 呼出日志控制台的快捷键
     /// </summary>
     private const KeyCode HotKey = KeyCode.F12;
+
+    private GlobalHotkeyManager _ghm;
     
     // Start is called before the first frame update
     void Start()
     {
         screenLogger.ShowLog = isloggerOn;
-        GlobalHotkeyManager.Instance.RegistHotkey(this, HotKey, SwitchLoggerOnAndOff);
+        _ghm = GlobalHotkeyManager.Instance;
+        
+        _ghm.RegistHotkey(this, HotKey, SwitchLoggerOnAndOff);
         if(ScreenLogger.IsPersistent)
             DontDestroyOnLoad(this);
     }
 
     private void OnDestroy()
     {
-        GlobalHotkeyManager.Instance.UnRegistHotkey(this, HotKey);
+        _ghm?.UnRegistHotkey(this, HotKey);
     }
     
 

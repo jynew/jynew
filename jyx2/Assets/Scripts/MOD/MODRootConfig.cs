@@ -28,6 +28,8 @@ public class MODRootConfig : ScriptableObject
     [LabelText("主角姓名")] public string PlayerName;
 
     [LabelText("预加载的lua文件（比如热更新）")] public List<string> PreloadedLua;
+
+    [LabelText("只允许大地图存档")] public bool EnableSaveBigMapOnly = true;
     
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]

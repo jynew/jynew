@@ -92,6 +92,12 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	async void Save()
 	{
+		if (!LevelMaster.Instance.IsInWorldMap && RuntimeEnvSetup.CurrentModConfig.EnableSaveBigMapOnly)
+		{
+			GameUtil.DisplayPopinfo("<color=red>必须在大地图才可以存档</color>");
+			return;
+		}
+		
 		showingSavePanel = true;
 
 		//---------------------------------------------------------------------------
