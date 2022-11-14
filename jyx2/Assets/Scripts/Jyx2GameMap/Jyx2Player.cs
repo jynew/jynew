@@ -200,6 +200,11 @@ public class Jyx2Player : MonoBehaviour
 
         if (!CanControlPlayer)
             return;
+		
+		//尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
+		if (LevelMaster.IsInBattle)
+			return;
+		
         //BigMapIdleJudge();
 
         //延迟下交互触发 不然加载后的第一帧 交互和对话会同时触发
