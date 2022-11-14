@@ -598,6 +598,8 @@ namespace Jyx2
 
             role.Wugongs[magicIndexRole].Key = magicId;
             role.Wugongs[magicIndexRole].Level = level;
+            //重置下缓存的配置
+            role.Wugongs[magicIndexRole].ResetSkill();
         }
 
         public static bool JudgeSexual(int sexual)
