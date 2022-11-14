@@ -201,9 +201,9 @@ public class Jyx2Player : MonoBehaviour
         if (!CanControlPlayer)
             return;
 		
-		//尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
-		if (LevelMaster.IsInBattle)
-			return;
+	//尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
+	if (LevelMaster.IsInBattle)
+	    return;
 		
         //BigMapIdleJudge();
 
