@@ -206,8 +206,6 @@ public class Jyx2Player : MonoBehaviour
 			return;
 		
         //BigMapIdleJudge();
-        if (LevelMaster.IsInBattle)
-            return;
         //延迟下交互触发 不然加载后的第一帧 交互和对话会同时触发
         if (m_InteractDelayTime >= Time.time)
             return;
