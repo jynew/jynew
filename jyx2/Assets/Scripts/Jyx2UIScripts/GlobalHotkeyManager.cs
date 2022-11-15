@@ -130,10 +130,4 @@ public class GlobalHotkeyManager : MonoBehaviour
             }
         }
     }
-
-
-    private void OnApplicationQuit()
-    {
-        Destroy(this.gameObject);
-    }
 }

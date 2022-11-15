@@ -1,0 +1,912 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1351212051, guid: 09c9b883b79ef864a99683bb36c5776d, type: 3}
+  m_Name: FlightYoke
+  m_EditorClassIdentifier: 
+  controllerName: Flight Yoke
+  description: 
+  templateGuid: f311fa16-0ccc-41c0-ac4b-50f7100bb8ff
+  templateType: 3
+  className: FlightYokeTemplate
+  elementIdentifiers:
+  - _id: 0
+    _name: Rotate Yoke
+    _positiveName: Rotate Yoke Right
+    _negativeName: Rotate Yoke Left
+    _elementType: 0
+    _scriptingName: rotateYoke
+    _excludeFromExport: 1
+  - _id: 1
+    _name: Yoke Z
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: yokeZ
+    _excludeFromExport: 1
+  - _id: 59
+    _name: Left Paddle
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftPaddle
+    _excludeFromExport: 0
+  - _id: 60
+    _name: Right Paddle
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightPaddle
+    _excludeFromExport: 0
+  - _id: 2
+    _name: Lever 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: lever1Axis
+    _excludeFromExport: 1
+  - _id: 64
+    _name: Lever 1 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: lever1MinDetent
+    _excludeFromExport: 1
+  - _id: 3
+    _name: Lever 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: lever2Axis
+    _excludeFromExport: 1
+  - _id: 65
+    _name: Lever 2 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: lever2MinDetent
+    _excludeFromExport: 1
+  - _id: 4
+    _name: Lever 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: lever3Axis
+    _excludeFromExport: 1
+  - _id: 66
+    _name: Lever 3 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: lever3MinDetent
+    _excludeFromExport: 1
+  - _id: 5
+    _name: Lever 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: lever4Axis
+    _excludeFromExport: 1
+  - _id: 67
+    _name: Lever 4 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: lever4MinDetent
+    _excludeFromExport: 1
+  - _id: 6
+    _name: Lever 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 0
+    _scriptingName: lever5Axis
+    _excludeFromExport: 1
+  - _id: 68
+    _name: Lever 5 Min Detent
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: lever5MinDetent
+    _excludeFromExport: 1
+  - _id: 7
+    _name: Left Grip Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripButton1
+    _excludeFromExport: 0
+  - _id: 8
+    _name: Left Grip Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripButton2
+    _excludeFromExport: 0
+  - _id: 9
+    _name: Left Grip Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripButton3
+    _excludeFromExport: 0
+  - _id: 10
+    _name: Left Grip Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripButton4
+    _excludeFromExport: 0
+  - _id: 11
+    _name: Left Grip Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripButton5
+    _excludeFromExport: 0
+  - _id: 12
+    _name: Left Grip Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripButton6
+    _excludeFromExport: 0
+  - _id: 13
+    _name: Right Grip Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripButton1
+    _excludeFromExport: 0
+  - _id: 14
+    _name: Right Grip Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripButton2
+    _excludeFromExport: 0
+  - _id: 15
+    _name: Right Grip Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripButton3
+    _excludeFromExport: 0
+  - _id: 16
+    _name: Right Grip Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripButton4
+    _excludeFromExport: 0
+  - _id: 17
+    _name: Right Grip Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripButton5
+    _excludeFromExport: 0
+  - _id: 18
+    _name: Right Grip Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripButton6
+    _excludeFromExport: 0
+  - _id: 19
+    _name: Center Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton1
+    _excludeFromExport: 0
+  - _id: 20
+    _name: Center Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton2
+    _excludeFromExport: 0
+  - _id: 21
+    _name: Center Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton3
+    _excludeFromExport: 0
+  - _id: 22
+    _name: Center Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton4
+    _excludeFromExport: 0
+  - _id: 23
+    _name: Center Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton5
+    _excludeFromExport: 0
+  - _id: 24
+    _name: Center Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton6
+    _excludeFromExport: 0
+  - _id: 25
+    _name: Center Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton7
+    _excludeFromExport: 0
+  - _id: 26
+    _name: Center Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: centerButton8
+    _excludeFromExport: 0
+  - _id: 53
+    _name: Wheel 1 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheel1Up
+    _excludeFromExport: 0
+  - _id: 54
+    _name: Wheel 1 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheel1Down
+    _excludeFromExport: 0
+  - _id: 55
+    _name: Wheel 1 Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheel1Press
+    _excludeFromExport: 0
+  - _id: 56
+    _name: Wheel 2 Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheel2Up
+    _excludeFromExport: 0
+  - _id: 57
+    _name: Wheel 2 Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheel2Down
+    _excludeFromExport: 0
+  - _id: 58
+    _name: Wheel 2 Press
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: wheel2Press
+    _excludeFromExport: 0
+  - _id: 27
+    _name: Left Grip Hat Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatUp
+    _excludeFromExport: 1
+  - _id: 28
+    _name: Left Grip Hat Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatUpRight
+    _excludeFromExport: 1
+  - _id: 29
+    _name: Left Grip Hat Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatRight
+    _excludeFromExport: 1
+  - _id: 30
+    _name: Left Grip Hat Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatDownRight
+    _excludeFromExport: 1
+  - _id: 31
+    _name: Left Grip Hat Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatDown
+    _excludeFromExport: 1
+  - _id: 32
+    _name: Left Grip Hat Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatDownLeft
+    _excludeFromExport: 1
+  - _id: 33
+    _name: Left Grip Hat Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatLeft
+    _excludeFromExport: 1
+  - _id: 34
+    _name: Left Grip Hat Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: leftGripHatUpLeft
+    _excludeFromExport: 1
+  - _id: 35
+    _name: Right Grip Hat Up
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatUp
+    _excludeFromExport: 1
+  - _id: 36
+    _name: Right Grip Hat Up-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatUpRight
+    _excludeFromExport: 1
+  - _id: 37
+    _name: Right Grip Hat Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatRight
+    _excludeFromExport: 1
+  - _id: 38
+    _name: Right Grip Hat Down-Right
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatDownRight
+    _excludeFromExport: 1
+  - _id: 39
+    _name: Right Grip Hat Down
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatDown
+    _excludeFromExport: 1
+  - _id: 40
+    _name: Right Grip Hat Down-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatDownLeft
+    _excludeFromExport: 1
+  - _id: 41
+    _name: Right Grip Hat Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatLeft
+    _excludeFromExport: 1
+  - _id: 42
+    _name: Right Grip Hat Up-Left
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: rightGripHatUpLeft
+    _excludeFromExport: 1
+  - _id: 43
+    _name: Console Button 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton1
+    _excludeFromExport: 0
+  - _id: 44
+    _name: Console Button 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton2
+    _excludeFromExport: 0
+  - _id: 45
+    _name: Console Button 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton3
+    _excludeFromExport: 0
+  - _id: 46
+    _name: Console Button 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton4
+    _excludeFromExport: 0
+  - _id: 47
+    _name: Console Button 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton5
+    _excludeFromExport: 0
+  - _id: 48
+    _name: Console Button 6
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton6
+    _excludeFromExport: 0
+  - _id: 49
+    _name: Console Button 7
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton7
+    _excludeFromExport: 0
+  - _id: 50
+    _name: Console Button 8
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton8
+    _excludeFromExport: 0
+  - _id: 51
+    _name: Console Button 9
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton9
+    _excludeFromExport: 0
+  - _id: 52
+    _name: Console Button 10
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: consoleButton10
+    _excludeFromExport: 0
+  - _id: 61
+    _name: Mode 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: mode1
+    _excludeFromExport: 0
+  - _id: 62
+    _name: Mode 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: mode2
+    _excludeFromExport: 0
+  - _id: 63
+    _name: Mode 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 1
+    _scriptingName: mode3
+    _excludeFromExport: 0
+  - _id: 69
+    _name: Yoke
+    _positiveName: 
+    _negativeName: 
+    _elementType: 8
+    _scriptingName: yoke
+    _excludeFromExport: 0
+  - _id: 70
+    _name: Lever 1
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: lever1
+    _excludeFromExport: 0
+  - _id: 71
+    _name: Lever 2
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: lever2
+    _excludeFromExport: 0
+  - _id: 72
+    _name: Lever 3
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: lever3
+    _excludeFromExport: 0
+  - _id: 73
+    _name: Lever 4
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: lever4
+    _excludeFromExport: 0
+  - _id: 74
+    _name: Lever 5
+    _positiveName: 
+    _negativeName: 
+    _elementType: 6
+    _scriptingName: lever5
+    _excludeFromExport: 0
+  - _id: 75
+    _name: Left Grip Hat
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: leftGripHat
+    _excludeFromExport: 0
+  - _id: 76
+    _name: Right Grip Hat
+    _positiveName: 
+    _negativeName: 
+    _elementType: 7
+    _scriptingName: rightGripHat
+    _excludeFromExport: 0
+  joysticks:
+  - id: 0
+    name: CH Eclipse Yoke
+    joystickGuid: acd80423-3ce9-4029-9c4b-9230907ea4b1
+    fileGuid: 7a307642c32f15647bc6b0f77d6672c9
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 59
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 60
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 9
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 53
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 54
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 55
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 56
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 57
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 58
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 62
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 63
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 36
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 35
+      joystickId: 37
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 36
+      joystickId: 38
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 37
+      joystickId: 39
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 38
+      joystickId: 40
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 39
+      joystickId: 41
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 40
+      joystickId: 42
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 41
+      joystickId: 43
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 42
+      joystickId: 44
+      joystickId2: 0
+      splitAxis: 0
+  - id: 1
+    name: Saitek Pro Flight Yoke
+    joystickGuid: 6476e035-08d3-4b91-a336-f2e94ad89e6e
+    fileGuid: 91631b7cfb2e5d444a5b6f652ffaf6dc
+    elementIdentifierMappings:
+    - templateId: 0
+      joystickId: 0
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 1
+      joystickId: 1
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 2
+      joystickId: 2
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 3
+      joystickId: 3
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 4
+      joystickId: 4
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 7
+      joystickId: 12
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 5
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 8
+      joystickId: 6
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 13
+      joystickId: 11
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 14
+      joystickId: 7
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 15
+      joystickId: 8
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 16
+      joystickId: 9
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 17
+      joystickId: 10
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 19
+      joystickId: 13
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 20
+      joystickId: 14
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 21
+      joystickId: 15
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 61
+      joystickId: 16
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 62
+      joystickId: 17
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 63
+      joystickId: 18
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 43
+      joystickId: 19
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 44
+      joystickId: 20
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 45
+      joystickId: 21
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 46
+      joystickId: 22
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 47
+      joystickId: 23
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 48
+      joystickId: 24
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 27
+      joystickId: 28
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 28
+      joystickId: 29
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 29
+      joystickId: 30
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 30
+      joystickId: 31
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 31
+      joystickId: 32
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 32
+      joystickId: 33
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 33
+      joystickId: 34
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 34
+      joystickId: 35
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 64
+      joystickId: 25
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 65
+      joystickId: 26
+      joystickId2: 0
+      splitAxis: 0
+    - templateId: 66
+      joystickId: 27
+      joystickId2: 0
+      splitAxis: 0
+  specialElements:
+  - elementIdentifierId: 69
+    data: '{"eid_axisX":0,"eid_axisZ":1}'
+  - elementIdentifierId: 70
+    data: '{"eid_axis":2,"eid_MinDetent":64}'
+  - elementIdentifierId: 71
+    data: '{"eid_axis":3,"eid_MinDetent":65}'
+  - elementIdentifierId: 72
+    data: '{"eid_axis":4,"eid_MinDetent":66}'
+  - elementIdentifierId: 73
+    data: '{"eid_axis":5,"eid_MinDetent":67}'
+  - elementIdentifierId: 74
+    data: '{"eid_axis":6,"eid_MinDetent":68}'
+  - elementIdentifierId: 75
+    data: '{"eid_up":27,"eid_upRight":28,"eid_right":29,"eid_downRight":30,"eid_down":31,"eid_downLeft":32,"eid_left":33,"eid_upLeft":34}'
+  - elementIdentifierId: 76
+    data: '{"eid_up":35,"eid_upRight":36,"eid_right":37,"eid_downRight":38,"eid_down":39,"eid_downLeft":40,"eid_left":41,"eid_upLeft":42}'
+  elementIdentifierIdCounter: 77
+  joystickIdCounter: 2

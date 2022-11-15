@@ -144,6 +144,12 @@ public class GameEventManager : MonoBehaviour
             return;
         }
 
+        if (GetCurrentGameEvent() != null)
+        {
+            Debug.LogError("错误：在一个事件执行完毕以前不能执行新的事件。");
+            return;
+        }
+
         //停止导航
         var levelMaster = LevelMaster.Instance;
 
@@ -203,7 +209,7 @@ public class GameEventManager : MonoBehaviour
     }
 
     static string _currentEvt;
-    public static void SetCurrentGameEvent(GameEvent evt)
+    public void SetCurrentGameEvent(GameEvent evt)
     {
         if (evt == null)
         {
