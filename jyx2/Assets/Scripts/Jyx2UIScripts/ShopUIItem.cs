@@ -16,10 +16,11 @@ using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using System.Threading;
+using UnityEditor;
+using Jyx2.UINavigation;
+using UnityEngine.EventSystems;
 
-public class ShopUIItem : MonoBehaviour
+public class ShopUIItem : Selectable,INavigable
 {
 	Image iconImg;
 	Text desText;
@@ -35,23 +36,39 @@ public class ShopUIItem : MonoBehaviour
 	int buyCount;
 	int index;
 	int leftNum;
-	private bool currentlyReleased;
 
-	public void Init()
+	public event Action<ShopUIItem> OnShopItemSelect;
+
+	public int ItemId => shopItem?.Id ?? -1;
+
+	public Jyx2ConfigShopItem ShopItemData => shopItem;
+
+
+    protected override void Awake()
 	{
+		base.Awake();
 		iconImg = transform.Find("Icon").GetComponent<Image>();
 		desText = transform.Find("DesText").GetComponent<Text>();
 		numContent = transform.Find("NumContent");
 		addBtn = numContent.Find("AddBtn").GetComponent<Button>();
 		reduceBtn = numContent.Find("ReduceBtn").GetComponent<Button>();
-		numText = numContent.Find("NumText").GetComponent<Text>();
+        numText = numContent.Find("NumText").GetComponent<Text>();
 		select = transform.Find("Select");
 		itemNum = transform.Find("PriceText").GetComponent<Text>();
 		totalCost = numContent.Find("TotalCost").GetComponent<Text>();
 
 		addBtn.onClick.AddListener(OnAddBtnClick);
 		reduceBtn.onClick.AddListener(OnReduceBtnClick);
-	}
+
+    }
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+        addBtn.onClick.RemoveListener(OnAddBtnClick);
+        reduceBtn.onClick.RemoveListener(OnReduceBtnClick);
+		OnShopItemSelect = null;
+    }
 
 	public async UniTaskVoid Refresh(Jyx2ConfigShopItem shopItem, int index, int hasBuyNum)
 	{
@@ -68,7 +85,7 @@ public class ShopUIItem : MonoBehaviour
 		//---------------------------------------------------------------------------
 		//---------------------------------------------------------------------------
 		leftNum = shopItem.Count - hasBuyNum;
-		leftNum = Tools.Limit(leftNum, 0, shopItem.Count);
+		leftNum = Jyx2.Middleware.Tools.Limit(leftNum, 0, shopItem.Count);
 		itemNum.text = leftNum.ToString();
 
 		iconImg.LoadAsyncForget(item.GetPic());
@@ -105,7 +122,7 @@ public class ShopUIItem : MonoBehaviour
 		}
 	}
 
-	void OnAddBtnClick()
+	public void OnAddBtnClick()
 	{
 		if (buyCount >= leftNum)
 			return;
@@ -113,7 +130,7 @@ public class ShopUIItem : MonoBehaviour
 		RefreshCount();
 	}
 
-	void OnReduceBtnClick()
+	public void OnReduceBtnClick()
 	{
 		if (buyCount <= 0)
 			return;
@@ -121,7 +138,7 @@ public class ShopUIItem : MonoBehaviour
 		RefreshCount();
 	}
 
-	public int GetIndex()
+    public int GetIndex()
 	{
 		return index;
 	}
@@ -131,20 +148,32 @@ public class ShopUIItem : MonoBehaviour
 		return buyCount;
 	}
 
-
-	private void Update()
+	public void Connect(INavigable up = null, INavigable down = null, INavigable left = null, INavigable right = null)
 	{
-		if (gameObject.activeSelf && selected)
-		{
-			//right tab to add, left tab to remove
-			if (Input.GetButtonDown("JL1"))
-			{
-				OnReduceBtnClick();
-			}
-			else if (Input.GetButtonDown("JR1"))
-			{
-				OnAddBtnClick();
-			}
-		}
+		Navigation navigation = new Navigation();
+		navigation.mode = Navigation.Mode.Explicit;
+		navigation.selectOnUp = up?.GetSelectable();
+        navigation.selectOnDown = down?.GetSelectable();
+        navigation.selectOnLeft = left?.GetSelectable();
+        navigation.selectOnRight = right?.GetSelectable();
+        this.navigation = navigation;
+    }
+
+	public Selectable GetSelectable()
+	{
+		return this;
 	}
+    
+	public override void OnSelect(BaseEventData eventData)
+	{
+		base.OnSelect(eventData);
+		Select();
+    }
+
+	public void Select(bool notifyEvent = true)
+	{
+        SetSelect(true);
+		if (notifyEvent)
+			OnShopItemSelect?.Invoke(this);
+    }
 }
