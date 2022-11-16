@@ -48,32 +48,22 @@ public partial class InteractUIPanel : Jyx2_UIBase
 		}
 	}
 
-	void OnBtnClick(int buttonIndex)
+	public void OnBtnClick(int buttonIndex)
 	{
 		Action temp = buttonIndex == 0 ? m_callback1 : m_callback2;
 		Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
 		temp?.Invoke();
 	}
 
-	protected override void handleGamepadButtons()
+	public bool IsButtonAvailable(int buttonIndex)
 	{
-		if (gameObject.activeSelf)
-			if (LevelMaster.Instance?.GetPlayer().locomotionController.playerControllable ?? true)
-			{
-				if (Input.GetKeyDown(KeyCode.Space) || GamepadHelper.IsConfirm())
-				{
-					OnBtnClick(0);
-				}
-				else if (Input.GetKeyDown(KeyCode.Return) || GamepadHelper.IsCancel())
-				{
-					OnBtnClick(1);
-				}
-				else if (Input.GetKeyDown(KeyCode.Escape) || GamepadHelper.IsJump())
-				{
-					Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
-				}
-			}
+		if (buttonIndex == 0)
+			return MainBg_Button1.gameObject.activeSelf;
+		if (buttonIndex == 1)
+			return MainBg_Button2.gameObject.activeSelf;
+		return false;
 	}
+
 
 	protected override void OnHidePanel()
 	{
