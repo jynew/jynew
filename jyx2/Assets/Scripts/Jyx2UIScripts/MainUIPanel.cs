@@ -28,10 +28,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		BindListener(BagButton_Button, OnBagBtnClick);
 		BindListener(MapButton_Button, OnMapBtnClick);
 		BindListener(SystemButton_Button, OnSystemBtnClick);
-
-		//pre-load all icon sprites. somehow they don't load the first time
-		foreach (var i in Enumerable.Range(0, 4))
-			ChatUIPanel.getGamepadIconSprites(i);
 	}
 
 	public override void BindListener(UnityEngine.UI.Button button, Action callback, bool supportGamepadButtonsNav = true)

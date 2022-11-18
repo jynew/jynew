@@ -19,6 +19,8 @@ using Jyx2Configs;
 using UnityEngine.EventSystems;
 using Jyx2.ResourceManagement;
 using Sirenix.Utilities;
+using Jyx2.Util;
+using Jyx2.UINavigation;
 
 public enum ChatType
 {
@@ -26,8 +28,11 @@ public enum ChatType
 	RoleId = 1,
 	Selection = 2,
 }
-public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
+public partial class ChatUIPanel : Jyx2_UIBase
 {
+	[SerializeField]
+	private string m_SelectionItemPrefabPath;
+
 	public override UILayer Layer => UILayer.NormalUI;
 	public override bool IsOnly => true;
 
@@ -35,17 +40,18 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 	ChatType _currentShowType = ChatType.None;
 	string _currentText;//存一下要显示的文字 当文字要显示的时候 用一个指针显示当前显示到的索引 分多次显示，点击显示接下来的
 	int _currentShowIndex = 0;
+
+	public ChatType CurrentShowType => _currentShowType;
+
+	private List<ChatUISelectionItem> m_SelectItems = new List<ChatUISelectionItem>();
+
 	protected override void OnCreate()
 	{
 		InitTrans();
-
-		StorySelectionItem_Button.gameObject.SetActive(false);
 		MainBg_Button.onClick.AddListener(OnMainBgClick);
-
-		InitPanelTrigger();
 	}
 
-	void OnMainBgClick()
+	public void OnMainBgClick()
 	{
 		if (_currentShowType == ChatType.None)
 			return;
@@ -130,7 +136,8 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 			_currentShowIndex = _currentText.Length;
 		}
 		MainContent_Text.text = finalS;
-	}
+        EventSystem.current.SetSelectedGameObject(MainBg_Button.gameObject);
+    }
 
 	public void Show(int headId, string msg, int type, Action callback)
 	{
@@ -207,35 +214,6 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		Name_RectTransform.anchoredPosition = new Vector2(headId == 0 ? -450 : 450, 280);
 	}
 
-	protected override void handleGamepadButtons()
-	{
-		if (!gameObject.activeSelf)
-			return;
-        if (GamepadHelper.IsConfirm())
-        {
-			if (_currentShowType != ChatType.Selection)
-			{
-                OnMainBgClick();
-				return;
-            }
-            if (selectionContentCount > 1)
-            {
-                InvokeSelection(0);
-            }
-        }
-        else if (GamepadHelper.IsCancel())
-        {
-			if (_currentShowType != ChatType.Selection)
-				return;
-            if (selectionContentCount > 1)
-            {
-				InvokeSelection(1);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-            OnMainBgClick();
-    }
-
 	private void InvokeSelection(int iSelection)
 	{
         Action<int> tmpSelectionCalback = selectionCallback;
@@ -253,114 +231,30 @@ public partial class ChatUIPanel : Jyx2_UIBase, IUIAnimator
 		selectionCallback = OnChooseSelection;
 		selectionContentCount = selectionContent.Count;
 
-		ClearChildren(Container_RectTransform.transform);
-		for (int i = 0; i < selectionContent.Count; i++)
+		Action<int, ChatUISelectionItem, string> onSelectionItemCreate = (idx, item, data) =>
 		{
-			int currentIndex = i;
-			Button selectionItem = Instantiate(StorySelectionItem_Button);
-			selectionItem.gameObject.SetActive(true);
-			selectionItem.transform.Find("Text").GetComponent<Text>().text = selectionContent[i];
+			item.SetIndex(idx);
+			item.SetClickCallBack(InvokeSelection);
+		};
 
-			var image = getButtonImage(selectionItem);
-			if (image != null)
-			{
-				image.gameObject.SetActive(GamepadHelper.GamepadConnected);
-				UniTask.Void(async () =>
-				{
-					image.sprite = await getGamepadIconSprites(currentIndex);	
-				});
-			}
-			selectionItem.transform.SetParent(Container_RectTransform, false);
-			BindListener(selectionItem, delegate
-			{
-				Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-				OnChooseSelection?.Invoke(currentIndex);
-			}, false);
-		}
-
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Y, () =>
-		{
-			Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-			OnChooseSelection?.Invoke(0);
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.N, () =>
-		{
-			Jyx2_UIManager.Instance.HideUI(nameof(ChatUIPanel));
-			OnChooseSelection?.Invoke(1);
-		});
-		SelectionPanel_RectTransform.gameObject.SetActive(true);
+		MonoUtil.GenerateMonoElementsWithCacheList(m_SelectionItemPrefabPath, selectionContent, m_SelectItems, Container_RectTransform, onSelectionItemCreate);
+		NavigateUtil.SetUpNavigation(m_SelectItems, selectionContentCount, 1);
+		ConnectMainBgNavigation();
+        SelectionPanel_RectTransform.gameObject.SetActive(true);
 	}
 
-	public static async UniTask<Sprite> getGamepadIconSprites(int i)
+	private void ConnectMainBgNavigation()
 	{
-		string iconPath;
-		switch (i)
-		{
-			case 0:
-				iconPath = "Assets/BuildSource/Gamepad/confirm.png";
-				break;
-			case 1:
-				iconPath = "Assets/BuildSource/Gamepad/cancel.png";
-				break;
-			case 2:
-				iconPath = "Assets/BuildSource/Gamepad/action.png";
-				break;
-			case 3:
-				iconPath = "Assets/BuildSource/Gamepad/jump.png";
-				break;
-			default:
-				iconPath = "";
-				break;
-		}
-
-		if (iconPath.IsNullOrWhitespace())
-		{
-			return null;
-		}
-		else
-		{
-			return await ResLoader.LoadAsset<Sprite>(iconPath);
-		}
-	}
-
-	public void DoShowAnimator()
-	{
-		//Content_RectTransform.anchoredPosition = Vector2.zero;
-		//allTweenList.Add(Content_RectTransform.DOAnchorPosY(130, 0.5f));
-		//HeadAvataPre_RectTransform.anchoredPosition = new Vector2(-300, 300);
-		//allTweenList.Add(HeadAvataPre_RectTransform.DOAnchorPosX(300, 0.5f));
-	}
-
-	public void DoHideAnimator()
-	{
-
-	}
-
-	public void OnDisable()
-	{
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Y);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.N);
-	}
-
-	private void InitPanelTrigger()
-	{
-		List<EventTrigger.Entry> entries = Panel_Trigger.triggers;
-		for (int i = 0; i < entries.Count; i++)
-		{
-			if (entries[i].eventID == EventTriggerType.PointerClick)
-			{
-				entries[i].callback = new EventTrigger.TriggerEvent();
-				entries[i].callback.AddListener(new UnityEngine.Events.UnityAction<BaseEventData>((BaseEventData) =>
-				{
-					OnMainBgClick();
-				}));
-				break;
-			}
-		}
-	}
-
-	protected override Image getButtonImage(Button button)
-	{
-		return button.transform.Find("GamepadButtonIcon")?.GetComponent<Image>();
-	}
+		var firstItem = m_SelectItems.FirstOrDefault();
+		if (firstItem == null)
+			return;
+		Navigation navi = new Navigation();
+		navi.mode = Navigation.Mode.Explicit;
+		navi.selectOnLeft = firstItem.GetSelectable();
+        navi.selectOnRight = firstItem.GetSelectable();
+        navi.selectOnUp = firstItem.GetSelectable();
+        navi.selectOnDown = firstItem.GetSelectable();
+		MainBg_Button.navigation = navi;
+		EventSystem.current.SetSelectedGameObject(MainBg_Button.gameObject);
+    }
 }

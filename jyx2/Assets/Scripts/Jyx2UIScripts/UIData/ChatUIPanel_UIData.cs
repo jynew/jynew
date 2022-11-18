@@ -23,7 +23,6 @@ public partial class ChatUIPanel
 	private RectTransform HeadAvataPre_RectTransform;
 	private Image RoleHeadImage_Image;
 	private RectTransform SelectionPanel_RectTransform;
-	private Button StorySelectionItem_Button;
 	private RectTransform Container_RectTransform;
 
 	public void InitTrans()
@@ -39,7 +38,6 @@ public partial class ChatUIPanel
 		HeadAvataPre_RectTransform = transform.Find("HeadAvataPre").GetComponent<RectTransform>();
 		RoleHeadImage_Image = transform.Find("HeadAvataPre/Mask/RoleHeadImage").GetComponent<Image>();
 		SelectionPanel_RectTransform = transform.Find("SelectionPanel").GetComponent<RectTransform>();
-		StorySelectionItem_Button = transform.Find("SelectionPanel/SelectMenu/SelectPanel/StorySelectionItem").GetComponent<Button>();
 		Container_RectTransform = transform.Find("SelectionPanel/SelectMenu/SelectPanel/Container").GetComponent<RectTransform>();
 
 	}

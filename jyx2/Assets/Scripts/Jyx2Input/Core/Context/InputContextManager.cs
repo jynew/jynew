@@ -110,7 +110,10 @@ namespace Jyx2.InputCore
             if (IsLoading)
                 return;
             Jyx2_Input.OnUpdate();
-            CurrentContext?.OnUpdate();
+            if (CurrentContext != null && CurrentContext.CanUpdate)
+            {
+                CurrentContext.OnUpdate();
+            }
         }
     }
 }

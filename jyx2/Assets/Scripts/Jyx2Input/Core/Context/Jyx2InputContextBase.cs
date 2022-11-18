@@ -12,6 +12,7 @@ namespace Jyx2.InputCore
     [DisallowMultipleComponent]
     public class Jyx2InputContextBase:MonoBehaviour,IJyx2_InputContext
     {
+        public virtual bool CanUpdate => true;
         
         protected virtual void OnEnable()
         {
