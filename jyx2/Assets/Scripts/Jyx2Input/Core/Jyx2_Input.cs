@@ -11,7 +11,7 @@ namespace Jyx2.InputCore
 
     using RPlayer = Rewired.Player;
     using RController = Rewired.Controller;
-    
+
     public static class Jyx2_Input
     {
         public static event Action<RController> OnControllerChange;
@@ -177,18 +177,28 @@ namespace Jyx2.InputCore
         {
             if (!IsPlayerValid)
                 return null;
-            return CurrentPlayer.controllers.GetLastActiveController();
+            var lastController = CurrentPlayer.controllers.GetLastActiveController();
+            return lastController;
         }
 
         public static void OnUpdate()
         {
             if (!IsPlayerValid)
                 return;
+            UpdateControllerState();
+        }
+
+        private static void UpdateControllerState()
+        {
             var lastController = GetLastActiveController();
             if(m_CurController != lastController)
             {
                 m_CurController = lastController;
-                OnControllerChange?.Invoke(m_CurController);
+                OnControllerChange?.Invoke(lastController);
+#if UNITY_EDITOR
+                if(lastController != null)
+                    Debug.Log("NewController:" + lastController.name);
+#endif
             }
         }
     }
