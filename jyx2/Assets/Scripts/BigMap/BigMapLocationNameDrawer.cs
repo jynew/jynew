@@ -7,6 +7,8 @@ using UnityEngine;
 public class BigMapLocationNameDrawer : MonoBehaviour
 {
     public GameObject m_NameTextPrefab;
+    public int m_PositionSize = 6;
+    public int m_LocalScaleSize = 3;
     
     
     // Start is called before the first frame update
@@ -19,8 +21,8 @@ public class BigMapLocationNameDrawer : MonoBehaviour
             if (JudgeIfIgnoreLocationNameDisplay(loc)) continue;
 
             var nameObj = Instantiate(m_NameTextPrefab);
-            nameObj.transform.position = loc.transform.position + Vector3.up * 6;
-            nameObj.transform.localScale = Vector3.one * 3;
+            nameObj.transform.position = loc.transform.position + Vector3.up * m_PositionSize;
+            nameObj.transform.localScale = Vector3.one * m_LocalScaleSize;
             if (loc.name == GlobalAssetConfig.Instance.defaultHomeName)
             {
                 //---------------------------------------------------------------------------
