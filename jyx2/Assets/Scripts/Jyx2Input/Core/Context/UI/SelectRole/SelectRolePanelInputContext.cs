@@ -22,7 +22,8 @@ namespace Jyx2.InputCore.UI
 
             if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UICancel))
             {
-                m_SelectRolePanel.OnCancelClick();
+                if(m_SelectRolePanel.IsCancelBtnEnable)
+                    m_SelectRolePanel.OnCancelClick();
             }
 
             if(Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes))

@@ -62,6 +62,8 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
     private List<RoleUIItem> m_CachedRolesItems = new List<RoleUIItem>();
 
+    public bool IsCancelBtnEnable => CancelBtn_Button.gameObject.activeSelf;
+
     public static UniTask<List<RoleInstance>> Open(SelectRoleParams paras)
     {
         var t = new UniTaskCompletionSource<List<RoleInstance>>();
