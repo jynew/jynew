@@ -37,15 +37,18 @@ public class Jyx2_UIManager : MonoBehaviour
         {
             if (_instace == null) 
             {
+                var rewiredPreab = Resources.Load<GameObject>("RewiredInputManager");
+                var rewiredObj = Instantiate(rewiredPreab);
+
                 var prefab = Resources.Load<GameObject>("MainCanvas");
                 var obj = Instantiate(prefab);
                 obj.gameObject.name = "MainCanvas";
                 _instace = obj.GetComponent<Jyx2_UIManager>();
                 _instace.Init();
-                
+
                 var rewiredInputModule = obj.GetComponentInChildren<RewiredStandaloneInputModule>();
-                rewiredInputModule.RewiredInputManager = FindObjectOfType<Rewired.InputManager>();
-                
+                rewiredInputModule.RewiredInputManager = rewiredObj.GetComponent<Rewired.InputManager>();
+
                 DontDestroyOnLoad(_instace);
             }
             return _instace;

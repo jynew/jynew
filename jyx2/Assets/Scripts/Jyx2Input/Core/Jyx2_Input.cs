@@ -1,3 +1,4 @@
+using Rewired;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace Jyx2.InputCore
         {
             get
             {
+                if (!ReInput.isReady)
+                    return null;
                 if (m_RewiredPlayer == null)
                 {
                     m_RewiredPlayer = Rewired.ReInput.players.GetPlayer(SystemPlayerId);
