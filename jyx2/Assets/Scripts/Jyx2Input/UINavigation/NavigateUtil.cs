@@ -1,6 +1,9 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 namespace Jyx2.UINavigation
 {
@@ -86,6 +89,73 @@ namespace Jyx2.UINavigation
                 var neibor = GetNeighbors(i, row, col);
                 curItem.Connect(Items.SafeGet(neibor.up), Items.SafeGet(neibor.down), Items.SafeGet(neibor.left), Items.SafeGet(neibor.right));
             }
+        }
+
+        static Vector3[] corners = new Vector3[4];
+        public static Bounds TransformBoundsTo(this RectTransform source, Transform target)
+        {
+            var bounds = new Bounds();
+            if (source != null)
+            {
+                source.GetWorldCorners(corners);
+
+                var vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+                var vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+                var matrix = target.worldToLocalMatrix;
+                for (int j = 0; j < 4; j++)
+                {
+                    Vector3 v = matrix.MultiplyPoint3x4(corners[j]);
+                    vMin = Vector3.Min(v, vMin);
+                    vMax = Vector3.Max(v, vMax);
+                }
+                bounds = new Bounds(vMin, Vector3.zero);
+                bounds.Encapsulate(vMax);
+            }
+            return bounds;
+        }
+
+        private static float NormalizeScrollDistance(this ScrollRect scrollRect, int axis, float distance)
+        {
+            var viewport = scrollRect.viewport;
+            var viewRect = viewport != null ? viewport : scrollRect.GetComponent<RectTransform>();
+            var viewBounds = new Bounds(viewRect.rect.center, viewRect.rect.size);
+
+            var content = scrollRect.content;
+            var contentBounds = content != null ? content.TransformBoundsTo(viewRect) : new Bounds();
+
+            var hiddenLength = contentBounds.size[axis] - viewBounds.size[axis];
+            return distance / hiddenLength;
+        }
+
+        public static void ScrollToTarget(this ScrollRect scrollRect, RectTransform target)
+        {
+            var view = scrollRect.viewport != null ? scrollRect.viewport : scrollRect.GetComponent<RectTransform>();
+
+            var viewRect = view.rect;
+            var elementBounds = target.TransformBoundsTo(view);
+            var result = scrollRect.normalizedPosition;
+            if (scrollRect.horizontal)
+            {
+                var offsetX = viewRect.center.x - elementBounds.center.x;
+                var scrollPosX = scrollRect.horizontalNormalizedPosition - scrollRect.NormalizeScrollDistance(0, offsetX);
+                result.x = Mathf.Clamp01(scrollPosX);
+            }
+            if (scrollRect.vertical)
+            {
+                var offsetY = viewRect.center.y - elementBounds.center.y;
+                var scrollPosY = scrollRect.verticalNormalizedPosition - scrollRect.NormalizeScrollDistance(1, offsetY);
+                result.y = Mathf.Clamp01(scrollPosY);
+            }
+            scrollRect.DONormalizedPos(result, 0.1f);
+        }
+
+        public static void TryFocusInScrollRect(Component comp)
+        {
+            var rectTranform = comp.GetComponent<RectTransform>();
+            var scrollRect = comp.GetComponentInParent<ScrollRect>();
+            if (rectTranform == null || scrollRect == null)
+                return;
+            scrollRect.ScrollToTarget(rectTranform);
         }
     }
 }

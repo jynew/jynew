@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6011659508953628957}
   - component: {fileID: 77731520913514097}
   - component: {fileID: 7438529309197158789}
+  - component: {fileID: 3840075681779242490}
   m_Layer: 5
   m_Name: SelectRolePanel
   m_TagString: Untagged
@@ -54,6 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd87d81b263194fabee93ef44e03ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_RoleItemPrefabPath: Assets/Prefabs/Jyx2UI/RoleItem.prefab
 --- !u!222 &77731520913514097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -92,6 +94,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3840075681779242490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913914178916596532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e92f33c224aef4ca06f7b0f56e3b25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelect: {fileID: 0}
+  m_LastSelect: {fileID: 0}
+  m_ManualControlSelect: 1
 --- !u!1 &913914178959216398
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_exportComponentList:
-  - {fileID: 913914179946820674}
+  - {fileID: 913914179946820673}
 --- !u!1 &913914180475089638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,10 +1067,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 2983982273966756974}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1262,9 +1279,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 702346676307475357}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}

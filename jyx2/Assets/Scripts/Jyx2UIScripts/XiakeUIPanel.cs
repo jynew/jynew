@@ -119,7 +119,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		for (int i = 0; i < m_roleList.Count; i++)
 		{
 			role = m_roleList[i];
-			var item = RoleUIItem.Create();
+			var item = GetComponent<RoleUIItem>();
 			m_roleUIItems.Add(item);
 			item.transform.SetParent(RoleParent_RectTransform);
 			item.transform.localScale = Vector3.one;
@@ -133,7 +133,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 				m_currentRole_index = i;
 			}
 			item.SetState(isSelect, false);
-			item.ShowRole(role);
 		}
 	}
 

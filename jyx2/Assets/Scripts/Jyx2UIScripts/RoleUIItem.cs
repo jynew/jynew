@@ -15,48 +15,73 @@ using System.Text;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Jyx2.Util;
+using Jyx2.UINavigation;
+using System;
+using UnityEngine.EventSystems;
 
-public class RoleUIItem : MonoBehaviour
+public class RoleUIItem : Selectable, IPointerClickHandler, IDataContainer<RoleInstance>, INavigable
 {
-	public static RoleUIItem Create()
-	{
-		var obj = Jyx2ResourceHelper.CreatePrefabInstance("RoleItem");
-		var roleItem = obj.GetComponent<RoleUIItem>();
-		roleItem.InitTrans();
-		return roleItem;
-	}
+	public event Action<RoleUIItem, bool> OnSelectStateChange;
 
-	Transform m_select;
-	Transform m_over;
-	Image m_roleHead;
+    protected override void Awake()
+    {
+		base.Awake();
+		InitTrans();
+    }
+
+    protected override void OnDestroy()
+    {
+		base.OnDestroy();
+		OnSelectStateChange = null;
+    }
+
+    Image m_roleHead;
 	Text m_roleName;
 	Text m_roleInfo;
-	Transform m_actionButton;
 	RoleInstance m_role;
 	List<int> m_showPropertyIds = new List<int>() { 14, 13, 15 };//要显示的属性
 
+    [SerializeField]
+    private Graphic m_SelectMark;
+	[SerializeField]
+    private bool m_IsSelected = false;
+
+    public bool IsSelected => m_IsSelected;
+
+#if UNITY_EDITOR
+	protected override void OnValidate()
+	{
+		base.OnValidate();
+		RefreshMark();
+	}
+#endif
+
+
 	void InitTrans()
 	{
-		m_select = transform.Find("Select");
-		m_over = transform.Find("Over");
 		m_roleHead = transform.Find("RoleHead").GetComponent<Image>();
 		m_roleName = transform.Find("Name").GetComponent<Text>();
 		m_roleInfo = transform.Find("Info").GetComponent<Text>();
-		m_actionButton = transform.Find("ActionButton");
 	}
 
-	public void ShowRole(RoleInstance role, List<int> pros = null)
-	{
-		m_role = role;
-		if (pros != null)
-			m_showPropertyIds = pros;
+    public void SetData(RoleInstance data)
+    {
+        m_role = data;
+        RefreshRole();
+    }
 
-		string nameText = role.Name + " Lv." + role.Level;
+    private void RefreshRole()
+	{
+		if (m_role == null)
+			return;
+
+		string nameText = m_role.Name + " Lv." + m_role.Level;
 		m_roleName.text = nameText;
 
 		ShowProperty();
 
-		m_roleHead.LoadAsyncForget(role.Data.GetPic());
+		m_roleHead.LoadAsyncForget(m_role.Data.GetPic());
 	}
 
 	void ShowProperty()
@@ -99,53 +124,64 @@ public class RoleUIItem : MonoBehaviour
 		m_roleInfo.text = sb.ToString();
 	}
 
-	bool isOver = false;
-
-	public void SetState(bool? selected, bool? over)
+	public void SetState(bool _isSelected, bool notifyEvent = true)
 	{
-		if (selected.HasValue)
+		bool prevState = m_IsSelected;
+		m_IsSelected = _isSelected;
+		if(prevState != m_IsSelected && notifyEvent)
 		{
-			if (m_select != null)
-				m_select.gameObject.SetActive(selected.Value);
+			OnSelectStateChange?.Invoke(this, m_IsSelected);
 		}
+        RefreshMark();
+    }
 
-		if (over.HasValue)
-		{
-			isOver = over.Value;
-			var allowPerformingOver = selected != null ? !selected.Value : true;
+    private void RefreshMark(bool instant = true)
+    {
+        if (m_SelectMark != null)
+        {
+            if (!Application.isPlaying)
+            {
+                m_SelectMark.canvasRenderer.SetAlpha(IsSelected ? 1f : 0f);
+            }
+            else
+            {
+                m_SelectMark.CrossFadeAlpha(IsSelected ? 1f : 0f, instant ? 0f : 0.1f, true);
+            }
+        }
+    }
 
-			//turn off over if selected
-			if (m_over != null)
-				m_over.gameObject.SetActive(isOver && allowPerformingOver);
-			//always show
-			if (m_actionButton != null)
-				m_actionButton.gameObject.SetActive(isOver);
-		}
-	}
-
-	public RoleInstance GetShowRole()
+    public RoleInstance GetShowRole()
 	{
 		return m_role;
 	}
 
-	bool gamepadConnected = false;
+    public void Connect(INavigable up = null, INavigable down = null, INavigable left = null, INavigable right = null)
+    {
+        var selectable = GetSelectable();
+		if (selectable == null)
+			return;
+        Navigation navigation = new Navigation();
+        navigation.mode = Navigation.Mode.Explicit;
+        navigation.selectOnUp = up?.GetSelectable();
+        navigation.selectOnDown = down?.GetSelectable();
+        navigation.selectOnLeft = left?.GetSelectable();
+        navigation.selectOnRight = right?.GetSelectable();
+        selectable.navigation = navigation;
+    }
 
-	private void Update()
-	{
-		if (gamepadConnected != GamepadHelper.GamepadConnected)
-		{
-			gamepadConnected = GamepadHelper.GamepadConnected;
+    public Selectable GetSelectable()
+    {
+		return this;
+    }
 
-			if (gamepadConnected)
-			{
-				m_actionButton.gameObject.SetActive(isOver);
-				m_over.gameObject.SetActive(isOver);
-			}
-			else if (!gamepadConnected)
-			{
-				m_actionButton.gameObject.SetActive(false);
-				m_over.gameObject.SetActive(false);
-			}
-		}
-	}
+    public void Select(bool notifyEvent)
+    {
+		SetState(true, notifyEvent);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+		if (eventData.button == PointerEventData.InputButton.Left)
+			SetState(!IsSelected);
+    }
 }
