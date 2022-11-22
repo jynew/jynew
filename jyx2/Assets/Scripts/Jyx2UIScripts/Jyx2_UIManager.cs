@@ -293,7 +293,25 @@ public class Jyx2_UIManager : MonoBehaviour
         else
             uibase.Hide();
     }
-    
+    public void HideUI<T>() where T : Jyx2_UIBase
+    {
+        var uiName = typeof(T).Name;
+        if (!m_uiDic.ContainsKey(uiName))
+            return;
+        Jyx2_UIBase uibase = m_uiDic[uiName];
+        if (m_normalUIStack.Contains(uibase))
+        {
+            PopUI(uibase, m_normalUIStack);
+        }
+        else if (m_PopUIStack.Contains(uibase))
+        {
+            PopUI(uibase, m_PopUIStack);
+        }
+        else if (uibase.Layer == UILayer.MainUI)
+            uibase.Hide();
+        else
+            uibase.Hide();
+    }
 
     public void HideAllUI()
     {
