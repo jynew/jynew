@@ -1,3 +1,39 @@
+1.1.43.0:
+
+  Changes:
+    - Added MacOS Game Controller Framework support.
+  
+  API Changes:
+    - Added ControllerMap.CreateFromJson function.
+    - Added Controller.Element.compoundElement property.
+    - Added Controller.GetCompoundElementById function.
+
+1.1.42.1:
+
+    Bug Fixes:
+      - Fixed missing method exception thrown when editing Custom Controllers in Rewired Editor.
+
+1.1.42.0:
+
+  Changes:
+    - Added Unity 2022 branch.
+    - Removed support for many old platforms: Windows 8 Phone, Windows 8 Store,  Windows 8.1 Universal, Ouya, PS3, Wii, WiiU, Xbox 360, Blackberry, Google Nexus Player, Gamestick.
+    - Removed PS4 support from core. A plugin is now required for PS4 support. See Special Platforms in the documentation for details.
+    - Added support for Sony PlayStation 4 plugin.
+    - Added support for Sony PlayStation 5 plugin.
+    - Added support for Nintendo Switch plugin running in Unity Editor.
+    - OSX: Updated SDL2 library to 2.0.20, universal Intel/Apple Silicon. (SDL2 library files in project must be deleted and re-installed from the menu.)
+    - Added Rewired_DirectInput.pdb files.
+    - Added option to disable mouse input on platforms and avoid polling for mouse input values on Unity-based input sources to reduce CPU usage on certain platforms.
+
+  Bug Fixes:
+    - Removed warning in editor when Unity Input System is enabled in Unity 2021.2+.
+    - Rewired Input Manager Settings configuration is no longer reset when using Compact Ids function.
+    - Controller Map returns the correct controller type even before data is baked when creating a Controller Map from XML.
+    - Controller id defaults to -1 instead of 0 for incomplete Controller Maps which have been created outside a Player and have no associated Controller.
+    - Creating an ActionElementMap in an incomplete Controller Map can no longer throw an exception if no Controller exists when the Controller Map has an undefined Controller id.
+    - Control Mapper: Adding a Map categories that is set to not User Assignable to the list of categories to display no longer break the layout.
+
 1.1.41.5:
 
   Bug Fixes:
@@ -17,7 +53,6 @@
 
   Bug Fixes:
     - OSX Standalone, Native, Enhanced Device support enabled: Fixed Dual Shock 4 axes not working when connected via USB bug introduced in 1.1.41.2.
-
 
 1.1.41.2:
 
