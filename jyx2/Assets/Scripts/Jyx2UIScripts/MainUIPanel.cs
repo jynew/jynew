@@ -67,19 +67,18 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 				return;
 			coordinateBuilder.Clear();
 
-			int offsetX = 242, offsetZ = 435;
 			var playerPosition = player.transform.position;
-			coordinateBuilder.Append(Mathf.Floor(playerPosition.x + offsetX));
+			coordinateBuilder.Append(Mathf.Floor(playerPosition.z));
 			coordinateBuilder.Append(",");
-			coordinateBuilder.Append(Mathf.Floor(playerPosition.z + offsetZ));
+			coordinateBuilder.Append(Mathf.Floor(playerPosition.x));
 
 			if (!player.IsOnBoat)
 			{
 				var boatPosition = player.GetBoatPosition();
 				coordinateBuilder.Append("(");
-				coordinateBuilder.Append(Mathf.Round(boatPosition.x + offsetX));
+				coordinateBuilder.Append(Mathf.Round(boatPosition.z));
 				coordinateBuilder.Append(",");
-				coordinateBuilder.Append(Mathf.Round(boatPosition.z + offsetZ));
+				coordinateBuilder.Append(Mathf.Round(boatPosition.x));
 				coordinateBuilder.Append(")");
 
 			}
