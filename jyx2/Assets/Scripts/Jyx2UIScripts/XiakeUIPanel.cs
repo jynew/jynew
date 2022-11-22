@@ -20,23 +20,41 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Jyx2Configs;
+using Jyx2.UINavigation;
+using Jyx2.Util;
+using System.Linq;
+using UnityEditor.Tilemaps;
+using UnityEngine.EventSystems;
+using Jyx2.InputCore;
 
 public partial class XiakeUIPanel : Jyx2_UIBase
 {
-	public override UILayer Layer => UILayer.NormalUI;
+	[SerializeField]
+	private string m_RoleItemPrefabPath;
+
+	[SerializeField]
+	private List<Selectable> m_RightButtons = new List<Selectable>();
+
+    private List<Selectable> m_VisibleBtns = new List<Selectable>();
+
+    public override UILayer Layer => UILayer.NormalUI;
+
+	List<RoleInstance> m_roleList = new List<RoleInstance>();
+
+	RoleUIItem m_CurSelecRoleItem;
 
 	RoleInstance m_currentRole;
-	List<RoleInstance> m_roleList;
-	RoleUIItem m_currentShowItem;
-	private int m_currentRole_index = 0;
-	private List<RoleUIItem> m_roleUIItems = new List<RoleUIItem>();
 
-	protected override void OnCreate()
+	private List<RoleUIItem> m_CachedRoleItems = new List<RoleUIItem>();
+
+    private List<RoleUIItem> m_AvailableRoleItems = new List<RoleUIItem>();
+
+	public int CurItemIdx => m_AvailableRoleItems.IndexOf(m_CurSelecRoleItem);
+
+    protected override void OnCreate()
 	{
 		InitTrans();
 		IsBlockControl = true;
-
-		//there is button for this, so doesn't get into the listing of dpad nav
 		BindListener(BackButton_Button, OnBackClick, false);
 
 		BindListener(ButtonHeal_Button, OnHealClick);
@@ -54,36 +72,16 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		m_currentRole = allParams[0] as RoleInstance;
 		if (allParams.Length > 1)
 			m_roleList = allParams[1] as List<RoleInstance>;
-
-		/*var curMap=GameRuntimeData.Instance.CurrentMap;
-        (LeaveButton_Button.gameObject).SetActive("0_BigMap"==curMap);*/
 		DoRefresh();
 	}
 
 	void DoRefresh()
 	{
-		RefreshScrollView();
-		RefreshCurrent();
+		RefreshRoleItems();
+		RefreshCurrentRole();
 	}
 
-	private void OnEnable()
-	{
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, OnBackClick);
-	}
-
-	private void OnDisable()
-	{
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
-	}
-
-	protected override void OnHidePanel()
-	{
-		m_currentRole_index = 0;
-		base.OnHidePanel();
-		HSUnityTools.DestroyChildren(RoleParent_RectTransform);
-	}
-
-	void RefreshCurrent()
+	void RefreshCurrentRole()
 	{
 		if (m_currentRole == null)
 		{
@@ -101,55 +99,72 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		ButtonDetoxicate_Button.gameObject.SetActive(canDepoison);
 		bool canHeal = m_currentRole.Heal >= 20 && m_currentRole.Tili >= 50;
 		ButtonHeal_Button.gameObject.SetActive(canHeal);
-
-		//select the first available button
-		changeCurrentSelection(0);
-
 		PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
-	}
+		AdjustRightButtonNavigation();
+		EventSystem.current.SetSelectedGameObject(LeaveButton_Button.gameObject);
+    }
 
-	void RefreshScrollView()
+	void RefreshRoleItems()
 	{
-		m_roleUIItems.Clear();
-		HSUnityTools.DestroyChildren(RoleParent_RectTransform);
-		if (m_roleList == null || m_roleList.Count <= 0)
-			return;
-		RoleInstance role;
-		cleanupDestroyedButtons();
-		for (int i = 0; i < m_roleList.Count; i++)
-		{
-			role = m_roleList[i];
-			var item = GetComponent<RoleUIItem>();
-			m_roleUIItems.Add(item);
-			item.transform.SetParent(RoleParent_RectTransform);
-			item.transform.localScale = Vector3.one;
+		m_AvailableRoleItems.Clear();
+        Action<int, RoleUIItem, RoleInstance> onRoleItemCreate = (idx, item, data) =>
+        {
+            m_AvailableRoleItems.Add(item);
+            item.SetState(m_currentRole == data, false);
+            item.OnSelectStateChange -= OnItemClick;
+            item.OnSelectStateChange += OnItemClick;
+        };
 
-			Button btn = item.GetComponent<Button>();
-			BindListener(btn, () => { OnItemClick(item); }, false);
-			bool isSelect = (m_currentRole == role);
-			if (isSelect)
-			{
-				m_currentShowItem = item;
-				m_currentRole_index = i;
-			}
-			item.SetState(isSelect, false);
+        MonoUtil.GenerateMonoElementsWithCacheList(m_RoleItemPrefabPath, m_roleList, m_CachedRoleItems, RoleParent_RectTransform, onRoleItemCreate);
+        NavigateUtil.SetUpNavigation(m_AvailableRoleItems, m_AvailableRoleItems.Count, 1);
+		SetUpRoleItemRightNavigation();
+        PreSelectRoleItem();
+    }
+	
+	void SetUpRoleItemRightNavigation()
+	{
+		foreach(var role in m_AvailableRoleItems)
+		{
+			var nav = role.navigation;
+			nav.selectOnRight = LeaveButton_Button;
 		}
 	}
 
-	void OnItemClick(RoleUIItem item)
+	void AdjustRightButtonNavigation()
 	{
-		if (m_currentShowItem != null && m_currentShowItem == item)
-			return;
+        m_VisibleBtns.Clear();
+        var visibleBtns = m_RightButtons.Where(btn => btn.gameObject.activeInHierarchy);
+        m_VisibleBtns.AddRange(visibleBtns);
+		NavigateUtil.SetUpNavigation(m_VisibleBtns, m_VisibleBtns.Count, 1);
+    }
 
-		if (m_currentShowItem)
-			m_currentShowItem.SetState(false, false);
-
-		m_currentShowItem = item;
-		m_currentShowItem.SetState(true, false);
-
-		m_currentRole = m_currentShowItem.GetShowRole();
-		RefreshCurrent();
+	void PreSelectRoleItem()
+	{
+        if (m_AvailableRoleItems.Count == 0)
+            return;
+        int idx = -1;
+		if (m_currentRole != null)
+			idx = m_AvailableRoleItems.FindIndex(item => item.GetShowRole() == m_currentRole);
+		if (idx == -1) idx = 0;
+		m_AvailableRoleItems[idx].SetState(true);
 	}
+
+    void OnItemClick(RoleUIItem item, bool willBeSelected)
+    {
+        if (m_CurSelecRoleItem == item)
+            return;
+
+        if (m_CurSelecRoleItem != null)
+            m_CurSelecRoleItem.SetState(false, false);
+        m_CurSelecRoleItem = item;
+        m_CurSelecRoleItem.SetState(true, false);
+        m_currentRole = m_CurSelecRoleItem.GetShowRole();
+        RefreshCurrentRole();
+        if (NavigateUtil.IsNavigateInputLastFrame())
+        {
+            NavigateUtil.TryFocusInScrollRect(m_CurSelecRoleItem);
+        }
+    }
 
 	string GetInfoText(RoleInstance role)
 	{
@@ -219,17 +234,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 	{
 		StringBuilder sb = new StringBuilder();
 		var weapon = role.GetWeapon();
-		//---------------------------------------------------------------------------
-		//sb.AppendLine("武器：" + (weapon == null ? "" : weapon.Name));
-		//var armor = role.GetArmor();
-		//sb.AppendLine("防具：" + (armor == null ? "" : armor.Name));
-		//var xiulianItem = role.GetXiulianItem();
-		//sb.AppendLine("修炼：" + (xiulianItem == null
-		//    ? ""
-		//    : xiulianItem.Name + $"({role.ExpForItem}/{role.GetFinishedExpForItem()})"));
-		//---------------------------------------------------------------------------
-		//特定位置的翻译【XiakePanel角色信息显示大框的信息】
-		//---------------------------------------------------------------------------
 		sb.AppendLine("武器：".GetContent(nameof(XiakeUIPanel)) + (weapon == null ? "" : weapon.Name));
 
 		var armor = role.GetArmor();
@@ -239,13 +243,11 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		sb.AppendLine("修炼：".GetContent(nameof(XiakeUIPanel)) + (xiulianItem == null
 			? ""
 			: xiulianItem.Name + $"({role.ExpForItem}/{role.GetFinishedExpForItem()})"));
-		//---------------------------------------------------------------------------
-		//---------------------------------------------------------------------------
 
 		return sb.ToString();
 	}
 
-	void OnBackClick()
+	public void OnBackClick()
 	{
 		Jyx2_UIManager.Instance.HideUI(nameof(XiakeUIPanel));
 	}
@@ -254,7 +256,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 	// by eaphone at 2021/6/6
 	void OnLeaveClick()
 	{
-
 		var curMap = LevelMaster.GetCurrentGameMap();
 		if (!curMap.Tags.Contains("WORLDMAP"))
 		{
@@ -266,7 +267,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 			return;
 		if (!m_roleList.Contains(m_currentRole))
 			return;
-		if (m_currentRole.GetJyx2RoleId() == GameRuntimeData.Instance.Player.GetJyx2RoleId())
+		if (m_currentRole.IsPlayerRole)
 		{
 			GameUtil.DisplayPopinfo("主角不能离开队伍");
 			return;
@@ -288,13 +289,12 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
 	async UniTask PlayLeaveStory(string story)
 	{
-		this.gameObject.SetActive(false);
-		var s = new UniTaskCompletionSource();
+		gameObject.SetActive(false);
 
 		var eventPath = string.Format(RuntimeEnvSetup.CurrentModConfig.LuaFilePatten, story);
 
 		await Jyx2.LuaExecutor.Execute(eventPath);
-		this.gameObject.SetActive(true);
+		gameObject.SetActive(true);
 		RefreshView();
 	}
 
@@ -312,56 +312,58 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 
 	async void OnWeaponClick()
 	{
-		await SelectFromBag(
-			(itemId) =>
-			{
-				var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+		Action<int> onItemSelect = (itemId) =>
+		{
+			var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
 
-				//选择了当前使用的装备，则卸下
-				if (m_currentRole.Weapon == itemId)
-				{
-					m_currentRole.UnequipItem(m_currentRole.GetWeapon());
-					m_currentRole.Weapon = -1;
-				}
-				//否则更新
-				else
-				{
-					m_currentRole.UnequipItem(m_currentRole.GetWeapon());
-					m_currentRole.Weapon = itemId;
-					m_currentRole.UseItem(m_currentRole.GetWeapon());
-					runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
-				}
-			},
-			(item) => { return item.EquipmentType == 0 && (runtime.GetItemUser(item.Id) == m_currentRole.GetJyx2RoleId() || runtime.GetItemUser(item.Id) == -1); },
-			m_currentRole.Weapon);
+			//选择了当前使用的装备，则卸下
+			if (m_currentRole.Weapon == itemId)
+			{
+				m_currentRole.UnequipItem(m_currentRole.GetWeapon());
+				m_currentRole.Weapon = -1;
+			}
+			//否则更新
+			else
+			{
+				m_currentRole.UnequipItem(m_currentRole.GetWeapon());
+				m_currentRole.Weapon = itemId;
+				m_currentRole.UseItem(m_currentRole.GetWeapon());
+				runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
+			}
+		};
+
+		Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.IsWeapon && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser);
+
+		await SelectFromBag(onItemSelect, itemFilterFunc, m_currentRole.Weapon);
 	}
 
 	async void OnArmorClick()
 	{
-		await SelectFromBag(
-			(itemId) =>
+		Action<int> onItemSelect = (itemId) =>
+		{
+			var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+			if (m_currentRole.Armor == itemId)
 			{
-				var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
-				if (m_currentRole.Armor == itemId)
-				{
-					m_currentRole.UnequipItem(m_currentRole.GetArmor());
-					m_currentRole.Armor = -1;
-				}
-				else
-				{
-					m_currentRole.UnequipItem(m_currentRole.GetArmor());
-					m_currentRole.Armor = itemId;
-					m_currentRole.UseItem(m_currentRole.GetArmor());
-					runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
-				}
-			},
-			(item) => { return (int)item.EquipmentType == 1 && (runtime.GetItemUser(item.Id) == m_currentRole.GetJyx2RoleId() || runtime.GetItemUser(item.Id) == -1); },
-			m_currentRole.Armor);
+				m_currentRole.UnequipItem(m_currentRole.GetArmor());
+				m_currentRole.Armor = -1;
+			}
+			else
+			{
+				m_currentRole.UnequipItem(m_currentRole.GetArmor());
+				m_currentRole.Armor = itemId;
+				m_currentRole.UseItem(m_currentRole.GetArmor());
+				runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
+			}
+		};
+
+        Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.IsArmor && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser);
+
+        await SelectFromBag(onItemSelect, itemFilterFunc, m_currentRole.Armor);
 	}
 
 	async void OnXiulianClick()
 	{
-		async void Callback(int itemId)
+		async void onItemSelect(int itemId)
 		{
 			var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
 			if (m_currentRole.Xiulianwupin == itemId)
@@ -385,7 +387,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 						m_currentRole.Xiulianwupin = itemId;
 						runtime.SetItemUser(item.Id, m_currentRole.GetJyx2RoleId());
 
-						RefreshCurrent();
+						RefreshCurrentRole();
 					});
 				}
 				else
@@ -402,14 +404,9 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 			}
 		}
 
-		await SelectFromBag(
-			Callback,
-			(item) =>
-			{
-				return (int) item.ItemType == 2 && (runtime.GetItemUser(item.Id) == m_currentRole.GetJyx2RoleId() ||
-				                                    runtime.GetItemUser(item.Id) == -1);
-			},
-			m_currentRole.Xiulianwupin);
+        Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.IsBook && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser);
+
+        await SelectFromBag(onItemSelect, itemFilterFunc, m_currentRole.Xiulianwupin);
 	}
 
 	async UniTask SelectFromBag(Action<int> Callback, Func<Jyx2ConfigItem, bool> filter, int current_itemId)
@@ -431,7 +428,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 				Callback(itemId);
 			}
 
-			RefreshCurrent();
+			RefreshCurrentRole();
 		}), filter, current_itemId);
 	}
 
@@ -505,49 +502,22 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SelectRolePanel), selectParams);
 	}
 
-	protected override bool captureGamepadAxis => true;
 
-	protected override void handleGamepadButtons()
+    public void TabLeft()
+    {
+        SelectRoleItem(CurItemIdx - 1);
+    }
+
+    public void TabRight()
+    {
+		SelectRoleItem(CurItemIdx + 1);
+    }
+
+	public void SelectRoleItem(int idx)
 	{
-		base.handleGamepadButtons();
-		if (gameObject.activeSelf)
-		{
-			if (GamepadHelper.IsCancel())
-			{
-				OnBackClick();
-			}
-			else if (GamepadHelper.IsTabLeft())
-			{
-				selectPreviousRole();
-			}
-			else if (GamepadHelper.IsTabRight())
-			{
-				selectNextRole();
-			}
-		}
+		if (idx < 0 || idx >= m_AvailableRoleItems.Count)
+			return;
+		m_AvailableRoleItems[idx].Select(true);
 	}
 
-	private void selectPreviousRole()
-	{
-		if (m_currentRole_index == 0)
-		{
-			m_currentRole_index = m_roleUIItems.Count - 1;
-		}
-		else
-			m_currentRole_index--;
-
-		OnItemClick(m_roleUIItems[m_currentRole_index]);
-	}
-
-	private void selectNextRole()
-	{
-		if (m_currentRole_index == m_roleUIItems.Count - 1)
-		{
-			m_currentRole_index = 0;
-		}
-		else
-			m_currentRole_index++;
-
-		OnItemClick(m_roleUIItems[m_currentRole_index]);
-	}
 }

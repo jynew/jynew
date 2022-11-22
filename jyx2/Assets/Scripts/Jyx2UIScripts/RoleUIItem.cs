@@ -36,6 +36,12 @@ public class RoleUIItem : Selectable, IPointerClickHandler, IDataContainer<RoleI
 		OnSelectStateChange = null;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+		RefreshMark();
+    }
+
     Image m_roleHead;
 	Text m_roleName;
 	Text m_roleInfo;
@@ -126,9 +132,8 @@ public class RoleUIItem : Selectable, IPointerClickHandler, IDataContainer<RoleI
 
 	public void SetState(bool _isSelected, bool notifyEvent = true)
 	{
-		bool prevState = m_IsSelected;
 		m_IsSelected = _isSelected;
-		if(prevState != m_IsSelected && notifyEvent)
+		if(notifyEvent)
 		{
 			OnSelectStateChange?.Invoke(this, m_IsSelected);
 		}

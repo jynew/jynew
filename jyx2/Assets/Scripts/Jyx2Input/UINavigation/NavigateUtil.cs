@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Jyx2.InputCore;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,6 +81,17 @@ namespace Jyx2.UINavigation
             return ret;
         }
 
+        public static bool IsNavigateInputLastFrame()
+        {
+            var controller = Jyx2_Input.GetLastActiveController();
+            if (controller == null)
+                return false;
+            if (!controller.isConnected)
+                return false;
+            if (controller.type == Rewired.ControllerType.Mouse)
+                return false;
+            return true;
+        }
 
         public static void SetUpNavigation<T>(this IList<T> Items, int row, int col) where T : INavigable
         {
@@ -88,6 +100,22 @@ namespace Jyx2.UINavigation
                 var curItem = Items[i];
                 var neibor = GetNeighbors(i, row, col);
                 curItem.Connect(Items.SafeGet(neibor.up), Items.SafeGet(neibor.down), Items.SafeGet(neibor.left), Items.SafeGet(neibor.right));
+            }
+        }
+
+        public static void SetUpNavigation(this IList<Selectable> Items, int row, int col)
+        {
+            for (int i = 0; i < Items.Count; ++i)
+            {
+                var curItem = Items[i];
+                var neibor = GetNeighbors(i, row, col);
+                Navigation navigation = new Navigation();
+                navigation.mode = Navigation.Mode.Explicit;
+                navigation.selectOnLeft = Items.SafeGet(neibor.left);
+                navigation.selectOnRight = Items.SafeGet(neibor.right);
+                navigation.selectOnUp = Items.SafeGet(neibor.up);
+                navigation.selectOnDown = Items.SafeGet(neibor.down);
+                curItem.navigation = navigation;
             }
         }
 

@@ -50,8 +50,8 @@ namespace Jyx2.InputCore.UI
             var down = this.UpdateAsObservable().Where(_ => Jyx2_Input.IsUIMoveDown()).Select(_ => "Down");
             var left = this.UpdateAsObservable().Where(_ => Jyx2_Input.IsUIMoveLeft()).Select(_ => "Left");
             var right = this.UpdateAsObservable().Where(_ => Jyx2_Input.IsUIMoveRight()).Select(_ => "Right");
-            var a = this.UpdateAsObservable().Where(_ => Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIConfirm)).Select(_ => "A");
-            var b = this.UpdateAsObservable().Where(_ => Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UICancel)).Select(_ => "B");
+            var a = this.UpdateAsObservable().Where(_ => Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes)).Select(_ => "A");
+            var b = this.UpdateAsObservable().Where(_ => Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_No)).Select(_ => "B");
             var inputs = new[] { up, down, left, right, a, b };
             Observable.Merge(inputs)
                       .Buffer(cheatCommands.Length, 1)
@@ -75,12 +75,11 @@ namespace Jyx2.InputCore.UI
         {
             if (_mainMenu == null)
                 return;
-            //这里要输Konami指令作弊，为防止按键冲突，不用UIConfrim和UICancel来确认取消
-            if(Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes))
+            if(Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIConfirm))
             {
                 _mainMenu.OnCreateRoleYesClick();
             }
-            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_No))
+            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UICancel))
             {
                 _mainMenu.OnCreateRoleNoClick();
             }
