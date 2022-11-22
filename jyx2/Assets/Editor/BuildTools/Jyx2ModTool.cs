@@ -1,7 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Serialization;
-using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
