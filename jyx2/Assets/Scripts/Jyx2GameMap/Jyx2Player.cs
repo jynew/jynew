@@ -128,13 +128,23 @@ public class Jyx2Player : MonoBehaviour
         }
     }
 
+    public void GetInSecret()
+    {
+        _navMeshAgent.areaMask = GetSecretNavAreaMask();
+    }
+
+    public void GetOutSecret()
+    {
+        _navMeshAgent.areaMask = GetNormalNavAreaMask();
+    }
+
     /// <summary>
     /// 获取水路行走mask
     /// </summary>
     /// <returns></returns>
     int GetWaterNavAreaMask()
     {
-        return (0 << 0) + (0 << 1) + (1 << 2) + (1 << 3);
+        return (0 << 0) + (0 << 1) + (1 << 2) + (1 << 3) + (0 << 4);
     }
 
     /// <summary>
@@ -143,9 +153,14 @@ public class Jyx2Player : MonoBehaviour
     /// <returns></returns>
     int GetNormalNavAreaMask()
     {
-        return (1 << 0) + (0 << 1) + (1 << 2) + (0 << 3);
+        return (1 << 0) + (0 << 1) + (1 << 2) + (0 << 3) + (0 << 4);
     }
 
+    // 获取隐秘区域行走mask
+    int GetSecretNavAreaMask()
+    {
+        return (1 << 0) + (0 << 1) + (1 << 2) + (0 << 3) + (1 << 4);
+    }
 
     public void Init()
     {
