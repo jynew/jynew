@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Text;
 
-public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
+public partial class MainUIPanel : Jyx2_UIBase
 {
 	public override UILayer Layer => UILayer.MainUI;
 
@@ -307,77 +307,4 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
 	}
-
-	public void DoShowAnimator()
-	{
-		//AnimRoot_RectTransform.anchoredPosition = new Vector2(0, 150);
-		//AnimRoot_RectTransform.DOAnchorPosY(-50, 1.0f);
-	}
-
-	public void DoHideAnimator()
-	{
-
-	}
-
-	private void OnEnable()
-	{
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
-		{
-			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
-			{
-				OnSystemBtnClick();
-			}
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.X, () =>
-		{
-			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
-			{
-				OnXiakeBtnClick();
-			}
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.B, () =>
-		{
-			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
-			{
-				OnBagBtnClick();
-			}
-		});
-	}
-
-	private void OnDisable()
-	{
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.X);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.B);
-	}
-
-	protected override bool captureGamepadAxis => true;
-
-	protected override void OnDirectionalDown()
-	{
-		//do nothing
-	}
-
-	protected override void OnDirectionalUp()
-	{
-		//do nothing
-	}
-
-	protected override void OnDirectionalLeft()
-	{
-		base.OnDirectionalUp();
-	}
-
-	protected override void OnDirectionalRight()
-	{
-		base.OnDirectionalDown();
-	}
-
-	protected override string confirmButtonName()
-	{
-		return GamepadHelper.START_BUTTON;
-	}
-
-	//don't reset to 0 for this main, since it will select the system button automatically
-	protected override bool resetCurrentSelectionOnShow => false;
 }

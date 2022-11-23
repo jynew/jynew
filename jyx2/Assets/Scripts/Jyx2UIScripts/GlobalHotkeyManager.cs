@@ -14,8 +14,8 @@ using UnityEngine;
 
 /// <summary>
 /// 全局的热键管理，将对应热键进行堆栈式管理。
-///
 /// </summary>
+[Obsolete("使用Rewired完全替代，勿再使用")]
 public class GlobalHotkeyManager : MonoBehaviour
 {
     public static GlobalHotkeyManager Instance
@@ -108,7 +108,7 @@ public class GlobalHotkeyManager : MonoBehaviour
         isLock = false;
     }
 
-    void Update()
+    void Update_Obsolete()
     {
         if (_hotkeys.Count == 0 || isLock)
             return;

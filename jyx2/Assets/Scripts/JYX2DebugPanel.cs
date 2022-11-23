@@ -17,36 +17,31 @@ using System.Collections.Generic;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
+using Jyx2.InputCore;
 
-public class JYX2DebugPanel : MonoBehaviour
+public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
 {
     public Dropdown m_ChangeScene;
     public Dropdown m_TransportDropdown;
 
     List<Jyx2ConfigMap> m_ChangeSceneMaps = new List<Jyx2ConfigMap>();
-    bool _debugPanelSwitchOff = false;
+    bool _isDebugPanelOn = false;
 
-    public bool IsDebugPanelSwitchOff()
-    {
-        return _debugPanelSwitchOff;
-    }
+    public bool CanUpdate => _isDebugPanelOn;
 
     //打开和关闭面板
     public void DebugPanelSwitch()
     {
-        transform.DOLocalMoveX(_debugPanelSwitchOff ? -1360f : -960f, 0.3f);
-        
-        LevelMaster lm = LevelMaster.Instance;
-        if (lm != null)
+        transform.DOLocalMoveX(_isDebugPanelOn ? -1360f : -960f, 0.3f);
+        _isDebugPanelOn = !_isDebugPanelOn;
+        if(_isDebugPanelOn)
         {
-            var player = lm.GetPlayer();
-            if (player != null)
-            {
-                player.locomotionController.forceDisable = !_debugPanelSwitchOff;
-            }
+            InputContextManager.Instance.AddInputContext(this);
         }
-
-        _debugPanelSwitchOff = !_debugPanelSwitchOff;
+        else
+        {
+            InputContextManager.Instance.RemoveInputContext(this);
+        }
     }
 
     #region 地点跳转
@@ -136,12 +131,11 @@ public class JYX2DebugPanel : MonoBehaviour
     private void Start()
     {
         InitLocationDebugTools();
-
     }
 
-    private void Update()
+    public void OnUpdate()
     {
-        if (Input.GetKeyUp(KeyCode.BackQuote))
+        if(Input.GetKeyUp(KeyCode.BackQuote)) 
         {
             DebugPanelSwitch();
         }
