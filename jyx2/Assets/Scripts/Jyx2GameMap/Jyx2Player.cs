@@ -101,7 +101,7 @@ public class Jyx2Player : MonoBehaviour
     public bool GetOutBoat()
     {
         NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(transform.position, out myNavHit, 3.5f, GetNormalNavAreaMask()))
+        if (NavMesh.SamplePosition(transform.position, out myNavHit, 2.5f, GetNormalNavAreaMask()))
         {
             //比水平面还低
             if (myNavHit.position.y < 5f)
