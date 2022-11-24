@@ -337,7 +337,15 @@ public class Jyx2_UIManager : MonoBehaviour
         return Camera.main;
     }
 
-
+    public T GetUI<T>() where T : Jyx2_UIBase
+    {
+        foreach (var item in m_uiDic.Values)
+        {
+            if (item is T)
+                return item as T;
+        }
+        return null;
+    }
     public bool IsUIOpen(string uiName)
     {
         if (!m_uiDic.ContainsKey(uiName))

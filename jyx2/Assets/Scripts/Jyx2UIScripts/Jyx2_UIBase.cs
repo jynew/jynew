@@ -75,12 +75,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 			(this as IUIAnimator).DoShowAnimator();
 		}
 
-		if (IsBlockControl && !IsChangedBlockControl && LevelMaster.Instance != null && !BattleManager.Instance.IsInBattle && LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
-		{
-			IsChangedBlockControl = true;
-			LevelMaster.Instance.GetPlayer().locomotionController.playerControllable = false;
-		}
-
 		VisibilityToggled?.Invoke(this, true);
 
 		if (resetCurrentSelectionOnShow && GamepadHelper.GamepadConnected && captureGamepadAxis && activeButtons.Length > 0)
@@ -120,11 +114,6 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 
 		this.gameObject.SetActive(false);
 		this.OnHidePanel();
-		if (IsBlockControl && IsChangedBlockControl)
-		{
-			IsChangedBlockControl = false;
-			LevelMaster.Instance.GetPlayer().locomotionController.playerControllable = true;
-		}
 
 		VisibilityToggled?.Invoke(this, false);
 	}

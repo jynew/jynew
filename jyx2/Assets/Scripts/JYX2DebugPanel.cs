@@ -29,6 +29,11 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
 
     public bool CanUpdate => _isDebugPanelOn;
 
+    void OnDisable()
+    {
+        InputContextManager.Instance.RemoveInputContext(this);
+    }
+
     //打开和关闭面板
     public void DebugPanelSwitch()
     {

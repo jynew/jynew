@@ -935,8 +935,13 @@ namespace Jyx2
         // modify by eaphone at 2021/6/5
         public static void SetRoleFace(int dir)
         {
-            var levelMaster = GameObject.FindObjectOfType<LevelMaster>();
-            levelMaster.GetPlayer().locomotionController.SetRotation(dir);
+            var player = Jyx2Player.GetPlayer();
+            if (player == null)
+                return;
+            var movementComp = player.GetComponent<Jyx2_PlayerMovement>();
+            if (movementComp == null)
+                return;
+            movementComp.SetRotation(dir);
         }
 
         public static void NPCGetItem(int roleId,int itemId,int count)
@@ -1372,7 +1377,14 @@ namespace Jyx2
                 callback();
                 return;
             }
-            LevelMaster.Instance.GetPlayer().locomotionController.PlayerWarkFromTo(fromObj.transform.position,toObj.transform.position, callback);
+            var autoWalker = LevelMaster.Instance.GetPlayer().GetComponent<Jyx2_PlayerAutoWalk>();
+            if(autoWalker == null)
+            {
+                GameUtil.LogError("找不到自动行走控件");
+                callback();
+                return;
+            }
+            autoWalker.PlayerWarkFromTo(fromObj.transform.position,toObj.transform.position, callback);
         }
 
         public static async UniTask jyx2_WalkFromToAsync(int fromName, int toName)
@@ -1513,8 +1525,6 @@ namespace Jyx2
                 GameObject obj = GameObject.Find(objPath);
                 DoPlayTimeline(playableDirector, obj.gameObject);
             }
-
-            LevelMaster.Instance.GetPlayer().locomotionController.playerControllable = false;
         }
 
         static void DoPlayTimeline(PlayableDirector playableDirector, GameObject player, bool isMovePlayer = false)
@@ -1566,7 +1576,6 @@ namespace Jyx2
             clonePlayer = null;
 
             playableDiretor.GetComponent<PlayableDirectorHelper>().ClearTempObjects();
-            LevelMaster.Instance.GetPlayer().locomotionController.playerControllable = true;
         }
 
         public static void jyx2_Wait(float duration,Action callback)

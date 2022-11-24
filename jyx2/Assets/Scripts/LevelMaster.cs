@@ -345,9 +345,7 @@ public class LevelMaster : MonoBehaviour
 		}
 		else if (loadPara.loadType == LevelLoadPara.LevelLoadType.ReturnFromBattle)
 		{
-			//从战斗回来的，先不能触发对话逻辑
-			//GetPlayer().locomotionController.playerControllable = false; 作弊战斗回来后会卡住
-			GetPlayer().locomotionController.StopPlayerNavigation();
+			GetPlayer()?.StopPlayerMovement();
 
 			PlayerSpawnAt(loadPara.Pos);
 			PlayerSpawnRotate(loadPara.Rotate);

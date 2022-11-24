@@ -140,12 +140,12 @@ public partial class MainUIPanel : Jyx2_UIBase
 		}
 	}
 
-	async void OnXiakeBtnClick()
+	public async void OnXiakeBtnClick()
 	{
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
 	}
 
-	async void OnBagBtnClick()
+	public async void OnBagBtnClick()
 	{
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), new Action<int>(OnUseItem));
 	}
@@ -303,7 +303,7 @@ public partial class MainUIPanel : Jyx2_UIBase
 		}
 	}
 
-	async void OnSystemBtnClick()
+	public async void OnSystemBtnClick()
 	{
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
 	}

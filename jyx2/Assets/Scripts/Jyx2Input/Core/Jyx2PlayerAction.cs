@@ -45,6 +45,14 @@ namespace Jyx2.InputCore
         [LabelText("特殊UI否认NO")]
         UI_No = 11,
 
+        [LabelText("打开系统菜单")]
+        UI_SystemMenu = 13,
+
+        [LabelText("打开侠客属性")]
+        UI_Xiake = 14,
+
+        [LabelText("打开背包")]
+        UI_Bag = 15,
     }
     
     public class Jyx2ActionConst
@@ -61,5 +69,8 @@ namespace Jyx2.InputCore
         public const int UISwitchRight = (int)Jyx2PlayerAction.UISwitchRight;
         public const int UI_Yes = (int)Jyx2PlayerAction.UI_Yes;
         public const int UI_No = (int)Jyx2PlayerAction.UI_No;
+        public const int UI_SystemMenu = (int)Jyx2PlayerAction.UI_SystemMenu;
+        public const int UI_Xiake = (int)Jyx2PlayerAction.UI_Xiake;
+        public const int UI_Bag = (int)Jyx2PlayerAction.UI_Bag;
     }
 }

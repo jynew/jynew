@@ -19,7 +19,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using XLua;
+using System;
+using Jyx2.InputCore;
 
+
+[RequireComponent(typeof(Jyx2_PlayerInput))]
+[RequireComponent(typeof(Jyx2_PlayerMovement))]
+[RequireComponent(typeof(Jyx2_PlayerAutoWalk))]
+[DisallowMultipleComponent]
 public class Jyx2Player : MonoBehaviour
 {
     /// <summary>
@@ -31,11 +38,6 @@ public class Jyx2Player : MonoBehaviour
     /// 交互的视野角度
     /// </summary>
     const float PLAYER_INTERACTIVE_ANGLE = 120f;
-
-    private bool _isControlEnable = true;
-    public PlayerLocomotionController locomotionController => _locomotionController;
-    [SerializeField]
-    private PlayerLocomotionController _locomotionController;
 
     public static Jyx2Player GetPlayer()
     {
@@ -64,6 +66,8 @@ public class Jyx2Player : MonoBehaviour
     public bool IsOnBoat;
 
     NavMeshAgent _navMeshAgent;
+    Jyx2_PlayerAutoWalk _autoWalker;
+    Jyx2_PlayerMovement m_PlayerMovement;
     Jyx2Boat _boat;
 
     private float m_InteractDelayTime;
@@ -149,12 +153,14 @@ public class Jyx2Player : MonoBehaviour
 
     public void Init()
     {
+        m_PlayerMovement = GetComponent<Jyx2_PlayerMovement>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _boat = FindObjectOfType<Jyx2Boat>();
+        _autoWalker = GetComponent<Jyx2_PlayerAutoWalk>();
         _gameEventLayerMask = LayerMask.GetMask("GameEvent");
         m_InteractDelayTime = Time.time + 0.1f;
-        _locomotionController.Init(_navMeshAgent);
     }
+
 
     void Start()
     {
@@ -167,16 +173,13 @@ public class Jyx2Player : MonoBehaviour
         }
     }
 
-    public void SetPlayerControlEnable(bool isEnable)
-    {
-        _isControlEnable = isEnable;
-    }
-
     public bool CanControlPlayer
     {
         get
         {
-            if (!_isControlEnable)
+            if (!Jyx2_Input.IsPlayerContext)
+                return false;
+            if (_autoWalker.IsAutoWalking)
                 return false;
             if (Jyx2_UIManager.Instance.IsUIOpen(nameof(GameOver)))
                 return false;
@@ -238,6 +241,14 @@ public class Jyx2Player : MonoBehaviour
     {
         return m_Animancer;
     }
+
+    public void SetAnimSpeed(float speed)
+    {
+        if (m_Animator == null)
+            return;
+        m_Animator.SetFloat("speed", Mathf.Clamp(speed,0, 20));
+    }
+
     
     //在大地图上判断是否需要展示待机动作
     void BigMapIdleJudge()
@@ -430,5 +441,10 @@ public class Jyx2Player : MonoBehaviour
         transform.position = spawnPos;
 		transform.rotation = ori;
         _navMeshAgent.enabled = true;
+    }
+
+    public void StopPlayerMovement()
+    {
+        m_PlayerMovement?.StopMovement();
     }
 }

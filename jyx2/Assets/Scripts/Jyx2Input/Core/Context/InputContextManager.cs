@@ -12,7 +12,8 @@ namespace Jyx2.InputCore
     public class InputContextManager : Singleton<InputContextManager>
     {
         private List<IJyx2_InputContext> m_Contexts = new List<IJyx2_InputContext>();
-        
+
+        public bool IsPlayerContext => CurrentContext is Jyx2_PlayerInput;
 
         public IJyx2_InputContext CurrentContext
         {
@@ -55,7 +56,7 @@ namespace Jyx2.InputCore
         }
 
 
-        public void AddInputContext(IJyx2_InputContext newContext)
+        public void AddInputContext(IJyx2_InputContext newContext, bool insertToHead = false)
         {
             if (newContext == null)
                 return;
@@ -67,11 +68,24 @@ namespace Jyx2.InputCore
 
             TryStoreLastSelectObject(CurrentContext);
 
-            m_Contexts.Add(newContext);
+            var prevContext = CurrentContext;
+
+            if(insertToHead)
+            {
+                m_Contexts.Insert(0, newContext);
+            }
+            else
+            {
+                m_Contexts.Add(newContext);
+            }
             
             if (newContext is Jyx2Input_UIContext uiContext)
             {
                 uiContext.TrySelectMyUIObject();
+            }
+            if(prevContext is Jyx2_PlayerInput)
+            {
+                Jyx2_Input.FirePlayerInputChangeEvent(false);
             }
         }
 
@@ -83,6 +97,11 @@ namespace Jyx2.InputCore
             TryStoreLastSelectObject(inputContext);
 
             m_Contexts.Remove(inputContext);
+
+            if (inputContext is Jyx2_PlayerInput)
+            {
+                Jyx2_Input.FirePlayerInputChangeEvent(true);
+            }
 
             TrySelectCurrentContextUIObject();
         }

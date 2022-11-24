@@ -17,6 +17,8 @@ namespace Jyx2.InputCore
     {
         public static event Action<RController> OnControllerChange;
 
+        public static event Action<bool> OnPlayerInputStateChange;
+
         private static RController m_CurController;
 
 
@@ -39,6 +41,8 @@ namespace Jyx2.InputCore
         }
 
         private static bool IsPlayerValid => CurrentPlayer != null;
+
+        public static bool IsPlayerContext => InputContextManager.Instance.IsPlayerContext;
 
         public static bool GetAnyButtonDown()
         {
@@ -84,6 +88,13 @@ namespace Jyx2.InputCore
             return CurrentPlayer.GetAxisRaw(actionId);
         }
 
+        public static Vector2 GetAxis2DRaw(int xActionId, int yActionId)
+        {
+            if (!IsPlayerValid)
+                return Vector2.zero;
+            return CurrentPlayer.GetAxis2DRaw(xActionId, yActionId);
+        }
+
 
         public static Vector2 GetAxis2D(int xActionId, int yActionId)
         {
@@ -122,6 +133,11 @@ namespace Jyx2.InputCore
         public static float GetAxisRaw(Jyx2PlayerAction actionId)
         {
             return GetAxisRaw((int)actionId);
+        }
+
+        public static Vector2 GetAxis2DRaw(Jyx2PlayerAction xActionId, Jyx2PlayerAction yActionId)
+        {
+            return GetAxis2DRaw((int)xActionId, (int)yActionId);
         }
 
         public static bool GetButton(Jyx2PlayerAction actionId)
@@ -203,6 +219,11 @@ namespace Jyx2.InputCore
                     Debug.Log("NewController:" + lastController.name);
 #endif
             }
+        }
+
+        internal static void FirePlayerInputChangeEvent(bool isActive)
+        {
+            OnPlayerInputStateChange?.Invoke(isActive);
         }
     }
 }
