@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
+using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 
 namespace Jyx2
 {
@@ -23,6 +24,8 @@ namespace Jyx2
 
         private float _tempV = 0;
 
+        private float m_ManualMoveSpeed = 0;
+
         public bool IsLockingDirection { get; set; }
 
         public bool IsNavAgentUpdateRotation => _playerNavAgent != null && _playerNavAgent.updateRotation;
@@ -33,14 +36,14 @@ namespace Jyx2
 
         private NavMeshPath _cachePath;
 
-        private Jyx2Player m_MapPlayer;
+        private Animator m_Animator;
 
         private Jyx2_PlayerAutoWalk m_AutoWalker;
 
         private void Awake()
         {
             _playerNavAgent = GetComponent<NavMeshAgent>();
-            m_MapPlayer = GetComponent<Jyx2Player>();
+            m_Animator = GetComponentInChildren<Animator>();
             m_AutoWalker = GetComponent<Jyx2_PlayerAutoWalk>();
             Jyx2_Input.OnPlayerInputStateChange += OnPlayerInputStateChange;
         }
@@ -75,6 +78,11 @@ namespace Jyx2
             transform.rotation = Quaternion.Euler(Vector3.up * roationSet[ro]);
         }
 
+        public void SetManualMoveSpeed(float speed)
+        {
+            m_ManualMoveSpeed = speed;
+        }
+
 
         public void UpdateMovement(Vector2 input)
         {
@@ -82,7 +90,8 @@ namespace Jyx2
             float v = input.y;
             //Debug.Log($"h={h},v={v}");
             _playerNavAgent.updateRotation = false;
-
+            _playerNavAgent.isStopped = true;
+            
             Vector3 forward = Vector3.zero;
             //尝试只使用摄像机的朝向来操作角色移动
             forward = Camera.main.transform.forward;//m_Player.position - Camera.main.transform.position;
@@ -124,7 +133,7 @@ namespace Jyx2
 
             //计算当前速度
             var speed = (transform.position - sourcePos).magnitude / Time.deltaTime;
-            m_MapPlayer.SetAnimSpeed(speed);
+            SetManualMoveSpeed(speed);
 
             if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
             _playerNavAgent.isStopped = true;
@@ -139,8 +148,8 @@ namespace Jyx2
 
         public void StopMovement()
         {
+            SetManualMoveSpeed(0);
             _playerNavAgent.isStopped = true;
-            m_MapPlayer.SetAnimSpeed(0);
         }
 
         public void MoveToDestination(Vector3 target)
@@ -157,12 +166,25 @@ namespace Jyx2
                     _playerNavAgent.SetPath(_cachePath);
             }
         }
-
+        
         public void SetNavAgentUpdateRotation(bool updateRotation)
         {
             if (_playerNavAgent == null)
                 return;
             _playerNavAgent.updateRotation = updateRotation;
+        }
+
+        private void Update()
+        {
+            UpdateAnimSpeed();
+        }
+
+        void UpdateAnimSpeed()
+        {
+            float navAgentSpeed = IsNavAgentAvailable ? _playerNavAgent.velocity.magnitude : 0;
+            float manualMoveSpeed = m_ManualMoveSpeed;
+            float finalSpeed = Math.Max(manualMoveSpeed, navAgentSpeed);
+            m_Animator.SetFloat("speed", Mathf.Clamp(finalSpeed, 0, 20));
         }
     }
 }

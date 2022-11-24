@@ -13,6 +13,8 @@ namespace Jyx2
     {
         private NavMeshAgent m_NavmeshAgent;
 
+        private Jyx2Player m_MapPlayer;
+
         private bool m_IsWalking = false;
 
         private Action m_OnArriveDestination;
@@ -22,6 +24,7 @@ namespace Jyx2
         private void Awake()
         {
             m_NavmeshAgent = GetComponent<NavMeshAgent>();
+            m_MapPlayer = GetComponent<Jyx2Player>();
         }
 
         public void PlayerWarkFromTo(Vector3 fromVector, Vector3 toVector, Action callback)
@@ -54,6 +57,8 @@ namespace Jyx2
 
         private void Update()
         {
+            if (!m_IsWalking)
+                return;
             if (!m_NavmeshAgent.pathPending && m_NavmeshAgent.enabled && !m_NavmeshAgent.isStopped && m_NavmeshAgent.remainingDistance <= m_NavmeshAgent.stoppingDistance)
             {
                 FinishAutoWalking();
@@ -67,6 +72,7 @@ namespace Jyx2
             m_OnArriveDestination?.Invoke();
             m_OnArriveDestination = null;
             m_IsWalking = false;
+            m_MapPlayer.StopPlayerMovement();
         }
     }
 }

@@ -256,14 +256,6 @@ public class Jyx2Player : MonoBehaviour
     {
         return m_Animancer;
     }
-
-    public void SetAnimSpeed(float speed)
-    {
-        if (m_Animator == null)
-            return;
-        m_Animator.SetFloat("speed", Mathf.Clamp(speed,0, 20));
-    }
-
     
     //在大地图上判断是否需要展示待机动作
     void BigMapIdleJudge()

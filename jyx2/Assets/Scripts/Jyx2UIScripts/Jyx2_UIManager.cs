@@ -62,8 +62,8 @@ public class Jyx2_UIManager : MonoBehaviour
 
     private Dictionary<string, Jyx2_UIBase> m_uiDic = new Dictionary<string, Jyx2_UIBase>();
     private Jyx2_UIBase m_currentMainUI;
-    private Stack<Jyx2_UIBase> m_normalUIStack = new Stack<Jyx2_UIBase>();
-    private Stack<Jyx2_UIBase> m_PopUIStack = new Stack<Jyx2_UIBase>();
+    private List<Jyx2_UIBase> m_NormalUIs = new List<Jyx2_UIBase>();
+    private List<Jyx2_UIBase> m_PopUIs = new List<Jyx2_UIBase>();
 
     void Init()
     {
@@ -86,7 +86,7 @@ public class Jyx2_UIManager : MonoBehaviour
 		}
 		else if (ui.Layer == UILayer.NormalUI)
 		{
-            Jyx2_UIBase currentUi = m_normalUIStack.Count > 0 ? m_normalUIStack.Peek() : null;
+            Jyx2_UIBase currentUi = m_NormalUIs.LastOrDefault();
             if (currentUi == null)
                 return true;
             
@@ -94,7 +94,7 @@ public class Jyx2_UIManager : MonoBehaviour
 		}
         else if (ui.Layer == UILayer.PopupUI)
 		{
-            return (m_PopUIStack.Count > 0 ? m_PopUIStack.Peek() : null) == ui;
+            return m_PopUIs.LastOrDefault() == ui;
 		}
         else if (ui.Layer == UILayer.Top)
 		{
@@ -106,15 +106,15 @@ public class Jyx2_UIManager : MonoBehaviour
 
 	private bool noShowingNormalUi()
 	{
-        return !m_normalUIStack
+        return !m_NormalUIs
             .Any(ui => ui.gameObject.activeSelf);
 	}
 
 	private bool noInterferingPopupUI()
 	{
         //common tips panel has no interaction, doesn't count towards active uis
-        return !m_normalUIStack
-            .Any(ui => ui.gameObject.activeSelf) || (m_PopUIStack.All(p => p is CommonTipsUIPanel));
+        return !m_NormalUIs
+            .Any(ui => ui.gameObject.activeSelf) || (m_PopUIs.All(p => p is CommonTipsUIPanel));
 	}
 
 	public async void GameStart()
@@ -246,10 +246,10 @@ public class Jyx2_UIManager : MonoBehaviour
                 m_currentMainUI = uibase;
                 break;
             case UILayer.NormalUI:
-                m_normalUIStack.Push(uibase);
+                m_NormalUIs.Add(uibase);
                 break;
             case UILayer.PopupUI:
-                m_PopUIStack.Push(uibase);
+                m_PopUIs.Add(uibase);
                 break;
         }
     }
@@ -258,31 +258,30 @@ public class Jyx2_UIManager : MonoBehaviour
     {
         if (layer == UILayer.NormalUI)
         {
-            PopUI(null, m_normalUIStack);
+            ClearAndHide(m_NormalUIs);
         }
         else if (layer == UILayer.PopupUI) 
         {
-            PopUI(null, m_PopUIStack);
+            ClearAndHide(m_PopUIs);
         }
     }
 
-    void PopUI(Jyx2_UIBase ui, Stack<Jyx2_UIBase> uiStack) 
+    void ClearAndHide(List<Jyx2_UIBase> uiList)
     {
-        if (!uiStack.Contains(ui))
-            return;
-        Jyx2_UIBase node = uiStack.Pop();
-        while (node) 
+        foreach (var ui in uiList)
         {
-            if (node == ui) 
-            {
-                node.Hide();
-                return;
-            }
-            if (uiStack.Count <= 0)
-                return;
-            node.Hide();
-            node = uiStack.Pop();
+            if(ui != null)
+                ui.Hide();
         }
+        uiList.Clear();
+    }
+
+    void PopUI(Jyx2_UIBase ui, List<Jyx2_UIBase> uiList) 
+    {
+        if (!uiList.Contains(ui))
+            return;
+        uiList.Remove(ui);
+        ui.Hide();
     }
 
     public void HideUI(string uiName) 
@@ -290,13 +289,13 @@ public class Jyx2_UIManager : MonoBehaviour
         if (!m_uiDic.ContainsKey(uiName))
             return;
         Jyx2_UIBase uibase = m_uiDic[uiName];
-        if (m_normalUIStack.Contains(uibase))
+        if (m_NormalUIs.Contains(uibase))
         {
-            PopUI(uibase, m_normalUIStack);
+            PopUI(uibase, m_NormalUIs);
         }
-        else if (m_PopUIStack.Contains(uibase))
+        else if (m_PopUIs.Contains(uibase))
         {
-            PopUI(uibase, m_PopUIStack);
+            PopUI(uibase, m_PopUIs);
         }
         else
             uibase.Hide();
@@ -304,21 +303,7 @@ public class Jyx2_UIManager : MonoBehaviour
     public void HideUI<T>() where T : Jyx2_UIBase
     {
         var uiName = typeof(T).Name;
-        if (!m_uiDic.ContainsKey(uiName))
-            return;
-        Jyx2_UIBase uibase = m_uiDic[uiName];
-        if (m_normalUIStack.Contains(uibase))
-        {
-            PopUI(uibase, m_normalUIStack);
-        }
-        else if (m_PopUIStack.Contains(uibase))
-        {
-            PopUI(uibase, m_PopUIStack);
-        }
-        else if (uibase.Layer == UILayer.MainUI)
-            uibase.Hide();
-        else
-            uibase.Hide();
+        HideUI(uiName);
     }
 
     public void HideAllUI()
@@ -336,15 +321,12 @@ public class Jyx2_UIManager : MonoBehaviour
         var uiNames = m_uiDic.Keys.ToList(); 
         foreach (var uiName in uiNames)
         {
-            if(m_uiDic.ContainsKey(uiName))
-            {
-                HideUI(uiName);
-                Destroy(m_uiDic[uiName].gameObject);
-                m_uiDic.Remove(uiName);
-            }
+            HideUI(uiName);
+            Destroy(m_uiDic[uiName].gameObject);
+            m_uiDic.Remove(uiName);
         }
-        m_normalUIStack.Clear();
-        m_PopUIStack.Clear();
+        m_NormalUIs.Clear();
+        m_PopUIs.Clear();
     }
 
     public Camera GetUICamera() 

@@ -146,7 +146,7 @@ namespace Jyx2.InputCore
                             //计算当前速度
                             var speed = (transform.position - sourcePos).magnitude / Time.deltaTime;
                             m_PlayerMovement.SetNavAgentUpdateRotation(true);
-                            m_MapPlayer.SetAnimSpeed(speed);
+                            m_PlayerMovement.SetManualMoveSpeed(speed);
                         }
                         else
                         {
@@ -159,14 +159,24 @@ namespace Jyx2.InputCore
             }
         }
 
+        private bool IsAxisMoved()
+        {
+            return Jyx2_Input.GetAxis2DRaw(Jyx2PlayerAction.MoveHorizontal, Jyx2PlayerAction.MoveVertical) != Vector2.zero;
+        }
+
+        private bool IsETCJoyStickMoved()
+        {
+            return LevelMaster.Instance.m_Joystick.axisX.axisValue != 0 || LevelMaster.Instance.m_Joystick.axisY.axisValue != 0;
+        }
+
         void OnManualControlPlayer()
         {
-            if (IsAxisControlEnable())
+            if (IsAxisControlEnable() && IsAxisMoved())
             {
                 var input = Jyx2_Input.GetAxis2DRaw(Jyx2PlayerAction.MoveHorizontal, Jyx2PlayerAction.MoveVertical);
                 m_PlayerMovement.UpdateMovement(input.normalized);
             }
-            else if (IsJoystickControlEnable())
+            else if (IsJoystickControlEnable() && IsETCJoyStickMoved())
             {
                 var input = new Vector2(LevelMaster.Instance.m_Joystick.axisX.axisValue, 
                                         LevelMaster.Instance.m_Joystick.axisY.axisValue);
@@ -176,7 +186,7 @@ namespace Jyx2.InputCore
             {
                 if (!m_PlayerMovement.IsNavAgentUpdateRotation)
                 {
-                    m_MapPlayer.SetAnimSpeed(0);
+                    m_PlayerMovement.SetManualMoveSpeed(0);
                 }
                 //如果被锁方向，在这解锁
                 if (m_PlayerMovement.IsLockingDirection)
@@ -189,12 +199,12 @@ namespace Jyx2.InputCore
         void OnManualControlPlayerFollowViewport()
         {
             m_PlayerMovement.SetNavAgentUpdateRotation(false);
-            if (IsAxisControlEnable())
+            if (IsAxisControlEnable() && IsAxisMoved())
             {
                 var input = Jyx2_Input.GetAxis2DRaw(Jyx2PlayerAction.MoveHorizontal, Jyx2PlayerAction.MoveVertical);
                 m_PlayerMovement.UpdateMovement(input.normalized);
             }
-            else if (IsJoystickControlEnable())
+            else if (IsJoystickControlEnable() && IsETCJoyStickMoved())
             {
                 var input = new Vector2(LevelMaster.Instance.m_Joystick.axisX.axisValue,
                                         LevelMaster.Instance.m_Joystick.axisY.axisValue);
@@ -202,7 +212,7 @@ namespace Jyx2.InputCore
             }
             else
             {
-                m_MapPlayer.SetAnimSpeed(0);
+                m_PlayerMovement.SetManualMoveSpeed(0);
             }
 
             if (Input.GetKey(KeyCode.Q))
