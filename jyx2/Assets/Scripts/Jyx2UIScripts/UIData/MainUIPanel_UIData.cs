@@ -1,11 +1,11 @@
 /*
- * é‡‘åº¸ç¾¤ä¾ ä¼ 3Dé‡åˆ¶ç‰ˆ
+ * ½ğÓ¹ÈºÏÀ´«3DÖØÖÆ°æ
  * https://github.com/jynew/jynew
  *
- * è¿™æ˜¯æœ¬å¼€æºé¡¹ç›®æ–‡ä»¶å¤´ï¼Œæ‰€æœ‰ä»£ç å‡ä½¿ç”¨MITåè®®ã€‚
- * ä½†æ¸¸æˆå†…èµ„æºå’Œç¬¬ä¸‰æ–¹æ’ä»¶ã€dllç­‰è¯·ä»”ç»†é˜…è¯»LICENSEç›¸å…³æˆæƒåè®®æ–‡æ¡£ã€‚
+ * ÕâÊÇ±¾¿ªÔ´ÏîÄ¿ÎÄ¼şÍ·£¬ËùÓĞ´úÂë¾ùÊ¹ÓÃMITĞ­Òé¡£
+ * µ«ÓÎÏ·ÄÚ×ÊÔ´ºÍµÚÈı·½²å¼ş¡¢dllµÈÇë×ĞÏ¸ÔÄ¶ÁLICENSEÏà¹ØÊÚÈ¨Ğ­ÒéÎÄµµ¡£
  *
- * é‡‘åº¸è€å…ˆç”Ÿåƒå¤ï¼
+ * ½ğÓ¹ÀÏÏÈÉúÇ§¹Å£¡
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -15,29 +15,28 @@ using UnityEngine.UI;
 public partial class MainUIPanel
 {
 	private RectTransform AnimRoot_RectTransform;
+	private Text Name_Text;
 	private Text Level_Text;
 	private Text Exp_Text;
-	private Text Name_Text;
 	private Text MapName_Text;
-	private Button XiakeButton_Button;
-	private Button BagButton_Button;
-	private Button MapButton_Button;
+	private Image SystemButton_Image;
 	private Button SystemButton_Button;
-	private Image Image_Right;
-	private Text Compass;
+	private Button BagButton_Button;
+	private Button XiakeButton_Button;
+	private Text ComassText_Text;
 
 	public void InitTrans()
 	{
 		AnimRoot_RectTransform = transform.Find("AnimRoot").GetComponent<RectTransform>();
+		Name_Text = transform.Find("AnimRoot/PlayerStatus/Name").GetComponent<Text>();
 		Level_Text = transform.Find("AnimRoot/PlayerStatus/Level").GetComponent<Text>();
 		Exp_Text = transform.Find("AnimRoot/PlayerStatus/Exp").GetComponent<Text>();
-		Name_Text = transform.Find("AnimRoot/PlayerStatus/Name").GetComponent<Text>();
 		MapName_Text = transform.Find("AnimRoot/PlayerStatus/MapName").GetComponent<Text>();
-		XiakeButton_Button = transform.Find("AnimRoot/BtnRoot/XiakeButton").GetComponent<Button>();
-		BagButton_Button = transform.Find("AnimRoot/BtnRoot/BagButton").GetComponent<Button>();
-		MapButton_Button = transform.Find("AnimRoot/BtnRoot/MapButton").GetComponent<Button>();
-		SystemButton_Button = transform.Find("AnimRoot/BtnRoot/SystemButton").GetComponent<Button>();
-		Image_Right = transform.Find("AnimRoot/Image-right").GetComponent<Image>();
-		Compass = transform.Find("AnimRoot/Compass/Text").GetComponent<Text>();
+		SystemButton_Image = transform.Find("AnimRoot/Image-right/BtnRoot/SystemButton").GetComponent<Image>();
+		SystemButton_Button = transform.Find("AnimRoot/Image-right/BtnRoot/SystemButton").GetComponent<Button>();
+		BagButton_Button = transform.Find("AnimRoot/Image-right/BtnRoot/BagButton").GetComponent<Button>();
+		XiakeButton_Button = transform.Find("AnimRoot/Image-right/BtnRoot/XiakeButton").GetComponent<Button>();
+		ComassText_Text = transform.Find("AnimRoot/Compass/ComassText").GetComponent<Text>();
+
 	}
 }

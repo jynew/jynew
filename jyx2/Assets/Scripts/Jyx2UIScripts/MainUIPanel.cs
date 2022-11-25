@@ -13,7 +13,6 @@ using System;
 using System.Linq;
 using Jyx2Configs;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using System.Text;
 
 public partial class MainUIPanel : Jyx2_UIBase
@@ -26,21 +25,13 @@ public partial class MainUIPanel : Jyx2_UIBase
 
 		BindListener(XiakeButton_Button, OnXiakeBtnClick);
 		BindListener(BagButton_Button, OnBagBtnClick);
-		BindListener(MapButton_Button, OnMapBtnClick);
 		BindListener(SystemButton_Button, OnSystemBtnClick);
-	}
-
-	public override void BindListener(UnityEngine.UI.Button button, Action callback, bool supportGamepadButtonsNav = true)
-	{
-		base.BindListener(button, callback, supportGamepadButtonsNav);
-		getButtonImage(button)?.gameObject.SetActive(false);
 	}
 
 	static HashSet<string> IgnorePanelTypes = new HashSet<string>(new[]
 	{
 		"CommonTipsUIPanel"
 	});
-	private bool initialized;
 
 
 	private StringBuilder coordinateBuilder = new StringBuilder();
@@ -49,18 +40,12 @@ public partial class MainUIPanel : Jyx2_UIBase
 	{
 		base.Update();
 
-		if (!initialized)
-		{
-			selectSystemButton();
-			initialized = true;
-		}
-
 		ShowCompass(Jyx2LuaBridge.jyx2_GetFlagInt("获得罗盘") == 1);
 	}
 	public void ShowCompass(bool flag)
 	{
-		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && flag);
-		if (Compass.gameObject.activeSelf)
+        ComassText_Text.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && flag);
+		if (ComassText_Text.gameObject.activeSelf)
 		{
 			var player = LevelMaster.Instance.GetPlayer();
 			if (player == null)
@@ -82,7 +67,7 @@ public partial class MainUIPanel : Jyx2_UIBase
 				coordinateBuilder.Append(")");
 
 			}
-			Compass.text = coordinateBuilder.ToString();
+            ComassText_Text.text = coordinateBuilder.ToString();
 		}
 	}
 
@@ -91,25 +76,6 @@ public partial class MainUIPanel : Jyx2_UIBase
 		base.OnShowPanel(allParams);
 		RefreshNameMapName();
 		RefreshDynamic();
-	}
-
-	private void selectSystemButton()
-	{
-		var systemButtonIndex = activeButtons.ToList().IndexOf(SystemButton_Button);
-		if (systemButtonIndex > -1)
-		{
-			changeCurrentSelection(systemButtonIndex);
-		}
-	}
-
-	protected override void changeCurrentSelection(int num)
-	{
-		base.changeCurrentSelection(num);
-		for (var i = 0; i < activeButtons.Length; i++)
-		{
-			var button = activeButtons[i];
-			getButtonImage(button)?.gameObject.SetActive(i == num);
-		}
 	}
 
 	void RefreshDynamic()
@@ -131,12 +97,8 @@ public partial class MainUIPanel : Jyx2_UIBase
 			MapName_Text.text = map.GetShowName();
 
 			//BY CGGG：小地图不提供传送到大地图的功能 2021/6/13
+            //BY kk47: 这个按钮删了 2022/11/25
 			//MapButton_Button.gameObject.SetActive(!isWorldMap);
-			MapButton_Button.gameObject.SetActive(false);
-
-
-			//var rt = Image_Right.GetComponent<RectTransform>();
-			//rt.sizeDelta = new Vector2(isWorldMap?480:640, 100);
 		}
 	}
 
@@ -283,24 +245,6 @@ public partial class MainUIPanel : Jyx2_UIBase
 
 		await GameUtil.ShowYesOrNoUseItem(item, Action);
 
-	}
-
-	void OnMapBtnClick()
-	{
-		var levelMaster = LevelMaster.Instance;
-
-		if (levelMaster.IsInWorldMap)
-			return;
-
-		//执行离开事件
-		foreach (var zone in FindObjectsOfType<MapTeleportor>())
-		{
-			if (LevelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
-			{
-				zone.DoTransport();
-				break;
-			}
-		}
 	}
 
 	public async void OnSystemBtnClick()

@@ -69,6 +69,10 @@ namespace Jyx2.InputCore.Util
                     {
                         result = "→";
                     }
+                    else if(elementMap.keyCode == KeyCode.Escape)
+                    {
+                        result = "ESC";
+                    }
                     else
                     {
                         result = elementMap.keyCode.ToString();
