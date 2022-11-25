@@ -27,7 +27,7 @@ namespace Jyx2
         private void Awake()
         {
             _playerNavAgent = GetComponent<NavMeshAgent>();
-            m_Animator = GetComponentInChildren<Animator>();
+            m_Animator = GetComponentInChildren<Animator>(true);
             m_AutoWalker = GetComponent<Jyx2_PlayerAutoWalk>();
             Jyx2_Input.OnPlayerInputStateChange += OnPlayerInputStateChange;
         }

@@ -40,12 +40,11 @@ namespace Jyx2.InputCore
             Jyx2_Input.OnControllerChange -= OnControllerChange;
         }
 
-        private void OnControllerChange(Controller lastActiveController)
+        private void OnControllerChange(Controller currentController)
         {
-            if (lastActiveController == null)
+            if (currentController == null)
                 return;
-            if(lastActiveController.type != ControllerType.Keyboard
-                && lastActiveController.type == ControllerType.Joystick)
+            if(currentController.type == ControllerType.Mouse)
             {
                 return;
             }
@@ -98,7 +97,7 @@ namespace Jyx2.InputCore
 
             m_Contexts.Remove(inputContext);
 
-            if (inputContext is Jyx2_PlayerInput)
+            if (CurrentContext is Jyx2_PlayerInput)
             {
                 Jyx2_Input.FirePlayerInputChangeEvent(true);
             }
