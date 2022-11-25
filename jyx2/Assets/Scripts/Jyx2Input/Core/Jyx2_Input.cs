@@ -1,3 +1,6 @@
+using Jyx2.InputCore.Util;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Rewired;
 using System;
 using System.Collections;
@@ -224,6 +227,31 @@ namespace Jyx2.InputCore
         internal static void FirePlayerInputChangeEvent(bool isActive)
         {
             OnPlayerInputStateChange?.Invoke(isActive);
+        }
+
+        public static string GetAllJoyStickJsonData()
+        {
+            Dictionary<string, IList<ControllerElementIdentifier>> m_AllElements = new Dictionary<string, IList<ControllerElementIdentifier>>();
+            var allJoySticks = ReInput.controllers.Joysticks;
+            foreach (var joyStick in allJoySticks)
+            {
+                m_AllElements[joyStick.hardwareIdentifier] = joyStick.ElementIdentifiers;
+            }
+            var serializeSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented,
+            };
+            var json = JsonConvert.SerializeObject(m_AllElements, serializeSettings);
+            return json;
+        }
+
+
+        public static string GetActionButtonName(Jyx2PlayerAction actionID, AxisRange axisRange = AxisRange.Positive)
+        {
+            if (!IsPlayerValid)
+                return "?";
+            return CurrentPlayer.GetPlayerButtonName(actionID, axisRange);
         }
     }
 }
