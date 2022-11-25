@@ -45,9 +45,10 @@ public class GameViewPortManager : MonoBehaviour
         var viewportType = (ViewportType) value;
         _viewportType = viewportType;
         var vcam = GetFollowVCam();
+        bool isInWorldMap = LevelMaster.Instance?.IsInWorldMap ?? false;
         if (vcam != null)
         {
-            vcam.gameObject.SetActive(viewportType == ViewportType.Follow);
+            vcam.gameObject.SetActive(viewportType == ViewportType.Follow && !isInWorldMap);
         }
 
         LevelMaster.Instance.UpdateCameraParams();

@@ -1,29 +1,13 @@
 ﻿using Jyx2.InputCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
-using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 
 namespace Jyx2
 {
     [DisallowMultipleComponent]
     public class Jyx2_PlayerMovement : MonoBehaviour
     {
-        public float unlockDegree = 10f;
-
-        private Vector3 _tempDestH = Vector3.zero;
-
-        private Vector3 _tempDestV = Vector3.zero;
-
-        private float _tempH = 0;
-
-        private float _tempV = 0;
-
         private float m_ManualMoveSpeed = 0;
 
         public bool IsLockingDirection { get; set; }
@@ -55,13 +39,10 @@ namespace Jyx2
 
         void OnPlayerInputStateChange(bool isInputEnabled)
         {
-            if(!isInputEnabled)
+            if(!isInputEnabled && !m_AutoWalker.IsAutoWalking)
             {
                 //失去玩家控制且不是自动寻路
-                if (!m_AutoWalker.IsAutoWalking)
-                {
-                    StopMovement();
-                }
+                StopMovement();
             }
         }
 
@@ -94,7 +75,7 @@ namespace Jyx2
             
             Vector3 forward = Vector3.zero;
             //尝试只使用摄像机的朝向来操作角色移动
-            forward = Camera.main.transform.forward;//m_Player.position - Camera.main.transform.position;
+            forward = Camera.main.transform.forward;
             forward.y = 0;
             forward.Normalize();
 
@@ -103,28 +84,10 @@ namespace Jyx2
             right.Normalize();
 
             var dest = transform.position + right * h + forward * v;
-            if (_tempDestH == Vector3.zero) _tempDestH = right * h;
-            if (_tempDestV == Vector3.zero) _tempDestV = forward * v;
-            if (IsLockingDirection)
-            {
-                dest = transform.position + _tempDestH + _tempDestV;
-                Vector3 cur_dir = new Vector3(h, v, 0).normalized;
-                Vector3 old_dir = new Vector3(_tempH, _tempV, 0).normalized;
-                if (Vector3.Angle(cur_dir, old_dir) > unlockDegree)
-                {
-                    IsLockingDirection = false;
-                }
-                //Debug.Log("LockingDirection");
+            if (!IsLockingDirection)
+            { 
+                transform.LookAt(new Vector3(dest.x, transform.position.y, dest.z));
             }
-            else
-            {
-                _tempDestH = right * h;
-                _tempDestV = forward * v;
-                _tempH = h;
-                _tempV = v;
-                //Debug.Log("UnLockingDirection");
-            }
-            transform.LookAt(new Vector3(dest.x, transform.position.y, dest.z));
             var sourcePos = transform.position;
             var maxSpeed = _playerNavAgent.speed;
 
@@ -135,9 +98,11 @@ namespace Jyx2
             var speed = (transform.position - sourcePos).magnitude / Time.deltaTime;
             SetManualMoveSpeed(speed);
 
-            if (_playerNavAgent == null || !_playerNavAgent.enabled || !_playerNavAgent.isOnNavMesh) return;
-            _playerNavAgent.isStopped = true;
-            _playerNavAgent.ResetPath();
+            if (IsNavAgentAvailable)
+            {
+                _playerNavAgent.isStopped = true;
+                _playerNavAgent.ResetPath();
+            }
         }
 
         public void UpdateMovement(float h, float v)

@@ -178,7 +178,7 @@ namespace Jyx2.InputCore
             }
             else if (IsJoystickControlEnable() && IsETCJoyStickMoved())
             {
-                var input = new Vector2(LevelMaster.Instance.m_Joystick.axisX.axisValue, 
+                var input = new Vector2(-LevelMaster.Instance.m_Joystick.axisX.axisValue, 
                                         LevelMaster.Instance.m_Joystick.axisY.axisValue);
                 m_PlayerMovement.UpdateMovement(input.normalized);
             }
@@ -198,6 +198,7 @@ namespace Jyx2.InputCore
 
         void OnManualControlPlayerFollowViewport()
         {
+            m_PlayerMovement.IsLockingDirection = true;
             m_PlayerMovement.SetNavAgentUpdateRotation(false);
             if (IsAxisControlEnable() && IsAxisMoved())
             {
@@ -206,7 +207,7 @@ namespace Jyx2.InputCore
             }
             else if (IsJoystickControlEnable() && IsETCJoyStickMoved())
             {
-                var input = new Vector2(LevelMaster.Instance.m_Joystick.axisX.axisValue,
+                var input = new Vector2(-LevelMaster.Instance.m_Joystick.axisX.axisValue,
                                         LevelMaster.Instance.m_Joystick.axisY.axisValue);
                 m_PlayerMovement.UpdateMovement(input.normalized);
             }
