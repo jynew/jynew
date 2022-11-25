@@ -156,6 +156,10 @@ namespace Jyx2.InputCore
                         DisplayNavPointer(hitInfo.point);
                     }
                 }
+                else
+                {
+                    m_PlayerMovement.SetManualMoveSpeed(0);
+                }
             }
         }
 
