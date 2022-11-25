@@ -339,10 +339,10 @@ public class Jyx2_UIManager : MonoBehaviour
 
     public T GetUI<T>() where T : Jyx2_UIBase
     {
-        foreach (var item in m_uiDic.Values)
+        var uiName = nameof(T);
+        if(m_uiDic.TryGetValue(uiName, out Jyx2_UIBase result))
         {
-            if (item is T)
-                return item as T;
+            return result as T;
         }
         return null;
     }
