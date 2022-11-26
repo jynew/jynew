@@ -13,11 +13,11 @@ namespace Jyx2.InputCore.UI
 
         public override void OnUpdate()
         {
-            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UISwitchLeft))
+            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIClose))
             {
                 _mainMenu?.OnBackBtnClicked();
             }
-            else if(Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UISwitchRight))
+            else if(Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIConfirm))
             {
                 _mainMenu?.OnCreateBtnClicked();
             }

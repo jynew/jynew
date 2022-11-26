@@ -23,6 +23,7 @@ using i18n.TranslatorDef;
 using Jyx2Configs;
 using Jyx2.Middleware;
 using UnityEngine.Rendering.PostProcessing;
+using Rewired;
 
 namespace Jyx2
 {
@@ -1525,6 +1526,9 @@ namespace Jyx2
                 GameObject obj = GameObject.Find(objPath);
                 DoPlayTimeline(playableDirector, obj.gameObject);
             }
+            var player = Jyx2Player.GetPlayer();
+            if(player != null)
+                player.IsInTimeline = true;
         }
 
         static void DoPlayTimeline(PlayableDirector playableDirector, GameObject player, bool isMovePlayer = false)
@@ -1565,7 +1569,7 @@ namespace Jyx2
             timeLineObj.gameObject.SetActive(false);
 
             var player = Jyx2Player.GetPlayer();
-                
+            player.IsInTimeline = false;    
             player.gameObject.SetActive(true);
             player.m_Animator.transform.localPosition = Vector3.zero;
             player.m_Animator.transform.localRotation = Quaternion.Euler(Vector3.zero);

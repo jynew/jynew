@@ -8,18 +8,10 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using Animancer;
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
-using XLua;
-using System;
 using Jyx2.InputCore;
 
 
@@ -72,6 +64,13 @@ public class Jyx2Player : MonoBehaviour
 
     private float m_InteractDelayTime;
 
+    private bool m_IsInTimeline = false;
+
+    public bool IsInTimeline
+    {
+        get => m_IsInTimeline;
+        set => m_IsInTimeline = value;
+    }
 
     GameEventManager evtManager
     {
@@ -194,6 +193,8 @@ public class Jyx2Player : MonoBehaviour
         {
             if (!Jyx2_Input.IsPlayerContext)
                 return false;
+            if (m_IsInTimeline)
+                return false;
             if (_autoWalker.IsAutoWalking)
                 return false;
             if (Jyx2_UIManager.Instance.IsUIOpen(nameof(GameOver)))
@@ -219,8 +220,8 @@ public class Jyx2Player : MonoBehaviour
         if (!CanControlPlayer)
             return;
 		
-	//尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
-	    if (LevelMaster.IsInBattle)
+	    //尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
+        if (LevelMaster.IsInBattle)
 	        return;
 		
         //BigMapIdleJudge();
