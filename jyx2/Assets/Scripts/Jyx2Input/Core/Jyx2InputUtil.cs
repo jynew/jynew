@@ -49,33 +49,17 @@ namespace Jyx2.InputCore.Util
             var result = "?";
             if (controllerType == ControllerType.Keyboard)
             {
-                var keyboadMap = GetKeyboardMap(player);
-                var elementMap = keyboadMap?.GetActionElementMap(actionID, axisRange);
-                if (elementMap != null)
+                
+                var keyboad = player.controllers.Keyboard;
+                var keyBoardMaps = player.controllers.maps.GetMaps(keyboad);
+                ActionElementMap elementMap = null;
+                foreach (var map in keyBoardMaps)
                 {
-                    if (elementMap.keyCode == KeyCode.UpArrow)
+                    elementMap = map.GetActionElementMap(actionID, axisRange);
+                    if (elementMap != null)
                     {
-                        result = "↑";
-                    }
-                    else if (elementMap.keyCode == KeyCode.DownArrow)
-                    {
-                        result = "↓";
-                    }
-                    else if (elementMap.keyCode == KeyCode.LeftArrow)
-                    {
-                        result = "←";
-                    }
-                    else if (elementMap.keyCode == KeyCode.RightArrow)
-                    {
-                        result = "→";
-                    }
-                    else if(elementMap.keyCode == KeyCode.Escape)
-                    {
-                        result = "ESC";
-                    }
-                    else
-                    {
-                        result = elementMap.keyCode.ToString();
+                        result = GetKeyCodeName(elementMap);
+                        break;
                     }
                 }
             }
@@ -91,6 +75,39 @@ namespace Jyx2.InputCore.Util
                         result = GetJoyStickButtonRichText(lastController, elementMap);
                         break;
                     }
+                }
+            }
+            return result;
+        }
+
+        private static string GetKeyCodeName(ActionElementMap elementMap)
+        {
+            string result = "?";
+            if (elementMap != null)
+            {
+                if (elementMap.keyCode == KeyCode.UpArrow)
+                {
+                    result = "↑";
+                }
+                else if (elementMap.keyCode == KeyCode.DownArrow)
+                {
+                    result = "↓";
+                }
+                else if (elementMap.keyCode == KeyCode.LeftArrow)
+                {
+                    result = "←";
+                }
+                else if (elementMap.keyCode == KeyCode.RightArrow)
+                {
+                    result = "→";
+                }
+                else if (elementMap.keyCode == KeyCode.Escape)
+                {
+                    result = "ESC";
+                }
+                else
+                {
+                    result = elementMap.keyCode.ToString();
                 }
             }
             return result;
