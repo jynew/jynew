@@ -22,12 +22,12 @@ namespace Jyx2
     [ProtoContract]
     public class BattleboxDataset
     {
-        //相邻格子x方向的偏移
-        public static float BlockLength = 1.5f;
-        //相邻两行x轴的整体偏移
+        //相邻格子的中心点在Unity中x方向上的间隔
+        public static float BlockLength = 1f;
+        //让奇数行和偶数行格子沿着x轴方向错开数值为RowXDiff的距离
         public static float RowXDiff = 0f; //0.75f;
-        //相邻两行y轴的距离
-        public static float RowYDiff = 1.5f; //1.25f;
+        //相邻格子的中心点在Unity中z方向上的间隔
+        public static float BlockLengthY = BlockLength; //1.25f;
 
 
         [ProtoMember(1)]
@@ -64,8 +64,9 @@ namespace Jyx2
             BoxWidth = width;
             MinX = minx;
             MinY = miny;
+            
             CountX = (int)Math.Floor(BoxLength / BlockLength + 3);
-            CountY = (int)Math.Floor(BoxWidth / RowYDiff + 3);
+            CountY = (int)Math.Floor(BoxWidth / BlockLengthY + 3);
 
             Blocks = new List<BattleboxBlock>();
         }
@@ -115,7 +116,7 @@ namespace Jyx2
 
         //格子编号从0,0开始
         //x轴的buff是m_BlockLength+
-        //y轴的buff是m_RowYDiff
+        //y轴的buff是m_BlockLengthY
         public Vector2 CalcPos(int xindex, int yindex)
         {
             var rst = new Vector2(0, 0);
@@ -125,7 +126,7 @@ namespace Jyx2
             if (xindex >= CountX || yindex >= CountY) return rst;
 
             rst.X = BlockLength * 0.5f + xindex * BlockLength + MinX + RowXDiff;
-            rst.Y = RowYDiff * 0.5f + yindex * RowYDiff + MinY;
+            rst.Y = BlockLengthY * 0.5f + yindex * BlockLengthY + MinY;
             if (yindex % 2 == 0) rst.X -= RowXDiff;
             return rst;
         }
@@ -134,7 +135,7 @@ namespace Jyx2
         {
             var rst = new System.Numerics.Vector2(-1, -1);
 
-            var iY = Math.Floor((z - MinY) / RowYDiff);
+            var iY = Math.Floor((z - MinY) / BlockLengthY);
 
             var iX = x - MinX - RowXDiff;
             if ((int)iY % 2 == 0) iX += RowXDiff;

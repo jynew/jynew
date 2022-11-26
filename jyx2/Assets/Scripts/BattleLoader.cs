@@ -71,26 +71,6 @@ public class BattleLoader : MonoBehaviour
         get { return GameRuntimeData.Instance; }
     }
 
-    //void OnTest()
-    //{
-    //    m_Roles = new List<BattlePosRole>();
-    //    m_Roles.Add(new BattlePosRole() { pos = "1", team = 0, roleKey = "0" });
-    //    m_Roles.Add(new BattlePosRole() { pos = "2", team = 1, roleKey = "1" });
-    //    m_Roles.Add(new BattlePosRole() { pos = "1", team = 1, roleKey = "3" });
-    //    m_Roles.Add(new BattlePosRole() { pos = "1", team = 1, roleKey = "4" });
-    //    m_Roles.Add(new BattlePosRole() { pos = "2", team = 0, roleKey = "5" });
-    //    m_Roles.Add(new BattlePosRole() { pos = "2", team = 0, roleKey = "51" });
-
-    //    GameRuntimeData.CreateNew();  //选一个没有用过的id
-    //    MapRuntimeData.Instance.Clear();
-
-
-    //    //测试等级
-    //    runtime.TeamLevel = 10;
-
-    //    InitBattle(null);
-    //}
-    
     async UniTask LoadJyx2Battle(int id, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
