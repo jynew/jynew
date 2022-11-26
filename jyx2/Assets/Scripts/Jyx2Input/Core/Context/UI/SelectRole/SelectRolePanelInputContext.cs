@@ -20,7 +20,7 @@ namespace Jyx2.InputCore.UI
                 m_SelectRolePanel.OnConfirmClick();
             }
 
-            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UICancel))
+            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIClose))
             {
                 if(m_SelectRolePanel.IsCancelBtnEnable)
                     m_SelectRolePanel.OnCancelClick();

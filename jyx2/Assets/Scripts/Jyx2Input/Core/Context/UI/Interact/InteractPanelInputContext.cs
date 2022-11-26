@@ -45,11 +45,11 @@ namespace  Jyx2.InputCore.UI
                 return;
             if (!IsPlayerControlable)
                 return;
-            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes) && m_InteractPanel.IsButtonAvailable(0))
+            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.Interact1) && m_InteractPanel.IsButtonAvailable(0))
             {
                 m_InteractPanel.OnBtnClick(0);
             }
-            else if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_No) && m_InteractPanel.IsButtonAvailable(1))
+            else if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.Interact2) && m_InteractPanel.IsButtonAvailable(1))
             {
                 m_InteractPanel.OnBtnClick(1);
             }

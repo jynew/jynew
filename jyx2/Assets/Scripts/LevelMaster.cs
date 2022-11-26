@@ -587,7 +587,7 @@ public class LevelMaster : MonoBehaviour
 			return;
 		if (!button.gameObject.activeInHierarchy)
 			return;
-        if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes))
+        if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.Interact1))
         {
             button.onClick?.Invoke();
         }

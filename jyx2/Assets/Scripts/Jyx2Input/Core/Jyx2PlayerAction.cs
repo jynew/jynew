@@ -15,8 +15,11 @@ namespace Jyx2.InputCore
         [LabelText("Y轴移动")]
         MoveVertical = 1,
         
-        [LabelText("交互")]
-        Interact = 2,
+        [LabelText("交互按钮1")]
+        Interact1 = 2,
+
+        [LabelText("交互按钮2")]
+        Interact2 = 16,  //新增的所以id排到UI_Bag后面去了
 
         [LabelText("UI水平移动")]
         UIHorizontal = 3,
@@ -59,7 +62,8 @@ namespace Jyx2.InputCore
     {
         public const int MoveHorizontal = (int)Jyx2PlayerAction.MoveHorizontal;
         public const int MoveVertical = (int)Jyx2PlayerAction.MoveVertical;
-        public const int Interact = (int)Jyx2PlayerAction.Interact;
+        public const int Interact1 = (int)Jyx2PlayerAction.Interact1;
+        public const int Interact2 = (int)Jyx2PlayerAction.Interact2;
         public const int UIHorizontal = (int)Jyx2PlayerAction.UIHorizontal;
         public const int UIVertical = (int)Jyx2PlayerAction.UIVertical;
         public const int UIConfirm = (int)Jyx2PlayerAction.UIConfirm;
