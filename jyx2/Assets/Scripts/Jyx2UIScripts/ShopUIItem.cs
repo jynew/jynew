@@ -12,11 +12,9 @@ using System;
 using Jyx2;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
-using Jyx2.Middleware;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using Jyx2.UINavigation;
 using UnityEngine.EventSystems;
 
