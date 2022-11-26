@@ -32,7 +32,7 @@ namespace Jyx2.MOD
             });
             if (modPaths.Count == 0)
             {
-                Debug.LogError("[AndroidLocalMODProvider] Mod xml file not found");
+                Debug.LogWarning("[AndroidLocalMODProvider] Mod xml file not found");
                 return;
             }
 

@@ -107,7 +107,14 @@ namespace Jyx2
         {
             foreach (var mod in MODManager.Instance.GetAllModProviders<MODProviderBase>())
             {
-                await mod.GetInstalledMods();
+                try
+                {
+                    await mod.GetInstalledMods();
+                }
+                catch (Exception e)
+                {
+                    // ignored
+                }
             }
         }
         
@@ -118,7 +125,6 @@ namespace Jyx2
             var path = SceneManager.GetActiveScene().path;
             if (path.Contains("Assets/Mods/"))
             {
-
                 CurrentModId = path.Split('/')[2];
             }
             else

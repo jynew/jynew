@@ -1,4 +1,4 @@
-﻿#if !UNITY_ANDROID
+﻿#if UNITY_EDITOR || UNITY_STANDALONE_WIN
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
@@ -29,7 +29,8 @@ namespace Jyx2.MOD
         {
             if (!Directory.Exists(ModDir))
             {
-                Debug.LogError("[PCLocalMODProvider] Mods Directory not found");
+                Debug.LogWarning("[PCLocalMODProvider] Mods Directory not found");
+                Directory.CreateDirectory(ModDir);
                 return;
             }
             List<string> modPaths = new List<string>();
