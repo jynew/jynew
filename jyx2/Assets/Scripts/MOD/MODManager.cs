@@ -39,6 +39,9 @@ namespace Jyx2.MOD
             RegisterModPlatform(new AndroidMODProvider() { Name = "Android" });
 #else
             RegisterModPlatform(new SteamMODProvider() { Name = "Steam" });
+#endif
+            
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
             RegisterModPlatform(new PCLocalMODProvider() { Name = "PC" });
 #endif
         }
