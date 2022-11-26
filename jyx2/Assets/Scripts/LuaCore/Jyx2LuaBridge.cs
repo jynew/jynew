@@ -1731,7 +1731,7 @@ namespace Jyx2
         {
             UniTask.Void(async () =>
             {
-                List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
+                List<string> selectionContent = new List<string>() {"是", "否"};
                 storyEngine.BlockPlayerControl = true;
                 await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage,
                     selectionContent, new Action<int>((index) =>

@@ -143,7 +143,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 			var modId = summary.ModId.ToLower();
 			if (!modId.Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
 			{
-				List<string> selectionContent = new List<string>() {"是(Y)", "否(N)"};
+				List<string> selectionContent = new List<string>() {"是", "否"};
 				string msg = "该存档MOD不匹配，载入可能导致数据错乱，是否继续？";
 				Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((selection) =>
 				{

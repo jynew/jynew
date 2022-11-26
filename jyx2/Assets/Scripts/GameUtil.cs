@@ -147,7 +147,7 @@ public static class GameUtil
         if (role.Sex == 0)//男
         {
             string msg = "修炼此书必须先行挥剑自宫，你是否仍要修炼？";
-            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            List<string> selectionContent = new List<string>() { "是", "否" };
             await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
             {
                 if (index == 0)
@@ -196,7 +196,7 @@ public static class GameUtil
         if (GameRuntimeData.Instance.GetItemUser(item.Id) != -1)
         {
             string msg = (int)item.ItemType == 1 ? "此物品已经有人配备，是否换人配备？" : "此物品已经有人修炼，是否换人修炼？";
-            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            List<string> selectionContent = new List<string>() { "是", "否" };
             await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
             {
                 if (index == 0)
