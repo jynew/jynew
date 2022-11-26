@@ -103,7 +103,7 @@ public class MapTeleportor : MonoBehaviour
 	{
 		if (!CheckCanEnterMap(transportMapId))
 		{
-			GameUtil.DisplayPopinfo("目前还不能进入");
+			//GameUtil.DisplayPopinfo("目前还不能进入");
 			return;
 		}
 		
