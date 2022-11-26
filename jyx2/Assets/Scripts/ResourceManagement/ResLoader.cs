@@ -76,7 +76,7 @@ namespace Jyx2.ResourceManagement
             else
             {
                 //加载基础包
-                var ab = await AssetBundle.LoadFromFileAsync(Path.Combine(AbDir, BaseAbName));
+                var ab = await LoadAssetBundleAsync(AbDir, BaseAbName);
                 foreach (var assetName in ab.GetAllAssetNames())
                 {
                     _assetsMap[assetName.ToLower()] = ("", assetName.ToLower());
@@ -100,8 +100,8 @@ namespace Jyx2.ResourceManagement
             }
             else
             {
-                AssetBundle modAssetsAb = await AssetBundle.LoadFromFileAsync(Path.Combine(dir, $"{modId}_mod"));
-                AssetBundle modScenesAb = await AssetBundle.LoadFromFileAsync(Path.Combine(dir, $"{modId}_maps"));
+                AssetBundle modAssetsAb = await LoadAssetBundleAsync(dir, $"{modId}_mod");
+                AssetBundle modScenesAb = await LoadAssetBundleAsync(dir, $"{modId}_maps");
                 _modAssets[modId] = modAssetsAb;
                 _modScenes[modId] = modScenesAb;
             
@@ -124,6 +124,19 @@ namespace Jyx2.ResourceManagement
                 }
             }
         }
+
+
+        private static async UniTask<AssetBundle> LoadAssetBundleAsync(string dir, string filename)
+        {
+            string path = Path.Combine(dir, filename);
+            
+            //20221126 知大虾：为了这里可以测试，暂时先改为从StreamingAssets目录进行加载，待实现为一并扫描加载安卓SD卡中目录
+            
+#if UNITY_ANDROID && !UNITY_EDITOR
+            path = "jar:file://" + Application.dataPath + "!/assets/" + filename;
+#endif
+            return await AssetBundle.LoadFromFileAsync(path);
+        } 
 
         /// <summary>
         /// 加载资源

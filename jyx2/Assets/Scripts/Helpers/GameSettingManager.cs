@@ -448,7 +448,11 @@ public static class GameSettingManager
 	{
 		if (!GlobalAssetConfig.Instance) return;
 		int debugMode = (int) mode;
+#if DEVELOPMENT_BUILD
+		ScreenLogger.Instance.ShowLog = true;
+#else
 		ScreenLogger.Instance.ShowLog = (debugMode == 1);
+#endif
 	}
 	
 	#endregion
