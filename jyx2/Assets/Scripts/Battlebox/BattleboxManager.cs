@@ -29,7 +29,7 @@ public class BattleboxManager : MonoBehaviour
 {
     //排除拥挤点半径
     public float m_DetechRadius = 0.8f;
-    public float m_SpriteToGroundHeight = 0.01f;
+    public float m_blockTexMultiplier = 1.0f;
     public Color m_InvalidColor = new Color(1,1,1,0.2f);
     public const float BATTLEBLOCK_DECAL_ALPHA = 0.4f;
 
@@ -37,7 +37,7 @@ public class BattleboxManager : MonoBehaviour
     [HideInInspector]
     private string m_BattleboxSerializedData;
     
-    private SpriteRenderer _BlockPrefab;
+    private Vector3 _blockScale = BattleboxDataset.BlockLength * new Vector3(1, 1, 1);
 
     [HideInInspector]
     public BattleboxDataset m_Dataset;
@@ -51,6 +51,7 @@ public class BattleboxManager : MonoBehaviour
     private List<BattleBlockData> _rangeLayerBlocks = new List<BattleBlockData>();
     
     private GameObject _parent;
+
 
     // Use this for initialization
     void Awake()
@@ -191,16 +192,16 @@ public class BattleboxManager : MonoBehaviour
         var bound = GetBounds();
         var sceneName = SceneManager.GetActiveScene().name;
         var objName = gameObject.name;
-        var length = bound.size.x;
-        var width = bound.size.z;
-        var minx = bound.min.x;
-        var miny = bound.min.z;
+        var length = bound.size.x;//包围战斗区域的盒子的长度
+        var width = bound.size.z;//包围战斗区域的盒子的宽度
+        var minx = bound.min.x;//包围战斗区域的盒子的最小x坐标
+        var miny = bound.min.z;//包围战斗区域的盒子的最小z坐标
+        var height = bound.size.y;//包围战斗区域的盒子的高度
+        var maxHeight = bound.max.y;//包围战斗区域的盒子的最大高度坐标
 
         m_Dataset = new BattleboxDataset(sceneName, objName, length, width, minx, miny);
         Debug.Log($"重新生成格子，x轴格子数{m_Dataset.CountX}, y轴格子数{m_Dataset.CountY}，理论总格子数目{m_Dataset.GetSizeCount()}");
 
-        var height = bound.size.y;
-        var maxHeight = bound.min.y + height;
         for (int i = 0; i < m_Dataset.CountX; i++)
         {
             for (int j = 0; j < m_Dataset.CountY; j++)
@@ -366,6 +367,7 @@ public class BattleboxManager : MonoBehaviour
         var parent = FindOrCreateBlocksParent();
         
         var block = Resources.Load<GameObject>("BattleboxBlock");
+        
         var obj = EasyDecal.Project(block, pos, Quaternion.identity);
         obj.Quality = 2;
         obj.Distance = 0.05f;
@@ -375,6 +377,7 @@ public class BattleboxManager : MonoBehaviour
         }
         
         obj.transform.SetParent(parent.transform, false);
+        obj.transform.localScale = m_blockTexMultiplier * _blockScale;
 
         var bPos = new BattleBlockVector(x, y);
         var bbd = new BattleBlockData();
