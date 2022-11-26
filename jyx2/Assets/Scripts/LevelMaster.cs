@@ -18,6 +18,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2Configs;
 using Application = UnityEngine.Application;
 using UnityEngine.UI;
+using Jyx2.InputCore;
 
 public class LevelMaster : MonoBehaviour
 {
@@ -344,9 +345,7 @@ public class LevelMaster : MonoBehaviour
 		}
 		else if (loadPara.loadType == LevelLoadPara.LevelLoadType.ReturnFromBattle)
 		{
-			//从战斗回来的，先不能触发对话逻辑
-			//GetPlayer().locomotionController.playerControllable = false; 作弊战斗回来后会卡住
-			GetPlayer().locomotionController.StopPlayerNavigation();
+			GetPlayer()?.StopPlayerMovement();
 
 			PlayerSpawnAt(loadPara.Pos);
 			PlayerSpawnRotate(loadPara.Rotate);
@@ -584,26 +583,14 @@ public class LevelMaster : MonoBehaviour
 	private void GamePadUpdate()
 	{
 		Button button = Jyx2InteractiveButton.GetInteractiveButton();
-
-		if (GamepadHelper.GamepadConnected != gamepadConnected)
-		{
-			gamepadConnected = GamepadHelper.GamepadConnected;
-
-			Transform trans = button?.gameObject.transform;
-			if (trans != null)
-			{
-				var image = trans.GetChild(2).GetComponentInChildren<Image>();
-				image.gameObject.SetActive(gamepadConnected);
-			}
-		}
-
-		if (gamepadConnected)
-		{
-			if (GamepadHelper.IsConfirm() && button != null && button.gameObject.activeSelf)
-			{
-				button.onClick?.Invoke();
-			}
-		}
-	}
+		if (button == null)
+			return;
+		if (!button.gameObject.activeInHierarchy)
+			return;
+        if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.Interact1))
+        {
+            button.onClick?.Invoke();
+        }
+    }
 }
 

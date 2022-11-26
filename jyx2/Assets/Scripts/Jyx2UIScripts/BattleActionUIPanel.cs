@@ -478,7 +478,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		bool Filter(Jyx2ConfigItem item) => (int)item.ItemType == 3 || (int)item.ItemType == 4;
 
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), new Action<int>((itemId) =>
 		{
 
 			if (itemId == -1)

@@ -1,11 +1,11 @@
 /*
- * é‡‘åº¸ç¾¤ä¾ ä¼ 3Dé‡åˆ¶ç‰ˆ
+ * ½ğÓ¹ÈºÏÀ´«3DÖØÖÆ°æ
  * https://github.com/jynew/jynew
  *
- * è¿™æ˜¯æœ¬å¼€æºé¡¹ç›®æ–‡ä»¶å¤´ï¼Œæ‰€æœ‰ä»£ç å‡ä½¿ç”¨MITåè®®ã€‚
- * ä½†æ¸¸æˆå†…èµ„æºå’Œç¬¬ä¸‰æ–¹æ’ä»¶ã€dllç­‰è¯·ä»”ç»†é˜…è¯»LICENSEç›¸å…³æˆæƒåè®®æ–‡æ¡£ã€‚
+ * ÕâÊÇ±¾¿ªÔ´ÏîÄ¿ÎÄ¼şÍ·£¬ËùÓĞ´úÂë¾ùÊ¹ÓÃMITĞ­Òé¡£
+ * µ«ÓÎÏ·ÄÚ×ÊÔ´ºÍµÚÈı·½²å¼ş¡¢dllµÈÇë×ĞÏ¸ÔÄ¶ÁLICENSEÏà¹ØÊÚÈ¨Ğ­ÒéÎÄµµ¡£
  *
- * é‡‘åº¸è€å…ˆç”Ÿåƒå¤ï¼
+ * ½ğÓ¹ÀÏÏÈÉúÇ§¹Å£¡
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -14,22 +14,19 @@ using UnityEngine.UI;
 
 public partial class SavePanel
 {
-	private RectTransform SaveParent_RectTransform;
 	private Button BackButton_Button;
-	private Button SaveItem_Button;
-	private Text Main_Text;
-	private Button ImButton_Button;
-	private Button ExButton_Button;
-	[Header("æ ‡è¯†æ˜¯å¦åœ¨æ­»äº¡é¡µé¢")] 
-	public bool IsInGameOverPage = false;
+	private Text MainText_Text;
+	private RectTransform SaveParent_RectTransform;
+	private Button Export_Button;
+	private Button Import_Button;
 
 	public void InitTrans()
 	{
-		SaveParent_RectTransform = transform.Find("SaveParent").GetComponent<RectTransform>();
 		BackButton_Button = transform.Find("TopbarUI/BackButton").GetComponent<Button>();
-		SaveItem_Button = transform.Find("ItemRoot/SaveItem").GetComponent<Button>();
-		Main_Text = transform.Find("MainText").GetComponent<Text>();
-		ImButton_Button = transform.Find("FileIO/Import").GetComponent<Button>();
-		ExButton_Button = transform.Find("FileIO/Export").GetComponent<Button>();
+		MainText_Text = transform.Find("MainText").GetComponent<Text>();
+		SaveParent_RectTransform = transform.Find("SaveParent").GetComponent<RectTransform>();
+		Export_Button = transform.Find("FileIO/Export").GetComponent<Button>();
+		Import_Button = transform.Find("FileIO/Import").GetComponent<Button>();
+
 	}
 }

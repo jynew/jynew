@@ -102,7 +102,7 @@ public class GameEventManager : MonoBehaviour
     {
         if (!curEvent.IsUseItemEvent) return;
 
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>((itemId) =>
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), new Action<int>((itemId) =>
         {
             if (itemId == -1) //取消使用
                 return;
@@ -150,16 +150,12 @@ public class GameEventManager : MonoBehaviour
             return;
         }
 
-        //停止导航
-        var levelMaster = LevelMaster.Instance;
-
         //fix player stop moving after interaction UI confirm
-        if (levelMaster != null && eventId != 911)
+        if (eventId != 911)
         {
             // fix drag motion continuous move the player when scene is playing
             // modified by eaphone at 2021/05/31
-            levelMaster.GetPlayer().locomotionController.playerControllable = false;
-            levelMaster.GetPlayer().locomotionController.StopPlayerNavigation();
+            Jyx2Player.GetPlayer()?.StopPlayerMovement();
         }
         
         SetCurrentGameEvent(curEvent);
@@ -192,13 +188,6 @@ public class GameEventManager : MonoBehaviour
         JYX2EventContext.current = null;
 
         SetCurrentGameEvent(null);
-        // fix drag motion continuous move the player when scene is playing
-        // modified by eaphone at 2021/05/31
-        var levelMaster = LevelMaster.Instance;
-        if (levelMaster != null)
-        {
-            levelMaster.GetPlayer().locomotionController.playerControllable = true;
-        }
 
         if (curEvent != null)
         {

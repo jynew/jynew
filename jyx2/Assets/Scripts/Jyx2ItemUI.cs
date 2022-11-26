@@ -7,61 +7,160 @@
  *
  * 金庸老先生千古！
  */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
 
 using Jyx2;
+using Jyx2.UINavigation;
+using Jyx2.Util;
 using Jyx2Configs;
+using Steamworks.Ugc;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Jyx2ItemUI : MonoBehaviour
+public class Jyx2ItemUI : Selectable,INavigable,IDataContainer<KeyValuePair<string,(int,int)>>,IPointerClickHandler
 {
     public Image m_Image;
     public Text m_NameText;
     public Text m_CountText;
-
-    private const string ITEM_UI_PREFAB = "Jyx2ItemUI";
-    
-    public static Jyx2ItemUI Create(int id,int count)
-    {
-        var prefab = Jyx2ResourceHelper.GetCachedPrefab(ITEM_UI_PREFAB);
-        var obj = Instantiate(prefab); 
-        var itemUI = obj.GetComponent<Jyx2ItemUI>();
-        itemUI.Show(id, count).Forget();
-        return itemUI;
-    }
-
     private int _id;
 
-    public Jyx2ConfigItem GetItem()
+    public int ItemId => _id;
+
+    [SerializeField]
+    private Graphic m_CheckMark;
+
+    [SerializeField]
+    private bool m_IsSelected = false;
+
+    public bool IsSelected => m_IsSelected;
+
+    public event Action<Jyx2ItemUI> OnItemSelect;
+
+    protected override void Awake()
     {
-        return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(_id);
+        base.Awake();
     }
 
-    private async UniTaskVoid Show(int id,int count)
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        OnItemSelect = null;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        RefreshMark();
+    }
+
+#if UNITY_EDITOR
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+        RefreshMark();
+    }
+#endif
+
+    public Jyx2ConfigItem GetItemConfigData()
+    {
+        return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(ItemId);
+    }
+
+    public Selectable GetSelectable()
+    {
+        return this;
+    }
+
+    public void Connect(INavigable up = null, INavigable down = null, INavigable left = null, INavigable right = null)
+    {
+        Navigation navigation = new Navigation();
+        navigation.mode = Navigation.Mode.Explicit;
+        navigation.selectOnUp = up?.GetSelectable();
+        navigation.selectOnDown = down?.GetSelectable();
+        navigation.selectOnLeft = left?.GetSelectable();
+        navigation.selectOnRight = right?.GetSelectable();
+        this.navigation = navigation;
+    }
+
+    public void Select(bool notifyEvent)
+    {
+        SetSelectState(true, notifyEvent);
+    }
+
+    public void SetSelectState(bool state, bool notifyEvent)
+    {
+        m_IsSelected = state;
+        RefreshMark();
+        if (notifyEvent && m_IsSelected)
+        {
+            OnItemSelect?.Invoke(this);
+        }
+    }
+
+    private void RefreshItem(int id, int count)
     {
         _id = id;
-        var item = GetItem();//0-阴性内力，1-阳性内力，2-中性内力
-        var color =
-            (int)item.ItemType == 2
-                ? (int)item.NeedMPType == 2 ? ColorStringDefine.Default :
-                (int)item.NeedMPType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0
-                : ColorStringDefine.Default;
-        
-        m_NameText.text = $"<color={color}>{item.Name}</color>";
-        m_CountText.text = (count > 1 ? count.ToString() : "");
+        var item = GetItemConfigData();
+        var htmlColorStr = GetItemNameColorStr();
+
+        m_NameText.text = string.Format("<color={0}>{1}</color>", htmlColorStr, item.Name);
+        m_CountText.text = count > 1 ? count.ToString() : "";
 
         m_Image.LoadAsyncForget(item.GetPic());
         
     }
 
-    public void Select(bool active) 
+    private string GetItemNameColorStr()
     {
-        Transform select = transform.Find("Select");
-        select.gameObject.SetActive(active);
+        var result = ColorStringDefine.Default;
+        var item = GetItemConfigData();
+        if (item == null || !item.IsBook)
+            return result;
+        //0-阴性内力，1-阳性内力，2-中性内力
+        if (item.NeedMPType == 0)
+            result = ColorStringDefine.Mp_type0;
+        else if(item.NeedMPType == 1)
+            result = ColorStringDefine.Mp_type1;
+        return result;
     }
 
+    public void SetData(KeyValuePair<string, (int, int)> data)
+    {
+        if (!int.TryParse(data.Key, out int itemId))
+            itemId = -1;
+        int itemCount = data.Value.Item1;
+        RefreshItem(itemId, itemCount);
+    }
+
+    private void RefreshMark(bool instant = true)
+    {
+        if (m_CheckMark != null)
+        {
+            if (!Application.isPlaying)
+            {
+                m_CheckMark.canvasRenderer.SetAlpha(IsSelected ? 1f : 0f);
+            }
+            else
+            {
+                m_CheckMark.CrossFadeAlpha(IsSelected ? 1f : 0f, instant ? 0f : 0.1f, true);
+            }
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+            Select(true);
+    }
+
+    public override void OnSelect(BaseEventData eventData)
+    {
+        base.OnSelect(eventData);
+        SetSelectState(true, true);
+    }
 }

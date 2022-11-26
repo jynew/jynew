@@ -13,10 +13,9 @@ using System;
 using System.Linq;
 using Jyx2Configs;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using System.Text;
 
-public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
+public partial class MainUIPanel : Jyx2_UIBase
 {
 	public override UILayer Layer => UILayer.MainUI;
 
@@ -26,25 +25,13 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 		BindListener(XiakeButton_Button, OnXiakeBtnClick);
 		BindListener(BagButton_Button, OnBagBtnClick);
-		BindListener(MapButton_Button, OnMapBtnClick);
 		BindListener(SystemButton_Button, OnSystemBtnClick);
-
-		//pre-load all icon sprites. somehow they don't load the first time
-		foreach (var i in Enumerable.Range(0, 4))
-			ChatUIPanel.getGamepadIconSprites(i);
-	}
-
-	public override void BindListener(UnityEngine.UI.Button button, Action callback, bool supportGamepadButtonsNav = true)
-	{
-		base.BindListener(button, callback, supportGamepadButtonsNav);
-		getButtonImage(button)?.gameObject.SetActive(false);
 	}
 
 	static HashSet<string> IgnorePanelTypes = new HashSet<string>(new[]
 	{
 		"CommonTipsUIPanel"
 	});
-	private bool initialized;
 
 
 	private StringBuilder coordinateBuilder = new StringBuilder();
@@ -53,18 +40,12 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 	{
 		base.Update();
 
-		if (!initialized)
-		{
-			selectSystemButton();
-			initialized = true;
-		}
-
 		ShowCompass(Jyx2LuaBridge.jyx2_GetFlagInt("获得罗盘") == 1);
 	}
 	public void ShowCompass(bool flag)
 	{
-		Compass.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && flag);
-		if (Compass.gameObject.activeSelf)
+        ComassText_Text.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && flag);
+		if (ComassText_Text.gameObject.activeSelf)
 		{
 			var player = LevelMaster.Instance.GetPlayer();
 			if (player == null)
@@ -86,7 +67,7 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 				coordinateBuilder.Append(")");
 
 			}
-			Compass.text = coordinateBuilder.ToString();
+            ComassText_Text.text = coordinateBuilder.ToString();
 		}
 	}
 
@@ -95,25 +76,6 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 		base.OnShowPanel(allParams);
 		RefreshNameMapName();
 		RefreshDynamic();
-	}
-
-	private void selectSystemButton()
-	{
-		var systemButtonIndex = activeButtons.ToList().IndexOf(SystemButton_Button);
-		if (systemButtonIndex > -1)
-		{
-			changeCurrentSelection(systemButtonIndex);
-		}
-	}
-
-	protected override void changeCurrentSelection(int num)
-	{
-		base.changeCurrentSelection(num);
-		for (var i = 0; i < activeButtons.Length; i++)
-		{
-			var button = activeButtons[i];
-			getButtonImage(button)?.gameObject.SetActive(i == num);
-		}
 	}
 
 	void RefreshDynamic()
@@ -135,23 +97,19 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 			MapName_Text.text = map.GetShowName();
 
 			//BY CGGG：小地图不提供传送到大地图的功能 2021/6/13
+            //BY kk47: 这个按钮删了 2022/11/25
 			//MapButton_Button.gameObject.SetActive(!isWorldMap);
-			MapButton_Button.gameObject.SetActive(false);
-
-
-			//var rt = Image_Right.GetComponent<RectTransform>();
-			//rt.sizeDelta = new Vector2(isWorldMap?480:640, 100);
 		}
 	}
 
-	async void OnXiakeBtnClick()
+	public async void OnXiakeBtnClick()
 	{
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(XiakeUIPanel), GameRuntimeData.Instance.Player, GameRuntimeData.Instance.GetTeam().ToList());
 	}
 
-	async void OnBagBtnClick()
+	public async void OnBagBtnClick()
 	{
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), GameRuntimeData.Instance.Items, new Action<int>(OnUseItem));
+		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), new Action<int>(OnUseItem));
 	}
 
 	async void OnUseItem(int id)
@@ -289,99 +247,8 @@ public partial class MainUIPanel : Jyx2_UIBase, IUIAnimator
 
 	}
 
-	void OnMapBtnClick()
-	{
-		var levelMaster = LevelMaster.Instance;
-
-		if (levelMaster.IsInWorldMap)
-			return;
-
-		//执行离开事件
-		foreach (var zone in FindObjectsOfType<MapTeleportor>())
-		{
-			if (LevelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
-			{
-				zone.DoTransport();
-				break;
-			}
-		}
-	}
-
-	async void OnSystemBtnClick()
+	public async void OnSystemBtnClick()
 	{
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SystemUIPanel));
 	}
-
-	public void DoShowAnimator()
-	{
-		//AnimRoot_RectTransform.anchoredPosition = new Vector2(0, 150);
-		//AnimRoot_RectTransform.DOAnchorPosY(-50, 1.0f);
-	}
-
-	public void DoHideAnimator()
-	{
-
-	}
-
-	private void OnEnable()
-	{
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.Escape, () =>
-		{
-			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
-			{
-				OnSystemBtnClick();
-			}
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.X, () =>
-		{
-			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
-			{
-				OnXiakeBtnClick();
-			}
-		});
-		GlobalHotkeyManager.Instance.RegistHotkey(this, KeyCode.B, () =>
-		{
-			if (LevelMaster.Instance.GetPlayer().locomotionController.playerControllable)
-			{
-				OnBagBtnClick();
-			}
-		});
-	}
-
-	private void OnDisable()
-	{
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.Escape);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.X);
-		GlobalHotkeyManager.Instance.UnRegistHotkey(this, KeyCode.B);
-	}
-
-	protected override bool captureGamepadAxis => true;
-
-	protected override void OnDirectionalDown()
-	{
-		//do nothing
-	}
-
-	protected override void OnDirectionalUp()
-	{
-		//do nothing
-	}
-
-	protected override void OnDirectionalLeft()
-	{
-		base.OnDirectionalUp();
-	}
-
-	protected override void OnDirectionalRight()
-	{
-		base.OnDirectionalDown();
-	}
-
-	protected override string confirmButtonName()
-	{
-		return GamepadHelper.START_BUTTON;
-	}
-
-	//don't reset to 0 for this main, since it will select the system button automatically
-	protected override bool resetCurrentSelectionOnShow => false;
 }

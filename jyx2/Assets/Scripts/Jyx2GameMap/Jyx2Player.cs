@@ -8,18 +8,17 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using Animancer;
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
-using XLua;
+using Jyx2.InputCore;
 
+
+[RequireComponent(typeof(Jyx2_PlayerInput))]
+[RequireComponent(typeof(Jyx2_PlayerMovement))]
+[RequireComponent(typeof(Jyx2_PlayerAutoWalk))]
+[DisallowMultipleComponent]
 public class Jyx2Player : MonoBehaviour
 {
     /// <summary>
@@ -31,11 +30,6 @@ public class Jyx2Player : MonoBehaviour
     /// 交互的视野角度
     /// </summary>
     const float PLAYER_INTERACTIVE_ANGLE = 120f;
-
-    private bool _isControlEnable = true;
-    public PlayerLocomotionController locomotionController => _locomotionController;
-    [SerializeField]
-    private PlayerLocomotionController _locomotionController;
 
     public static Jyx2Player GetPlayer()
     {
@@ -64,10 +58,19 @@ public class Jyx2Player : MonoBehaviour
     public bool IsOnBoat;
 
     NavMeshAgent _navMeshAgent;
+    Jyx2_PlayerAutoWalk _autoWalker;
+    Jyx2_PlayerMovement m_PlayerMovement;
     Jyx2Boat _boat;
 
     private float m_InteractDelayTime;
 
+    private bool m_IsInTimeline = false;
+
+    public bool IsInTimeline
+    {
+        get => m_IsInTimeline;
+        set => m_IsInTimeline = value;
+    }
 
     GameEventManager evtManager
     {
@@ -164,12 +167,14 @@ public class Jyx2Player : MonoBehaviour
 
     public void Init()
     {
+        m_PlayerMovement = GetComponent<Jyx2_PlayerMovement>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _boat = FindObjectOfType<Jyx2Boat>();
+        _autoWalker = GetComponent<Jyx2_PlayerAutoWalk>();
         _gameEventLayerMask = LayerMask.GetMask("GameEvent");
         m_InteractDelayTime = Time.time + 0.1f;
-        _locomotionController.Init(_navMeshAgent);
     }
+
 
     void Start()
     {
@@ -182,16 +187,15 @@ public class Jyx2Player : MonoBehaviour
         }
     }
 
-    public void SetPlayerControlEnable(bool isEnable)
-    {
-        _isControlEnable = isEnable;
-    }
-
     public bool CanControlPlayer
     {
         get
         {
-            if (!_isControlEnable)
+            if (!Jyx2_Input.IsPlayerContext)
+                return false;
+            if (m_IsInTimeline)
+                return false;
+            if (_autoWalker.IsAutoWalking)
                 return false;
             if (Jyx2_UIManager.Instance.IsUIOpen(nameof(GameOver)))
                 return false;
@@ -216,9 +220,9 @@ public class Jyx2Player : MonoBehaviour
         if (!CanControlPlayer)
             return;
 		
-		//尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
-		if (LevelMaster.IsInBattle)
-			return;
+	    //尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
+        if (LevelMaster.IsInBattle)
+	        return;
 		
         //BigMapIdleJudge();
         //延迟下交互触发 不然加载后的第一帧 交互和对话会同时触发
@@ -445,5 +449,10 @@ public class Jyx2Player : MonoBehaviour
         transform.position = spawnPos;
 		transform.rotation = ori;
         _navMeshAgent.enabled = true;
+    }
+
+    public void StopPlayerMovement()
+    {
+        m_PlayerMovement?.StopMovement();
     }
 }

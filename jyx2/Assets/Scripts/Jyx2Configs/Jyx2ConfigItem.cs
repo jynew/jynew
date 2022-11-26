@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Jyx2;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 using ProtoBuf;
@@ -22,7 +23,31 @@ namespace Jyx2Configs
             var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/Items/{Id}.png");
             return _sprite;
         }
-        
+
+        public bool IsWeapon => EquipmentType == 0;
+
+        public bool IsArmor => EquipmentType == 1;
+
+        //是否为经书
+        public bool IsBook => ItemType == 2; 
+
+        public bool NoItemUser => GameRuntimeData.Instance.GetItemUser(Id) == -1;
+
+        public bool IsBeingUsedBy(int targetRoleId)
+        {
+            int curEquipedRoleId = GameRuntimeData.Instance.GetItemUser(Id);
+            return curEquipedRoleId == targetRoleId;
+        }
+
+        public bool IsBeingUsedBy(RoleInstance role)
+        {
+            if (role == null)
+                return false;
+            return IsBeingUsedBy(role.GetJyx2RoleId());
+        }
+
+
+
         //物品说明
         [ProtoMember(1)]
         public string Desc; 

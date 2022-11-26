@@ -19,9 +19,6 @@ public partial class GameMainMenu
 	private Button LoadGameButton_Button;
 	private Button SettingsButton_Button;
 	private Button QuitGameButton_Button;
-	private RectTransform SavePanel_RectTransform;
-	private RectTransform savePanelContainer_RectTransform;
-	private Button BackButton_Button;
 	private RectTransform InfoPanel_RectTransform;
 	private RectTransform InputNamePanel_RectTransform;
 	private InputField NameInput_InputField;
@@ -46,9 +43,6 @@ public partial class GameMainMenu
 		LoadGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/LoadGameButton").GetComponent<Button>();
 		SettingsButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/GameSettingsButton").GetComponent<Button>();
 		QuitGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/QuitGameButton").GetComponent<Button>();
-		SavePanel_RectTransform = transform.Find("SavePanel").GetComponent<RectTransform>();
-		savePanelContainer_RectTransform = transform.Find("SavePanel/savePanelContainer").GetComponent<RectTransform>();
-		BackButton_Button = transform.Find("SavePanel/BackButton").GetComponent<Button>();
 		InfoPanel_RectTransform = transform.Find("InfoPanel").GetComponent<RectTransform>();
 		InputNamePanel_RectTransform = transform.Find("InputNamePanel").GetComponent<RectTransform>();
 		NameInput_InputField = transform.Find("InputNamePanel/NameInput").GetComponent<InputField>();

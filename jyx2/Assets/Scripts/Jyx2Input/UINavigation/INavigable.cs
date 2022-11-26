@@ -21,15 +21,6 @@ namespace Jyx2.UINavigation
 
         Selectable GetSelectable();
 
-        INavigable GetLeft();
-
-        INavigable GetRight();
-
-        INavigable GetUp();
-
-        INavigable GetDown();
-
-
         void Select(bool notifyEvent);
     }
 }

@@ -16,8 +16,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.Events;
+using Jyx2;
 
-public class GeneralSettingsPanel : Jyx2_UIBase
+public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
 {
     public Dropdown resolutionDropdown;
     public Dropdown windowDropdown;
@@ -30,7 +31,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     public Slider volumeSlider;
     public Slider soundEffectSlider;
 
-    public Button m_CloseButton;
 
     private GraphicSetting _graphicSetting;
     Resolution[] resolutions;
@@ -72,7 +72,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     void Start()
     {
         Debug.Log("GeneralSettingsPanel Start()");
-        _graphicSetting = GraphicSetting.GlobalSetting;
 
         InitWindowDropdown();
         InitResolutionDropdown();
@@ -98,16 +97,17 @@ public class GeneralSettingsPanel : Jyx2_UIBase
         mobileMoveModeDropdown.onValueChanged.AddListener(SetMobileMoveMode);
         mobileMoveModeDropdown.gameObject.SetActive(Application.isMobilePlatform);
         
-        m_CloseButton.onClick.AddListener(Close);
-        
         Debug.Log("GeneralSettingsPanel Start() END");
     }
 
-    public void Close()
+    public void ApplySetting()
     {
-        _graphicSetting.Save();
-        _graphicSetting.Execute();
-        Jyx2_UIManager.Instance.HideUI(nameof(GameSettingsPanel));
+        
+    }
+
+    public void SetVisibility(bool isVisible)
+    {
+        gameObject.SetActive(isVisible);
     }
 
     public void InitResolutionDropdown()
@@ -267,17 +267,5 @@ public class GeneralSettingsPanel : Jyx2_UIBase
     protected override void OnCreate()
     {
 
-    }
-
-    public override void Update()
-    {
-        //only allow close setting for now, so at least this UI can be closed via gamepad
-        if (gameObject.activeSelf)
-        {
-            if (GamepadHelper.IsConfirm() || GamepadHelper.IsCancel())
-            {
-                Close();
-            }
-        }
     }
 }
