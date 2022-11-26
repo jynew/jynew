@@ -39,9 +39,8 @@ public class CinemachineTriggerActionHelper : UIBehaviour
         if (!enabled) return;
         if (enterLockDirection)
         {
-            LevelMaster levelMaster = GameObject.FindObjectOfType<LevelMaster>();
             //开启方向锁
-            levelMaster.GetPlayer().locomotionController.isLockingDirection = true;
+            LockPlayerDirection();
         }
         if(m_UnlockTarget)
         {
@@ -63,9 +62,8 @@ public class CinemachineTriggerActionHelper : UIBehaviour
         if (!enabled) return;
         if (exitLockDirection)
         {
-            LevelMaster levelMaster = GameObject.FindObjectOfType<LevelMaster>();
             //开启方向锁
-            levelMaster.GetPlayer().locomotionController.isLockingDirection = true;
+            LockPlayerDirection();
         }
         if (m_UnlockTarget)
         {
@@ -74,6 +72,13 @@ public class CinemachineTriggerActionHelper : UIBehaviour
                 vcam.Follow = old_followTarget;
             }
         }
+    }
+
+    private void LockPlayerDirection()
+    {
+        var playerMovement = LevelMaster.Instance?.GetPlayer().GetComponent<Jyx2_PlayerMovement>();
+        if (playerMovement != null)
+            playerMovement.IsLockingDirection = true;
     }
 
     IEnumerator CallWithDelay(Action action, float time)

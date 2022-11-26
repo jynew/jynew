@@ -1,11 +1,11 @@
 /*
- * é‡‘åº¸ç¾¤ä¾ ä¼ 3Dé‡åˆ¶ç‰ˆ
+ * ½ğÓ¹ÈºÏÀ´«3DÖØÖÆ°æ
  * https://github.com/jynew/jynew
  *
- * è¿™æ˜¯æœ¬å¼€æºé¡¹ç›®æ–‡ä»¶å¤´ï¼Œæ‰€æœ‰ä»£ç å‡ä½¿ç”¨MITåè®®ã€‚
- * ä½†æ¸¸æˆå†…èµ„æºå’Œç¬¬ä¸‰æ–¹æ’ä»¶ã€dllç­‰è¯·ä»”ç»†é˜…è¯»LICENSEç›¸å…³æˆæƒåè®®æ–‡æ¡£ã€‚
+ * ÕâÊÇ±¾¿ªÔ´ÏîÄ¿ÎÄ¼şÍ·£¬ËùÓĞ´úÂë¾ùÊ¹ÓÃMITĞ­Òé¡£
+ * µ«ÓÎÏ·ÄÚ×ÊÔ´ºÍµÚÈı·½²å¼ş¡¢dllµÈÇë×ĞÏ¸ÔÄ¶ÁLICENSEÏà¹ØÊÚÈ¨Ğ­ÒéÎÄµµ¡£
  *
- * é‡‘åº¸è€å…ˆç”Ÿåƒå¤ï¼
+ * ½ğÓ¹ÀÏÏÈÉúÇ§¹Å£¡
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -14,14 +14,14 @@ using UnityEngine.UI;
 
 public partial class SelectRolePanel
 {
-	private RectTransform RoleParent_RectTransform;
+	private GridLayoutGroup RoleParent_GridLayoutGroup;
 	private Text TitleText_Text;
 	private Button ConfirmBtn_Button;
 	private Button CancelBtn_Button;
 
 	public void InitTrans()
 	{
-		RoleParent_RectTransform = transform.Find("RoleScroll/Viewport/RoleParent").GetComponent<RectTransform>();
+		RoleParent_GridLayoutGroup = transform.Find("RoleScroll/Viewport/RoleParent").GetComponent<GridLayoutGroup>();
 		TitleText_Text = transform.Find("Title/TitleText").GetComponent<Text>();
 		ConfirmBtn_Button = transform.Find("Btns/ConfirmBtn").GetComponent<Button>();
 		CancelBtn_Button = transform.Find("Btns/CancelBtn").GetComponent<Button>();

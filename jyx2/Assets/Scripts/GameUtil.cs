@@ -23,7 +23,7 @@ using Jyx2Configs;
 /// JYX工具类
 /// </summary>
 
-public class GameUtil
+public static class GameUtil
 {
     /// <summary>
     /// 选择角色
@@ -88,6 +88,14 @@ public class GameUtil
             Time.timeScale = 1;
     }
 
+    public static void BetterSetActive(this GameObject go, bool isActive)
+    {
+        if (go == null || go.activeSelf == isActive)
+            return;
+        go.SetActive(isActive);
+    }
+
+
     public static Component GetOrAddComponent(Transform trans,string type)
     {
         Component com = trans.GetComponent(type);
@@ -109,7 +117,7 @@ public class GameUtil
         return com;
     }
     
-    public static T GetOrAddComponent<T>(GameObject go) where T:Component
+    public static T GetOrAddComponent<T>(this GameObject go) where T:Component
     {
         return GetOrAddComponent<T>(go.transform);
     }
@@ -139,7 +147,7 @@ public class GameUtil
         if (role.Sex == 0)//男
         {
             string msg = "修炼此书必须先行挥剑自宫，你是否仍要修炼？";
-            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            List<string> selectionContent = new List<string>() { "是", "否" };
             await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
             {
                 if (index == 0)
@@ -188,7 +196,7 @@ public class GameUtil
         if (GameRuntimeData.Instance.GetItemUser(item.Id) != -1)
         {
             string msg = (int)item.ItemType == 1 ? "此物品已经有人配备，是否换人配备？" : "此物品已经有人修炼，是否换人修炼？";
-            List<string> selectionContent = new List<string>() { "是(Y)", "否(N)" };
+            List<string> selectionContent = new List<string>() { "是", "否" };
             await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", msg, selectionContent, new Action<int>((index) =>
             {
                 if (index == 0)

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4319810010241906134}
   - component: {fileID: 2326275412389899404}
   - component: {fileID: 4203395598244372398}
-  - component: {fileID: 4556600549279615731}
+  - component: {fileID: 3445765669371778045}
   m_Layer: 0
   m_Name: Jyx2ItemUI
   m_TagString: Untagged
@@ -93,23 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9714f32934f3b0443a9b7be3368bf31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Image: {fileID: 4046712323609845713}
-  m_NameText: {fileID: 2218200582278588488}
-  m_CountText: {fileID: 1881331527635374027}
---- !u!114 &4556600549279615731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2416003973807249431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -133,13 +118,27 @@ MonoBehaviour:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Highlighted
+    m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2326275412389899404}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
+  m_Image: {fileID: 4046712323609845713}
+  m_NameText: {fileID: 2218200582278588488}
+  m_CountText: {fileID: 1881331527635374027}
+  m_CheckMark: {fileID: 7502949348132884970}
+  m_IsSelected: 0
+--- !u!114 &3445765669371778045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2416003973807249431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2b8acd95571cd43a99d17b3476ccb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3215719289828575260
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -369,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -445,7 +444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

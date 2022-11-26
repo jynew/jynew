@@ -8,9 +8,6 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-
-using Jyx2;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System;
@@ -19,23 +16,25 @@ using i18n.TranslatorDef;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
+using Jyx2.Util;
+using UnityEngine.EventSystems;
+using Jyx2.UINavigation;
 
 public partial class ShopUIPanel : Jyx2_UIBase
 {
-	ChildGoComponent childMgr;
 	int curShopId;
-	List<Jyx2ConfigShopItem> curShopItemList = new List<Jyx2ConfigShopItem>();
-	ShopUIItem curSelectItem
-	{
-		get
-		{
-			return (current_selection >= 0 && current_selection < visibleItems.Count) ? visibleItems[current_selection] : null;
-		}
-	}
+	List<Jyx2ConfigShopItem> m_ShopDataItems = new List<Jyx2ConfigShopItem>();
+    
 	Action callback;
-	List<ShopUIItem> visibleItems = new List<ShopUIItem>();
+	List<ShopUIItem> m_VisibleShopItems = new List<ShopUIItem>();
 
-	private GameRuntimeData runtime
+    List<ShopUIItem> m_CachedShopItems = new List<ShopUIItem>();
+
+    private ShopUIItem m_CurSelectItem;
+
+	public ShopUIItem CurSelectItem => m_CurSelectItem;
+
+    private GameRuntimeData runtime
 	{
 		get { return GameRuntimeData.Instance; }
 	}
@@ -44,17 +43,6 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	{
 		InitTrans();
 		IsBlockControl = true;
-		childMgr = GameUtil.GetOrAddComponent<ChildGoComponent>(ItemRoot_RectTransform);
-		childMgr.Init(ScrollItem_RectTransform, (trans) =>
-		{
-			ShopUIItem item = GameUtil.GetOrAddComponent<ShopUIItem>(trans);
-			item.Init();
-			visibleItems.Add(item);
-			BindListener(trans.GetComponent<Button>(), () =>
-			{
-				OnItemSelect(item, false);
-			});
-		});
 
 		BindListener(CloseBtn_Button, OnCloseClick, false);
 		BindListener(ConfirmBtn_Button, OnConfirmClick, false);
@@ -77,7 +65,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
-		curShopItemList.Clear();
+		m_ShopDataItems.Clear();
 		//curShopId = (int)allParams[0];
 		curShopId = LevelMaster.GetCurrentGameMap().Id;
 		var curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
@@ -90,14 +78,10 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			shopItem.Id = int.Parse(shopItemArr[0]);
 			shopItem.Count = int.Parse(shopItemArr[1]);
 			shopItem.Price = int.Parse(shopItemArr[2]);
-			curShopItemList.Add(shopItem);
+			m_ShopDataItems.Add(shopItem);
 		}
-		
-		//only change to first item, when first time showing
-		if (visibleItems.Count > 0 && GamepadHelper.GamepadConnected)
-			changeCurrentSelection(0);
 
-		RefreshChild();
+		LoadShopItems();
 		RefreshProperty();
 		RefreshMoney();
 		if (allParams.Length > 1)
@@ -108,8 +92,6 @@ public partial class ShopUIPanel : Jyx2_UIBase
 
 	protected override void OnHidePanel()
 	{
-		itemX = 0;
-		itemY = 0;
 		base.OnHidePanel();
 		callback?.Invoke();
 		callback = null;
@@ -128,73 +110,71 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		//---------------------------------------------------------------------------
 	}
 
-	void RefreshChild()
+	void LoadShopItems()
 	{
-		childMgr.RefreshChildCount(curShopItemList.Count);
-		List<Transform> childList = childMgr.GetUsingTransList();
-
-		float itemHeight = 0;
-
-		for (int i = 0; i < childList.Count; i++)
+		m_VisibleShopItems.Clear();
+		Action<int, ShopUIItem, Jyx2ConfigShopItem> OnShopItemCreate = (idx, item, data) =>
 		{
-			Transform trans = childList[i];
-			var data = curShopItemList[i];
-			ShopUIItem uiItem = trans.GetComponent<ShopUIItem>();
-			int currentNum = GetHasBuyNum(data.Id);
-			uiItem.Refresh(data, i, currentNum);
-			uiItem.SetSelect(current_selection == i);
+			m_VisibleShopItems.Add(item);
+            item.gameObject.BetterSetActive(true);
+            int currentNum = GetHasBuyNum(data.Id);
+            item.Refresh(data, idx, currentNum);
+            item.SetSelect(m_CurSelectItem == item);
+			item.OnShopItemSelect += OnItemSelect;
+        };      
+        MonoUtil.GenerateMonoElementsWithCacheList(ScrollItem_RectTransform.gameObject, m_ShopDataItems, m_CachedShopItems, ItemRoot_RectTransform, OnShopItemCreate);
+        if(m_VisibleShopItems.Count > 0)
+		{
+			int col = ItemRoot_GridLayout.constraintCount;
+            int row = m_VisibleShopItems.Count % col == 0 ? m_VisibleShopItems.Count / col : m_VisibleShopItems.Count / col + 1;
 
-			if (itemHeight == 0)
-				itemHeight = uiItem.rectTransform().rect.height;
-		}
-
-		//setAreasHeightForItemCompleteView(itemHeight, new[] {
-		//	ItemsArea_ScrollReact.rectTransform(),
-		//	ItemDes_RectTransform
-		//});
+            NavigateUtil.SetUpNavigation(m_VisibleShopItems, row, col);
+			EventSystem.current.SetSelectedGameObject(m_VisibleShopItems[0].gameObject);
+        }
 	}
 
 	void RefreshProperty()
 	{
-		if (current_selection < 0 || current_selection >= curShopItemList.Count)
+		if (m_CurSelectItem == null)
 		{
 			ItemDes_RectTransform.gameObject.SetActive(false);
 			return;
 		}
 		ItemDes_RectTransform.gameObject.SetActive(true);
-		string mainText = UIHelper.GetItemDesText(GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(curShopItemList[current_selection].Id));
+		string mainText = UIHelper.GetItemDesText(GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(m_CurSelectItem.ItemId));
 		DesText_Text.text = mainText;
 	}
 
-	void OnItemSelect(ShopUIItem item, bool scroll)
+	void OnItemSelect(ShopUIItem item)
 	{
-		curSelectItem?.SetSelect(false);
+		m_CurSelectItem?.SetSelect(false);
 
-		int index = item.GetIndex();
-		current_selection = index;
-		curSelectItem?.SetSelect(true);
-		if (scroll)
-			scrollIntoView(ItemsArea_ScrollReact, item.transform as RectTransform, ItemRoot_GridLayout, 0);
+		m_CurSelectItem = item;
+		m_CurSelectItem?.SetSelect(true);
+		//scrollIntoView(ItemsArea_ScrollReact, item.transform as RectTransform, ItemRoot_GridLayout, 0);
 		RefreshProperty();
 	}
 
-	void OnCloseClick()
+	public void OnCloseClick()
 	{
 		Jyx2_UIManager.Instance.HideUI(nameof(ShopUIPanel));
 	}
 
-	void OnConfirmClick()
+	public void OnConfirmClick()
 	{
-		if (curSelectItem == null)
+		if (m_CurSelectItem == null)
 			return;
-		int count = curSelectItem.GetBuyCount();
+		int count = m_CurSelectItem.GetBuyCount();
 		if (count <= 0)
 			return;
-		Jyx2ConfigShopItem item = curShopItemList[curSelectItem.GetIndex()];
-		Jyx2ConfigItem itemCfg = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id);
+		Jyx2ConfigShopItem shopItem = m_CurSelectItem.ShopItemData;
+		if (shopItem == null)
+			return;
+
+        Jyx2ConfigItem itemCfg = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(shopItem.Id);
 		if (itemCfg == null)
 			return;
-		int moneyCost = count * item.Price;
+		int moneyCost = count * shopItem.Price;
 		if (runtime.GetMoney() < moneyCost)
 		{
 			GameUtil.DisplayPopinfo("持有银两不足");
@@ -205,136 +185,7 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		GameUtil.DisplayPopinfo($"购买{itemCfg.Name},数量{count}");
 		runtime.AddItem(GameConst.MONEY_ID, -moneyCost);
 
-		RefreshChild();
-		RefreshMoney();
+        m_CurSelectItem.Refresh(shopItem, m_CurSelectItem.GetIndex(), GetHasBuyNum(shopItem.Id));
+        RefreshMoney();
 	}
-	#region 手柄支持代码
-
-	protected override int axisReleaseDelay
-	{
-		get
-		{
-			return 200;
-		}
-	}
-
-
-	protected override bool captureGamepadAxis
-	{
-		get
-		{
-			return true;
-		}
-	}
-
-	private int itemX = 0;
-	private int itemY = 0;
-
-	protected override void changeCurrentSelection(int num)
-	{
-		if (num >= 0 && num < visibleItems.Count)
-		{
-			OnItemSelect(visibleItems[num], true);
-		}
-		else
-		{
-			if (curSelectItem != null)
-			{
-				curSelectItem.SetSelect(false);
-			}
-		}
-	}
-
-	private int getSelectedItemIndex()
-	{
-		if (visibleItems.Count == 0)
-			return -1;
-
-		int horizontalItemsCount = getColCount();
-		return itemY * horizontalItemsCount + itemX;
-	}
-
-	private int getColCount()
-	{
-		if (visibleItems.Count == 0)
-			return 1;
-
-		return (int)Math.Floor(ItemRoot_RectTransform.rect.width / visibleItems[0].rectTransform().rect.width);
-	}
-
-	private int getRowCount()
-	{
-		return (int)Math.Ceiling((float)visibleItems.Count / (float)getColCount());
-	}
-
-	protected override void OnDirectionalLeft()
-	{
-		if (itemX > 0)
-			itemX--;
-		else if (itemY > 0)
-		{
-			itemX = getColCount() - 1;
-			OnDirectionalUp();
-		}
-
-		changeCurrentSelectionWithAxis();
-	}
-
-	private bool changeCurrentSelectionWithAxis()
-	{
-		var itemIndex = getSelectedItemIndex();
-		var validMove = (itemIndex > -1 && itemIndex < visibleItems.Count);
-
-		if (validMove)
-			changeCurrentSelection(itemIndex);
-
-		return validMove;
-	}
-
-	protected override void OnDirectionalUp()
-	{
-		if (itemY > 0)
-			itemY--;
-
-		changeCurrentSelectionWithAxis();
-	}
-
-	protected override void OnDirectionalRight()
-	{
-		if (itemX < getColCount() - 1)
-		{
-			itemX++;
-			if (!changeCurrentSelectionWithAxis())
-				itemX--;
-		}
-		else if (itemY < getRowCount() - 1)
-		{
-			itemX = 0;
-			OnDirectionalDown();
-		}
-	}
-
-	protected override void OnDirectionalDown()
-	{
-		if (itemY < getRowCount() - 1)
-			itemY++;
-
-		if (!changeCurrentSelectionWithAxis())
-			itemY--;
-	}
-
-
-	protected override void handleGamepadButtons()
-	{
-		if (GamepadHelper.IsConfirm())
-		{
-			OnConfirmClick();
-		}
-		else if (GamepadHelper.IsCancel())
-		{
-			OnCloseClick();
-		}
-	}
-
-	#endregion
 }

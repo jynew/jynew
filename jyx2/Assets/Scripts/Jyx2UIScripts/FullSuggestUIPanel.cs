@@ -28,14 +28,7 @@ public partial class FullSuggestUIPanel : Jyx2_UIBase
 		BindListener(MainBg_Button, OnBgClick);
 	}
 
-	public override void Update()
-	{
-		//ok or cancel button both close the ui
-		if (GamepadHelper.IsConfirm() || GamepadHelper.IsCancel())
-			OnBgClick();
-	}
-
-	private void OnBgClick()
+	public void OnBgClick()
 	{
 		if (Time.unscaledTime < m_canClickTime)
 			return;

@@ -1,11 +1,11 @@
 /*
- * é‡‘åº¸ç¾¤ä¾ ä¼ 3Dé‡åˆ¶ç‰ˆ
+ * ½ğÓ¹ÈºÏÀ´«3DÖØÖÆ°æ
  * https://github.com/jynew/jynew
  *
- * è¿™æ˜¯æœ¬å¼€æºé¡¹ç›®æ–‡ä»¶å¤´ï¼Œæ‰€æœ‰ä»£ç å‡ä½¿ç”¨MITåè®®ã€‚
- * ä½†æ¸¸æˆå†…èµ„æºå’Œç¬¬ä¸‰æ–¹æ’ä»¶ã€dllç­‰è¯·ä»”ç»†é˜…è¯»LICENSEç›¸å…³æˆæƒåè®®æ–‡æ¡£ã€‚
+ * ÕâÊÇ±¾¿ªÔ´ÏîÄ¿ÎÄ¼şÍ·£¬ËùÓĞ´úÂë¾ùÊ¹ÓÃMITĞ­Òé¡£
+ * µ«ÓÎÏ·ÄÚ×ÊÔ´ºÍµÚÈı·½²å¼ş¡¢dllµÈÇë×ĞÏ¸ÔÄ¶ÁLICENSEÏà¹ØÊÚÈ¨Ğ­ÒéÎÄµµ¡£
  *
- * é‡‘åº¸è€å…ˆç”Ÿåƒå¤ï¼
+ * ½ğÓ¹ÀÏÏÈÉúÇ§¹Å£¡
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -14,21 +14,19 @@ using UnityEngine.UI;
 
 public partial class SystemUIPanel
 {
-	private Button MainBg_Button;
 	private Button SaveButton_Button;
 	private Button LoadButton_Button;
 	private Button GraphicSettingsButton_Button;
 	private Button MainMenuButton_Button;
-	private Button QuitGameButton_Button;
+	private Button ResumeGameBtn_Button;
 
 	public void InitTrans()
 	{
-		MainBg_Button = transform.Find("MainBg").GetComponent<Button>();
 		SaveButton_Button = transform.Find("SelectionPanel/SelectMenu/SelectPanel/Container/SaveButton").GetComponent<Button>();
 		LoadButton_Button = transform.Find("SelectionPanel/SelectMenu/SelectPanel/Container/LoadButton").GetComponent<Button>();
 		GraphicSettingsButton_Button = transform.Find("SelectionPanel/SelectMenu/SelectPanel/Container/GraphicSettingsButton").GetComponent<Button>();
 		MainMenuButton_Button = transform.Find("SelectionPanel/SelectMenu/SelectPanel/Container/MainMenuButton").GetComponent<Button>();
-		QuitGameButton_Button = transform.Find("SelectionPanel/SelectMenu/SelectPanel/Container/QuitGameButton").GetComponent<Button>();
+		ResumeGameBtn_Button = transform.Find("SelectionPanel/SelectMenu/SelectPanel/Container/ResumeGameBtn").GetComponent<Button>();
 
 	}
 }

@@ -17,6 +17,7 @@ using UniRx;
 using Jyx2Configs;
 using NUnit.Framework;
 using Random = UnityEngine.Random;
+using static Cinemachine.DocumentationSortingAttribute;
 
 
 namespace Jyx2
@@ -240,12 +241,16 @@ namespace Jyx2
 
         int getLevelUpExp(int level)
         {
+            //防止越界，限制下
+            level = Mathf.Clamp(level, 0, GameConst._levelUpExpList.Count);
             return GameConst._levelUpExpList[level - 1];
         }
 
         public int GetLevelUpExp()
         {
-            return GameConst._levelUpExpList[Level - 1];
+            //防止越界，限制下
+            int lv = Mathf.Clamp(Level, 0, GameConst._levelUpExpList.Count);
+            return GameConst._levelUpExpList[lv - 1];
         }
 
 
@@ -1114,5 +1119,7 @@ namespace Jyx2
             var newRole = ES3.Deserialize<RoleInstance>(data);
             return newRole;
         }
+
+        public bool IsPlayerRole => this == GameRuntimeData.Instance.Player;
     }
 }
