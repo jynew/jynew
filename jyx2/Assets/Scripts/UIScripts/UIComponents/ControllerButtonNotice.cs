@@ -1,4 +1,5 @@
-﻿using Rewired;
+﻿using i18n.TranslatorDef;
+using Rewired;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,9 @@ namespace Jyx2.InputCore
 
         [SerializeField]
         private TextMeshProUGUI m_ActionTxt;
+
+        [SerializeField]
+        private string m_FormatText = string.Empty;
 
         private void OnEnable()
         {
@@ -49,7 +53,11 @@ namespace Jyx2.InputCore
                 ClearActionText();
                 return;
             }
-            m_ActionTxt.text = Jyx2_Input.GetActionButtonName(m_Action, m_AxisRange);
+            var buttonName = Jyx2_Input.GetActionButtonName(m_Action, m_AxisRange);
+            if (string.IsNullOrEmpty(m_FormatText))
+                m_ActionTxt.text = Jyx2_Input.GetActionButtonName(m_Action, m_AxisRange);
+            else
+                m_ActionTxt.text = string.Format(m_FormatText.GetContent("ControllerNotice"), buttonName);
         }
     }
 }

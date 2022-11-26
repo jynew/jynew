@@ -339,7 +339,7 @@ public class Jyx2_UIManager : MonoBehaviour
 
     public T GetUI<T>() where T : Jyx2_UIBase
     {
-        var uiName = nameof(T);
+        var uiName = typeof(T).Name;
         if(m_uiDic.TryGetValue(uiName, out Jyx2_UIBase result))
         {
             return result as T;
