@@ -28,7 +28,7 @@ using UnityEngine.SceneManagement;
 public class BattleboxManager : MonoBehaviour
 {
     //排除拥挤点半径
-    public float m_DetechRadius = 0.8f;
+    public float m_DetechRadius = 0.5f;
     public float m_blockTexMultiplier = 1.0f;
     public Color m_InvalidColor = new Color(1,1,1,0.2f);
     public const float BATTLEBLOCK_DECAL_ALPHA = 0.4f;
