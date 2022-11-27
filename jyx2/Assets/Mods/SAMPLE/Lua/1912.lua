@@ -9,5 +9,6 @@ if UseItem(195) == true then goto label0 end;
         jyx2_FixMapObject("无际坊左侍卫让路", 1);
         jyx2_FixMapObject("无际坊右侍卫让路", 1);
         ModifyEvent(-2, -2, -2, -2, 1913, -1, -1, -2, -2, -2, -2, -2, -2);
+        ModifyEvent(-2, 8, -2, -2, -1, -1, 1914, -2, -2, -2, -2, -2, -2);
         LightScence();
 do return end;
