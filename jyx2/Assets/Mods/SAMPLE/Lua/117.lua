@@ -1,0 +1,32 @@
+Talk(0, "朱兄，感觉你身材又圆润了些许，看来婚后生活过得滋润啊。");
+Talk(11, "嘿嘿，棠依做的菜可好吃了。");
+Talk(0, "真是为你感到开心啊。");
+Talk(11, "不过莫掌门的死因一直没有查明，我心里总放不下这件事情。");
+if AskJoin() == true then goto label0 end;
+    Talk(0, "朱兄先多陪陪新婚妻子，这件事我先去查，到时候再一起交流。");
+    do return end;
+::label0::
+    if TeamIsFull() == false then goto label1 end;
+        Talk(11, "你的队伍已满，我无法加入。");
+        do return end;
+::label1::
+    Talk(0, "不如朱兄再随我一同继续打探。");
+    Talk(11, "好的，我也正有此意。");
+    Talk(0, "你才刚新婚不久，那就实在是扰劳了。");
+    Talk(11, "别这么说，莫掌门本是我的恩师，这是我应该做的。");
+    Talk(100, "这个徒弟还不错，不像张云贤那样无动于衷。");
+    Talk(11, "没想到我夫人棠依不但人好看，还是个武学理论奇才。");
+    Talk(0, "真的吗？");
+    Talk(11, "他研究了我的身形骨架和武功招式，觉得我更适合练刀法，还送了我一本刀法秘籍，现在我这招惊鹭刀法已经练得很熟练了。");
+    DarkScence();
+    jyx2_ReplaceSceneObject("", "NPC/朱云天", "");
+    LightScence();
+    Join(11);
+    LearnMagic2(11, 190, 1);
+    LearnMagic2(11, 190, 1);
+    LearnMagic2(11, 190, 1);
+    LearnMagic2(11, 190, 1);
+    LearnMagic2(11, 190, 1);
+    AddItem(196, 1);
+    ModifyEvent(-2, -2, -2, -2, -1, -1, -1, -2, -2, -2, -2, -2, -2);
+do return end;
