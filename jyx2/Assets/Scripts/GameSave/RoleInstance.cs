@@ -17,7 +17,6 @@ using UniRx;
 using Jyx2Configs;
 using NUnit.Framework;
 using Random = UnityEngine.Random;
-using static Cinemachine.DocumentationSortingAttribute;
 
 
 namespace Jyx2
