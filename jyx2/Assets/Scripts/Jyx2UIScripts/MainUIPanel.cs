@@ -44,7 +44,7 @@ public partial class MainUIPanel : Jyx2_UIBase
 	}
 	public void ShowCompass(bool flag)
 	{
-        ComassText_Text.gameObject.SetActive(LevelMaster.Instance.IsInWorldMap && flag);
+        ComassText_Text.gameObject.SetActive(LevelMaster.IsInWorldMap && flag);
 		if (ComassText_Text.gameObject.activeSelf)
 		{
 			var player = LevelMaster.Instance.GetPlayer();

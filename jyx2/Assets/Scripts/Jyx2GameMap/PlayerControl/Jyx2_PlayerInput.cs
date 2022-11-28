@@ -60,7 +60,7 @@ namespace Jyx2.InputCore
             if (!m_MapPlayer.CanControlPlayer)
                 return;
 
-            if (GameViewPortManager.Instance.GetViewportType() != GameViewPortManager.ViewportType.Follow || LevelMaster.Instance.IsInWorldMap)
+            if (GameViewPortManager.Instance.GetViewportType() != GameViewPortManager.ViewportType.Follow || LevelMaster.IsInWorldMap)
             {
                 //鼠标点击控制
                 OnClickControlPlayer();

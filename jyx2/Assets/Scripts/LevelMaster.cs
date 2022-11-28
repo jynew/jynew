@@ -105,10 +105,7 @@ public class LevelMaster : MonoBehaviour
 	/// <summary>
 	/// 当前是否在大地图，统一判断方式
 	/// </summary>
-	public bool IsInWorldMap
-	{
-		get { return _currentMap?.Tags.Contains("WORLDMAP") ?? false; }
-	}
+	public static bool IsInWorldMap => _currentMap != null && _currentMap.Tags.Contains("WORLDMAP");
 
 	public Image BlackCover
     {
