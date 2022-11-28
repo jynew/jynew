@@ -23,9 +23,7 @@ using Jyx2Configs;
 using Jyx2.UINavigation;
 using Jyx2.Util;
 using System.Linq;
-using UnityEditor.Tilemaps;
 using UnityEngine.EventSystems;
-using Jyx2.InputCore;
 
 public partial class XiakeUIPanel : Jyx2_UIBase
 {
