@@ -15001,6 +15001,77 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 563638865}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &567058482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 567058483}
+  - component: {fileID: 567058486}
+  - component: {fileID: 567058485}
+  - component: {fileID: 567058484}
+  m_Layer: 0
+  m_Name: 7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &567058483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567058482}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 15.354458, y: 0.5, z: 8.11}
+  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
+  m_Children: []
+  m_Father: {fileID: 1531856070}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &567058484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567058482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28456c42ed689d9458276be4c9851804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventTargets:
+  - {fileID: 779149225}
+  m_InteractiveEventId: -1
+  m_UseItemEventId: -1
+  m_EnterEventId: -1
+--- !u!65 &567058485
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567058482}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &567058486
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567058482}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &571826945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20916,6 +20987,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "\u6768\u68E0\u4F9D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314778829848807839, guid: 20b11e37991be4f4cb1e05579bfb76b9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7982771333511500581, guid: 20b11e37991be4f4cb1e05579bfb76b9,
         type: 3}
@@ -41226,6 +41302,7 @@ Transform:
   - {fileID: 1303201324}
   - {fileID: 1871533100}
   - {fileID: 1085611276}
+  - {fileID: 567058483}
   m_Father: {fileID: 173614895}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -55147,9 +55224,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.39697933, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39697868, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.41148475, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.4114841, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
