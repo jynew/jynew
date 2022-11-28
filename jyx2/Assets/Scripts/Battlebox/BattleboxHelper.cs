@@ -85,9 +85,8 @@ public class BattleboxHelper : MonoBehaviour
 				Debug.Log($"找到了战斗盒子，玩家坐标：{pos.x}：{pos.y}：{pos.z}");
 				_currentBattlebox = box;
 				_currentBattlebox.Init();
-                                //armodeniz testing
-                                Debug.Log(m_MoveZoneDrawRange);
 				_currentBattlebox.DrawAreaBlocks(pos, m_MoveZoneDrawRange);
+
 				return true;
 			}
 		}
