@@ -425,6 +425,22 @@ public class BattleboxManager : MonoBehaviour
 
     public void DrawAreaBlocks(Vector3 center, int range, bool show = false)
     {
+        for (int i = 0; i < m_Dataset.CountX; i++)
+        {
+            for (int j = 0; j < m_Dataset.CountY; j++)
+            {
+                if (!m_Dataset.Exist(i, j)) continue;
+                var data = m_Dataset.GetBLock(i, j);
+                if (!data.IsValid) continue;
+                var pos = new Vector3(data.WorldPosX, data.WorldPosY, data.WorldPosZ);
+                var normal = new Vector3(data.NormalX, data.NormalY, data.NormalZ);
+                DrawBattleBlock(pos, data.IsValid ? Color.white : m_InvalidColor, i, j, normal, data);
+                DrawBattleBlock(pos, Color.blue, i, j, normal, data, true);
+            }
+        }
+
+        //由于格子变多了，需改成绘制所有格子 armodeniz
+        /*
         var xy = m_Dataset.GetXYIndex(center.x, center.z);
         var centerX = (int) xy.X;
         var centerY = (int) xy.Y;
@@ -440,6 +456,7 @@ public class BattleboxManager : MonoBehaviour
             DrawBattleBlock(pos, data.IsValid ? Color.white : m_InvalidColor, b.X, b.Y, normal, data);
             DrawBattleBlock(pos, Color.blue, b.X, b.Y, normal, data, true);
         }
+        */
         //for (int i = centerX - range; i < centerX + range; i++)
         //{
         //    if (i < 0 || i >= m_Dataset.CountX) continue;
