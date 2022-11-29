@@ -12,10 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Animancer;
 using Cysharp.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Playables;
 
 namespace Jyx2
 {
