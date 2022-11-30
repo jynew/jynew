@@ -59,11 +59,13 @@ namespace Jyx2.MOD
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void GetAndroidPermissions()
         {
-            Permission.RequestUserPermission(Permission.ExternalStorageRead);
+            //20221130 知大虾：在没有通知用户的情况下，申请访问存储是不道德的行为。先关闭
+            
+            /*Permission.RequestUserPermission(Permission.ExternalStorageRead);
             Permission.RequestUserPermission(Permission.ExternalStorageWrite);
             Permission.RequestUserPermission("android.permission.MANAGE_EXTERNAL_STORAGE");
             // 获取文件权限
-            AndroidTools.GetFileAccessPermission();
+            AndroidTools.GetFileAccessPermission();*/
         }
     }
 }
