@@ -117,7 +117,7 @@ public class Jyx2_UIManager : MonoBehaviour
             .Any(ui => ui.gameObject.activeSelf) || (m_PopUIs.All(p => p is CommonTipsUIPanel));
 	}
 
-	public async void GameStart()
+	public async UniTask GameStart()
     {
         // await UniTask.WaitForEndOfFrame();
         await RuntimeEnvSetup.Setup();
