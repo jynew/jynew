@@ -228,9 +228,8 @@ namespace Jyx2
             {
                 dic.Add(key, val);
             }
-#if UNITY_EDITOR
+
             Save();
-#endif
         }
 
         private static T GetValue<T>(Dictionary<string, T> dic, string key, T defaultValue)
