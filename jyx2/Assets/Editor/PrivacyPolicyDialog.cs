@@ -190,7 +190,7 @@ import android.content.DialogInterface;
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SharedPreferences.Editor editor = base.edit();
-                    editor.putBoolean(""isFirstStartHjjh"", false);
+                    editor.putBoolean(""isFirstStartJynew"", false);
                     editor.commit();
                 }
             });
