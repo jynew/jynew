@@ -1,0 +1,624 @@
+v1.15.5
+- improved Unity 2021.3 LTS support
+- COMPATIBILITY-BREAKING CHANGES: ListView: methods ComponentCreated, ComponentDestroyed, ComponentActivated, ComponentCached changed to public
+- ListView: added SetSharedTemplates() method
+- Widgets Generation: fixed bug when data type has parameterless constructor
+
+v1.15.4
+- added ScrollRectDragSensitivity
+- added UtilitiesScrollRect: get time for ScrollRect stop by inertia
+- ListView: added ReversedOrder option (items displayed from end to start)
+- ListView: added OnlyOneHighlighted option
+- ScrollRectHeader, ScrollRectFooter: added Visible option to show and hide header (or footer)
+- ScrollRectHeader, ScrollRectFooter: added layout support if DisplayType is Reveal
+- ScrollRectFooter: added ChangeLayout option
+- ScrollRectPaginator: added RoundingError option to avoid excess last page
+- Switch: added AnimationCurve option
+- Widgets Generation: fixed enum related bug
+- Widgets Generation: improved support of latest Unity versions (2022.1.0+)
+- Style: fixed "Create Style" bug
+
+v1.15.3
+- COMPATIBILITY-BREAKING CHANGES: LateUpdateAdd and LateUpdateRemove methods of IUpdaterProxy renamed to AddLateUpdate and RemoveLateUpdate, added RemoveRunOnce and RemoveRunOnceNextFrame methods
+- ContextMenu: added helper script OpenContextMenu to open the menu by clicking on non-UI gameobject, requires PhysicsRaycaster and/or PhysicsRaycaster2D on the main camera
+- DateTimeScroller and DateScroller: fixed AMPM change on hours scroll if IndependentScroll enabled
+- EasyLayout: added optional movement and resize animation support; warning: can decrease performance
+- Effects: RingEffect, RippleEffect, LinesDrawer, SnapGridDrawer no more requires enabled TexCoord1 channel on Canvas
+- ListView: fixed item instance visibility if ListViewItem.DisableRecycling enabled
+- ListView: added OnNavigate event; called after navigating to the other item instance with keyboard or gamepad
+- ListView: added ItemsEvents.MovedToCache event
+- ListView: FixHighlightItemUnderPointer option now obsolete
+- ListView: added KeepHighlight option to keep item highlight on pointer enter until will be selected another gameobject
+- ListView: fixed wrong events processing order in some cases
+- ListViewItem: added StopSelectableAnimations() method to ListViewItem class
+- Notification: added OpenedNotifications, AllNotifications and InactiveNotifications properties
+- Picker: added OpenedPickers, AllPickers, and InactivePickers properties
+- Spinner: fixed bug with Unity Text and OnKeyDown validation
+- Tabs: added EventSystemSelectActiveHeader option
+- Tabs: added ImmediateSelect option
+- Tabs: added NextTab() and PreviousTab() methods
+- TimeScroller: added SingleAMPM property to disable multiple AM PM options in scroll block
+- TreeNode: added HasNodes and HasVisibleNodes properties
+- TreeView: added ToggleOnNavigate option, if enabled expand node on move right event and collapse node on move left event
+- TreeView: added ToggleOnSubmitCancel option, if enabled expand node on submit event and collapse node on cancel event
+
+v1.15.2
+- added Updater static class to control scripts updates IUpdatable.RunUpdate() without reflection instead of the default MonoBehaviour.Update()
+- added SnapGrid: sticks draggable or resizable UI game objects to the nearest grid lines
+- added LinesDrawer and SnapGridDrawer effects
+- COMPATIBILITY-BREAKING CHANGES: MonoBehaviour.Update() replaced with IUpdatable.RunUpdate()
+- Autocomplete: added AllowCancelOnDeselect to cancel DisplayListView close on deselect event.
+- Autocomplete: added OnSearchCompleted event
+- Autocomplete: added ResetListViewSelection option
+- AutoCombobox: fixed InputField display bug
+- AutoCombobox: fixed coloring bug
+- AutoCombobox: added KeepSelection option (set Autocomplete.DisplayListView selected items)
+- Connectors: fixed incorrect positions when CanvasMode is WorldSpace and its scale is not 1
+- Dialog: added ButtonsContainer option
+- ListView: fixed bug with incorrect item sizes when using variable size type
+- ListView: fixed highlighting bug
+- ListView: fixed wrong background color for the last items in table mode
+- ListView: added RangeMode property to determine which element is the start when selecting a range with the Shift key.
+- ListView: fixed instance recycling if ListViewItem.IsDragged enabled
+- ListViewItem: IsDragged renamed to DisableRecycling
+- ListViewString: now sort can be disabled with EnableSort in the Inspector window
+- Notification: added ButtonsContainer option
+- Paginator: added SetPage method to change current page without animation
+- Sidebar: added ModalColor field
+- shaders: now should support stereo instanced rendering and SRP batcher (thanks to David Watt)
+- Tooltip: added generic Tooltip
+- TreeView: added FindNodes method
+- Widgets Generation: added Tooltip generation
+
+v1.15.1
+- COMPATIBILITY-BREAKING CHANGES: cursors fields at components (Resizable, Rotatable, Splitter, TableHeader, *DragSupport) are no more used and replaced with Cursors asset and CursorsDPISelector component (recommended to have only one CursorsDPISelector component at the scene)
+- Accordion: added Curve property to use in animations
+- ContextMenu: fixed HotKey null bug
+- ListView: added OnComponentCreated, OnComponentEnabled, OnComponentDisabled, OnComponentDestroyed events
+- ListView: renamed StopScrollAtItemCenter to ScrollInertiaUntilItemCenter and StopScrollInertia to ScrollInertia
+- TreeView: fixed node remove bug when different nodes using the same item
+- TreeView: fixed multiple selection bug when selecting a collapsed node
+- TreeViewNodeDropSupport: added "Expand Node On Hold" option with customizable delay
+- UICursors: static methods replaced to fields so they can be replaced
+
+v1.15.0
+- added ListViewEnum with ListViewEnum<T> wrapper to work with any enums
+- reduced memory allocations
+- all classes with INotifyPropertyChanged support now also implements IObservable, which works without memory allocations
+- Autocomplete, Combobox: added field ParentCanvas, it used as ListView parent on open
+- Combobox: toggle-button is now full width
+- ContextMenu: now works correctly with all canvas render modes
+- DateScroller/DateTimeScroller/TimeScroller: ScrollBlock replaced with ScrollBlockBase
+- Dialog: added InactiveDialogs and AllDialogs properties to get access to the template instances
+- Dialog: DialogButton now support callback with Func<DialogBase dialog, int buttonIndex, bool closeDialog> type
+- EasyLayout: small improvements
+- EasyLayout: Filter property is obsolete and replaced with ShouldIgnore
+- Input System support: fixed bug on mobile devices
+- ListView: added property TemplateSelector, its allow to use of different templates (not only DefaultItem) depending on the item
+- ListView: added GetDebugInfo and PringDebugInfo methods
+- ListView: added "AnimationCurve animation, bool unscaledTime, Action after = null" parameters to the ScrollTo*Animated methods
+- ListView: StopScrollAtItemCenter and StopScrollInertia properties
+- ListView: fixed problem with not displayed items for ListType with variable sizes
+- ListView: added GetComponentsEnumerator to iterate through DefaultItems instances as allocation free replacement of the ForEachComponent method
+- ListView: added support of Container with custom scale
+- ListView: fixed AutoScroll bug
+- Notification: NotificationButton now support callback with Func<NotificationBase notification, int buttonIndex, bool closeNotification> type
+- Paginators: added OnMovement event
+- Popup: added content and onClose parameters to the Show method, added SetContent() method, added OnClose field, works the same way as dialog
+- Resizable: added UseCanvasScaler option, if enabled ActiveRegion will be changed according to the CanvasScaler settings
+- ScrollBlock: added OnItemChanged event to customize items depending on index and value
+- ScrollBlock: added ScrollBlockBase and ScrollBlockCustom<T> classes
+- TracksViewBase: ScrollBlock replaced with ScrollBlockBase
+- TreeView: fixed drop support bug
+- TreeView prefabs: toggle arrow now is nested
+- UICursor: added Replacement function to replace cursor (can be used to replace cursor on High DPI screens)
+- Utilities: more functions moved to the new UtilitiesUI and UtilitiesRectTransform classes
+
+v1.14.2
+- added CircularSlider widget
+- added SliderScale widget
+- added TimeAnalog widget
+- Accordion: added OnStartToggleAnimation and OnDataSourceChanged events
+- Accordion: added AccordionHighlight component 
+- AutoComplete: added OnItemNotFound and OnCancelInput events
+- AutoCombobox: added AddItems option (requires overridden Input2Item method)
+- CenteredSlider: event OnValuesChange renamed to OnValueChanged
+- Connectors: fixed bug related to "Scale With Screen Size"
+- Connectors: added rectangular lines support
+- Cursor: fixed flickering
+- DatePicker and DateTimePicker: fixed initial date
+- DirectoryTreeView: nested nodes are automatically loaded on node expand from a script
+- DirectoryTreeView: added ExpandPath(), Path2Node(), Path2NearestNode(), RefreshDirectories() methods
+- ListView: fixed highlight coloring on navigation
+- ListView: fixed unstoppable auto-scroll bug
+- ListView Drop Support: added ReceiveOnlyEmptyNode option
+- RangeSlider: event OnValuesChange renamed to OnValuesChanged
+- Resizable: fixed position change
+- ScrollBlock: added AllowIncrease and AllowDecrease fields
+- Spinner: added SetValue() method to change value without OnChangeEvent invocation
+- Styles: fixed error when creating a new style
+- Styles: added PixelsPerUnitMultiplier property to the Image styles
+- TreeGraph: small performance improvement
+- TreeGraph: added LineThickness, LineType, LineMargin options
+- TreeView: added ScrollWithIndent option
+- Widgets Generation: improved localization support
+
+v1.14.1
+- EasyLayout: reduced memory allocations
+- Widgets Generation: fixed type name error
+- Widgets Generation: fixed missing reference
+
+v1.14.0
+- added localizations integration support
+- added I2 Localization support
+- added ContextMenu
+- added Input System support
+- added UtilitiesCompare class
+- added ScrollRectFooter
+- added AutoComboboxIcons prefab
+- Dialog, Picker, Popup: added CloseButton property
+- EasyLayout: added SetPreferredAndFitContainer option for the Children Size
+- ListView: added Header property
+- ListViewPaginator: added LoopedList support
+- Notification: added "content" and "onReturn" parameters to the Show() method
+- Style: fixed unchangeable settings after "Apply Fast Settings" use
+- Style: added "Update Default Style" option, which is opposite of the "Apply Default Style", it gets style settings from widgets and saves them to the current style
+- Tabs: added CanSelectTab field to check if tab can be selected with a button click
+- TabsCustom: TabButton class changed to the generic class TabButton<T>
+- Widgets Generation: generated classes are partial now
+- Widgets Generation: added AutoCombobox widget
+- Utilities: most functions moved to the new Utilities* classes
+
+v1.12.6
+- ListViewItem: added ToggleOnClick and ToggleOnSubmit fields
+- Widgets Generation fixes
+
+v1.12.5
+- added UIFlareGlobal shader: flare at global space
+- added Ripple effect
+- UIWidgets extensions methods moved to UIWidgets.Extensions namespace
+- EasyLayout extensions methods moved to EasyLayoutNS.Extensions namespace
+- shaders: replaced properties names with properties IDs
+- Dialog: Show() arguments can later be changed with other methods: SetInfo(), SetButtons(), FocusButton(), SetPosition(), SetContent(), SetCanvas(), SetModal().
+- EasyLayout: added GetElementPosition to get position in group
+- InputFieldExtended: fixed bug with Value property (thanks to RickSaada1)
+- ListView: added ItemsEvents field
+- ListViewItem: now foreground and background graphics are serialized properties
+- Notify: added buttons support with SetButtons(IList<DialogButton> buttons) method
+- ProgressbarIndeterminate: fixed bar jump at the start
+- TableHeader: fixed bug with ColumnToggle (thanks to jbw)
+- UIFlare shaders: added flare delay property
+
+v1.12.4
+- Unity 4.6+ and Unity 5.x no more supported, now oldest supported version is 2017.4
+- fixed SendMessage warnings in Unity 2019.3 and later versions
+- assembly definitions removed because all changes in .asmdef files are deleted on package update
+- ListView: DefaultItem no more disabled by default in Editor mode
+- ListViewDragSupport: added auto-scroll when the drag is near the border
+- Notify: now you can create derived classes with NotificationCustom<T>
+- TreeView Drag&Drop: now nodes can be reordered
+
+v1.12.3
+- added Pinchable component: drag, rotate, resize multi-touch support
+- added ListViewAutoResize component: auto-resize ListView or TileView according to items counts until specified maximum size reached
+- [Serializable] attribute of TreeNode<TItem> class not available for Unity 2020.1 and later versions
+- ListView: added DisableScrollRect property to disable ScrollRect if ListView is not Interactable
+- ListView and TreeView Drag&Drop: added Interactable support
+
+v1.12.2
+- added DistanceLines component
+- added UI Cursor settings component
+- Dialog: fixed buttons order
+- DirectoryTreeView: fixed drives list
+- ListViewPaginator, ScrollRectPaginator: fixed LastPageFullSize option
+- ListView: now resize of disabled ListView processed correctly
+
+v1.12.1
+- added converter from Unity Text to TextMeshPro text
+- added IUpgradeable interface to improve compatibility between versions
+- added Groupable component
+- added UIFlareTransparent shader
+- added ResizableHandles component
+- added Rotatable component
+- added RotatableHandle component
+- deleted a lot of lambda functions
+- other lambda functions replaced with local functions
+- renamed classes *Utilites to *Utilities
+- improved performance with Asset Pipeline V2
+- Combobox: fixed navigation support
+- Draggable: added Target property to drag the specified target instead self
+- DragSupport: added AllowDrag field
+- DropSupport: added ReceiveItems and ReceiveNodes fields for the base classes
+- ListView: not selectable items are no more highlighted and navigated
+- ListViewPaginator, ScrollRectPaginator: added LastPageFullSize option to change the last page size to full-page size
+- Resizable: AllowResize renamed to Interactable
+- Resizable: added resize type to change between size and scale
+- Resizable: added Target property to resize the specified target instead self
+- ScrollRectEvents: RequiredMovement replaced with Thresholds to support separate thresholds for each pull direction
+- Splitter: AllowResize renamed to Interactable
+
+v1.11.2
+- added TracksView to create custom planner or time-lines widgets
+- added InputFieldAdapter to improve TextMeshPro support
+- added ListComponentPool
+- added SplitButton
+- Dialog: added RectTransform content and Action onClose parameters to Show(...) method
+- Dialog: added OpenedDialogs property to get list of the opened dialog
+- Dialog: DefaultButton replaced with ButtonsTemplates and DialogActions now has option to specify button index for the button template
+- Dialog: type of the "buttons" parameter in the Show() method changed to IList<DialogButton>
+- Dialog: added "Func<int, bool> onCancel" parameter to the Show() method, called with -1 parameter when dialog closed with top right close button
+- DragListener: OnDragListener renamed to DragListener
+- DragSupport: added optional DragHandle property, you can use it drag ListView items by specified handle instead of the whole item
+- DragSupport: added StartDragEvent and EndDragEvent
+- EasyLayout: added ElementsRotate and ElementsRotationStart for Ellipse layout
+- ListView: improved navigation support
+- ListView: added optional parameter minVisiblePart to IsVisible() method
+- ListView: replaced old ListView with ListViewString
+- ListView: added Virtualization setting to disable Virtualization
+- ListViewDropSupport: added DropPosition parameter
+- ListViewPaginator: now use ListView.ScrollToAnimatedPosition instead of the own animation
+- Notify: fixed incorrect size and rotation of next notification if previous notification was closed during hide animation
+- Resizable: added AllowResize property to enable/disable resize without removing component
+- ScrollBlock: SetText() renamed to UpdateView()
+- ScrollRectPaginator: ForceScrollOnPage replaced with ForcedPosition to support different positions
+
+v1.11.1
+- added AutocompleteCombobox
+- ListView: fixed scrolling bug with variable size list types
+- Notify: renamed AnimationRotate to AnimationRotateVertical, AnimationCollapse to AnimationCollapseVertical
+- Notify: added animations AnimationRotateHorizontal, AnimationCollapseHorizontal, AnimationSlideRight, AnimationSlideLeft, AnimationSlideUp, AnimationSlideDown
+- Notify: added configurable animations AnimationRotateBase, AnimationCollapseBase, AnimationSlideBase
+- Resizable: added OnResize event
+- Splitter: added OnResize event
+- Tabs: added SelectedTabIndex property
+
+v1.11.0
+- added ScrollRectHeader (example of usage in Examples/ListView/ListViewHeader scene)
+- added EasyLayoutEllipseScroll
+- Combobox: added OnShowListView and OnHideListView events
+- EasyLayout: added new layout type Ellipse
+- EasyLayout: added new option ResetRotation
+- ListView: added DestroyDefaultItemsCache, if enabled instances of the previous DefaultItem will be destroyed when replacing DefaultItem
+- ListView: added new ListViewEllipse list type
+- Scroller: renamed to ScrollBlock
+
+v1.10.4
+- added DateScroller, DateTimeScroller, DateTimeScrollerSeparate, TimeScroller widgets
+- added EditorCondition attributes to use with MonoBehaviourConditional and UIBehaviourConditional
+- added LayoutElementMax: allow to control the maximum preferred sizes of the LayoutGroup
+- added UIFlare shader
+- Combobox: added HideAfterItemToggle option
+- DateTime: fixed init and time errors
+- DatePicker: added DateChangeOnly option to allow to select date on change or on click
+- EasyLayout: fixed FitContainer
+- ListView: added null value support for the GraphicsForeground and GraphicsBackground properties
+- ListView: added AllowColoring option
+- ListView: added StateDefault(), StateSelected() and StateHighlighted() functions to the base default item class as addition to coloring functions
+- ListView: added loading example with UIFlare shader use
+
+v1.10.3
+- added GroupedTileView example
+- DragRedirect: improved support for the multiple redirects
+- GroupedList: added ItemsPerBlock, EmptyGroupItem, EmptyItem properties for the TileView support
+- EasyLayout: added Flex layout type
+- EasyLayout: added Staggered layout type
+- EasyLayout: renamed Stacking to MainAxis
+- ListView: HighlightedBackgroundColor and HighlightedColor now applied automatically after changed
+- ListView: fixed scrolling when List Type is fixed, ListScrollValue enabled and DefaultItem have Layout Group
+- ListView: fixed rare bug for the ListView with items of the variable sizes.
+- ListView: added missing fields in the Inspector window for the simple ListView
+- ListView: added TileViewStaggered renderer
+- ScrollRectPaginator: fixed displayed buttons at the start
+- Style: fixed error when style created not in the folder or outside Assets folder
+- TextMeshPro support: improved support for the Unity 2019.1
+- Tooltip: fixed displayed tooltip after parent gameobject was disabled (thanks to Gladyon)
+- Widget Generation: fixed bug when type has only one field of the supported types
+
+v1.10.2
+- added ScrollbarMinSize component - allow set minimum size of the scrollbar handle
+- added DragOneDirection component - it changes drag event to work only with one direction
+- added LayoutDropIndicator component to use with TableHeader
+- added Project Settings support for Unity 2018.3 and later
+- Accordion: fixed problems when content size changed
+- Accordion: added ForceOpen() and ForceClose() functions to open and close items without animation
+- Accordion: added fields AnimationOpen, AnimationOpenFlexible, AnimationClose, AnimationCloseFlexible to change animations
+- AudioPlayer: added setter for Source property
+- LayoutSwitcher: added LayoutSelector field to control layout selection
+- ListView: added CanSelect(index) and CanDeselect(index) fields
+- ListView: added PrecalculateItemSizes, disabling this option increase performance with huge lists of items with variable sizes
+- ListView: fixed LimitScrollValue when scroll to end
+- ListView: fixed error when drag-and-drop position after the last item
+- ObservableList: added INofityPropertyChanged implementation
+- ObservableList: added ObserveItems field
+- ObservableList: now allowed null items
+- RangeSlider: now correctly works when enabled or disabled inside layout groups
+- ResizableHeader: renamed to TableHeader with related class
+- TableHeader: no more required IResizableItem implementation for the ListView.DefaultItem
+- TableHeader: added GetColumnsOrder() and SetColumnsOrder() functions
+- TableHeader: added DropIndicator support
+- Sidebar: added prefab and styles support
+- Spinner: now use InputField component instead of the inheritance
+- Spinner: added TextMeshPro support
+- Switch: SetStatus() now does not invocate events for other Switches in the same group
+- TextMeshPro support: widgets created with default menu "UI / New UI Widgets / ..." if support enabled
+- TextMeshPro support: removed menu "UI / UIWidgets with TextMeshPro / ..."
+- TextMeshPro support: added menu "Edit / Project / Settings / New UI Widgets / Import TextMeshPro support package" to import TMPro prefabs after update to new version
+- Widget Generation: added ScriptableObject support
+- Widget Generation: added Data Bind support
+- Other: fixes related using instantiate with inited complicated widgets
+- Other: "UIWidgets" in the menu replaced with "New UI Widgets" to match with the package name
+- Other: Time used with animations can be controlled with Utilites.GetTime field (You can use own Time manager instead of the default Time.time)
+
+v1.10.1
+- ListView: added ScrollTo(item) and ScrollToAnimated(item) functions
+- Paginator: added StopAnimation() function
+- ListViewPaginator: fixed direction problem
+- TreeView: added ScrollTo(node) and ScrollToAnimated(node) functions
+- TreeView: added FindNode() function
+- TreeView: now ScrollTo(..) and ScrollToAnimated(...) correctly work with node indentation
+- Widget Generation: added interface types support
+- Widget Generation: fixed property support
+
+v1.10.0
+- Added styles support (Styles folder, new styles can be created from context menu "Assets / Create / UIWidget - Style")
+- Added widget generation (context menu "Create / UIWidget - Create Widgets" on file with item class definition)
+- Added DateTime, Time24 and Time12 widgets
+- Added DateTimePicker and TimePicker widgets
+- Added ColorPickerRangeHSV widget
+- Added ColorsList widget to display list of the selected colors, should be used with ColorPicker or ColorPickerRange.
+- Added "Data Bind for Unity" support (requires Unity 5.6 or later)
+- Added base ListView Picker class for the custom ListView
+- Added base TreeView Picker class for the custom TreeView
+- Added base drop support class for the custom TreeView
+- Added base drop support class for the custom TreeView node
+- Added assembly definitions
+- Improvement: Drag can be canceled with Cancel button
+- Accordion: added AllItemsCanBeClosed option
+- Autocomplete: added GetInputFieldText() function
+- Calendar: added DateMin and DateMax properties
+- Calendar: added currentDateAsDefault option
+- ColorPicker: added Hex block
+- ColorPicker: added new palette mode HSVCircle
+- ColorPickerRange: DefaultShader replaced with DefaultShaderHorizontal and DefaultShaderVertical
+- Connectors: now works correctly with "Screen Space - Camera"
+- EasyLayout: reduced memory allocations
+- EasyLayout: EasyLayout namespace renamed to EasyLayoutNS to avoid problems with Unity 2018.2 and later
+- Interfaces: IItemWidth, IItemHeight, IListViewItemHeight, IListViewItemWidth not used anymore
+- ListView: added CenterTheItems property
+- ListView: added overridable functions CanBeSelected() and CanBeDeselected()
+- ListView: added LoopedList option
+- ListView: added Interactable option
+- ListView: added IsTable option (required to valid stylization)
+- ListView and TileView: ListViewCustomWidth, ListViewCustomHeight, TileViewCustom and TileViewCustomSize replaced with ListViewCustom with List Type option
+- ListViewCustomWidth: TItem now does not require IItemWidth implementation
+- ListViewCustomHeight: TItem now does not require IItemHeight implementation
+- ListViewDropIndicator: added styles support
+- ResizableHeader: fixed resize on touch devices
+- Sidebar: added OnOpeningStarted and OnClosingStarted, called when appropriated animation started
+- other: prefabs in "Sample Assets" folder replaced with scenes
+- other: "Standart Assets" folder renamed to "Scripts"
+- other: "Sample Assets" folder renamed to "Examples"
+- other: removed ListViewGameObjects prefab
+- other: removed outdated prefabs and sprites
+- other: namespace "UIWidgetsSamples" renamed to "UIWidget.Examples"
+
+v1.9.3
+- Accordion: now works with content with dynamically change size
+- ListView's, TileView's, TreeView's: added GetItemPositionMiddle()
+- ListView's, TileView's, TreeView's: added ScrollToPosition()
+- ListView's, TileView's, TreeView's: added ScrollToPositionAnimated()
+- ResizableHeader: added ColumnEnable, ColumnDisable and ColumnToggle
+- ResizableHeader: fixed problem with adding columns
+- ResizableHeader: improvements
+
+v1.9.2
+- added TreeViewCustomNodeDragSupport
+- added ScrollButtons
+- Autocomplete: fixed problem with resizing
+- Autocomplete: added SearchDelay and MinLength options
+- ColorPicker: fixed incorrect display in linear colorspace
+- ColorPicker: now click on palette or image will change color
+- Draggable: added Horizontal and Vertical options
+- Draggable: added Restriction option
+- ListViewCustomDragSupport: added DeleteAfterDrop parameter
+- ListView's, TileView's, TreeView's: added SetContentSizeFitter parameter
+- ListView's, TileView's, TreeView's: added Navigation parameter
+- ListView's, TileView's, TreeView's: added IsVisible() function to check if item is visible
+- ListView's, TileView's, TreeView's: added animated scrolling to items - ScrollToTime() and ScrollToSpeed()
+- ListView's, TileView's, TreeView's: Multiple renamed to MultipleSelect
+- RangeSlider: added RangeSliderType; it's allow or disable handles overlay
+- Resizable: fixed error with allowed directions
+- Sidebar: added new animation type ScaleDownAndPush
+- Spinner: fixed input parsing problem
+- Splitter: added Mode option, so you can specify left and right targets, instead using previous and next siblings in hierarchy
+- TreeView: added serialization support with TreeNode<T>.Serialize() and TreeNode<T>.Deserialize()
+- TreeView: fixed error when deleting selected node with disabled DeselectCollapsedNodes
+- TreeView: added ExpandParentNodes() and CollapseParentNodes() functions
+- TreeView's DefaultItem: Filler renamed to Indentation
+- Dialog, Notify, Picker, Popup: Template() renamed to Clone()
+
+v1.9.1
+- Fixed CenteredSlider
+- Fixed missing links in prefabs
+- Fixed demo scene
+
+v1.9.0
+- Added AudioPlayer
+- Added Calendar
+- Added DatePicker
+- Added DirectoryTreeView
+- Added FileDialog
+- Added FileListView
+- Added FolderDialog
+- Added PickerBool (can be used as Confirmation dialog with Yes/No/Cancel options)
+- Accordion: added ResizeMethod property
+- Accordion: protected Items property replaced with public DataSource property with type ObservableList<T>
+- Accordion: added DisableClosed option
+- ColorPicker: added Image palette, you can use it to get colors from custom Texture2D. The texture must have the Read/Write Enabled flag set in the import settings, otherwise this function will fail.
+- ColorPicker: fixed bug with wrong axes with Hue palette
+- Drag&Drop: added generic classes ListViewCustomDragSupport and ListViewCustomDropSupport, using them to add Drap&Drop functionality for own ListView's become more easily. Check ListViewIconsDragSupport and ListViewIconsDropSuppport as reference (ignore TreeNode region).
+- EasyLayout: fixed "dirty" scene bug when using FitContainer or ShrinkOnOverflow
+- ListView's: DataSource can be safely used from other threads
+- ListView's: added GroupedListView sample
+- ListView's: added .Select(int index, bool raiseEvents) function, you can use it to select items without raising events
+- ListView's: added Owner field to ListViewItem (base class for any DefaultItem), it contains link to parent ListView
+- ListView's: you can implement IViewData<T> to DefaultItem component class to avoid overriding ListView.SetData() function
+- ListView's: added virtual properties Graphic[] GraphicsForeground and Graphic[] GraphicsBackground to ListViewItem, you can them to specify graphics for coloring, instead overriding coloring functions
+- Resizable: mark events as used
+- SlideBlock renamed to Sidebar
+- Sidebar: added new animation types Overlay (default), Push, Uncover, ScaleDown, SlideAlong, SlideOut, Resize
+- Sidebar: added AnimateWithLayout option for Resize animation, use it if you need more than one Sidebar with Resize on same Content object
+- Spinner: added AllowHold option, so you can disable increasing/decreasing value during pointer hold
+- Switch: added .SetStatus(bool value), you can change state without raising corresponding events
+- TileView's: added TileViewCustomSize
+- Tooltip: added UnscaledTime option
+- TreeNode: added RootNode property, used to check if nodes belong to same tree
+- TreeView's and TreeNode: Nodes type change from IObservableList<TreeNode<TItem>> to ObservableList<TreeNode<TItem>>
+- TreeView: added SelectedNodes property
+- TreeView: added DeselectCollapsedNodes property, enabled by default
+- TreeView: added .Node2Index(TreeNode<TItem> node) function
+- TreeView: added .SelectNode(TreeNode<TItem> node) and .SelectNodeWithSubnodes(TreeNode<TItem> node) functions
+- TreeViewDataSource: fixed incorrect branch bug (thanks to Heiko Berres)
+- ProgressBar: added SpeedType option
+
+v1.8.5
+- IInputFieldProxy: properties onValueChange, onValueChanged, onEndEdit type changed to UnityEvent<string> and get only.
+- ListView: now is possible change DefaultItem in runtime
+- ListViewItem: now works without ImageAdvanced
+- SlideBlock: added Modal property, if enabled SlideBlock will be closed on click outside SlideBlock
+- Tabs: added EnableTab and DisableTab functions
+
+v1.8.4
+- Added ColorPickerRange - allow selecting color from a range of two colors.
+- Fixed Combobox bug.
+
+v1.8.3
+- Added SelectableHelper - allow controlling additional Graphic component according to selection state of current gameobject. So you can control button background color with Button component and Button text color with SelectableHelper
+- Added ListViewInt
+- Added Picker - base class for creating own pickers
+- Added PickerInt, PickerString, PickerIcons
+- Added LayoutSwitcher
+- SpinnerFloat - added property Culture, specified how the number will be displayed and how input will be parsed
+- SpinnerFloat - added field DecimalSeparators, along with decimal separator within Culture determine valid decimal separators for input
+    (Warning: incompatible types with different Unity versions - Unity 4.x use string[] and Unity 5.x use char[])
+- Spinner, SpinnerFloat - fixed overflow exception
+- Resizable - added corners directions for resize
+- ListView's - added FadeDuration for colors change
+
+v1.8.2
+- EasyLayout - added Shrink on Overflow option
+- EasyLayout - added CompactConstraint and CompactConstraintCount options
+- Splitter - fixed problem with using more than one splitter with same container
+- Tabs - added prefab for left side Tabs
+- Added ScrollRectRestictedDrag
+- TextMeshPro support available with separate unitypackage
+- Beta: Added Connectors. Add SingleConnector or MultipleConnector to empty gameobject
+
+v1.8.0
+- Added ScrollRectPaginator
+- Added ListViewPaginator
+- Added Autocomplete
+- Added Popup
+- TreeView: added TreeViewDataSource component with nodes editor
+- ListView's: added ScrollTo()
+- EasyLayout: reduced memory allocation
+- EasyLayout: added row/column constraint for Grid layout
+- Tabs: added DefaultTabName property
+- TreeNode: added Path property - return list of parent nodes
+- TreeViewComponent: added OnNodeExpand property with Rotate (rotate toggle) and ChangeSprite (change toggle sprite) values
+- Notify and Dialog: added Template() method, now you can use notifyPrefab.Template().Show(...) instead Notify.Template("template name").Show(...)
+- CenteredSlider: added ValueMin, ValueMax and UseValueLimits. If UseValueLimits enabled then ValueMin <= Value <= ValueMax
+- Tabs: added TabButtonComponent, use derived class with overrided SetButtonData() to control how tab name will be displayed. For TabsIcons you can use TabIconButton.
+- Dialog: added DialogButtonComponent, use derived class with overrided SetButtonName() to control how button name will be displayed.
+- Dialog: added DialogInfoBase, use derived class with overrided SetInfo() to control how info will be displayed.
+- ListView's, TileView: added DropIndicator for Drag-and-Drop
+- TileView: added TileViewScrollRectFitter, ScrollRect will be resized to display whole number of items.
+
+v1.7.4
+- Added Switch
+- Resizable: added KeepAspectRatio property
+- Tabs: added SelectedTab property
+- Tabs: added OnTabSelect event
+- Known problems: Accordion with EasyLayout and Canvas.PixelPerfect enabled in Unity 5.3 cause error "Trying to add (Layout Rebuilder for) {ObjectName} (UnityEngine.RectTransform) for layout rebuild while we are already inside a layout rebuild loop. This is not supported." in some cases. Workaround - use Vertical or Horizontal Layout Group instead EasyLayout.
+
+v1.7.2
+- Fixed errors in WinStore builds.
+- IDropSupport: added DropCanceled method.
+- DragSupport: added DragPoint property (empty gameobject on cursor/touch position), you can use it to attach custom gameobject with information about a draggable object.
+- ListViewIconsDragSupport, TreeViewNodeDragSupport: show information about the draggable object.
+- Tabs: added Tabs with icons.
+
+v1.7.0
+- Added Drag and Drop support.
+- ComboboxCustom and ComboboxIcons: Added Multiselect support.
+- ResizableHeader: Added drag column support.
+- TreeViewItem: Added Tag property.
+- SlideBlock: Optional support for children ScrollRect.
+- Accordion: Added Direction.
+- Accordion: Added support Horizontal Layout Group and Vertical Layout Group (Content Objects should have LayoutElement component).
+- ListViews: Added limited support Horizontal Layout Group and Vertical Layout Group (you cannot change ListView direction in runtime).
+- ObservableList: Added events OnCollectionChange (raised when items added, removed or replaced) and OnCollectionItemChange (raised when the item in collection raise OnChange or PropertyChanged events).
+- ObservableList: Added Comparison, ResortOnCollectionChanged, ResortOnCollectionItemChanged properties.
+- TreeNode: Added Parent property. Now you can remove a node from the tree using Node.Parent = null or move node to another subtree Node.Parent = AnotherNode.
+
+v1.6.5
+- Added Resizable.
+- Added Splitter.
+- Added SlideBlock.
+- Added ScrollRectEvents component with PullUp, PullDown, PullLeft, PullRight events (use it for refresh or load more options).
+- ListViewCustom: Removed properties SelectedComponent and SelectedComponents.
+- ObservableList: Now you can disable items observe in the constructor.
+- ListViewItem: Added MovedToCache function, called when item moved to cache, you can use it to free used resources.
+- Added Table sample (ListViewCustom + ResizableHeader + Tooltip).
+- TileView sample - added Resizable for TileView and TileViewItems and toggle direction.
+- Bug fixes.
+- Optimization.
+
+v1.6.0
+- ColorPicker
+- For ListView, ListViewIcons, ListViewCustom, ListViewCustomHeight, TileView added support for ObservableList
+- Items property marked obsolete but can be used.
+- Added optional sequence parameters for Notify - notifications can be showed one by one, not only all at once like before.
+- For ListViewIcons items and TreeView nodes added field LocalizedName, so now can be easily added localization support.
+- EasyLayout - Control Width, Max Width, Control Height, Max Height replaced with "Children Width" and "Children Height" with options:
+    Do Nothing
+    Set Preferred - Set width/height to preferred, like Control Width/Height
+    Set Max from Preferred - Set width/height to maximum preferred width/height of items, like Max Width/Height
+    Fit Container - similar to "Child Force Expand" from Horizontal/Vertical Layout Group
+- ListViewCustomHeight - implementation of IListViewItemHeight for components now optional, but you still can implement it for optimization purpose.
+
+v.1.5.0
+- Added TileView
+- Added TreeView
+- Added ResizableHeader
+- Direction option for ListView's
+- Value option for ListViewIcons items
+
+v.1.4.2 
+- Added ListViewCustomHeight (support items of variable heights).
+
+v.1.4.1
+- Added CenteredSlider.
+
+v.1.4
+- Added RangeSlider
+- Added Accordion
+- Bugfixes.
+Thanks to Nox from Purple Pwny Studios (http://purplepwny.com) for helping fix a mobile combobox bug.
+
+v.1.3
+- Added ListViewIcons
+- Added ComboboxIcons
+- Added ListViewCustom
+- Added ComboboxCustom
+
+v.1.2
+- Added Dialog
+- Added Draggable
+
+v.1.1
+- Added Notify
+- Added EasyLayout
+
+v.1.0
+- Initial release
