@@ -68,7 +68,6 @@ namespace Jyx2
         private void FinishAutoWalking()
         {
             m_NavmeshAgent.updateRotation = false;
-            m_NavmeshAgent.isStopped = true;
             m_OnArriveDestination?.Invoke();
             m_OnArriveDestination = null;
             m_IsWalking = false;
