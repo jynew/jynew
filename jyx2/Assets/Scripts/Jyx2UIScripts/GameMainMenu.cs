@@ -36,13 +36,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	private PanelType m_panelType;
 
-	private int main_menu_index => current_selection;
-
-	private const int NewGameIndex = 0;
-	private const int LoadGameIndex = 1;
-	private const int SettingsIndex = 2;
-	private const int QuitGameIndex = 3;
-
 	private string m_newName;
 
 	async void OnStart()
@@ -103,18 +96,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 		InitTrans();
 		RegisterEvent();
 		m_randomProperty = this.StartNewRolePanel_RectTransform.GetComponent<RandomPropertyComponent>();
-	}
-
-
-
-	protected override Color normalButtonColor()
-	{
-		return ColorStringDefine.main_menu_normal;
-	}
-
-	protected override Color selectedButtonColor()
-	{
-		return ColorStringDefine.main_menu_selected;
 	}
 
 

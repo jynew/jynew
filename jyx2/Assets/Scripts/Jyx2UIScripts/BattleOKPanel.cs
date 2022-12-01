@@ -73,12 +73,4 @@ public partial class BattleOKPanel:Jyx2_UIBase
             cancelCallback = null;
         }
     }
-
-	protected override void handleGamepadButtons()
-	{
-		if (GamepadHelper.IsConfirm())
-            OnOKClick();
-        else if (GamepadHelper.IsCancel())
-            OnCancelClick();
-	}
 }

@@ -124,19 +124,4 @@ public class MessageBox : MonoBehaviour
         _onCancel = null;
         Jyx2ResourceHelper.ReleasePrefabInstance(gameObject);
     }
-
-    private void Update()
-	{
-        if (gameObject.activeSelf)
-        {
-            if (GamepadHelper.IsConfirm())
-            {
-                OnConfirmBtnClick();
-            }
-            else if (GamepadHelper.IsCancel())
-            {
-                OnCancelBtnClick();
-            }
-        }
-	}
 }

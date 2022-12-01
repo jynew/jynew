@@ -1,12 +1,13 @@
 /*
- * é‡‘åº¸ç¾¤ä¾ ä¼ 3Dé‡åˆ¶ç‰ˆ
+ * ½ğÓ¹ÈºÏÀ´«3DÖØÖÆ°æ
  * https://github.com/jynew/jynew
  *
- * è¿™æ˜¯æœ¬å¼€æºé¡¹ç›®æ–‡ä»¶å¤´ï¼Œæ‰€æœ‰ä»£ç å‡ä½¿ç”¨MITåè®®ã€‚
- * ä½†æ¸¸æˆå†…èµ„æºå’Œç¬¬ä¸‰æ–¹æ’ä»¶ã€dllç­‰è¯·ä»”ç»†é˜…è¯»LICENSEç›¸å…³æˆæƒåè®®æ–‡æ¡£ã€‚
+ * ÕâÊÇ±¾¿ªÔ´ÏîÄ¿ÎÄ¼şÍ·£¬ËùÓĞ´úÂë¾ùÊ¹ÓÃMITĞ­Òé¡£
+ * µ«ÓÎÏ·ÄÚ×ÊÔ´ºÍµÚÈı·½²å¼ş¡¢dllµÈÇë×ĞÏ¸ÔÄ¶ÁLICENSEÏà¹ØÊÚÈ¨Ğ­ÒéÎÄµµ¡£
  *
- * é‡‘åº¸è€å…ˆç”Ÿåƒå¤ï¼
+ * ½ğÓ¹ÀÏÏÈÉúÇ§¹Å£¡
  */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ using UnityEngine.UI;
 
 public partial class BattleActionUIPanel
 {
-	private RectTransform LeftActions_RectTransform;
+	private VerticalLayoutGroup LeftActions_VerticalLayoutGroup;
 	private Button Move_Button;
 	private Button UsePoison_Button;
 	private Button Depoison_Button;
@@ -22,14 +23,13 @@ public partial class BattleActionUIPanel
 	private Button Item_Button;
 	private Button Wait_Button;
 	private Button Rest_Button;
-	private Button Surrender_Button;
 	private RectTransform Skills_RectTransform;
-	private RectTransform SkillItem_RectTransform;
+	private Button Surrender_Button;
 	private Button Cancel_Button;
 
 	public void InitTrans()
 	{
-		LeftActions_RectTransform = transform.Find("LeftActions").GetComponent<RectTransform>();
+		LeftActions_VerticalLayoutGroup = transform.Find("LeftActions").GetComponent<VerticalLayoutGroup>();
 		Move_Button = transform.Find("LeftActions/Move").GetComponent<Button>();
 		UsePoison_Button = transform.Find("LeftActions/UsePoison").GetComponent<Button>();
 		Depoison_Button = transform.Find("LeftActions/Depoison").GetComponent<Button>();
@@ -37,9 +37,8 @@ public partial class BattleActionUIPanel
 		Item_Button = transform.Find("LeftActions/Item").GetComponent<Button>();
 		Wait_Button = transform.Find("LeftActions/Wait").GetComponent<Button>();
 		Rest_Button = transform.Find("LeftActions/Rest").GetComponent<Button>();
-		Surrender_Button = transform.Find("Surrender").GetComponent<Button>();
 		Skills_RectTransform = transform.Find("Skills").GetComponent<RectTransform>();
-		SkillItem_RectTransform = transform.Find("Prefabs/SkillItem").GetComponent<RectTransform>();
+		Surrender_Button = transform.Find("Surrender").GetComponent<Button>();
 		Cancel_Button = transform.Find("Cancel").GetComponent<Button>();
 
 	}

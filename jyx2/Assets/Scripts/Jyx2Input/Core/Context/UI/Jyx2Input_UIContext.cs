@@ -48,9 +48,9 @@ namespace Jyx2.InputCore.UI
         public bool IsLastSelectValid => m_LastSelect != null && m_LastSelect.activeInHierarchy;
         
         
-        public void TrySelectMyUIObject()
+        public void TrySelectMyUIObject(bool forceSelect = false)
         {
-            if (m_ManualControlSelect)
+            if (m_ManualControlSelect && !forceSelect)
                 return;
             if (IsLastSelectValid && CurrentSelect != m_LastSelect)
             {

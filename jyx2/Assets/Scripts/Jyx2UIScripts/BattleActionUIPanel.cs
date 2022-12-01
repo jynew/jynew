@@ -9,21 +9,41 @@
  */
 using Jyx2;
 using Jyx2.Middleware;
-
-using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Jyx2.Battle;
 using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 using i18n.TranslatorDef;
+using Jyx2.Util;
+using Jyx2.UINavigation;
+using Sirenix.OdinInspector;
+using UnityEngine.EventSystems;
 
 public partial class BattleActionUIPanel : Jyx2_UIBase
 {
+	[SerializeField]
+	private string m_SkillItemPrefabPath;
+
+	[ShowInInspector, ReadOnly]
+	private List<Button> m_RightButtons = new List<Button>();
+    
+    public List<Button> RightActionBtns
+	{
+		get
+		{
+            if (m_RightButtons.Count == 0)
+            {
+				var btns = LeftActions_VerticalLayoutGroup.GetComponentsInChildren<Button>(true);
+                m_RightButtons.AddRange(btns);
+            }
+            return m_RightButtons;
+        }
+	}
+
 	public RoleInstance GetCurrentRole()
 	{
 		return m_currentRole;
@@ -31,21 +51,19 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	RoleInstance m_currentRole;
 
-	List<SkillUIItem> m_curItemList = new List<SkillUIItem>();
-	ChildGoComponent childMgr;
+	List<SkillUIItem> m_CurSkillItems = new List<SkillUIItem>();
+
+	private List<SkillUIItem> m_CacheSkillItems = new List<SkillUIItem>();
 
 	private bool isSelectMove;
-	private Action<BattleLoop.ManualResult> callback;
+	private Action<BattleLoop.ManualResult> OnManualAction;
 	private List<BattleBlockVector> moveRange;
 	private BattleFieldModel battleModel;
 	private SkillCastInstance currentSkill;
-	private Dictionary<Button, Action> skillList = new Dictionary<Button, Action>();
 
 	protected override void OnCreate()
 	{
 		InitTrans();
-		childMgr = GameUtil.GetOrAddComponent<ChildGoComponent>(Skills_RectTransform);
-		childMgr.Init(SkillItem_RectTransform);
 
 		BindListener(Move_Button, OnMoveClick);
 		BindListener(UsePoison_Button, OnUsePoisonClick);
@@ -56,23 +74,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		BindListener(Rest_Button, OnRestClick);
 		BindListener(Surrender_Button, OnSurrenderClick);
 		BindListener(Cancel_Button, OnCancelClick);
-	}
-
-	protected override bool captureGamepadAxis { get { return true; } }
-
-	protected override Text getButtonText(Button button)
-	{
-		if (button.gameObject.transform.childCount == 1)
-			return base.getButtonText(button);
-
-		for (var i = 0; i < button.gameObject.transform.childCount; i++)
-		{
-			var text = button.gameObject.transform.GetChild(i).GetComponent<Text>();
-			if (text != null)
-				return text;
-		}
-
-		return null;
 	}
 
 	protected Image getSkillCastButtonImage(Button button)
@@ -96,54 +97,32 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			return;
 
 		moveRange = (List<BattleBlockVector>)allParams[1];
-		isSelectMove = (bool)allParams[2];
-		callback = (Action<BattleLoop.ManualResult>)allParams[3];
+		OnManualAction = (Action<BattleLoop.ManualResult>)allParams[3];
 		battleModel = BattleManager.Instance.GetModel();
 
-		BattleboxHelper.Instance.analogLeftMovedToBlock += onBattleBlockMove;
-		BattleboxHelper.Instance.blockConfirmed += gamepadBlockConfirmed;
+        BattleboxHelper.Instance.OnControllerSelectBox -= onBattleBlockMove;
+        BattleboxHelper.Instance.OnBlockConfirmed -= OnControllerSelectBlock;
+        BattleboxHelper.Instance.OnControllerSelectBox += onBattleBlockMove;
+		BattleboxHelper.Instance.OnBlockConfirmed += OnControllerSelectBlock;
 
-		//Cancel_Button.gameObject.SetActive(false);
 		SetActionBtnState();
 		RefreshSkill();
-		//SetPanelState();
 
-		if (isSelectMove)
-		{
-			_lastHitRangeOverBlock = null;
-			BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange, BattleBlockType.MoveZone, false);
-		}
-		else
-		{
-			if (m_curItemList.Count > 0)
-			{
-				//fix issue of mp deplition causes skillCast not showing, and previously recorded current index
-				//out of range.
-				if (m_currentRole.CurrentSkill >= m_curItemList.Count)
-					m_currentRole.CurrentSkill = 0;
-
-				var skillCast = m_curItemList[m_currentRole.CurrentSkill].GetSkill();
-				ShowAttackRangeSelector(skillCast);
-			}
-		}
-
-		changeCurrentSelection(-1);
-	}
+		TryFocusOnMoveButton();
+    }
 
 	private void onBattleBlockMove(BattleBlockData block)
 	{
-		//hide the hilite
-		changeCurrentSelection(-1);
 		//hide the skillCast selection
 		changeCurrentSkillCastSelection(-1);
 
-		showSkillCastHitRange(block);
+		ShowSkillCastHitRange(block);
 	}
 
-	private void gamepadBlockConfirmed(BattleBlockData obj)
+	private void OnControllerSelectBlock(BattleBlockData block)
 	{
-		showSkillCastHitRange();
-		blockConfirm(obj, false);
+		ShowSkillCastHitRange();
+		OnBlockConfirmed(block, false);
 	}
 
 
@@ -170,92 +149,12 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	private void changeCurrentSkillCastSelection(int number)
 	{
-		if (skillList.Count == 0)
-			return;
-
 		cur_skillCast = number;
 
 		if (number > -1)
 		{
-			changeCurrentSelection(-1);
 			BattleboxHelper.Instance.AnalogMoved = false;
 		}
-
-		var curBtnKey = number < 0 || number > skillList.Count ?
-			null :
-			skillList.ElementAt(number).Key;
-
-		foreach (var btn in skillList)
-		{
-			bool isInvokedButton = btn.Key == curBtnKey;
-			var text = getButtonText(btn.Key);
-			if (text != null)
-			{
-				text.color = isInvokedButton ?
-					base.selectedButtonColor() :
-					base.normalButtonColor();
-				text.fontStyle = isInvokedButton ?
-					FontStyle.Bold :
-					FontStyle.Normal;
-			}
-
-			var action = getSkillCastButtonImage(btn.Key);
-			if (action != null)
-			{
-				action.gameObject.SetActive(isInvokedButton);
-			}
-		}
-	}
-
-	protected override void changeCurrentSelection(int num)
-	{
-		if (num > -1)
-		{
-			changeCurrentSkillCastSelection(-1);
-			BattleboxHelper.Instance.AnalogMoved = false;
-		}
-
-		base.changeCurrentSelection(num);
-	}
-
-	protected override bool resetCurrentSelectionOnShow => false;
-
-	protected override void OnDirectionalRight()
-	{
-		if (skillList.Count == 0)
-			return;
-
-		changeCurrentSelection(-1);
-
-		var nextSkillCast = (cur_skillCast >= skillList.Count - 1) ?
-			0 :
-			cur_skillCast + 1;
-
-		changeCurrentSkillCastSelection(nextSkillCast);
-	}
-
-	protected override void OnDirectionalUp()
-	{
-		base.OnDirectionalUp();
-	}
-
-	protected override void OnDirectionalDown()
-	{
-		base.OnDirectionalDown();
-	}
-
-	protected override void OnDirectionalLeft()
-	{
-		if (skillList.Count == 0)
-			return;
-
-		changeCurrentSelection(-1);
-
-		var nextSkillCast = (cur_skillCast <= 0) ?
-			cur_skillCast = skillList.Count - 1 :
-			cur_skillCast - 1;
-
-		changeCurrentSkillCastSelection(nextSkillCast);
 	}
 
 	public override void Update()
@@ -263,7 +162,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		base.Update();
 
 		//显示当前攻击范围
-		showSkillCastHitRange();
+		ShowSkillCastHitRange();
 
 		//寻找玩家点击的格子
 		var block = InputManager.Instance.GetMouseUpBattleBlock();
@@ -281,10 +180,10 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		//以下进行回调
 
 		//移动
-		blockConfirm(block, true);
+		OnBlockConfirmed(block, true);
 	}
 
-	private void showSkillCastHitRange(BattleBlockData block = null)
+	private void ShowSkillCastHitRange(BattleBlockData block = null)
 	{
 		if (!isSelectMove)
 		{
@@ -298,47 +197,12 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		}
 	}
 
-	protected override void handleGamepadButtons()
-	{
-		base.handleGamepadButtons();
-
-		if (gameObject.activeSelf)
-		{
-			if (GamepadHelper.IsCancel())
-				//取消
-				OnCancelClick();
-			else if (GamepadHelper.IsJump())
-				OnHealClick();
-			else if (GamepadHelper.IsTabRight())
-				OnRestClick();
-			else if (GamepadHelper.IsAction()) // x/square button invoke skillCast 
-			{
-				if (m_curItemList.Count == 0)
-					return;
-
-				if (cur_skillCast < 0 || cur_skillCast >= m_curItemList.Count)
-				{
-					cur_skillCast = 0;
-					changeCurrentSkillCastSelection(cur_skillCast);
-				}
-
-				onSkillCastStart(m_curItemList[cur_skillCast], cur_skillCast);
-			}
-		}
-	}
-
-	protected override void buttonClickAt(int position)
-	{
-		if (!BattleboxHelper.Instance.AnalogMoved && cur_skillCast == -1)
-			base.buttonClickAt(position);
-	}
-
-	private void blockConfirm(BattleBlockData block, bool isMouseClick)
+	private void OnBlockConfirmed(BattleBlockData block, bool isMouseClick)
 	{
 		if (!BattleboxHelper.Instance.AnalogMoved && !isMouseClick)
 			return;
 
-		changeCurrentSelection(-1);
+		//changeCurrentSelection(-1);
 
 		if (isSelectMove)
 		{
@@ -359,7 +223,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	void TryCallback(BattleLoop.ManualResult ret)
 	{
 		BattleboxHelper.Instance.HideAllBlocks(true);
-		callback?.Invoke(ret);
+		OnManualAction?.Invoke(ret);
 	}
 
 	//点击了自动
@@ -372,94 +236,80 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		base.OnHidePanel();
 		m_currentRole = null;
-		m_curItemList.Clear();
-
-		//隐藏格子
-		BattleboxHelper.Instance?.HideAllBlocks();
-		skillList.Clear();
+		m_CurSkillItems.Clear();
+        isSelectMove = false;
+        //隐藏格子
+        BattleboxHelper.Instance?.HideAllBlocks();
 	}
 
 	void SetActionBtnState()
 	{
+		bool canMove = m_currentRole.movedStep <= 0;
+		Move_Button.gameObject.BetterSetActive(canMove);
 		bool canPoison = m_currentRole.UsePoison >= 20 && m_currentRole.Tili >= 10;
-		UsePoison_Button.gameObject.SetActive(canPoison);
+		UsePoison_Button.gameObject.BetterSetActive(canPoison);
 		bool canDepoison = m_currentRole.DePoison >= 20 && m_currentRole.Tili >= 10;
-		Depoison_Button.gameObject.SetActive(canDepoison);
+		Depoison_Button.gameObject.BetterSetActive(canDepoison);
 		bool canHeal = m_currentRole.Heal >= 20 && m_currentRole.Tili >= 50;
-		Heal_Button.gameObject.SetActive(canHeal);
+		Heal_Button.gameObject.BetterSetActive(canHeal);
 
-		bool lastRole = BattleManager.Instance.GetModel().IsLastRole(m_currentRole);
-		Wait_Button.gameObject.SetActive(!lastRole);
+		bool isLastRole = BattleManager.Instance.GetModel().IsLastRole(m_currentRole);
+		Wait_Button.gameObject.BetterSetActive(!isLastRole);
+		RefreshRightButtonNavigation();
+
+    }
+
+    private List<Selectable> _ActiveButtons = new List<Selectable>();
+    void RefreshRightButtonNavigation()
+    {
+        _ActiveButtons.Clear();
+        _ActiveButtons.AddRange(RightActionBtns.Where(btn => btn.gameObject.activeSelf));
+        NavigateUtil.SetUpNavigation(_ActiveButtons, _ActiveButtons.Count, 1);
+    }
+
+
+    void RefreshSkill()
+	{
+		m_CurSkillItems.Clear();
+		var skillCastList = m_currentRole.GetSkills(true).ToList();
+		Action<int, SkillUIItem, SkillCastInstance> OnSkillItemCreate = (idx, item, data) =>
+		{
+			m_CurSkillItems.Add(item);
+			item.OnSkillItemClick -= OnSelectSkillItem;
+			item.OnSkillItemClick += OnSelectSkillItem;
+        };
+
+		MonoUtil.GenerateMonoElementsWithCacheList(m_SkillItemPrefabPath, skillCastList, m_CacheSkillItems, Skills_RectTransform, OnSkillItemCreate);
+		NavigateUtil.SetUpNavigation(m_CurSkillItems, 1, m_CurSkillItems.Count);
 	}
 
-	void RefreshSkill()
+	void OnSelectSkillItem(SkillUIItem item)
 	{
-		m_curItemList.Clear();
-		var skillCasts = m_currentRole.GetSkills(true).ToList();
-		childMgr.RefreshChildCount(skillCasts.Count);
-		List<Transform> childTransList = childMgr.GetUsingTransList();
-		skillList.Clear();
-
-		for (int i = 0; i < skillCasts.Count; i++)
-		{
-			int index = i;
-			SkillUIItem item = GameUtil.GetOrAddComponent<SkillUIItem>(childTransList[i]);
-			item.RefreshSkill(skillCasts[i]);
-			item.SetSelect(i == m_currentRole.CurrentSkill);
-
-			Button btn = item.GetComponent<Button>();
-			bindSkillCast(btn, () => { onSkillCastStart(item, index); });
-			m_curItemList.Add(item);
-		}
-
-		if (m_currentRole.CurrentSkill > -1 && m_currentRole.CurrentSkill < skillCasts.Count)
-		{
-			changeCurrentSkillCastSelection(m_currentRole.CurrentSkill);
-		}
-	}
-
-	void bindSkillCast(Button btn, Action callback)
-	{
-		BindListener(btn, callback, false);
-		skillList[btn] = callback;
-	}
-
-
-
-	void onSkillCastStart(SkillUIItem item, int index)
-	{
-		// clear current skillCast selection selected color only
-		if (index > -1)
-			changeCurrentSelection(-1);
-
-		m_currentRole.CurrentSkill = index;
-
-		m_curItemList.ForEach(t =>
-		{
-			t.SetSelect(t == item);
-		});
+		m_currentRole.CurrentSkill = m_CurSkillItems.IndexOf(item);
 
 		m_currentRole.SwitchAnimationToSkill(item.GetSkill().Data);
 		ShowAttackRangeSelector(item.GetSkill());
 	}
 
-	void OnCancelClick()
+	public void OnCancelClick()
 	{
 		TryCallback(new BattleLoop.ManualResult() { isRevert = true });
 	}
 
-	void OnMoveClick()
+	public void OnMoveClick()
 	{
+		isSelectMove = true;
+        _lastHitRangeOverBlock = null;
+        BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange, BattleBlockType.MoveZone, false);
+    }
 
-	}
-
-	void OnUsePoisonClick()
+	public void OnUsePoisonClick()
 	{
 		var skillCast = new PoisonSkillCastInstance(m_currentRole.UsePoison);
 		ShowAttackRangeSelector(skillCast);
 	}
 
-	void OnDepoisonClick()
+    public void OnDepoisonClick()
 	{
 		var skillCast = new DePoisonSkillCastInstance(m_currentRole.DePoison);
 		ShowAttackRangeSelector(skillCast);
@@ -473,32 +323,36 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		var skillCast = new HealSkillCastInstance(m_currentRole.Heal);
 		ShowAttackRangeSelector(skillCast);
 	}
-
+    
 	async void OnUseItemClick()
 	{
-		bool Filter(Jyx2ConfigItem item) => (int)item.ItemType == 3 || (int)item.ItemType == 4;
+		Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.GetItemType() == Jyx2ItemType.Costa 
+														 || item.GetItemType() == Jyx2ItemType.Anqi;
 
-		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), new Action<int>((itemId) =>
+		Action<int> OnItemSelected = itemId =>
 		{
-
 			if (itemId == -1)
 				return;
 
 			var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
-			if ((int)item.ItemType == 3) //使用道具逻辑
+			if (item == null)
+				return;
+			if (item.GetItemType() == Jyx2ItemType.Costa) //使用道具逻辑
 			{
 				if (m_currentRole.CanUseItem(itemId))
 				{
 					TryCallback(new BattleLoop.ManualResult() { aiResult = new AIResult() { Item = item } });
 				}
 			}
-			else if ((int)item.ItemType == 4) //使用暗器逻辑
+			else if (item.GetItemType() == Jyx2ItemType.Anqi) //使用暗器逻辑
 			{
 				var skillCast = new AnqiSkillCastInstance(m_currentRole.Anqi, item);
 				ShowAttackRangeSelector(skillCast);
 			}
 
-		}), (Func<Jyx2ConfigItem, bool>)Filter);
+		};
+
+        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), OnItemSelected, itemFilterFunc);
 	}
 
 	void OnWaitClick()
@@ -511,10 +365,37 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		TryCallback(new BattleLoop.ManualResult() { aiResult = new AIResult() { IsRest = true } });
 	}
 
-	void OnSurrenderClick()
+	public void OnSurrenderClick()
 	{
 		Action onConfirm = () => TryCallback(new BattleLoop.ManualResult() { isSurrender = true });
 
 		MessageBox.ConfirmOrCancel("确定投降并放弃本场战斗?".GetContent(nameof(BattleActionUIPanel)), onConfirm);
+	}
+
+    public void TryFocusOnCurrentSkill()
+	{
+		if (m_CurSkillItems.Count == 0)
+			return;
+        var idx = m_currentRole?.CurrentSkill ?? 0;
+        idx = Mathf.Clamp(idx, 0, m_CurSkillItems.Count - 1);
+		m_CurSkillItems[idx].Select(false);
+    }
+
+    public void TryFocusOnMoveButton()
+    {
+		EventSystem.current.SetSelectedGameObject(Move_Button.gameObject);
+    }
+
+    public bool IsFocusOnSkillsItems
+	{
+		get
+		{
+			var curSelect = EventSystem.current.currentSelectedGameObject;
+			if (curSelect == null)
+				return false;
+			if (!curSelect.activeInHierarchy)
+				return false;
+			return m_CurSkillItems.Any(item => item.gameObject == curSelect);
+		}
 	}
 }
