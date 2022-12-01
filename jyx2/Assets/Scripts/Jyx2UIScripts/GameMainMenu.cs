@@ -362,6 +362,11 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenModPanel()
 	{
-		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanelNew)).Forget();
+		//知大虾：20221130为了提供给手机测试，先临时关掉
+#if UNITY_ANDROID
+		GameUtil.DisplayPopinfo("暂未开放，请等待版本更新。");
+#else
+		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanelNew)).Forget();	
+#endif
 	}
 }

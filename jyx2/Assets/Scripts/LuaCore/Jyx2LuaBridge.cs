@@ -1128,7 +1128,7 @@ namespace Jyx2
         //韦小宝商店
         public static void WeiShop(Action callback)
         {
-            if (LevelMaster.Instance.IsInWorldMap)
+            if (LevelMaster.IsInWorldMap)
             {
                 callback();
                 return;

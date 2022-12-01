@@ -105,7 +105,9 @@ namespace Jyx2Editor
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "jyx2Win64Build");
-            
+            if (string.IsNullOrEmpty(path))
+                return;
+
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
 
@@ -138,15 +140,14 @@ namespace Jyx2Editor
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "jyx2Win64Build");
+            if (string.IsNullOrEmpty(path))
+                return;
             
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
 
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.StandaloneWindows64);
 
-            if (string.IsNullOrEmpty(path))
-                return;
-            
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
             //设置版本号
@@ -176,6 +177,9 @@ namespace Jyx2Editor
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
             
+            if (string.IsNullOrEmpty(path))
+                return;
+            
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.Android);
 
@@ -184,8 +188,7 @@ namespace Jyx2Editor
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
 
-                if (string.IsNullOrEmpty(path))
-                    return;
+                
                 
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
@@ -222,7 +225,8 @@ namespace Jyx2Editor
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
-            
+            if (string.IsNullOrEmpty(path))
+                return;        
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.Android);
 
@@ -231,8 +235,7 @@ namespace Jyx2Editor
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
 
-                if (string.IsNullOrEmpty(path))
-                    return;
+
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
@@ -266,7 +269,8 @@ namespace Jyx2Editor
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
-            
+            if (string.IsNullOrEmpty(path))
+                return;     
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneOSX);
 
@@ -280,8 +284,7 @@ namespace Jyx2Editor
                 UnityEditor.OSXStandalone.UserBuildSettings.architecture = MacOSArchitecture.x64ARM64;
 #endif
 
-                if (string.IsNullOrEmpty(path))
-                    return;
+
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string outputPath = path + $"/jyxOSXBuild-{currentDate}.app";
@@ -312,7 +315,9 @@ namespace Jyx2Editor
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
-            
+            if (string.IsNullOrEmpty(path))
+                return;
+  
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneOSX);
 
@@ -325,8 +330,6 @@ namespace Jyx2Editor
                 UnityEditor.OSXStandalone.UserBuildSettings.architecture = MacOSArchitecture.x64ARM64;
 #endif
 
-                if (string.IsNullOrEmpty(path))
-                    return;
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string outputPath = path + $"/jyxOSXBuild-{currentDate}.app";
@@ -358,6 +361,8 @@ namespace Jyx2Editor
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+            if (string.IsNullOrEmpty(path))
+                return; 
             
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.iOS);
@@ -365,10 +370,6 @@ namespace Jyx2Editor
             try
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.iOS);
-
-                if (string.IsNullOrEmpty(path))
-                    return;
-                
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string outputPath = path + $"/jyxiOSBuild-{currentDate}";
@@ -398,6 +399,8 @@ namespace Jyx2Editor
 
             //BUILD
             string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
+            if (string.IsNullOrEmpty(path))
+                return;
             
             //生成ab包
             BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.iOS);
@@ -405,10 +408,6 @@ namespace Jyx2Editor
             try
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.iOS);
-
-                if (string.IsNullOrEmpty(path))
-                    return;
-                
 
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string outputPath = path + $"/jyxiOSBuild-{currentDate}";
