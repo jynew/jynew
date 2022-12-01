@@ -22,6 +22,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.ResourceManagement;
+using MOD;
+using MOD.UI;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
