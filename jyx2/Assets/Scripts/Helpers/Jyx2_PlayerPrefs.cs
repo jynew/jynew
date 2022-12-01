@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -101,7 +100,16 @@ namespace Jyx2
             m_PrefsData.Clear();
             try
             {
-                var jsonText = File.ReadAllText(SavePath);
+                string jsonText;
+                if (Application.isMobilePlatform)
+                {
+                    jsonText = PlayerPrefs.GetString(SavePath);    
+                }
+                else
+                {
+                    jsonText = File.ReadAllText(SavePath);    
+                }
+
                 var newPrefs = JsonConvert.DeserializeObject<Jyx2_PlayerPrefsData>(jsonText);
                 if(newPrefs != null)
                 {
@@ -145,7 +153,15 @@ namespace Jyx2
             try
             {
                 var jsonText = JsonConvert.SerializeObject(m_PrefsData, Formatting.Indented);
-                File.WriteAllText(SavePath, jsonText);
+                if (Application.isMobilePlatform)
+                {
+                    PlayerPrefs.SetString(SavePath, jsonText);
+                    PlayerPrefs.Save();    
+                }
+                else
+                {
+                    File.WriteAllText(SavePath, jsonText);    
+                }
             }
             catch (Exception ex)
             {
@@ -212,9 +228,8 @@ namespace Jyx2
             {
                 dic.Add(key, val);
             }
-#if UNITY_EDITOR
+
             Save();
-#endif
         }
 
         private static T GetValue<T>(Dictionary<string, T> dic, string key, T defaultValue)

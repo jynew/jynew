@@ -71,7 +71,7 @@ namespace Jyx2
             float v = input.y;
             //Debug.Log($"h={h},v={v}");
             _playerNavAgent.updateRotation = false;
-            _playerNavAgent.isStopped = true;
+            StopNavAgent();
             
             Vector3 forward = Vector3.zero;
             //尝试只使用摄像机的朝向来操作角色移动
@@ -100,7 +100,7 @@ namespace Jyx2
 
             if (IsNavAgentAvailable)
             {
-                _playerNavAgent.isStopped = true;
+                StopNavAgent();
                 _playerNavAgent.ResetPath();
             }
         }
@@ -114,7 +114,13 @@ namespace Jyx2
         public void StopMovement()
         {
             SetManualMoveSpeed(0);
-            _playerNavAgent.isStopped = true;
+            StopNavAgent();
+        }
+
+        private void StopNavAgent()
+        {
+            if (IsNavAgentAvailable && !_playerNavAgent.isStopped)
+                _playerNavAgent.isStopped = true;
         }
 
         public void MoveToDestination(Vector3 target)
