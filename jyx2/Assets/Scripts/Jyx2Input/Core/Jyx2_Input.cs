@@ -118,6 +118,11 @@ namespace Jyx2.InputCore
             return GetButtonDown((int)actionId);
         }
 
+        public static bool GetNegativeButtonDown(Jyx2PlayerAction actionId)
+        {
+            return GetNegativeButtonDown((int)actionId);
+        }
+
         public static bool GetButtonUp(Jyx2PlayerAction actionId)
         {
             return GetButtonUp((int)actionId);

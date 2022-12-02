@@ -38,13 +38,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	private PanelType m_panelType;
 
-	private int main_menu_index => current_selection;
-
-	private const int NewGameIndex = 0;
-	private const int LoadGameIndex = 1;
-	private const int SettingsIndex = 2;
-	private const int QuitGameIndex = 3;
-
 	private string m_newName;
 
 	async void OnStart()
@@ -108,18 +101,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 	}
 
 
-
-	protected override Color normalButtonColor()
-	{
-		return ColorStringDefine.main_menu_normal;
-	}
-
-	protected override Color selectedButtonColor()
-	{
-		return ColorStringDefine.main_menu_selected;
-	}
-
-
 	protected override void OnShowPanel(params object[] allParams)
 	{
 		base.OnShowPanel(allParams);
@@ -142,7 +123,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((archiveIndex) =>
 		{
 			var summary = GameSaveSummary.Load(archiveIndex);
-			var modId = summary.ModId.ToLower();
+            if (summary.IsEmpty())
+            {
+                StoryEngine.Instance.DisplayPopInfo("存档为空");
+                return;
+            }
+            var modId = summary.ModId.ToLower();
 			if (!modId.Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
 			{
 				List<string> selectionContent = new List<string>() {"是", "否"};

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
+[Obsolete("使用Rewired代替，参加Jyx2_Input.cs")]
 public class GamepadHelper
 {
 	public const string CONFIRM_BUTTON = "JFire2";

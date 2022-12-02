@@ -27,6 +27,11 @@ namespace Jyx2
         public string ModId;
         public string ModName;
 
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(ModId);
+        }
+
         public static GameSaveSummary Load(int index)
         {
             var summaryInfoFilePath = GetSummaryFilePath(index);
