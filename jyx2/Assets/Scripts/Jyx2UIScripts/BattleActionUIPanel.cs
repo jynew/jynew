@@ -25,6 +25,22 @@ using UnityEngine.EventSystems;
 
 public partial class BattleActionUIPanel : Jyx2_UIBase
 {
+	struct LastOperateAction
+	{
+		public int RoleId;
+
+		public int SkillIdx;
+
+		public int RightActionIdx;
+        
+        public void ResetData() 
+		{
+            RoleId = -1;
+            SkillIdx = -1;
+            RightActionIdx = -1;
+        }
+    }
+    
 	[SerializeField]
 	private string m_SkillItemPrefabPath;
 
@@ -61,6 +77,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	private BattleFieldModel battleModel;
 	private SkillCastInstance currentSkill;
 
+	private LastOperateAction m_LastOperateData = new LastOperateAction();
+    
 	protected override void OnCreate()
 	{
 		InitTrans();
@@ -108,15 +126,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
         SetActionsVisible(true);
         SetActionBtnState();
 		RefreshSkill();
-		if(m_currentRole.CurrentSkill >= 0)
-		{
-			TryFocusOnCurrentSkill();
-
-        }
-		else
-		{
-            TryFocusOnRightAction();
-        }
+		RestoreLastOperation();
     }
 
 	private void OnControllerBlockMove(BattleBlockData block)
@@ -163,7 +173,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		if (block == null) return;
 
 		//格子隐藏（原则上应该不会出现）
-		if (block.gameObject.activeSelf == false) return;
+		if (!block.gameObject.activeSelf) return;
 
 		//选择移动，但位置站人了
 		if (isSelectMove && battleModel.BlockHasRole(block.BattlePos.X, block.BattlePos.Y)) return;
@@ -224,6 +234,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	protected override void OnHidePanel()
 	{
+        SaveLastRightAction();
 		base.OnHidePanel();
 		m_currentRole = null;
 		m_CurSkillItems.Clear();
@@ -276,8 +287,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	void OnSelectSkillItem(SkillUIItem item)
 	{
 		m_currentRole.CurrentSkill = m_CurSkillItems.IndexOf(item);
-
-		m_currentRole.SwitchAnimationToSkill(item.GetSkill().Data);
+		m_LastOperateData.RightActionIdx = -1;
+        m_LastOperateData.SkillIdx = m_currentRole.CurrentSkill;
+        m_currentRole.SwitchAnimationToSkill(item.GetSkill().Data);
 		ShowAttackRangeSelector(item.GetSkill());
 	}
 
@@ -288,7 +300,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	public void OnMoveClick()
 	{
-		isSelectMove = true;
+        ResetSkillOperateIndex();
+        isSelectMove = true;
         _lastHitRangeOverBlock = null;
         SetActionsVisible(false);
         BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange, BattleBlockType.MoveZone, false);
@@ -296,13 +309,15 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	public void OnUsePoisonClick()
 	{
-		var skillCast = new PoisonSkillCastInstance(m_currentRole.UsePoison);
+        ResetSkillOperateIndex();
+        var skillCast = new PoisonSkillCastInstance(m_currentRole.UsePoison);
 		ShowAttackRangeSelector(skillCast);
 	}
 
     public void OnDepoisonClick()
 	{
-		var skillCast = new DePoisonSkillCastInstance(m_currentRole.DePoison);
+        ResetSkillOperateIndex();
+        var skillCast = new DePoisonSkillCastInstance(m_currentRole.DePoison);
 		ShowAttackRangeSelector(skillCast);
 	}
 
@@ -310,14 +325,15 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		if (!Heal_Button.gameObject.activeSelf)
 			return;
-
-		var skillCast = new HealSkillCastInstance(m_currentRole.Heal);
+        ResetSkillOperateIndex();
+        var skillCast = new HealSkillCastInstance(m_currentRole.Heal);
 		ShowAttackRangeSelector(skillCast);
 	}
     
 	async void OnUseItemClick()
-	{
-		Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.GetItemType() == Jyx2ItemType.Costa 
+    {
+        ResetSkillOperateIndex();
+        Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.GetItemType() == Jyx2ItemType.Costa 
 														 || item.GetItemType() == Jyx2ItemType.Anqi;
 
 		Action<int> OnItemSelected = itemId =>
@@ -349,12 +365,15 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	void OnWaitClick()
 	{
 		TryCallback(new BattleLoop.ManualResult() { isWait = true });
-	}
+		ResetSkillOperateIndex();
+
+    }
 
 	void OnRestClick()
 	{
 		TryCallback(new BattleLoop.ManualResult() { aiResult = new AIResult() { IsRest = true } });
-	}
+        ResetSkillOperateIndex();
+    }
 
 	public void OnSurrenderClick()
 	{
@@ -367,16 +386,19 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		if (m_CurSkillItems.Count == 0)
 			return;
-        var idx = m_currentRole?.CurrentSkill ?? 0;
+        var idx = m_LastOperateData.SkillIdx;
         idx = Mathf.Clamp(idx, 0, m_CurSkillItems.Count - 1);
 		m_CurSkillItems[idx].Select(false);
     }
 
     public void TryFocusOnRightAction()
     {
-		var firstActiveBtn = RightActionBtns.FirstOrDefault(btn => btn.gameObject.activeSelf);
-        if(firstActiveBtn != null)
-			EventSystem.current.SetSelectedGameObject(firstActiveBtn.gameObject);
+		var selectedBtn = RightActionBtns.SafeGet(m_LastOperateData.RightActionIdx);
+        if(selectedBtn == null || !selectedBtn.gameObject.activeSelf)
+			selectedBtn = RightActionBtns.FirstOrDefault(btn => btn.gameObject.activeSelf);
+        
+        if(selectedBtn != null)
+			EventSystem.current.SetSelectedGameObject(selectedBtn.gameObject);
         else
             EventSystem.current.SetSelectedGameObject(Rest_Button.gameObject);
     }
@@ -399,4 +421,44 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			return m_CurSkillItems.Any(item => item.gameObject == curSelect);
 		}
 	}
+
+    #region 操作缓存
+
+    private void ResetOperationIfNotSameRole()
+	{
+        if (m_currentRole == null || m_currentRole.GetJyx2RoleId() != m_LastOperateData.RoleId)
+        {
+            m_LastOperateData.ResetData();
+        }
+    }
+
+    private void ResetSkillOperateIndex()
+	{
+		m_LastOperateData.SkillIdx = -1;
+	}
+    
+
+    private void RestoreLastOperation()
+	{
+        ResetOperationIfNotSameRole();
+        if (m_LastOperateData.SkillIdx >= 0)
+        {
+            TryFocusOnCurrentSkill();
+
+        }
+        else
+        {
+            TryFocusOnRightAction();
+        }
+    }
+
+    private void SaveLastRightAction()
+	{
+		if (m_currentRole == null)
+			return;
+        var curSelect = EventSystem.current?.currentSelectedGameObject;
+        m_LastOperateData.RoleId = m_currentRole.GetJyx2RoleId();
+		m_LastOperateData.RightActionIdx = RightActionBtns.FindIndex(btn => btn.gameObject == curSelect);
+	}
+    #endregion
 }
