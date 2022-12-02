@@ -47,7 +47,7 @@ namespace Jyx2.InputCore.UI
             if (m_BattleActionUI.IsFocusOnSkillsItems)
             {
 
-                m_BattleActionUI.TryFocusOnMoveButton();
+                m_BattleActionUI.TryFocusOnRightAction();
             }
             else
             {

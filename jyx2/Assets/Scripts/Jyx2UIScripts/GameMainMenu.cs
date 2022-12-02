@@ -123,7 +123,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 		await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SavePanel), new Action<int>((archiveIndex) =>
 		{
 			var summary = GameSaveSummary.Load(archiveIndex);
-			var modId = summary.ModId.ToLower();
+            if (summary.IsEmpty())
+            {
+                StoryEngine.Instance.DisplayPopInfo("存档为空");
+                return;
+            }
+            var modId = summary.ModId.ToLower();
 			if (!modId.Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
 			{
 				List<string> selectionContent = new List<string>() {"是", "否"};

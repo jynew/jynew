@@ -37,7 +37,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		{
             if (m_RightButtons.Count == 0)
             {
-				var btns = LeftActions_VerticalLayoutGroup.GetComponentsInChildren<Button>(true);
+				var btns = RightActions_VerticalLayoutGroup.GetComponentsInChildren<Button>(true);
                 m_RightButtons.AddRange(btns);
             }
             return m_RightButtons;
@@ -100,26 +100,31 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		OnManualAction = (Action<BattleLoop.ManualResult>)allParams[3];
 		battleModel = BattleManager.Instance.GetModel();
 
-        BattleboxHelper.Instance.OnControllerSelectBox -= onBattleBlockMove;
-        BattleboxHelper.Instance.OnBlockConfirmed -= OnControllerSelectBlock;
-        BattleboxHelper.Instance.OnControllerSelectBox += onBattleBlockMove;
-		BattleboxHelper.Instance.OnBlockConfirmed += OnControllerSelectBlock;
+        BattleboxHelper.Instance.OnBlockSelectMoved -= OnControllerBlockMove;
+        BattleboxHelper.Instance.OnBlockConfirmed -= OnControllerBlockConfirmed;
+        BattleboxHelper.Instance.OnBlockSelectMoved += OnControllerBlockMove;
+		BattleboxHelper.Instance.OnBlockConfirmed += OnControllerBlockConfirmed;
 
-		SetActionBtnState();
+        SetActionsVisible(true);
+        SetActionBtnState();
 		RefreshSkill();
+		if(m_currentRole.CurrentSkill >= 0)
+		{
+			TryFocusOnCurrentSkill();
 
-		TryFocusOnMoveButton();
+        }
+		else
+		{
+            TryFocusOnRightAction();
+        }
     }
 
-	private void onBattleBlockMove(BattleBlockData block)
+	private void OnControllerBlockMove(BattleBlockData block)
 	{
-		//hide the skillCast selection
-		changeCurrentSkillCastSelection(-1);
-
 		ShowSkillCastHitRange(block);
 	}
 
-	private void OnControllerSelectBlock(BattleBlockData block)
+	private void OnControllerBlockConfirmed(BattleBlockData block)
 	{
 		ShowSkillCastHitRange();
 		OnBlockConfirmed(block, false);
@@ -134,7 +139,8 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		isSelectMove = false;
 
 		BattleboxHelper.Instance.HideAllBlocks();
-		var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, skillCast);
+        SetActionsVisible(false);
+        var blockList = BattleManager.Instance.GetSkillUseRange(m_currentRole, skillCast);
 
 		//prevent reselecting causing not showing hit range
 		_lastHitRangeOverBlock = null;
@@ -142,20 +148,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	}
 
 	private BattleBlockData _lastHitRangeOverBlock = null;
-	private bool rightDpadPressed;
-	private bool leftDpadPressed;
-
-	private int cur_skillCast = 0;
-
-	private void changeCurrentSkillCastSelection(int number)
-	{
-		cur_skillCast = number;
-
-		if (number > -1)
-		{
-			BattleboxHelper.Instance.AnalogMoved = false;
-		}
-	}
 
 	public override void Update()
 	{
@@ -201,9 +193,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		if (!BattleboxHelper.Instance.AnalogMoved && !isMouseClick)
 			return;
-
-		//changeCurrentSelection(-1);
-
+        
 		if (isSelectMove)
 		{
 			TryCallback(new BattleLoop.ManualResult() { movePos = block.BattlePos }); //移动
@@ -300,6 +290,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
 		isSelectMove = true;
         _lastHitRangeOverBlock = null;
+        SetActionsVisible(false);
         BattleboxHelper.Instance.ShowBlocks(m_currentRole, moveRange, BattleBlockType.MoveZone, false);
     }
 
@@ -381,9 +372,19 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 		m_CurSkillItems[idx].Select(false);
     }
 
-    public void TryFocusOnMoveButton()
+    public void TryFocusOnRightAction()
     {
-		EventSystem.current.SetSelectedGameObject(Move_Button.gameObject);
+		var firstActiveBtn = RightActionBtns.FirstOrDefault(btn => btn.gameObject.activeSelf);
+        if(firstActiveBtn != null)
+			EventSystem.current.SetSelectedGameObject(firstActiveBtn.gameObject);
+        else
+            EventSystem.current.SetSelectedGameObject(Rest_Button.gameObject);
+    }
+
+	private void SetActionsVisible(bool isVisible)
+	{
+		MainActions_RectTransform.gameObject.BetterSetActive(isVisible);
+        BlockNotice_RectTransform.gameObject.BetterSetActive(!isVisible);
     }
 
     public bool IsFocusOnSkillsItems

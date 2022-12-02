@@ -216,7 +216,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		}
 
 
-        if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose))
+        if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose) || Input.GetMouseButtonDown(1))
         {
 			var ui = Jyx2_UIManager.Instance.GetUI<BattleActionUIPanel>();
 			if (ui != null)
@@ -261,8 +261,8 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 
 			AnalogMoved = true;
 
-			if (OnControllerSelectBox != null)
-				OnControllerSelectBox(newSelectedBlock);
+			if (OnBlockSelectMoved != null)
+				OnBlockSelectMoved(newSelectedBlock);
 
 			return true;
 		}
@@ -270,7 +270,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		return false;
 	}
 
-	public event Action<BattleBlockData> OnControllerSelectBox;
+	public event Action<BattleBlockData> OnBlockSelectMoved;
 	public event Action<BattleBlockData> OnBlockConfirmed;
 
 	private void initXPos()
