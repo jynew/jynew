@@ -376,6 +376,10 @@ namespace Jyx2
         BattleBlockData FindNearestBattleBlock(Vector3 pos, bool ignoreRole = false)
         {
             BattleBlockData rst = null;
+            //先检查脚下的格子是否能用，如果能用就不再遍历查找最近格子
+            var locBlock = BattleboxHelper.Instance.GetLocationBattleBlock(pos);
+            if (locBlock != null && !m_BattleModel.BlockHasRole(locBlock.BattlePos.X, locBlock.BattlePos.Y)) return locBlock;
+
             var list = BattleboxHelper.Instance.GetBattleBlocks();
             var minDist = float.MaxValue;
             foreach (var data in list)

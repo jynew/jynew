@@ -32,7 +32,7 @@ public class BattleboxHelper : MonoBehaviour
 	private static BattleboxHelper _instance;
 
 	//绘制区域（主角身边的范围）
-	public int m_MoveZoneDrawRange = 16;
+	public int m_MoveZoneDrawRange = 20;
 
 	private BattleboxManager _currentBattlebox;
 
@@ -86,6 +86,7 @@ public class BattleboxHelper : MonoBehaviour
 				_currentBattlebox = box;
 				_currentBattlebox.Init();
 				_currentBattlebox.DrawAreaBlocks(pos, m_MoveZoneDrawRange);
+
 				return true;
 			}
 		}
