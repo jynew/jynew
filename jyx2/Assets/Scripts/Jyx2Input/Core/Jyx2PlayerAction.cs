@@ -56,6 +56,19 @@ namespace Jyx2.InputCore
 
         [LabelText("打开背包")]
         UI_Bag = 15,
+
+        [LabelText("向左旋转")]
+        RotateLeft = 17,
+
+        [LabelText("向右旋转")]
+        RotateRight = 18,
+
+        [LabelText("向右旋转")]
+        CameraMoveX = 19,
+
+
+        [LabelText("向右旋转")]
+        CameraMoveY = 20,
     }
     
     public class Jyx2ActionConst
@@ -76,5 +89,9 @@ namespace Jyx2.InputCore
         public const int UI_SystemMenu = (int)Jyx2PlayerAction.UI_SystemMenu;
         public const int UI_Xiake = (int)Jyx2PlayerAction.UI_Xiake;
         public const int UI_Bag = (int)Jyx2PlayerAction.UI_Bag;
+        public const int RotateLeft = (int)Jyx2PlayerAction.RotateLeft;
+        public const int RotateRight = (int)Jyx2PlayerAction.RotateRight;
+        public const int CameraMoveX = (int)Jyx2PlayerAction.CameraMoveX;
+        public const int CameraMoveY = (int)Jyx2PlayerAction.CameraMoveY;
     }
 }

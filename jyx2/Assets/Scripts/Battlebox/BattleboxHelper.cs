@@ -180,6 +180,16 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 	private int m_InputEnableFrame = -1;
 	public bool CanUpdate => m_InputEnableFrame != Time.frameCount;
     
+    
+    private bool IsCancelBoxSelect()
+	{
+		if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose))
+			return true;
+		if (Input.GetMouseButtonDown(1) && !Application.isMobilePlatform)
+			return true;
+		return false;
+    }
+
 	public void OnUpdate()
 	{
 		if (xPositions.Length == 0 || yPositions.Length == 0)
@@ -215,12 +225,11 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 			}
 		}
 
-
-        if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose) || Input.GetMouseButtonDown(1))
+        if (IsCancelBoxSelect())
         {
-			var ui = Jyx2_UIManager.Instance.GetUI<BattleActionUIPanel>();
-			if (ui != null)
-				ui.OnCancelClick();
+            var ui = Jyx2_UIManager.Instance.GetUI<BattleActionUIPanel>();
+            if (ui != null)
+                ui.OnCancelClick();
         }
 
     }
