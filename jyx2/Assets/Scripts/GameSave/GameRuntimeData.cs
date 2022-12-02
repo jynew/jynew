@@ -118,6 +118,10 @@ namespace Jyx2
         #endregion
 
         #region 存档数据定义
+        //存档设置一个独立版本号，用来检查兼容性
+        const int RUNTIME_VERSION_LATEST = 1;
+        public int RuntimeVersion = RUNTIME_VERSION_LATEST;
+
         //JYX2，所有的角色都放到存档里
         [SerializeField] public Dictionary<int,RoleInstance> AllRoles = new Dictionary<int,RoleInstance>();
         
@@ -256,7 +260,7 @@ namespace Jyx2
             return null;
         }
 
-		private void SaveToFile(int fileIndex)
+	private void SaveToFile(int fileIndex)
         {
             //保存存档简介
             GameSaveSummary summary = new GameSaveSummary()
@@ -269,6 +273,7 @@ namespace Jyx2
             
             //存档
             var path = GetArchiveFile(fileIndex);
+            ES3.Save("RuntimeVersion", _instance.RuntimeVersion, path);//用一个key单独存储版本号
             ES3.Save(nameof(GameRuntimeData), this, path);
         }
 
@@ -276,21 +281,48 @@ namespace Jyx2
         {
             var path = GetArchiveFile(fileIndex);
 
+            int archiveVersion = -1;
             GameRuntimeData runtime;
 
             if (ES3.FileExists(path))
             {
+                //检查runtime版本，进行兼容
+                archiveVersion = ES3.Load<int>("RuntimeVersion", path, -1);
                 runtime = ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
             }
             else
             {
-                // TODO:没读取到则兼容旧版本，下个版本请删除代码
-                var oldSavePath = RuntimeEnvSetup.CurrentModId + "_" + string.Format(ARCHIVE_FILE_NAME, fileIndex);
-                runtime = ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), oldSavePath);
+                throw new Exception("找不到存档文件");
             }
-            
+           
+            //Debug.Log($"Runtime Version: {archiveVersion}");
+
+            if (archiveVersion < RUNTIME_VERSION_LATEST)
+            {
+                UpdateOldArchive(runtime, archiveVersion);
+            }
+ 
             _instance = runtime;
             return runtime;
+        }
+
+        private static void UpdateOldArchive(GameRuntimeData runtime, int oldVersion)
+        {
+            if (oldVersion == -1)
+            {
+                //修复主角与船在大地图的位置
+                if (runtime.WorldData == null)
+                {
+                    runtime.WorldData = new WorldMapSaveData();
+                }
+
+                runtime.WorldData.WorldPosition.Set(234.82f, 5.2f, 357.46f);
+                runtime.WorldData.BoatWorldPos.Set(100f, 4.9f, 109f);
+                runtime.WorldData.OnBoat = 0;
+
+                runtime.RuntimeVersion = RUNTIME_VERSION_LATEST;
+                return;
+            }
         }
 
         private string GenerateSaveSummaryInfo()
