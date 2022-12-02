@@ -5,7 +5,7 @@ if GetFlagInt("四二认母") == 1 then goto label0 end;
     jyx2_ReplaceSceneObject("8", "NPC/童四二", "1");
     do return end;
 ::label0::
-    Talk(0, "四二，你先回罂粟谷，陪陪你娘亲，我过些日子再去找你。");
+    Talk(0, "四二，你先回曼陀谷，陪陪你娘亲，我过些日子再去找你。");
     ModifyEvent(7, 6, -2, -2, 716, -1, -1, -2, -2, -2, -2, -2, -2);
     jyx2_ReplaceSceneObject("7", "NPC/童四二", "1");
 do return end;
