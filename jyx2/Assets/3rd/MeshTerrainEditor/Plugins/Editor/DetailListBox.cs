@@ -6,8 +6,10 @@ namespace MTE
 {
     internal abstract class DetailListBox<T> where T: Detail
     {
+        private Vector2 scrollPos = Vector2.zero;
         public int DoGUI(int selectedDetailIndex)
         {
+            scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(160f));
             EditorGUILayout.BeginVertical("box", GUILayout.MinHeight(64));
             {
                 if (detailList == null || this.detailList.Count == 0)
@@ -18,13 +20,13 @@ namespace MTE
                 {
                     for (int i = 0; i < this.detailList.Count; i += 4)
                     {
-                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));
                         {
                             for (int j = 0; j < 4; j++)
                             {
                                 if (i + j >= this.detailList.Count) break;
 
-                                EditorGUILayout.BeginVertical();
+                                EditorGUILayout.BeginVertical(GUILayout.ExpandHeight(false));
 
                                 //toggle button
                                 bool toggleOn = selectedDetailIndex == i + j;
@@ -55,6 +57,7 @@ namespace MTE
                 }
             }
             EditorGUILayout.EndVertical();
+            EditorGUILayout.EndScrollView();
 
             MenuButton(new GUIContent($"{StringTable.Get(C.Edit)} {StringTable.Get(DetailType)}"));
 

@@ -249,22 +249,22 @@ namespace MTE
         {
             return new HashSet<Hotkey>
             {
-                new Hotkey(this, KeyCode.Minus, () =>
+                new Hotkey(this, KeyCode.LeftBracket, () =>
                 {
                     BrushSize -= 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
-                new Hotkey(this, KeyCode.Equals, () =>
+                new Hotkey(this, KeyCode.RightBracket, () =>
                 {
                     BrushSize += 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
-                new Hotkey(this, KeyCode.LeftBracket, () =>
+                new Hotkey(this, KeyCode.Minus, () =>
                 {
                     BrushOpacity -= 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
-                new Hotkey(this, KeyCode.RightBracket, () =>
+                new Hotkey(this, KeyCode.Equals, () =>
                 {
                     BrushOpacity += 0.01f;
                     MTEEditorWindow.Instance.Repaint();

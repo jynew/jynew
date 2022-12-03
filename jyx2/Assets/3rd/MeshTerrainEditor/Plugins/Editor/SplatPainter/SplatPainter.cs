@@ -480,22 +480,22 @@ namespace MTE
             {
                 new Hotkey(this, KeyCode.Minus, () =>
                 {
-                    BrushSize -= 1;
+                    BrushFlow -= 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.Equals, () =>
                 {
-                    BrushSize += 1;
+                    BrushFlow += 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.LeftBracket, () =>
                 {
-                    BrushFlow -= 0.01f;
+                    BrushSize -= 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.RightBracket, () =>
                 {
-                    BrushFlow += 0.01f;
+                    BrushSize += 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
             };
@@ -1122,7 +1122,7 @@ namespace MTE
                     otherWeights += GetWeight(modifyingSections, x, y, width, i);
                 }
             }
-            if (otherWeights >= 0.01)
+            if (otherWeights >= 1/255.0f)
             {
                 float k = (1 - newWeight) / otherWeights;
                 for (int i = 0; i < splatTotal; i++)

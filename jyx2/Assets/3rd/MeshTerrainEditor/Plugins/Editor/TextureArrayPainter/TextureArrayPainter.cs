@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MTE.Undo;
@@ -497,22 +498,22 @@ namespace MTE
             {
                 new Hotkey(this, KeyCode.Minus, () =>
                 {
-                    BrushSize -= 1;
+                    BrushFlow -= 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.Equals, () =>
                 {
-                    BrushSize += 1;
+                    BrushFlow += 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.LeftBracket, () =>
                 {
-                    BrushFlow -= 0.01f;
+                    BrushSize -= 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.RightBracket, () =>
                 {
-                    BrushFlow += 0.01f;
+                    BrushSize += 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
             };
@@ -556,6 +557,8 @@ namespace MTE
             {
                 return;
             }
+
+            
 
             // do nothing when mouse middle/right button, control/alt key is pressed
             if (e.button != 0 || e.control || e.alt)
@@ -845,6 +848,15 @@ namespace MTE
 
                             //MTEDebug.Log("Finding the selected texture in the material.");
                             //Convention: for texture array, the selected texture index is the layer index
+                            if (!material.HasProperty(AlbedoArrayPropertyName))
+                            {
+                                //zwcloud/MeshTerrainEditor-issues#218
+                                var relativePath = AssetDatabase.GetAssetPath(material);
+                                MTEDebug.LogError(
+                                    $"Material<{material.name}> at <{relativePath}> using shader <{material.shader.name}> doesn't have a texture property" +
+                                    $" '{AlbedoArrayPropertyName}'. Please capture a screenshot of the material editor, and report this issue with it.");
+                                return;
+                            }
                             Texture2DArray textureArray =
                                 material.GetTexture(AlbedoArrayPropertyName) as Texture2DArray;
                             var layerIndex = TextureArrayManager.Instance.GetTextureSliceIndex(textureArray,
@@ -859,39 +871,57 @@ namespace MTE
 
                             //MTEDebug.Log("check control textures.");
 
-                            // check control textures
-                            var controlTexture0_ = material.GetTexture(ControlTexturePropertyNames[0]);
+                            // fetch control textures from material, TODO refator to merge duplicate code below
                             Texture2D controlTexture0 = null, controlTexture1 = null, controlTexture2 = null;
-                            if (controlTexture0_ != null)
+                            if (splatTotal > 0)//controlTexture0 should exists
                             {
-                                controlTexture0 = (Texture2D)controlTexture0_;
-                            }
-                            else
-                            {
-                                throw new MTEEditException($"{ControlTexturePropertyNames[0]} is" +
-                                    $" not assigned or existing in material<{material.name}>.");
-                            }
-
-                            if (material.HasProperty(ControlTexturePropertyNames[1]))
-                            {
-                                var controlTexture1_ = material.GetTexture(ControlTexturePropertyNames[1]);
-                                if (controlTexture1_ == null)
-                                {
-                                    throw new MTEEditException($"{ControlTexturePropertyNames[1]} " +
-                                        $"is not assigned or existing in material<{material.name}>.");
+                                if (!material.HasProperty(ControlTexturePropertyNames[0]))
+                                {//impossible if using a builtin TextureArray shader
+                                    throw new MTEEditException($"Property {ControlTexturePropertyNames[0]} " +
+                                        $"doesn't exist in material<{material.name}>.");
                                 }
-                                controlTexture1 = (Texture2D)controlTexture1_;
+                                var tex = material.GetTexture(ControlTexturePropertyNames[0]);
+                                if (tex != null)
+                                {
+                                    controlTexture0 = (Texture2D)tex;
+                                }
+                                else
+                                {
+                                    throw new MTEEditException($"{ControlTexturePropertyNames[0]} is" +
+                                        $" not assigned or existing in material<{material.name}>.");
+                                }
                             }
 
-                            if (material.HasProperty(ControlTexturePropertyNames[2]))
+                            if (splatTotal > 4)//controlTexture1 should exists
                             {
-                                var controlTexture2_ = material.GetTexture(ControlTexturePropertyNames[2]);
-                                if (controlTexture2_ == null)
+                                if (!material.HasProperty(ControlTexturePropertyNames[1]))
+                                {//impossible if using a builtin TextureArray shader
+                                    throw new MTEEditException($"Property {ControlTexturePropertyNames[1]} " +
+                                        $"doesn't exist in material<{material.name}>.");
+                                }
+                                var tex = material.GetTexture(ControlTexturePropertyNames[1]);
+                                if (tex == null)
+                                {
+                                    throw new MTEEditException($"Property {ControlTexturePropertyNames[1]} " +
+                                        $"is not assigned in material<{material.name}>.");
+                                }
+                                controlTexture1 = (Texture2D)tex;
+                            }
+
+                            if (splatTotal > 8)//controlTexture2 should exists
+                            {
+                                if (!material.HasProperty(ControlTexturePropertyNames[2]))
+                                {//impossible if using a builtin TextureArray shader
+                                    throw new MTEEditException($"Property {ControlTexturePropertyNames[2]} " +
+                                        $"doesn't exist in material<{material.name}>.");
+                                }
+                                var tex = material.GetTexture(ControlTexturePropertyNames[2]);
+                                if (tex == null)
                                 {
                                     throw new MTEEditException($"{ControlTexturePropertyNames[2]} " +
-                                        $"is not assigned or existing in material<{material.name}>.");
+                                        $"is not assigned in material<{material.name}>.");
                                 }
-                                controlTexture2 = (Texture2D)controlTexture2_;
+                                controlTexture2 = (Texture2D)tex;
                             }
 
                             // check which control texture is to be modified
@@ -1055,19 +1085,19 @@ namespace MTE
              Vector2 minUV, Vector2 maxUV)
         {
             // check parameters
-            if (controlTexture0 == null)
+            if (splatTotal > 0 && controlTexture0 == null)
             {
                 throw new System.ArgumentException(
                     $"[MTE] {nameof(controlTexture0)} is null.",
                     nameof(controlTexture0));
             }
-            if (splatIndex > 3 && controlTexture1 == null)
+            if (splatTotal > 4 && controlTexture1 == null)
             {
                 throw new System.ArgumentException(
                     $"[MTE] splatIndex is 4/5/6/7 but {nameof(controlTexture1)} is null.",
                     nameof(controlTexture1));
             }
-            if (splatIndex > 7 && controlTexture1 == null)
+            if (splatTotal > 8 && controlTexture2 == null)
             {
                 throw new System.ArgumentException(
                     $"[MTE] splatIndex is 8/9/10/11 but {nameof(controlTexture2)} is null.",
@@ -1075,7 +1105,7 @@ namespace MTE
             }
             if (splatIndex < 0 || splatIndex > 11)
             {
-                throw new System.ArgumentOutOfRangeException("splatIndex", splatIndex,
+                throw new System.ArgumentOutOfRangeException(nameof(splatIndex), splatIndex,
                     "[MTE] splatIndex should be [0, 11].");
             }
 
@@ -1092,7 +1122,7 @@ namespace MTE
             }
             else
             {
-                modifyingSections.Add(new Color[1]);
+                modifyingSections.Add(Array.Empty<Color>());
             }
             if (controlTexture2 != null)
             {
@@ -1100,7 +1130,7 @@ namespace MTE
             }
             else
             {
-                modifyingSections.Add(new Color[1]);
+                modifyingSections.Add(Array.Empty<Color>());
             }
 
             // sample brush strength from the mask texture
@@ -1135,22 +1165,28 @@ namespace MTE
                 splatIndex, splatTotal, height, width);
 
             // modify the control texture
-            if (splatTotal >= 8)
+            if (splatTotal > 8)
             {
                 controlTexture0.SetPixels(x, y, width, height, modifyingSections[0]);
                 controlTexture0.Apply();
+                System.Diagnostics.Debug.Assert(controlTexture1 != null);
+                System.Diagnostics.Debug.Assert(modifyingSections[1].Length != 0);
                 controlTexture1.SetPixels(x, y, width, height, modifyingSections[1]);
                 controlTexture1.Apply();
+                System.Diagnostics.Debug.Assert(controlTexture2 != null);
+                System.Diagnostics.Debug.Assert(modifyingSections[2].Length != 0);
                 controlTexture2.SetPixels(x, y, width, height, modifyingSections[2]);
                 controlTexture2.Apply();
                 DirtyTextureSet.Add(controlTexture0);
                 DirtyTextureSet.Add(controlTexture1);
                 DirtyTextureSet.Add(controlTexture2);
             }
-            else if(splatTotal >= 5)
+            else if(splatTotal > 4)
             {
                 controlTexture0.SetPixels(x, y, width, height, modifyingSections[0]);
                 controlTexture0.Apply();
+                System.Diagnostics.Debug.Assert(controlTexture1 != null);
+                System.Diagnostics.Debug.Assert(modifyingSections[1].Length != 0);
                 controlTexture1.SetPixels(x, y, width, height, modifyingSections[1]);
                 controlTexture1.Apply();
                 DirtyTextureSet.Add(controlTexture0);
@@ -1290,6 +1326,27 @@ namespace MTE
                 return;
             }
 
+            RuntimeTextureArrayLoader runtimeTextureArrayLoader =
+                meshRenderer.GetComponent<RuntimeTextureArrayLoader>();
+            TextureArraySettings settings = null;
+            if (runtimeTextureArrayLoader)
+            {
+                //create and assign texture array to material
+                runtimeTextureArrayLoader.LoadInEditor();
+                settings = runtimeTextureArrayLoader.settings;
+            }
+
+            var textureArray = material.GetTexture(AlbedoArrayPropertyName) as Texture2DArray;
+            if (textureArray == null || textureArray.depth <= 0)
+            {
+                MTEDebug.LogWarning(
+                    $"Material<{material.name}>'s {AlbedoArrayPropertyName} property is empty.");
+                return;
+            }
+
+            TextureArrayManager.Instance.AddOrUpdate(textureArray, settings);
+            TextureArrayManager.Instance.GetTextures(textureArray, out var textures);
+
             var propertyCount = ShaderUtil.GetPropertyCount(shader);
             for (int j = 0; j < propertyCount; j++)
             {
@@ -1304,14 +1361,6 @@ namespace MTE
                     continue;
                 }
 
-                var textureArray = material.GetTexture(AlbedoArrayPropertyName) as Texture2DArray;
-                if (textureArray == null || textureArray.depth <= 0)
-                {
-                    continue;
-                }
-
-                TextureArrayManager.Instance.AddOrUpdate(textureArray);
-                TextureArrayManager.Instance.GetTextures(textureArray, out var textures);
                 foreach (var texture in textures)
                 {
                     if (!TextureList.Contains(texture))
@@ -1329,17 +1378,21 @@ namespace MTE
                 return;
             }
 
+            int splatTotal = GetLayerTextureNumber(targetMaterial);
+            int weightMapTotal = splatTotal / 4;
+            Debug.Assert(weightMapTotal <= ControlTexturePropertyNames.Length);
+
             int width = -1, height = -1;
-            for (int i = 0; i < ControlTexturePropertyNames.Length; i++)
+            for (int weightMapIndex = 0; weightMapIndex < weightMapTotal; weightMapIndex++)
             {
-                var controlPropertyName = ControlTexturePropertyNames[i];
+                var controlPropertyName = ControlTexturePropertyNames[weightMapIndex];
                 var controlTexture = targetMaterial.GetTexture(controlPropertyName) as Texture2D;
-                if (i == 0 && controlTexture == null )
+                if (controlTexture == null )
                 {
-                    MTEDebug.LogWarning(
-                        $"[MTE] \"{controlPropertyName}\" is not assigned" +
-                        $" or existing in material<{targetMaterial.name}>.");
+                    throw new MTEEditException($"Property {controlPropertyName} isn't assigned " +
+                        $"or doesn't exist in material<{targetMaterial.name}>.");
                 }
+
                 var controlTextureWidth = controlTexture.width;
                 var controlTextureHeight = controlTexture.height;
                 if (controlTextureWidth != controlTextureHeight)
@@ -1358,7 +1411,7 @@ namespace MTE
                         $"Size of {controlPropertyName} is different from others.");
                 }
 
-                controlTextures[i] = controlTexture;
+                controlTextures[weightMapIndex] = controlTexture;
             }
         }
 

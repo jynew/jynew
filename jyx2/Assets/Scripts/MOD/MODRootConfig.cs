@@ -26,6 +26,8 @@ public class MODRootConfig : ScriptableObject
 
     [LabelText("LUA文件名配置")] public string LuaFilePatten = "ka{0}";
 
+    [LabelText("MOD存档版本号")] public int ModArchiveVersion = 0;
+
     [LabelText("主角姓名")] public string PlayerName;
 
     [LabelText("预加载的lua文件（比如热更新）")] public List<string> PreloadedLua;
