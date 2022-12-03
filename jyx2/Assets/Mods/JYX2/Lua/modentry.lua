@@ -1,9 +1,10 @@
 local function UpdateArchive(runtime, oldVersion)
     --修复主角与船在大地图的位置
-
     runtime.WorldData.WorldPosition = CS.UnityEngine.Vector3(234.82, 5.2, 357.46)
     runtime.WorldData.BoatWorldPos = CS.UnityEngine.Vector3(100, 4.9, 109)
     runtime.WorldData.OnBoat = 0
+    --强制离开小地图
+    runtime.SubMapData = CS.SubMapSaveData(1000)
 end
 
 local function OnBeforeBattle(battleStartParams)
