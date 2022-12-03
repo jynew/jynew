@@ -5,6 +5,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using Jyx2.MOD;
+using Jyx2.MOD.ModV2;
 using Jyx2.ResourceManagement;
 using Jyx2Configs;
 using UnityEngine;
@@ -18,8 +19,15 @@ namespace Jyx2
     public static class RuntimeEnvSetup
     {
         private static bool _isSetup;
-        public static MODRootConfig CurrentModConfig { get; set; } = null;
-        public static string CurrentModId { get; set; } = "";
+        public static MODRootConfig CurrentModConfig { get; private set; } = null;
+        private static GameModBase _currentMod;
+
+        public static string CurrentModId => _currentMod.Id;
+
+        public static void SetCurrentMod(GameModBase mod)
+        {
+            _currentMod = mod;
+        }
 
         public static bool IsLoading { get; private set; } = false;
 
@@ -27,7 +35,7 @@ namespace Jyx2
         {
             _isSetup = false;
             CurrentModConfig = null;
-            CurrentModId = "";
+            _currentMod = null;
             IsLoading = false;
             LuaManager.Clear();
             GameConfigDatabase.ForceClear();
@@ -55,87 +63,16 @@ namespace Jyx2
                 GlobalAssetConfig.Instance = t;
                 await t.OnLoad();
             }
-
-            //初始化MOD管理器
-            MODManager.Instance.Init();
-
-            await LoadMods();
-            await LoadCurrentMod();
             
             await ResLoader.Init();
-
-#if UNITY_EDITOR
-            await MODManager.Instance.LoadMod(CurrentModId, "PC");
-#elif UNITY_STANDALONE
-            await MODManager.Instance.LoadMod(CurrentModId, "Steam");
-#elif UNITY_ANDROID
-            await MODManager.Instance.LoadMod(CurrentModId, "Android");
-#elif UNITY_IPHONE
-            await MODManager.Instance.LoadMod(CurrentModId, "IOS");
-#else
-            Debug.LogError("当前平台还不支持Mod");
-#endif
+            await ResLoader.LaunchMod(_currentMod);
+            
             CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
-
-#if UNITY_EDITOR
-            var dirPath = $"Assets/Mods/{CurrentModId}/Configs";
-            if (Directory.Exists(dirPath))
-            {
-                if (!File.Exists($"{dirPath}/Datas.bytes"))
-                {
-                    CurrentModConfig.GenerateConfigs();
-                }
-                else
-                {
-                    ExcelTools.WatchConfig(dirPath, () =>
-                    {
-                        CurrentModConfig.GenerateConfigs();
-                        Debug.Log("File Watcher! Reload success! -> " + dirPath);
-                    }); 
-                } 
-            }
-#endif
-      
             GameSettingManager.Init();
             await Jyx2ResourceHelper.Init();
             LuaManager.LuaMod_Init();
             _isSetup = true;
             IsLoading = false;
         }
-        
-        public static async UniTask LoadMods()
-        {
-            foreach (var mod in MODManager.Instance.GetAllModProviders<MODProviderBase>())
-            {
-                try
-                {
-                    await mod.GetInstalledMods();
-                }
-                catch (Exception e)
-                {
-                    // ignored
-                }
-            }
-        }
-        
-
-        private static async UniTask LoadCurrentMod()
-        {
-#if UNITY_EDITOR
-            var path = SceneManager.GetActiveScene().path;
-            if (path.Contains("Assets/Mods/"))
-            {
-                CurrentModId = path.Split('/')[2];
-            }
-            else
-            {
-                CurrentModId = Jyx2_PlayerPrefs.GetString("CURRENT_MOD_ID", GlobalAssetConfig.Instance.startModId);
-            }
-#else
-                CurrentModId = Jyx2_PlayerPrefs.GetString("CURRENT_MOD_ID", GlobalAssetConfig.Instance.startModId);
-#endif
-        }
-
-
     }
 }

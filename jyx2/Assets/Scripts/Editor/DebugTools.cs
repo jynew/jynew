@@ -95,7 +95,7 @@ public class DebugTools : EditorWindow
 
     public static void SetSize(int index)
     {
-        var gvWndType = typeof(Editor).Assembly.GetType("UnityEditor.GameView");
+        var gvWndType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
         var selectedSizeIndexProp = gvWndType.GetProperty("selectedSizeIndex",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         var gvWnd = EditorWindow.GetWindow(gvWndType);
@@ -133,7 +133,7 @@ public class DebugTools : EditorWindow
 
     static object GetGroup(GameViewSizeGroupType type)
     {
-        var sizesType = typeof(Editor).Assembly.GetType("UnityEditor.GameViewSizes");
+        var sizesType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameViewSizes");
         var singleType = typeof(ScriptableSingleton<>).MakeGenericType(sizesType);
         var instanceProp = singleType.GetProperty("instance");
         var getGroup = sizesType.GetMethod("GetGroup");

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 namespace MTE
 {
     [CustomEditor(typeof(GrassLoader))]
-    internal class GrassLoaderEditor : Editor
+    internal class GrassLoaderEditor : UnityEditor.Editor
     {
         /// <summary>
         /// Remove lightmap data from the grass GameObject, so it won't be influenced by the possibly invalid lightmap data.

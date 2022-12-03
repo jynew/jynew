@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(UIComponentFilter), true)]
-public class UIComponentFilterEditor : Editor 
+public class UIComponentFilterEditor : UnityEditor.Editor 
 {
 	UIComponentFilter m_UIComponentFilter;
     public List<string> m_selectList = new List<string>();

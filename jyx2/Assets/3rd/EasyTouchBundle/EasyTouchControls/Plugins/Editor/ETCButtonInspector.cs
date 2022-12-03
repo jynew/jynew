@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(ETCButton))]
-public class ETCButtonInspector : Editor {
+public class ETCButtonInspector : UnityEditor.Editor {
 
 	public string[] unityAxes;
 	

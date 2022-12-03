@@ -4,7 +4,7 @@ using System.Collections;
 
 
 [CustomEditor(typeof(CFX_SpawnSystem))]
-public class CFX_SpawnSystemEditor : Editor
+public class CFX_SpawnSystemEditor : UnityEditor.Editor
 {
 	public override void OnInspectorGUI()
 	{

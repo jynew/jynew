@@ -22,7 +22,7 @@ using TileWorld;
 
 
 [CustomEditor(typeof(TileWorldCreatorRTE))]
-public class TileWorldCreatorRTEeditor : Editor
+public class TileWorldCreatorRTEeditor : UnityEditor.Editor
 {
    
     //REFERENCE

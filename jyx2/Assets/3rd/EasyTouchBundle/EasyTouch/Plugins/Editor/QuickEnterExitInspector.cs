@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(QuickEnterOverExist))]
-public class QuickEnterExitInspector : Editor {
+public class QuickEnterExitInspector : UnityEditor.Editor {
 
 	public override void OnInspectorGUI(){
 		

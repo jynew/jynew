@@ -30,7 +30,7 @@ using TileWorld;
 
 
 [CustomEditor(typeof(TileWorldCreator))]
-public class TileWorldCreatorEditor : Editor
+public class TileWorldCreatorEditor : UnityEditor.Editor
 {
 
     //-------------------------------------------------------

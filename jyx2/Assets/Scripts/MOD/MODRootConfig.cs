@@ -17,6 +17,8 @@ public class MODRootConfig : ScriptableObject
 {
     [LabelText("MOD ID（全局唯一）")] public string ModId;
 
+    [LabelText("是否原生MOD（随打包一起发布）")] public bool IsNativeMod = false;
+    
     [LabelText("MOD名称")] public string ModName;
     [LabelText("游戏MOD的根目录")] public string ModRootDir;
     [Multiline] [LabelText("游戏的欢迎语")] public string WelcomeWord;

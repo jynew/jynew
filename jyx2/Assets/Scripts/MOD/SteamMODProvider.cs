@@ -1,4 +1,4 @@
-﻿#if !UNITY_ANDROID
+﻿#if JYNEW_STEAM_DEPLOY
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,11 +11,14 @@ namespace Jyx2.MOD
 {
     public class SteamMODProvider: MODProviderBase
     {
+
+        public const uint SteamAppId = 2098790;
+        
         public SteamMODProvider()
         {
             try
             {
-                SteamClient.Init(2098790);
+                SteamClient.Init(SteamAppId);
             } 
             catch (Exception e)
             {
@@ -38,35 +41,34 @@ namespace Jyx2.MOD
                 
                 foreach (Steamworks.Ugc.Item entry in result.Value.Entries)
                 {
-                    if (entry.IsInstalled)
-                    {
-                        Debug.Log($"[SteamMODProvider] Found Installed Item: {entry.Title}");
+                    if (!entry.IsInstalled) continue;
+                    
+                    Debug.Log($"[SteamMODProvider] Found Installed Item: {entry.Title}");
                         
-                        List<string> modPaths = new List<string>();
-                        FileTools.GetAllFilePath(entry.Directory, modPaths, new List<string>()
+                    List<string> modPaths = new List<string>();
+                    FileTools.GetAllFilePath(entry.Directory, modPaths, new List<string>()
+                    {
+                        ".xml"
+                    });
+                    if (modPaths.Count == 0)
+                    {
+                        Debug.LogWarning("[SteamMODProvider] Mod xml file not found, ModName:" + entry.Title);
+                        continue;
+                    }
+                    foreach (var modPath in modPaths)
+                    {
+                        var xmlObj = GetModItem(modPath);
+                        var modItem = new ModItem
                         {
-                            ".xml"
-                        });
-                        if (modPaths.Count == 0)
-                        {
-                            Debug.LogWarning("[SteamMODProvider] Mod xml file not found, ModName:" + entry.Title);
-                            continue;
-                        }
-                        foreach (var modPath in modPaths)
-                        {
-                            var xmlObj = GetModItem(modPath);
-                            var modItem = new ModItem
-                            {
-                                ModId = xmlObj.ModId,
-                                Name = entry.Title ?? xmlObj.Name,
-                                Version = xmlObj.Version,
-                                Author = entry.Owner.Name ?? xmlObj.Author,
-                                Description = entry.Description ?? xmlObj.Description,
-                                Directory = entry.Directory,
-                                PreviewImageUrl = entry.PreviewImageUrl ?? xmlObj.PreviewImageUrl
-                            };
-                            Items[xmlObj.ModId.ToLower()] = modItem;
-                        }
+                            ModId = xmlObj.ModId,
+                            Name = entry.Title ?? xmlObj.Name,
+                            Version = xmlObj.Version,
+                            Author = entry.Owner.Name ?? xmlObj.Author,
+                            Description = entry.Description ?? xmlObj.Description,
+                            Directory = entry.Directory,
+                            PreviewImageUrl = entry.PreviewImageUrl ?? xmlObj.PreviewImageUrl
+                        };
+                        Items[xmlObj.ModId.ToLower()] = modItem;
                     }
                 }
             }

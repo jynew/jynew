@@ -33,7 +33,9 @@ public abstract class Jyx2_UIBase : MonoBehaviour
 	public virtual bool IsBlockControl { get; set; } = false;
 	public virtual bool AlwaysDisplay { get; } = false;
 
-	protected abstract void OnCreate();
+	protected virtual void OnCreate()
+	{
+	}
 
 	protected virtual void OnShowPanel(params object[] allParams) { }
 	protected virtual void OnHidePanel() { }

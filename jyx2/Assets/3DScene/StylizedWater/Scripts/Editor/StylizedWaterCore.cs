@@ -5,7 +5,7 @@ using UnityEditor;
 
 namespace StylizedWater
 {
-    public class StylizedWaterCore : Editor
+    public class StylizedWaterCore : UnityEditor.Editor
     {
         public const string ASSET_NAME = "Stylized Water Shader";
         public const string ASSET_ABRV = "SWS";

@@ -6,7 +6,7 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[CustomEditor( typeof( Texture2DArray ) )]
-	public class CustomTexture2DArrayInspector : Editor
+	public class CustomTexture2DArrayInspector : UnityEditor.Editor
 	{
 		Texture2DArray m_target;
 		[SerializeField]
