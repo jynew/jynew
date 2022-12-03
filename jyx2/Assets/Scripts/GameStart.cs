@@ -17,6 +17,7 @@ using UnityEngine;
 using Jyx2;
 using Jyx2.Middleware;
 using Jyx2.MOD;
+using MOD.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
@@ -44,8 +45,7 @@ public class GameStart : MonoBehaviour
 
 		Application.logMessageReceived += OnErrorMsg;
 
-		//await MODManager.Init();
-		SceneManager.LoadScene("0_MainMenu");
+		ModPanelNew.SwitchSceneTo();
 	}
 
 	private void OnErrorMsg(string condition, string stackTrace, LogType logType)

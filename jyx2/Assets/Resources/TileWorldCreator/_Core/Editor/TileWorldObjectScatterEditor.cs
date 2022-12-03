@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using TileWorld;
 
 [CustomEditor(typeof(TileWorldObjectScatter))]
-public class TileWorldObjectScatterEditor : Editor
+public class TileWorldObjectScatterEditor : UnityEditor.Editor
 {
 
     TileWorldObjectScatter twos;

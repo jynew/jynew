@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(ETCDPad))]
-public class ETCDPadInspector : Editor {
+public class ETCDPadInspector : UnityEditor.Editor {
 
 	public string[] unityAxes;
 	

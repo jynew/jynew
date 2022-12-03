@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(EasyTouch))]
-public class EasyTouchInspector : Editor {
+public class EasyTouchInspector : UnityEditor.Editor {
 
 	
 	public override void OnInspectorGUI(){

@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(QuickDrag))]
-public class QuickDragInspector : Editor {
+public class QuickDragInspector : UnityEditor.Editor {
 
 	public override void OnInspectorGUI(){
 

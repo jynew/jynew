@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(QuickTwist))]
-public class QuickTwistInspector : Editor {
+public class QuickTwistInspector : UnityEditor.Editor {
 
 	public override void OnInspectorGUI(){
 		

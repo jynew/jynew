@@ -24,6 +24,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2.ResourceManagement;
 using MOD;
 using MOD.UI;
+using UnityEngine.SceneManagement;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
@@ -67,7 +68,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	private void OnEnable()
 	{
-		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(true); 
+		 
 	}
 
 	void JudgeShowReleaseNotePanel()
@@ -111,7 +112,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	public void OnNewGameClicked()
 	{
-		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(false); 
+		 
 		OnNewGame();
 	}
 
@@ -158,11 +159,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	public void OnQuitGameClicked()
 	{
-#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-#else
-		Application.Quit();
-#endif
+		ModPanelNew.SwitchSceneTo();
 	}
 
 	private void setPlayerName()
@@ -324,12 +321,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		this.InputNamePanel_RectTransform.gameObject.SetActive(false);
 		m_panelType = PanelType.Home;
 		
-		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(true);
-	}
-
-	protected override void OnHidePanel()
-	{
-		base.OnHidePanel();
+		
 	}
 
 	public void OnOpenURL(string url)
@@ -350,11 +342,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenModPanel()
 	{
-		//知大虾：20221130为了提供给手机测试，先临时关掉
-#if UNITY_ANDROID
-		GameUtil.DisplayPopinfo("暂未开放，请等待版本更新。");
-#else
-		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanelNew)).Forget();	
-#endif
+		ModPanelNew.SwitchSceneTo();
 	}
 }

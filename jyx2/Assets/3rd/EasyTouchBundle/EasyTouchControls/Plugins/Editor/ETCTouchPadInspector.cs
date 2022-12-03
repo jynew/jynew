@@ -15,7 +15,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(ETCTouchPad))]
-public class ETCTouchPadInspector : Editor {
+public class ETCTouchPadInspector : UnityEditor.Editor {
 
 	public string[] unityAxes;
 	

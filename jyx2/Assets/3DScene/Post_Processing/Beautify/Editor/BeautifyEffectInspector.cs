@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace BeautifyEffect
 {
     [CustomEditor(typeof(Beautify))]
-    public class BeautifyEffectInspector : Editor
+    public class BeautifyEffectInspector : UnityEditor.Editor
     {
         const string PRAGMA_COMMENT_MARK = "// Edited by Shader Control: ";
         const string PRAGMA_DISABLED_MARK = "// Disabled by Shader Control: ";

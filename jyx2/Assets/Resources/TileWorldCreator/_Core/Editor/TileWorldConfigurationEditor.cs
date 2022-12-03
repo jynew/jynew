@@ -11,7 +11,7 @@ using System.IO;
 using TileWorld;
 
 [CustomEditor(typeof(TileWorldConfiguration), true)]
-public class TileWorldConfigurationEditor : Editor
+public class TileWorldConfigurationEditor : UnityEditor.Editor
 {
 
     TileWorldConfiguration config;
@@ -181,7 +181,7 @@ public class TileWorldConfigurationEditor : Editor
 
     public static void ShowGlobalSettings(TileWorldConfiguration _config)
     {
-        var _editor = Editor.CreateEditor(_config);
+        var _editor = UnityEditor.Editor.CreateEditor(_config);
 
         GUILayout.BeginVertical("Box");
         _config.global.worldName = EditorGUILayout.TextField("Name:", _config.global.worldName);

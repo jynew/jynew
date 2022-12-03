@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Jyx2.Middleware;
 using Jyx2.MOD;
+using Jyx2.MOD.ModV2;
 using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,9 +20,11 @@ public class MODRootConfig : ScriptableObject
 {
     [LabelText("MOD ID（全局唯一）")] public string ModId;
 
+    [LabelText("是否原生MOD（随打包一起发布）")] public bool IsNativeMod = false;
+    [Multiline][LabelText("MOD简介")] public string Desc;
+    [LabelText("MOD版本号")] public string Version;
     [LabelText("MOD名称")] public string ModName;
     [LabelText("游戏MOD的根目录")] public string ModRootDir;
-    [Multiline] [LabelText("游戏的欢迎语")] public string WelcomeWord;
     [LabelText("游戏作者名")] public string Author;
 
     [LabelText("LUA文件名配置")] public string LuaFilePatten = "ka{0}";
@@ -49,4 +54,18 @@ public class MODRootConfig : ScriptableObject
         UnityEditor.AssetDatabase.Refresh();
     }
 #endif
+    
+    public GameModInfo CreateModInfo()
+    {
+        GameModInfo info = new GameModInfo();
+        info.Id = ModId.ToLower();
+        info.Name = ModName;
+        info.Author = Author;
+        info.Version = Version;
+        info.ClientVersion = Application.version;
+        info.CreateTime = DateTime.Now.ToString("yyyyMMdd H:m:s");
+        info.Desc = Desc;
+        
+        return info;
+    }
 }

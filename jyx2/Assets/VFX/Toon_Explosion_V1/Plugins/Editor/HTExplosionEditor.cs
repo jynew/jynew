@@ -9,7 +9,7 @@ using System.Collections;
 /// HTExplosion editor.
 /// </summary>
 [CustomEditor(typeof(HTExplosion))]
-public class HTExplosionEditor : Editor {
+public class HTExplosionEditor : UnityEditor.Editor {
 
 	// Use this for initialization
 	public override void OnInspectorGUI(){
