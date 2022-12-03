@@ -274,6 +274,8 @@ namespace Jyx2
             //存档
             var path = GetArchiveFile(fileIndex);
             ES3.Save("RuntimeVersion", _instance.RuntimeVersion, path);//用一个key单独存储版本号
+            //ES3.Save("ModId", RuntimeEnvSetup.CurrentModId, path);//用一个key储存Mod名称
+            ES3.Save("ModArchiveVersion", RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion, path);//用一个key储存Mod存档版本号
             ES3.Save(nameof(GameRuntimeData), this, path);
         }
 
@@ -281,48 +283,48 @@ namespace Jyx2
         {
             var path = GetArchiveFile(fileIndex);
 
-            int archiveVersion = -1;
+            int archiveRtVersion = -1;
+            //string archiveModId = "";
+            int archiveModVersion = -1;
+
             GameRuntimeData runtime;
 
             if (ES3.FileExists(path))
             {
-                //检查runtime版本，进行兼容
-                archiveVersion = ES3.Load<int>("RuntimeVersion", path, -1);
+                //检查存档版本，进行兼容
+                archiveRtVersion = ES3.Load<int>("RuntimeVersion", path, -1);
+                //archiveModId = ES3.Load<int>("ModId", path, "");
+                archiveModVersion = ES3.Load<int>("ModArchiveVersion", path, -1);
                 runtime = ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
             }
             else
             {
-                throw new Exception("找不到存档文件");
+                throw new Exception($"找不到存档文件 {fileIndex}");
             }
            
             //Debug.Log($"Runtime Version: {archiveVersion}");
 
-            if (archiveVersion < RUNTIME_VERSION_LATEST)
+            var IsOutdated = (archiveRtVersion < RUNTIME_VERSION_LATEST || archiveModVersion < RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion);
+
+            if (IsOutdated)
             {
-                UpdateOldArchive(runtime, archiveVersion);
+                UpdateOldArchive(runtime, archiveRtVersion, archiveModVersion);
             }
  
             _instance = runtime;
             return runtime;
         }
 
-        private static void UpdateOldArchive(GameRuntimeData runtime, int oldVersion)
+        private static void UpdateOldArchive(GameRuntimeData runtime, int oldRtVersion, int oldModVersion)
         {
-            if (oldVersion == -1)
+            if (oldRtVersion == -1)
             {
-                //修复主角与船在大地图的位置
-                if (runtime.WorldData == null)
-                {
-                    runtime.WorldData = new WorldMapSaveData();
-                }
-
-                runtime.WorldData.WorldPosition.Set(234.82f, 5.2f, 357.46f);
-                runtime.WorldData.BoatWorldPos.Set(100f, 4.9f, 109f);
-                runtime.WorldData.OnBoat = 0;
-
+                //To Do: Runtime更新后在此填写修复代码
                 runtime.RuntimeVersion = RUNTIME_VERSION_LATEST;
-                return;
             }
+            if (oldModVersion  < RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion)
+                //Lua事件，mod作者可以通过api监听此事件来进行存档更新
+            Jyx2LuaBridge.DispatchLuaEvent("OnArchiveOutdated", runtime, oldModVersion);
         }
 
         private string GenerateSaveSummaryInfo()
