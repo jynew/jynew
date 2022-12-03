@@ -44,11 +44,11 @@ namespace MOD.UI
             m_AddButton.onClick.AddListener(OnAdd);
             m_CloseButton.onClick.AddListener(OnQuit);
             
-            #if UNITY_STANDALONE
+#if UNITY_STANDALONE
             m_SteamWorkshopButton.gameObject.SetActive(true);
-            #else
+#else
             m_SteamWorkshopButton.gameObject.SetActive(false);
-            #endif
+#endif
         }
 
         void OnQuit()
@@ -173,15 +173,7 @@ namespace MOD.UI
 
         public void OnCloseBtnClick()
         {
-            /*var selectMod = m_ModIds[m_Dropdown.value];
-        if(selectMod != RuntimeEnvSetup.CurrentModId)
-        {
-            Jyx2_PlayerPrefs.SetString("CURRENT_MOD_ID", selectMod);
-            Jyx2_PlayerPrefs.Save();
-            RebootGame();
-        }
-        else
-            Hide();*/
+            OnQuit();
         }
         
         
