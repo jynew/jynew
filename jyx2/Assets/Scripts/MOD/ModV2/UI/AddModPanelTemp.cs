@@ -16,7 +16,7 @@ namespace MOD.UI
         [SerializeField] private Button m_OpenModDirBtn;
         [SerializeField] private Button m_OkBtn;
         [SerializeField] private Text m_ModDirText;
-
+        [SerializeField] private Button m_CopyBtn;
 
         void Start()
         {
@@ -38,8 +38,15 @@ namespace MOD.UI
                 Application.OpenURL(path);
             });
             
+            m_CopyBtn.onClick.AddListener(() =>
+            {
+                string path = loader.ManualInstalledDir[0];
+                GUIUtility.systemCopyBuffer = path;
+            });
+            
             gameObject.SetActive(false);
         }
+
 
         public void Show()
         {

@@ -68,6 +68,7 @@ namespace Editor
 
                 //输出
                 Debug.Log($"<color=green>打包完成！目标平台={target} 生成位置={buildPath}</color>");
+                Tools.openURL(path);
             }
             catch (Exception e)
             {

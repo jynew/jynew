@@ -64,7 +64,9 @@ namespace Jyx2.MOD.ModV2
                     var modInfo = Tools.DeserializeXML<GameModInfo>(content);
                     if (modInfo == null) continue;
                     
-                    var mod = new GameModManualInstalled() {Info = modInfo, Dir = modPath};
+                    
+                    
+                    var mod = new GameModManualInstalled() {Info = modInfo, Dir = Directory.GetParent(modPath)?.FullName};
                     rst.Add(mod);
                 }
             }
