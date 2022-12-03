@@ -28,6 +28,10 @@ namespace Editor
         public void Build(BuildTarget target, string defaultDirName, string defaultBuildFileName, BuildOptions options = BuildOptions.None)
         {
             TempAbDir = Path.Combine("Temp/jynew", target.ToString());
+            if (!Directory.Exists(TempAbDir))
+            {
+                Directory.CreateDirectory(TempAbDir);
+            }
             
             try
             {
@@ -87,13 +91,21 @@ namespace Editor
                 if (editorMod == null) continue;
                 var modConfig = editorMod.RootConfig;
 
-                if (modConfig == null || !modConfig.IsNativeMod) continue; //非原生MOD
+                if (modConfig == null) continue; 
 
                 var modInfo = modConfig.CreateModInfo();
                 var xmlContent = Tools.SerializeXML(modInfo);
-                string targetXmlPath = Path.Combine(StreamingAssetsDir, modInfo.Id + ".xml");
-                File.WriteAllText(targetXmlPath, xmlContent);
-                nativeMods.Add(modInfo.Id);
+                
+                //给临时目录也写一份
+                string tempDirPath = Path.Combine(TempAbDir, modInfo.Id + ".xml");
+                File.WriteAllText(tempDirPath, xmlContent);
+                
+                if (modConfig.IsNativeMod)
+                {
+                    string targetXmlPath = Path.Combine(StreamingAssetsDir, modInfo.Id + ".xml");
+                    File.WriteAllText(targetXmlPath, xmlContent);    
+                    nativeMods.Add(modInfo.Id);
+                }
             }
 
             if (nativeMods.Count > 0)
