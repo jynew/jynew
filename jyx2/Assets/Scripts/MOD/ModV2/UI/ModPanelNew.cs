@@ -189,5 +189,13 @@ namespace MOD.UI
             PlayerPrefs.DeleteAll();
             
         }
+
+
+        public static void SwitchSceneTo()
+        {
+            Jyx2_UIManager.Clear();
+            RuntimeEnvSetup.ForceClear();
+            SceneManager.LoadScene("0_MODLoaderScene");
+        }
     }
 }

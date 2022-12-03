@@ -58,7 +58,7 @@ public class Jyx2_UIManager : MonoBehaviour
     public static void Clear()
     {
         if (_instace == null) return;
-        Destroy(_instace);
+        Destroy(_instace.gameObject);
         _instace = null;
     }
 

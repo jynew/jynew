@@ -9,6 +9,7 @@ using Jyx2.MOD;
 using Jyx2.MOD.ModV2;
 using Jyx2.ResourceManagement;
 using Jyx2Configs;
+using MOD.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -81,9 +82,7 @@ namespace Jyx2
             {
                 Debug.LogError("<color=red>MOD加载出错了，请检查文件是否损坏！</color>");
                 ScreenLogger.Instance.enabled = true;
-                Jyx2_UIManager.Clear();
-                
-                SceneManager.LoadScene("0_MODLoaderScene");
+                ModPanelNew.SwitchSceneTo();
             }
         }
     }

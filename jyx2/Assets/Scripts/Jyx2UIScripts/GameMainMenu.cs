@@ -68,7 +68,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	private void OnEnable()
 	{
-		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(true); 
+		 
 	}
 
 	void JudgeShowReleaseNotePanel()
@@ -112,7 +112,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	public void OnNewGameClicked()
 	{
-		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(false); 
+		 
 		OnNewGame();
 	}
 
@@ -159,8 +159,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	public void OnQuitGameClicked()
 	{
-		Jyx2_UIManager.Clear();
-		SceneManager.LoadScene("0_MODLoaderScene");
+		ModPanelNew.SwitchSceneTo();
 	}
 
 	private void setPlayerName()
@@ -322,12 +321,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		this.InputNamePanel_RectTransform.gameObject.SetActive(false);
 		m_panelType = PanelType.Home;
 		
-		transform.Find("mainPanel/ExtendPanel")?.gameObject.SetActive(true);
-	}
-
-	protected override void OnHidePanel()
-	{
-		base.OnHidePanel();
+		
 	}
 
 	public void OnOpenURL(string url)
@@ -348,7 +342,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenModPanel()
 	{
-		Jyx2_UIManager.Clear();
-		SceneManager.LoadScene("0_MODLoaderScene");
+		ModPanelNew.SwitchSceneTo();
 	}
 }
