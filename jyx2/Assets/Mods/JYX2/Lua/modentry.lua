@@ -1,5 +1,8 @@
 local function UpdateArchive(runtime, oldVersion)
     --修复主角与船在大地图的位置
+    if (runtime.WorldData == nil) then
+        runtime.WorldData = CS.WorldMapSaveData()
+    end
     runtime.WorldData.WorldPosition = CS.UnityEngine.Vector3(234.82, 5.2, 357.46)
     runtime.WorldData.BoatWorldPos = CS.UnityEngine.Vector3(100, 4.9, 109)
     runtime.WorldData.OnBoat = 0
