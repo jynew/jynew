@@ -44,7 +44,7 @@ public class GameStart : MonoBehaviour
 
 		Application.logMessageReceived += OnErrorMsg;
 
-		SceneManager.LoadScene("MODLoaderScene");
+		SceneManager.LoadScene("0_MODLoaderScene");
 	}
 
 	private void OnErrorMsg(string condition, string stackTrace, LogType logType)
