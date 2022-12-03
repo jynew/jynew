@@ -132,7 +132,7 @@
 	{
 		Tags
 		{
-			"Queue" = "Geometry-99"
+            "Queue" = "Geometry-100"
 			"RenderType" = "Opaque"
 		}
 		SubShader//for target 3.0+

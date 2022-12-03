@@ -387,27 +387,49 @@ namespace MTE
                 {
                     return null;
                 }
-                var texturePropertyValue = m.GetTexture(
-                    TextureArrayShaderPropertyNames.AlbedoArrayPropertyName);
-                if (!texturePropertyValue)
-                {
-                    return null;
-                }
 
-                var textureArray = texturePropertyValue as Texture2DArray;
-                if (textureArray == null)
+                var runtimeTextureArrayLoader = meshRenderer.GetComponent<RuntimeTextureArrayLoader>();
+                if (runtimeTextureArrayLoader)
                 {
-                    return null;
+                    runtimeTextureArrayLoader.LoadInEditor();
+                    var settings = runtimeTextureArrayLoader.settings;
+                    var texturePropertyValue = m.GetTexture(
+                        TextureArrayShaderPropertyNames.AlbedoArrayPropertyName);
+                    if (!texturePropertyValue)
+                    {
+                        return null;
+                    }
+                    var textureArray = texturePropertyValue as Texture2DArray;
+                    if (textureArray == null)
+                    {
+                        return null;
+                    }
+                    TextureArrayManager.Instance.AddOrUpdate(textureArray, settings);
                 }
-
-                if (!TextureArrayManager.Instance.IsCached(textureArray))
+                else
                 {
-                    return null;
-                }
+                    var texturePropertyValue = m.GetTexture(
+                        TextureArrayShaderPropertyNames.AlbedoArrayPropertyName);
+                    if (!texturePropertyValue)
+                    {
+                        return null;
+                    }
 
-                if (TextureArrayManager.Instance.GetTextureSliceIndex(textureArray, texture) < 0)
-                {
-                    return null;
+                    var textureArray = texturePropertyValue as Texture2DArray;
+                    if (textureArray == null)
+                    {
+                        return null;
+                    }
+
+                    if (!TextureArrayManager.Instance.IsCached(textureArray))
+                    {
+                        return null;
+                    }
+
+                    if (TextureArrayManager.Instance.GetTextureSliceIndex(textureArray, texture) < 0)
+                    {
+                        return null;
+                    }
                 }
 
                 return m;

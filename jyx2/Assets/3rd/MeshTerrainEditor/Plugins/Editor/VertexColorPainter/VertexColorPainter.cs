@@ -196,22 +196,22 @@ namespace MTE
             {
                 new Hotkey(this, KeyCode.Minus, () =>
                 {
-                    BrushSize -= 1;
+                    Speed -= 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.Equals, () =>
                 {
-                    BrushSize += 1;
+                    Speed += 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.LeftBracket, () =>
                 {
-                    Speed -= 0.01f;
+                    BrushSize -= 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.RightBracket, () =>
                 {
-                    Speed += 0.01f;
+                    BrushSize += 1;
                     MTEEditorWindow.Instance.Repaint();
                 })
             };
@@ -637,7 +637,9 @@ namespace MTE
                 {
                     throw new System.InvalidOperationException("[MTE] The gameObject doesn't have a Material.");
                 }
-                material.shader = Shader.Find("MTE/VertexColored/ColorOnly");
+
+                material.shader = RenderPipelineUtil.Current == RenderPipeline.Builtin ?
+                    Shader.Find("MTE/VertexColored/ColorOnly") : Shader.Find("MTE/URP/VertexColor");
             }
             catch (System.Exception e)
             {

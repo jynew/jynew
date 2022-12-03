@@ -269,7 +269,11 @@ namespace MTE
             return terrain.legacySpecular;
 #elif UNITY_2019_3 || UNITY_2019_4 || UNITY_2020_1 || UNITY_2020_2 || UNITY_2020_3 || UNITY_2021_1 || UNITY_2021_2_OR_NEWER
             var material = terrain.materialTemplate;
-            return material.GetColor("_SpecColor");
+            if (material.HasProperty("_SpecColor"))
+            {
+                return material.GetColor("_SpecColor");
+            }
+            return Color.black;
 #else
 #error not supported on any Unity build targets
 #endif
