@@ -10,6 +10,16 @@ using Tools = Jyx2.Middleware.Tools;
 
 namespace Editor
 {
+    /// <summary>
+    /// 打包工具
+    ///
+    /// 知大虾 2022/12/03 整体重构
+    ///
+    /// - 所有的ab包临时生成在TemAbDir目录中，按不同平台区分
+    /// - 不同平台的ab包如果没有修改，不会重复进行生成，这样可以提高打包效率
+    /// - 所有勾选“原生MOD”的模组，将会随包发布（在Assert/Mods/{Your Mod Id}/ModSetting.asset中进行配置）
+    /// 
+    /// </summary>
     public class JynewBuilder
     {
         private string TempAbDir = "Temp/jynew";
@@ -57,7 +67,7 @@ namespace Editor
                 BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, buildPath, target, options);
 
                 //输出
-                EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
+                Debug.Log($"<color=green>打包完成！目标平台={target} 生成位置={buildPath}</color>");
             }
             catch (Exception e)
             {

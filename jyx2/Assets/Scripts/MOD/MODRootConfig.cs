@@ -64,7 +64,7 @@ public class MODRootConfig : ScriptableObject
         info.Author = Author;
         info.Version = Version;
         info.ClientVersion = Application.version;
-        info.CreateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+        info.CreateTime = DateTime.Now.ToString("yyyyMMdd H:m:s");
         return info;
     }
 }
