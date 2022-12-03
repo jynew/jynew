@@ -24,6 +24,7 @@ using Cysharp.Threading.Tasks;
 using Jyx2.ResourceManagement;
 using MOD;
 using MOD.UI;
+using UnityEngine.SceneManagement;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
@@ -158,11 +159,8 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	public void OnQuitGameClicked()
 	{
-#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-#else
-		Application.Quit();
-#endif
+		Jyx2_UIManager.Clear();
+		SceneManager.LoadScene("0_MODLoaderScene");
 	}
 
 	private void setPlayerName()
@@ -350,11 +348,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	/// </summary>
 	public void OpenModPanel()
 	{
-		//知大虾：20221130为了提供给手机测试，先临时关掉
-#if UNITY_ANDROID
-		GameUtil.DisplayPopinfo("暂未开放，请等待版本更新。");
-#else
-		Jyx2_UIManager.Instance.ShowUIAsync(nameof(ModPanelNew)).Forget();	
-#endif
+		Jyx2_UIManager.Clear();
+		SceneManager.LoadScene("0_MODLoaderScene");
 	}
 }

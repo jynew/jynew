@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Cysharp.Threading.Tasks;
 using Jyx2;
 using Jyx2.Middleware;
@@ -21,6 +22,8 @@ namespace MOD.UI
         [SerializeField] private Button m_RemoveButton;
         [SerializeField] private Button m_RefreshButton;
         [SerializeField] private Button m_LaunchButton;
+        [SerializeField] private Button m_SteamWorkshopButton;
+        
 
         [SerializeField] private Image m_ModPic;
         [SerializeField] private Text m_ModTitle;
@@ -28,6 +31,7 @@ namespace MOD.UI
 
         [SerializeField] private AddModPanelTemp m_AddModPanel;
 
+        [SerializeField] private InputField m_ResetInputField;
 
         private readonly List<GameModBase> _allMods = new List<GameModBase>();
         
@@ -38,6 +42,23 @@ namespace MOD.UI
             m_ModListView.OnSelect.AddListener(OnItemSelect);
             m_RemoveButton.onClick.AddListener(OnRemove);
             m_AddButton.onClick.AddListener(OnAdd);
+            m_CloseButton.onClick.AddListener(OnQuit);
+            
+            #if UNITY_STANDALONE
+            m_SteamWorkshopButton.gameObject.SetActive(true);
+            #else
+            m_SteamWorkshopButton.gameObject.SetActive(false);
+            #endif
+        }
+
+        void OnQuit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+		    Application.Quit();
+#endif
+
         }
 
         private void OnItemSelect(int index, ListViewItem arg1)
@@ -168,6 +189,13 @@ namespace MOD.UI
         {
             Jyx2.Middleware.Tools.openURL("https://steamcommunity.com/app/2098790/workshop/");
         }
-        
+
+        public void DoReset()
+        {
+            if (m_ResetInputField.text != "我要一键复原") return;
+            Directory.Delete(Application.persistentDataPath, true);
+            PlayerPrefs.DeleteAll();
+            
+        }
     }
 }
