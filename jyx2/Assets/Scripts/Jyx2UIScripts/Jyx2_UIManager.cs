@@ -55,6 +55,13 @@ public class Jyx2_UIManager : MonoBehaviour
         }
     }
 
+    public static void Clear()
+    {
+        if (_instace == null) return;
+        Destroy(_instace);
+        _instace = null;
+    }
+
     private Transform m_mainParent;
     private Transform m_normalParent;
     private Transform m_popParent;

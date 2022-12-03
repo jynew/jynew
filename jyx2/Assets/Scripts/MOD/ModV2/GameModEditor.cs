@@ -22,7 +22,7 @@ namespace Jyx2.MOD.ModV2
 
         public override string GetDesc()
         {
-            return $"[{Tag}]{Id}";
+            return $"[{Tag}]{RootConfig.ModName}({Id.ToLower()})";
         }
         
         protected override string Tag => "Editor";

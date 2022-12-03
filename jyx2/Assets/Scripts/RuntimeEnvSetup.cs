@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AClockworkBerry;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
 using Jyx2.MOD;
@@ -45,34 +46,45 @@ namespace Jyx2
         {
             if (_isSetup) return;
 
-            if(IsLoading)
+            try
             {
-                //同时调用了Setup的地方都应该挂起
-               await UniTask.WaitUntil(() => _isSetup);
-               return;
-            }
+                if (IsLoading)
+                {
+                    //同时调用了Setup的地方都应该挂起
+                    await UniTask.WaitUntil(() => _isSetup);
+                    return;
+                }
 
-            IsLoading = true;
-            
-            DebugInfoManager.Init();
-            
-            //全局配置表
-            var t = Resources.Load<GlobalAssetConfig>("GlobalAssetConfig");
-            if (t != null)
-            {
-                GlobalAssetConfig.Instance = t;
-                await t.OnLoad();
+                IsLoading = true;
+
+                DebugInfoManager.Init();
+
+                //全局配置表
+                var t = Resources.Load<GlobalAssetConfig>("GlobalAssetConfig");
+                if (t != null)
+                {
+                    GlobalAssetConfig.Instance = t;
+                    await t.OnLoad();
+                }
+
+                await ResLoader.Init();
+                await ResLoader.LaunchMod(_currentMod);
+
+                CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
+                GameSettingManager.Init();
+                await Jyx2ResourceHelper.Init();
+                LuaManager.LuaMod_Init();
+                _isSetup = true;
+                IsLoading = false;
             }
-            
-            await ResLoader.Init();
-            await ResLoader.LaunchMod(_currentMod);
-            
-            CurrentModConfig = await ResLoader.LoadAsset<MODRootConfig>("Assets/ModSetting.asset");
-            GameSettingManager.Init();
-            await Jyx2ResourceHelper.Init();
-            LuaManager.LuaMod_Init();
-            _isSetup = true;
-            IsLoading = false;
+            catch (Exception e)
+            {
+                Debug.LogError("<color=red>MOD加载出错了，请检查文件是否损坏！</color>");
+                ScreenLogger.Instance.enabled = true;
+                Jyx2_UIManager.Clear();
+                
+                SceneManager.LoadScene("0_MODLoaderScene");
+            }
         }
     }
 }
