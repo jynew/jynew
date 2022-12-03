@@ -28,17 +28,17 @@ namespace Editor
         private const string StreamingAssetsDir = "Assets/StreamingAssets";
 
         
-        [MenuItem("一键打包/*Windows64")]
+        [MenuItem("一键打包/Windows64")]
         private static void BuildWindows()
         {
             new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "wuxia_launch.exe");
         }
-        [MenuItem("一键打包/*Windows64 Dev")]
+        [MenuItem("一键打包/Windows64 Dev")]
         private static void BuildWindowsDev()
         {
             new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "wuxia_launch.exe", BuildOptions.Development);
         }
-        [MenuItem("一键打包/*Android")]
+        [MenuItem("一键打包/Android")]
         private static void BuildAndroid()
         {
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
@@ -48,7 +48,7 @@ namespace Editor
             PlayerSettings.Android.keyaliasPass = "123456";
             new JynewBuilder().Build(BuildTarget.Android, "", apkName);
         }
-        [MenuItem("一键打包/*Android Dev")]
+        [MenuItem("一键打包/Android Dev")]
         private static void BuildAndroidDev()
         {
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
@@ -59,7 +59,7 @@ namespace Editor
             new JynewBuilder().Build(BuildTarget.Android, "", apkName, BuildOptions.Development);
         }
 
-        [MenuItem("一键打包/*MacOS")]
+        [MenuItem("一键打包/MacOS")]
         private static void BuildMac()
         {
 #if UNITY_STANDALONE_OSX
@@ -71,7 +71,7 @@ namespace Editor
             new JynewBuilder().Build(BuildTarget.StandaloneOSX, "", outputName);
         }
         
-        [MenuItem("一键打包/*MacOS Dev")]
+        [MenuItem("一键打包/MacOS Dev")]
         private static void BuildMacDev()
         {
 #if UNITY_STANDALONE_OSX
@@ -83,13 +83,13 @@ namespace Editor
             new JynewBuilder().Build(BuildTarget.StandaloneOSX, "", outputName, BuildOptions.Development);
         }
         
-        [MenuItem("一键打包/*iOS")]
+        [MenuItem("一键打包/iOS")]
         private static void BuildIOS()
         {
             new JynewBuilder().Build(BuildTarget.iOS, "iOSBuild", "");
         }
         
-        [MenuItem("一键打包/*iOS Dev")]
+        [MenuItem("一键打包/iOS Dev")]
         private static void BuildIOSDev()
         {
             new JynewBuilder().Build(BuildTarget.iOS, "iOSBuild", "", BuildOptions.Development);

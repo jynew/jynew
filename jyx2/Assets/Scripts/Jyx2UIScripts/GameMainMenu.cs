@@ -74,7 +74,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	void JudgeShowReleaseNotePanel()
 	{
 		//每个更新显示一次 这里就不用Jyx2_PlayerPrefs了
-		string key = "RELEASENOTE_" + Application.version;
+		string key = "RELEASENOTE_" + RuntimeEnvSetup.CurrentModId + "_" + Application.version;
 		if (!PlayerPrefs.HasKey(key))
 		{
 			ReleaseNote_Panel.gameObject.SetActive(true);

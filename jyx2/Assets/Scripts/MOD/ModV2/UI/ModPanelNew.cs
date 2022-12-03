@@ -92,6 +92,15 @@ namespace MOD.UI
 
             m_ModTitle.text = mod.Title;
             m_ModContent.text = mod.GetContent();
+
+            if (mod is GameModManualInstalled)
+            {
+                m_RemoveButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                m_RemoveButton.gameObject.SetActive(false);
+            }
         }
 
         void OnRemove()
@@ -101,8 +110,12 @@ namespace MOD.UI
 
             if (mod is GameModManualInstalled)
             {
-                Debug.LogError("暂不支持，请手动前往删除。");
-                Tools.openURL(Application.persistentDataPath);    
+                var dir = (mod as GameModManualInstalled).Dir;
+                File.Delete(Path.Combine(dir, $"{mod.Id}.xml"));
+                File.Delete(Path.Combine(dir, $"{mod.Id}_mod"));
+                File.Delete(Path.Combine(dir, $"{mod.Id}_maps"));
+
+                DoRefresh().Forget();
             }
             //TODO :steam平台可以取消订阅
             else

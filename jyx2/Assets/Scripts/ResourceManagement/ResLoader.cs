@@ -88,7 +88,7 @@ namespace Jyx2.ResourceManagement
         public static async UniTask LaunchMod(GameModBase mod)
         {
             var modId = mod.Id.ToLower();
-            if (IsEditor())
+            if (mod is GameModEditor)
             {
                 _modList.Add(modId);
             }

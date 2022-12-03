@@ -37,18 +37,15 @@ namespace Jyx2
 
     /// <summary>
     /// lua的桥接函数
-    /// 
-    /// 注意：桥接函数都不是运行在Unity主线程中
+    ///
+    /// 都是在Unity主线程中被调用，放心食用
     /// </summary>
     [LuaCallCSharp]
     public static class Jyx2LuaBridge
     {
-        static StoryEngine storyEngine { get { return StoryEngine.Instance; } }
+        static StoryEngine storyEngine => StoryEngine.Instance;
+        static GameRuntimeData runtime => GameRuntimeData.Instance;
 
-        static Semaphore sema = new Semaphore(0, 1);
-
-        static GameRuntimeData runtime { get { return GameRuntimeData.Instance; } }
-        
         public static void LuaExecFinished(string ret)
         {
             var s = LuaExecutor.CurrentEventSourceStack.Pop();
@@ -1700,30 +1697,6 @@ namespace Jyx2
         {
             return "CustomerFlag_" + flag;
         }
-        
-        /*private static void RunInMainThread(Action run)
-        {
-            Loom.QueueOnMainThread(_ =>
-            {
-                run();
-            }, null);
-        }*/
-
-        /*/// <summary>
-        /// 等待返回
-        /// </summary>
-        private static void Wait()
-        {
-            sema.WaitOne();
-        }
-
-        /// <summary>
-        /// 下一条指令
-        /// </summary>
-        private static void Next()
-        {
-            sema.Release();
-        }*/
 
         private static int _selectResult;
 
