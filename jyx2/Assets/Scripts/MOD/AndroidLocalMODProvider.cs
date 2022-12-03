@@ -1,4 +1,4 @@
-#if UNITY_ANDROID
+#if false
 using System.Collections.Generic;
 using System.IO;
 using AndroidAuxiliary.Plugins.Auxiliary.AndroidBridge;

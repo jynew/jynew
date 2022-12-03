@@ -1,16 +1,68 @@
 ﻿using System;
+using System.Collections.Generic;
 using CSObjectWrapEditor;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using Jyx2.MOD.ModV2;
+using TMPro.EditorUtilities;
+using UnityEditor.SceneManagement;
+using XNode;
+using Tools = Jyx2.Middleware.Tools;
+
 
 namespace Editor
 {
     /// <summary>
     /// 一键打包工具
+    ///
+    /// 知大虾 20221203 重构代码
+    ///
     /// </summary>
     public static class OneKeyBuildTools
     {
+        private const string TempAbDir = "Temp/jynew";
+        private const string StreamingAssetsDir = "Assets/StreamingAssets";
+
         
+        [MenuItem("一键打包/*Windows64")]
+        private static void BuildWindows()
+        {
+            new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "jynew.exe");
+        }
+        [MenuItem("一键打包/*Windows64 Dev")]
+        private static void BuildWindowsDev()
+        {
+            new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "jynew.exe", BuildOptions.Development);
+        }
+        [MenuItem("一键打包/*Android")]
+        private static void BuildAndroid()
+        {
+            string currentDate = DateTime.Now.ToString("yyyyMMdd");
+            string apkName = $"/jynew-Android-{currentDate}.apk";
+            //动态设置keystore的密码
+            PlayerSettings.Android.keystorePass = "123456";
+            PlayerSettings.Android.keyaliasPass = "123456";
+            new JynewBuilder().Build(BuildTarget.Android, "", apkName, BuildOptions.Development);
+        }
+        
+        
+        private static void GenerateAssetBundlesInTempDirectory(BuildTarget target)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(TempAbDir);
+            if (!dirInfo.Exists)
+                dirInfo.Create();
+
+            BuildPipeline.BuildAssetBundles(TempAbDir, BuildAssetBundleOptions.ChunkBasedCompression, target);
+        }
+        
+        
+        
+        
+        /*
         [MenuItem("一键打包/Windows64")]
         private static void BuildWindows64()
         {
@@ -76,55 +128,13 @@ namespace Editor
 
             EditorUtility.DisplayDialog("打包完成", "输出目录:" + path, "确定");
         }
+        */
 
         static string[] GetScenePaths()
         {
             return new string[] {"Assets/0_GameStart.unity", "Assets/0_MainMenu.unity"};
         }
 
-        [MenuItem("一键打包/Android")]
-        private static void BuildAndroid()
-        {
-            //自动运行xLua的编译
-            Generator.GenAll();
-
-            //BUILD
-            string path = EditorUtility.SaveFolderPanel("选择打包输出目录", "", "");
-            
-            if (string.IsNullOrEmpty(path))
-                return;
-            
-            //生成ab包
-            BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.Android);
-
-
-            try
-            {
-                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
-
-                string currentDate = DateTime.Now.ToString("yyyyMMdd");
-                string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
-
-                //设置版本号
-                PlayerSettings.bundleVersion = currentDate;
-
-                //动态设置keystore的密码
-                PlayerSettings.Android.keystorePass = "123456";
-                PlayerSettings.Android.keyaliasPass = "123456";
-
-                //打包
-                BuildPipeline.BuildPlayer(GetScenePaths(), apkPath, BuildTarget.Android, BuildOptions.None);
-
-                EditorUtility.DisplayDialog("打包完成", "输出文件:" + apkPath, "确定");
-
-                AssetDatabase.Refresh();
-            }
-            catch (Exception e)
-            {
-                EditorUtility.DisplayDialog("打包出错", e.ToString(), "确定");
-                Debug.LogError(e.StackTrace);
-            }
-        }
 
         [MenuItem("一键打包/[调试用]Android仅AB包")]
         static void BuildAndroidAssetbundle()

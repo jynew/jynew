@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Jyx2.Middleware;
 using Jyx2.MOD;
+using Jyx2.MOD.ModV2;
 using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -18,6 +21,7 @@ public class MODRootConfig : ScriptableObject
     [LabelText("MOD ID（全局唯一）")] public string ModId;
 
     [LabelText("是否原生MOD（随打包一起发布）")] public bool IsNativeMod = false;
+    [LabelText("MOD版本号")] public string Version;
     
     [LabelText("MOD名称")] public string ModName;
     [LabelText("游戏MOD的根目录")] public string ModRootDir;
@@ -51,4 +55,16 @@ public class MODRootConfig : ScriptableObject
         UnityEditor.AssetDatabase.Refresh();
     }
 #endif
+    
+    public GameModInfo CreateModInfo()
+    {
+        GameModInfo info = new GameModInfo();
+        info.Id = ModId.ToLower();
+        info.Name = ModName;
+        info.Author = Author;
+        info.Version = Version;
+        info.ClientVersion = Application.version;
+        info.CreateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+        return info;
+    }
 }
