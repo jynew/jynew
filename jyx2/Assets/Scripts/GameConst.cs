@@ -160,7 +160,12 @@ public class GameConst
     }
 
     private static List<int> _levelUpExpListCache = null;
-    
+
+
+    #region 体力配置相关
+
+    #endregion
+
     [Obsolete]
     public const string UI_PREFAB_PATH = "Assets/Prefabs/Jyx2UI/{0}.prefab";
     public static Dictionary<string, PropertyItem> ProItemDic = new Dictionary<string, PropertyItem>()

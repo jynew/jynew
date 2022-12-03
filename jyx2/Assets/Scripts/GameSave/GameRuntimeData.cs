@@ -27,6 +27,11 @@ namespace Jyx2
         public string ModId;
         public string ModName;
 
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(ModId);
+        }
+
         public static GameSaveSummary Load(int index)
         {
             var summaryInfoFilePath = GetSummaryFilePath(index);
@@ -113,6 +118,10 @@ namespace Jyx2
         #endregion
 
         #region 存档数据定义
+        //存档设置一个独立版本号，用来检查兼容性
+        const int RUNTIME_VERSION_LATEST = 1;
+        public int RuntimeVersion = RUNTIME_VERSION_LATEST;
+
         //JYX2，所有的角色都放到存档里
         [SerializeField] public Dictionary<int,RoleInstance> AllRoles = new Dictionary<int,RoleInstance>();
         
@@ -251,7 +260,7 @@ namespace Jyx2
             return null;
         }
 
-		private void SaveToFile(int fileIndex)
+	private void SaveToFile(int fileIndex)
         {
             //保存存档简介
             GameSaveSummary summary = new GameSaveSummary()
@@ -264,6 +273,9 @@ namespace Jyx2
             
             //存档
             var path = GetArchiveFile(fileIndex);
+            ES3.Save("RuntimeVersion", _instance.RuntimeVersion, path);//用一个key单独存储版本号
+            //ES3.Save("ModId", RuntimeEnvSetup.CurrentModId, path);//用一个key储存Mod名称
+            ES3.Save("ModArchiveVersion", RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion, path);//用一个key储存Mod存档版本号
             ES3.Save(nameof(GameRuntimeData), this, path);
         }
 
@@ -271,21 +283,48 @@ namespace Jyx2
         {
             var path = GetArchiveFile(fileIndex);
 
+            int archiveRtVersion = -1;
+            //string archiveModId = "";
+            int archiveModVersion = -1;
+
             GameRuntimeData runtime;
 
             if (ES3.FileExists(path))
             {
+                //检查存档版本，进行兼容
+                archiveRtVersion = ES3.Load<int>("RuntimeVersion", path, -1);
+                //archiveModId = ES3.Load<int>("ModId", path, "");
+                archiveModVersion = ES3.Load<int>("ModArchiveVersion", path, -1);
                 runtime = ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), path);
             }
             else
             {
-                // TODO:没读取到则兼容旧版本，下个版本请删除代码
-                var oldSavePath = RuntimeEnvSetup.CurrentModId + "_" + string.Format(ARCHIVE_FILE_NAME, fileIndex);
-                runtime = ES3.Load<GameRuntimeData>(nameof(GameRuntimeData), oldSavePath);
+                throw new Exception($"找不到存档文件 {fileIndex}");
             }
-            
+           
+            //Debug.Log($"Runtime Version: {archiveVersion}");
+
+            var IsOutdated = (archiveRtVersion < RUNTIME_VERSION_LATEST || archiveModVersion < RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion);
+
+            if (IsOutdated)
+            {
+                UpdateOldArchive(runtime, archiveRtVersion, archiveModVersion);
+            }
+ 
             _instance = runtime;
             return runtime;
+        }
+
+        private static void UpdateOldArchive(GameRuntimeData runtime, int oldRtVersion, int oldModVersion)
+        {
+            if (oldRtVersion == -1)
+            {
+                //To Do: Runtime更新后在此填写修复代码
+                runtime.RuntimeVersion = RUNTIME_VERSION_LATEST;
+            }
+            if (oldModVersion  < RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion)
+                //Lua事件，mod作者可以通过api监听此事件来进行存档更新
+            Jyx2LuaBridge.DispatchLuaEvent("OnArchiveOutdated", runtime, oldModVersion);
         }
 
         private string GenerateSaveSummaryInfo()

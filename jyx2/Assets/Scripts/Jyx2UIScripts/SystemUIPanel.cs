@@ -63,6 +63,11 @@ public partial class SystemUIPanel : Jyx2_UIBase
 		Action<int> OnLoadSelect = (archiveIndex) =>
 		{
 			var summary = GameSaveSummary.Load(archiveIndex);
+			if (summary.IsEmpty())
+			{
+                StoryEngine.Instance.DisplayPopInfo("存档为空");
+				return;
+            }
 			if (!summary.ModId.ToLower().Equals(RuntimeEnvSetup.CurrentModId.ToLower()))
 			{
 				HidePanel();

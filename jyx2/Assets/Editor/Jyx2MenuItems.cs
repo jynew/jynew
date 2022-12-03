@@ -188,9 +188,6 @@ namespace Jyx2Editor
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
 
-                
-                
-
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 string apkPath = path + $"/jyx2AndroidBuild-{currentDate}.apk";
 
@@ -215,7 +212,13 @@ namespace Jyx2Editor
             }
         }
 
-
+        [MenuItem("一键打包/[调试用]Android仅AB包")]
+        static void BuildAndroidAssetbundle()
+        {
+            //生成ab包
+            BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.Android);
+        }
+        
         [MenuItem("一键打包/Android_Develop")]
         private static void BuildAndroid_Dev()
         {

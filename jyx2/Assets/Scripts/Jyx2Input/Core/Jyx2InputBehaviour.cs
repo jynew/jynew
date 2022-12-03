@@ -23,7 +23,9 @@ namespace Jyx2.InputCore
         [ContextMenu("打印所有手柄信息")]
         public void DumpJoySticks()
         {
-            GUIUtility.systemCopyBuffer = Jyx2_Input.GetAllJoyStickJsonData();
+            string result = Jyx2_Input.GetAllJoyStickJsonData();
+            GUIUtility.systemCopyBuffer = result;
+            Debug.Log(result);
         }
     }
 }

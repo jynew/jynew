@@ -220,12 +220,12 @@ namespace Jyx2.InputCore
                 m_PlayerMovement.SetManualMoveSpeed(0);
             }
 
-            if (Input.GetKey(KeyCode.Q))
+            if (Jyx2_Input.GetButton(Jyx2PlayerAction.RotateLeft))
             {
                 transform.RotateAround(transform.position, Vector3.up, -5);
             }
 
-            if (Input.GetKey(KeyCode.E))
+            if (Jyx2_Input.GetButton(Jyx2PlayerAction.RotateRight))
             {
                 transform.RotateAround(transform.position, Vector3.up, 5);
             }

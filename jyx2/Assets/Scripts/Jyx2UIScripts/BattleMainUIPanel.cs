@@ -114,14 +114,12 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         }
     }
 
-	public override void Update()
-	{
-        //battle action ui handles update by itself, this is calling it twice
-
-        //BattleActionUIPanel panel = FindObjectOfType<BattleActionUIPanel>();
-        //if (panel != null)
-        //    panel.Update();
-	}
+    public void SwitchAutoBattle()
+    {
+        if (!AutoBattle_Toggle.gameObject.activeInHierarchy)
+            return;
+        AutoBattle_Toggle.isOn = !AutoBattle_Toggle.isOn;
+    }
 
 	void OnHUDCreate(Transform hudTrans) 
     {
