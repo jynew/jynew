@@ -11,6 +11,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -28,7 +29,77 @@ public class GameStart : MonoBehaviour
 
 	void Start()
 	{
+		//修复存档，下个版本删掉
+		FixSaves();
+
 		StartAsync().Forget();
+	}
+
+
+	void FixSaves()
+	{
+
+#if true
+		try
+		{
+			if (!PlayerPrefs.HasKey("save_fixed_20221204_1"))
+			{
+				DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);
+				if (!dir.Exists)
+				{
+					dir.Create();
+				}
+
+				var movedDir = Path.Combine(dir.Parent.FullName, "wuxia_launch");
+				if (Directory.Exists(movedDir))
+				{
+					CopyDirectory(movedDir, dir.FullName); //迁移存档
+				}
+			
+				PlayerPrefs.SetInt("save_fixed_20221204_1", 1);
+				PlayerPrefs.Save();
+			}
+		}
+		catch (Exception e)
+		{
+			Debug.LogError(e.ToString());
+		}
+#endif
+	}
+	
+	static void CopyDirectory(string srcDir, string tgtDir)
+	{
+		DirectoryInfo source = new DirectoryInfo(srcDir);
+		DirectoryInfo target = new DirectoryInfo(tgtDir);
+
+		if (target.FullName.StartsWith(source.FullName, StringComparison.CurrentCultureIgnoreCase))
+		{
+			throw new Exception("父目录不能拷贝到子目录！");
+		}
+
+		if (!source.Exists)
+		{
+			return;
+		}
+
+		if (!target.Exists)
+		{
+			target.Create();
+		}
+
+		FileInfo[] files = source.GetFiles();
+
+		for (int i = 0; i < files.Length; i++)
+		{
+			File.Copy(files[i].FullName, target.FullName + @"\" + files[i].Name, true);
+		}
+
+		DirectoryInfo[] dirs = source.GetDirectories();
+
+		for (int j = 0; j < dirs.Length; j++)
+		{
+			CopyDirectory(dirs[j].FullName, target.FullName + @"\" + dirs[j].Name);
+		}
 	}
 
 	async UniTask StartAsync()
