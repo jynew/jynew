@@ -47,7 +47,9 @@ public partial class GameMainMenu : Jyx2_UIBase
 		//显示loading
 		var c = StartCoroutine(ShowLoading());
 		StopCoroutine(c);
-		await RuntimeEnvSetup.Setup();
+		var ret = await RuntimeEnvSetup.Setup();
+		if (ret == false)
+			return;
 		
 		LoadingText.gameObject.SetActive(false);
 		homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);

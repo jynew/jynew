@@ -1,4 +1,5 @@
 ﻿#if UNITY_STANDALONE
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -84,13 +85,20 @@ namespace Jyx2.MOD.ModV2
     public class GameModSteamWorkshopLoader : GameModLoader
     {
         public const uint SteamAppId = 2098790;
-
-        public GameModSteamWorkshopLoader()
-        {
-            if(!SteamClient.IsValid)
-                SteamClient.Init(SteamAppId);
-        }
         
+        public override void Init()
+        {
+            try
+            {
+                if (!SteamClient.IsValid)
+                    SteamClient.Init(SteamAppId);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("steam没有启动或登录，所以steamWorkShopLoader不可用。启动steam后重启游戏方可生效。");
+            }
+        }
+
         //适配老的创意工坊版本
         [XmlType("ModItem")]
         public class OldModItem
