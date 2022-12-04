@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
@@ -86,14 +87,22 @@ namespace Jyx2.MOD.ModV2
         {
             var uri = new System.Uri(Path.Combine(Application.streamingAssetsPath, path));
             UnityWebRequest request = UnityWebRequest.Get(uri);
-            await request.SendWebRequest();//读取数据
-
-            if (request.result == UnityWebRequest.Result.Success)
+            try
             {
-                return request.downloadHandler.text;
+                await request.SendWebRequest();//读取数据
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    return request.downloadHandler.text;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch(Exception ex)
             {
+                //文件不存在会导致404错误码，相关http错误WebRequest直接抛的异常
+                Debug.LogError(ex);
                 return null;
             }
         }
