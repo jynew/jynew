@@ -96,7 +96,7 @@ namespace MOD.UI
         private GameModBase GetCurrentSelectMod()
         {
             int index = m_ModListView.SelectedIndex;
-            if (index >= _allMods.Count) return null;
+            if (index < 0 || index >= _allMods.Count) return null;
             return _allMods[index];
         }
 

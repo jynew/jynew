@@ -56,8 +56,8 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		EventSystem.current.sendNavigationEvents = false;
         
         InputContextManager.Instance.AddInputContext(this);
-        //这一帧UI的A键确认了，等下一帧在响应
-		m_InputEnableFrame = Time.frameCount;
+		//这一帧UI的A键确认了，等下一帧在响应
+		m_InputEnableFrame = Time.frameCount + 1;
     }
 
     void UnRegisterInput()
@@ -178,8 +178,8 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
     
 	public bool AnalogMoved = false;
 
-	private int m_InputEnableFrame = -1;
-	public bool CanUpdate => m_InputEnableFrame != Time.frameCount;
+	private int m_InputEnableFrame = int.MaxValue;
+	public bool CanUpdate => m_InputEnableFrame <= Time.frameCount;
     
     
     private bool IsCancelBoxSelect()
