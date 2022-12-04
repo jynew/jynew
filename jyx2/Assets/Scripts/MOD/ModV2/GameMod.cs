@@ -36,6 +36,15 @@ namespace Jyx2.MOD.ModV2
             sb.AppendLine($"版本:{Info.Version}");
             sb.AppendLine($"匹配客户端版本:{Info.ClientVersion}");
             sb.AppendLine($"更新时间:{Info.CreateTime}");
+            if (IsPlatformMatch())
+            {
+                sb.AppendLine($"打包平台:{Info.Platform.ToString()}");    
+            }
+            else
+            {
+                sb.AppendLine($"<color=red>打包平台:{Info.Platform.ToString()}</color>");
+            }
+            
             sb.AppendLine($"简介:{Info.Desc}");
 
 
@@ -44,12 +53,26 @@ namespace Jyx2.MOD.ModV2
 
         public virtual string GetDesc()
         {
-            return
-                $"[{Tag}]{Info.Name}({Id})";
+            var match = IsPlatformMatch();
+            if (match)
+            {
+                return $"[{Tag}]{Info.Name}({Id})";    
+            }
+            else
+            {
+                return $"<color=red>异常</color> [{Tag}]{Info.Name}({Id})";
+            }
         }
 
         protected abstract string Tag { get; }
 
+        //是否平台符合
+        protected virtual bool IsPlatformMatch()
+        {
+            if (Info != null && !Info.Platform.IsMatchCurrentPlatform())
+                return false;
+            return true;
+        }
     }
 
     /// <summary>
@@ -72,6 +95,10 @@ namespace Jyx2.MOD.ModV2
     [XmlType]
     public class GameModInfo
     {
+        public GameModInfo()
+        {
+        }
+
         [XmlAttribute] public string Id;
         [XmlAttribute] public string Name;
         [XmlAttribute] public string Author;
@@ -82,5 +109,40 @@ namespace Jyx2.MOD.ModV2
         [XmlAttribute] public string CreateTime;
         [XmlAttribute] public string Desc;
         [XmlAttribute] public string Welcome;
+        [XmlAttribute] public int BuildPlatform;
+
+        public GameModBuildPlatform Platform
+        {
+            get => (GameModBuildPlatform) BuildPlatform;
+            set => BuildPlatform = (int) value;
+        }
+    }
+
+    public enum GameModBuildPlatform
+    {
+        Unknown = 0,
+        Windows = 1,
+        Android = 2,
+        IOS = 3,
+        MacOS = 4,
+    }
+
+    public static class GameModBuildPlatformHelper
+    {
+        public static bool IsMatchCurrentPlatform(this GameModBuildPlatform platform)
+        {
+            if (platform == GameModBuildPlatform.Unknown) return true;
+            
+            #if UNITY_STANDALONE_WIN
+            if (platform != GameModBuildPlatform.Windows) return false;
+#elif UNITY_STANDALONE
+            if (platform != GameModBuildPlatform.MacOS) return false;
+#elif UNITY_ANDROID
+            if (platform != GameModBuildPlatform.Android) return false;
+#elif UNITY_IOS
+            if (platform != GameModBuildPlatform.IOS) return false;
+#endif
+            return true;
+        }
     }
 }

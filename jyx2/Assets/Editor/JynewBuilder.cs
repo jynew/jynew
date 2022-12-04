@@ -51,7 +51,7 @@ namespace Editor
                 }
                 
                 //生成原生MOD的索引文件
-                var nativeMods = BuildNativeModsIndexFiles();
+                var nativeMods = BuildNativeModsIndexFiles(target);
 
                 //生成xlua
                 Generator.GenAll();
@@ -80,7 +80,7 @@ namespace Editor
             }
         }
 
-        private List<string> BuildNativeModsIndexFiles()
+        private List<string> BuildNativeModsIndexFiles(BuildTarget target)
         {
             List<string> nativeMods = new List<string>();
             var editorModLoader = new GameModEditorLoader();
@@ -94,6 +94,22 @@ namespace Editor
                 if (modConfig == null) continue; 
 
                 var modInfo = modConfig.CreateModInfo();
+
+                switch (target)
+                {
+                    case BuildTarget.Android: modInfo.Platform = GameModBuildPlatform.Android;
+                        break;
+                    case BuildTarget.StandaloneWindows64: modInfo.Platform = GameModBuildPlatform.Windows;
+                        break;
+                    case BuildTarget.StandaloneOSX: modInfo.Platform = GameModBuildPlatform.MacOS;
+                        break;
+                    case BuildTarget.iOS: modInfo.Platform = GameModBuildPlatform.IOS;
+                        break;
+                    default:
+                        modInfo.Platform = GameModBuildPlatform.Unknown;
+                        break;
+                }
+                
                 var xmlContent = Tools.SerializeXML(modInfo);
                 
                 //给临时目录也写一份

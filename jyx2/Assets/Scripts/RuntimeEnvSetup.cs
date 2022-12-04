@@ -41,9 +41,12 @@ namespace Jyx2
             CurrentModConfig = null;
             _currentMod = null;
             IsLoading = false;
+            _successInited = false;
             LuaManager.Clear();
             GameConfigDatabase.ForceClear();
         }
+
+        static private bool _successInited = false;
         
         public static async UniTask<bool> Setup()
         {
@@ -55,7 +58,7 @@ namespace Jyx2
                 {
                     //同时调用了Setup的地方都应该挂起
                     await UniTask.WaitUntil(() => _isSetup);
-                    return false;
+                    return _successInited;
                 }
 
                 IsLoading = true;
@@ -79,6 +82,7 @@ namespace Jyx2
                 LuaManager.LuaMod_Init();
                 _isSetup = true;
                 IsLoading = false;
+                _successInited = true;
                 return true;
             }
             catch (Exception e)
@@ -87,6 +91,7 @@ namespace Jyx2
                 Debug.LogError(e.ToString());
                 ScreenLogger.Instance.enabled = true;
                 ModPanelNew.SwitchSceneTo();
+                _successInited = false;
                 return false;
             }
         }

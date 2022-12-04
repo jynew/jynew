@@ -25,6 +25,11 @@ namespace Jyx2.MOD.ModV2
             return await AssetBundle.LoadFromFileAsync(path);
         }
 
+        public override string GetDesc()
+        {
+            return base.GetDesc();
+        }
+
         protected override string Tag => "手动安装";
     }
     
