@@ -216,7 +216,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 
         if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIConfirm))
 		{
-			if (AnalogMoved)
+			if (AnalogMoved && !IsRoleStandingInBlock(CurPosX, CurPosY))
 			{
 				var selectedBlock =  _currentBattlebox.GetBlockData(CurPosX, CurPosY);
 				if (selectedBlock != null && !selectedBlock.Inaccessible)
@@ -250,6 +250,14 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		if (TrySelectNewBlock(CurPosX, newPosY))
 			CurPosY = newPosY;
     }
+
+	public bool IsRoleStandingInBlock(int x, int y)
+    {
+		var battleModel = BattleManager.Instance.GetModel();
+		if (battleModel == null)
+			return false;
+		return battleModel.BlockHasRole(x, y);
+	}
 
 
 	private bool TrySelectNewBlock(int newX, int newY)

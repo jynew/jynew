@@ -63,11 +63,11 @@ namespace Jyx2.InputCore
         [LabelText("向右旋转")]
         RotateRight = 18,
 
-        [LabelText("向右旋转")]
+        [LabelText("摄像机水平移动")]
         CameraMoveX = 19,
 
 
-        [LabelText("向右旋转")]
+        [LabelText("摄像机垂直移动")]
         CameraMoveY = 20,
     }
     

@@ -265,7 +265,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
     {
         _ActiveButtons.Clear();
         _ActiveButtons.AddRange(RightActionBtns.Where(btn => btn.gameObject.activeSelf));
-        NavigateUtil.SetUpNavigation(_ActiveButtons, _ActiveButtons.Count, 1);
+        NavigateUtil.SetUpNavigation(_ActiveButtons, _ActiveButtons.Count, 1, true);
     }
 
 
