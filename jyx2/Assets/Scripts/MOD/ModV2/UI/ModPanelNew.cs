@@ -7,6 +7,7 @@ using Jyx2.Middleware;
 using Jyx2.MOD.ModV2;
 using UIWidgets;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -35,11 +36,24 @@ namespace MOD.UI
 
         private readonly List<GameModBase> _allMods = new List<GameModBase>();
         
+        /// 所有注册的MOD加载器
+        private List<GameModLoader> _modLoaders = new List<GameModLoader>()
+        {
+            new GameModNativeLoader(),
+#if UNITY_EDITOR
+            new GameModEditorLoader(),
+#endif
+            new GameModManualInstalledLoader(),
+#if UNITY_STANDALONE
+            new GameModSteamWorkshopLoader(),
+#endif
+        };
         void Awake()
         {
             m_LaunchButton.onClick.AddListener(OnLanuch);
             m_RefreshButton.onClick.AddListener(OnClickedRefresh);
             m_ModListView.OnSelect.AddListener(OnItemSelect);
+            m_ModListView.ItemsEvents.DoubleClick.AddListener(DoubleClickedListViewItem);
             m_RemoveButton.onClick.AddListener(OnRemove);
             m_AddButton.onClick.AddListener(OnAdd);
             m_CloseButton.onClick.AddListener(OnQuit);
@@ -49,6 +63,17 @@ namespace MOD.UI
 #else
             m_SteamWorkshopButton.gameObject.SetActive(false);
 #endif
+            
+            foreach (var gameModLoader in _modLoaders)
+            {
+                gameModLoader.Init();
+            }
+        }
+
+        private void DoubleClickedListViewItem(int index, ListViewItem arg1, PointerEventData arg2)
+        {
+            m_ModListView.SelectedIndex = index;
+            OnLanuch();
         }
 
         void OnQuit()
@@ -147,17 +172,6 @@ namespace MOD.UI
             DoRefresh().Forget();
         }
 
-        private List<GameModLoader> _modLoaders = new List<GameModLoader>()
-        {
-            new GameModNativeLoader(),
-#if UNITY_EDITOR
-            new GameModEditorLoader(),
-#endif
-            new GameModManualInstalledLoader(),
-#if UNITY_STANDALONE
-            new GameModSteamWorkshopLoader(),
-#endif
-        };
         
 
         async UniTask DoRefresh()
@@ -167,10 +181,17 @@ namespace MOD.UI
             _allMods.Clear();
             foreach (var modLoader in _modLoaders)
             {
-                foreach (var mod in await modLoader.LoadMods())
+                try
                 {
-                    _allMods.Add(mod);
-                    m_ModListView.Add(mod.GetDesc());
+                    foreach (var mod in await modLoader.LoadMods())
+                    {
+                        _allMods.Add(mod);
+                        m_ModListView.Add(mod.GetDesc());
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"mod Loader({modLoader.GetType().ToString()})加载出错:" + e.ToString());
                 }
             }
 

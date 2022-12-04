@@ -31,6 +31,8 @@ namespace Jyx2
             _currentMod = mod;
         }
 
+        public static GameModBase GetCurrentMod() => _currentMod;
+
         public static bool IsLoading { get; private set; } = false;
 
         public static void ForceClear()
@@ -43,9 +45,9 @@ namespace Jyx2
             GameConfigDatabase.ForceClear();
         }
         
-        public static async UniTask Setup()
+        public static async UniTask<bool> Setup()
         {
-            if (_isSetup) return;
+            if (_isSetup) return false;
 
             try
             {
@@ -53,7 +55,7 @@ namespace Jyx2
                 {
                     //同时调用了Setup的地方都应该挂起
                     await UniTask.WaitUntil(() => _isSetup);
-                    return;
+                    return false;
                 }
 
                 IsLoading = true;
@@ -77,12 +79,15 @@ namespace Jyx2
                 LuaManager.LuaMod_Init();
                 _isSetup = true;
                 IsLoading = false;
+                return true;
             }
             catch (Exception e)
             {
                 Debug.LogError("<color=red>MOD加载出错了，请检查文件是否损坏！</color>");
+                Debug.LogError(e.ToString());
                 ScreenLogger.Instance.enabled = true;
                 ModPanelNew.SwitchSceneTo();
+                return false;
             }
         }
     }

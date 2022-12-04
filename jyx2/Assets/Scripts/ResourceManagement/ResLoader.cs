@@ -53,11 +53,13 @@ namespace Jyx2.ResourceManagement
         {
             foreach (var ab in _modAssets.Values)
             {
+                if (ab == null) continue;
                 ab.Unload(true);
             }
 
             foreach (var ab in _modScenes.Values)
             {
+                if (ab == null) continue;
                 ab.Unload(true);
             }
                 

@@ -58,6 +58,11 @@ namespace Jyx2.MOD.ModV2
     public abstract class GameModLoader
     {
         public abstract UniTask<List<GameModBase>> LoadMods();
+
+        public virtual void Init()
+        {
+            //do nothing..
+        }
     }
     
 

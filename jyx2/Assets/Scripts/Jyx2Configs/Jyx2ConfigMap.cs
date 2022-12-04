@@ -33,7 +33,8 @@ namespace Jyx2Configs
         //标签
         [ProtoMember(6)]
         public string Tags;
-
+        
+        
         /// <summary>
         /// 获取标签数据，以半角的冒号分割
         /// </summary>
