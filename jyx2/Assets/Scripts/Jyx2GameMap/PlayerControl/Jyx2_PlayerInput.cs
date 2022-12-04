@@ -9,7 +9,11 @@ namespace Jyx2.InputCore
     public class Jyx2_PlayerInput : MonoBehaviour,IJyx2_InputContext
     {
 
+        private int m_EnableFrame = int.MaxValue;
+
         public bool CanUpdate => Jyx2_Input.IsPlayerContext;
+
+        private bool IsValidFrame => m_EnableFrame <= Time.frameCount;
 
 
         //寻路终点图标
@@ -40,6 +44,7 @@ namespace Jyx2.InputCore
         void OnEnable()
         {
             InputContextManager.Instance.AddInputContext(this, true);
+            m_EnableFrame = Time.frameCount + 1;
         }
 
         void OnDisable()

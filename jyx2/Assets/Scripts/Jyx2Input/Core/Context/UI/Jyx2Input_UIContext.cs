@@ -17,16 +17,16 @@ namespace Jyx2.InputCore.UI
         [LabelText("手动控制激活时的UI对象选择")]
         private bool m_ManualControlSelect = false;
 
-        private int m_EnableFrame = -1;
-        private bool IsEnableFrame => m_EnableFrame == Time.frameCount;
+        private int m_EnableFrame = int.MaxValue;
+        private bool IsValidFrame => m_EnableFrame <= Time.frameCount;
 
-        public override bool CanUpdate => !IsEnableFrame;
+        public override bool CanUpdate => IsValidFrame;
 
         protected override void OnEnable()
         {
             base.OnEnable();
             //避免相同按键在同一帧多次响应多个UIContext
-            m_EnableFrame = Time.frameCount;
+            m_EnableFrame = Time.frameCount + 1;
         }
 
         public bool NoValidSelect
