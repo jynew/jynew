@@ -42,7 +42,7 @@ namespace Jyx2.MOD.ModV2
             }
             else
             {
-                sb.AppendLine($"<color=red>打包平台:{Info.Platform.ToString()}</color>");
+                sb.AppendLine($"<color=red>打包平台:{Info.Platform.ToString()} 与当前平台不匹配，强制启动可能导致错误</color> ");
             }
             
             sb.AppendLine($"简介:{Info.Desc}");
