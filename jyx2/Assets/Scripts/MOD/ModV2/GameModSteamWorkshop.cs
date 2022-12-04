@@ -72,7 +72,14 @@ namespace Jyx2.MOD.ModV2
 
             sb.AppendLine();
             sb.AppendLine($"{SteamItem.Description}");
-            
+
+            if (Info != null)
+            {
+                sb.AppendLine("------------------");
+                sb.AppendLine("模组基础打包信息");
+                sb.AppendLine(base.GetContent());    
+            }
+
             return sb.ToString();
         }
 
