@@ -31,6 +31,8 @@ namespace Jyx2
             _currentMod = mod;
         }
 
+        public static GameModBase GetCurrentMod() => _currentMod;
+
         public static bool IsLoading { get; private set; } = false;
 
         public static void ForceClear()

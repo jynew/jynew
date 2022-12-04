@@ -46,6 +46,12 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	async void Save()
 	{
+		if (!LevelMaster.IsInWorldMap && RuntimeEnvSetup.CurrentModConfig != null && RuntimeEnvSetup.CurrentModConfig.EnableSaveBigMapOnly)
+		{
+			StoryEngine.Instance.DisplayPopInfo("本MOD只允许在大地图进行存档");
+			return;
+		}
+
 		Action<int> OnSave = (idx) =>
 		{
 			if (LevelMaster.Instance != null)

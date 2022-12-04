@@ -35,6 +35,18 @@ namespace MOD.UI
 
         private readonly List<GameModBase> _allMods = new List<GameModBase>();
         
+        /// 所有注册的MOD加载器
+        private List<GameModLoader> _modLoaders = new List<GameModLoader>()
+        {
+            new GameModNativeLoader(),
+#if UNITY_EDITOR
+            new GameModEditorLoader(),
+#endif
+            new GameModManualInstalledLoader(),
+#if UNITY_STANDALONE
+            new GameModSteamWorkshopLoader(),
+#endif
+        };
         void Awake()
         {
             m_LaunchButton.onClick.AddListener(OnLanuch);
@@ -147,17 +159,6 @@ namespace MOD.UI
             DoRefresh().Forget();
         }
 
-        private List<GameModLoader> _modLoaders = new List<GameModLoader>()
-        {
-            new GameModNativeLoader(),
-#if UNITY_EDITOR
-            new GameModEditorLoader(),
-#endif
-            new GameModManualInstalledLoader(),
-#if UNITY_STANDALONE
-            new GameModSteamWorkshopLoader(),
-#endif
-        };
         
 
         async UniTask DoRefresh()
