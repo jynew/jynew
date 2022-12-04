@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(QuickTouch))]
-public class QuickTouchInspector : Editor {
+public class QuickTouchInspector : UnityEditor.Editor {
 
 	public override void OnInspectorGUI(){
 		

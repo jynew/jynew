@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2.MOD;
@@ -12,6 +13,8 @@ public class ReleaseNotePanel : MonoBehaviour
 {
     //public AssetReferenceT<TextAsset> refReleaseNote;
     public Text text;
+
+    public bool IsPlatform = false;
     
     public async UniTask Show()
     {
@@ -24,8 +27,17 @@ public class ReleaseNotePanel : MonoBehaviour
         //---------------------------------------------------------------------------
         //---------------------------------------------------------------------------
 
-        var t = await ResLoader.LoadAsset<TextAsset>("Assets/BuildSource/RELEASE_NOTE.txt");
-        text.text = t.text;
+        if (IsPlatform)
+        {
+            var t = Resources.Load<TextAsset>("RELEASE_NOTE_PLATFORM");
+            text.text = t.text;
+        }
+        else
+        {
+            var t = await ResLoader.LoadAsset<TextAsset>("Assets/BuildSource/RELEASE_NOTE.txt");
+            text.text = t.text;    
+        }
+        
     }
 
     private void OnEnable()

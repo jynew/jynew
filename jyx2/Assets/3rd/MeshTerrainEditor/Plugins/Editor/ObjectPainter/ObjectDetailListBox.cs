@@ -39,6 +39,12 @@ namespace MTE
             {
                 GUI.DrawTexture(rect, previewTexture);
             }
+
+            var textRect = buttonRect;
+            var rectMin = textRect.min;
+            rectMin.y = rect.max.y - EditorStyles.miniBoldLabel.lineHeight;
+            textRect.min = rectMin;
+            GUI.Label(textRect, detail.Object.name, EditorStyles.miniBoldLabel);
         }
 
         protected override void SaveDetailList()

@@ -87,28 +87,29 @@ public class GraphicSetting : MonoBehaviour
 
     void Awake()
     {
+#if UNITY_ANDROID || UNITY_IOS
+        HasFog = 0;
+        HasPost = 0;
+        HasWaterNormal = 1;
+        HasAntiAliasing = 0;
+        Vsync = 0;
+        MaxFps = MaxFpsEnum.Fps60;
+        QualityLevel = QualityLevelEnum.Low;
+        ShaderLodLevel = ShaderLodLevelEnum.Low;
+        ShadowQuality = ShadowQuality.Disable;
+        ShadowShowLevel = ShadowShowLevelEnum.Team;
+#else
         HasFog = 1;
         HasPost = 1;
         HasWaterNormal = 1;
         HasAntiAliasing = 1;
         Vsync = 1;
-#if UNITY_EDITOR
-
-        MaxFps = MaxFpsEnum.Fps200;
-        QualityLevel = QualityLevelEnum.High;
-        ShaderLodLevel = ShaderLodLevelEnum.High;
-        ShadowQuality = ShadowQuality.All;
-
-#else
-
         MaxFps = MaxFpsEnum.Fps120;
-        QualityLevel = QualityLevelEnum.High;
+        QualityLevel = QualityLevelEnum.Extreme;
         ShaderLodLevel = ShaderLodLevelEnum.High;
         ShadowQuality = ShadowQuality.All;
-
+        ShadowShowLevel = ShadowShowLevelEnum.All;
 #endif
-
-        ShadowShowLevel = ShadowShowLevelEnum.Team;
     }
 
     public void Save()

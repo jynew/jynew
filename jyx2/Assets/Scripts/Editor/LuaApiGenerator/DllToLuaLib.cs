@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using ICSharpCode.SharpZipLib.Zip;
 
-public class DllToLuaLib : Editor {
+public class DllToLuaLib : UnityEditor.Editor {
 
 	private static string[] LUA_KEYWORDS = { "local", "function", "end", "then" };
 	private static string[] DLL_NAMES = {

@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
+using Jyx2.MOD.ModV2;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Jyx2.ResourceManagement
 {
@@ -20,9 +23,6 @@ namespace Jyx2.ResourceManagement
         /// 调试接口，打开即在editor下使用assetbundle调试，需要先build
         /// </summary>
         private const bool UseAbInEditor = false;
-
-        private static string AbDir => Application.streamingAssetsPath;
-        
         private const string BaseAbName = "base_assets";
         
         private static readonly Dictionary<string, AssetBundle> _modAssets = new Dictionary<string, AssetBundle>();
@@ -76,7 +76,7 @@ namespace Jyx2.ResourceManagement
             else
             {
                 //加载基础包
-                var ab = await LoadAssetBundleAsync(AbDir, BaseAbName);
+                var ab = await LoadAssetBundleFromStreamingAssets(BaseAbName);
                 foreach (var assetName in ab.GetAllAssetNames())
                 {
                     _assetsMap[assetName.ToLower()] = ("", assetName.ToLower());
@@ -85,23 +85,17 @@ namespace Jyx2.ResourceManagement
             }
         }
 
-
-        /// <summary>
-        /// 加载MOD
-        /// </summary>
-        /// <param name="currentModId"></param>
-        /// <param name="dir"></param>
-        public static async UniTask LoadMod(string currentModId, string dir)
+        public static async UniTask LaunchMod(GameModBase mod)
         {
-            var modId = currentModId.ToLower();
-            if (IsEditor())
+            var modId = mod.Id.ToLower();
+            if (mod is GameModEditor)
             {
                 _modList.Add(modId);
             }
             else
             {
-                AssetBundle modAssetsAb = await LoadAssetBundleAsync(dir, $"{modId}_mod");
-                AssetBundle modScenesAb = await LoadAssetBundleAsync(dir, $"{modId}_maps");
+                AssetBundle modAssetsAb = await mod.LoadModAb();
+                AssetBundle modScenesAb = await mod.LoadModMap();
                 _modAssets[modId] = modAssetsAb;
                 _modScenes[modId] = modScenesAb;
             
@@ -113,7 +107,6 @@ namespace Jyx2.ResourceManagement
                     _assetsMap[url] = (modId, assetName);
                 }
             
-            
                 foreach (var sceneName in modScenesAb.GetAllScenePaths())
                 {
                     var lowSceneName = sceneName.ToLower();
@@ -124,13 +117,11 @@ namespace Jyx2.ResourceManagement
                 }
             }
         }
+        
 
-
-        private static async UniTask<AssetBundle> LoadAssetBundleAsync(string dir, string filename)
+        private static async UniTask<AssetBundle> LoadAssetBundleFromStreamingAssets(string filename)
         {
-            string path = Path.Combine(dir, filename);
-            
-            //20221126 知大虾：为了这里可以测试，暂时先改为从StreamingAssets目录进行加载，待实现为一并扫描加载安卓SD卡中目录
+            string path = Path.Combine(Application.streamingAssetsPath, filename);
             
 #if UNITY_ANDROID && !UNITY_EDITOR
             path = "jar:file://" + Application.dataPath + "!/assets/" + filename;

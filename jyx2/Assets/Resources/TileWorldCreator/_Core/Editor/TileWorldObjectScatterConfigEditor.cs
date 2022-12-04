@@ -6,7 +6,7 @@ using System.IO;
 using TileWorld;
 
 [CustomEditor(typeof(TileWorldObjectScatterConfiguration), true)]
-public class TileWorldObjectScatterConfigEditor : Editor {
+public class TileWorldObjectScatterConfigEditor : UnityEditor.Editor {
 
     TileWorldObjectScatterConfiguration config;
     static TileWorldObjectScatter twos;

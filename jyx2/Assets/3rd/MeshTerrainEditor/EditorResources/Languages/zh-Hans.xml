@@ -132,6 +132,7 @@ GrassLoader</AttachGrassLoader>
 按Esc重新选择</MeshMisc_Description>
   <Info_ToolDescription_DeleteVertices>删除选中的顶点（只删除相连的面）。含有顶点颜色组件的对象会被忽略。</Info_ToolDescription_DeleteVertices>
   <Warning_CannotCutHolesOnAVertexColoredMesh>不能在附加有顶点颜色组件的对象上挖洞</Warning_CannotCutHolesOnAVertexColoredMesh>
+  <Info_SwapQuadSplitDirection>按“S”键，修改鼠标处高亮格子的划分方向。</Info_SwapQuadSplitDirection>
   <TextureArrayPainter_Header>绘制地形纹理(数组)-测试版</TextureArrayPainter_Header>
   <TextureArrayPainter_Description>选择贴图，点击、拖动鼠标绘制</TextureArrayPainter_Description>
   <Info_TextureArrayPainter_NoSplatTextureFoundOnSelectedObject>没有在选中的对象上找到纹理贴图数组。</Info_TextureArrayPainter_NoSplatTextureFoundOnSelectedObject>
@@ -200,12 +201,14 @@ GrassLoader</AttachGrassLoader>
 	<TextureChannelPacker_Description>将多张单通道8bit贴图打包到一张RGBA32bit格式的贴图中</TextureChannelPacker_Description>
 	<TextureSize>贴图大小</TextureSize>
   <LayerNumber>层数</LayerNumber>
-  <PBRTextureArraySettings_Description>每层的粗糙度、法线和AO贴图合并到一张贴图中： R通道是粗糙度，GB通道是法线，A通道是AO，然后将所有合并的贴图填充到一个纹理数组中；所有Albedo颜色贴图也会被填充到一个纹理数组中。</PBRTextureArraySettings_Description>
+  <PBRTextureArraySettings_Description_Color>所有层的颜色贴图会被打包到一个纹理数组中。</PBRTextureArraySettings_Description_Color>
+  <PBRTextureArraySettings_Description_ColorAndNormal>所有层的颜色贴图会被打包到一个纹理数组中；所有层的法线贴图会被打包到另一个纹理数组中。</PBRTextureArraySettings_Description_ColorAndNormal>
+  <PBRTextureArraySettings_Description_PBR>每层的粗糙度、法线和AO贴图合并到一张贴图中： R通道是粗糙度，GB通道是法线，A通道是AO，然后将所有合并的贴图填充到一个纹理数组中；所有Albedo颜色贴图也会被填充到一个纹理数组中。</PBRTextureArraySettings_Description_PBR>
   <Tooltip_TextureArrayMode>只用颜色贴图？或者颜色和法线贴图？或者PBR贴图：颜色（Albedo）、法线、粗糙度和AO贴图？</Tooltip_TextureArrayMode>
   <Tooltip_TextureModeColor>只用颜色贴图。</Tooltip_TextureModeColor>
   <Tooltip_TextureModeColorAndNormal>用颜色和法线贴图。</Tooltip_TextureModeColorAndNormal>
   <Tooltip_TextureModePBR>用PBR贴图，包括颜色（Albedo）、法线、粗糙度和AO贴图。</Tooltip_TextureModePBR>
-  <Info_ColorOrColorNormalTextureArrayLimitation>目前暂时，当使用“Color”或“ColorNormal”贴图数组模式，只有自动和自定义shader类型可用。</Info_ColorOrColorNormalTextureArrayLimitation>
+  <Info_ColorOrColorNormalTextureArrayLimitation>当使用“Color”或“ColorNormal”贴图数组模式时，只有自动和自定义shader类型可用。</Info_ColorOrColorNormalTextureArrayLimitation>
   <Info>信息</Info>
   <Warning>提示</Warning>
   <Error>错误</Error>
@@ -273,6 +276,8 @@ GrassLoader</AttachGrassLoader>
   <WeightMaps>权重图</WeightMaps>
   <Shader>Shader</Shader>
 	<TextureArrayMode>贴图数组的组成模式</TextureArrayMode>
+  <Vertex>顶点</Vertex>
+  <Quad>格子</Quad>
   <Yes>是</Yes>
   <No>否</No>
   <OK>确定</OK>
@@ -316,7 +321,12 @@ GrassLoader</AttachGrassLoader>
   <DelayUntil7DaysLater>推迟7天</DelayUntil7DaysLater>
   <AutoCheckForUpdates>自动检查更新</AutoCheckForUpdates>
   <BrowseToAsset>定位资产位置</BrowseToAsset>
-  <UseTextureArray>使用贴图数组</UseTextureArray>
+  <UseTextureArray>使用贴图数组</UseTextureArray>	
+  <UseSmoothness>使用光滑度</UseSmoothness>
+  <Info_UseSmoothness>当地形层有MaskMap时，在转换后的材质中使用光滑度贴图。 Smoothness(光滑度) = 1.0 - Roughness(粗糙度).</Info_UseSmoothness>
+  <Info_UseRoughness>当地形层有MaskMap时，在转换后的材质中使用粗糙度贴图。Roughness(粗糙度) = 1.0 - Smoothness(光滑度).</Info_UseRoughness>
+  <BreakMaskMap>打散mask-map</BreakMaskMap>
+  <Info_BreakMaskMap>提取每个地形层的mask-map为分开的贴图，它们可以在之后用于MTE地表的材质。</Info_BreakMaskMap>
   <Tooltip_AdjustControlMap>修改控制图的尺寸；纵向或横向翻转它</Tooltip_AdjustControlMap>
   <Info_AutoSaveMeshImmediately>鼠标释放时，修改过的MTE地表模型将会被自动保存。如果编辑器有明显卡顿，请到设置中关闭“自动保存模型”。注意启用自动保存后，撤销重做功能会失效。</Info_AutoSaveMeshImmediately>
   <Info_AutoSaveMeshWithInterval>每隔设置的分钟数，修改过的MTE地表模型将会被自动保存。注意启用定时自动保存后，撤销重做功能会不稳定。</Info_AutoSaveMeshWithInterval>
@@ -368,7 +378,7 @@ PageDown  重做 (Mac: Fn+Down)
   <Forum>论坛</Forum>
   <InstantMessaging>QQ群</InstantMessaging>
   <EmailAuthor>向作者发邮件</EmailAuthor>
-  <CopyInfo>© 2016-2021 邹维. 保留所有权利.</CopyInfo>
+  <CopyInfo>© 2016-2022 邹维. 保留所有权利.</CopyInfo>
   <About_AuthorWebsiteLink>https://zwcloud.net</About_AuthorWebsiteLink>
   <BuyLink>https://assetstore.unity.com/packages/tools/terrain/mesh-terrain-editor-pro-57515</BuyLink>
   <ForumLink>https://connect.unity.com/messages/pj/5c455c0bedbc2a70e68c8153</ForumLink>
@@ -389,7 +399,7 @@ PageDown  重做 (Mac: Fn+Down)
   <FeatureRequestAndBugReportDescription>提议实现新功能或修改当前功能；提交bug报告到问题跟踪器。</FeatureRequestAndBugReportDescription>
   <Video>视频</Video>
   <VideoDescription>Mesh Terrain Editor的介绍视频。</VideoDescription>
-  <Short_CopyInfo>© 2016-2021 邹维</Short_CopyInfo>
+  <Short_CopyInfo>© 2016-2022 邹维</Short_CopyInfo>
   <IssueTrackerLink>https://github.com/zwcloud/MeshTerrainEditor-issues/issues</IssueTrackerLink>
   <VideoLink>https://space.bilibili.com/375686/#/channel/detail?cid=12959</VideoLink>
   <ShowWelcomeAtStartUp>在启动时显示欢迎窗口。</ShowWelcomeAtStartUp>
@@ -400,7 +410,8 @@ PageDown  重做 (Mac: Fn+Down)
 
 也可以稍后再保存，但如果在保存前就关闭了Unity3D，您的修改就会丢失。</Warning_MeshIsNotSaved>
   <Warning_PleaseSelectAPathInsideAssets>请选择一个在"Assets"目录下的路径。</Warning_PleaseSelectAPathInsideAssets>
-  <Warning_TextureCountNotSupported>选择的地形的贴图数量不是2/3/4/5，请删除或添加贴图到2/3/4/5张后再试。</Warning_TextureCountNotSupported>
+  <Warning_TextureCountNotSupported>选择的地形的层贴图数量不是2/3/4/5，请增减贴图到2/3/4/5张后再试。如果想要使用多于5层贴图，请选中“使用贴图数组”，它可支持2~12层贴图。</Warning_TextureCountNotSupported>
+  <Warning_TextureCountNotSupportedForTextureArray>选择的地形的贴图数量不是2~12，请增减贴图到2~12张后再试。</Warning_TextureCountNotSupportedForTextureArray>
   <Warning_SelectAGameObject>请选中一个GameObject.</Warning_SelectAGameObject>
   <Warning_GrassLoaderExists>不能创建新的GrassLoader对象，场景中已经存在添加了GrassLoader组件的GameObject {0}.</Warning_GrassLoaderExists>
   <Warning_CannotAttachGrassLoaderToAGameObjectWithMeshFilter>无法向带有MeshFilter的GameObject附加GrassLoader.</Warning_CannotAttachGrassLoaderToAGameObjectWithMeshFilter>
@@ -443,7 +454,7 @@ PageDown  重做 (Mac: Fn+Down)
 错误:
 {0}</Error_AccessServerFailed>
   <Warning_ActivationFailed>激活失败：Invoice/serial无效，请检查后再试。</Warning_ActivationFailed>
-  <Info_ActivationSucceeded>Mesh Terrain Editor专业版激活成功！</Info_ActivationSucceeded>
+  <Info_ActivationSucceeded>Mesh Terrain Editor专业版激活成功！请重启Unity.</Info_ActivationSucceeded>
   <Info_ActivationHelp>若需要帮助，请先查看文档(点击问号按钮打开)。再通过 zwcloud@hotmail.com 联系作者(请在邮件中附上你的Invoice number)。或加QQ群 689511734 联系作者。</Info_ActivationHelp>
   <ManualActivationHint1>请确保你的Invoice/Serial是正确的，在可以联网的机器上用浏览器打开下面的链接地址，获得激活码，此链接地址只能用于获取激活此机器的激活码。</ManualActivationHint1>
   <ManualActivationHint2>将获得的激活码粘贴到下面</ManualActivationHint2>

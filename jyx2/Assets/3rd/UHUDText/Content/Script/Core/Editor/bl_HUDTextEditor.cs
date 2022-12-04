@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 
 [CustomEditor(typeof(bl_HUDText))]
-public class bl_HUDTextEditor : Editor
+public class bl_HUDTextEditor : UnityEditor.Editor
 {
 
     // target component

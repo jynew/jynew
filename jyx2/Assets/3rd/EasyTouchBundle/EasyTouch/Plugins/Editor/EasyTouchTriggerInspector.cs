@@ -10,7 +10,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(EasyTouchTrigger))]
-public class EasyTouchTriggerInspector : Editor {
+public class EasyTouchTriggerInspector : UnityEditor.Editor {
 
 	public override void OnInspectorGUI(){
 

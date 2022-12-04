@@ -6,7 +6,7 @@ using System.Collections;
 namespace AmplifyShaderEditor
 {
 	[CustomEditor( typeof( AmplifyShaderFunction ) )]
-	public class AmplifyShaderFunctionEditor : Editor
+	public class AmplifyShaderFunctionEditor : UnityEditor.Editor
 	{
 		AmplifyShaderFunction m_target;
 

@@ -110,22 +110,22 @@ namespace MTE
             {
                 new Hotkey(this, KeyCode.Minus, () =>
                 {
-                    BrushSize -= 1;
+                    Speed -= 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.Equals, () =>
                 {
-                    BrushSize += 1;
+                    Speed += 0.01f;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.LeftBracket, () =>
                 {
-                    Speed -= 0.01f;
+                    BrushSize -= 1;
                     MTEEditorWindow.Instance.Repaint();
                 }),
                 new Hotkey(this, KeyCode.RightBracket, () =>
                 {
-                    Speed += 0.01f;
+                    BrushSize += 1;
                     MTEEditorWindow.Instance.Repaint();
                 })
             };

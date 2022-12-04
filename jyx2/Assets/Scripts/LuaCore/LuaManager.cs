@@ -266,7 +266,7 @@ namespace Jyx2
         {
             try
             {
-                var curModDir = MODManager.Instance.GetCurrentModLuaDirectory();
+                var curModDir = RuntimeEnvSetup.CurrentModConfig.ModRootDir + "/Lua";
                 var luaFilePaths = new List<string>();
                 var luafilter = new List<string>() { ".lua" };
                 FileTools.GetAllFilePath(curModDir, luaFilePaths, luafilter);

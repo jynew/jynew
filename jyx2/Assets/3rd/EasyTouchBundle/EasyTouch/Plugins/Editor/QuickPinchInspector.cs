@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(QuickPinch))]
-public class QuickPinchInspector : Editor {
+public class QuickPinchInspector : UnityEditor.Editor {
 
 	public override void OnInspectorGUI(){
 		
