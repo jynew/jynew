@@ -231,7 +231,22 @@ namespace Jyx2Editor.BuildTool
         private void GenerateModXmlFile(MODRootConfig config)
         {
             var modId = config.ModId.ToLower().Trim();
-            var xmlContent = Tools.SerializeXML(config.CreateModInfo());
+            var modInfo = config.CreateModInfo();
+            switch (m_BuildTargetPlatForm)
+            {
+                case BuildTarget.Android: modInfo.Platform = GameModBuildPlatform.Android;
+                    break;
+                case BuildTarget.StandaloneWindows64: modInfo.Platform = GameModBuildPlatform.Windows;
+                    break;
+                case BuildTarget.StandaloneOSX: modInfo.Platform = GameModBuildPlatform.MacOS;
+                    break;
+                case BuildTarget.iOS: modInfo.Platform = GameModBuildPlatform.IOS;
+                    break;
+                default:
+                    modInfo.Platform = GameModBuildPlatform.Unknown;
+                    break;
+            }
+            var xmlContent = Tools.SerializeXML(modInfo);
             var xmlPath = Path.Combine(GetModExportDirectory(modId), modId + ".xml");
             File.WriteAllText(xmlPath, xmlContent);
         }
