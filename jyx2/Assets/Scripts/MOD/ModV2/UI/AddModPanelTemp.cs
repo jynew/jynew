@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 
 using Jyx2.MOD.ModV2;
 using UnityEngine;
@@ -21,7 +22,14 @@ namespace MOD.UI
         void Start()
         {
             var loader = new GameModManualInstalledLoader();
-            m_ModDirText.text = string.Join("\n", loader.ManualInstalledDir);
+            
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < loader.ManualInstalledDir.Length; i++)
+            {
+                sb.AppendLine(string.Format("目录{0}: {1}", i+1, loader.ManualInstalledDir[i].Replace("\\","/")));
+            }
+            //m_ModDirText.text = string.Join("\n", loader.ManualInstalledDir);
+            m_ModDirText.text = sb.ToString();
             
             m_OkBtn.onClick.AddListener(() =>
             {

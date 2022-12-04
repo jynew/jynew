@@ -38,10 +38,10 @@ namespace Jyx2.MOD.ModV2
         //手动安装的目录列表
         public string[] ManualInstalledDir => new[]
         {
-            Path.Combine(Application.persistentDataPath, "mods"),
 #if UNITY_STANDALONE_WIN
-            "mods"
+            Path.Combine(Application.dataPath, "mods"),
 #endif
+            Path.Combine(Application.persistentDataPath, "mods")
         };
 
         public override async UniTask<List<GameModBase>> LoadMods()
