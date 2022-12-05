@@ -73,6 +73,27 @@ namespace Jyx2
                     await t.OnLoad();
                 }
 
+//为了Editor内调试方便
+#if UNITY_EDITOR
+                var editorModLoader = new GameModEditorLoader();
+                var path = SceneManager.GetActiveScene().path;
+                Debug.Log("当前调试场景："+path);
+
+                if (path.Contains("Assets/Mods/"))
+                {
+                    var editorModId = path.Split('/')[2];
+                    Debug.Log("当前场景所属Mod："+ editorModId);
+
+                    foreach (var mod in await editorModLoader.LoadMods())
+                    {
+                        if (mod.Id == editorModId)
+                        {
+                            SetCurrentMod(mod);
+                            break;
+                        }
+                    }
+                }
+#endif
                 await ResLoader.Init();
                 await ResLoader.LaunchMod(_currentMod);
 
