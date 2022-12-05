@@ -131,7 +131,20 @@ public partial class SelectRolePanel : Jyx2_UIBase
         int col = RoleParent_GridLayoutGroup.constraintCount;
         int row = m_AvailableRoleItems.Count % col == 0 ? m_AvailableRoleItems.Count / col : m_AvailableRoleItems.Count / col + 1;
         NavigateUtil.SetUpNavigation(m_AvailableRoleItems, row, col);
+        SetUpRoleNavigationWithRightBtns(row, col);
         SelectDefaultRoleItem();
+    }
+
+    private void SetUpRoleNavigationWithRightBtns(int row, int col)
+    {
+        var rightItems = NavigateUtil.GetEdgeItems(m_AvailableRoleItems, row, col, NavigationDirection.Right);
+        if (rightItems.Count == 0)
+            return;
+        var newNavigation = ConfirmBtn_Button.navigation;
+        newNavigation.selectOnLeft = rightItems[0].GetSelectable();
+        newNavigation = CancelBtn_Button.navigation;
+        newNavigation.selectOnLeft = rightItems[0].GetSelectable();
+        newNavigation.selectOnLeft = rightItems[0].GetSelectable();
     }
 
     void SelectDefaultRoleItem()
