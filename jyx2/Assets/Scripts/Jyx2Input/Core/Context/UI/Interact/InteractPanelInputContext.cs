@@ -19,7 +19,8 @@ namespace  Jyx2.InputCore.UI
 
         protected override void OnEnable()
         {
-            CurrentSelect = null;
+            //if(IsPlayerControlable)
+                CurrentSelect = null;
         }
 
         protected override void OnDisable()
