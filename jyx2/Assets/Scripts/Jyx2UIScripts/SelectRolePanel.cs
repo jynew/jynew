@@ -71,6 +71,8 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
     public bool IsCancelBtnEnable => CancelBtn_Button.gameObject.activeSelf;
 
+    public bool IsAllSelectBtnEnable => AllBtn_Button.gameObject.activeSelf;
+
     public static UniTask<List<RoleInstance>> WaitForSelectConfirm(SelectRoleParams paras)
     {
         var t = new UniTaskCompletionSource<List<RoleInstance>>();
@@ -84,12 +86,17 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
     SelectRoleParams m_params;
 
+
+    private List<Selectable> m_RightButtons = new List<Selectable>();
     protected override void OnCreate()
     {
         InitTrans();
         BindListener(ConfirmBtn_Button, OnConfirmClick, false);
         BindListener(CancelBtn_Button, OnCancelClick, false);
         BindListener(AllBtn_Button, OnAllClick, false);
+        m_RightButtons.Add(ConfirmBtn_Button);
+        m_RightButtons.Add(CancelBtn_Button);
+        m_RightButtons.Add(AllBtn_Button);
     }
 
     protected override void OnShowPanel(params object[] allParams)
@@ -149,11 +156,25 @@ public partial class SelectRolePanel : Jyx2_UIBase
         var rightItems = NavigateUtil.GetEdgeItems(m_AvailableRoleItems, row, col, NavigationDirection.Right);
         if (rightItems.Count == 0)
             return;
-        var newNavigation = ConfirmBtn_Button.navigation;
-        newNavigation.selectOnLeft = rightItems[0].GetSelectable();
-        newNavigation = CancelBtn_Button.navigation;
-        newNavigation.selectOnLeft = rightItems[0].GetSelectable();
-        newNavigation.selectOnLeft = rightItems[0].GetSelectable();
+
+        Navigation newNavigation;
+
+        var activeBtns = m_RightButtons.FindAll(btn => btn.gameObject.activeSelf);
+        NavigateUtil.SetUpNavigation(activeBtns, activeBtns.Count, 1, true);
+
+        foreach (var btn in activeBtns)
+        {
+            newNavigation = btn.navigation;
+            newNavigation.selectOnLeft = rightItems[0].GetSelectable();
+            btn.navigation = newNavigation;
+        }
+
+        foreach(var roleItem in rightItems)
+        {
+            newNavigation = roleItem.navigation;
+            newNavigation.selectOnRight = ConfirmBtn_Button;
+            roleItem.navigation = newNavigation;
+        }
     }
 
     void SelectDefaultRoleItem()

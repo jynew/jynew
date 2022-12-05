@@ -28,7 +28,8 @@ namespace Jyx2.InputCore.UI
 
             if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes))
             {
-                m_SelectRolePanel.OnAllClick();
+                if (m_SelectRolePanel.IsAllSelectBtnEnable)
+                    m_SelectRolePanel.OnAllClick();
             }
         }
 
