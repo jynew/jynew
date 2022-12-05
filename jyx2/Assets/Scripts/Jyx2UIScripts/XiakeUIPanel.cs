@@ -439,7 +439,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		selectParams.callback = (cbParam) =>
 		{
 			this.gameObject.SetActive(true);
-			StoryEngine.Instance.BlockPlayerControl = false;
+			StoryEngine.BlockPlayerControl = false;
 			if (cbParam.isCancelClick == true)
 			{
 				return;
@@ -474,7 +474,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 		selectParams.callback = (cbParam) =>
 		{
 			this.gameObject.SetActive(true);
-			StoryEngine.Instance.BlockPlayerControl = false;
+			StoryEngine.BlockPlayerControl = false;
 			if (cbParam.isCancelClick == true)
 			{
 				return;

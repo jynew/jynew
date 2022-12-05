@@ -199,7 +199,7 @@ public class Jyx2Player : MonoBehaviour
                 return false;
             if (Jyx2_UIManager.Instance.IsUIOpen(nameof(GameOver)))
                 return false;
-            if (StoryEngine.Instance != null && StoryEngine.Instance.BlockPlayerControl)
+            if (StoryEngine.BlockPlayerControl)
                 return false;
             if (LevelMaster.Instance != null && LevelMaster.Instance.IsFadingScene)
                 return false;

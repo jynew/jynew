@@ -54,6 +54,7 @@ namespace Jyx2.MOD.ModV2
         {
             var allMods = new List<GameModBase>();
             string samples = await GetTextForStreamingAssets("native_mods.txt");
+            if (samples.IsNullOrWhitespace()) return allMods;
             
             foreach (var line in samples.Split(','))
             {

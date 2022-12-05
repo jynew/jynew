@@ -39,8 +39,8 @@ public static class GameUtil
             selectionContent.Add(role.Name);
         }
         selectionContent.Add("取消");
-        var storyEngine = StoryEngine.Instance;
-        storyEngine.BlockPlayerControl = true;
+        //var storyEngine = StoryEngine.Instance;
+        StoryEngine.BlockPlayerControl = true;
         
         SelectRoleParams selectParams = new SelectRoleParams();
         selectParams.roleList = roles.ToList();
@@ -48,7 +48,7 @@ public static class GameUtil
         selectParams.isDefaultSelect=false;
         selectParams.callback = (cbParam) => 
         {
-            storyEngine.BlockPlayerControl = false;
+            StoryEngine.BlockPlayerControl = false;
             if (cbParam.isCancelClick == true)
             {
                 return;

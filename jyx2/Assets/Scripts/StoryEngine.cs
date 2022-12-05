@@ -27,14 +27,14 @@ public class StoryEngine : MonoBehaviour
     public bl_HUDText HUDRoot;
     
 
-    public bool BlockPlayerControl
+    public static bool BlockPlayerControl
     {
         get { return _blockPlayerControl; }
         set { _blockPlayerControl = value; }
     }
 
 
-    private bool _blockPlayerControl;
+    private static bool _blockPlayerControl;
 
     private static GameRuntimeData runtime
     {
