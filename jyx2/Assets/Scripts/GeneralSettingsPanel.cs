@@ -241,7 +241,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
     
     private void SetDifficulty(int index)
     {
-        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Difficulty, index);
+        GameSettingManager.SetGameDifficulty(index);
     }
     
     private void SetLanguage(int index)
@@ -257,11 +257,6 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
     private void SetMobileMoveMode(int index)
     {
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.MobileMoveMode, index);
-    }
-    
-    public void SetGameDifficulty(int index)
-    {
-        GameSettingManager.UpdateSetting(GameSettingManager.Catalog.Difficulty, index);
     }
 
     protected override void OnCreate()

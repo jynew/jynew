@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using i18n.TranslatorDef;
@@ -9,13 +10,24 @@ public class BigMapLocationNameDrawer : MonoBehaviour
     public GameObject m_NameTextPrefab;
     public int m_PositionSize = 6;
     public int m_LocalScaleSize = 3;
-    
-    
-    // Start is called before the first frame update
+
+    private HashSet<TextMesh> m_LocationNameObjs = new HashSet<TextMesh>();
+
+    private void Awake()
+    {
+        GameSettingManager.OnDifficultyChange += OnDifficultyChange;
+    }
+
+    private void OnDestroy()
+    {
+        GameSettingManager.OnDifficultyChange -= OnDifficultyChange;
+    }
+
     async void Start()
     {
         await RuntimeEnvSetup.Setup();
         var allLocs = FindObjectsOfType<MapTeleportor>();
+        m_LocationNameObjs.Clear();
         foreach (var loc in allLocs)
         {
             if (JudgeIfIgnoreLocationNameDisplay(loc)) continue;
@@ -23,6 +35,9 @@ public class BigMapLocationNameDrawer : MonoBehaviour
             var nameObj = Instantiate(m_NameTextPrefab);
             nameObj.transform.position = loc.transform.position + Vector3.up * m_PositionSize;
             nameObj.transform.localScale = Vector3.one * m_LocalScaleSize;
+            var txtComp = nameObj.GetComponent<TextMesh>();
+            if (txtComp == null)
+                continue;
             if (loc.name == GlobalAssetConfig.Instance.defaultHomeName)
             {
                 //---------------------------------------------------------------------------
@@ -33,14 +48,32 @@ public class BigMapLocationNameDrawer : MonoBehaviour
                 var name = GameRuntimeData.Instance.Player.Name + "居".GetContent(nameof(BigMapLocationNameDrawer));
                 //---------------------------------------------------------------------------
                 //---------------------------------------------------------------------------
-                nameObj.GetComponent<TextMesh>().text = name;
+                txtComp.text = name;
             }
             else
             {
-                nameObj.GetComponent<TextMesh>().text = loc.name;    
+                txtComp.text = loc.name;    
             }
+            m_LocationNameObjs.Add(txtComp);
+        }
+        RefreshLocationNameVisibility();
+    }
+    
+    private void OnDifficultyChange(Jyx2_GameDifficulty newDifficulty)
+    {
+        RefreshLocationNameVisibility();
+    }
+
+    private void RefreshLocationNameVisibility()
+    {
+        bool isVisible = GameSettingManager.GetDifficulty() <= (int)Jyx2_GameDifficulty.Normal;
+        foreach (var nameObj in m_LocationNameObjs)
+        {
+            //SetActive开销有点大，用缩放代替
+            nameObj.transform.localScale = isVisible ? Vector3.one * m_LocalScaleSize : Vector3.zero;
         }
     }
+
 
     /// <summary>
     /// 判断是否要跳过名字显示
