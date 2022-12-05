@@ -72,7 +72,7 @@ public static class GameUtil
     /// <param name="duration"></param>
     public static void DisplayPopinfo(string msg, float duration =2f)
     {
-        StoryEngine.Instance.DisplayPopInfo(msg, duration);
+        StoryEngine.DisplayPopInfo(msg, duration);
     }
 
     public static async void ShowFullSuggest(string content, string title = "", Action cb = null) 

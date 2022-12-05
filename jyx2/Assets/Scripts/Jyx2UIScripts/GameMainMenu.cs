@@ -126,7 +126,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 			var summary = GameSaveSummary.Load(archiveIndex);
             if (summary.IsEmpty())
             {
-                StoryEngine.Instance.DisplayPopInfo("存档为空");
+                StoryEngine.DisplayPopInfo("存档为空");
                 return;
             }
             var modId = summary.ModId.ToLower();

@@ -80,7 +80,7 @@ namespace Jyx2
                 //空挥升级
                 if ((Data.Level / 100) < ((Data.Level + levelAdd) / 100))
                 {
-                    StoryEngine.Instance.DisplayPopInfo(
+                    StoryEngine.DisplayPopInfo(
                         $"{role.Name}的{this.Data.Name}升到{((Data.Level + levelAdd) / 100) + 1}级!");
                 }
 
