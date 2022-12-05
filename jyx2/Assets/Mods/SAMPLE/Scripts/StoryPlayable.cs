@@ -89,11 +89,10 @@ namespace TimelineExtend
                 
                 if (!string.IsNullOrEmpty(content))
                 {
-                    var storyEngine = StoryEngine.Instance;
-                    storyEngine.BlockPlayerControl = true;
+                    StoryEngine.BlockPlayerControl = true;
                     await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.RoleId, roleId, content, 0, new Action(() =>
                     {
-                        storyEngine.BlockPlayerControl = false;
+                        StoryEngine.BlockPlayerControl = false;
                     }));
                 }
             }

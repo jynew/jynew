@@ -38,7 +38,10 @@ namespace Editor
                 string path = EditorUtility.SaveFolderPanel("选择输出目录", "..", defaultDirName);
                 if (string.IsNullOrEmpty(path))
                     return;
-
+                
+                var targetGroup = BuildPipeline.GetBuildTargetGroup(target);
+                EditorUserBuildSettings.SwitchActiveBuildTarget(targetGroup, target);
+                
                 //设置版本号
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
                 PlayerSettings.bundleVersion = currentDate;
