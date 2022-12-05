@@ -43,7 +43,7 @@ namespace Jyx2
     [LuaCallCSharp]
     public static class Jyx2LuaBridge
     {
-        static StoryEngine storyEngine => StoryEngine.Instance;
+        //static StoryEngine storyEngine => StoryEngine.Instance;
         static GameRuntimeData runtime => GameRuntimeData.Instance;
 
         public static void LuaExecFinished(string ret)
@@ -59,10 +59,10 @@ namespace Jyx2
         
         public static void Talk(int roleId, string content, string talkName, int type, Action callback)
         {
-            storyEngine.BlockPlayerControl = true;
+            StoryEngine.BlockPlayerControl = true;
             Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.RoleId, roleId, content, type, new Action(() =>
             {
-                storyEngine.BlockPlayerControl = false;
+                StoryEngine.BlockPlayerControl = false;
                 callback();
             })).Forget();
         }
@@ -1705,12 +1705,12 @@ namespace Jyx2
             UniTask.Void(async () =>
             {
                 List<string> selectionContent = new List<string>() {"是", "否"};
-                storyEngine.BlockPlayerControl = true;
+                StoryEngine.BlockPlayerControl = true;
                 await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage,
                     selectionContent, new Action<int>((index) =>
                     {
                         _selectResult = index;
-                        storyEngine.BlockPlayerControl = false;
+                        StoryEngine.BlockPlayerControl = false;
                         callback(_selectResult == 0);
                     }));
             });
@@ -1720,12 +1720,12 @@ namespace Jyx2
         {
             UniTask.Void(async () =>
             {
-                storyEngine.BlockPlayerControl = true;
+                StoryEngine.BlockPlayerControl = true;
                 List<string> selections = content.Cast<List<string>>();
                 
                 await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, roleId.ToString(), selectMessage, selections, new Action<int>((index) =>
                 {
-                    storyEngine.BlockPlayerControl = false;
+                    StoryEngine.BlockPlayerControl = false;
                     callback(index);
                 }));
             });
@@ -1737,12 +1737,12 @@ namespace Jyx2
         {
             UniTask.Void(async () =>
             {
-                storyEngine.BlockPlayerControl = true;
+                StoryEngine.BlockPlayerControl = true;
                 List<string> selections = new List<string>() {YesMessage, NoMessage};
                 
                 await Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.Selection, "0", selectMessage, selections, new Action<int>((index) =>
                 {
-                    storyEngine.BlockPlayerControl = false;
+                    StoryEngine.BlockPlayerControl = false;
                     callback(index);
                 }));
             });
