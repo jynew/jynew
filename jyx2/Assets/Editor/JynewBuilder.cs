@@ -39,8 +39,8 @@ namespace Editor
                 if (string.IsNullOrEmpty(path))
                     return;
                 
-                
-                EditorUserBuildSettings.SwitchActiveBuildTarget(target);
+                var targetGroup = BuildPipeline.GetBuildTargetGroup(target);
+                EditorUserBuildSettings.SwitchActiveBuildTarget(targetGroup, target);
                 
                 //设置版本号
                 string currentDate = DateTime.Now.ToString("yyyyMMdd");
