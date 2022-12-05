@@ -2,6 +2,7 @@
 using Jyx2.InputCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -92,6 +93,15 @@ namespace Jyx2.UINavigation
             return true;
         }
 
+        public static int GetGroupCount(int totalCount, int CountPerGroup)
+        {
+            if (totalCount == 0 || CountPerGroup == 0)
+                return 0;
+            int result = totalCount % CountPerGroup == 0 ? totalCount / CountPerGroup
+                                                         : totalCount / CountPerGroup + 1;
+            return result;
+        }
+
         public static void SetUpNavigation<T>(this IList<T> Items, int row, int col, bool supportLoop = false) where T : INavigable
         {
             for (int i = 0; i < Items.Count; ++i)
@@ -106,6 +116,21 @@ namespace Jyx2.UINavigation
                 var last = Items[Items.Count - 1].GetSelectable();
                 SetUpLoopNavigation(first, last, row, col);
             }
+        }
+
+        public static IReadOnlyList<T> GetEdgeItems<T>(List<T> Items, int row, int col, NavigationDirection direction)
+        {
+            if (Items.Count == 1)
+                return Items;
+            var result = new List<T>();
+            for (int i = 0; i < Items.Count; ++i)
+            {
+                if(IsEdge(i, row, col, direction))
+                {
+                    result.Add(Items[i]);
+                }
+            }
+            return result;
         }
 
         public static void SetUpNavigation(this IList<Selectable> Items, int row, int col, bool supportLoop = false)

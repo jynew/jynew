@@ -30,9 +30,11 @@ public class SelectRoleParams
     public string title = "选择角色";
     public bool canCancel = true;//默认可以取消选择
     public bool needCloseAfterClickOK = true;//点击确认之后是否需要关闭 如果不需要关闭 那么刷新下面板
-    public List<int> showPropertyIds = new List<int>() { 13, 15, 14 };//要显示的属性 默认是生命 体力 内力
-    public bool IsFull { get { return selectList.Count >= maxCount; } }
+
+    public bool IsFull => selectList.Count >= maxCount || selectList.Count >= roleList.Count;
+
     public bool isDefaultSelect = true;
+
     //默认选择角色和必须上场的角色
     public bool isCancelClick = false;//是否点击取消
     public void SetDefaltRole()
@@ -42,7 +44,7 @@ public class SelectRoleParams
         for (int i = 0; i < roleList.Count; i++)
         {
             RoleInstance role = roleList[i];
-            if (mustSelect != null && mustSelect(role))
+            if (IsRoleMustSelect(role))
             {
                 if (role.Hp <= 0) role.Hp = 1;
                 selectList.Add(role);
@@ -50,6 +52,11 @@ public class SelectRoleParams
         }
         if (selectList.Count <= 0)
             selectList.Add(roleList[0]);
+    }
+
+    public bool IsRoleMustSelect(RoleInstance role)
+    {
+        return mustSelect?.Invoke(role) ?? false;
     }
 }
 
@@ -64,7 +71,9 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
     public bool IsCancelBtnEnable => CancelBtn_Button.gameObject.activeSelf;
 
-    public static UniTask<List<RoleInstance>> Open(SelectRoleParams paras)
+    public bool IsAllSelectBtnEnable => AllBtn_Button.gameObject.activeSelf;
+
+    public static UniTask<List<RoleInstance>> WaitForSelectConfirm(SelectRoleParams paras)
     {
         var t = new UniTaskCompletionSource<List<RoleInstance>>();
         paras.callback = (ret) =>
@@ -77,11 +86,17 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
     SelectRoleParams m_params;
 
+
+    private List<Selectable> m_RightButtons = new List<Selectable>();
     protected override void OnCreate()
     {
         InitTrans();
         BindListener(ConfirmBtn_Button, OnConfirmClick, false);
         BindListener(CancelBtn_Button, OnCancelClick, false);
+        BindListener(AllBtn_Button, OnAllClick, false);
+        m_RightButtons.Add(ConfirmBtn_Button);
+        m_RightButtons.Add(CancelBtn_Button);
+        m_RightButtons.Add(AllBtn_Button);
     }
 
     protected override void OnShowPanel(params object[] allParams)
@@ -106,6 +121,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
     void ShowBtns()
     {
+        AllBtn_Button.gameObject.BetterSetActive(m_params.maxCount > 1);
         CancelBtn_Button.gameObject.SetActive(m_params.canCancel);
     }
 
@@ -129,9 +145,36 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
         MonoUtil.GenerateMonoElementsWithCacheList(m_RoleItemPrefabPath, m_params.roleList, m_CachedRolesItems, RoleParent_GridLayoutGroup.transform, onRoleItemCreate);
         int col = RoleParent_GridLayoutGroup.constraintCount;
-        int row = m_AvailableRoleItems.Count % col == 0 ? m_AvailableRoleItems.Count / col : m_AvailableRoleItems.Count / col + 1;
+        int row = NavigateUtil.GetGroupCount(m_AvailableRoleItems.Count, col);
         NavigateUtil.SetUpNavigation(m_AvailableRoleItems, row, col);
+        SetUpRoleNavigationWithRightBtns(row, col);
         SelectDefaultRoleItem();
+    }
+
+    private void SetUpRoleNavigationWithRightBtns(int row, int col)
+    {
+        var rightItems = NavigateUtil.GetEdgeItems(m_AvailableRoleItems, row, col, NavigationDirection.Right);
+        if (rightItems.Count == 0)
+            return;
+
+        Navigation newNavigation;
+
+        var activeBtns = m_RightButtons.FindAll(btn => btn.gameObject.activeSelf);
+        NavigateUtil.SetUpNavigation(activeBtns, activeBtns.Count, 1, true);
+
+        foreach (var btn in activeBtns)
+        {
+            newNavigation = btn.navigation;
+            newNavigation.selectOnLeft = rightItems[0].GetSelectable();
+            btn.navigation = newNavigation;
+        }
+
+        foreach(var roleItem in rightItems)
+        {
+            newNavigation = roleItem.navigation;
+            newNavigation.selectOnRight = ConfirmBtn_Button;
+            roleItem.navigation = newNavigation;
+        }
     }
 
     void SelectDefaultRoleItem()
@@ -151,8 +194,8 @@ public partial class SelectRolePanel : Jyx2_UIBase
         RoleInstance role = item.GetShowRole();
         if (!willBeSelected)
         {
-            bool isRoleMusSelect = m_params.mustSelect?.Invoke(role) ?? false;
-            if (isRoleMusSelect)
+            bool isRoleMustSelect = m_params.IsRoleMustSelect(role);
+            if (isRoleMustSelect)
             {
                 item.SetState(true, false);
                 GameUtil.DisplayPopinfo("此角色强制上场");
@@ -199,6 +242,29 @@ public partial class SelectRolePanel : Jyx2_UIBase
         Jyx2_UIManager.Instance.HideUI(nameof(SelectRolePanel));
         param.callback(param);
     }
+
+    public void OnAllClick()
+    {
+        if (m_params == null)
+            return;
+        var allRoles = m_params.roleList;
+        var selectRoles = m_params.selectList;
+        if(m_params.IsFull)
+        {
+            selectRoles.RemoveAll(role => !m_params.IsRoleMustSelect(role));
+        }
+        else
+        {
+            for(int i = 0;i < allRoles.Count && !m_params.IsFull; ++i)
+            {
+                if (selectRoles.Contains(allRoles[i]))
+                    continue;
+                selectRoles.Add(allRoles[i]);
+            }
+        }
+        RefreshRoleItems();
+    }
+
 
     protected override void OnHidePanel()
     {

@@ -17,7 +17,7 @@ namespace Jyx2.InputCore.UI
                 return;
             if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIConfirm))
             {
-                m_SelectRolePanel.OnConfirmClick();
+                TrySwitchCurrentRoleItem();
             }
 
             if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIClose))
@@ -26,9 +26,10 @@ namespace Jyx2.InputCore.UI
                     m_SelectRolePanel.OnCancelClick();
             }
 
-            if(Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes))
+            if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UI_Yes))
             {
-                TrySwitchCurrentRoleItem();
+                if (m_SelectRolePanel.IsAllSelectBtnEnable)
+                    m_SelectRolePanel.OnAllClick();
             }
         }
 
