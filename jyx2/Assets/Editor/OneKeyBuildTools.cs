@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Jyx2.MOD.ModV2;
 using TMPro.EditorUtilities;
+#if UNITY_STANDALONE_OSX
+using UnityEditor.OSXStandalone;
+#endif
 using UnityEditor.SceneManagement;
 using XNode;
 using Tools = Jyx2.Middleware.Tools;
