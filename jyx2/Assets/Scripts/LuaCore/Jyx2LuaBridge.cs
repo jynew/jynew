@@ -287,7 +287,7 @@ namespace Jyx2
             {
                 if (!TryFindRole(roleId, out var role))
                     return;
-                storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
+                StoryEngine.DisplayPopInfo(role.Name + "加入队伍！");
             }
         }
         ///角色加入，同时获得对方身上的物品。不提示--by citydream
@@ -301,7 +301,7 @@ namespace Jyx2
                 {
                     role.Hp = 1;
                 }
-                //  storyEngine.DisplayPopInfo(role.Name + "加入队伍！");
+                //  StoryEngine.DisplayPopInfo(role.Name + "加入队伍！");
             }
         }
         public static void Dead()
@@ -332,7 +332,7 @@ namespace Jyx2
             {
                 if (!TryFindRole(roleId, out var role))
                     return;
-                storyEngine.DisplayPopInfo(role.Name + "离队。");
+                StoryEngine.DisplayPopInfo(role.Name + "离队。");
             }
         }
 		///离队，不提示--by citydream
@@ -502,7 +502,7 @@ namespace Jyx2
         public static void AddEthics(int value)
         {
             runtime.Player.Pinde = Tools.Limit(runtime.Player.Pinde + value, 0, 100);
-            /* storyEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "品德:" + Math.Abs(value));*/
+            /* StoryEngine.DisplayPopInfo((value > 0 ? "增加" : "减少") + "品德:" + Math.Abs(value));*/
         }
 
         public static void ChangeScencePic(int p1,int p2,int p3,int p4)
@@ -560,7 +560,7 @@ namespace Jyx2
             if(noDisplay != 0 && runtime.IsRoleInTeam(roleId))
             {
                 var skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(magicId);
-                storyEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
+                StoryEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
             }
         }
 
@@ -570,7 +570,7 @@ namespace Jyx2
             if (!TryFindRole(roleId, out var role))
                 return;
             role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ROLE_ZIZHI);
-            storyEngine.DisplayPopInfo(role.Name + "资质" + (v > 0 ? "增加" : "减少") + Math.Abs(v));
+            StoryEngine.DisplayPopInfo(role.Name + "资质" + (v > 0 ? "增加" : "减少") + Math.Abs(v));
         }
 
         public static void SetOneMagic(int roleId,int magicIndexRole,int magicId, int level)
@@ -628,7 +628,7 @@ namespace Jyx2
                 return;
             var v0 = r.Qinggong;
             r.Qinggong = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
         }
 
         //内力
@@ -639,7 +639,7 @@ namespace Jyx2
             var v0 = r.MaxMp;
             r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_MP);
             r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
-            storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
         }
 		///加内力不提示--by citydream
         public static void AddMpWithoutHint(int roleId, int value)
@@ -649,7 +649,7 @@ namespace Jyx2
             var v0 = r.MaxMp;
             r.MaxMp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_MP);
             r.Mp = Tools.Limit(r.Mp + value, 0, GameConst.MAX_ROLE_MP);
-            // storyEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
+            // StoryEngine.DisplayPopInfo(r.Name + "内力增加" + (r.MaxMp - v0));
         }
 		///加等级并返回实际增加的值--by citydream
         public static int AddLevelreturnUper(int roleId, int value)
@@ -658,7 +658,7 @@ namespace Jyx2
                 return 0;
             var v0 = r.Level;
             r.Level = Tools.Limit(r.Level + value, 0, GameConst.MAX_ROLE_LEVEL);
-            //storyEngine.DisplayPopInfo(r.Name + "等级增加" + (r.Level - v0));
+            //StoryEngine.DisplayPopInfo(r.Name + "等级增加" + (r.Level - v0));
             int Uper = r.Level - v0;
 			return Uper;
         }
@@ -669,7 +669,7 @@ namespace Jyx2
                 return;
             var v0 = r.Attack;
             r.Attack = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
         }
 
         //生命
@@ -680,7 +680,7 @@ namespace Jyx2
             var v0 = r.MaxHp;
             r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_HP);
             r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
-            storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
         }
 		///加生命不提示--by citydream
         public static void AddHpWithoutHint(int roleId, int value)
@@ -690,7 +690,7 @@ namespace Jyx2
             var v0 = r.MaxHp;
             r.MaxHp = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_HP);
             r.Hp = Tools.Limit(r.Hp + value, 0, GameConst.MAX_ROLE_HP);
-            // storyEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
+            // StoryEngine.DisplayPopInfo(r.Name + "生命增加" + (r.MaxHp - v0));
         }
         //设置角色内力属性
         public static void SetPersonMPPro(int roleId, int value)
@@ -1081,7 +1081,7 @@ namespace Jyx2
             {
                 displayCount = Mathf.Min(displayCount, runtime.GetItemCount(itemId));
                 //---------------------------------------------------------------------------
-                //storyEngine.DisplayPopInfo("失去物品:" + item.Name + "×" + Math.Abs(count));
+                //StoryEngine.DisplayPopInfo("失去物品:" + item.Name + "×" + Math.Abs(count));
                 //---------------------------------------------------------------------------
                 //特定位置的翻译【得到物品提示】
                 //---------------------------------------------------------------------------
@@ -1092,7 +1092,7 @@ namespace Jyx2
             else
             {
                 //---------------------------------------------------------------------------
-                //storyEngine.DisplayPopInfo("得到物品:" + item.Name + "×" + Math.Abs(count));
+                //StoryEngine.DisplayPopInfo("得到物品:" + item.Name + "×" + Math.Abs(count));
                 //---------------------------------------------------------------------------
                 //特定位置的翻译【得到物品提示】
                 //---------------------------------------------------------------------------
@@ -1104,7 +1104,7 @@ namespace Jyx2
             stringBuilder.Append(item.Name);
             stringBuilder.Append("×");
             stringBuilder.Append(displayCount);
-            storyEngine.DisplayPopInfo(stringBuilder.ToString());
+            StoryEngine.DisplayPopInfo(stringBuilder.ToString());
 
             runtime.AddItem(itemId, count);
 
@@ -1119,7 +1119,7 @@ namespace Jyx2
         public static void AddRepute(int value)
         {
             runtime.Player.Shengwang = Tools.Limit(runtime.Player.Shengwang + value, 0, GameConst.MAX_ROLE_SHENGWANG);
-            /*    storyEngine.DisplayPopInfo("增加声望:" + value);*/
+            /*    StoryEngine.DisplayPopInfo("增加声望:" + value);*/
         }
 
         //韦小宝商店
@@ -1183,7 +1183,7 @@ namespace Jyx2
                 return;
             var v0 = r.Heal;
             r.Heal = Tools.Limit(v0 + value, 0, GameConst.MAX_HEAL);
-            storyEngine.DisplayPopInfo(r.Name + "医疗增加" + (r.Heal - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "医疗增加" + (r.Heal - v0));
         }
         //防御
         public static void AddDefence(int roleId, int value)
@@ -1192,7 +1192,7 @@ namespace Jyx2
                 return;
             var v0 = r.Defence;
             r.Defence = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_DEFENCE);
-            storyEngine.DisplayPopInfo(r.Name + "防御增加" + (r.Defence - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "防御增加" + (r.Defence - v0));
         }
 		//拳掌
         public static void AddQuanzhang(int roleId, int value)
@@ -1201,7 +1201,7 @@ namespace Jyx2
                 return;
             var v0 = r.Quanzhang;
             r.Quanzhang = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "拳掌增加" + (r.Quanzhang - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "拳掌增加" + (r.Quanzhang - v0));
         }
 		//耍刀
         public static void AddShuadao(int roleId, int value)
@@ -1210,7 +1210,7 @@ namespace Jyx2
                 return;
             var v0 = r.Shuadao;
             r.Shuadao = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "耍刀增加" + (r.Shuadao - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "耍刀增加" + (r.Shuadao - v0));
         }
 		//御剑
         public static void AddYujian(int roleId, int value)
@@ -1219,7 +1219,7 @@ namespace Jyx2
                 return;
             var v0 = r.Yujian;
             r.Yujian = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "御剑增加" + (r.Yujian - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "御剑增加" + (r.Yujian - v0));
         }
 		//暗器
         public static void AddAnqi(int roleId, int value)
@@ -1228,7 +1228,7 @@ namespace Jyx2
                 return;
             var v0 = r.Anqi;
             r.Anqi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "暗器增加" + (r.Anqi - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "暗器增加" + (r.Anqi - v0));
         }
 		//奇门
         public static void AddQimen(int roleId, int value)
@@ -1237,7 +1237,7 @@ namespace Jyx2
                 return;
             var v0 = r.Qimen;
             r.Qimen = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "奇门增加" + (r.Qimen - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "奇门增加" + (r.Qimen - v0));
         }
 		//武学常识
         public static void AddWuchang(int roleId, int value)
@@ -1246,7 +1246,7 @@ namespace Jyx2
                 return;
             var v0 = r.Wuxuechangshi;
             r.Wuxuechangshi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "武学常识增加" + (r.Wuxuechangshi - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "武学常识增加" + (r.Wuxuechangshi - v0));
         }
 		//功夫带毒
         public static void AddAttackPoison(int roleId, int value)
@@ -1255,7 +1255,7 @@ namespace Jyx2
                 return;
             var v0 = r.AttackPoison;
             r.AttackPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "功夫带毒增加" + (r.AttackPoison - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "功夫带毒增加" + (r.AttackPoison - v0));
         }
         //抗毒
         public static void AddAntiPoison(int roleId, int value)
@@ -1264,7 +1264,7 @@ namespace Jyx2
                 return;
             var v0 = r.AntiPoison;
             r.AntiPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            storyEngine.DisplayPopInfo(r.Name + "抗毒增加" + (r.AttackPoison - v0));
+            StoryEngine.DisplayPopInfo(r.Name + "抗毒增加" + (r.AttackPoison - v0));
         }
 		//经验
         public static void AddExp(int roleId, int value)
@@ -1273,7 +1273,7 @@ namespace Jyx2
                 return;
             var v0 = role.Exp;
             role.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
-            storyEngine.DisplayPopInfo(role.Name + "经验增加" + (role.Exp - v0));
+            StoryEngine.DisplayPopInfo(role.Name + "经验增加" + (role.Exp - v0));
         }
 		///增加经验，不提示--by citydream
         public static void AddExpWithoutHint(int roleId, int value)

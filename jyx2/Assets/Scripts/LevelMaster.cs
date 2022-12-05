@@ -508,7 +508,7 @@ public class LevelMaster : MonoBehaviour
 	{
 		if (runtime == null)
 		{
-			StoryEngine.Instance.DisplayPopInfo("<color=red>存档失败！</color>");
+			StoryEngine.DisplayPopInfo("<color=red>存档失败！</color>");
 			Debug.LogError("存档失败！请从GameStart中启动游戏！");
 			return;
 		}
@@ -524,7 +524,7 @@ public class LevelMaster : MonoBehaviour
 
 
 		runtime.GameSave(index);
-		StoryEngine.Instance.DisplayPopInfo("存档成功！");
+		StoryEngine.DisplayPopInfo("存档成功！");
 	}
 
 	public Vector3 GetPlayerPosition()

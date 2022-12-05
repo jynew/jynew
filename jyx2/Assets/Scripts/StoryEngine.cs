@@ -24,7 +24,6 @@ public class StoryEngine : MonoBehaviour
 {
     public static StoryEngine Instance;
 
-
     public bl_HUDText HUDRoot;
     
 
@@ -47,7 +46,7 @@ public class StoryEngine : MonoBehaviour
         Instance = this;
     }
 
-    public async void DisplayPopInfo(string msg, float duration = 2f)
+    public static async void DisplayPopInfo(string msg, float duration = 2f)
     {
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), TipsType.Common, msg, duration);
     }
