@@ -14,8 +14,8 @@ if AskBattle() == true then goto label0 end;
         Talk(0, "宝剑还是应该配英雄，怎样？师太，这“倚天剑”可以让给我了吧。", "talkname0", 1);
         Talk(6, "魔教妖孽，想从我灭绝手中拿走倚天剑，等下辈子吧！", "talkname6", 0);
         PlayAnimation(2, 5468, 5496);--by fanyu|播放动画。场景33-2
-        jyx2_SwitchRoleAnimation("NPC/miejueshitai", "Assets/BuildSource/AnimationControllers/自戕死状.controller");
-        jyx2_PlayTimelineSimple("[Timeline]ka148_峨眉派_灭绝自戕", false, "");
+        jyx2_SwitchRoleAnimation("NPC/miejueshitai", "Assets/BuildSource/AnimationControllers/Suicidedying.controller");
+        jyx2_PlayTimelineSimple("[Timeline]ka148_Emei_MiejueSuicide", false, "");
         jyx2_Wait(3.5);
         ModifyEvent(-2, -2, -2, -2, 149, -1, -1, 5238, 5238, 5238, -2, -2, -2);--by fanyu|启动脚本-149，改变贴图。场景33-2
         Talk(77, "师父，师父！", "talkname77", 0);

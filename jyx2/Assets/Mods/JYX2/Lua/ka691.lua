@@ -1,31 +1,31 @@
 SetRoleFace(1);
 jyx2_SetTimelineSpeed(3); --播放速度X3
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_醒来", 0, false);
+jyx2_PlayTimeline("[Timeline]ka691_Home_wake", 0, false);
 jyx2_Wait(1);
 Talk(0, "啊！头好痛呀！是不是最近Ｋ书Ｋ太凶了，所以有点恍惚了……我记得我正在玩“金庸群侠传”啊！怎么突然就睡着了。管他的，我得赶紧起来玩，这游戏可是等了半年多才玩到的，非第一个破关不可。", "talkname0", 1);
 PlayAnimation(-1, 6890, 6932);
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_站起", 0, false);
+jyx2_PlayTimeline("[Timeline]ka691_Home_Stand", 0, false);
 jyx2_Wait(10);
 Talk(0, "咦！我的电脑呢？", "talkname0", 1);
 PlayAnimation(-1, 6934, 6986);
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_迷惑", 0, false);
+jyx2_PlayTimeline("[Timeline]ka691_Home_Maze", 0, false);
 jyx2_Wait(10);
 Talk(0, "奇怪，我什么时候换了衣服的，我都不知道。哎！还是古装的？", "talkname0", 1);
 PlayAnimation(-1, 6988, 7000);
 PlayAnimation(-1, 6988, 7000);
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_四处观察", 0, false);
+jyx2_PlayTimeline("[Timeline]ka691_Home_LookAround", 0, false);
 jyx2_Wait(5);
 Talk(0, "奇了奇了，这儿也不是我家呀？难不成我被绑架了？还是平日ＲＰＧ玩太多了，做起白日梦了？", "talkname0", 1);
 Talk(114, "非常恭喜你！", "talkname114", 0);
 -- SetRoleFace(0); --改为用timeline转身
 PlayWave(0);
 PlayAnimation(1, 6820, 6860);
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_转身", 0, false);
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_软体娃娃跳起", 0, false, "Bake/Static/Others/Doll_1");
+jyx2_PlayTimeline("[Timeline]ka691_Home_Around", 0, false);
+jyx2_PlayTimeline("[Timeline]ka691_Home_dollJump", 0, false, "Bake/Static/Others/Doll_1");
 jyx2_Wait(4);
 Talk(0, "软体娃娃！", "talkname0", 1);
 PlayAnimation(1, 6862, 6888);
-jyx2_PlayTimeline("[Timeline]ka691_小虾米居_软体娃娃打招呼", 0, false, "Bake/Static/Others/Doll_1");
+jyx2_PlayTimeline("[Timeline]ka691_Home_SayHi", 0, false, "Bake/Static/Others/Doll_1");
 Talk(114, "非常恭喜你，你是本产品消费者中最幸运的一位。软体世界经过多年的努力研究后，终于发展出一套完全的ＶＲ游戏。你将亲身的扮演游戏的主人翁，在我们为你设计的游戏世界中冒险。", "talkname114", 0);
 Talk(0, "你说什么？这不是在做梦吧？“真正的ＶＲ游戏”？不会吧？你是说，你们已经可以像电影，漫画中的剧情一般，将游戏设计的这么“真实”？让玩者真的“身”处在游戏世界中，而不是只能操纵键盘，盯着荧幕看而已。", "talkname0", 1);
 Talk(114, "没错。这是“最真实的游戏”！而且你知道吗，你是所有消费者中最幸运的一位。因为基于成本考量，在众多的产品中，你购买的这套，是我们所生产中仅有的一套“ＶＲ”版。", "talkname114", 0);
@@ -48,13 +48,13 @@ Talk(114, "别怕，这房内为你准备了一些基本物品，都放在各种
 Talk(0, "什么拳法，我只会“野球拳”！", "talkname0", 1);
 Talk(114, "好了，不能再说下去了，游戏设计者叮咛过我，话不能说太多，否则会犯了游戏的大忌，俗语说……“好ＧＡＭＥ不多话”。ＢＹＥ！ＢＹＥ！", "talkname114", 0);
 DarkScence(); --增加过场
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_醒来");
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_站起");
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_迷惑");
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_四处观察");
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_转身");
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_软体娃娃跳起");
-jyx2_StopTimeline("[Timeline]ka691_小虾米居_软体娃娃打招呼");
+jyx2_StopTimeline("[Timeline]ka691_Home_wake");
+jyx2_StopTimeline("[Timeline]ka691_Home_Stand");
+jyx2_StopTimeline("[Timeline]ka691_Home_Maze");
+jyx2_StopTimeline("[Timeline]ka691_Home_LookAround");
+jyx2_StopTimeline("[Timeline]ka691_Home_Around");
+jyx2_StopTimeline("[Timeline]ka691_Home_dollJump");
+jyx2_StopTimeline("[Timeline]ka691_Home_SayHi");
 jyx2_SetTimelineSpeed(1); --播放速度还原
 SetRoleFace(0); --修正朝向角度
 LightScence(); --增加过场
