@@ -107,7 +107,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.3
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -115,7 +115,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.1
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -26697,6 +26697,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 1482381767441946968, guid: f1d9b9f30279d6d4aa6fa4a405ce2a14,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1482381767441946968, guid: f1d9b9f30279d6d4aa6fa4a405ce2a14,
         type: 3}
@@ -62735,8 +62740,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2029062581732702593, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029062581732702593, guid: b95b2807c80ddf247b9c4b3d42643a6b,
+        type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2465153268367920658, guid: b95b2807c80ddf247b9c4b3d42643a6b,
         type: 3}
