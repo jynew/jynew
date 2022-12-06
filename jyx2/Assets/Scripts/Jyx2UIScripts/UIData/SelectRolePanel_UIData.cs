@@ -18,6 +18,7 @@ public partial class SelectRolePanel
 	private Text TitleText_Text;
 	private Button ConfirmBtn_Button;
 	private Button CancelBtn_Button;
+	private Button AllBtn_Button;
 
 	public void InitTrans()
 	{
@@ -25,6 +26,7 @@ public partial class SelectRolePanel
 		TitleText_Text = transform.Find("Title/TitleText").GetComponent<Text>();
 		ConfirmBtn_Button = transform.Find("Btns/ConfirmBtn").GetComponent<Button>();
 		CancelBtn_Button = transform.Find("Btns/CancelBtn").GetComponent<Button>();
+		AllBtn_Button = transform.Find("Btns/AllBtn").GetComponent<Button>();
 
 	}
 }

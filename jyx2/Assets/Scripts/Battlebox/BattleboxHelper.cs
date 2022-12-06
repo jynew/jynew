@@ -181,15 +181,6 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 	private int m_InputEnableFrame = int.MaxValue;
 	public bool CanUpdate => m_InputEnableFrame <= Time.frameCount;
     
-    
-    private bool IsCancelBoxSelect()
-	{
-		if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose))
-			return true;
-		if (Input.GetMouseButtonDown(1) && !Application.isMobilePlatform)
-			return true;
-		return false;
-    }
 
 	public void OnUpdate()
 	{
@@ -226,11 +217,9 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 			}
 		}
 
-        if (IsCancelBoxSelect())
+        if (IsCancelBoxSelection())
         {
-            var ui = Jyx2_UIManager.Instance.GetUI<BattleActionUIPanel>();
-            if (ui != null)
-                ui.OnCancelClick();
+			TryCancelBoxSelection();
         }
 
     }
@@ -258,6 +247,22 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 			return false;
 		return battleModel.BlockHasRole(x, y);
 	}
+
+    private bool IsCancelBoxSelection()
+    {
+        if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose))
+            return true;
+        if (Input.GetMouseButtonDown(1) && !Application.isMobilePlatform)
+            return true;
+        return false;
+    }
+
+    public void TryCancelBoxSelection()
+	{
+        var ui = Jyx2_UIManager.Instance.GetUI<BattleActionUIPanel>();
+        if (ui != null)
+            ui.OnCancelBoxSelection();
+    }
 
 
 	private bool TrySelectNewBlock(int newX, int newY)
