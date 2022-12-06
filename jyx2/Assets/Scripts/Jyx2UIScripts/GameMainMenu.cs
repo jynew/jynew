@@ -43,63 +43,38 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	async void OnStart()
 	{
-		MainMenuTitles.SetActive(false);
-		//显示loading
-		var c = StartCoroutine(ShowLoading());
-		StopCoroutine(c);
-		var ret = await RuntimeEnvSetup.Setup();
-
-		LoadingText.gameObject.SetActive(false);
-		homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(true);
-
-		var res = await ResLoader.LoadAsset<GameObject>("MainMenuBg.prefab");
-		if (res != null)
-		{
-			var newMainMenuBg = Instantiate(res, this.transform, false);
-			newMainMenuBg.transform.SetAsFirstSibling();
-		}
-		else
-		{
-			MainMenuTitles.gameObject.SetActive(true);
-		}
-
-		JudgeShowReleaseNotePanel();
-	}
-
-	private void OnEnable()
-	{
-		 
-	}
-
-	void JudgeShowReleaseNotePanel()
-	{
-		//每个更新显示一次 这里就不用Jyx2_PlayerPrefs了
-		string key = "RELEASENOTE_" + RuntimeEnvSetup.CurrentModId + "_" + Application.version;
-		if (!PlayerPrefs.HasKey(key))
-		{
-			ReleaseNote_Panel.gameObject.SetActive(true);
-			PlayerPrefs.SetInt(key, 1);
-			PlayerPrefs.Save();
-		}
-	}
-
-	IEnumerator ShowLoading()
-	{
-		while (true)
-		{
-			LoadingText.gameObject.SetActive(!LoadingText.gameObject.activeSelf);
-			yield return new WaitForSeconds(0.5f);
-		}
-	}
+		await RuntimeEnvSetup.Setup();
+		LoadMainMenuBackGround().Forget();
+    }
 
 
-	public override UILayer Layer { get => UILayer.MainUI; }
-	protected override void OnCreate()
+	public override UILayer Layer => UILayer.MainUI;
+
+    protected override void OnCreate()
 	{
 		InitTrans();
 		RegisterEvent();
 		m_randomProperty = this.StartNewRolePanel_RectTransform.GetComponent<RandomPropertyComponent>();
 	}
+
+    private async UniTask LoadMainMenuBackGround()
+	{
+        DefaultBackGround_RectTransform.gameObject.BetterSetActive(false);
+        homeBtnAndTxtPanel_RectTransform.gameObject.BetterSetActive(false);
+
+        var res = await ResLoader.LoadAsset<GameObject>("MainMenuBg.prefab");
+        if (res != null)
+        {
+            var newMainMenuBg = Instantiate(res, transform, false);
+            newMainMenuBg.transform.SetAsFirstSibling();
+        }
+        else
+        {
+            DefaultBackGround_RectTransform.gameObject.BetterSetActive(true);
+        }
+        homeBtnAndTxtPanel_RectTransform.gameObject.BetterSetActive(true);
+        ReleaseNotePanel.ShowReleaseNoteIfPossible(ReleaseNoteType.Mod);
+    }
 
 
 	protected override void OnShowPanel(params object[] allParams)
@@ -109,6 +84,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 		AudioManager.PlayMusic(16);
 		m_panelType = PanelType.Home;
 	}
+
 
 	public void OnNewGameClicked()
 	{
@@ -216,13 +192,13 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		BindListener(this.NewGameButton_Button, OnNewGameClicked);
 		BindListener(this.LoadGameButton_Button, OnLoadGameClicked);
-		BindListener(this.SettingsButton_Button, OpenSettingsPanel);
+		BindListener(this.GameSettingsButton_Button, OpenSettingsPanel);
 		BindListener(this.QuitGameButton_Button, OnQuitGameClicked);
 		
-		BindListener(this.inputSure_Button, OnCreateBtnClicked, false);
-		BindListener(this.inputBack_Button, OnBackBtnClicked, false);
-		BindListener(this.YesBtn_Button, OnCreateRoleYesClick, false);
-		BindListener(this.NoBtn_Button, OnCreateRoleNoClick, false);
+		BindListener(this.inputSure_Button, OnCreateBtnClicked);
+		BindListener(this.inputBack_Button, OnBackBtnClicked);
+		BindListener(this.YesBtn_Button, OnCreateRoleYesClick);
+		BindListener(this.NoBtn_Button, OnCreateRoleNoClick);
 	}
 	public void OnCreateRoleYesClick()
 	{
@@ -323,6 +299,12 @@ public partial class GameMainMenu : Jyx2_UIBase
 		
 		
 	}
+
+    public void OnReleaseNoteBtnClick()
+	{
+		ReleaseNotePanel.ShowReleaseNoteAnyway(ReleaseNoteType.Mod);
+	}
+    
 
 	public void OnOpenURL(string url)
 	{
