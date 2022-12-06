@@ -1,4 +1,5 @@
-﻿using Jyx2.Middleware;
+﻿using System;
+using Jyx2.Middleware;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,16 @@ namespace Jyx2
         public void OnOpenURL(string url)
         {
             Tools.openURL(url);
+        }
+
+
+        private void Start()
+        {
+            //知大虾 20221206，版号合规性问题，避免纠纷，在移动端关闭捐助按钮。
+            if (Application.isMobilePlatform)
+            {
+                donateBtn.gameObject.SetActive(false);
+            }
         }
     }
 }
