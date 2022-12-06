@@ -497,27 +497,6 @@ namespace Jyx2
 
             else if ((int)item.ItemType == 1 || (int)item.ItemType == 2)
             {
-                if ((int)item.ItemType == 2)
-                {
-                    //有仅适合人物，直接判断
-                    if (item.OnlySuitableRole >= 0)
-                    {
-                        return item.OnlySuitableRole == this.Key;
-                    }
-
-                    //内力属性判断
-                    if ((this.MpType == 0 || this.MpType == 1) && (item.NeedMPType == 0 || (int)item.NeedMPType == 1))
-                    {
-                        if (this.MpType != (int)item.NeedMPType)
-                        {
-                            return false;
-                        }
-                    }
-                }
-                //若有相关武学，则为真
-                //若已经学满武学，则为假
-                //满级则为真
-                //此处注意，如果有可制成物品的秘籍，则武学满级之后不会再制药了，请尽量避免这样的设置
                 if (item.Skill != null)
                 {
                     foreach (var wugong in Wugongs)
@@ -540,6 +519,28 @@ namespace Jyx2
                         return true;
                     }
                 }
+                if ((int)item.ItemType == 2)
+                {
+                    //有仅适合人物，直接判断
+                    if (item.OnlySuitableRole >= 0)
+                    {
+                        return item.OnlySuitableRole == this.Key;
+                    }
+
+                    //内力属性判断
+                    if ((this.MpType == 0 || this.MpType == 1) && (item.NeedMPType == 0 || (int)item.NeedMPType == 1))
+                    {
+                        if (this.MpType != (int)item.NeedMPType)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                //若有相关武学，则为真
+                //若已经学满武学，则为假
+                //满级则为真
+                //此处注意，如果有可制成物品的秘籍，则武学满级之后不会再制药了，请尽量避免这样的设置
+
 
                 //上面的判断未确定则进入下面的判断链
                 return testAttr(this.Attack - GetWeaponProperty("Attack") - GetArmorProperty("Attack"), item.ConditionAttack)
