@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 namespace MOD.UI
 {
-    public class ModPanelNew : MonoBehaviour
+    public class ModPanelNew : Jyx2_UIBase
     {
         
         [SerializeField] private ListViewString m_ModListView;
@@ -33,6 +33,9 @@ namespace MOD.UI
         [SerializeField] private AddModPanelTemp m_AddModPanel;
 
         [SerializeField] private InputField m_ResetInputField;
+
+
+        public override UILayer Layer => UILayer.MainUI;
 
         private readonly List<GameModBase> _allMods = new List<GameModBase>();
         
@@ -132,25 +135,29 @@ namespace MOD.UI
         {
             var mod = GetCurrentSelectMod();
             if (mod == null) return;
-
-            if (mod is GameModManualInstalled)
+            
+            if (mod is GameModManualInstalled manualMod)
             {
-                var dir = (mod as GameModManualInstalled).Dir;
-                File.Delete(Path.Combine(dir, $"{mod.Id}.xml"));
-                File.Delete(Path.Combine(dir, $"{mod.Id}_mod"));
-                File.Delete(Path.Combine(dir, $"{mod.Id}_maps"));
-
-                DoRefresh().Forget();
+                Action onConfirm = () =>
+                {
+                    var dir = manualMod.Dir;
+                    File.Delete(Path.Combine(dir, $"{mod.Id}.xml"));
+                    File.Delete(Path.Combine(dir, $"{mod.Id}_mod"));
+                    File.Delete(Path.Combine(dir, $"{mod.Id}_maps"));
+                    DoRefresh().Forget();
+                };
+                MessageBox.ConfirmOrCancel($"确认删除Mod {mod?.Title}", onConfirm);
             }
             //TODO :steam平台可以取消订阅
             else
             {
-                Debug.LogError("现在不支持删除本类型MOD");
+                MessageBox.ShowMessage("现在不支持删除本类型MOD");
             }
         }
         
         void OnLanuch()
         {
+            Jyx2_UIManager.Instance.CloseAllUI();
             RuntimeEnvSetup.ForceClear();
             var mod = GetCurrentSelectMod();
             if (mod != null)
@@ -227,6 +234,7 @@ namespace MOD.UI
 
         public static void SwitchSceneTo()
         {
+            AudioManager.StopMusic();
             Jyx2_UIManager.Clear();
             RuntimeEnvSetup.ForceClear();
             SceneManager.LoadScene("0_MODLoaderScene");

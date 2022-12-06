@@ -14,7 +14,16 @@ namespace Jyx2
         [SerializeField] private Button bilibiliBtn;
         [SerializeField] private Button releaseNoteBtn;
         [SerializeField] private Button donateBtn;
-        
+
+        private void OnEnable()
+        {
+            ReleaseNotePanel.ShowReleaseNoteIfPossible();
+        }
+
+        public void OnReleaseNoteBtnClick()
+        {
+            ReleaseNotePanel.ShowReleaseNoteAnyway();
+        }
         
         public void OnOpenURL(string url)
         {
