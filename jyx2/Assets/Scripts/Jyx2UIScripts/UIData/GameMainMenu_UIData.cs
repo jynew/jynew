@@ -1,11 +1,11 @@
 /*
- * é‡‘åº¸ç¾¤ä¾ ä¼ 3Dé‡åˆ¶ç‰ˆ
+ * ½ğÓ¹ÈºÏÀ´«3DÖØÖÆ°æ
  * https://github.com/jynew/jynew
  *
- * è¿™æ˜¯æœ¬å¼€æºé¡¹ç›®æ–‡ä»¶å¤´ï¼Œæ‰€æœ‰ä»£ç å‡ä½¿ç”¨MITåè®®ã€‚
- * ä½†æ¸¸æˆå†…èµ„æºå’Œç¬¬ä¸‰æ–¹æ’ä»¶ã€dllç­‰è¯·ä»”ç»†é˜…è¯»LICENSEç›¸å…³æˆæƒåè®®æ–‡æ¡£ã€‚
+ * ÕâÊÇ±¾¿ªÔ´ÏîÄ¿ÎÄ¼şÍ·£¬ËùÓĞ´úÂë¾ùÊ¹ÓÃMITĞ­Òé¡£
+ * µ«ÓÎÏ·ÄÚ×ÊÔ´ºÍµÚÈı·½²å¼ş¡¢dllµÈÇë×ĞÏ¸ÔÄ¶ÁLICENSEÏà¹ØÊÚÈ¨Ğ­ÒéÎÄµµ¡£
  *
- * é‡‘åº¸è€å…ˆç”Ÿåƒå¤ï¼
+ * ½ğÓ¹ÀÏÏÈÉúÇ§¹Å£¡
  */
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,46 +13,43 @@ using UnityEngine.UI;
 
 public partial class GameMainMenu
 {
+	private RectTransform DefaultBackGround_RectTransform;
 	private RectTransform mainPanel_RectTransform;
 	private RectTransform homeBtnAndTxtPanel_RectTransform;
 	private Button NewGameButton_Button;
 	private Button LoadGameButton_Button;
-	private Button SettingsButton_Button;
+	private Button GameSettingsButton_Button;
 	private Button QuitGameButton_Button;
 	private RectTransform InfoPanel_RectTransform;
 	private RectTransform InputNamePanel_RectTransform;
 	private InputField NameInput_InputField;
 	private Button inputSure_Button;
-    private Button inputBack_Button;
-    private RectTransform StartNewRolePanel_RectTransform;
+	private Button inputBack_Button;
+	private RectTransform StartNewRolePanel_RectTransform;
 	private Button NoBtn_Button;
 	private Button YesBtn_Button;
 	private RectTransform PropertyItem_RectTransform;
 	private RectTransform PropertyRoot_RectTransform;
-	private Text LoadingText;
-	private ReleaseNotePanel ReleaseNote_Panel;
-	private GameObject MainMenuTitles;
 
 	public void InitTrans()
 	{
+		DefaultBackGround_RectTransform = transform.Find("DefaultBackGround").GetComponent<RectTransform>();
 		mainPanel_RectTransform = transform.Find("mainPanel").GetComponent<RectTransform>();
 		homeBtnAndTxtPanel_RectTransform = transform.Find("mainPanel/homeBtnAndTxtPanel").GetComponent<RectTransform>();
 		NewGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/NewGameButton").GetComponent<Button>();
 		LoadGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/LoadGameButton").GetComponent<Button>();
-		SettingsButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/GameSettingsButton").GetComponent<Button>();
+		GameSettingsButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/GameSettingsButton").GetComponent<Button>();
 		QuitGameButton_Button = transform.Find("mainPanel/homeBtnAndTxtPanel/QuitGameButton").GetComponent<Button>();
 		InfoPanel_RectTransform = transform.Find("InfoPanel").GetComponent<RectTransform>();
 		InputNamePanel_RectTransform = transform.Find("InputNamePanel").GetComponent<RectTransform>();
 		NameInput_InputField = transform.Find("InputNamePanel/NameInput").GetComponent<InputField>();
 		inputSure_Button = transform.Find("InputNamePanel/inputSure").GetComponent<Button>();
-        inputBack_Button = transform.Find("InputNamePanel/inputBack").GetComponent<Button>();
-        StartNewRolePanel_RectTransform = transform.Find("StartNewRolePanel").GetComponent<RectTransform>();
+		inputBack_Button = transform.Find("InputNamePanel/inputBack").GetComponent<Button>();
+		StartNewRolePanel_RectTransform = transform.Find("StartNewRolePanel").GetComponent<RectTransform>();
 		NoBtn_Button = transform.Find("StartNewRolePanel/NoBtn").GetComponent<Button>();
 		YesBtn_Button = transform.Find("StartNewRolePanel/YesBtn").GetComponent<Button>();
 		PropertyItem_RectTransform = transform.Find("StartNewRolePanel/PropertyItem").GetComponent<RectTransform>();
 		PropertyRoot_RectTransform = transform.Find("StartNewRolePanel/PropertyRoot").GetComponent<RectTransform>();
-		LoadingText = transform.Find("mainPanel/LoadingText").GetComponent<Text>();
-		ReleaseNote_Panel = transform.Find("ReleaseNotePanel").GetComponent<ReleaseNotePanel>();
-		MainMenuTitles = transform.Find("BG").gameObject;
+
 	}
 }

@@ -35,6 +35,15 @@ public class AudioManager
         }
     }
 
+    public static void StopMusic()
+    {
+        Init();
+        if (bgmAudioSource != null)
+        {
+            bgmAudioSource.Stop();
+        }
+    }
+
     public static async UniTask PlayMusicAtPath(string path)
     {
         Init();

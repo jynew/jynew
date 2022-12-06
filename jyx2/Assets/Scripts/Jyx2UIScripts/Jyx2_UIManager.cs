@@ -37,17 +37,22 @@ public class Jyx2_UIManager : MonoBehaviour
         {
             if (_instace == null) 
             {
-                var rewiredPreab = Resources.Load<GameObject>("RewiredInputManager");
-                var rewiredObj = Instantiate(rewiredPreab);
+                var rewiredObj = FindObjectOfType<Rewired.InputManager>();
+                if(rewiredObj == null)
+                {
+                    var inputMgrPrefab = Resources.Load<GameObject>("RewiredInputManager");
+                    var go = Instantiate(inputMgrPrefab);
+                    rewiredObj = go.GetComponent<Rewired.InputManager>();
+                }
 
-                var prefab = Resources.Load<GameObject>("MainCanvas");
-                var obj = Instantiate(prefab);
-                obj.gameObject.name = "MainCanvas";
-                _instace = obj.GetComponent<Jyx2_UIManager>();
+                var canvasPrefab = Resources.Load<GameObject>("MainCanvas");
+                var canvsGo = Instantiate(canvasPrefab);
+                canvsGo.name = "MainCanvas";
+                _instace = canvsGo.GetComponent<Jyx2_UIManager>();
                 _instace.Init();
 
-                var rewiredInputModule = obj.GetComponentInChildren<RewiredStandaloneInputModule>();
-                rewiredInputModule.RewiredInputManager = rewiredObj.GetComponent<Rewired.InputManager>();
+                var rewiredInputModule = canvsGo.GetComponentInChildren<RewiredStandaloneInputModule>();
+                rewiredInputModule.RewiredInputManager = rewiredObj;
 
                 DontDestroyOnLoad(_instace);
             }
@@ -188,6 +193,13 @@ public class Jyx2_UIManager : MonoBehaviour
             
             OnUILoaded(go);
         }
+    }
+    
+    public async UniTask<T> ShowUIAsync<T>(params object[] allParams) where T:Jyx2_UIBase
+    {
+        var uiName = typeof(T).Name;
+        await ShowUIAsync(uiName, allParams);
+        return GetUI<T>();
     }
 
     //UI加载完后的回调
