@@ -24,7 +24,7 @@ namespace Jyx2
         public static MODRootConfig CurrentModConfig { get; private set; } = null;
         private static GameModBase _currentMod;
 
-        public static string CurrentModId => _currentMod.Id;
+        public static string CurrentModId => _currentMod?.Id;
 
         public static void SetCurrentMod(GameModBase mod)
         {
@@ -108,11 +108,13 @@ namespace Jyx2
             }
             catch (Exception e)
             {
-                Debug.LogError("<color=red>MOD加载出错了，请检查文件是否损坏！</color>");
+                string msg = "<color=red>MOD加载出错了，请检查文件是否损坏！</color>";
+                Debug.LogError(msg);
                 Debug.LogError(e.ToString());
                 ScreenLogger.Instance.enabled = true;
                 ModPanelNew.SwitchSceneTo();
                 _successInited = false;
+                MessageBox.ShowMessage(msg);
                 return false;
             }
         }
