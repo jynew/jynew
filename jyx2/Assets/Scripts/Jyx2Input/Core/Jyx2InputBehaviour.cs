@@ -27,5 +27,13 @@ namespace Jyx2.InputCore
             GUIUtility.systemCopyBuffer = result;
             Debug.Log(result);
         }
+
+        [ContextMenu("打印键盘信息")]
+        public void DumpKeyboard()
+        {
+            string result = Jyx2_Input.GetKeyBoardElementJsonData();
+            GUIUtility.systemCopyBuffer = result;
+            Debug.Log(result);
+        }
     }
 }

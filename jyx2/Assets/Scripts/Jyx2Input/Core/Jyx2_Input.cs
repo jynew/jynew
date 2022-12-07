@@ -5,6 +5,7 @@ using Rewired;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Jyx2.InputCore
@@ -248,6 +249,19 @@ namespace Jyx2.InputCore
                 Formatting = Formatting.Indented,
             };
             var json = JsonConvert.SerializeObject(m_AllElements, serializeSettings);
+            return json;
+        }
+
+        public static string GetKeyBoardElementJsonData()
+        {
+            var keyBoard = ReInput.controllers.Keyboard;
+            var allElements = keyBoard.ElementIdentifiers.Select(e => keyBoard.GetKeyCodeById(e.id).ToString());
+            var serializeSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented,
+            };
+            var json = JsonConvert.SerializeObject(allElements, serializeSettings);
             return json;
         }
 
