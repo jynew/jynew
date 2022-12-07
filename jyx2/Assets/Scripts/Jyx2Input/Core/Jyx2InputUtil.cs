@@ -58,7 +58,7 @@ namespace Jyx2.InputCore.Util
                     elementMap = map.GetActionElementMap(actionID, axisRange);
                     if (elementMap != null)
                     {
-                        result = GetKeyCodeName(elementMap);
+                        result = GetKeyCodeRichTextName(elementMap);
                         break;
                     }
                 }
@@ -80,36 +80,23 @@ namespace Jyx2.InputCore.Util
             return result;
         }
 
-        private static string GetKeyCodeName(ActionElementMap elementMap)
+        private static string GetKeyCodeRichTextName(ActionElementMap elementMap)
         {
             string result = "?";
-            if (elementMap != null)
-            {
-                if (elementMap.keyCode == KeyCode.UpArrow)
-                {
-                    result = "↑";
-                }
-                else if (elementMap.keyCode == KeyCode.DownArrow)
-                {
-                    result = "↓";
-                }
-                else if (elementMap.keyCode == KeyCode.LeftArrow)
-                {
-                    result = "←";
-                }
-                else if (elementMap.keyCode == KeyCode.RightArrow)
-                {
-                    result = "→";
-                }
-                else if (elementMap.keyCode == KeyCode.Escape)
-                {
-                    result = "ESC";
-                }
-                else
-                {
-                    result = elementMap.keyCode.ToString();
-                }
-            }
+            if (elementMap == null)
+                return result;
+            
+            result = elementMap.keyCode.ToString();
+            var controllerAssetMap = ResLoader.LoadAssetSync<ControllerSpriteAsset>("Assets/BuildSource/Gamepad/ControllerSpriteAsset.asset");
+            var spriteAsset = controllerAssetMap?.GetSpriteAsset("Keyboard");
+            if (spriteAsset == null)
+                return result;
+            
+            var keyCodeName = result;
+            if (spriteAsset.GetSpriteIndexFromName(keyCodeName) == -1)
+                return keyCodeName;
+            
+            result = $"<sprite=\"{spriteAsset.name}\" name=\"{keyCodeName}\">";
             return result;
         }
 
