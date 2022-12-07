@@ -11,7 +11,7 @@ if UseItem(195) == true then goto label0 end;
 
     --缺少timeline
     --jyx2_PlayTimeline("[Timeline]ka564_小虾米破庙挖坟", 0, false);
-    jyx2_PlayTimelineSimple("[Timeline]ka564_小虾米破庙挖坟", true)
+    jyx2_PlayTimelineSimple("[Timeline]ka564_OldtempleDig", true)
     jyx2_Wait(5.2)
     --jyx2_StopTimeline("[Timeline]ka564_小虾米破庙挖坟");
 
