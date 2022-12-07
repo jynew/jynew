@@ -1,6 +1,6 @@
 jyx2_ReplaceSceneObject("", "Dynamic/Leave2", "");--by citydream 屏蔽地道入口（强制推进剧情）
-jyx2_SwitchRoleAnimation("NPC/tubiweng", "Assets/BuildSource/AnimationControllers/StandController.controller");
-jyx2_SwitchRoleAnimation("NPC/huangzhonggong", "Assets/BuildSource/AnimationControllers/StandController.controller");
+jyx2_SwitchRoleAnimation("NPC/tubiweng", "Assets/BuildSource/AnimationControllers/自然站立Controller.controller");
+jyx2_SwitchRoleAnimation("NPC/huangzhonggong", "Assets/BuildSource/AnimationControllers/自然站立Controller.controller");
 Talk(0, "四位那么好的闲情逸致聚在这儿，是不是准备打麻将，插花收不收啊？", "talkname0", 1);
 Talk(33, "你这臭小子，看你做了什么好事？还敢在这说风凉话。", "talkname33", 0);
 Talk(34, "我早该知道天底下哪有这么好的事情，原来这一切都是你设计出来的诡计。", "talkname34", 0);
