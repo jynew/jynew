@@ -2,7 +2,8 @@
 
 ![主宣传图](https://user-images.githubusercontent.com/7448857/192084760-017f3789-81ff-4a67-81bf-8d8c4df1cac5.png)
 
-[![button-steam-available-fixed-22](https://user-images.githubusercontent.com/7448857/192085415-7c1b8d34-d1ac-4f86-8d5e-969747c7a798.png)](https://store.steampowered.com/app/2098790/_/)
+<p><a href="https://store.steampowered.com/app/2098790/"><img src="https://user-images.githubusercontent.com/7448857/205875106-ba52fc19-f92a-47ff-b0d6-c5e451b8bdd2.png" align="center" height="96"></a><a href="https://www.taptap.cn/app/246004"><img src="https://user-images.githubusercontent.com/7448857/205873000-824a0855-bb62-4cbd-a187-c2f51f343c7d.png" align="center" height="96"></a></p>
+
 
 
 [![license](https://img.shields.io/badge/license-%E9%87%91%E7%BE%A43D%E9%87%8D%E5%88%B6%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
@@ -152,8 +153,9 @@ https://github.com/0kk470/modtool_qt/
 * 开发者Q群 749167552 （入群密码是本代码仓库名称）
 * 玩家Q群<br>
    1群 480072818（已满）<br>
-   2群 704370277<br>
-   3群 704697875<br>
+   2群 704370277（已满）<br>
+   3群 704697875（已满）<br>
+   4群 389536186<br>
 
 ## 感谢支持
 

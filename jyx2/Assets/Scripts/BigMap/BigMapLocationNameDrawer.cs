@@ -11,7 +11,7 @@ public class BigMapLocationNameDrawer : MonoBehaviour
     public int m_PositionSize = 6;
     public int m_LocalScaleSize = 3;
 
-    private HashSet<TextMesh> m_LocationNameObjs = new HashSet<TextMesh>();
+    private readonly HashSet<TextMesh> m_LocationNameObjs = new HashSet<TextMesh>();
 
     private void Awake()
     {
@@ -26,8 +26,15 @@ public class BigMapLocationNameDrawer : MonoBehaviour
     async void Start()
     {
         await RuntimeEnvSetup.Setup();
+        ForceRefresh();
+    }
+
+
+    void ForceRefresh()
+    {
+        ClearAll();
+        
         var allLocs = FindObjectsOfType<MapTeleportor>();
-        m_LocationNameObjs.Clear();
         foreach (var loc in allLocs)
         {
             if (JudgeIfIgnoreLocationNameDisplay(loc)) continue;
@@ -56,24 +63,21 @@ public class BigMapLocationNameDrawer : MonoBehaviour
             }
             m_LocationNameObjs.Add(txtComp);
         }
-        RefreshLocationNameVisibility();
     }
-    
+
+    private void ClearAll()
+    {
+        foreach (var loc in m_LocationNameObjs)
+        {
+            Destroy(loc.gameObject);
+        }
+        m_LocationNameObjs.Clear();
+    }
+
     private void OnDifficultyChange(Jyx2_GameDifficulty newDifficulty)
     {
-        RefreshLocationNameVisibility();
+        ForceRefresh();
     }
-
-    private void RefreshLocationNameVisibility()
-    {
-        bool isVisible = GameSettingManager.GetDifficulty() <= (int)Jyx2_GameDifficulty.Normal;
-        foreach (var nameObj in m_LocationNameObjs)
-        {
-            //SetActive开销有点大，用缩放代替
-            nameObj.transform.localScale = isVisible ? Vector3.one * m_LocalScaleSize : Vector3.zero;
-        }
-    }
-
 
     /// <summary>
     /// 判断是否要跳过名字显示
@@ -93,8 +97,13 @@ public class BigMapLocationNameDrawer : MonoBehaviour
     /// <returns></returns>
     private static bool JudgeIfIgnoreLocationNameDisplay(MapTeleportor loc)
     {
+        //如果难度设置是HARD，则关闭所有的地点名字
+        bool banAllName = Jyx2LuaBridge.jyx2_GetFlagInt($"BanLocationName.All") == 1 ||
+                          GameSettingManager.GetDifficulty() == (int) Jyx2_GameDifficulty.Hard;
+        
+        
         //全部禁止显示，只过滤设置了ShowLocationName的
-        if (Jyx2LuaBridge.jyx2_GetFlagInt($"BanLocationName.All") == 1 &&
+        if (banAllName &&
             Jyx2LuaBridge.jyx2_GetFlagInt($"ShowLocationName.{loc.name}") == 0)
         {
             return true;
