@@ -13,13 +13,17 @@ namespace Jyx2.InputCore.UI
 
         public override void OnUpdate()
         {
+            if (_mainMenu == null)
+                return;
             if (Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIClose))
             {
-                _mainMenu?.OnBackBtnClicked();
+                if (!_mainMenu.IsNameInputFocused)
+                    _mainMenu.OnBackBtnClicked();
             }
             else if(Jyx2_Input.GetButtonDown(Jyx2PlayerAction.UIConfirm))
             {
-                _mainMenu?.OnCreateBtnClicked();
+                if (!_mainMenu.IsNameInputFocused)
+                    _mainMenu.OnCreateBtnClicked();
             }
         }
     }

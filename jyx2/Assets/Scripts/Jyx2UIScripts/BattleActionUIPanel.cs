@@ -392,6 +392,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	{
         BattleboxHelper.Instance.HideAllBlocks(true);
 		SetActionsVisible(true);
+		RestoreLastOperation();
     }
     
 
