@@ -15,7 +15,7 @@ if InTeam(35) == true then goto label0 end;
     ModifyEvent(-2, 3, 1, 1, -1, -1, -1, 7624, 7624, 7624, -2, -2, -2);
     LightScence();
     --播放timeline
-    jyx2_PlayTimelineSimple("[Timeline]ka284_Siguoya_LinghuchongDangce");
+    jyx2_PlayTimelineSimple("[Timeline]ka284_思过崖_令狐冲演练");
     jyx2_Wait(4);
     PlayAnimation(3, 7624, 7654);
     PlayAnimation(3, 7624, 7654);
