@@ -97,8 +97,13 @@ public class BigMapLocationNameDrawer : MonoBehaviour
     /// <returns></returns>
     private static bool JudgeIfIgnoreLocationNameDisplay(MapTeleportor loc)
     {
+        //如果难度设置是HARD，则关闭所有的地点名字
+        bool banAllName = Jyx2LuaBridge.jyx2_GetFlagInt($"BanLocationName.All") == 1 ||
+                          GameSettingManager.GetDifficulty() == (int) Jyx2_GameDifficulty.Hard;
+        
+        
         //全部禁止显示，只过滤设置了ShowLocationName的
-        if (Jyx2LuaBridge.jyx2_GetFlagInt($"BanLocationName.All") == 1 &&
+        if (banAllName &&
             Jyx2LuaBridge.jyx2_GetFlagInt($"ShowLocationName.{loc.name}") == 0)
         {
             return true;
@@ -106,13 +111,6 @@ public class BigMapLocationNameDrawer : MonoBehaviour
 
         //禁止地点名称
         if (Jyx2LuaBridge.jyx2_GetFlagInt($"BanLocationName.{loc.name}") == 1)
-        {
-            return true;
-        }
-        
-        //难度设置
-        bool isVisible = GameSettingManager.GetDifficulty() <= (int)Jyx2_GameDifficulty.Normal;
-        if (!isVisible)
         {
             return true;
         }
