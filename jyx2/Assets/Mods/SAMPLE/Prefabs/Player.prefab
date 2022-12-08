@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4c7218c4d328544ba9f8c445f3fd11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animancer: {fileID: 1726130425376247409}
   m_Animator: {fileID: 374160793599274411}
   IsOnBoat: 0
 --- !u!114 &2226599538022775491
@@ -131,6 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226bd2b86e20b264b923a1d3cae2900c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRunning: 0
+  m_Animancer: {fileID: 3051895616162607096}
+  _Idle: {fileID: 7400000, guid: 19947d83295c3b24c8c4ece6145908ae, type: 3}
+  _Move: {fileID: 7400000, guid: 43215d71819bd3d4a85bc47a3b1c561e, type: 2}
 --- !u!114 &618352215032370339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,7 +573,7 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 2490486126916691196}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1726130425376247409
+--- !u!114 &3051895616162607096
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -579,19 +582,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6384614684486626667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ad7b53f86f9da4da426b673c422513, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Animator: {fileID: 374160793599274411}
   _ActionOnDisable: 0
-  _PlayAutomatically: 0
-  _Animations: []
-  _Controller:
-    _FadeDuration: 0.25
-    _Events:
-      _Names: []
-      _NormalizedTimes: []
-      _Callbacks: []
-    _Controller: {fileID: 9100000, guid: 6f244789ddcff184399118af9d00138e, type: 2}
-    _NormalizedStartTime: NaN
-    _KeepStateOnStop: 0
