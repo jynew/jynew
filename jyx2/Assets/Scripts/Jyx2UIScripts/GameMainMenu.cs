@@ -50,6 +50,8 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	public override UILayer Layer => UILayer.MainUI;
 
+	public bool IsNameInputFocused => NameInput_InputField.isFocused;
+
     protected override void OnCreate()
 	{
 		InitTrans();

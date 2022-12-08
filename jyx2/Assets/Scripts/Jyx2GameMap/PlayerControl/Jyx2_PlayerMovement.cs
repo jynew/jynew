@@ -2,12 +2,15 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Animancer;
 
 namespace Jyx2
 {
     [DisallowMultipleComponent]
     public class Jyx2_PlayerMovement : MonoBehaviour
     {
+        public bool IsRunning = false;//public用来在editor中监控
+
         private float m_ManualMoveSpeed = 0;
 
         public bool IsLockingDirection { get; set; }
@@ -20,16 +23,22 @@ namespace Jyx2
 
         private NavMeshPath _cachePath;
 
-        private Animator m_Animator;
+        public AnimancerComponent m_Animancer;
 
         private Jyx2_PlayerAutoWalk m_AutoWalker;
+
+        public AnimationClip _Idle;//在editor面板中选择动画对象
+        public AnimationClip _Move;
 
         private void Awake()
         {
             _playerNavAgent = GetComponent<NavMeshAgent>();
-            m_Animator = GetComponentInChildren<Animator>(true);
+            m_Animancer = GetComponentInChildren<AnimancerComponent>(true);
             m_AutoWalker = GetComponent<Jyx2_PlayerAutoWalk>();
             Jyx2_Input.OnPlayerInputStateChange += OnPlayerInputStateChange;
+            //初始化角色开始状态
+            StopMovement();
+            _bigmapIdleTimeCount = 0;
         }
 
         private void OnDestroy()
@@ -145,17 +154,38 @@ namespace Jyx2
             _playerNavAgent.updateRotation = updateRotation;
         }
 
+        //在大地图上判断是否需要展示待机动作
+        private float _bigmapIdleTimeCount = 0;
+        private const float BIG_MAP_IDLE_TIME = 5f;
+        private bool _playingBigMapIdle = false;
+        private void OnClipEnd() => _playingBigMapIdle = false;
+
         private void Update()
         {
-            UpdateAnimSpeed();
-        }
+            IsRunning = Math.Max(m_ManualMoveSpeed, _playerNavAgent.velocity.magnitude) > 0;
 
-        void UpdateAnimSpeed()
-        {
-            float navAgentSpeed = IsNavAgentAvailable ? _playerNavAgent.velocity.magnitude : 0;
-            float manualMoveSpeed = m_ManualMoveSpeed;
-            float finalSpeed = Math.Max(manualMoveSpeed, navAgentSpeed);
-            m_Animator.SetFloat("speed", Mathf.Clamp(finalSpeed, 0, 20));
+            //大地图待机动作计时器
+            if (LevelMaster.IsInWorldMap && !_playingBigMapIdle)//只在大地图和没有在播放待机动作的时候计时
+                _bigmapIdleTimeCount += Time.deltaTime;
+
+            if (IsRunning)//如果在跑步就重置
+            {
+                _bigmapIdleTimeCount = 0;
+                _playingBigMapIdle = false;
+            }
+
+            if (_bigmapIdleTimeCount > BIG_MAP_IDLE_TIME)
+            {
+                _bigmapIdleTimeCount = 0;
+                var clip = Jyx2.Middleware.Tools.GetRandomElement(GlobalAssetConfig.Instance.bigMapIdleClips);
+                var state = m_Animancer.Play(clip, 0.25f);
+                state.Events.OnEnd = OnClipEnd;
+                _playingBigMapIdle = true;
+                return;
+            }
+
+            if (!_playingBigMapIdle)
+                m_Animancer.Play(IsRunning ? _Move : _Idle, 0.25f);
         }
     }
 }

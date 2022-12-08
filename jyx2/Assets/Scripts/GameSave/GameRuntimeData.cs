@@ -323,8 +323,24 @@ namespace Jyx2
                 runtime.RuntimeVersion = RUNTIME_VERSION_LATEST;
             }
             if (oldModVersion  < RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion)
+            {
                 //Lua事件，mod作者可以通过api监听此事件来进行存档更新
-            Jyx2LuaBridge.DispatchLuaEvent("OnArchiveOutdated", runtime, oldModVersion);
+                Jyx2LuaBridge.DispatchLuaEvent("OnArchiveOutdated", runtime, oldModVersion);
+                //自动检查一下有没有新添加的人物物品等，无需在lua中单独进行
+                var arcRoleCount = runtime.AllRoles.Count;
+                var configRoleCount = GameConfigDatabase.Instance.GetCount<Jyx2ConfigCharacter>();
+                if ( arcRoleCount < configRoleCount)
+                {
+                    foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                    {
+                        if (runtime.AllRoles.ContainsKey(r.Id)) continue;
+
+                        var role = new RoleInstance(r.Id);
+                        runtime.AllRoles.Add(r.Id, role);
+                        Debug.Log("Add New Role: "+ r.Id);
+                    }
+                }
+            }
         }
 
         private string GenerateSaveSummaryInfo()

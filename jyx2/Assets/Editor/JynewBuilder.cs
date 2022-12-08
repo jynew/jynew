@@ -15,22 +15,22 @@ namespace Editor
     ///
     /// 知大虾 2022/12/03 整体重构
     ///
-    /// - 所有的ab包临时生成在TemAbDir目录中，按不同平台区分
+    /// - 所有的ab包临时生成在_tempAbDir目录中，按不同平台区分
     /// - 不同平台的ab包如果没有修改，不会重复进行生成，这样可以提高打包效率
     /// - 所有勾选“原生MOD”的模组，将会随包发布（在Assert/Mods/{Your Mod Id}/ModSetting.asset中进行配置）
     /// 
     /// </summary>
     public class JynewBuilder
     {
-        private string TempAbDir = "Temp/jynew";
+        private string _tempAbDir = "ModBuild";
         private const string StreamingAssetsDir = "Assets/StreamingAssets";
         
         public void Build(BuildTarget target, string defaultDirName, string defaultBuildFileName, BuildOptions options = BuildOptions.None)
         {
-            TempAbDir = Path.Combine("Temp/jynew", target.ToString());
-            if (!Directory.Exists(TempAbDir))
+            _tempAbDir = Path.Combine(_tempAbDir, target.ToString());
+            if (!Directory.Exists(_tempAbDir))
             {
-                Directory.CreateDirectory(TempAbDir);
+                Directory.CreateDirectory(_tempAbDir);
             }
             
             try
@@ -101,7 +101,7 @@ namespace Editor
                 var xmlContent = Tools.SerializeXML(modInfo);
                 
                 //给临时目录也写一份
-                string tempDirPath = Path.Combine(TempAbDir, modInfo.Id + ".xml");
+                string tempDirPath = Path.Combine(_tempAbDir, modInfo.Id + ".xml");
                 File.WriteAllText(tempDirPath, xmlContent);
                 
                 if (modConfig.IsNativeMod)
@@ -152,7 +152,7 @@ namespace Editor
 
         private void DoCopyCoreAssetBundles()
         {
-            var abPath = Path.Combine(TempAbDir, $"base_assets");
+            var abPath = Path.Combine(_tempAbDir, $"base_assets");
             var abDestPath = Path.Combine(StreamingAssetsDir, $"base_assets");
             File.Copy(abPath, abDestPath);
         }
@@ -162,11 +162,11 @@ namespace Editor
             foreach (var mod in nativeMods)
             {
                 //拷贝相关文件到StreamingAssets下
-                var abPath = Path.Combine(TempAbDir, $"{mod}_mod");
+                var abPath = Path.Combine(_tempAbDir, $"{mod}_mod");
                 var abDestPath = Path.Combine(StreamingAssetsDir, $"{mod}_mod");
                 File.Copy(abPath, abDestPath);
 
-                var mapPath = Path.Combine(TempAbDir, $"{mod}_maps");
+                var mapPath = Path.Combine(_tempAbDir, $"{mod}_maps");
                 var mapDestPath = Path.Combine(StreamingAssetsDir, $"{mod}_maps");
                 File.Copy(mapPath, mapDestPath);
             }
@@ -174,11 +174,11 @@ namespace Editor
 
         private void GenerateAssetBundlesInTempDirectory(BuildTarget target)
         {
-            DirectoryInfo dirInfo = new DirectoryInfo(TempAbDir);
+            DirectoryInfo dirInfo = new DirectoryInfo(_tempAbDir);
             if (!dirInfo.Exists)
                 dirInfo.Create();
 
-            BuildPipeline.BuildAssetBundles(TempAbDir, BuildAssetBundleOptions.ChunkBasedCompression, target);
+            BuildPipeline.BuildAssetBundles(_tempAbDir, BuildAssetBundleOptions.ChunkBasedCompression, target);
         }
     }
 }

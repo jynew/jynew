@@ -51,10 +51,8 @@ public class Jyx2Player : MonoBehaviour
         c.enabled = true;
     }
 
-    public HybridAnimancerComponent m_Animancer;
     public Animator m_Animator;
 
-    
     public bool IsOnBoat;
 
     NavMeshAgent _navMeshAgent;
@@ -223,8 +221,7 @@ public class Jyx2Player : MonoBehaviour
 	    //尝试解决战斗场景中出现交互按钮导致游戏卡死的问题
         if (LevelMaster.IsInBattle)
 	        return;
-		
-        //BigMapIdleJudge();
+
         //延迟下交互触发 不然加载后的第一帧 交互和对话会同时触发
         if (m_InteractDelayTime >= Time.time)
             return;
@@ -247,56 +244,6 @@ public class Jyx2Player : MonoBehaviour
         }
     }
 
-
-    private float _bigmapIdleTimeCount = 0;
-    private const float BIG_MAP_IDLE_TIME = 5f;
-    private bool _playingbigMapIdle = false;
-
-    
-    private HybridAnimancerComponent GetPlayerAnimancer()
-    {
-        return m_Animancer;
-    }
-    
-    //在大地图上判断是否需要展示待机动作
-    void BigMapIdleJudge()
-    {
-        if(_boat == null) return; //暂实现：判断是否是大地图，有船才是大地图
-
-        var animator = m_Animator;
-        
-        if (_playingbigMapIdle)
-        {
-            //判断是否有移动速度，有的话立刻打断目前IDLE动作
-            if (animator!=null && animator.GetFloat("speed") > 0)
-            {
-                var animancer = GetPlayerAnimancer();
-                animancer.Stop();
-                animancer.PlayController();
-                _playingbigMapIdle = false;
-            }
-            return;
-        }
-
-        //一旦开始移动，则重新计时
-        if (animator!=null && animator.GetFloat("speed") > 0)
-        {
-            _bigmapIdleTimeCount = 0;
-            return;
-        }
-        
-        _bigmapIdleTimeCount += Time.deltaTime;
-        if (_bigmapIdleTimeCount > BIG_MAP_IDLE_TIME)
-        {
-            //展示IDLE动作
-            _bigmapIdleTimeCount = 0;
-            var animancer = GetPlayerAnimancer();
-            var clip = Jyx2.Middleware.Tools.GetRandomElement(GlobalAssetConfig.Instance.bigMapIdleClips);
-            animancer.Play(clip, 0.25f);
-            _playingbigMapIdle = true;
-        }
-    }
-    
     #region 事件交互
     
     private Collider[] targets = new Collider[10];

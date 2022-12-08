@@ -32,7 +32,10 @@ if ShowSelectPanel(0, "要抽一抽吗？", {"是", "否"}) == 0 then goto label
 ::label1::
         AddItem(174, -100);
         Talk(1193, "恭喜你，抽中了一件珍宝！");
-        AddItem(items[GetImbalancedRandomInt(0, #items)], 1);
+		::label2::
+		item = items[GetImbalancedRandomInt(0, #items)];
+		if item > 189 and HaveItem(item) then goto label2 end;
+        AddItem(item, 1);
 do return end;
 
 

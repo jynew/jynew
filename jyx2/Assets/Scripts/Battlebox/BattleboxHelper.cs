@@ -43,6 +43,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 	private bool _isInit = false;
 	private BattleboxManager[] _boxList;
 	private GameObject _boxRoot;
+	private BattleBlockType m_CurrentType;
 
 	void Start()
 	{
@@ -207,7 +208,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 
         if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIConfirm))
 		{
-			if (AnalogMoved && !IsRoleStandingInBlock(CurPosX, CurPosY))
+			if (AnalogMoved && !IsMoveSelectAndBlocked(CurPosX, CurPosY))
 			{
 				var selectedBlock =  _currentBattlebox.GetBlockData(CurPosX, CurPosY);
 				if (selectedBlock != null && !selectedBlock.Inaccessible)
@@ -239,6 +240,11 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		if (TrySelectNewBlock(CurPosX, newPosY))
 			CurPosY = newPosY;
     }
+
+	public bool IsMoveSelectAndBlocked(int x, int y)
+	{
+		return m_CurrentType == BattleBlockType.MoveZone && IsRoleStandingInBlock(x, y);
+	}
 
 	public bool IsRoleStandingInBlock(int x, int y)
     {
@@ -327,8 +333,8 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 	{
 		if (!GeneralPreJudge()) return;
 		HideAllBlocks();
-
-		if (type == BattleBlockType.MoveZone)
+		m_CurrentType = type;
+        if (type == BattleBlockType.MoveZone)
 		{
 			_currentBattlebox.SetAllBlockColor(new Color(1, 1, 1, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA));
 			_selectedBlock = null;

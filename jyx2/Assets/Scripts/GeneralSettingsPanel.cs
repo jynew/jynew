@@ -17,6 +17,8 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using Jyx2;
+using Rewired;
+using System.Text;
 
 public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
 {
@@ -30,6 +32,8 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
 
     public Slider volumeSlider;
     public Slider soundEffectSlider;
+
+    public Button JoyStickTestButton;
 
 
     private GraphicSetting _graphicSetting;
@@ -96,7 +100,9 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
         debugModeDropdown.onValueChanged.AddListener(SetDebugMode);
         mobileMoveModeDropdown.onValueChanged.AddListener(SetMobileMoveMode);
         mobileMoveModeDropdown.gameObject.SetActive(Application.isMobilePlatform);
-        
+
+        JoyStickTestButton.onClick.AddListener(OnJoyStickTestBtnClick);
+        JoyStickTestButton.gameObject.SetActive(!Application.isMobilePlatform);
         Debug.Log("GeneralSettingsPanel Start() END");
     }
 
@@ -259,8 +265,32 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
         GameSettingManager.UpdateSetting(GameSettingManager.Catalog.MobileMoveMode, index);
     }
 
-    protected override void OnCreate()
+    private void OnJoyStickTestBtnClick()
     {
+        Action onCopy = () =>
+        {
+            var ui = Jyx2_UIManager.Instance.GetUI<CommonNoticePanel>();
+            if (ui == null)
+                return;
+            GUIUtility.systemCopyBuffer = ui.Content;
+            CommonTipsUIPanel.ShowPopInfo("调试信息已复制到剪贴版");
+        };
 
+        var sb = new StringBuilder(); 
+        var allJoySticks = ReInput.controllers.Joysticks;
+        
+        sb.AppendLine("<color=red>以下为手柄测试输出日志, 如有问题请点击复制后发送给开发者</color>");
+        sb.AppendLine();
+        foreach (var joyStick in allJoySticks)
+        {
+            sb.AppendFormat("<color=yellow>[设备名:{0}]</color>  <color=green>识别码:{1}</color>\n", joyStick.hardwareName, joyStick.hardwareTypeGuid);
+        }
+        
+        sb.AppendLine("=======按键列表======");
+        var json = Jyx2.InputCore.Jyx2_Input.GetAllJoyStickJsonData();
+        sb.Append(json);
+        
+        
+        CommonNoticePanel.ShowNotice("手柄信息", sb.ToString(), onCopy, null, "复制");
     }
 }
