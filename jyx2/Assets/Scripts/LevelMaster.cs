@@ -370,10 +370,10 @@ public class LevelMaster : MonoBehaviour
 		if (_gameMapPlayer == null)
 			return;
 
-		var animator = _gameMapPlayer.m_Animator;
-		if (animator != null)
+		var playerMovement = _gameMapPlayer.GetComponent<Jyx2_PlayerMovement>();
+		if (playerMovement != null)
 		{
-			animator.SetFloat("speed", Math.Min(speed, 20));
+			playerMovement.StopMovement();
 		}
 	}
 
