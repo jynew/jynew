@@ -1,0 +1,15 @@
+#群侠传启动MOD目录说明
+#2022/12/8   知大虾
+
+#由于主干只保持JYX2和SAMPLE目录，其他所有的MOD都建议自己组织代码仓库管理
+#所以在这里屏蔽所有MOD的资源目录，这样MOD开发者不需要再频繁的切换分枝，来维护自己的MOD版本库。最终组织形态应如下：
+#
+# jyx2/  <---从jynew拉取最新代码，提交引擎部分的PR
+#   Assets/Mods/{Your Mod Id} <----MOD自己的版本库进行维护，由于被ignore了，所以不用担心提交到原库
+
+*
+!.gitignore
+!JYX2
+!JYX2.meta
+!SAMPLE
+!SAMPLE.meta
