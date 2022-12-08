@@ -25,7 +25,8 @@ public class LevelMasterBooster : MonoBehaviour
     [LabelText("模拟移动端")] public bool m_MobileSimulate;
 
     [LabelText("战斗地图")] public bool m_IsBattleMap = false;
-
+    
+    
     private GameRuntimeData runtime => GameRuntimeData.Instance;
 
     private async void Awake()

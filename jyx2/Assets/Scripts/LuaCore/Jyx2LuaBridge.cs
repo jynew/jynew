@@ -41,7 +41,7 @@ namespace Jyx2
     /// 都是在Unity主线程中被调用，放心食用
     /// </summary>
     [LuaCallCSharp]
-    public static class Jyx2LuaBridge
+    public  static partial class Jyx2LuaBridge
     {
         //static StoryEngine storyEngine => StoryEngine.Instance;
         static GameRuntimeData runtime => GameRuntimeData.Instance;
@@ -1957,5 +1957,6 @@ namespace Jyx2
         }
 
         #endregion
+        
     }
 }

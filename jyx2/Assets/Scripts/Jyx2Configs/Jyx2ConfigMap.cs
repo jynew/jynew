@@ -35,12 +35,9 @@ namespace Jyx2Configs
         public string Tags;
 
 
-        //进入场景调用事件
-        [ProtoMember(7)] public string EnterSceneLua;
-        
-        //退出场景调用事件
-        [ProtoMember(8)] public string ExitSceneLua;
-        
+        //脚本绑定
+        [ProtoMember(7)] public string BindScript;
+ 
         
         /// <summary>
         /// 获取标签数据，以半角的冒号分割

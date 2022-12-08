@@ -180,6 +180,11 @@ JudgePointEventNum = luaBridge.JudgePointEventNum--判断指定触发器的交�
 GetMoneyCount = luaBridge.GetMoneyCount--获取金钱数量
 GetImbalancedRandomInt = luaBridge.GetImbalancedRandomInt--获取不平衡随机数
 
+
+--新一代的LUA API
+FastBindEvent = luaBridge.FastBindEventToObj --快速绑定交互事件到物体
+
+
 function main_getLuaFiles()
 	return {}
 end 

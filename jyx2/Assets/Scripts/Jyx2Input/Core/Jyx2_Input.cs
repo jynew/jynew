@@ -224,8 +224,10 @@ namespace Jyx2.InputCore
                 m_CurController = lastController;
                 OnControllerChange?.Invoke(lastController);
 #if UNITY_EDITOR
-                if(lastController != null)
-                    Debug.Log("NewController:" + lastController.name);
+                if (lastController != null)
+                {
+                    //Debug.Log("NewController:" + lastController.name);
+                }
 #endif
             }
         }
