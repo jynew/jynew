@@ -532,7 +532,7 @@ namespace Jyx2
                     }
                     int level = GetWugongLevel(item.Skill);
                    //若已经学满武学，则为假
-                    if (level < 0 && this.Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
+                    if (level < 0 || this.Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
                     {
                         return false;
                     }
