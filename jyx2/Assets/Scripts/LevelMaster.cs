@@ -223,7 +223,7 @@ public class LevelMaster : MonoBehaviour
 		//判断是否有进入触发的事件，如果有则触发
 		if (!_currentMap.EnterSceneLua.IsNullOrWhitespace())
 		{
-			
+			FindObjectOfType<GameEventManager>().ExecuteJyx2Event(_currentMap.EnterSceneLua);
 		}
 	}
 
@@ -566,7 +566,7 @@ public class LevelMaster : MonoBehaviour
 
 			try
 			{
-				string modify = runtime.GetModifiedEvent(gameMap.Id, int.Parse(eventId));
+				string modify = runtime.GetModifiedEvent(gameMap.Id, eventId);
 				if (!string.IsNullOrEmpty(modify))
 				{
 					string[] tmp = modify.Split('_');

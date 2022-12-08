@@ -142,13 +142,13 @@ public class GameEventManager : MonoBehaviour
         if (int.TryParse(eventName, out var v))
         {
             eventId = v;
+            if (eventId < 0)
+            {
+                //Debug.LogError("执行错误的luaEvent，id=" + eventId);
+                return;
+            }
         }
         
-        if (eventId < 0)
-        {
-            //Debug.LogError("执行错误的luaEvent，id=" + eventId);
-            return;
-        }
 
         if (GetCurrentGameEvent() != null)
         {

@@ -596,7 +596,7 @@ namespace Jyx2
             KeyValues[key] = string.Format("{0}_{1}_{2}", interactiveEventId, useItemEventId, enterEventId);
         }
 
-        public string GetModifiedEvent(int scene,int eventId)
+        public string GetModifiedEvent(int scene,string eventId)
         {
             string key = "evt_" + scene + "_" + eventId;
             if (KeyValues.ContainsKey(key))

@@ -12,8 +12,11 @@
 using Jyx2;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Jyx2.EventsGraph;
+using Jyx2.Middleware;
+using Jyx2.MOD.ModV2;
 using Jyx2.ResourceManagement;
 using Jyx2Configs;
 using ProtoBuf;
@@ -58,9 +61,8 @@ public static class Jyx2ResourceHelper
         }
 
         //基础配置表
-        var config = await ResLoader.LoadAsset<TextAsset>($"Assets/Configs/Datas.bytes");
-        GameConfigDatabase.Instance.Init(config.bytes);
-        
+        await InitConfigTables();
+
         //初始化基础配置
         GameSettings.Refresh();
         
@@ -75,6 +77,24 @@ public static class Jyx2ResourceHelper
         
         //IFix热更新文件
         await IFixManager.LoadPatch();
+    }
+
+    private static async Task InitConfigTables()
+    {
+        var mod = RuntimeEnvSetup.GetCurrentMod();
+
+        //编辑器模式下直接从excel中载入，不需要再打包
+        if (mod is GameModEditor editor)
+        {
+            var excelDir = Path.Combine(editor.RootConfig.ModRootDir, "Configs");
+            var data = ExcelTools.LoadFromExcels(excelDir);
+            GameConfigDatabase.Instance.Init(data);   
+        }
+        else //否则从打包载入
+        {
+            var config = await ResLoader.LoadAsset<TextAsset>($"Assets/Configs/Datas.bytes");
+            GameConfigDatabase.Instance.Init(config.bytes);    
+        }
     }
 
     public static GameObject GetCachedPrefab(string path)
