@@ -16,7 +16,7 @@ using UnityEditor.SceneManagement;
 
 
 [CustomEditor(typeof(ETCJoystick))]
-public class ETCJoystickInspector:Editor  {
+public class ETCJoystickInspector:UnityEditor.Editor  {
 
 	public string[] unityAxes;
 

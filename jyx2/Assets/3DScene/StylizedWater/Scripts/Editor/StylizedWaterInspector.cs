@@ -9,7 +9,7 @@ using UnityEditor;
 namespace StylizedWater
 {
     [CustomEditor(typeof(StylizedWater))]
-    public class StylizedWaterInspector : Editor
+    public class StylizedWaterInspector : UnityEditor.Editor
     {
         //Non serialized, local
         StylizedWater stylizedWater;

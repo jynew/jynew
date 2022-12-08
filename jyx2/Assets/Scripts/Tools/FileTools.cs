@@ -26,56 +26,54 @@ namespace Jyx2.Middleware
         /// <param name="_list"></param>
         public static void GetAllFilePath(string _path, List<string> _list, List<string> _filter = null)
         {
-            if (_path != null)
+            if (_path == null) return;
+            DirectoryInfo _dir = new DirectoryInfo(_path);
+
+            if(!_dir.Exists)
             {
-                DirectoryInfo _dir = new DirectoryInfo(_path);
+                UnityEngine.Debug.LogWarning("目标文件夹不存在, 路径:" + _path);
+                return;
+            }
 
-                if(!_dir.Exists)
+            // GetFileSystemInfos方法可以获取到指定目录下的所有文件以及子文件夹
+            FileSystemInfo[] _files = _dir.GetFileSystemInfos();
+
+            for (int i = 0; i < _files.Length; i++)
+            {
+                // 文件夹
+                if (_files[i] is DirectoryInfo)
                 {
-                    UnityEngine.Debug.LogWarning("目标文件夹不存在, 路径:" + _path);
-                    return;
+                    GetAllFilePath(_files[i].FullName, _list, _filter);
                 }
-
-                // GetFileSystemInfos方法可以获取到指定目录下的所有文件以及子文件夹
-                FileSystemInfo[] _files = _dir.GetFileSystemInfos();
-
-                for (int i = 0; i < _files.Length; i++)
+                else
                 {
-                    // 文件夹
-                    if (_files[i] is DirectoryInfo)
-                    {
-                        GetAllFilePath(_files[i].FullName, _list, _filter);
-                    }
-                    else
-                    {
-                        string _filePath = _files[i].FullName;
+                    string _filePath = _files[i].FullName;
 
-                        // 用来判断最后的扩展名
-                        string _temp = _filePath.ToLower();
+                    // 用来判断最后的扩展名
+                    string _temp = _filePath.ToLower();
 
-                        if (_filter != null)
+                    if (_filter != null)
+                    {
+                        bool _b = false;
+
+                        foreach (string _str in _filter)
                         {
-                            bool _b = false;
-
-                            foreach (string _str in _filter)
+                            // 检测结尾
+                            if (_temp.EndsWith(_str))
                             {
-                                // 检测结尾
-                                if (_temp.EndsWith(_str))
-                                {
-                                    _b = true;
-                                }
-                            }
-
-                            if (!_b)
-                            {
-                                continue;
+                                _b = true;
                             }
                         }
 
-                        _filePath = _filePath.Replace("\\", "/");
-
-                        _list.Add(_filePath);
+                        if (!_b)
+                        {
+                            continue;
+                        }
                     }
+
+                    _filePath = _filePath.Replace("\\", "/");
+
+                    _list.Add(_filePath);
                 }
             }
         }

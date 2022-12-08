@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace BeautifyEffect
 {
     [CustomEditor(typeof(BeautifyProfile))]
-    public class BeautifyProfilenspector : Editor
+    public class BeautifyProfilenspector : UnityEditor.Editor
     {
         static GUIStyle titleLabelStyle, labelBoldStyle, labelNormalStyle, sectionHeaderBoldStyle, sectionHeaderNormalStyle, sectionHeaderIndentedStyle;
         static GUIStyle buttonNormalStyle, buttonPressedStyle, blackBack;

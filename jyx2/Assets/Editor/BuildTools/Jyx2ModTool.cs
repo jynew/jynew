@@ -7,8 +7,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Editor;
+using Jyx2.MOD.ModV2;
 using UnityEditor;
 using UnityEngine;
+using Tools = Jyx2.Middleware.Tools;
 
 namespace Jyx2Editor.BuildTool
 {
@@ -228,13 +231,12 @@ namespace Jyx2Editor.BuildTool
 
         private void GenerateModXmlFile(MODRootConfig config)
         {
-            var modId = config.ModId.ToLower();
-            StringBuilder xmlBuilder = new StringBuilder();
-            xmlBuilder.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            xmlBuilder.AppendFormat("<ModItem ModId=\"{0}\" Name=\"{1}\"/>", modId, config.ModName);
-
-            var xmlPath = Path.Combine(GetModExportDirectory(modId), "mod.xml");
-            File.WriteAllText(xmlPath, xmlBuilder.ToString());
+            var modId = config.ModId.ToLower().Trim();
+            var modInfo = JynewBuilder.CreateModInfo(config, m_BuildTargetPlatForm);
+            
+            var xmlContent = Tools.SerializeXML(modInfo);
+            var xmlPath = Path.Combine(GetModExportDirectory(modId), modId + ".xml");
+            File.WriteAllText(xmlPath, xmlContent);
         }
 
         private void MoveModBundlesToModFolder()

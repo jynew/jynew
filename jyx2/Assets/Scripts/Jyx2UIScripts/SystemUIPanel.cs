@@ -46,6 +46,12 @@ public partial class SystemUIPanel : Jyx2_UIBase
 
 	async void Save()
 	{
+		if (!LevelMaster.IsInWorldMap && RuntimeEnvSetup.CurrentModConfig != null && RuntimeEnvSetup.CurrentModConfig.EnableSaveBigMapOnly)
+		{
+			StoryEngine.DisplayPopInfo("本MOD只允许在大地图进行存档");
+			return;
+		}
+
 		Action<int> OnSave = (idx) =>
 		{
 			if (LevelMaster.Instance != null)
@@ -65,7 +71,7 @@ public partial class SystemUIPanel : Jyx2_UIBase
 			var summary = GameSaveSummary.Load(archiveIndex);
 			if (summary.IsEmpty())
 			{
-                StoryEngine.Instance.DisplayPopInfo("存档为空");
+                StoryEngine.DisplayPopInfo("存档为空");
 				return;
             }
 			if (!summary.ModId.ToLower().Equals(RuntimeEnvSetup.CurrentModId.ToLower()))

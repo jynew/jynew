@@ -22,6 +22,13 @@ public enum Jyx2_MpType
     Neutral = 2, //中性内力
 }
 
+public enum Jyx2_GameDifficulty
+{
+    Simple = 0,
+    Normal = 1,
+    Hard = 2,
+}
+
 
 public struct PropertyItem 
 {

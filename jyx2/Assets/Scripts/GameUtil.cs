@@ -39,8 +39,8 @@ public static class GameUtil
             selectionContent.Add(role.Name);
         }
         selectionContent.Add("取消");
-        var storyEngine = StoryEngine.Instance;
-        storyEngine.BlockPlayerControl = true;
+        //var storyEngine = StoryEngine.Instance;
+        StoryEngine.BlockPlayerControl = true;
         
         SelectRoleParams selectParams = new SelectRoleParams();
         selectParams.roleList = roles.ToList();
@@ -48,7 +48,7 @@ public static class GameUtil
         selectParams.isDefaultSelect=false;
         selectParams.callback = (cbParam) => 
         {
-            storyEngine.BlockPlayerControl = false;
+            StoryEngine.BlockPlayerControl = false;
             if (cbParam.isCancelClick == true)
             {
                 return;
@@ -72,7 +72,7 @@ public static class GameUtil
     /// <param name="duration"></param>
     public static void DisplayPopinfo(string msg, float duration =2f)
     {
-        StoryEngine.Instance.DisplayPopInfo(msg, duration);
+        StoryEngine.DisplayPopInfo(msg, duration);
     }
 
     public static async void ShowFullSuggest(string content, string title = "", Action cb = null) 

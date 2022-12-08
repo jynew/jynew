@@ -2,6 +2,7 @@
 using Jyx2.InputCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -92,7 +93,16 @@ namespace Jyx2.UINavigation
             return true;
         }
 
-        public static void SetUpNavigation<T>(this IList<T> Items, int row, int col) where T : INavigable
+        public static int GetGroupCount(int totalCount, int CountPerGroup)
+        {
+            if (totalCount == 0 || CountPerGroup == 0)
+                return 0;
+            int result = totalCount % CountPerGroup == 0 ? totalCount / CountPerGroup
+                                                         : totalCount / CountPerGroup + 1;
+            return result;
+        }
+
+        public static void SetUpNavigation<T>(this IList<T> Items, int row, int col, bool supportLoop = false) where T : INavigable
         {
             for (int i = 0; i < Items.Count; ++i)
             {
@@ -100,9 +110,30 @@ namespace Jyx2.UINavigation
                 var neibor = GetNeighbors(i, row, col);
                 curItem.Connect(Items.SafeGet(neibor.up), Items.SafeGet(neibor.down), Items.SafeGet(neibor.left), Items.SafeGet(neibor.right));
             }
+            if(supportLoop && Items.Count > 1)
+            {
+                var first = Items[0].GetSelectable();
+                var last = Items[Items.Count - 1].GetSelectable();
+                SetUpLoopNavigation(first, last, row, col);
+            }
         }
 
-        public static void SetUpNavigation(this IList<Selectable> Items, int row, int col)
+        public static IReadOnlyList<T> GetEdgeItems<T>(List<T> Items, int row, int col, NavigationDirection direction)
+        {
+            if (Items.Count == 1)
+                return Items;
+            var result = new List<T>();
+            for (int i = 0; i < Items.Count; ++i)
+            {
+                if(IsEdge(i, row, col, direction))
+                {
+                    result.Add(Items[i]);
+                }
+            }
+            return result;
+        }
+
+        public static void SetUpNavigation(this IList<Selectable> Items, int row, int col, bool supportLoop = false)
         {
             for (int i = 0; i < Items.Count; ++i)
             {
@@ -116,6 +147,42 @@ namespace Jyx2.UINavigation
                 navigation.selectOnDown = Items.SafeGet(neibor.down);
                 curItem.navigation = navigation;
             }
+            if(supportLoop && Items.Count > 1)
+            {
+                SetUpLoopNavigation(Items.SafeGet(0), Items.SafeGet(Items.Count - 1), row, col);
+            }
+        }
+
+        private static void SetUpLoopNavigation(Selectable firstItem, Selectable lastItem, int row, int col)
+        {
+            if (firstItem == null || lastItem == null)
+                return;
+            if (row < 1 || col < 1)
+                return;
+            var firstNavigation = firstItem.navigation;
+            var lastNavigation = lastItem.navigation;
+            if (row == 1)
+            {
+                //横向列表
+                firstNavigation.selectOnLeft = lastItem;
+                lastNavigation.selectOnRight = firstItem;
+            }
+            else if (col == 1)
+            {
+                //竖直列表
+                firstNavigation.selectOnUp = lastItem;
+                lastNavigation.selectOnDown = firstItem;
+            }
+            else
+            {
+                //Grid
+                firstNavigation.selectOnLeft = lastItem;
+                firstNavigation.selectOnUp = lastItem;
+                lastNavigation.selectOnRight = firstItem;
+                lastNavigation.selectOnDown = firstItem;
+            }
+            firstItem.navigation = firstNavigation;
+            lastItem.navigation = lastNavigation;
         }
 
         static Vector3[] corners = new Vector3[4];

@@ -18,6 +18,7 @@ using Jyx2.ResourceManagement;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using System.IO;
+using Jyx2.MOD.ModV2;
 
 namespace Jyx2
 {
@@ -258,15 +259,29 @@ namespace Jyx2
             {
                 _luaMapper[a.name] = Encoding.UTF8.GetBytes(a.text);
             }
+            
+            /*var mod = RuntimeEnvSetup.GetCurrentMod();
+            if (mod is GameModEditor)
+            {
+                await InitMapperFromEditor();
+            }
+            else
+            {
+                var assets = await ResLoader.LoadAssets<TextAsset>("Assets/Lua/");
 
-            await InitMapperFromMod();
+                _luaMapper = new Dictionary<string, byte[]>();
+                foreach (var a in assets)
+                {
+                    _luaMapper[a.name] = Encoding.UTF8.GetBytes(a.text);
+                }
+            }*/
         }
 
-        private static async UniTask InitMapperFromMod()
+        private static async UniTask InitMapperFromEditor()
         {
             try
             {
-                var curModDir = MODManager.Instance.GetCurrentModLuaDirectory();
+                var curModDir = RuntimeEnvSetup.CurrentModConfig.ModRootDir + "/Lua";
                 var luaFilePaths = new List<string>();
                 var luafilter = new List<string>() { ".lua" };
                 FileTools.GetAllFilePath(curModDir, luaFilePaths, luafilter);
@@ -288,7 +303,7 @@ namespace Jyx2
             }
             catch(Exception ex)
             {
-                Debug.LogError("读取Mod文件夹的Lua文件异常:" + ex.Message);
+                Debug.LogError("读取Mod文件夹的Lua文件异常:" + ex.ToString());
             }
         }
 

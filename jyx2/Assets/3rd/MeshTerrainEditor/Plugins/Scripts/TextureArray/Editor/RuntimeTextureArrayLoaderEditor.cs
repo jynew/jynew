@@ -1,10 +1,11 @@
+#if false
 using UnityEditor;
 using UnityEngine;
 
 namespace MTE
 {
-    [CustomEditor(typeof(RuntimeTextureArrayLoader))]
-    public class RuntimeTextureArrayLoaderEditor : Editor
+    [UnityEditor.CustomEditor(typeof(RuntimeTextureArrayLoader))]
+    public class RuntimeTextureArrayLoaderEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
@@ -24,3 +25,4 @@ namespace MTE
         }
     }
 }
+#endif

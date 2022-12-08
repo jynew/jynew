@@ -78,6 +78,9 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	private SkillCastInstance currentSkill;
 
 	private LastOperateAction m_LastOperateData = new LastOperateAction();
+
+	private bool IsSelectingBox => !MainActions_RectTransform.gameObject.activeSelf;
+
     
 	protected override void OnCreate()
 	{
@@ -265,7 +268,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
     {
         _ActiveButtons.Clear();
         _ActiveButtons.AddRange(RightActionBtns.Where(btn => btn.gameObject.activeSelf));
-        NavigateUtil.SetUpNavigation(_ActiveButtons, _ActiveButtons.Count, 1);
+        NavigateUtil.SetUpNavigation(_ActiveButtons, _ActiveButtons.Count, 1, true);
     }
 
 
@@ -295,7 +298,10 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 	public void OnCancelClick()
 	{
-		TryCallback(new BattleLoop.ManualResult() { isRevert = true });
+		if (IsSelectingBox)
+			OnCancelBoxSelection();
+        else
+			TryCallback(new BattleLoop.ManualResult() { isRevert = true });
 	}
 
 	public void OnMoveClick()
@@ -381,6 +387,14 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 
 		MessageBox.ConfirmOrCancel("确定投降并放弃本场战斗?".GetContent(nameof(BattleActionUIPanel)), onConfirm);
 	}
+
+    public void OnCancelBoxSelection()
+	{
+        BattleboxHelper.Instance.HideAllBlocks(true);
+		SetActionsVisible(true);
+		RestoreLastOperation();
+    }
+    
 
     public void TryFocusOnCurrentSkill()
 	{

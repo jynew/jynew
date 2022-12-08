@@ -43,6 +43,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 	private bool _isInit = false;
 	private BattleboxManager[] _boxList;
 	private GameObject _boxRoot;
+	private BattleBlockType m_CurrentType;
 
 	void Start()
 	{
@@ -56,8 +57,8 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		EventSystem.current.sendNavigationEvents = false;
         
         InputContextManager.Instance.AddInputContext(this);
-        //这一帧UI的A键确认了，等下一帧在响应
-		m_InputEnableFrame = Time.frameCount;
+		//这一帧UI的A键确认了，等下一帧在响应
+		m_InputEnableFrame = Time.frameCount + 1;
     }
 
     void UnRegisterInput()
@@ -178,18 +179,9 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
     
 	public bool AnalogMoved = false;
 
-	private int m_InputEnableFrame = -1;
-	public bool CanUpdate => m_InputEnableFrame != Time.frameCount;
+	private int m_InputEnableFrame = int.MaxValue;
+	public bool CanUpdate => m_InputEnableFrame <= Time.frameCount;
     
-    
-    private bool IsCancelBoxSelect()
-	{
-		if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose))
-			return true;
-		if (Input.GetMouseButtonDown(1) && !Application.isMobilePlatform)
-			return true;
-		return false;
-    }
 
 	public void OnUpdate()
 	{
@@ -216,7 +208,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 
         if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIConfirm))
 		{
-			if (AnalogMoved)
+			if (AnalogMoved && !IsMoveSelectAndBlocked(CurPosX, CurPosY))
 			{
 				var selectedBlock =  _currentBattlebox.GetBlockData(CurPosX, CurPosY);
 				if (selectedBlock != null && !selectedBlock.Inaccessible)
@@ -226,11 +218,9 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 			}
 		}
 
-        if (IsCancelBoxSelect())
+        if (IsCancelBoxSelection())
         {
-            var ui = Jyx2_UIManager.Instance.GetUI<BattleActionUIPanel>();
-            if (ui != null)
-                ui.OnCancelClick();
+			TryCancelBoxSelection();
         }
 
     }
@@ -249,6 +239,35 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
             return;
 		if (TrySelectNewBlock(CurPosX, newPosY))
 			CurPosY = newPosY;
+    }
+
+	public bool IsMoveSelectAndBlocked(int x, int y)
+	{
+		return m_CurrentType == BattleBlockType.MoveZone && IsRoleStandingInBlock(x, y);
+	}
+
+	public bool IsRoleStandingInBlock(int x, int y)
+    {
+		var battleModel = BattleManager.Instance.GetModel();
+		if (battleModel == null)
+			return false;
+		return battleModel.BlockHasRole(x, y);
+	}
+
+    private bool IsCancelBoxSelection()
+    {
+        if (Jyx2_Input.GetButtonDown(Jyx2ActionConst.UIClose))
+            return true;
+        if (Input.GetMouseButtonDown(1) && !Application.isMobilePlatform)
+            return true;
+        return false;
+    }
+
+    public void TryCancelBoxSelection()
+	{
+        var ui = Jyx2_UIManager.Instance.GetUI<BattleActionUIPanel>();
+        if (ui != null)
+            ui.OnCancelBoxSelection();
     }
 
 
@@ -314,8 +333,8 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 	{
 		if (!GeneralPreJudge()) return;
 		HideAllBlocks();
-
-		if (type == BattleBlockType.MoveZone)
+		m_CurrentType = type;
+        if (type == BattleBlockType.MoveZone)
 		{
 			_currentBattlebox.SetAllBlockColor(new Color(1, 1, 1, BattleboxManager.BATTLEBLOCK_DECAL_ALPHA));
 			_selectedBlock = null;

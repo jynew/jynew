@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 using System.Collections;
 
 [CustomEditor(typeof(ETCArea))]
-public class ETCAreaInspector : Editor {
+public class ETCAreaInspector : UnityEditor.Editor {
 
 	private ETCArea.AreaPreset preset = ETCArea.AreaPreset.Choose;
 

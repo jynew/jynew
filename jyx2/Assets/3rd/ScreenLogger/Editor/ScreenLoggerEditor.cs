@@ -5,7 +5,7 @@ using UnityEditor;
 namespace AClockworkBerry
 {
     [CustomEditor(typeof(ScreenLogger))]
-    public class ScreenLoggerEditor : Editor
+    public class ScreenLoggerEditor : UnityEditor.Editor
     {
         [MenuItem("GameObject/Create Other/Screen Logger")]
         static void AddScreenLogger()

@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 [CustomEditor(typeof(QuickSwipe))]
-public class QuickSwipeInspector : Editor {
+public class QuickSwipeInspector : UnityEditor.Editor {
 
 	public override void OnInspectorGUI(){
 		
