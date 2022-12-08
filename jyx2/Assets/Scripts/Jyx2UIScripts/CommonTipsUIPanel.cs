@@ -99,4 +99,9 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
         await Task.Delay(TimeSpan.FromSeconds(duration));
         MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(false);
     }
+
+    public static void ShowPopInfo(string msg, TipsType tipsType = TipsType.Common)
+    {
+        Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), tipsType, msg).Forget();
+    }
 }
