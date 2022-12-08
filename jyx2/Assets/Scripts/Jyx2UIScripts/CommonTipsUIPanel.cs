@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static TileWorld.TileWorldCreatorSaveLoad;
 
 public enum TipsType 
 {
@@ -98,5 +99,10 @@ public partial class CommonTipsUIPanel:Jyx2_UIBase
         cg.DOFade(0, duration / 2);
         await Task.Delay(TimeSpan.FromSeconds(duration));
         MiddleTopMessageSuggest_RectTransform.gameObject.SetActive(false);
+    }
+
+    public static void ShowPopInfo(string msg, TipsType tipsType = TipsType.Common)
+    {
+        Jyx2_UIManager.Instance.ShowUIAsync(nameof(CommonTipsUIPanel), tipsType, msg).Forget();
     }
 }

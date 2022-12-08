@@ -106,7 +106,7 @@ namespace Jyx2.InputCore.Util
             if (controller == null || elementMap == null)
                 return result;
             var controllerAssetMap = ResLoader.LoadAssetSync<ControllerSpriteAsset>("Assets/BuildSource/Gamepad/ControllerSpriteAsset.asset");
-            var spriteAsset = controllerAssetMap?.GetSpriteAsset(controller.hardwareIdentifier);
+            var spriteAsset = controllerAssetMap?.GetSpriteAsset(controller.hardwareTypeGuid.ToString());
             if (spriteAsset != null)
             {
                 result = $"<sprite=\"{spriteAsset.name}\" name=\"{elementMap.elementIdentifierName}\">";
