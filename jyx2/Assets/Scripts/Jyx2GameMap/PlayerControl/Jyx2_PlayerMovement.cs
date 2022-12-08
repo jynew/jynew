@@ -156,7 +156,7 @@ namespace Jyx2
 
         //在大地图上判断是否需要展示待机动作
         private float _bigmapIdleTimeCount = 0;
-        private const float BIG_MAP_IDLE_TIME = 10f;
+        private const float BIG_MAP_IDLE_TIME = 7f;
         private bool _playingBigMapIdle = false;
         private void OnClipEnd() => _playingBigMapIdle = false;
 
