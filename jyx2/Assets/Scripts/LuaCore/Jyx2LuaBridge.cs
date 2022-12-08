@@ -149,17 +149,17 @@ namespace Jyx2
             {
                 if (interactiveEventId == -2)
                 {
-                    interactiveEventId = evt.m_InteractiveEventId;
+                    interactiveEventId = int.Parse(evt.m_InteractiveEventId);
                 }
 
                 if (useItemEventId == -2)
                 {
-                    useItemEventId = evt.m_UseItemEventId;
+                    useItemEventId = int.Parse(evt.m_UseItemEventId);
                 }
 
                 if (enterEventId == -2)
                 {
-                    enterEventId = evt.m_EnterEventId;
+                    enterEventId = int.Parse(evt.m_EnterEventId);
                 }
             }
             // 非当前场景事件如何获取
@@ -396,29 +396,29 @@ namespace Jyx2
                 if (v1 == -2)
                 {
                     //值为-2时，取当前值
-                    v1 = evt.m_InteractiveEventId;
+                    v1 = int.Parse(evt.m_InteractiveEventId);
                 }
                 else if (v1 > -1)
                 {
-                    v1 += evt.m_InteractiveEventId;
+                    v1 += int.Parse(evt.m_InteractiveEventId);
                 }
 
                 if (v2 == -2)
                 {
-                    v2 = evt.m_UseItemEventId;
+                    v2 = int.Parse(evt.m_UseItemEventId);
                 }
                 else if (v2 > -1)
                 {
-                    v2 += evt.m_UseItemEventId;
+                    v2 += int.Parse(evt.m_UseItemEventId);
                 }
 
                 if (v3 == -2)
                 {
-                    v3 = evt.m_EnterEventId;
+                    v3 = int.Parse(evt.m_EnterEventId);
                 }
                 else if (v3 > -1)
                 {
-                    v3 += evt.m_EnterEventId;
+                    v3 += int.Parse(evt.m_EnterEventId);
                 }
 
                 runtime.ModifyEvent(scene, eventId, v1, v2, v3);
@@ -726,7 +726,7 @@ namespace Jyx2
             var evt = GameEvent.GetCurrentSceneEvent(eventIndex.ToString());
             if(evt != null)
             {
-                result = (evt.m_InteractiveEventId == value);
+                result = (int.Parse(evt.m_InteractiveEventId) == value);
             }
             return result;
         }
@@ -739,15 +739,15 @@ namespace Jyx2
             {
                 if (EventId == 0)
                 {
-                    result = (evt.m_InteractiveEventId == value);
+                    result = (int.Parse(evt.m_InteractiveEventId) == value);
                 }
                 else if (EventId == 1)
                 {
-                    result = (evt.m_UseItemEventId == value);
+                    result = (int.Parse(evt.m_UseItemEventId) == value);
                 }
                 else if (EventId == 2)
                 {
-                    result = (evt.m_EnterEventId == value);
+                    result = (int.Parse(evt.m_EnterEventId) == value);
                 }
             }
             return result;

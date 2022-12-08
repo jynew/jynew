@@ -36,7 +36,7 @@ public class GameEvent : MonoBehaviour
         return GameEventManager.GetCurrentGameEvent();
     }
 
-    private const int NO_EVENT = -1;
+    private const string NO_EVENT = "-1";
 
     /// <summary>
     /// 交互对象
@@ -46,17 +46,17 @@ public class GameEvent : MonoBehaviour
     /// <summary>
     /// 交互事件
     /// </summary>
-    public int m_InteractiveEventId = NO_EVENT;
+    public string m_InteractiveEventId = NO_EVENT;
 
     /// <summary>
     /// 使用物品事件
     /// </summary>
-    public int m_UseItemEventId = NO_EVENT;
+    public string m_UseItemEventId = NO_EVENT;
 
     /// <summary>
     /// 经过事件
     /// </summary>
-    public int m_EnterEventId = NO_EVENT;
+    public string m_EnterEventId = NO_EVENT;
 
     /// <summary>
     /// 交互提示按钮文字
@@ -128,12 +128,14 @@ public class GameEvent : MonoBehaviour
     public bool HasEventTargets => m_EventTargets != null && m_EventTargets.Length > 0;
 
 
-    private bool IsValidEvent(int eventId)
+    private bool IsValidEvent(string eventId)
     {
         if (eventId == NO_EVENT)
             return false;
-        if (eventId < 0)
-            return false;
+        if (int.TryParse(eventId, out var v))
+        {
+            if (v < 0) return false;
+        }
         return true;
     }
 
@@ -182,7 +184,7 @@ public class GameEvent : MonoBehaviour
             if (chest != null)
             {
 				//使用物品事件为-1时可以直接打开。>0时候需要对应钥匙才能解开。-2时不能打开，参考南贤居宝箱一开始不能打开，交谈后可以直接打开
-                chest.ChangeLockStatus(m_UseItemEventId != -1);
+                chest.ChangeLockStatus(m_UseItemEventId != NO_EVENT);
                 await chest.MarkAsOpened();
             }
         }

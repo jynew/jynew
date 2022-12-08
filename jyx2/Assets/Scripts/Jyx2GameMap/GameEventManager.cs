@@ -136,8 +136,14 @@ public class GameEventManager : MonoBehaviour
 
 
 
-    public void ExecuteJyx2Event(int eventId, JYX2EventContext context = null)
+    public void ExecuteJyx2Event(string eventName, JYX2EventContext context = null)
     {
+        int eventId = -1;
+        if (int.TryParse(eventName, out var v))
+        {
+            eventId = v;
+        }
+        
         if (eventId < 0)
         {
             //Debug.LogError("执行错误的luaEvent，id=" + eventId);
@@ -167,14 +173,14 @@ public class GameEventManager : MonoBehaviour
         {
             //先判断是否有蓝图类
             //如果有则执行蓝图，否则执行lua
-            var graph = await Jyx2ResourceHelper.LoadEventGraph(eventId);
+            var graph = await Jyx2ResourceHelper.LoadEventGraph(eventName);
             if (graph != null)
             {
                 graph.Run(OnFinishEvent);
             }
             else
             {
-                var eventLuaPath = string.Format(RuntimeEnvSetup.CurrentModConfig.LuaFilePatten, eventId);
+                var eventLuaPath = string.Format(RuntimeEnvSetup.CurrentModConfig.LuaFilePatten, eventName);
                 await Jyx2.LuaExecutor.Execute(eventLuaPath);
                 OnFinishEvent();
             }
