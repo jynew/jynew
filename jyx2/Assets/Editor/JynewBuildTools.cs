@@ -25,18 +25,14 @@ namespace Editor
     /// 知大虾 20221203 重构代码
     ///
     /// </summary>
-    public static class OneKeyBuildTools
+    public static class JynewBuildTools
     {
-        private const string TempAbDir = "Temp/jynew";
-        private const string StreamingAssetsDir = "Assets/StreamingAssets";
-
-        
         [MenuItem("一键打包/Windows64")]
         private static void BuildWindows()
         {
             new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "wuxia_launch.exe");
         }
-        [MenuItem("一键打包/Windows64 Dev")]
+        [MenuItem("一键打包/Windows64 Dev", false, 2000)]
         private static void BuildWindowsDev()
         {
             new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "wuxia_launch.exe", BuildOptions.Development);
@@ -51,7 +47,7 @@ namespace Editor
             PlayerSettings.Android.keyaliasPass = "123456";
             new JynewBuilder().Build(BuildTarget.Android, "", apkName);
         }
-        [MenuItem("一键打包/Android Dev")]
+        [MenuItem("一键打包/Android Dev", false, 2000)]
         private static void BuildAndroidDev()
         {
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
@@ -74,7 +70,7 @@ namespace Editor
             new JynewBuilder().Build(BuildTarget.StandaloneOSX, "", outputName);
         }
         
-        [MenuItem("一键打包/MacOS Dev")]
+        [MenuItem("一键打包/MacOS Dev", false, 2000)]
         private static void BuildMacDev()
         {
 #if UNITY_STANDALONE_OSX
@@ -92,10 +88,22 @@ namespace Editor
             new JynewBuilder().Build(BuildTarget.iOS, "iOSBuild", "");
         }
         
-        [MenuItem("一键打包/iOS Dev")]
+        [MenuItem("一键打包/iOS Dev", false, 2000)]
         private static void BuildIOSDev()
         {
             new JynewBuilder().Build(BuildTarget.iOS, "iOSBuild", "", BuildOptions.Development);
+        }
+        
+        [MenuItem("一键打包/Linux")]
+        private static void BuildLinux()
+        {
+            new JynewBuilder().Build(BuildTarget.StandaloneLinux64, "LinuxBuild", "");
+        }
+        
+        [MenuItem("一键打包/Linux Dev", false, 2000)]
+        private static void BuildLinuxDev()
+        {
+            new JynewBuilder().Build(BuildTarget.StandaloneLinux64, "LinuxBuild", "", BuildOptions.Development);
         }
     }
 }
