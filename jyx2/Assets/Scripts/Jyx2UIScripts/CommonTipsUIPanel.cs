@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using static TileWorld.TileWorldCreatorSaveLoad;
 
 public enum TipsType 
 {
