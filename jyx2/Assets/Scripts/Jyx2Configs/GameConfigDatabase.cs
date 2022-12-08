@@ -108,6 +108,20 @@ namespace Jyx2Configs
         }
 
         /// <summary>
+        /// 获取某类型Config中元素的数量
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public int GetCount<T>() where T : Jyx2ConfigBase
+        {
+            if (_dataBase.TryGetValue(typeof(T), out var configMap))
+            {
+                return configMap.Count;
+            }
+            return 0;
+        }
+
+        /// <summary>
         /// 销毁
         /// </summary>
         public void Dispose()
