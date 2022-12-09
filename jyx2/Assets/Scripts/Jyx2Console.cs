@@ -35,7 +35,7 @@ public static class Jyx2Console
                 */
 
                 var eventManager = GameObject.FindObjectOfType<GameEventManager>();
-                eventManager.ExecuteJyx2Event(int.Parse(eventId));
+                eventManager.ExecuteJyx2Event(eventId);
 
                 //停止导航
                 /*var levelMaster = LevelMaster.Instance;
@@ -134,7 +134,7 @@ public static class Jyx2Console
                     if (obj == null) continue;
                     if ("韦小宝" == obj.name)
                     {
-                        isTalkedToWei = evt.m_InteractiveEventId == 938;
+                        isTalkedToWei = evt.m_InteractiveEventId == "938";
 
                     }
                 }

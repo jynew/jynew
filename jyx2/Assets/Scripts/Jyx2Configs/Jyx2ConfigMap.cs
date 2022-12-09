@@ -33,6 +33,13 @@ namespace Jyx2Configs
         //标签
         [ProtoMember(6)]
         public string Tags;
+
+
+        //进入场景调用事件
+        [ProtoMember(7)] public string EnterSceneLua;
+        
+        //退出场景调用事件
+        [ProtoMember(8)] public string ExitSceneLua;
         
         
         /// <summary>

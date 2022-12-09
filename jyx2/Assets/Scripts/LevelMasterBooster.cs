@@ -118,7 +118,7 @@ public class LevelMasterBooster : MonoBehaviour
         //如果是当前场景
         if (string.IsNullOrEmpty(scene))
         {
-            RefreshSceneObjects();
+            RefreshSceneObjects().Forget();
         }
     }
 

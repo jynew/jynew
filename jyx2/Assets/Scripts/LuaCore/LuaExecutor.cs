@@ -29,10 +29,25 @@ namespace Jyx2
                 return;
             }*/
 
+            //文件中函数的调用方式
+            if (path.Contains("."))
+            {
+                var tmp = path.Split('.');
+                var file = tmp[0];
+                var func = tmp[1];
+                var chunk = LuaManager.LoadLua(file);
+                string luaContent = Encoding.UTF8.GetString(chunk).Trim('\n').Trim('\r');
+                luaContent += $"\n{func}()";
+                await ExecuteLuaAsync(luaContent, path);
+            }
+            //简单文件的调用方式
+            else
+            {
+                var chunk = LuaManager.LoadLua(path);
+                string luaContent = Encoding.UTF8.GetString(chunk).Trim('\n').Trim('\r');
             
-            var chunk = LuaManager.LoadLua(path);
-            string luaContent = Encoding.UTF8.GetString(chunk).Trim('\n').Trim('\r');
-            await ExecuteLuaAsync(luaContent, path);
+                await ExecuteLuaAsync(luaContent, path);
+            }
         }
 
         public static readonly Stack<UniTaskCompletionSource<string>> CurrentEventSourceStack =
@@ -49,9 +64,8 @@ namespace Jyx2
 
             var luaEnv = LuaManager.GetLuaEnv();
 
-            Debug.Log("执行lua: " + path);
+            //Debug.Log("执行lua: " + path);
 
-            
             string template =
                 $"local function temp_lua_func()\r\n {luaContent}\r\n end\r\n util.coroutine_call(combine(temp_lua_func, LuaExecFinished))();\r\n";
             
@@ -62,7 +76,7 @@ namespace Jyx2
             {
                 luaEnv.DoString(template);
                 await cs.Task;
-                Debug.Log("lua执行完毕: " + path);
+                //Debug.Log("lua执行完毕: " + path);
             }
             catch (Exception e)
             {
