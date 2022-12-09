@@ -1,6 +1,15 @@
 --必须，进入场景调用
 function Start()
-    InitBind()
+    --快速绑定事件到物体
+    scene_api.BindEvent("NPC/Nanxian", "wumingshangu.TalkNanXian")
+    scene_api.BindEvent("NPC/Beichou", "wumingshangu.TalkBeichou")
+
+    --快速绑定flag到物体控制是否显示
+    --scene_api.Register("NPC/Nanxian")
+    --scene_api.Register("NPC/Beichou")
+
+    --整个场景只调用一次
+    scene_api.CallOnce(FirstTimeAccessScene)
 end
 
 --必须，退出场景
@@ -9,7 +18,7 @@ function Exit()
 end
 
 --只调用一次
-function FirstTime()
+function FirstTimeAccessScene()
     print("第一次进入无名山谷..")
     Talk(0, "咦，这里是什么地方？嗯……似乎感觉那么的熟悉，难道是曾经呕心沥血战斗的那个野狼谷？")
     Talk(0, "不管那么多，先探索下吧。。。")
@@ -18,20 +27,6 @@ function FirstTime()
     scene_api.SetActive("NPC/Beichou" , false)
 end
 
-
---提供所有的场景物体绑定
-function InitBind()
-    --整个场景只调用一次
-    scene_api.CallOnce(FirstTime)
-    
-    --快速绑定事件到物体
-    scene_api.BindEvent("NPC/Nanxian", "wumingshangu.TalkNanXian")
-    scene_api.BindEvent("NPC/Beichou", "wumingshangu.TalkBeichou")
-    
-    --快速绑定flag到物体控制是否显示
-    --scene_api.Register("NPC/Nanxian")
-    --scene_api.Register("NPC/Beichou")
-end
 
 --与南贤对话
 function TalkNanXian()
