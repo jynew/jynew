@@ -503,39 +503,64 @@ namespace Jyx2
             {
                 
                 if ((int)item.ItemType == 2)
-                {     
-                    int flag=0;
-                    //若有相关武学，则为真
-                    foreach (var wugong in Wugongs)
+                {   
+                    //若为可习得技能的武学
+                    if (item.Skill>=0)
                     {
-                        if (wugong.Key == item.Skill)
-                            flag=1;
-                    }
-                    if (flag == 1)
-                    {
-                        return true;
-                    }
-                    //若无相关武学，开始装备条件判断
-                    //有仅适合人物，直接判断
-                    if (item.OnlySuitableRole >= 0)
-                    {
-                        return item.OnlySuitableRole == this.Key;
-                    }
+                        int flag=0;
+                        //若有相关武学，则为真
+                        foreach (var wugong in Wugongs)
+                        {
+                            if (wugong.Key == item.Skill)
+                                flag=1;
+                        }
+                        if (flag == 1)
+                        {
+                            return true;
+                        }
+                        //若无相关武学，开始装备条件判断
+                        //有仅适合人物，直接判断
+                        if (item.OnlySuitableRole >= 0)
+                        {
+                            return item.OnlySuitableRole == this.Key;
+                        }
 
-                    //内力属性判断
-                    if ((this.MpType == 0 || this.MpType == 1) && (item.NeedMPType == 0 || (int)item.NeedMPType == 1))
-                    {
-                        if (this.MpType != (int)item.NeedMPType)
+                        //内力属性判断
+                        if ((this.MpType == 0 || this.MpType == 1) && (item.NeedMPType == 0 || (int)item.NeedMPType == 1))
+                        {
+                            if (this.MpType != (int)item.NeedMPType)
+                            {
+                                return false;
+                            }
+                        }
+                        int level = GetWugongLevel(item.Skill);
+                       //若已经学满武学，则为假
+                        if (level < 0 || this.Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
                         {
                             return false;
                         }
                     }
-                    int level = GetWugongLevel(item.Skill);
-                   //若已经学满武学，则为假
-                    if (level < 0 || this.Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
+                    //若不是练武学技能的秘籍
+                    else
                     {
-                        return false;
+
+                        //有仅适合人物，直接判断
+                        if (item.OnlySuitableRole >= 0)
+                        {
+                            return item.OnlySuitableRole == this.Key;
+                        }
+
+                        //内力属性判断
+                        if ((this.MpType == 0 || this.MpType == 1) && (item.NeedMPType == 0 || (int)item.NeedMPType == 1))
+                        {
+                            if (this.MpType != (int)item.NeedMPType)
+                            {
+                                return false;
+                            }
+                        }
                     }
+
+
 
                 }
 
