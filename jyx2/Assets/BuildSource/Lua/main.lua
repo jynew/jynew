@@ -181,8 +181,42 @@ GetMoneyCount = luaBridge.GetMoneyCount--获取金钱数量
 GetImbalancedRandomInt = luaBridge.GetImbalancedRandomInt--获取不平衡随机数
 
 
---新一代的LUA API
-FastBindEvent = luaBridge.FastBindEventToObj --快速绑定交互事件到物体
+--场景API
+scene_api = {}
+
+scene_api.BindEvent = luaBridge.FastBindEventToObj --快速绑定交互事件到物体
+scene_api.Register = luaBridge.RegisterDynamicSceneObj
+scene_api.SetActive = luaBridge.DynamicSceneObjSetActive
+scene_api.SetInt = luaBridge.SetSceneFlagInt
+scene_api.GetInt = luaBridge.GetSceneFlagInt
+scene_api.SetString = luaBridge.SetSceneFlagString
+scene_api.GetString = luaBridge.GetSceneFlagString
+scene_api.SetBool = luaBridge.SetSceneFlagBool
+scene_api.GetBool = luaBridge.GetSceneFlagBool
+scene_api.Dark = util.async_to_sync(luaBridge.DarkScence)--场景变暗
+scene_api.Light = util.async_to_sync(luaBridge.LightScence)--场景变亮
+
+--每个场景只会调用一次的方法
+scene_api.CallOnce = function (func)
+	local alreadyAccess = scene_api.GetBool("call_once_func")
+	if(alreadyAccess == false) then
+		func()
+		scene_api.SetBool("call_once_func", true)
+		return true
+	end
+	return false
+end
+
+--只调用一次，写到flag里去
+scene_api.CallOnceWithFlag = function (func, flag)
+	local alreadyAccess = scene_api.GetBool(flag)
+	if(alreadyAccess == false) then
+		func()
+		scene_api.SetBool(flag, true)
+		return true
+	end
+	return false
+end
 
 
 function main_getLuaFiles()
