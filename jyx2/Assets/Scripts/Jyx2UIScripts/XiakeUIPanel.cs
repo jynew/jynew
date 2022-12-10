@@ -255,7 +255,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
 	void OnLeaveClick()
 	{
 		var curMap = LevelMaster.GetCurrentGameMap();
-		if (!curMap.Tags.Contains("WORLDMAP"))
+		if (!curMap.Tags.Contains("WORLDMAP") && RuntimeEnvSetup.CurrentModConfig.EnableKickTeammateBigMapOnly)
 		{
 			GameUtil.DisplayPopinfo("必须在大地图才可以角色离队");
 			return;

@@ -221,6 +221,15 @@ namespace Jyx2.Battle
             skill.CastCost(role); //技能消耗（左右互搏体力消耗一次，内力消耗两次）
             skill.CastMP(role);
 
+            if (RuntimeEnvSetup.CurrentModConfig.ShowSkillNameInBattle)
+            {
+                UniTask.Run(async () =>
+                {
+                    await UniTask.SwitchToMainThread();
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+                    role.View.ShowBattleText(skill.Data.Name, Color.white);
+                });
+            }
             await CastOnce(role, skill, skillTo); //攻击一次
             if (Zuoyouhubo(role, skill))
             {

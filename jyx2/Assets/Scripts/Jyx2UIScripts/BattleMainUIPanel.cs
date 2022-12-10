@@ -59,6 +59,14 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
             ShowHUDSlider();
         }else
             ShowRole();
+        
+        
+        //只允许自动战斗
+        if (RuntimeEnvSetup.CurrentModConfig.AutoBattleOnly)
+        {
+            AutoBattle_Toggle.isOn = true;
+            AutoBattle_Toggle.enabled = false;
+        }
     }
 
     void ShowRole() 

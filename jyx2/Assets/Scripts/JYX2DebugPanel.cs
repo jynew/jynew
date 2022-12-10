@@ -136,6 +136,11 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
     private void Start()
     {
         InitLocationDebugTools();
+        var modConfig = RuntimeEnvSetup.CurrentModConfig;
+        if (modConfig != null && !modConfig.IsConsoleEnable)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void OnUpdate()
