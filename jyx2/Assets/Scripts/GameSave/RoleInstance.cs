@@ -507,14 +507,9 @@ namespace Jyx2
                     //若为可习得技能的武学
                     if (item.Skill>=0)
                     {
-                        int flag=0;
-                        //若有相关武学，则为真
-                        foreach (var wugong in Wugongs)
-                        {
-                            if (wugong.Key == item.Skill)
-                                flag=1;
-                        }
-                        if (flag == 1)
+                        //若武学等级大于一，说明已习得武学，直接装备
+                        int level = GetWugongLevel(item.Skill);
+                        if (level > 0)
                         {
                             return true;
                         }
@@ -533,7 +528,6 @@ namespace Jyx2
                                 return false;
                             }
                         }
-                        int level = GetWugongLevel(item.Skill);
                        //若已经学满武学，则为假
                         if (level < 0 || this.Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
                         {
