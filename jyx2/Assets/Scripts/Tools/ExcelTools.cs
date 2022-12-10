@@ -12,18 +12,12 @@ namespace Jyx2.Middleware
 {
     public static class ExcelTools
     {
-        /// <summary>
-        /// 生成配置
-        /// </summary>
-        /// <param name="dirPath"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static void GenerateConfigsFromExcel<T>(string dirPath) where T: Jyx2ConfigBase
+        public static Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> LoadFromExcels(string dirPath)
         {
             var files = Directory.GetFiles(dirPath, "*.xlsx", SearchOption.AllDirectories);
             
-            Dictionary<Type, Dictionary<int, T>> dataBase =
-                new Dictionary<Type, Dictionary<int, T>>();
+            Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> dataBase =
+                new Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>();
             
             foreach (var path in files)
             {
@@ -42,7 +36,7 @@ namespace Jyx2.Middleware
                 }
 
                 //创建数据库
-                dataBase[type] = new Dictionary<int, T>();
+                dataBase[type] = new Dictionary<int, Jyx2ConfigBase>();
 
                 //创建数据
                 //从第4行开始有数据，第一行是类名，第二行是映射变量，第三行是说明。
@@ -50,7 +44,7 @@ namespace Jyx2.Middleware
                 {
                     var obj = Activator.CreateInstance(type);
 
-                    if (!(obj is T))
+                    if (!(obj is Jyx2ConfigBase))
                     {
                         Debug.LogError($"类{type}没有继承ConfigBase!");
                         throw new Exception($"类{type}没有继承ConfigBase!");
@@ -75,11 +69,11 @@ namespace Jyx2.Middleware
                         variable.SetValue(obj, Convert.ChangeType(collection[i][j], variable.FieldType));
                     }
 
-                    var config = obj as T;
+                    var config = obj as Jyx2ConfigBase;
                     if (config == null)
                     {
-                        Debug.LogError($"{type} 没有继承{typeof(T)}类");
-                        throw new Exception($"{type} 没有继承{typeof(T)}类");
+                        Debug.LogError($"{type} 没有继承{typeof(Jyx2ConfigBase)}类");
+                        throw new Exception($"{type} 没有继承{typeof(Jyx2ConfigBase)}类");
                     }
 
 
@@ -89,7 +83,22 @@ namespace Jyx2.Middleware
                     }
                     dataBase[type][config.Id] = config;
                 }
+                
             }
+
+            return dataBase;
+        }
+
+
+        /// <summary>
+        /// 生成配置
+        /// </summary>
+        /// <param name="dirPath"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static void GenerateConfigsFromExcel(string dirPath)
+        {
+            var dataBase = LoadFromExcels(dirPath);
             
             //生成二进制文件
             ProtobufSerialize($"{dirPath}/Datas.bytes", dataBase);

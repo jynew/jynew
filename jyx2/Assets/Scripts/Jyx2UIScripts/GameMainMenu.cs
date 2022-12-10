@@ -214,12 +214,18 @@ public partial class GameMainMenu : Jyx2_UIBase
 		GameRuntimeData.Instance.startDate = DateTime.Now;
 		//加载地图
 		var startMap = Jyx2ConfigMap.GetGameStartMap();
+		if (startMap == null)
+		{
+			Debug.LogError("没有定义开始地图，需要在场景.xls中指定一个地图标签为START！");
+			return;
+		}
 
 		string startTrigger = startMap.GetTagValue("START");
 		if (!string.IsNullOrEmpty(startTrigger))
 		{
 			loadPara.triggerName = startTrigger;
 		}
+		
 		
 		LevelLoader.LoadGameMap(startMap, loadPara, () =>
 		{

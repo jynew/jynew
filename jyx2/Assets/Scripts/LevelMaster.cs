@@ -19,6 +19,7 @@ using Jyx2Configs;
 using Application = UnityEngine.Application;
 using UnityEngine.UI;
 using Jyx2.InputCore;
+using Sirenix.Utilities;
 
 public class LevelMaster : MonoBehaviour
 {
@@ -218,6 +219,12 @@ public class LevelMaster : MonoBehaviour
 
 		IsInited = true;
 		
+		
+		//判断是否有进入触发的事件，如果有则触发
+		if (!_currentMap.EnterSceneLua.IsNullOrWhitespace())
+		{
+			FindObjectOfType<GameEventManager>().ExecuteJyx2Event(_currentMap.EnterSceneLua);
+		}
 	}
 
 	public void UpdateCameraParams()
@@ -559,13 +566,13 @@ public class LevelMaster : MonoBehaviour
 
 			try
 			{
-				string modify = runtime.GetModifiedEvent(gameMap.Id, int.Parse(eventId));
+				string modify = runtime.GetModifiedEvent(gameMap.Id, eventId);
 				if (!string.IsNullOrEmpty(modify))
 				{
 					string[] tmp = modify.Split('_');
-					evt.m_InteractiveEventId = int.Parse(tmp[0]);
-					evt.m_UseItemEventId = int.Parse(tmp[1]);
-					evt.m_EnterEventId = int.Parse(tmp[2]);
+					evt.m_InteractiveEventId = tmp[0];
+					evt.m_UseItemEventId = tmp[1];
+					evt.m_EnterEventId = tmp[2];
 				}
 
 				evt.Init();

@@ -49,6 +49,16 @@ namespace Jyx2Configs
             
             _dataBase = ExcelTools.ProtobufDeserialize<Dictionary<Type, Dictionary<int, Jyx2ConfigBase>>>(data);
         }
+
+        public void Init(Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> data)
+        {
+            if (_isInited)
+                return;
+            
+            _isInited = true;
+            _dataBase.Clear();
+            _dataBase = data;
+        }
         
         /// <summary>
         /// 根据ID获取Config

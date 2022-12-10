@@ -50,7 +50,7 @@ public class MODRootConfig : ScriptableObject
         {
             File.Delete(dataPath);
         }
-        ExcelTools.GenerateConfigsFromExcel<Jyx2ConfigBase>($"{ModRootDir}/Configs");
+        ExcelTools.GenerateConfigsFromExcel($"{ModRootDir}/Configs");
         UnityEditor.AssetDatabase.Refresh();
     }
 #endif
