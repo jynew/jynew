@@ -20,7 +20,8 @@ end
 --只调用一次
 function FirstTimeAccessScene()
     print("第一次进入无名山谷..")
-    Talk(0, "咦，这里是什么地方？嗯……似乎感觉那么的熟悉，难道是曾经呕心沥血战斗的那个野狼谷？")
+    
+    Talk(0, "唔。。。好困。。。。咦，这里是什么地方？")
     Talk(0, "不管那么多，先探索下吧。。。")
 
     --首先隐藏北丑
@@ -46,7 +47,14 @@ function TalkNanXian()
 
         Talk(0, "额，又是该死的策划，好吧，你告诉我这个游戏该怎么玩吧？")
 
-        Talk(roleId, "不要急，年轻人，你先去找北丑吧，他会告诉你怎么玩的。");
+        --告诉玩家去找北丑
+        Talk(roleId, "你可以去找北丑，他会告诉你怎么玩的。");
+        
+        --告诉玩家北丑知道宝藏在哪
+        Talk(roleId, "北丑知道宝藏在哪，你可以去找他。");
+        
+        --玩家说算了，别去了
+        Talk(0, "算了，我不想玩了，我要去找北丑。");
 
         scene_api.Dark()
         scene_api.SetActive("NPC/Beichou" , true) --把北丑显示出来
@@ -73,3 +81,5 @@ function TalkBeichou()
         Talk(roleId, "...")
     end
 end
+
+
