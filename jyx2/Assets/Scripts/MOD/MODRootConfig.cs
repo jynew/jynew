@@ -36,6 +36,10 @@ public class MODRootConfig : ScriptableObject
     [LabelText("预加载的lua文件（比如热更新）")] public List<string> PreloadedLua;
 
     [LabelText("只允许大地图存档")] public bool EnableSaveBigMapOnly = true;
+    [LabelText("只允许大地图离队")] public bool EnableKickTeammateBigMapOnly = true;
+    [LabelText("只允许自动战斗")] public bool AutoBattleOnly = false;
+    [LabelText("默认战斗倍速")] public float BattleTimeScale = 1f;
+    [LabelText("战斗中显示招式名字")] public bool ShowSkillNameInBattle = false;
     [LabelText("是否打开控制台")] public bool IsConsoleEnable = true;
     
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 

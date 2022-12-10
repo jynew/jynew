@@ -91,6 +91,7 @@ namespace Jyx2
         {
             Debug.Log("StartBattle called");
             if (IsInBattle) return;
+            
             var tempView = _player.View;
             if (tempView == null)
             {
@@ -141,13 +142,22 @@ namespace Jyx2
             //---------------------------------------------------------------------------
 
             await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BattleMainUIPanel), BattleMainUIState.ShowHUD); //展示角色血条
+
+            if (RuntimeEnvSetup.CurrentModConfig.BattleTimeScale > 1)
+            {
+                _prevTimeScle = Time.timeScale;
+                Time.timeScale = RuntimeEnvSetup.CurrentModConfig.BattleTimeScale;    
+            }
             
             await new BattleLoop(this).StartLoop();
         }
+
+        private float _prevTimeScle = 1f;
         
 
         public void OnBattleEnd(BattleResult result)
         {
+            Time.timeScale = _prevTimeScle;
             switch (result)
             {
                 case BattleResult.Win:

@@ -28,6 +28,7 @@ public class BattleLoader : MonoBehaviour
 {
     [LabelText("载入战斗ID")] public int m_BattleId = 0;
 
+    public Jyx2ConfigBattle CurrentBattleConfig { get; set; } = null;
 
     [HideInInspector] public Action<BattleResult> Callback;
 
@@ -45,6 +46,8 @@ public class BattleLoader : MonoBehaviour
 
     public List<BattlePosRole> m_Roles;
 
+
+
     void CycleLoadBattle()
     {
         LevelLoader.LoadBattle(m_BattleId, (ret) => { CycleLoadBattle(); });
@@ -53,15 +56,25 @@ public class BattleLoader : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        
         await RuntimeEnvSetup.Setup();
 
-        if (IsTestCase)
+        if (CurrentBattleConfig == null)
         {
-            await LoadJyx2Battle(m_BattleId, (ret) => { CycleLoadBattle(); });
+            CurrentBattleConfig = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(m_BattleId);
         }
         else
         {
-            await LoadJyx2Battle(m_BattleId, Callback);
+            m_BattleId = CurrentBattleConfig.Id;
+        }
+        
+        if (IsTestCase)
+        {
+            await LoadJyx2Battle(CurrentBattleConfig, (ret) => { CycleLoadBattle(); });
+        }
+        else
+        {
+            await LoadJyx2Battle(CurrentBattleConfig, Callback);
         }
     }
 
@@ -71,7 +84,7 @@ public class BattleLoader : MonoBehaviour
         get { return GameRuntimeData.Instance; }
     }
 
-    async UniTask LoadJyx2Battle(int id, Action<BattleResult> callback)
+    async UniTask LoadJyx2Battle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
         if (GameRuntimeData.Instance == null)
@@ -80,10 +93,10 @@ public class BattleLoader : MonoBehaviour
         }
 
         m_Roles = new List<BattlePosRole>();
-        Jyx2ConfigBattle battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(id);
+
         if (battle == null)
         {
-            Debug.LogError("载入了未定义的战斗，id=" + id);
+            Debug.LogError("载入了未定义的战斗:" + m_BattleId);
             return;
         }
 

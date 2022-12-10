@@ -48,6 +48,12 @@ namespace Jyx2
             
             DoloadBattle(battle, callback).Forget();
         }
+        
+        //加载战斗
+        public static void LoadBattle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
+        {
+            DoloadBattle(battle, callback).Forget();
+        }
 
         private static async UniTask DoloadBattle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
         {
@@ -58,7 +64,7 @@ namespace Jyx2
                 
             GameObject obj = new GameObject("BattleLoader");
             var battleLoader = obj.AddComponent<BattleLoader>();
-            battleLoader.m_BattleId = battle.Id;
+            battleLoader.CurrentBattleConfig = battle;
                 
             //播放之前的地图音乐
             battleLoader.Callback = (rst) =>

@@ -223,7 +223,10 @@ public class LevelMaster : MonoBehaviour
 		//判断是否有进入触发的事件，如果有则触发
 		if (!_currentMap.BindScript.IsNullOrWhitespace())
 		{
-			FindObjectOfType<GameEventManager>().ExecuteJyx2Event(_currentMap.BindScript + ".Start");
+			if (!FindObjectOfType<LevelMasterBooster>().m_IsBattleMap)
+			{
+				FindObjectOfType<GameEventManager>().ExecuteJyx2Event(_currentMap.BindScript + ".Start");	
+			}
 		}
 	}
 

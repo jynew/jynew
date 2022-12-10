@@ -218,7 +218,8 @@ scene_api.CallOnceWithFlag = function (func, flag)
 	return false
 end
 
-
+--高级扩展API
+TryBattleWithConfig = util.async_to_sync(luaBridge.TryBattleWithConfig)--尝试战斗
 
 
 function main_getLuaFiles()

@@ -224,9 +224,23 @@ namespace Jyx2
         private static bool _battleResult = false;
 
         public static bool isQuickBattle = false;
-   
-	   //开始一场战斗
+
+
         public static void TryBattle(int battleId, Action<bool> callback)
+        {
+            var battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(battleId);
+            if (battle == null)
+            {
+                Debug.LogError($"战斗id={battleId}未定义");
+                callback(false);
+                return;
+            }
+
+            TryBattleWithConfig(battle, callback);
+        }
+        
+	    //开始一场战斗
+        public static void TryBattleWithConfig(Jyx2ConfigBattle battle, Action<bool> callback)
         {
             if(isQuickBattle)
             {
@@ -240,8 +254,8 @@ namespace Jyx2
             Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
             var pos = LevelMaster.Instance.GetPlayerPosition();
             var rotate = LevelMaster.Instance.GetPlayerOrientation();
-            
-            LevelLoader.LoadBattle(battleId, (ret) =>
+
+            LevelLoader.LoadBattle(battle, (ret) =>
             {
                 LevelLoader.LoadGameMap(currentMap, new LevelMaster.LevelLoadPara()
                 {
@@ -256,6 +270,7 @@ namespace Jyx2
                 });
             });
         }
+        
 
         private static async UniTask<bool> TryBattleAsync(int battleId)
         {
