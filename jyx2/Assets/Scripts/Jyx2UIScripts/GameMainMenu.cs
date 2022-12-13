@@ -39,8 +39,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 
 	private PanelType m_panelType;
 
-	private string m_newName;
-
 	async void OnStart()
 	{
 		await RuntimeEnvSetup.Setup();
@@ -140,30 +138,25 @@ public partial class GameMainMenu : Jyx2_UIBase
 		ModPanelNew.SwitchSceneTo();
 	}
 
-	private void setPlayerName()
+	private void SetPlayerName(string newName)
 	{
-		//todo:去掉特殊符号
-		if (string.IsNullOrWhiteSpace(m_newName))
+		if (string.IsNullOrWhiteSpace(newName) || string.IsNullOrEmpty(newName))
 			return;
 
 		m_panelType = PanelType.PropertyPage;
 		//todo:给玩家提示
 		RoleInstance role = GameRuntimeData.Instance.Player;
-		role.Name = m_newName;
+		role.Name = newName;
 		m_randomProperty.ShowComponent();
 		DoGeneratePlayerRole();
 	}
 
 	public void OnCreateBtnClicked()
 	{
-		if (m_newName == null)
-		{
-			m_newName = this.NameInput_InputField.text;
-		}
-		setPlayerName();
+		SetPlayerName(NameInput_InputField.text);
 		
-		this.InputNamePanel_RectTransform.gameObject.SetActive(false);
-		this.StartNewRolePanel_RectTransform.gameObject.SetActive(true);
+		InputNamePanel_RectTransform.gameObject.SetActive(false);
+		StartNewRolePanel_RectTransform.gameObject.SetActive(true);
 		// generate random property at randomP panel first show
 		// added by eaphone at 2021/05/23
 		OnCreateRoleNoClick();
@@ -174,18 +167,17 @@ public partial class GameMainMenu : Jyx2_UIBase
 		GameRuntimeData.CreateNew();
 
 		m_panelType = PanelType.NewGamePage;
-		this.homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
+		homeBtnAndTxtPanel_RectTransform.gameObject.SetActive(false);
 
 		Debug.Log(RuntimeEnvSetup.CurrentModConfig.PlayerName);
 		if (!string.IsNullOrEmpty(RuntimeEnvSetup.CurrentModConfig.PlayerName))
 		{
-			m_newName = RuntimeEnvSetup.CurrentModConfig.PlayerName;
-			setPlayerName();
-			this.StartNewRolePanel_RectTransform.gameObject.SetActive(true);
+			SetPlayerName(RuntimeEnvSetup.CurrentModConfig.PlayerName);
+			StartNewRolePanel_RectTransform.gameObject.SetActive(true);
 		}
 		else
 		{
-			this.InputNamePanel_RectTransform.gameObject.SetActive(true);
+			InputNamePanel_RectTransform.gameObject.SetActive(true);
 			NameInput_InputField.ActivateInputField();
 		}
 	}
