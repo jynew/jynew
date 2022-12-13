@@ -42,6 +42,8 @@ public class BattleLoader : MonoBehaviour
         public int team;
 
         public int roleKey;
+
+        public RoleInstance role; //直接使用绑定的role，这时候roleKey应设置为-1
     }
 
     public List<BattlePosRole> m_Roles;
@@ -157,9 +159,7 @@ public class BattleLoader : MonoBehaviour
 
     UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     {
-        var teamMates = battle.TeamMates.Split(',').ToList();
-        var enemies = battle.Enemies.Split(',').ToList();
-        
+        //玩家选择的人物
         if (selectRoles != null)
         {
             foreach (var role in selectRoles)
@@ -167,18 +167,47 @@ public class BattleLoader : MonoBehaviour
                 AddRole(role.GetJyx2RoleId(), 0);
             }
         }
+
+        //通过ID添加队友
+        if (!string.IsNullOrEmpty(battle.TeamMates))
+        {
+            var teamMates = battle.TeamMates.Split(',').ToList();
+            //预配置队友
+            foreach (var v in teamMates)
+            {
+                AddRole(int.Parse(v), 0);
+            }
+        }
         
-        //预配置队友
-        foreach (var v in teamMates)
+        //通过ID添加敌人
+        if(!string.IsNullOrEmpty(battle.Enemies))
         {
-            AddRole(int.Parse(v), 0);
-        }
+            var enemies = battle.Enemies.Split(',').ToList();
 
-        foreach (var v in enemies)
+            //敌人
+            foreach (var v in enemies)
+            {
+                AddRole(int.Parse(v), 1);
+            }
+        }
+        
+        //动态生成队友
+        if (battle.DynamicTeammate != null)
         {
-            AddRole(int.Parse(v), 1);
+            foreach (var r in battle.DynamicTeammate)
+            {
+                AddDynamicRole(r, 0);
+            }
         }
-
+        //动态生成敌人
+        if (battle.DynamicEnemies != null)
+        {
+            foreach (var r in battle.DynamicEnemies)
+            {
+                AddDynamicRole(r, 1);
+            }
+        }
+ 
         return InitBattle(callback, battle);
     }
 
@@ -206,12 +235,26 @@ public class BattleLoader : MonoBehaviour
         m_Roles.Add(new BattlePosRole() {pos = posKey, team = team, roleKey = id});
     }
 
-    //初始化战斗
-    async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
+    void AddDynamicRole(RoleInstance r, int team)
     {
-        Debug.Log("-----------BattleLoader.InitBattle");
-        List<RoleInstance> roles = new List<RoleInstance>();
-        foreach (var r in m_Roles)
+        if (!teamRoleIndex.ContainsKey(team))
+        {
+            teamRoleIndex[team] = 0; //编号从0开始
+        }
+
+        //命名方式为：战斗地图号/队伍_序号，目前0是己方队伍，1是敌方队伍
+        string posKey = $"battle{m_BattleId}/{team}_{teamRoleIndex[team]}";
+        teamRoleIndex[team]++;
+        m_Roles.Add(new BattlePosRole() {pos = posKey, team = team, roleKey = -1, role = r});
+    }
+
+    RoleInstance GetRoleFromBattleRole(BattlePosRole r)
+    {
+        if (r.role != null)
+        {
+            return r.role;
+        }
+        else
         {
             //从存档中取，否则新生成
             RoleInstance roleInstance = runtime.GetRole(r.roleKey);
@@ -229,6 +272,20 @@ public class BattleLoader : MonoBehaviour
                 Debug.LogError($"载入角色出错，存档中没有该角色，强行从配置表生成。key={r.roleKey}");
                 roleInstance = new RoleInstance(r.roleKey); 
             }
+
+            return roleInstance;
+        }
+    }
+    
+    
+    //初始化战斗
+    async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
+    {
+        Debug.Log("-----------BattleLoader.InitBattle");
+        List<RoleInstance> roles = new List<RoleInstance>();
+        foreach (var r in m_Roles)
+        {
+            var roleInstance = GetRoleFromBattleRole(r);
 
             //开始位置
             var pos = FindSpawnPosition(r.pos, r.team);
