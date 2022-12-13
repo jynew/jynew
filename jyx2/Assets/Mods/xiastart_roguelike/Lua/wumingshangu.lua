@@ -1,3 +1,4 @@
+
 --必须，进入场景调用
 function Start()
     --快速绑定事件到物体
@@ -70,30 +71,65 @@ function TalkNanXian()
 end
 
 --生成对战敌人
-function GenerateEnemies(level)
-    if(level == 0) then
-        return "171"
-    elseif(level == 1) then
-        return "110,121"
-    end
-
-    local ret = {}
+function GenerateEnemies(level, battleConfig)
+    print(battleConfig.DynamicEnemies)
+    battleConfig:InitForDynamicData()
     local totalHp = 0
+
+    for i=0,math.min(level/2,8) do
+        local role = GenerateRole(level)
+        battleConfig.DynamicEnemies:Add(role)
+    end
+    
+    --[[
     while(totalHp < level * 100) do
         local roleId = math.random(1,319)
-        local role = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
+        local selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
+        local role = GenerateRole(level)
         
         --判断是否可以加入
         if(totalHp + role.MaxHp < level * 100) then
-            table.insert(ret, roleId)
+            battleConfig.DynamicEnemies:Add(role)
             totalHp = totalHp + role.MaxHp
-        elseif(#ret > 0) then
+        elseif(battleConfig.DynamicEnemies.Count > 0) then
             break --至少需要有一个对手
         end
     end
+    ]]
     
+    return
+end
+
+
+--根据等级，生成一个随机敌人
+function GenerateRole(level)
+    local roleId = math.random(1,319)
+    local selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
     
-    return table.concat(ret, ",")
+    --等级太高了，再重新随
+    while(selectRole.Level > level + 5) do
+        roleId = math.random(1,319)
+        selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
+    end
+
+    local role = selectRole:Clone()
+
+    while(role.Level < level) do
+        role:LevelUp() --把角色提升到现在等级
+    end
+
+    --角色技能提升
+    for i = 0, role.Wugongs.Count - 1 do
+        local skill = role.Wugongs[i]
+        if(skill ~= nil and skill.Level < level * 10) then
+
+            --随机提升技能等级，不超过上限
+            skill.Level = math.min(math.random(skill.Level, level * 10), 900) 
+        end
+    end
+    
+    role:Recover()
+    return role
 end
 
 
@@ -108,11 +144,11 @@ function NextBattle()
     
     battleConfig.Id = 9999 --随机战斗ID
     battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑战战斗场景
-    battleConfig.Exp = 500 * (level+1)
+    battleConfig.Exp = 200 * (level+1)
     battleConfig.Music = 5
     battleConfig.TeamMates = 0
     battleConfig.AutoTeamMates = -1
-    battleConfig.Enemies = GenerateEnemies(level)
+    GenerateEnemies(level, battleConfig)
 
     if(TryBattleWithConfig(battleConfig) == false) then
         Dead()
@@ -124,7 +160,42 @@ function NextBattle()
         RestTeam()
         scene_api.SetInt("Beichou", 2)
         scene_api.SetInt("Nanxian", 2)
+
+        --先生成奖励，防止SL
+        local itemRndId = math.random(96,123) --对应物品ID中的装备
+        local bookRndId = math.random(39,95) --对应物品ID中的秘籍
+        
+        local role = GenerateRandomTeammate(level)
+
+        scene_api.SetInt("rndItem", itemRndId)
+        scene_api.SetInt("rndBook", bookRndId)
+        scene_api.SetInt("rndTeamMate", role.Key)
     end
+end
+
+--根据等级生成一个随机队友
+function GenerateRandomTeammate(level)
+
+    local role = nil
+    local maxLoop = 0
+    while(true)do
+        --已经在队伍了，或者随出来角色等级太高了，就重新随一下
+        local teamMateId = math.random(1,71) --对应角色ID
+        role = CS.Jyx2.GameRuntimeData.Instance:GetRole(teamMateId)
+        
+        if((not InTeam(teamMateId)) and (role.Level < (level + 10))) then
+            print("bingo")
+            break
+        end
+
+        maxLoop = maxLoop + 1
+        if(maxLoop > 100) then --防止死循环
+            print("maxLoop " .. maxLoop)
+            break
+        end
+    end
+    
+    return role
 end
 
 --北丑对话
@@ -143,24 +214,33 @@ function TalkBeichou()
         Talk(0, "还是先不要理这个怪人了……")
     elseif(flag == 2) then
         print("发奖励..")
-        local ret = ShowSelectPanel(roleId, "汝欲？", {"神兵", "秘籍", "队友"})
+
+        local rndItem = scene_api.GetInt("rndItem", itemRndId)
+        local rndBook = scene_api.GetInt("rndBook", bookRndId)
+        local rndTeamMate = scene_api.GetInt("rndTeamMate", teamMateId)
+
+        
+        local item = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndItem)
+        local book = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndBook)
+        local teamMate = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigCharacter, rndTeamMate)
+        
+        local ret = ShowSelectPanel(roleId, "汝欲？", {item.Name, book.Name, teamMate.Name, "再想想"})
         if(ret == 0) then
-            local rndId = math.random(96,123) --对应物品ID中的装备
-            AddItem(rndId,1)
+            AddItem(rndItem,1)
         elseif(ret == 1) then
-            local rndId = math.random(39,95) --对应物品ID中的秘籍
-            AddItem(rndId,1)
+            AddItem(rndBook,1)
         elseif(ret == 2) then
-            local rndId = math.random(1,300) --对应角色ID
-            Join(rndId)
+            Join(rndTeamMate)
+        elseif(ret == 3) then
+            goto label_end
         end
         
         scene_api.SetInt("Beichou", 3)
         scene_api.SetInt("Nanxian", 1)
+        ::label_end::
+        
     elseif(flag == 3) then
         Talk(roleId, "噫唏嘘，危乎高哉！下一关才有下一关的奖励。")
         Talk(0, "……")
     end
 end
-
-

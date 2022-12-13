@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Jyx2;
 using ProtoBuf;
 
 namespace Jyx2Configs
@@ -28,5 +31,18 @@ namespace Jyx2Configs
         //敌人
         [ProtoMember(6)]
         public string Enemies;
+
+        
+        
+        //动态生成队友
+        [NonSerialized] public List<RoleInstance> DynamicTeammate;
+        //动态生成的敌人
+        [NonSerialized] public List<RoleInstance> DynamicEnemies;
+
+        public void InitForDynamicData()
+        {
+            DynamicTeammate = new List<RoleInstance>();
+            DynamicEnemies = new List<RoleInstance>();
+        }
     }
 }
