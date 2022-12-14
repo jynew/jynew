@@ -105,7 +105,12 @@ function GenerateRole(level)
     for i = 0, math.max(level/10-1,0) do
         if(role.Wugongs.Count < 10) then
             local skillId = math.random(0,92)
-            role:LearnMagic(skillId)    
+            if(skillId == 75 or skillId == 76) then
+                --do nothing
+                --鳄鱼和蜘蛛的技能，会导致动作失效
+            else
+                role:LearnMagic(skillId)
+            end    
         end
     end
     
