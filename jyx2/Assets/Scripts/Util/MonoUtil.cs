@@ -15,9 +15,9 @@ namespace Jyx2.Util
 
     public static class MonoUtil
     {
-        #region ¼ÓÔØÁĞ±íÏî
+        #region åŠ è½½åˆ—è¡¨é¡¹
 
-        //ºÜ¶à¼ÓÔØÁĞ±íÏîµÄÂß¼­ÍêÈ«¿ÉÒÔÍ¨ÓÃ³öÀ´
+        //å¾ˆå¤šåŠ è½½åˆ—è¡¨é¡¹çš„é€»è¾‘å®Œå…¨å¯ä»¥é€šç”¨å‡ºæ¥
 
         public static void GenerateMonoElements<T, data>(GameObject template, IList<data> dataList, Transform parent = null, Action<int, T, data> CreateElementCallback = null) where T : Component
         {

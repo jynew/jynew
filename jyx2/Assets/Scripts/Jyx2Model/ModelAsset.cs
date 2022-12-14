@@ -36,6 +36,7 @@ namespace Jyx2
             }
             catch (Exception e)
             {
+                Debug.LogError($"{roleName}的模型资源找不到，随便挑选一个。。");
                 Debug.LogException(e);
                 return Tools.GetRandomElement(All); //出错了，随便返回一个
             }

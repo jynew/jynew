@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Jyx2Configs;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Jyx2
@@ -20,21 +21,36 @@ namespace Jyx2
             TryInit();
         }
         
-        public static int GetInt(string key)
+        public static int GetInt(string key, int defaultVal = 0)
         {
             if (!_cacheInt.ContainsKey(key))
             {
-                _cacheInt[key] = int.Parse(GetValue(key));
+                if (defaultVal != 0)
+                {
+                    _cacheInt[key] = int.Parse(GetValue(key, defaultVal.ToString()));    
+                }
+                else
+                {
+                    _cacheInt[key] = int.Parse(GetValue(key));
+                }
+                
             }
 
             return _cacheInt[key];
         }
 
-        public static float GetFloat(string key)
+        public static float GetFloat(string key, float defaultVal = 0)
         {
             if (!_cacheFloat.ContainsKey(key))
             {
-                _cacheFloat[key] = int.Parse(GetValue(key));
+                if (defaultVal != 0)
+                {
+                    _cacheFloat[key] = float.Parse(GetValue(key, defaultVal.ToString("F2")));
+                }
+                else
+                {
+                    _cacheFloat[key] = float.Parse(GetValue(key));
+                }
             }
 
             return _cacheFloat[key];
@@ -61,13 +77,15 @@ namespace Jyx2
             }
         }
         
-        private static string GetValue(string key)
+        private static string GetValue(string key, string defaultVal = "")
         {
             TryInit();
 
             if (!_cache.ContainsKey(key))
             {
                 Debug.LogError($"调用了未定义的游戏设置：{key}");
+                if(!defaultVal.IsNullOrWhitespace())
+                    _cache[key] = defaultVal;
             }
             return _cache[key];
         }

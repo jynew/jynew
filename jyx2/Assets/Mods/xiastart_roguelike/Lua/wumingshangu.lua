@@ -59,7 +59,7 @@ function TalkNanXian()
     elseif(nanXianFlag == 1) then
         
         local level = scene_api.GetInt("Level") + 1
-        Talk(roleId, "当前是第 <color=red>"..level.."</color> 层，你准备好了吗？")
+        Talk(roleId, "当前是第 <color=red>"..level.."</color> 层，你准备好了吗？\n记住：每次挑战胜利将<color=red>自动存档</color>，不容反悔。")
         
         local ret = ShowYesOrNoSelectPanel("开始下一场挑战？")
         if(ret) then
@@ -114,19 +114,28 @@ function GenerateRole(level)
 
     local role = selectRole:Clone()
 
-    while(role.Level < math.min(level,30)) do
-        role:LevelUp() --把角色提升到现在等级
+    --把角色提升到现在等级
+    while(role.Level < math.min(level, CS.GameConst.MAX_ROLE_LEVEL)) do
+        role:LevelUp() 
     end
 
+    --每10关，随机给角色增加一个技能
+    for i = 0, math.max(level/10-1,0) do
+        if(role.Wugongs.Count < 10) then
+            local skillId = math.random(0,92)
+            role:LearnMagic(skillId)    
+        end
+    end
+    
     --角色技能提升
     for i = 0, role.Wugongs.Count - 1 do
         local skill = role.Wugongs[i]
         
-        --每5关升1级技能等级（一级对应是100level）
-        if(skill ~= nil and skill.Level < level * 20) then
+        --每4关升1级技能等级（一级对应是100level）
+        if(skill ~= nil and skill.Level < level * 25) then
 
             --随机提升技能等级，不超过上限
-            skill.Level = math.min(math.random(skill.Level, level * 20), 900) 
+            skill.Level = math.min(math.random(skill.Level, level * 25), 900) 
         end
     end
     
@@ -172,6 +181,8 @@ function NextBattle()
         scene_api.SetInt("rndItem", itemRndId)
         scene_api.SetInt("rndBook", bookRndId)
         scene_api.SetInt("rndTeamMate", role.Key)
+
+        AutoSave()
     end
 end
 
@@ -185,7 +196,7 @@ function GenerateRandomTeammate(level)
         local teamMateId = math.random(1,71) --对应角色ID
         role = CS.Jyx2.GameRuntimeData.Instance:GetRole(teamMateId)
         
-        if((not InTeam(teamMateId)) and (role.Level < (level + 4))) then
+        if((not InTeam(teamMateId)) and (role.Level < level + 4) and (role.Level >= level - 4)) then
             print("bingo")
             break
         end
@@ -197,7 +208,19 @@ function GenerateRandomTeammate(level)
         end
     end
     
+    
+    --将角色提升到现在等级
+    while(role.Level < math.min(level, CS.GameConst.MAX_ROLE_LEVEL)) do
+        role:LevelUp() 
+    end
+    
     return role
+end
+
+function AutoSave()
+    --覆盖所有存档位
+    CS.LevelMaster.Instance:OnManuelSave(0);
+    ShowToast("已自动存档..")
 end
 
 --北丑对话
@@ -210,9 +233,16 @@ function TalkBeichou()
         Talk(0, "什么鬼……")
         Talk(roleId, "汝可在吾之前，不知道吾是谁？")
         Talk(0, "这个神经病看起来有点问题，我还是尽量少惹他吧。。。")
+        Talk(roleId, "此间战斗仅可<color=red>自动进行</color>，好好规划汝之队伍！")
+        Talk(roleId, "每完成一次战斗和奖励选择都会<color=red>自动存档</color>！所有来此大侠须直面人生，无法反悔！")
+        
+        Talk(0, "行吧，我试试看.. 还有什么么？")
+        Talk(roleId, "噫唏嘘，危乎高哉！此间秘密不可语...")
+        Talk(0, "看来还是先不要理这个怪人了……")
+        
         scene_api.SetInt("Beichou", 1)
     elseif(flag == 1) then
-        Talk(roleId, "噫唏嘘，危乎高哉！")
+        Talk(roleId, "噫唏嘘，危乎高哉！此间秘密不可语...")
         Talk(0, "还是先不要理这个怪人了……")
     elseif(flag == 2) then
         print("发奖励..")
@@ -226,7 +256,7 @@ function TalkBeichou()
         local book = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndBook)
         local teamMate = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigCharacter, rndTeamMate)
         
-        local ret = ShowSelectPanel(roleId, "汝欲？", {item.Name, book.Name, teamMate.Name, "再想想"})
+        local ret = ShowSelectPanel(roleId, "汝欲神兵、秘笈，还是队友？\n选择后将<color=red>自动存档</color>，不容反悔。", {item.Name, book.Name, teamMate.Name, "再想想"})
         if(ret == 0) then
             AddItem(rndItem,1)
         elseif(ret == 1) then
@@ -239,10 +269,11 @@ function TalkBeichou()
         
         scene_api.SetInt("Beichou", 3)
         scene_api.SetInt("Nanxian", 1)
+        AutoSave()
         ::label_end::
         
     elseif(flag == 3) then
-        Talk(roleId, "噫唏嘘，危乎高哉！下一关才有下一关的奖励。")
+        Talk(roleId, "噫唏嘘，危乎高哉！此间秘密不可语...")
         Talk(0, "……")
     end
 end

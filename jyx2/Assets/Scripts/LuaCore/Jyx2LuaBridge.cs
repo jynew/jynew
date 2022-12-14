@@ -1745,7 +1745,11 @@ namespace Jyx2
                 }));
             });
         }
-        
+
+        public static void ShowToast(string msg)
+        {
+            StoryEngine.DisplayPopInfo(msg);
+        }
         
         ///显示二选一框--by citydream
         public static void ShowMessageSelectPanel(string selectMessage, string YesMessage, string NoMessage, Action<int> callback)
