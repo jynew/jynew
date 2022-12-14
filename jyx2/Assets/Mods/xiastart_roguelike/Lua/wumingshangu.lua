@@ -107,7 +107,7 @@ function GenerateRole(level)
     local selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
     
     --等级太高了，再重新随
-    while(selectRole.Level > level + 5) do
+    while(selectRole.Level > level + 3) do
         roleId = math.random(1,319)
         selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
     end
@@ -155,7 +155,7 @@ function NextBattle()
     
     battleConfig.Id = 9999 --随机战斗ID
     battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑战战斗场景
-    battleConfig.Exp = 300 * (level+1)
+    battleConfig.Exp = 400 * (level+1)
     battleConfig.Music = 22
     battleConfig.TeamMates = 0
     battleConfig.AutoTeamMates = -1
@@ -181,6 +181,12 @@ function NextBattle()
         scene_api.SetInt("rndItem", itemRndId)
         scene_api.SetInt("rndBook", bookRndId)
         scene_api.SetInt("rndTeamMate", role.Key)
+        
+        --生成普通药品奖励
+        for i=0,math.min(level/3,5) do
+            local itemId = math.random(0,36) --药品
+            AddItem(itemId, 1)
+        end
 
         AutoSave()
     end
@@ -214,6 +220,10 @@ function GenerateRandomTeammate(level)
         role:LevelUp() 
     end
     
+    --给角色增加生命、内力上限
+    role.MaxHp = math.min(role.MaxHp + 100, CS.GameConst.MAX_ROLE_HP)
+    role.MaxMp = math.min(role.MaxMp + 100, CS.GameConst.MAX_ROLE_MP)
+    role:Recover()
     return role
 end
 
