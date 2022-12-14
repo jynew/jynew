@@ -94,6 +94,8 @@ public class GameConst
     public static int MAX_DEPOISON => GameSettings.GetInt(nameof(MAX_DEPOISON));
     public static int MAX_ANTIPOISON => GameSettings.GetInt(nameof(MAX_ANTIPOISON));
     public static int MAX_HURT => GameSettings.GetInt(nameof(MAX_HURT));
+    
+    public static float CAM_SMOOTHING => GameSettings.GetFloat(nameof(CAM_SMOOTHING), 3f);
 
     public static int GAME_START_MUSIC_ID => GameSettings.GetInt(nameof(GAME_START_MUSIC_ID));
     /// <summary>
@@ -244,7 +246,7 @@ public class GameConst
     };
 
     //存档的数量
-    public const int SAVE_COUNT = 3;
+    public static int SAVE_COUNT => GameSettings.GetInt(nameof(SAVE_COUNT), 3);
     public static string GetUPNumber(int index)
     {
         switch (index)

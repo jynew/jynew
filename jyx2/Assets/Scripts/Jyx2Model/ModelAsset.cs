@@ -8,6 +8,7 @@
  * 金庸老先生千古！
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -17,7 +18,8 @@ using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using Jyx2.ResourceManagement;
+using Jyx2.Middleware;
+using Tools = Jyx2.Middleware.Tools;
 
 namespace Jyx2
 {
@@ -28,7 +30,17 @@ namespace Jyx2
     
         public static ModelAsset Get(string roleName)
         {
-            return All.Single(r => r.name == roleName);
+            try
+            {
+                return All.Single(r => r.name == roleName);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"{roleName}的模型资源找不到，随便挑选一个。。");
+                Debug.LogException(e);
+                return Tools.GetRandomElement(All); //出错了，随便返回一个
+            }
+            
         }
 
         [BoxGroup("数据")] [Header("模型")]

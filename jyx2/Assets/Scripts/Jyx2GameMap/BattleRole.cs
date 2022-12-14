@@ -476,6 +476,13 @@ public class BattleRole : Jyx2AnimationBattleRole
         if (modelAsset == null) return;
         
         var view = await modelAsset.GetView();
+
+        if (view == null)
+        {
+            Debug.LogError($"错误，角色预设 {modelAsset.name} 找不到view，请检查ModelAsset配置!");
+            return;
+        }
+        
         //要再等一帧
         await UniTask.WaitForEndOfFrame();
         

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using XLua;
 
@@ -42,6 +43,13 @@ namespace Jyx2
             var sc = obj.AddComponent<SphereCollider>();
             sc.isTrigger = true;
             sc.radius = 1;
+
+            var obstacle = obj.AddComponent<NavMeshObstacle>();
+            
+            obstacle.shape = NavMeshObstacleShape.Capsule;
+            obstacle.radius = 0.5f;
+            obstacle.center = Vector3.up;
+            obstacle.height = 2f;
 
             var evt = obj.AddComponent<GameEvent>();
             evt.m_InteractiveEventId = functionName;

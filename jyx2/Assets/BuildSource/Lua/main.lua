@@ -107,6 +107,7 @@ EndAmination = luaBridge.EndAmination--结局动画
 SetSexual = luaBridge.SetSexual--设定性别
 PlayMusic = luaBridge.PlayMusic--播放音乐
 PlayWave = luaBridge.PlayWave--播放音效
+ShowToast = luaBridge.ShowToast --显示提示信息
 
 
 jyx2_ReplaceSceneObject = luaBridge.jyx2_ReplaceSceneObject--替换场景内容（同步存档）

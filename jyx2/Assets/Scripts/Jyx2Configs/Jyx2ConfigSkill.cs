@@ -1,4 +1,5 @@
 using ProtoBuf;
+using Sirenix.Utilities;
 
 namespace Jyx2Configs
 {
@@ -27,12 +28,18 @@ namespace Jyx2Configs
         [ProtoMember(5)]
         public string Levels ;
         
+        //技能外观配置
+        [ProtoMember(6)] public string DisplayFileName;
+        
         //技能外观
         public Jyx2SkillDisplayAsset Display
         {
             get
             {
-                return Jyx2SkillDisplayAsset.Get(Name);
+                if(!DisplayFileName.IsNullOrWhitespace())
+                    return Jyx2SkillDisplayAsset.Get(DisplayFileName);
+                else
+                    return Jyx2SkillDisplayAsset.Get(Name);
             }
         }
     }
