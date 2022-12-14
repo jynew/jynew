@@ -94,8 +94,11 @@ namespace Editor
                 if (editorMod == null) continue;
                 var modConfig = editorMod.RootConfig;
 
-                if (modConfig == null) continue; 
-
+                if (modConfig == null) continue;
+                
+                //生成配置表
+                modConfig.GenerateConfigs();
+                
                 var modInfo = CreateModInfo(modConfig, target);
 
                 var xmlContent = Tools.SerializeXML(modInfo);
