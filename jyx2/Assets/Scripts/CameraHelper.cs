@@ -230,7 +230,7 @@ public class CameraHelper : MonoBehaviour
         
         
         //平滑系数载入
-        if (Math.Abs(GameConst.CAM_SMOOTHING - smoothing) > 0.1)
+        if (Math.Abs(GameConst.CAM_SMOOTHING - smoothing) > 0.01)
         {
             smoothing = GameConst.CAM_SMOOTHING;
         }
