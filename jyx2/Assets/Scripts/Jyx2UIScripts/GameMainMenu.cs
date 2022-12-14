@@ -81,7 +81,7 @@ public partial class GameMainMenu : Jyx2_UIBase
 	{
 		base.OnShowPanel(allParams);
 		OnStart();
-		AudioManager.PlayMusic(16);
+		AudioManager.PlayMusic(GameConst.GAME_START_MUSIC_ID);
 		m_panelType = PanelType.Home;
 	}
 

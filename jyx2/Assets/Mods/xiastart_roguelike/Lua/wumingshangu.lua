@@ -114,17 +114,19 @@ function GenerateRole(level)
 
     local role = selectRole:Clone()
 
-    while(role.Level < level) do
+    while(role.Level < math.min(level,30)) do
         role:LevelUp() --把角色提升到现在等级
     end
 
     --角色技能提升
     for i = 0, role.Wugongs.Count - 1 do
         local skill = role.Wugongs[i]
-        if(skill ~= nil and skill.Level < level * 10) then
+        
+        --每5关升1级技能等级（一级对应是100level）
+        if(skill ~= nil and skill.Level < level * 20) then
 
             --随机提升技能等级，不超过上限
-            skill.Level = math.min(math.random(skill.Level, level * 10), 900) 
+            skill.Level = math.min(math.random(skill.Level, level * 20), 900) 
         end
     end
     
@@ -144,8 +146,8 @@ function NextBattle()
     
     battleConfig.Id = 9999 --随机战斗ID
     battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑战战斗场景
-    battleConfig.Exp = 200 * (level+1)
-    battleConfig.Music = 5
+    battleConfig.Exp = 300 * (level+1)
+    battleConfig.Music = 22
     battleConfig.TeamMates = 0
     battleConfig.AutoTeamMates = -1
     GenerateEnemies(level, battleConfig)
@@ -183,7 +185,7 @@ function GenerateRandomTeammate(level)
         local teamMateId = math.random(1,71) --对应角色ID
         role = CS.Jyx2.GameRuntimeData.Instance:GetRole(teamMateId)
         
-        if((not InTeam(teamMateId)) and (role.Level < (level + 10))) then
+        if((not InTeam(teamMateId)) and (role.Level < (level + 4))) then
             print("bingo")
             break
         end

@@ -3,6 +3,7 @@ using Jyx2;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
 using ProtoBuf;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Jyx2Configs
@@ -142,12 +143,24 @@ namespace Jyx2Configs
         public string LeaveStoryId;
 
         /* ------- 分割线 --------*/
+
+        [ProtoMember(31)]
+        public string ModelFileKey;
+        
         //模型配置
         public ModelAsset Model
         {
             get
             {
-                return ModelAsset.Get(Name);
+                //如果配置了，则从配置表读取，否则根据名字读取
+                if (!ModelFileKey.IsNullOrWhitespace())
+                {
+                    return ModelAsset.Get(ModelFileKey);
+                }
+                else
+                {
+                    return ModelAsset.Get(Name);    
+                }
             }
         }
     }
