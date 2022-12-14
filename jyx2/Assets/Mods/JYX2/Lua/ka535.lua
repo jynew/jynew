@@ -1,5 +1,5 @@
 PlayAnimation(3, 6342, 6348);
-jyx2_SwitchRoleAnimation("NPC/suxinghe", "Assets/BuildSource/AnimationControllers/跪拜Controller.controller");
+jyx2_SwitchRoleAnimation("NPC/suxinghe", "Assets/BuildSource/AnimationControllers/KneelController.controller");
 Talk(52, "逍遥派不肖弟子苏星河，拜见本派新任掌门。", "talkname52", 0);
 Talk(49, "老前辈行此大礼，可折杀小僧了。", "talkname49", 0);
 Talk(52, "师弟，你是我师父的关门弟子，又是本派掌门。我虽是师兄，却也要向你磕头！", "talkname52", 0);
