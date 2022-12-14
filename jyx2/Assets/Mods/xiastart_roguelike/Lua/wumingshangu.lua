@@ -74,30 +74,12 @@ end
 function GenerateEnemies(level, battleConfig)
     print(battleConfig.DynamicEnemies)
     battleConfig:InitForDynamicData()
-    local totalHp = 0
 
+    --最多8个敌人
     for i=0,math.min(level/2,8) do
         local role = GenerateRole(level)
         battleConfig.DynamicEnemies:Add(role)
     end
-    
-    --[[
-    while(totalHp < level * 100) do
-        local roleId = math.random(1,319)
-        local selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
-        local role = GenerateRole(level)
-        
-        --判断是否可以加入
-        if(totalHp + role.MaxHp < level * 100) then
-            battleConfig.DynamicEnemies:Add(role)
-            totalHp = totalHp + role.MaxHp
-        elseif(battleConfig.DynamicEnemies.Count > 0) then
-            break --至少需要有一个对手
-        end
-    end
-    ]]
-    
-    return
 end
 
 
@@ -114,7 +96,7 @@ function GenerateRole(level)
 
     local role = selectRole:Clone()
 
-    --把角色提升到现在等级
+    --把角色提升到现在关卡的等级
     while(role.Level < math.min(level, CS.GameConst.MAX_ROLE_LEVEL)) do
         role:LevelUp() 
     end
@@ -150,11 +132,11 @@ function NextBattle()
 
     local level = scene_api.GetInt("Level")
     
-    --构造敌人队伍
+    --动态构建一场战斗
     local battleConfig = CS.Jyx2Configs.Jyx2ConfigBattle()
     
-    battleConfig.Id = 9999 --随机战斗ID
-    battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑战战斗场景
+    battleConfig.Id = 9999 --随便拟定一个战斗ID，无所谓
+    battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑选一个战斗场景
     battleConfig.Exp = 400 * (level+1)
     battleConfig.Music = 22
     battleConfig.TeamMates = 0
