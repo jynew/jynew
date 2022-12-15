@@ -51,7 +51,7 @@ public partial class Jyx2SkillDisplayAsset : ScriptableObject
             }
 
             var skillEditor = FindObjectOfType<Jyx2SkillEditor>();
-            skillEditor.PreviewSkill(this.name);
+            skillEditor.PreviewSkill(this);
         }
     }
     

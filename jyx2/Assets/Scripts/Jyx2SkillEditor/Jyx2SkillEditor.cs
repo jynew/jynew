@@ -8,82 +8,82 @@
  * 金庸老先生千古！
  */
 
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Jyx2;
 using Sirenix.OdinInspector;
 
 public class Jyx2SkillEditor : MonoBehaviour
 {
-    public BattleRole player;
-
+    public Jyx2SkillEditorEnemy player;
     public Jyx2SkillEditorEnemy[] enemys;
 
     public Transform[] faceTrans;
     public Transform[] lineTrans;
     public Transform[] crossTrans;
+    
+    
+    [LabelText("测试技能覆盖范围")]
+    public SkillCoverType coverType = SkillCoverType.POINT;
 
-    [LabelText("是否测试左右互搏")]
-    public bool TestZuoyouhubo = false;
-    // Start is called before the first frame update
-    async void Start()
+
+    private async UniTask TryDisplaySkill(Jyx2SkillDisplayAsset display)
     {
-        /*
-        FileSystemWatcher watcher;
-
-        //监控excel文件夹
-        watcher = new FileSystemWatcher();
-        watcher.BeginInit();
-        watcher.Path = "excel";
-        watcher.EnableRaisingEvents = true;
-        watcher.IncludeSubdirectories = true;
-        watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.LastAccess | NotifyFilters.Size;
-        watcher.Changed += Watcher_Changed;
-        watcher.EndInit();
-        */
-
-
-        player.IsInBattle = true;
-        //Container.TryResolve<IXLsReloader>()?.Do();
-
-        await RuntimeEnvSetup.Setup();
+        SkillCastHelper helper = new SkillCastHelper();
+        helper.Source = player;
+        helper.Targets = enemys;
         
-        await Jyx2_UIManager.Instance.ShowUIAsync(nameof(SkillEditorUIPanel),player,enemys);
-    }
+        helper.SkillDisplay = display;
 
-    /*
-    private void Watcher_Changed(object sender, FileSystemEventArgs e)
-    {
-        updateExcel = true;
-    }
+        //根据不同的技能覆盖类型，显示不同的效果
+        Transform[] blocks = null;
 
-    bool updateExcel = false;
-    */
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-      
-
-        /*
-        if (updateExcel)
+        switch (coverType)
         {
-            updateExcel = false;
-            Container.TryResolve<IXLsReloader>()?.Do();
+            case SkillCoverType.RECT:
+                blocks = faceTrans;
+                break;
+            case SkillCoverType.RHOMBUS:
+                blocks = faceTrans;
+                break;
+            case SkillCoverType.LINE:
+                blocks = lineTrans;
+                break;
+            case SkillCoverType.CROSS:
+                blocks = crossTrans;
+                break;
+            case SkillCoverType.POINT:
+                
+                //任选一个敌人受击
+                blocks = new Transform[1] {Jyx2.Middleware.Tools.GetRandomElement(enemys).transform};
+                
+                //直接在每个敌人身上受击
+                /*blocks = new Transform[enemys.Length];
+                int index = 0;
+                foreach(var e in enemys)
+                {
+                    blocks[index++] = e.transform;
+                }*/
+                break;
+            case SkillCoverType.INVALID:
+            default:
+                Debug.LogError("invalid skill cover type!");
+                break;                
         }
-        */
+        
+        helper.CoverBlocks = blocks; 
+        
 
-      
+        await helper.Play();
     }
+ 
 
     /// <summary>
     /// 预览技能
     /// </summary>
-    /// <param name="skillName"></param>
-    public void PreviewSkill(string skillName)
+    /// <param name="skill"></param>
+    public void PreviewSkill(Jyx2SkillDisplayAsset skill)
     {
-        var skillEditorUIPanel = FindObjectOfType<SkillEditorUIPanel>();
-        skillEditorUIPanel.SwitchToSkill(skillName);
+        TryDisplaySkill(skill).Forget();
     }
 }
