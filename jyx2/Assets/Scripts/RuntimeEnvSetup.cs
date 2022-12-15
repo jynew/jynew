@@ -10,6 +10,7 @@ using Jyx2.MOD.ModV2;
 using Jyx2.ResourceManagement;
 using Jyx2Configs;
 using MOD.UI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -46,7 +47,7 @@ namespace Jyx2
             GameConfigDatabase.ForceClear();
         }
 
-        static private bool _successInited = false;
+        private static bool _successInited = false;
         
         public static async UniTask<bool> Setup()
         {
@@ -72,14 +73,26 @@ namespace Jyx2
                     GlobalAssetConfig.Instance = t;
                     await t.OnLoad();
                 }
-
+ 
 //为了Editor内调试方便
 #if UNITY_EDITOR
                 var editorModLoader = new GameModEditorLoader();
                 var path = SceneManager.GetActiveScene().path;
                 Debug.Log("当前调试场景："+path);
 
-                if (path.Contains("Assets/Mods/"))
+                //调试工具
+                if (path.StartsWith("Assets/Jyx2Tools/Jyx2SkillEditor"))
+                {
+                    foreach (var mod in await editorModLoader.LoadMods())
+                    {
+                        if (mod.Id == "SAMPLE")
+                        {
+                            SetCurrentMod(mod);
+                            break;
+                        }
+                    }
+                }
+                else if (path.Contains("Assets/Mods/"))
                 {
                     var editorModId = path.Split('/')[2];
                     Debug.Log("当前场景所属Mod："+ editorModId);

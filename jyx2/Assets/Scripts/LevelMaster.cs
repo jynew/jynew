@@ -221,7 +221,7 @@ public class LevelMaster : MonoBehaviour
 		
 		
 		//判断是否有进入触发的事件，如果有则触发
-		if (!_currentMap.BindScript.IsNullOrWhitespace())
+		if (_currentMap != null && !_currentMap.BindScript.IsNullOrWhitespace())
 		{
 			if (!FindObjectOfType<LevelMasterBooster>().m_IsBattleMap)
 			{
