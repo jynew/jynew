@@ -119,7 +119,7 @@ namespace Jyx2
 
         #region 存档数据定义
         //存档设置一个独立版本号，用来检查兼容性
-        const int RUNTIME_VERSION_LATEST = 1;
+        const int RUNTIME_VERSION_LATEST = 2;
         public int RuntimeVersion = RUNTIME_VERSION_LATEST;
 
         //JYX2，所有的角色都放到存档里
@@ -317,11 +317,16 @@ namespace Jyx2
 
         private static void UpdateOldArchive(GameRuntimeData runtime, int oldRtVersion, int oldModVersion)
         {
-            if (oldRtVersion == -1)
+            if (oldRtVersion < 2)
             {
                 //To Do: Runtime更新后在此填写修复代码
-                runtime.RuntimeVersion = RUNTIME_VERSION_LATEST;
+                //To Do: 升级到存档版本2的代码请在2023年6月前删除
+                int mask = (1 << 0) + (0 << 1) + (1 << 2) + (0 << 3) + (0 << 4);
+                runtime.WorldData.areaMask = mask; 
             }
+            //框架部分修复完成后更新框架版本号
+            runtime.RuntimeVersion = RUNTIME_VERSION_LATEST;
+            //下面是mod自己修复的部分
             if (oldModVersion  < RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion)
             {
                 //Lua事件，mod作者可以通过api监听此事件来进行存档更新

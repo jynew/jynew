@@ -14,6 +14,7 @@ public class WorldMapSaveData
     [SerializeField] public Vector3 BoatWorldPos; //船的世界位置
     [SerializeField] public Quaternion BoatRotate; //船的朝向
     [SerializeField] public int OnBoat; //是否在船上
+    [SerializeField] public int areaMask; //区域通行mask
 }
 
 /// <summary>
