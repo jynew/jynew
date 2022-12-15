@@ -18,6 +18,7 @@ function Exit()
 
 end
 
+
 --只调用一次
 function FirstTimeAccessScene()
     print("第一次进入无名山谷..")
@@ -76,21 +77,26 @@ function GenerateEnemies(level, battleConfig)
     battleConfig:InitForDynamicData()
 
     --最多8个敌人
-    for i=0,math.min(level/2,8) do
+    for i=0,math.min(level/4,8) do
         local role = GenerateRole(level)
         battleConfig.DynamicEnemies:Add(role)
+        
+        --如果在5关以前，则NPC没有道具（否则太难了）
+        if(level < 5) then
+            role.Items:Clear()
+        end
     end
 end
 
 
 --根据等级，生成一个随机敌人
 function GenerateRole(level)
-    local roleId = math.random(1,319)
+    local roleId = math.random(1,76)
     local selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
     
     --等级太高了，再重新随
     while(selectRole.Level > level + 3) do
-        roleId = math.random(1,319)
+        roleId = math.random(1,76)
         selectRole = CS.Jyx2.GameRuntimeData.Instance:GetRole(roleId)
     end
 
@@ -170,7 +176,7 @@ function NextBattle()
         scene_api.SetInt("rndTeamMate", role.Key)
         
         --生成普通药品奖励
-        for i=0,math.min(level/3,5) do
+        for i=0,math.min(level/10,2) do
             local itemId = math.random(0,36) --药品
             AddItem(itemId, 1)
         end
@@ -189,7 +195,7 @@ function GenerateRandomTeammate(level)
         local teamMateId = math.random(1,71) --对应角色ID
         role = CS.Jyx2.GameRuntimeData.Instance:GetRole(teamMateId)
         
-        if((not InTeam(teamMateId)) and (role.Level < level + 4) and (role.Level >= level - 4)) then
+        if((not InTeam(teamMateId)) and (role.Level < level) and (role.Level >= level - 10)) then
             print("bingo")
             break
         end
@@ -200,7 +206,6 @@ function GenerateRandomTeammate(level)
             break
         end
     end
-    
     
     --将角色提升到现在等级
     while(role.Level < math.min(level, CS.GameConst.MAX_ROLE_LEVEL)) do
@@ -214,8 +219,9 @@ function GenerateRandomTeammate(level)
     return role
 end
 
+--自动存档
 function AutoSave()
-    --覆盖所有存档位
+    --覆盖存档
     CS.LevelMaster.Instance:OnManuelSave(0);
     ShowToast("已自动存档..")
 end
@@ -230,7 +236,7 @@ function TalkBeichou()
         Talk(0, "什么鬼……")
         Talk(roleId, "汝可在吾之前，不知道吾是谁？")
         Talk(0, "这个神经病看起来有点问题，我还是尽量少惹他吧。。。")
-        Talk(roleId, "此间战斗仅可<color=red>自动进行</color>，好好规划汝之队伍！")
+        Talk(roleId, "此间战斗仅可<color=red>自动进行</color>，最多上阵<color=red>6</color>名队友，好好规划汝之队伍！")
         Talk(roleId, "每完成一次战斗和奖励选择都会<color=red>自动存档</color>！所有来此大侠须直面人生，无法反悔！")
         
         Talk(0, "行吧，我试试看.. 还有什么么？")
@@ -252,8 +258,21 @@ function TalkBeichou()
         local item = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndItem)
         local book = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndBook)
         local teamMate = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigCharacter, rndTeamMate)
+
+        local level = scene_api.GetInt("Level")
+
+        --只有奇数关可以选队友
+        local ret = 3
+        if(level % 2 == 1) then
+            ret = ShowSelectPanel(roleId, "汝欲神兵、秘笈，还是队友？\n选择后将<color=red>自动存档</color>，不容反悔。", {item.Name, book.Name, teamMate.Name, "再想想"})
+        else
+            ::label_retry::
+            ret = ShowSelectPanel(roleId, "汝欲神兵、秘笈？\n选择后将<color=red>自动存档</color>，不容反悔。", {item.Name, book.Name, "<color=grey>(暂不可选队友)</color>", "再想想"})
+            if(ret == 2) then
+                goto label_retry
+            end 
+        end
         
-        local ret = ShowSelectPanel(roleId, "汝欲神兵、秘笈，还是队友？\n选择后将<color=red>自动存档</color>，不容反悔。", {item.Name, book.Name, teamMate.Name, "再想想"})
         if(ret == 0) then
             AddItem(rndItem,1)
         elseif(ret == 1) then

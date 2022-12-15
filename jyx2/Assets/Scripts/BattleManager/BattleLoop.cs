@@ -135,8 +135,13 @@ namespace Jyx2.Battle
                 role.Hp = 1;
 
             //只有实际中毒和受伤才等待
-            role.View?.MarkHpBarIsDirty();
-            await UniTask.Delay(TimeSpan.FromSeconds(0.8));
+            
+            if (hurtEffectRst > 0 || poisonEffectRst > 0)
+            {
+                role.View?.MarkHpBarIsDirty();
+                await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
+            }
+            //await UniTask.Delay(TimeSpan.FromSeconds(0.8));
         }
 
         //AI角色行动
@@ -310,7 +315,15 @@ namespace Jyx2.Battle
             //如果配置了动作，则先播放动作
             if (clip != null)
             {
-                await role.View.PlayAnimationAsync(clip, 0.25f);
+                if (RuntimeEnvSetup.CurrentModConfig.IsPlayUseItemAnimation)
+                {
+                    await role.View.PlayAnimationAsync(clip, 0.25f);    
+                }
+                else
+                {
+                    role.View.PlayAnimationAsync(clip, 0.25f).Forget();
+                }
+                
             }
 
             role.UseItem(item);
@@ -345,7 +358,8 @@ namespace Jyx2.Battle
                 }
             }
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            if(RuntimeEnvSetup.CurrentModConfig.IsPlayUseItemAnimation)
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         }
 
 
