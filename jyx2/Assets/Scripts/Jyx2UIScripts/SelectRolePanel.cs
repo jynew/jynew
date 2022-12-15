@@ -125,7 +125,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
         CancelBtn_Button.gameObject.SetActive(m_params.canCancel);
     }
 
-    void RefreshRoleItems()
+    void RefreshRoleItems(bool isSelectDefault = true)
     {
         m_AvailableRoleItems.Clear();
         if (m_params.roleList == null || m_params.roleList.Count <= 0)
@@ -148,7 +148,8 @@ public partial class SelectRolePanel : Jyx2_UIBase
         int row = NavigateUtil.GetGroupCount(m_AvailableRoleItems.Count, col);
         NavigateUtil.SetUpNavigation(m_AvailableRoleItems, row, col);
         SetUpRoleNavigationWithRightBtns(row, col);
-        SelectDefaultRoleItem();
+        if(isSelectDefault)
+            SelectDefaultRoleItem();
     }
 
     private void SetUpRoleNavigationWithRightBtns(int row, int col)
@@ -252,6 +253,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
         if(m_params.IsFull)
         {
             selectRoles.RemoveAll(role => !m_params.IsRoleMustSelect(role));
+            RefreshRoleItems(false);
         }
         else
         {
@@ -261,8 +263,10 @@ public partial class SelectRolePanel : Jyx2_UIBase
                     continue;
                 selectRoles.Add(allRoles[i]);
             }
+            RefreshRoleItems(false);
+            //全选后手柄导航锁定到确认按钮上
+            EventSystem.current.SetSelectedGameObject(ConfirmBtn_Button.gameObject);
         }
-        RefreshRoleItems();
     }
 
 
