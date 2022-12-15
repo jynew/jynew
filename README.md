@@ -56,9 +56,25 @@ https://github.com/0kk470/modtool_qt/
 
 ---------
 
-## 样例MOD：金庸群侠传3D重制版
+## 样例MOD：无限肉鸽武侠
 
-[English HomePage](https://github.com/jynew/jynew/wiki/Heros-of-Jin-Yong-3D-Remastered)
+![mainmenu](https://user-images.githubusercontent.com/7448857/207826751-6e74d7cd-1b67-4efe-83e1-5a5fce28a451.png)
+
+一个roguelike武侠的DEMO，供MOD开发者参考。
+玩家亦可简单体验游玩，纯粹享受BUILD和战斗的乐趣。
+
+- 在本玩法里战斗纯自动，不可手操
+- 玩家每通关一次可以选择想要的奖励
+- BUILD好队伍，迎接下一关的挑战！
+- 战斗将越来越难，奖励将越来越好！
+- 不允许S/L，此玩法直面人生（自动保存）
+- 运气和实力兼具的挑战！
+
+![1671035002406 00_00_02--00_00_22](https://user-images.githubusercontent.com/7448857/207826895-fa8db838-c165-4103-ac1f-8e3e0a744005.gif)
+
+---------
+
+## 样例MOD：金庸群侠传3D重制版
 
 ![主宣传图-616-353](https://user-images.githubusercontent.com/7448857/145429032-4cb357f9-077d-4450-acb2-bea62e9910d6.jpg)
 
