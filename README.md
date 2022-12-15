@@ -17,15 +17,14 @@
 [![bilibili](https://img.shields.io/badge/videos-bilibili-pink)](https://space.bilibili.com/1232630839) 
  
 
-[包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [B站主页](https://space.bilibili.com/1232630839) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [授权列表](https://github.com/jynew/jynew/wiki/%E9%A1%B9%E7%9B%AE%E7%B4%A0%E6%9D%90%E6%8E%88%E6%9D%83%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C)
+[包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [B站主页](https://space.bilibili.com/1232630839) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [授权列表](https://github.com/jynew/jynew/wiki/%E9%A1%B9%E7%9B%AE%E7%B4%A0%E6%9D%90%E6%8E%88%E6%9D%83%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C) 
+
 
 《群侠传，启动！》 是一个开放源代码的武侠RPG游戏框架，旨在致敬经典游戏《金庸群侠传》，并为此类游戏爱好者提供一个二次创作与交流的平台。
 你可以体验样例工程《渡城残魂转》，扮演灵魂穿越附身于小乞丐的莫桥山庄掌门人“莫穿林”，解开自己死亡之谜。
 
 你亦可使用本框架制作游戏MOD，并上传到创意工坊。
 
-《群侠传，启动！》Steam创意工坊MOD上传工具项目地址：
-https://github.com/0kk470/modtool_qt/
 
 一切均免费，纯粹用爱发电。非常欢迎感兴趣的朋友加入。
 但未经允许，不允许在本项目及其MOD以外任何场景使用本项目任何素材、资源（包括商用/非商用）！否则将上本项目的耻辱榜。具体可以关注本项目相关开源协议。
@@ -43,6 +42,8 @@ https://github.com/0kk470/modtool_qt/
 
 ## 样例MOD：渡城残魂传
 
+[项目地址](https://github.com/jynew/jynew/tree/main/jyx2/Assets/Mods/SAMPLE)
+
 - 约3-4个小时的主线游戏剧情体验，可最终通关并解开自己死亡之谜，以及掩盖在该谜底下的阴谋
 - 多游戏结局
 - 多名风格各异的可入队队友
@@ -59,6 +60,8 @@ https://github.com/0kk470/modtool_qt/
 ## 样例MOD：无限肉鸽武侠
 
 ![mainmenu](https://user-images.githubusercontent.com/7448857/207826751-6e74d7cd-1b67-4efe-83e1-5a5fce28a451.png)
+
+[项目地址](https://github.com/jynew/jynew/tree/main/jyx2/Assets/Mods/xiastart_roguelike)
 
 一个roguelike武侠的DEMO，供MOD开发者参考。
 玩家亦可简单体验游玩，纯粹享受BUILD和战斗的乐趣。
@@ -78,6 +81,7 @@ https://github.com/0kk470/modtool_qt/
 
 ![主宣传图-616-353](https://user-images.githubusercontent.com/7448857/145429032-4cb357f9-077d-4450-acb2-bea62e9910d6.jpg)
 
+[项目地址](https://github.com/jynew/jynew/tree/main/jyx2/Assets/Mods/JYX2)
 
 金庸群侠传3D重制版是一个回合制战棋战斗开放世界RPG游戏。它是一个非盈利游戏项目，项目目标为重制经典游戏《[金庸群侠传](https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BF%A0%E5%82%B3)》（[在线玩DOS原版](https://dos.zczc.cz/games/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A0/)）并支持后续一系列MOD和二次开发。你可以在PC、MAC或移动手机平台(或其他支持平台)游玩。
 
@@ -111,7 +115,7 @@ https://github.com/0kk470/modtool_qt/
 - [x] 完整复刻实现金庸群侠传游戏流程，可正常通关
 - [x] 支持多端输出，一键打包
 - [x] 所有代码和资源全部开源，不依赖闭源库（标准第三方库除外）
-- [ ] 优化游戏运行性能和代码质量（考虑使用URP渲染管线）
+- [x] 优化游戏运行性能和代码质量
 - [x] 提供MOD启动器，提供金群MOD开发环境和样例
 - [ ] 提供联机战斗对战、ONLINE网络游戏模式的样例和DEMO
 
@@ -125,7 +129,7 @@ https://github.com/0kk470/modtool_qt/
 * UI方案使用Unity原生的UGUI
 * 使用默认渲染管线，卡通渲染风格（考虑升级到URP管线，尚未完成）
 * 动作管理部分大量使用Animancer插件，亦使用unity原生AnimatorController方案
-* 资源打包和加载使用Addressable
+* 资源打包和加载使用AssetBundle
 * 游戏中大量使用基于UniTask的异步编程方案来进行逻辑串接，以及防止大量回调嵌套
 * 技能特效使用了不少assetstore上的第三方库，如想使用，还请自行购买
 
@@ -149,6 +153,9 @@ https://github.com/0kk470/modtool_qt/
 
 ![image](https://user-images.githubusercontent.com/7448857/118384406-5b3bc680-b638-11eb-9186-8888b90bcc35.png)
 
+## 相关项目
+[群侠传启动-Steam创意工坊上传工具](https://github.com/0kk470/modtool_qt/)<br>
+[玩家群发码机器人](https://github.com/jynew/send-key-bot)<br>
 
 ## 引用项目
 
