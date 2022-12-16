@@ -76,6 +76,10 @@ namespace Jyx2.InputCore.Util
                         break;
                     }
                 }
+                if(result == "?")
+                {
+                    result = DefaultControllerButtonName.GetButtonNameRichText(actionID, axisRange);
+                }
             }
             return result;
         }
