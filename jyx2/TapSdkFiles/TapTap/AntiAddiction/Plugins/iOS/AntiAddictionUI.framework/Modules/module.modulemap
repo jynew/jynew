@@ -1,0 +1,11 @@
+framework module AntiAddictionUI {
+  umbrella header "AntiAddictionUI.h"
+
+  export *
+  module * { export * }
+}
+
+module AntiAddictionUI.Swift {
+    header "AntiAddictionUI-Swift.h"
+    requires objc
+}
