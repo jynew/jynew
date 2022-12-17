@@ -23,7 +23,6 @@ namespace Jyx2.Middleware
         l_boolean,
         l_number,
         l_string,
-        l_struct,
     }
     public class ColDesc
     {
@@ -31,7 +30,7 @@ namespace Jyx2.Middleware
         public string comment = "";
         public string typeStr = "";
         public string name = "";
-        public LuaFieldType type;
+        public List<LuaFieldType> type;
         public bool isArray = false;
     }
     /// <summary>
@@ -39,7 +38,7 @@ namespace Jyx2.Middleware
     /// </summary>
     public static class ExcelToLua
     {
-        private static readonly char[] pairSplit = {','};
+        private static readonly char[] structSplit = {','};
         private static readonly char[] arraySplit = {'|'};
         /// <summary>
         /// 读取Excel
@@ -84,22 +83,17 @@ namespace Jyx2.Middleware
 
                 bool isArray = typeStr.Contains("[]");
                 typeStr = typeStr.Replace("[]", "");
-                LuaFieldType fieldType;
-                if (typeStr.StartsWith("struct-"))
-                {
-                    typeStr = typeStr.Remove(0, 7);
-                    fieldType = LuaFieldType.l_struct;
-                }
-                else
-                {
-                    try{
-                    fieldType = (LuaFieldType)Enum.Parse(typeof(LuaFieldType), typeStr);
-                    }
-                    catch(ArgumentException e)
+                List<LuaFieldType> fieldType = new List<LuaFieldType>();
+                try{
+                    var typeList = typeStr.Split(structSplit, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string t in typeList)
                     {
-                        Debug.LogError($"Lua field type {typeStr} not found, at (3,{i+1})");
-                        fieldType = LuaFieldType.l_string;
+                        fieldType.Add((LuaFieldType)Enum.Parse(typeof(LuaFieldType), t));
                     }
+                }
+                catch{
+                    Debug.LogError($"Lua field type {typeStr} not found, at (3,{i+1})");
+                    fieldType.Add(LuaFieldType.l_string);
                 }
 
                 ColDesc colDesc = new ColDesc();
@@ -162,36 +156,27 @@ namespace Jyx2.Middleware
                     ColDesc curCol = colDescList[j];
                     string content = sheet[i][curCol.index].ToString();
 
-                    if (curCol.type != LuaFieldType.l_struct)
+                    if (!curCol.isArray)
                     {
-                        LuaFieldType fieldType = curCol.type;
-
-                        if (!curCol.isArray)
-                        {
-                            content = GetLuaValue(fieldType, content);
-                            oneRow.Append(content);
-                        }
-                        else
-                        {
-                            StringBuilder tmpSB = new StringBuilder("{");
-                            var tmpStringList = content.Split(arraySplit, StringSplitOptions.RemoveEmptyEntries);
-                            for (int k = 0; k < tmpStringList.Length; k++)
-                            {
-                                tmpStringList[k] = GetLuaValue(fieldType, tmpStringList[k]);
-                                tmpSB.Append(tmpStringList[k]);
-                                if (k != tmpStringList.Length - 1)
-                                {
-                                    tmpSB.Append(",");
-                                }
-                            }
-
-                            oneRow.Append(tmpSB);
-                            oneRow.Append("}");
-                        }
+                        content = GetLuaValue(curCol.type, content);
+                        oneRow.Append(content);
                     }
                     else
                     {
-                        oneRow.Append(GetLuaValue(LuaFieldType.l_string, content));
+                        StringBuilder tmpSB = new StringBuilder("{");
+                        var tmpStringList = content.Split(arraySplit, StringSplitOptions.RemoveEmptyEntries);
+                        for (int k = 0; k < tmpStringList.Length; k++)
+                        {
+                            tmpStringList[k] = GetLuaValue(curCol.type, tmpStringList[k]);
+                            tmpSB.Append(tmpStringList[k]);
+                            if (k != tmpStringList.Length - 1)
+                            {
+                                tmpSB.Append(",");
+                            }
+                        }
+
+                        oneRow.Append(tmpSB);
+                        oneRow.Append("}");
                     }
 
                     if (j != colDescList.Count - 1)
@@ -233,26 +218,46 @@ namespace Jyx2.Middleware
         /// <param name="fieldType"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static string GetLuaValue(LuaFieldType fieldType, string value)
+        private static string GetLuaValue(List<LuaFieldType> fieldType, string valueStr)
         {
-            if (fieldType == LuaFieldType.l_string)
+            var vList = valueStr.Split(structSplit, fieldType.Count, StringSplitOptions.None);
+            StringBuilder sb = new StringBuilder();
+            if (vList.Length > 1)
+                sb.Append("{");
+            for (int i = 0; i < vList.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(value))
+                var v = vList[i];
+                var t = fieldType[i];
+                if (t == LuaFieldType.l_string)
                 {
-                    return "\"\"";
+                    if (string.IsNullOrWhiteSpace(v))
+                    {
+                        sb.Append("\"\"");
+                    }
+                    else
+                    {
+                        sb.Append(string.Format("[[{0}]]", v));
+                    }
                 }
-
-                return string.Format("[[{0}]]", value);
+                else if (t == LuaFieldType.l_boolean)
+                {
+                    bool isOk = StringToBoolean(v);
+                    sb.Append( isOk ? "true" : "false");
+                }
+                else
+                {
+                    sb.Append(string.IsNullOrEmpty(v.Trim()) ? "" : v.Trim());
+                }
+                if (i < vList.Length - 1)
+                {
+                    sb.Append(",");
+                }
             }
-            else if (fieldType == LuaFieldType.l_boolean)
+            if (vList.Length > 1)
             {
-                bool isOk = StringToBoolean(value);
-                return isOk ? "true" : "false";
+                sb.Append("}");
             }
-            else
-            {
-                return string.IsNullOrEmpty(value.Trim()) ? "" : value.Trim();
-            }
+            return sb.ToString();
         }
 
         /// <summary>
