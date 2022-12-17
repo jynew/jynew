@@ -94,6 +94,22 @@ public static class Jyx2ResourceHelper
         {
             var config = await ResLoader.LoadAsset<TextAsset>($"Assets/Configs/Datas.bytes");
             GameConfigDatabase.Instance.Init(config.bytes);    
+
+        }
+        //从Lua表读取配置
+        var configs = await ResLoader.LoadAssets<TextAsset>("Assets/Configs/Lua/");
+        //var configtmp = await ResLoader.LoadAssets<TextAsset>("Assets/LuaScript/Jyx2Configs");
+        Debug.Log("load configs num: "+configs.Count);
+        var luaEnv = LuaManager.GetLuaEnv();
+        foreach (var file in configs)
+        {
+            try{
+                luaEnv.DoString(System.Text.Encoding.UTF8.GetBytes(file.text));
+            }
+            catch{
+                Debug.LogError($"{file.name} 运行出错");
+                throw;
+            }
         }
     }
 
