@@ -29,7 +29,7 @@ public class GameStart : MonoBehaviour
 
 	void Start()
 	{
-		//修复存档，下个版本删掉
+		//修复存档，下个版本删掉(202306之前)
 		FixSaves();
 
 		StartAsync().Forget();

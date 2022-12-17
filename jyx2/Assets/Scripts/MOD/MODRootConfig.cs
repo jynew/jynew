@@ -57,10 +57,13 @@ public class MODRootConfig : ScriptableObject
             File.Delete(dataPath);
         }
         ExcelTools.GenerateConfigsFromExcel($"{ModRootDir}/Configs");
+        // 生成Lua配置表
+        ExcelToLua.ExportAllLuaFile($"{ModRootDir}/Configs", $"{ModRootDir}/Configs/Lua");
+
         UnityEditor.AssetDatabase.Refresh();
     }
 #endif
-    
+
     public GameModInfo CreateModInfo()
     {
         GameModInfo info = new GameModInfo();
@@ -71,7 +74,7 @@ public class MODRootConfig : ScriptableObject
         info.ClientVersion = Application.version;
         info.CreateTime = DateTime.Now.ToString("yyyyMMdd H:m:s");
         info.Desc = Desc;
-        
+
         return info;
     }
 }

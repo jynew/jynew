@@ -26,6 +26,8 @@ namespace Jyx2.Middleware
 
                 //类名
                 string classType = collection[0][0].ToString();
+                //如果是为lua设计的excel，就跳过
+                if (classType == "LuaConfigGen") continue;
                     
                 //反射找类
                 Type type = Type.GetType(classType);

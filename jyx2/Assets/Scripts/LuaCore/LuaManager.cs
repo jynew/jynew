@@ -79,6 +79,15 @@ namespace Jyx2
 
             luaEnv.AddLoader((ref string filename) =>
             {
+                //require时首先去当前的LuaScript中查找
+                var luaFile = ResLoader.LoadAssetSync<TextAsset>($"Assets/LuaScripts/{filename}.lua");
+                if (luaFile != null)
+                    return Encoding.UTF8.GetBytes(luaFile.text);
+                return null;
+            });
+
+            luaEnv.AddLoader((ref string filename) =>
+            {
                 //require时默认去baseasset下加载lua
                 var luaFile = ResLoader.LoadAssetSync<TextAsset>($"Assets/BuildSource/Lua/{filename}.lua");
                 if (luaFile != null)
