@@ -60,17 +60,17 @@ public static class Jyx2ResourceHelper
             Jyx2SkillDisplayAsset.All = allSkills;
         }
 
-        //基础配置表
-        await InitConfigTables();
-
-        //初始化基础配置
-        GameSettings.Refresh();
-        
         //lua
         await LuaManager.InitLuaMapper();
         
         //执行lua根文件
         LuaManager.Init(GlobalAssetConfig.Instance.rootLuaFile.text);
+        
+        //基础配置表
+        await InitConfigTables();
+
+        //初始化基础配置
+        GameSettings.Refresh();
         
         //如果有热更新文件，执行热更新
         LuaManager.PreloadLua();
@@ -98,7 +98,6 @@ public static class Jyx2ResourceHelper
         }
         //从Lua表读取配置
         var configs = await ResLoader.LoadAssets<TextAsset>("Assets/Configs/Lua/");
-        //var configtmp = await ResLoader.LoadAssets<TextAsset>("Assets/LuaScript/Jyx2Configs");
         Debug.Log("load configs num: "+configs.Count);
         var luaEnv = LuaManager.GetLuaEnv();
         foreach (var file in configs)
