@@ -13,10 +13,12 @@ public class LuaTestStarter : ScriptableObject
     [Button("测试Lua代码")]
     public void luaTest()
     {
+        LuaManager.Clear();
         LuaManager.Init("");
         var luaEnv = LuaManager.GetLuaEnv();
         foreach (var file in luaFiles)
         {
+            Debug.Log($"开始测试{file.name}");
             luaEnv.DoString(Encoding.UTF8.GetBytes(file.text));
         }
     }

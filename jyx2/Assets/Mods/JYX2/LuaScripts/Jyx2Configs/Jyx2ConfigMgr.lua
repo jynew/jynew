@@ -24,6 +24,7 @@ function Jyx2ConfigMgr:AddConfigTable(cfgName, cfgData)
         else
             self[cfgName] = cfgData
         end
+        print(cfgName.." Loaded")
     end
 end
 

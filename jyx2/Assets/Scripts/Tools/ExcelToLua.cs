@@ -206,8 +206,7 @@ namespace Jyx2.Middleware
                 "for _,v in ipairs(data) do\n" +
                 "\tsetmetatable(v,mt)\n" +
                 "end\n" +
-                "require 'Jyx2Configs/Jyx2ConfigMgr'\n" +
-                "local configMgr = Jyx2ConfigMgr:Instance()\n" +
+                "local configMgr = Jyx2:GetModule('ConfigMgr')\n" +
                 $"configMgr:AddConfigTable([[{configType}]], data)";
             sb.Append(str);
             return sb.ToString();

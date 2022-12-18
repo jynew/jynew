@@ -107,11 +107,8 @@ namespace Jyx2
                 luaEnv.DoString(rootLuaFileText);    
             }
             
-            //load lua base files
-            /*foreach (var f in files)
-            {
-                luaEnv.DoString(LoadLua(LuaManager.LUA_ROOT_MENU + f.Replace(".lua", "")), f);
-            }*/
+            //初始化LuaScripts
+            luaEnv.DoString("require 'InitLuaScripts'");
 
             _inited = true;
             //LoadLuaFiles();

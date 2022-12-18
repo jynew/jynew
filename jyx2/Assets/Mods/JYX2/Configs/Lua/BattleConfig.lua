@@ -173,6 +173,5 @@ mt.__metatable = false
 for _,v in ipairs(data) do
 	setmetatable(v,mt)
 end
-require 'Jyx2Configs/Jyx2ConfigMgr'
-local configMgr = Jyx2ConfigMgr:Instance()
+local configMgr = Jyx2:GetModule('ConfigMgr')
 configMgr:AddConfigTable([[Battle]], data)
