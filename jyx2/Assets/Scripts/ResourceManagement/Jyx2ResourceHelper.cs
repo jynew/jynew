@@ -65,6 +65,9 @@ public static class Jyx2ResourceHelper
         
         //执行lua根文件
         LuaManager.Init(GlobalAssetConfig.Instance.rootLuaFile.text);
+
+        //初始化LuaScripts
+        await InitLuaScripts();
         
         //基础配置表
         await InitConfigTables();
@@ -77,6 +80,13 @@ public static class Jyx2ResourceHelper
         
         //IFix热更新文件
         await IFixManager.LoadPatch();
+    }
+
+    private static async Task InitLuaScripts()
+    {
+        var initFile = await ResLoader.LoadAsset<TextAsset>("Assets/LuaScripts/InitLuaScripts.lua");
+        var luaEnv = LuaManager.GetLuaEnv();
+        luaEnv.DoString(System.Text.Encoding.UTF8.GetBytes(initFile.text));
     }
 
     private static async Task InitConfigTables()

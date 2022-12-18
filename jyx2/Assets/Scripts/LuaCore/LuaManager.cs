@@ -107,9 +107,6 @@ namespace Jyx2
                 luaEnv.DoString(rootLuaFileText);    
             }
             
-            //初始化LuaScripts
-            luaEnv.DoString("require 'InitLuaScripts'");
-
             _inited = true;
             //LoadLuaFiles();
         }
