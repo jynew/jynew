@@ -61,10 +61,20 @@ namespace Jyx2.MOD.Editor
             
             //创建MOD的BuildSource目录
             System.IO.Directory.CreateDirectory(Application.dataPath + "/Mods/" + ModId + "/BuildSource");
+            //创建RELEASENOTE文件
+            var streamWriter = System.IO.File.CreateText(Application.dataPath + "/Mods/" + ModId + "/BuildSource/RELEASE_NOTE.txt");
+            streamWriter.WriteLine("添加更新说明..");
+            streamWriter.Close();
+            
             
             //创建MOD的Lua目录
             System.IO.Directory.CreateDirectory(Application.dataPath + "/Mods/" + ModId + "/Lua");
 
+            //创建MOD的地图目录
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/Mods/" + ModId + "/Maps");
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/Mods/" + ModId + "/Maps/GameMaps");
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/Mods/" + ModId + "/Maps/BattleMaps");
+            
             //拷贝SAMPLE中的所有的配置表文件
             System.IO.Directory.CreateDirectory(Application.dataPath + "/Mods/" + ModId + "/Configs");
             foreach (var file in System.IO.Directory.GetFiles(Application.dataPath + "/Mods/SAMPLE/Configs"))
@@ -88,6 +98,8 @@ namespace Jyx2.MOD.Editor
             newAsset.StoryIdNameFixes.Clear();
             newAsset.ModId = ModId;
             newAsset.ModRootDir = "Assets/Mods/" + ModId;
+            
+            
             
             
             //将newAsset保存
