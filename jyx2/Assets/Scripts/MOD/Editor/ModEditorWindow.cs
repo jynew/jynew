@@ -81,12 +81,17 @@ namespace Jyx2.MOD.Editor
                 AssetDatabase.LoadAssetAtPath<MODRootConfig>("Assets/Mods/" + ModId + "/ModSetting.asset");
 
             newAsset.ModName = "请填入MOD名称";
+            newAsset.IsNativeMod = false;
             newAsset.Author = "请输入作者名";
             newAsset.Desc = "请输入MOD描述";
+            newAsset.PreloadedLua.Clear();
             newAsset.StoryIdNameFixes.Clear();
             newAsset.ModId = ModId;
             newAsset.ModRootDir = "Assets/Mods/" + ModId;
             
+            
+            //将newAsset保存
+            EditorUtility.SetDirty(newAsset);
             AssetDatabase.SaveAssetIfDirty(newAsset);
             
             //选中新建的MOD
