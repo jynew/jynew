@@ -13,11 +13,12 @@ using UnityEditorInternal;
 using WH.Editor;
 /// <summary>
 /// 想做一个短篇天龙Mods，本身缺框架的原因，代码还是挺不稳定的，中间关联的代码也不好提交；
-/// 所以搞这-触发器管理，可同步场景的触发器和数据表（config/)
+/// 所以搞这-触发器管理，可同步场景的触发器和数据表（config/);
+/// （暂时只在另一个分支完成，这个分支无法保证这个功能）;
 /// </summary>
 public class WorldMapWindow : EditorWindow
 {
-    [MenuItem("项目快速导航/场景Teleporter数据管理",priority = 103)]
+    [MenuItem("项目快速导航/场景Teleporter数据管理（建议用 Odin？)",priority = 103)]
     public  static void Start()
     {
         GetWindow<WorldMapWindow>().Show();
@@ -74,14 +75,17 @@ public class WorldMapWindow : EditorWindow
     {
         lstTriggers.Clear();
         var root = GameObject.Find("Level/Triggers");
-        for (int i = 0; i < root.transform.childCount; i++)
+        if (root != null)
         {
-            var child = root.transform.GetChild(i);
-            lstTriggersName.Add(child.gameObject.name);
-            lstTriggers.Add(new TriggerInScene(){name = child.name,go= child.gameObject});  
-  
+            for (int i = 0; i < root.transform.childCount; i++)
+            {
+                var child = root.transform.GetChild(i);
+                lstTriggersName.Add(child.gameObject.name);
+                lstTriggers.Add(new TriggerInScene() {name = child.name, go = child.gameObject});
+
+            }
         }
-        
+
     }
 
     private void Update()
@@ -177,7 +181,8 @@ public class WorldMapWindow : EditorWindow
         //scrollView = GUILayout.BeginScrollView(scrollView);
         //reorderableList.DoLayoutList();
         //GUILayout.EndScrollView();
-        _lvCfg.DoGUI();
+        if(_lvCfg!=null)
+            _lvCfg.DoGUI();
         GUILayout.EndArea();
     }
 

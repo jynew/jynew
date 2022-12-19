@@ -18,11 +18,13 @@ public class GameEventEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        GUILayout.Space(5);
         if (GameEventManager.Inst == null)
         {
             GUILayout.Label("需要进入游戏和启动事件后，才能正常显示事件调试");
             return;
         }
+        GUILayout.Label("若当前事件错误，可用[x]关闭，先调试其他事件");
         GUILayout.BeginHorizontal();
       //  EditorGUILayout.LabelField("当前事件Id",GameEventManager.Inst.CurrEvent);
         EditorGUILayout.LabelField("当前事件Id", GetCurrEventStr());
@@ -32,10 +34,10 @@ public class GameEventEditorWindow : EditorWindow
         }
 
         GUILayout.EndHorizontal();
-        if (GUILayout.Button("跳到事件（Mods-hunter6-TL-X"))
-        {
-            GoToModsLuaFile();
-        }
+        // if (GUILayout.Button("跳到事件（Mods-hunter6-TL-X"))
+        // {
+        //     GoToModsLuaFile();
+        // }
         
         GUILayout.Space(10);
         
@@ -44,7 +46,10 @@ public class GameEventEditorWindow : EditorWindow
     void CloseCurrEvent()
     {
         //删除当前事件
-        Jyx2LuaBridge.EveDel();
+       // Jyx2LuaBridge.EveDel();
+        GameEventManager.Inst.SetCurrentGameEvent(null);
+        Debug.Log("清空了。。。当前事件 ");
+        //Eve();//打印看看是否还有事件
     }
 
     string GetCurrEventStr()

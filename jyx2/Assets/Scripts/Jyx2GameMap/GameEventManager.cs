@@ -18,6 +18,12 @@ using UnityEngine;
 public class GameEventManager : MonoBehaviour
 {
     GameEvent curEvent = null;
+    public static GameEventManager Inst;
+
+    private void Awake()
+    {
+        Inst = this;
+    }
 
     public bool OnTriggerEvent(GameEvent newEvent)
     {
