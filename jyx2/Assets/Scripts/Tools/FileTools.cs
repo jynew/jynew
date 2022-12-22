@@ -11,9 +11,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
-using Unity.SharpZipLib.Core;
 using Unity.SharpZipLib.Zip;
 
 namespace Jyx2.Middleware
