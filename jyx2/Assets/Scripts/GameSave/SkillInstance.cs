@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Jyx2Configs;
 using NUnit.Framework;
 using UnityEngine;
+using XLua;
 
 namespace Jyx2
 {
@@ -26,6 +27,19 @@ namespace Jyx2
         [SerializeField] public int Level;
         #endregion
 
+        // 与一个Lua配置表中的Skill绑定
+        private LSkillConfig _data;
+        public LSkillConfig Data
+        {
+            get{
+                if (_data == null)
+                    _data = GetSkill();
+                return _data;
+            }
+            set{
+                _data = value;
+            }
+        }
         public SkillInstance()
         {
         }
@@ -35,7 +49,7 @@ namespace Jyx2
             Key = s.Id;
             Level = s.Level;
         }
-        
+
         public SkillInstance(int magicId)
         {
             Key = magicId;
@@ -61,7 +75,7 @@ namespace Jyx2
             {
                 level = GetLevel();
             }
-            
+
             if(level > _levels.Count)
             {
                 Debug.LogError("skill level error");
@@ -74,31 +88,44 @@ namespace Jyx2
         {
             get
             {
-                return GetSkill().Name;
+                return Data.Name;
             }
         }
 
-        public Jyx2ConfigSkill GetSkill(Jyx2ConfigItem _anqi = null)
+        //public Jyx2ConfigSkill GetSkill(Jyx2ConfigItem _anqi = null)
+        public LSkillConfig GetSkill(Jyx2ConfigItem _anqi = null)
         {
-            var skillT = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(Key);
+            //var skillT = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(Key);
+            var skillT = LuaToCsBridge.SkillTable[Key];
 
-			//暗器
-			if (_anqi != null)
-			{
+            //暗器
+            if (_anqi != null)
+            {
                 skillT.Poison = _anqi.ChangePoisonLevel;
-                
-				foreach (var sl in _levels)
-				{
-					sl.Attack = Mathf.Abs(_anqi.AddHp);
-				}
-			}
+
+                foreach (var sl in _levels)
+                {
+                    sl.Attack = Mathf.Abs(_anqi.AddHp);
+                }
+            }
             return skillT;
         }
 
         public List<Jyx2ConfigSkillLevel> GetLevels()
         {
             var _levels = new List<Jyx2ConfigSkillLevel>();
-            var _levelArr = _skill.Levels.Split('|');
+            foreach (var lvl in _data.Levels)
+            {
+                if (lvl.Count != 5) continue;
+                var skillLevel = new Jyx2ConfigSkillLevel();
+                skillLevel.Attack = lvl[0];
+                skillLevel.SelectRange = lvl[1];
+                skillLevel.AttackRange = lvl[2];
+                skillLevel.AddMp = lvl[3];
+                skillLevel.KillMp = lvl[4];
+                _levels.Add(skillLevel);
+            }
+            /*var _levelArr = _data.Levels.Split('|');
             foreach (var _level in _levelArr)
             {
                 var _levelArr2 = _level.Split(',');
@@ -110,25 +137,14 @@ namespace Jyx2
                 skillLevel.AddMp = int.Parse(_levelArr2[3]);
                 skillLevel.KillMp = int.Parse(_levelArr2[4]);
                 _levels.Add(skillLevel);
-            }
+            }*/
             return _levels;
         }
 
         public void ResetSkill()
         {
-            _skill = null;
+            _data = null;
         }
-
-        Jyx2ConfigSkill skill;
-        Jyx2ConfigSkill _skill{
-			get {
-				if(skill==null) skill=GetSkill();
-				return skill;
-			}
-			set {
-				skill=value;
-			}
-		}
 
         List<Jyx2ConfigSkillLevel> levels;
 
@@ -148,7 +164,7 @@ namespace Jyx2
         {
             get
             {
-                switch ((int)_skill.SkillCoverType)
+                switch ((int)_data.SkillCoverType)
                 {
                     case 0:
                         return SkillCoverType.POINT;
@@ -161,7 +177,7 @@ namespace Jyx2
                     case 4:
                         return SkillCoverType.RHOMBUS;
                     default:
-                        Debug.LogError("invalid skill cover type:" + _skill.SkillCoverType);
+                        Debug.LogError("invalid skill cover type:" + _data.SkillCoverType);
                         return SkillCoverType.INVALID;
                 }
             }
@@ -171,10 +187,10 @@ namespace Jyx2
         {
             get
             {
-                if ((int)_skill.SkillCoverType == 1) //直线
+                if ((int)_data.SkillCoverType == 1) //直线
                     return 1;
 
-                if ((int)_skill.SkillCoverType == 2) //中心星型
+                if ((int)_data.SkillCoverType == 2) //中心星型
                     return 0;
 
                 return GetSkillLevelInfo().SelectRange;
@@ -185,7 +201,7 @@ namespace Jyx2
         {
             get
             {
-                if ((int)_skill.SkillCoverType == 1 || (int)_skill.SkillCoverType == 2)
+                if ((int)_data.SkillCoverType == 1 || (int)_data.SkillCoverType == 2)
                     return GetSkillLevelInfo().SelectRange;
                 return GetSkillLevelInfo().AttackRange;
             }
@@ -194,7 +210,11 @@ namespace Jyx2
 
         public Jyx2SkillDisplayAsset GetDisplay()
         {
-			return _skill.Display;
+            var DisplayFileName = _data.DisplayFileName;
+            if(!string.IsNullOrWhiteSpace(DisplayFileName))
+                return Jyx2SkillDisplayAsset.Get(DisplayFileName);
+            else
+                return Jyx2SkillDisplayAsset.Get(Name);
         }
 
         public int GetCoolDown()

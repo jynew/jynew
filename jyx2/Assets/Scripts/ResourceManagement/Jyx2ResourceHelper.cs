@@ -8,7 +8,6 @@
  * 金庸老先生千古！
  */
 
-
 using Jyx2;
 using System;
 using System.IO;
@@ -120,6 +119,7 @@ public static class Jyx2ResourceHelper
                 throw;
             }
         }
+        LuaToCsBridge.LuaConfRef();
     }
 
     public static GameObject GetCachedPrefab(string path)
@@ -128,7 +128,7 @@ public static class Jyx2ResourceHelper
         {
             return prefab;
         }
-        
+
         Debug.LogError($"载入缓存的Prefab失败：{path}(是否没填入GlobalAssetConfig.CachedPrefabs?)");
         return null;
     }

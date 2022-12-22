@@ -17,6 +17,9 @@ using UniRx;
 using Jyx2Configs;
 using NUnit.Framework;
 using Random = UnityEngine.Random;
+using Cysharp.Threading.Tasks;
+using Jyx2.ResourceManagement;
+using XLua;
 
 
 namespace Jyx2
@@ -24,14 +27,14 @@ namespace Jyx2
     [Serializable]
     public class RoleInstance : IComparable<RoleInstance>
     {
-        #region 存档数据定义
+    #region 存档数据定义
         [SerializeField] public int Key; //ID
         [SerializeField] public string Name; //姓名
 
         [SerializeField] public int Sex; //性别
         [SerializeField] public int Level = 1; //等级
         [SerializeField] public int Exp; //经验
-        
+
         [SerializeField] public int Attack; //攻击力
         [SerializeField] public int Qinggong; //轻功
         [SerializeField] public int Defence; //防御力
@@ -56,7 +59,7 @@ namespace Jyx2
         [SerializeField] public int ExpForItem; //修炼点数
         [SerializeField] public List<SkillInstance> Wugongs = new List<SkillInstance>(); //武功
         [SerializeField] public List<Jyx2ConfigCharacterItem> Items = new List<Jyx2ConfigCharacterItem>(); //道具
-        
+
         [SerializeField] public int Mp;
         [SerializeField] public int MaxMp;
         [SerializeField] public int MpType; //内力性质
@@ -66,7 +69,7 @@ namespace Jyx2
         [SerializeField] public int Poison; //中毒程度
         [SerializeField] public int Tili; //体力
         [SerializeField] public int ExpForMakeItem; //物品修炼点
-        
+
         [SerializeField] public int Weapon; //武器
         [SerializeField] public int Armor; //防具
         [SerializeField] public int Xiulianwupin = -1; //修炼物品
@@ -81,6 +84,15 @@ namespace Jyx2
 
         public RoleInstance(int roleId)
         {
+            if (RuntimeEnvSetup.CurrentModConfig.IsUsingLuaConfig)
+            {
+                var luaEnv = LuaManager.GetLuaEnv();
+                LuaToCsBridge.CallRoleWithKey initRole = luaEnv.Global.GetInPath<LuaToCsBridge.CallRoleWithKey>("Jyx2CSBridge.ConfigMgr.InitRole");
+                initRole(this, roleId);
+                Recover();
+                return;
+            }
+
             Key = roleId;
             BindKey();
             InitData();
@@ -89,13 +101,20 @@ namespace Jyx2
 
         public void BindKey()
         {
+            if (RuntimeEnvSetup.CurrentModConfig.IsUsingLuaConfig)
+            {
+                var luaEnv = LuaManager.GetLuaEnv();
+                LuaToCsBridge.CallRoleWithKey bindKey = luaEnv.Global.GetInPath<LuaToCsBridge.CallRoleWithKey>("Jyx2CSBridge.ConfigMgr.BindKey");
+                bindKey(this, Key);
+                return;
+            }
             _data = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(Key);
 
             if (_data == null)
             {
                 Assert.Fail("无法获取角色配置，配置不存在，Id:" + Key);
             }
-            
+
             //初始化武功列表
             //Wugongs.Clear();			
             if (Wugongs.Count == 0)
@@ -203,7 +222,7 @@ namespace Jyx2
             ResetSkillCasts();
             ResetItems();
         }
-        
+
         public void Recover()
         {
             SetHPAndRefreshHudBar(MaxHp);
@@ -219,7 +238,31 @@ namespace Jyx2
         {
             return Key;
         }
-
+        public async UniTask<Sprite> GetPic()
+        {
+            //if (_data == null) BindKey();
+            var Pic = LuaManager.GetLuaEnv().DoString($"return Jyx2.ConfigMgr.Character[{Key}].Pic");
+            var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/head/{Pic[0]}.png");
+            return _sprite;
+        }
+        //模型配置
+        public ModelAsset Model
+        {
+            get
+            {
+                if (_data == null) BindKey();
+                var ModelFileKey = LuaManager.GetLuaEnv().Global.GetInPath<string>($"Jyx2.ConfigMgr.Character[{Key}].ModelFileKey");
+                //如果配置了，则从配置表读取，否则根据名字读取
+                if (!string.IsNullOrWhiteSpace(ModelFileKey))
+                {
+                    return ModelAsset.Get(ModelFileKey);
+                }
+                else
+                {
+                    return ModelAsset.Get(Name);    
+                }
+            }
+        }
         #region JYX2等级相关
 
 
@@ -320,7 +363,7 @@ namespace Jyx2
             Attack = Tools.Limit(Attack, 0, GameConst.MAX_ROLE_ATTACK + equipAttack * attackTime);
             Defence = Tools.Limit(Defence, 0, GameConst.MAX_ROLE_DEFENCE + equipDefence * defenceTime);
             Qinggong = Tools.Limit(Qinggong, 0, GameConst.MAX_ROLE_QINGGONG + equipQinggong * qinggongTime);
-            
+
             UsePoison = Tools.Limit(UsePoison, 0, GameConst.MAX_USE_POISON);
             DePoison = Tools.Limit(DePoison, 0, GameConst.MAX_DEPOISON);
             Heal = Tools.Limit(Heal, 0, GameConst.MAX_HEAL);
@@ -471,10 +514,10 @@ namespace Jyx2
             else
             {
                 Items.Add(new Jyx2ConfigCharacterItem()
-                {
-                    Id = itemId,
-                    Count = count
-                });
+                        {
+                        Id = itemId,
+                        Count = count
+                        });
             }
         }
 
@@ -501,7 +544,7 @@ namespace Jyx2
 
             else if ((int)item.ItemType == 1 || (int)item.ItemType == 2)
             {
-                
+
                 if ((int)item.ItemType == 2)
                 {   
                     //若为可习得技能的武学
@@ -528,7 +571,7 @@ namespace Jyx2
                                 return false;
                             }
                         }
-                       //若已经学满武学，则为假
+                        //若已经学满武学，则为假
                         if (level < 0 || this.Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
                         {
                             return false;
@@ -562,17 +605,17 @@ namespace Jyx2
 
                 //上面的判断未确定则进入下面的判断链
                 return testAttr(this.Attack - GetWeaponProperty("Attack") - GetArmorProperty("Attack"), item.ConditionAttack)
-                       && testAttr(this.Qinggong - GetWeaponProperty("Qinggong") - GetArmorProperty("Qinggong"), item.ConditionQinggong)
-                       && testAttr(this.Heal, item.ConditionHeal)
-                       && testAttr(this.UsePoison, item.ConditionPoison)
-                       && testAttr(this.DePoison, item.ConditionDePoison)
-                       && testAttr(this.Quanzhang, item.ConditionQuanzhang)
-                       && testAttr(this.Yujian, item.ConditionYujian)
-                       && testAttr(this.Shuadao, item.ConditionShuadao)
-                       && testAttr(this.Qimen, item.ConditionQimen)
-                       && testAttr(this.Anqi, item.ConditionAnqi)
-                       && testAttr(this.MaxMp, item.ConditionMp)
-                       && testAttr(this.IQ, item.ConditionIQ);
+                    && testAttr(this.Qinggong - GetWeaponProperty("Qinggong") - GetArmorProperty("Qinggong"), item.ConditionQinggong)
+                    && testAttr(this.Heal, item.ConditionHeal)
+                    && testAttr(this.UsePoison, item.ConditionPoison)
+                    && testAttr(this.DePoison, item.ConditionDePoison)
+                    && testAttr(this.Quanzhang, item.ConditionQuanzhang)
+                    && testAttr(this.Yujian, item.ConditionYujian)
+                    && testAttr(this.Shuadao, item.ConditionShuadao)
+                    && testAttr(this.Qimen, item.ConditionQimen)
+                    && testAttr(this.Anqi, item.ConditionAnqi)
+                    && testAttr(this.MaxMp, item.ConditionMp)
+                    && testAttr(this.IQ, item.ConditionIQ);
             }
             else if ((int)item.ItemType == 3)
             {
@@ -638,12 +681,12 @@ namespace Jyx2
             }
             int GenerateItemNeedCount = runtime.Items[practiseItem.GenerateItemNeedCost.ToString()].Item1;
             int GenerateItemNeedExp = (7 - IQ / 15) * practiseItem.GenerateItemNeedExp;
-            
+
             if (ExpForMakeItem >= GenerateItemNeedExp && GenerateItemNeedCount  >= GenerateItemList.Count)
             {
                 //随机选择练出的物品
                 var pickItem = Jyx2.Middleware.Tools.GetRandomElement(GenerateItemList);
-                
+
                 //已经有物品
                 if (runtime.HaveItemBool(pickItem.Id))
                 {
@@ -653,7 +696,7 @@ namespace Jyx2
                 {
                     runtime.AddItem(pickItem.Id, 1 + Random.Range(0, 3));
                 }
-                
+
                 runtime.AddItem(practiseItem.GenerateItemNeedCost, -pickItem.Count);
                 ExpForMakeItem = 0;
                 return $"{Name} 制造出 {GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(pickItem.Id).Name}\n";
@@ -693,7 +736,7 @@ namespace Jyx2
             this.Attack += item.Attack;
             this.Defence += item.Defence;
             this.Qinggong += item.Qinggong;
-            
+
             this.Quanzhang += item.Quanzhang;
             this.Yujian += item.Yujian;
             this.Shuadao += item.Shuadao;
@@ -833,7 +876,7 @@ namespace Jyx2
 
             return 0;
         }
-        
+
 
         public Jyx2ConfigCharacter Data
         {
@@ -899,7 +942,7 @@ namespace Jyx2
         public void EnterBattle()
         {
             if (_isInBattle) return;
-            
+
             _isInBattle = true;
 
             View.LazyInitAnimator();
@@ -924,7 +967,7 @@ namespace Jyx2
         public void SwitchAnimationToSkill(SkillInstance skill, bool force = false)
         {
             if (skill == null || (_currentSkill == skill && !force)) return;
-            
+
             //切换武学待机动作
             View.SwitchSkillTo(skill);
 
@@ -980,7 +1023,7 @@ namespace Jyx2
         #endregion
 
         #region 状态相关
-        
+
         public bool IsDead()
         {
             return Hp <= 0;
@@ -1075,17 +1118,17 @@ namespace Jyx2
             ResetSkillCasts();
             return 0;
         }
-        
+
         public string GetMPColor()
         {
             return MpType == 2 ? ColorStringDefine.Default : MpType == 1 ? ColorStringDefine.Mp_type1 : ColorStringDefine.Mp_type0;
         }
-        
+
         public string GetHPColor1()
         {
             return Hurt > 20 ? ColorStringDefine.Hp_hurt_heavy : Hurt > 0 ? ColorStringDefine.Hp_hurt_light : ColorStringDefine.Default;
         }
-        
+
         public string GetHPColor2()
         {
             return Poison > 0 ? ColorStringDefine.Hp_posion : ColorStringDefine.Default;
@@ -1116,10 +1159,10 @@ namespace Jyx2
         /// </summary>
         /// <param name="wugong"></param>
         /// <returns></returns>
-        public int GetExtraAttack(Jyx2ConfigSkill wugong)
+        public int GetExtraAttack(int wugongId)
         {
             var extra = GameConfigDatabase.Instance.Get<Jyx2ConfigExtra>(Weapon);
-            if (extra != null && extra.Wugong == wugong.Id)
+            if (extra != null && extra.Wugong == wugongId)
             {
                 return extra.ExtraAttack;
             }

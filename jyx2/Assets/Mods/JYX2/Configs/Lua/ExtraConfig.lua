@@ -21,7 +21,8 @@ local data = {
 {115,115,63,50},
 {116,116,67,70},
 {110,110,54,80},
-{119,119,68,100},}
+{119,119,68,100},
+}
 local mt = {}
 mt.__index = function(a,b)
 	if fieldIdx[b] then
@@ -29,11 +30,8 @@ mt.__index = function(a,b)
 	end
 	return nil
 end
-mt.__newindex = function(t,k,v)
-	error('do not edit config')
-end
 mt.__metatable = false
-for _,v in ipairs(data) do
+for _,v in pairs(data) do
 	setmetatable(v,mt)
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')

@@ -44,7 +44,8 @@ local data = {
 {27,[[PLAYER_MOVE_SPEED]],6},
 {28,[[PLAYER_MOVE_SPEED_WORLD_MAP]],10},
 {29,[[SAVE_COUNT]],3},
-{30,[[CAM_SMOOTHING]],3},}
+{30,[[CAM_SMOOTHING]],3},
+}
 local mt = {}
 mt.__index = function(a,b)
 	if fieldIdx[b] then
@@ -52,11 +53,8 @@ mt.__index = function(a,b)
 	end
 	return nil
 end
-mt.__newindex = function(t,k,v)
-	error('do not edit config')
-end
 mt.__metatable = false
-for _,v in ipairs(data) do
+for _,v in pairs(data) do
 	setmetatable(v,mt)
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')

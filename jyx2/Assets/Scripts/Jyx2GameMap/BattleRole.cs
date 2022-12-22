@@ -27,7 +27,7 @@ public class BattleRole : Jyx2AnimationBattleRole
     {
         get
         {
-            return DataInstance.Data.Model;
+            return DataInstance.Model;
         }
     }
 

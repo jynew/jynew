@@ -121,7 +121,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
         ButtonDetoxicate_Button.gameObject.SetActive(canDepoison);
         bool canHeal = m_currentRole.Heal >= 20 && m_currentRole.Tili >= 50;
         ButtonHeal_Button.gameObject.SetActive(canHeal);
-        PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
+        PreImage_Image.LoadAsyncForget(m_currentRole.GetPic());
 
         AdjustRightButtonNavigation();
         TryFocusOnRightButton();
@@ -313,7 +313,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         if (m_currentRole == null)
             return;
-        var eventLuaPath = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(m_currentRole.GetJyx2RoleId())?.LeaveStoryId;
+        //var eventLuaPath = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(m_currentRole.GetJyx2RoleId())?.LeaveStoryId;
+        var eventLuaPath = LuaToCsBridge.GetConfigString("Character", m_currentRole.GetJyx2RoleId(), "LeaveStoryId");
         if (!string.IsNullOrEmpty(eventLuaPath))
         {
             PlayLeaveStory(eventLuaPath).Forget();

@@ -19,7 +19,7 @@ public class LuaTestStarter : ScriptableObject
         foreach (var file in luaFiles)
         {
             Debug.Log($"开始测试{file.name}");
-            luaEnv.DoString(Encoding.UTF8.GetBytes(file.text));
+            luaEnv.DoString(Encoding.UTF8.GetBytes(file.text),file.name);
         }
     }
 #endif

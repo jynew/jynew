@@ -115,7 +115,8 @@ local data = {
 {94,[[解毒]],3,0,10,0,{{80,1,0,0,0},{120,1,0,0,0},{160,1,0,0,0},{200,2,1,0,0},{250,2,1,0,0},{310,2,1,0,0},{370,3,2,0,0},{460,3,2,0,0},{560,3,2,0,0},{700,4,3,0,0}}},
 {95,[[医疗]],4,0,10,0,{{80,1,0,0,0},{120,1,0,0,0},{160,1,0,0,0},{200,2,1,0,0},{250,2,1,0,0},{310,2,1,0,0},{370,3,2,0,0},{460,3,2,0,0},{560,3,2,0,0},{700,4,3,0,0}}},
 {96,[[莽牯朱蛤]],0,0,0,0,{{50,1,0,0,0},{100,1,0,0,0},{150,1,0,0,0},{200,1,0,0,0},{250,1,0,0,0},{300,1,0,0,0},{350,1,0,0,0},{400,1,0,0,0},{450,1,0,0,0},{500,1,0,0,0}}},
-{97,[[暗器]],5,0,10,0,{{80,1,0,0,0},{120,1,0,0,0},{160,1,0,0,0},{200,2,1,0,0},{250,2,1,0,0},{310,2,1,0,0},{370,3,2,0,0},{460,3,2,0,0},{560,3,2,0,0},{700,4,3,0,0}}},}
+{97,[[暗器]],5,0,10,0,{{80,1,0,0,0},{120,1,0,0,0},{160,1,0,0,0},{200,2,1,0,0},{250,2,1,0,0},{310,2,1,0,0},{370,3,2,0,0},{460,3,2,0,0},{560,3,2,0,0},{700,4,3,0,0}}},
+}
 local mt = {}
 mt.__index = function(a,b)
 	if fieldIdx[b] then
@@ -123,12 +124,28 @@ mt.__index = function(a,b)
 	end
 	return nil
 end
-mt.__newindex = function(t,k,v)
-	error('do not edit config')
-end
 mt.__metatable = false
-for _,v in ipairs(data) do
+for _,v in pairs(data) do
 	setmetatable(v,mt)
+end
+local fieldIdxLevels = {}
+fieldIdxLevels.Attack = 1
+fieldIdxLevels.SelectRange = 2
+fieldIdxLevels.AttackRange = 3
+fieldIdxLevels.AddMp = 4
+fieldIdxLevels.KillMp = 5
+local mtLevels = {}
+mtLevels.__index = function(a,b)
+	if fieldIdxLevels[b] then
+		return a[fieldIdxLevels[b]]
+	end
+	return nil
+end
+mtLevels.__metatable = false
+for _,v in pairs(data) do
+	for _,t in pairs(v.Levels) do
+		setmetatable(t,mtLevels)
+	end
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')
 configMgr:AddConfigTable([[Skill]], data)

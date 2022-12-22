@@ -9,14 +9,26 @@
  * 金庸老先生千古！
  */
  ]]--
---类的声明，这里声明了类名还有属性，并且给出了属性的初始值
-LuaClass = {}
---设置元表的索引，想模拟类的话，这步操作很关键
-LuaClass.__index = LuaClass
---构造方法，构造方法的名字是随便起的，习惯性命名为new()
-function LuaClass:new()
-	 local self = {}  --初始化self，如果没有这句，那么类所建立的对象如果有一个改变，其他对象都会改变
-	 setmetatable(self, LuaClass)  --将self的元表设定为Class
-	 return self  --返回自身
+-- 封装创建class的方法
+local function class(className, super) -- 类名className 父类super(可为空)
+    -- 构建类
+    local clazz = { __cname = className, super = super}
+    if super then
+        -- 将父类设置为子类的元表，让子类访问父类成员
+        setmetatable(clazz, { __index = super })
+    end
+    -- new方法用来创建对象
+    clazz.new = function(...)
+        -- 构建一个对象
+        local instance = {}
+        -- 将对象元表设置为当前类，用来访问类当前类的元素
+        setmetatable(instance, { __index = clazz })
+        if clazz.ctor then
+            clazz.ctor(instance, ...)
+        end
+        return instance
+    end
+    return clazz
 end
--- todo:可以新增一些基类方法
+
+return class

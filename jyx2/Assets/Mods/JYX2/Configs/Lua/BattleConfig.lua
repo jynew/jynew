@@ -158,7 +158,8 @@ local data = {
 {136,[[无用]],[[Jyx2Battle_21]],0,7,{-1},{0},{69}},
 {137,[[无用]],[[Jyx2Battle_21]],0,7,{-1},{0},{69}},
 {138,[[无用]],[[Jyx2Battle_21]],0,7,{-1},{0},{69}},
-{139,[[无用]],[[Jyx2Battle_21]],0,7,{-1},{0},{78,78,121,122}},}
+{139,[[无用]],[[Jyx2Battle_21]],0,7,{-1},{0},{78,78,121,122}},
+}
 local mt = {}
 mt.__index = function(a,b)
 	if fieldIdx[b] then
@@ -166,11 +167,8 @@ mt.__index = function(a,b)
 	end
 	return nil
 end
-mt.__newindex = function(t,k,v)
-	error('do not edit config')
-end
 mt.__metatable = false
-for _,v in ipairs(data) do
+for _,v in pairs(data) do
 	setmetatable(v,mt)
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')

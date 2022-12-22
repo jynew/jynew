@@ -14,8 +14,9 @@ if Jyx2 ~= nil then
     print("重复定义")
     return 
 end
+local requireList = require "LuaModuleList"
 Jyx2 = {} -- 所有的Lua模块都作为Jyx2表的元素添加进去
-Jyx2.moduleList = require "LuaModuleList"
+Jyx2.moduleList = requireList[1]
 
 function Jyx2:AddModule(name, path)
     if path == nil then
@@ -28,6 +29,9 @@ function Jyx2:AddModule(name, path)
             print("Jyx2-Error: 添加模块 "..name.." 失败")
         end
         self[name] = tmpMdl
+    end
+    if tmpMdl ~= nil then
+        Jyx2CSBridge:AddBridge(name)
     end
 end
 
@@ -45,4 +49,21 @@ end
 
 function Jyx2:IsLoaded(name)
     return self[name] ~= nil
+end
+
+-- 避免重复定义
+if Jyx2CSBridge ~= nil then
+    print("重复定义Jyx2CSBridge")
+    return 
+end
+Jyx2CSBridge = {} -- 提供CS侧使用的API
+Jyx2CSBridge.bridgeList = requireList[2]
+
+function Jyx2CSBridge:AddBridge(name)
+    local tmpCB = self[name]
+    if tmpCB == nil then
+        tmpCB = require(self.bridgeList[name])
+        self[name] = tmpCB
+    end
+    print("添加bridge "..name)
 end

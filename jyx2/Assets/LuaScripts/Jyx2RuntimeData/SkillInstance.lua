@@ -7,12 +7,14 @@
  *
  * 金庸老先生千古！
  ]]--
--- 本脚本负责注册 Lua 模块
--- moduleName = modulePath
-local LuaModuleList = {
-    ConfigMgr = "Jyx2Configs/Jyx2ConfigMgr",
-}
-local CSBridgeList = {
-    ConfigMgr = "Jyx2Configs/Jyx2ConfigCSAPI",
-}
-return {LuaModuleList, CSBridgeList}
+-- 本脚本为SkillInstance类定义
+local class = require("LuaClass")
+
+local sk = class("SkillInstance")
+
+function sk:ctor(Id, Level)
+    if Level == nil then
+    end
+end
+
+return sk

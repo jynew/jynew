@@ -179,8 +179,9 @@ public partial class ChatUIPanel : Jyx2_UIBase
 		}
 
 		//再从人物库找
-		var role = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(headId);
-		return role.Name;
+		//var role = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(headId);
+		var roleName = LuaToCsBridge.GetConfigString("Character", headId, "Name");
+		return roleName;
 	}
 
 	//根据角色ID修改左右位置

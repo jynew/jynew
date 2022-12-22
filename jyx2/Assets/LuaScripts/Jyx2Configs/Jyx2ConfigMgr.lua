@@ -25,10 +25,31 @@ function Jyx2ConfigMgr:AddConfigTable(cfgName, cfgData)
             self[cfgName] = cfgData
         end
     end
+    self[cfgName]["ItemNum"] = self:GetLength(cfgName)
+end
+
+-- 获取某表格的长度
+function Jyx2ConfigMgr:GetLength(name)
+    local tmpCfg = self[name]
+    if tmpCfg == nil then
+        return 0
+    end
+    if tmpCfg.ItemNum ~= nil then
+        return tmpCfg.ItemNum
+    end
+    local res = 0
+    for k,v in pairs(tmpCfg) do
+        res = res + 1
+    end
+    return res
 end
 
 -- 获取对应的表格数据
 function Jyx2ConfigMgr:GetConfig(name)
+    if name == nil then
+        CS.UnityEngine.Debug.LogError("GetConfig 参数错误，使用:GetConfig")
+        return nil
+    end
     local tmpCfg = self[name]
     if nil ~= tmpCfg then
         return tmpCfg

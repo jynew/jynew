@@ -18,7 +18,8 @@ local data = {
 {3,{{1,1000,20},{8,1000,150},{36,1,500},{118,1,400},{85,1,600}},14},
 {40,{{26,1000,100},{5,1000,60},{35,1,500},{120,1,800},{71,1,300}},20},
 {60,{{9,1000,200},{20,1000,250},{97,1000,10},{114,1,300},{55,1,250}},12},
-{61,{{19,1000,250},{13,1000,50},{28,1,400},{119,1,500},{51,1,300}},9},}
+{61,{{19,1000,250},{13,1000,50},{28,1,400},{119,1,500},{51,1,300}},9},
+}
 local mt = {}
 mt.__index = function(a,b)
 	if fieldIdx[b] then
@@ -26,12 +27,26 @@ mt.__index = function(a,b)
 	end
 	return nil
 end
-mt.__newindex = function(t,k,v)
-	error('do not edit config')
-end
 mt.__metatable = false
-for _,v in ipairs(data) do
+for _,v in pairs(data) do
 	setmetatable(v,mt)
+end
+local fieldIdxShopItems = {}
+fieldIdxShopItems.Id = 1
+fieldIdxShopItems.Count = 2
+fieldIdxShopItems.Price = 3
+local mtShopItems = {}
+mtShopItems.__index = function(a,b)
+	if fieldIdxShopItems[b] then
+		return a[fieldIdxShopItems[b]]
+	end
+	return nil
+end
+mtShopItems.__metatable = false
+for _,v in pairs(data) do
+	for _,t in pairs(v.ShopItems) do
+		setmetatable(t,mtShopItems)
+	end
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')
 configMgr:AddConfigTable([[Shop]], data)
