@@ -11,12 +11,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-
+using Cysharp.Threading.Tasks;
 using Jyx2;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MessageBox : MonoBehaviour
+public class MessageBox : Jyx2_UIBase
 {
     [SerializeField]
     private Button m_ConfirmButton;
@@ -34,6 +35,9 @@ public class MessageBox : MonoBehaviour
     private Action _onCancel;
     private Action _onClose;
 
+    public override UILayer Layer => UILayer.Top;
+
+
     private void Awake()
     {
         m_ConfirmButton.onClick.AddListener(OnConfirmBtnClick);
@@ -48,13 +52,13 @@ public class MessageBox : MonoBehaviour
 
     private static MessageBox CreateMessageBox(UILayer uiLayer = UILayer.Top)
     {
-        var parent = Jyx2_UIManager.Instance.GetUIParent(uiLayer);
-        var obj = Jyx2ResourceHelper.CreatePrefabInstance("MessageBox");
-        obj.transform.SetParent(parent, false);
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localScale = Vector3.one;
-
-        return obj.GetComponent<MessageBox>();
+        var ui = Jyx2_UIManager.Instance.ShowUI<MessageBox>();
+        var layer = Jyx2_UIManager.Instance.GetUIParent(uiLayer);
+        if(layer != null)
+        {
+            ui.transform.SetParent(layer, false);
+        }
+        return ui;
     }
 
 
@@ -122,6 +126,6 @@ public class MessageBox : MonoBehaviour
         _onClose = null;
         _onConfirm = null;
         _onCancel = null;
-        Jyx2ResourceHelper.ReleasePrefabInstance(gameObject);
+        Jyx2_UIManager.Instance.HideUI<MessageBox>();
     }
 }

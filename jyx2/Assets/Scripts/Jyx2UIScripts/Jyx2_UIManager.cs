@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
@@ -200,6 +201,31 @@ public class Jyx2_UIManager : MonoBehaviour
         var uiName = typeof(T).Name;
         await ShowUIAsync(uiName, allParams);
         return GetUI<T>();
+    }
+    
+    public T ShowUI<T>(params object[] allParams) where T : Jyx2_UIBase
+    {
+        var uiName = typeof(T).Name;
+        Jyx2_UIBase uibase;
+        if (m_uiDic.ContainsKey(uiName))
+        {
+            uibase = m_uiDic[uiName];
+            if (uibase.IsOnly)//如果这个层唯一存在 那么先关闭其他
+                PopAllUI(uibase.Layer);
+            PushUI(uibase);
+            uibase.Show(allParams);
+        }
+        else
+        {
+            _loadingUIParams[uiName] = allParams;
+            string uiPath = string.Format(GameConst.UI_PREFAB_PATH, uiName);
+
+            var prefab = ResLoader.LoadAssetSync<GameObject>(uiPath);
+            var go = Instantiate(prefab);
+            OnUILoaded(go);
+            uibase = go.GetComponent<T>();
+        }
+        return uibase as T;
     }
 
     //UI加载完后的回调
