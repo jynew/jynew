@@ -61,7 +61,6 @@ namespace MOD.UI
         private void OnEnable()
         {
             AllocateNewCancellation();
-            ClearLog();
         }
 
         private void OnDisable()
@@ -112,9 +111,10 @@ namespace MOD.UI
                 CommonTipsUIPanel.ShowPopInfo("已经正在载入一个MOD了");
                 return;
             }
-            AllocateNewCancellation();
             if (!TryGetValidUrl(m_UrlInputField.text, out Uri uri))
                 return;
+            ClearLog();
+            AllocateNewCancellation();
             SetIsAddingMod(true);
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
@@ -260,6 +260,11 @@ namespace MOD.UI
             }
             catch(Exception ex)
             {
+                if (File.Exists(result.ModDownloadPath))
+                {
+                    //有错误缓存就删了
+                    File.Delete(result.ModDownloadPath);
+                }
                 AppendErrorMsg(ex.ToString());
                 result.isSuccess = false;
                 return result;
