@@ -32,6 +32,7 @@ namespace MOD.UI
         [SerializeField] private Button m_ClipboardButton;
         [SerializeField] private Button m_FilePickerButton;
         [SerializeField] private Text m_LoggerText;
+        [SerializeField] private ScrollRect m_LogTextScrollView;
 
         private StringBuilder m_LogMsgBuilder = new StringBuilder();
 
@@ -194,7 +195,7 @@ namespace MOD.UI
                 MessageBox.ShowMessage("不是合法的URL地址");
                 return false;
             }
-            var extensionName = Path.GetExtension(url);
+            var extensionName = Path.GetExtension(result.LocalPath);
             if (extensionName != ".zip")
             {
                 MessageBox.ShowMessage("不是有效的Zip压缩包文件路径");
@@ -308,6 +309,7 @@ namespace MOD.UI
 #endif
             m_LogMsgBuilder.AppendLine(msg);
             m_LoggerText.text = m_LogMsgBuilder.ToString();
+            m_LogTextScrollView.verticalNormalizedPosition = 0;
         }
         
         private void AppendErrorMsg(string msg)
@@ -315,6 +317,7 @@ namespace MOD.UI
             Debug.LogError(msg);
             m_LogMsgBuilder.AppendFormat("<color=red>{0}</color>\n", msg);
             m_LoggerText.text = m_LogMsgBuilder.ToString();
+            m_LogTextScrollView.verticalNormalizedPosition = 0;
         }
 
         private void ClearLog()
