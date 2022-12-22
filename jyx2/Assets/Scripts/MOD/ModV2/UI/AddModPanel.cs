@@ -205,7 +205,7 @@ namespace MOD.UI
 #endif
 
 #if UNITY_STANDALONE_WIN
-            return Path.Combine(Application.dataPath, "mods"),
+            return Path.Combine(Application.dataPath, "mods");
 #endif
 
 #if UNITY_ANDROID
