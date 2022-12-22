@@ -109,7 +109,7 @@ namespace MOD.UI
         {
             if (_isAddingMod)
             {
-                CommonTipsUIPanel.ShowPopInfo("ÒÑ¾­ÕıÔÚÔØÈëÒ»¸öMODÁË");
+                CommonTipsUIPanel.ShowPopInfo("å·²ç»æ­£åœ¨è½½å…¥ä¸€ä¸ªMODäº†");
                 return;
             }
             if (!TryGetValidUrl(m_UrlInputField.text, out Uri uri))
@@ -119,7 +119,7 @@ namespace MOD.UI
             SetIsAddingMod(true);
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                //Ô¶³ÌÏÂÔØ
+                //è¿œç¨‹ä¸‹è½½
                 var downloadResult = await DownloadModPackageAsync(uri);
                 if (downloadResult.isSuccess)
                 {
@@ -129,15 +129,15 @@ namespace MOD.UI
                 {
                     if (File.Exists(downloadResult.ModDownloadPath))
                     {
-                        //ÓĞ´íÎó»º´æ¾ÍÉ¾ÁË
+                        //æœ‰é”™è¯¯ç¼“å­˜å°±åˆ äº†
                         File.Delete(downloadResult.ModDownloadPath);
                     }
-                    AppendErrorMsg("ÏÂÔØÊ§°Ü");
+                    AppendErrorMsg("ä¸‹è½½å¤±è´¥");
                 }
             }
             else
             {
-                //·ñÔò±¾µØÂ·¾¶½âÑ¹
+                //å¦åˆ™æœ¬åœ°è·¯å¾„è§£å‹
                 await UnZipModPackageAsync(uri.LocalPath, GetModExtractPath(), m_DisableCancellation.Token);
             }
             SetIsAddingMod(false);
@@ -150,7 +150,7 @@ namespace MOD.UI
                 gameObject.SetActive(false);
                 return;
             }
-            MessageBox.ConfirmOrCancel("ÕıÔÚÏÂÔØºÍ½âÑ¹ËõMOD, È·¶¨ÒªÈ¡ÏûÂğ£¿", () =>
+            MessageBox.ConfirmOrCancel("æ­£åœ¨ä¸‹è½½å’Œè§£å‹ç¼©MOD, ç¡®å®šè¦å–æ¶ˆå—ï¼Ÿ", () =>
             {
                 StopModImport();
                 gameObject.SetActive(false);
@@ -182,7 +182,7 @@ namespace MOD.UI
 
         private void OnFileSelectCancel()
         {
-            Debug.Log("È¡ÏûÎÄ¼şÑ¡Ôñ");
+            Debug.Log("å–æ¶ˆæ–‡ä»¶é€‰æ‹©");
         }
 
 
@@ -192,13 +192,13 @@ namespace MOD.UI
             bool ret = Uri.TryCreate(url, UriKind.Absolute, out result);
             if (!ret)
             {
-                MessageBox.ShowMessage("²»ÊÇºÏ·¨µÄURLµØÖ·");
+                MessageBox.ShowMessage("ä¸æ˜¯åˆæ³•çš„URLåœ°å€");
                 return false;
             }
             var extensionName = Path.GetExtension(result.LocalPath);
             if (extensionName != ".zip")
             {
-                MessageBox.ShowMessage("²»ÊÇÓĞĞ§µÄZipÑ¹Ëõ°üÎÄ¼şÂ·¾¶");
+                MessageBox.ShowMessage("ä¸æ˜¯æœ‰æ•ˆçš„Zipå‹ç¼©åŒ…æ–‡ä»¶è·¯å¾„");
                 return false;
             }
             return true;
@@ -223,7 +223,7 @@ namespace MOD.UI
 
         private string GetDownloadSpeedText(ulong lastDownloadBytes, ulong currentDownloadBytes, float deltaTime)
         {
-            //ÔİÊ±²»¿¼ÂÇÒç³ö
+            //æš‚æ—¶ä¸è€ƒè™‘æº¢å‡º
             var speed = (currentDownloadBytes - lastDownloadBytes) / deltaTime;
             var sizeText = FileTools.FormatSize((long)speed);
             return sizeText + "/s";
@@ -248,7 +248,7 @@ namespace MOD.UI
                     var downloadSpeedTxt = GetDownloadSpeedText(lastDownloadBytes, m_CurrentRequest.downloadedBytes, 0.33f);
                     lastDownloadBytes = m_CurrentRequest.downloadedBytes;
                     ClearLog();
-                    AppendLogMessage(string.Format("ÏÂÔØÖĞ...½ø¶È{0:F2}% \nÏÂÔØËÙ¶È:{1}", 
+                    AppendLogMessage(string.Format("ä¸‹è½½ä¸­...è¿›åº¦{0:F2}% \nä¸‹è½½é€Ÿåº¦:{1}", 
                         100 * m_CurrentRequest.downloadProgress, downloadSpeedTxt));
                 }
                 if (m_CurrentRequest.result != UnityWebRequest.Result.Success)
@@ -259,7 +259,7 @@ namespace MOD.UI
                 }
                 else
                 {
-                    AppendLogMessage("ModÑ¹Ëõ°üÏÂÔØ³É¹¦£¬±£´æÂ·¾¶:" + savePath);
+                    AppendLogMessage("Modå‹ç¼©åŒ…ä¸‹è½½æˆåŠŸï¼Œä¿å­˜è·¯å¾„:" + savePath);
                     result.isSuccess = true;
                     return result;
                 }
@@ -277,18 +277,18 @@ namespace MOD.UI
         {
             if(!File.Exists(zipFilePath))
             {
-                AppendErrorMsg("´íÎó, Ñ¹Ëõ°üÎÄ¼ş²»´æÔÚ");
+                AppendErrorMsg("é”™è¯¯, å‹ç¼©åŒ…æ–‡ä»¶ä¸å­˜åœ¨");
                 return;
             }
             try
             {
-                int bufferSize = 1024 * 1024; //¸ø¸ö1mb »º³åÇø ²»È»½âÑ¹Ì«ÂıÁË
+                int bufferSize = 1024 * 1024; //ç»™ä¸ª1mb ç¼“å†²åŒº ä¸ç„¶è§£å‹å¤ªæ…¢äº†
                 await FileTools.UnZipAsync(zipFilePath, "", outPath, token, OnUnzipProgress, bufferSize);
-                AppendLogMessage("½âÑ¹MODÍê±Ï£¬ÇëË¢ĞÂModÁĞ±í");
+                AppendLogMessage("è§£å‹MODå®Œæ¯•ï¼Œè¯·åˆ·æ–°Modåˆ—è¡¨");
             }
             catch(TaskCanceledException cancelEx)
             {
-                AppendLogMessage("Mod½âÑ¹ËõÒÑÖÕÖ¹");
+                AppendLogMessage("Modè§£å‹ç¼©å·²ç»ˆæ­¢");
             }
             catch(Exception ex)
             {
@@ -298,7 +298,7 @@ namespace MOD.UI
 
         private void OnUnzipProgress(long finishedBytes, long totalBytes)
         {
-            AppendLogMessage(string.Format("½âÑ¹ÖĞ...½ø¶È{0:F1}%", finishedBytes * 100.0f / totalBytes));
+            AppendLogMessage(string.Format("è§£å‹ä¸­...è¿›åº¦{0:F1}%", finishedBytes * 100.0f / totalBytes));
         }
         
 
