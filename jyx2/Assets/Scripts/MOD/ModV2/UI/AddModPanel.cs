@@ -126,6 +126,11 @@ namespace MOD.UI
                 }
                 else
                 {
+                    if (File.Exists(downloadResult.ModDownloadPath))
+                    {
+                        //有错误缓存就删了
+                        File.Delete(downloadResult.ModDownloadPath);
+                    }
                     AppendErrorMsg("下载失败");
                 }
             }
@@ -260,11 +265,6 @@ namespace MOD.UI
             }
             catch(Exception ex)
             {
-                if (File.Exists(result.ModDownloadPath))
-                {
-                    //有错误缓存就删了
-                    File.Delete(result.ModDownloadPath);
-                }
                 AppendErrorMsg(ex.ToString());
                 result.isSuccess = false;
                 return result;
