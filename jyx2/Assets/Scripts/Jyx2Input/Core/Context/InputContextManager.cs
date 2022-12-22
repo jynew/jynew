@@ -9,7 +9,12 @@ using UnityEngine;
 
 namespace Jyx2.InputCore
 {
+#if DEVELOP_TAPTAP
+    /// 导入3.16.5版本的TapSDK时，由于TapSDK中定义了Singleton，这里的Singleton就需要指定Jyx2.Util
+    public class InputContextManager : Jyx2.Util.Singleton<InputContextManager>
+#else
     public class InputContextManager : Singleton<InputContextManager>
+#endif
     {
         private List<IJyx2_InputContext> m_Contexts = new List<IJyx2_InputContext>();
 

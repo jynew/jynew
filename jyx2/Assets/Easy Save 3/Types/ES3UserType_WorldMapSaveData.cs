@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("WorldPosition", "WorldRotation", "BoatWorldPos", "BoatRotate", "OnBoat")]
+	[ES3PropertiesAttribute("WorldPosition", "WorldRotation", "BoatWorldPos", "BoatRotate", "OnBoat", "areaMask")]
 	public class ES3UserType_WorldMapSaveData : ES3ObjectType
 	{
 		public static ES3Type Instance = null;
@@ -21,6 +21,7 @@ namespace ES3Types
 			writer.WriteProperty("BoatWorldPos", instance.BoatWorldPos, ES3Type_Vector3.Instance);
 			writer.WriteProperty("BoatRotate", instance.BoatRotate, ES3Type_Quaternion.Instance);
 			writer.WriteProperty("OnBoat", instance.OnBoat, ES3Type_int.Instance);
+			writer.WriteProperty("areaMask", instance.areaMask, ES3Type_int.Instance);
 		}
 
 		protected override void ReadObject<T>(ES3Reader reader, object obj)
@@ -45,6 +46,9 @@ namespace ES3Types
 						break;
 					case "OnBoat":
 						instance.OnBoat = reader.Read<System.Int32>(ES3Type_int.Instance);
+						break;
+					case "areaMask":
+						instance.areaMask = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
 					default:
 						reader.Skip();

@@ -353,6 +353,7 @@ public class Jyx2Player : MonoBehaviour
         WorldMapSaveData worldData = runtime.WorldData;
         worldData.WorldPosition = this.transform.position;
         worldData.WorldRotation = this.transform.rotation;
+        worldData.areaMask = _navMeshAgent.areaMask;
         if (_boat == null) return;
         worldData.BoatWorldPos = _boat.transform.position;
         worldData.BoatRotate = _boat.transform.rotation; 
@@ -364,6 +365,7 @@ public class Jyx2Player : MonoBehaviour
         var runtime = GameRuntimeData.Instance;
         if (runtime.WorldData == null) return;
         
+        _navMeshAgent.areaMask = runtime.WorldData.areaMask;
         PlayerSpawnAt(runtime.WorldData.WorldPosition, runtime.WorldData.WorldRotation);
 
         LoadBoat();
@@ -394,7 +396,7 @@ public class Jyx2Player : MonoBehaviour
         _navMeshAgent.enabled = false;
         Debug.Log("load pos = " + spawnPos);
         transform.position = spawnPos;
-		transform.rotation = ori;
+        transform.rotation = ori;
         _navMeshAgent.enabled = true;
     }
 

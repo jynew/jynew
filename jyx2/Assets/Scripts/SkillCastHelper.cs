@@ -58,9 +58,13 @@ namespace Jyx2
         public IEnumerable<Transform> CoverBlocks;
         public SkillCastInstance Skill;
 
+        public Jyx2SkillDisplayAsset SkillDisplay;
+
 
         Jyx2SkillDisplayAsset GetDisplay()
         {
+            if (SkillDisplay != null)
+                return SkillDisplay;
             return Skill.Data.GetDisplay();
         }
 

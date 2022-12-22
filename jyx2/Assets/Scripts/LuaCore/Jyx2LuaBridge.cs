@@ -63,7 +63,7 @@ namespace Jyx2
             Jyx2_UIManager.Instance.ShowUIAsync(nameof(ChatUIPanel), ChatType.RoleId, roleId, content, type, new Action(() =>
             {
                 StoryEngine.BlockPlayerControl = false;
-                callback();
+                callback?.Invoke();
             })).Forget();
         }
 
