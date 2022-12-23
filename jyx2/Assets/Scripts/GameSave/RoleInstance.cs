@@ -23,6 +23,26 @@ using XLua;
 
 namespace Jyx2
 {
+    /// <summary>
+    /// 用来储存Item信息而不影响配置表
+    /// </summary>
+    [Serializable]
+    public class CsRoleItem : LRoleItem
+    {
+        [SerializeField] public int Id {get;set;}
+        [SerializeField] public int Count {get;set;}
+
+        public CsRoleItem()
+        {
+        }
+
+        public CsRoleItem(LRoleItem itm)
+        {
+            Id = itm.Id;
+            Count = itm.Count;
+        }
+    }
+
     [Serializable]
     public class RoleInstance : IComparable<RoleInstance>
     {
@@ -57,7 +77,8 @@ namespace Jyx2
 
         [SerializeField] public int ExpForItem; //修炼点数
         [SerializeField] public List<SkillInstance> Wugongs = new List<SkillInstance>(); //武功
-        [SerializeField] public List<Jyx2ConfigCharacterItem> Items = new List<Jyx2ConfigCharacterItem>(); //道具
+        //[SerializeField] public List<Jyx2ConfigCharacterItem> Items = new List<Jyx2ConfigCharacterItem>(); //道具
+        [SerializeField] public List<CsRoleItem> Items = new List<CsRoleItem>(); //道具
 
         [SerializeField] public int Mp;
         [SerializeField] public int MaxMp;
@@ -91,7 +112,8 @@ namespace Jyx2
 
         public void BindKey()
         {
-            _data = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(Key);
+            //_data = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(Key);
+            _data = LuaToCsBridge.CharacterTable[Key];
 
             if (_data == null)
             {
@@ -100,7 +122,7 @@ namespace Jyx2
 
             //初始化武功列表
             //Wugongs.Clear();			
-            if (Wugongs.Count == 0)
+            /*if (Wugongs.Count == 0)
             {
                 var _skills = _data.Skills.Split('|');
                 foreach (var _skill in _skills)
@@ -113,6 +135,13 @@ namespace Jyx2
                     wugong.Id = id;
                     wugong.Level = level;
                     Wugongs.Add(new SkillInstance(wugong));
+                }
+            }*/
+            if (Wugongs.Count == 0)
+            {
+                foreach (var _skill in _data.Skills)
+                {
+                    Wugongs.Add(new SkillInstance(_skill));
                 }
             }
 
@@ -460,15 +489,15 @@ namespace Jyx2
         {
             Items.Clear();
             //配置表中添加的物品
-            var items = Data.Items.Split('|');
-            foreach (var item in items)
+            //var items = Data.Items.Split('|');
+            //foreach (var item in items)
+            foreach (var item in Data.Items)
             {
-                var itemArr = item.Split(',');
-                if (itemArr.Length != 2) continue;
-                var characterItem = new Jyx2ConfigCharacterItem();
-                characterItem.Id = int.Parse(itemArr[0]);
-                characterItem.Count = int.Parse(itemArr[1]);
-                Items.Add(characterItem);
+                //var characterItem = new Jyx2ConfigCharacterItem();
+                //characterItem.Id = int.Parse(itemArr[0]);
+                //characterItem.Count = int.Parse(itemArr[1]);
+                //Items.Add(characterItem);
+                Items.Add(new CsRoleItem(item));
             }
         }
 
@@ -496,7 +525,8 @@ namespace Jyx2
             }
             else
             {
-                Items.Add(new Jyx2ConfigCharacterItem()
+                //Items.Add(new Jyx2ConfigCharacterItem()
+                Items.Add(new CsRoleItem()
                         {
                         Id = itemId,
                         Count = count
@@ -861,7 +891,7 @@ namespace Jyx2
         }
 
 
-        public Jyx2ConfigCharacter Data
+        public LRoleConfig Data
         {
             get
             {
@@ -874,7 +904,7 @@ namespace Jyx2
             }
         }
 
-        private Jyx2ConfigCharacter _data;
+        private LRoleConfig _data;
 
         public BattleRole View { get; set; }
 

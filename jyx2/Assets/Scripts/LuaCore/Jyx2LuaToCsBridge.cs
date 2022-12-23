@@ -19,13 +19,13 @@ namespace Jyx2
     public interface LRoleSkill
     {
         int Id {get;set;}
-        string Level {get;set;}
+        int Level {get;set;}
     }
     [CSharpCallLua]
     public interface LRoleItem
     {
         int Id {get;set;}
-        string Count {get;set;}
+        int Count {get;set;}
     }
     [CSharpCallLua]
     public interface LRoleConfig
@@ -126,6 +126,16 @@ namespace Jyx2
         public static Jyx2LuaFunRef.CallConfigInt GetConfigValue;
         public static Jyx2LuaFunRef.CallConfigStr GetConfigString;
 
+        public static void LuaToCsBridgeInit()
+        {
+            LuaConfRef();
+        }
+
+        public static void LuaToCsBridgeDispose()
+        {
+            LuaConfRefDispose();
+        }
+
         public static void LuaConfRef()
         {
             GetConfigValue = LEnv.Global.GetInPath<Jyx2LuaFunRef.CallConfigInt>("Jyx2CSBridge.ConfigMgr.GetConfigValue");
@@ -136,11 +146,12 @@ namespace Jyx2
             SkillTable = LEnv.Global.GetInPath<Dictionary<int, LSkillConfig>>("Jyx2.ConfigMgr.Skill");
             ItemTable = LEnv.Global.GetInPath<Dictionary<int, LItemConfig>>("Jyx2.ConfigMgr.Item");
 
-            Debug.Log(SkillTable[97].Poison);
-            var tmpItem = Jyx2Configs.GameConfigDatabase.Instance.Get<Jyx2Configs.Jyx2ConfigItem>(101);
-            var tmpSk = new Jyx2.SkillInstance(tmpItem, 97);
-            Debug.Log(SkillTable[97].Poison);
             Debug.Log(CharacterTable[1].Name);
+        }
+        public static void LuaConfRefDispose()
+        {
+            GetConfigValue = null;
+            GetConfigString = null;
         }
     }
 }

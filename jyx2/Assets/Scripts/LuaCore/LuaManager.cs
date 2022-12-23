@@ -46,6 +46,7 @@ namespace Jyx2
         public static void Clear()
         {
             LuaMod_DeInit();
+            LuaToCsBridge.LuaToCsBridgeDispose();
             _inited = false;
 
             //ConfigManager.Reset();

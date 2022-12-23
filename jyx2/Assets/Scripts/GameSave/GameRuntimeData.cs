@@ -216,22 +216,12 @@ namespace Jyx2
         {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
-            if (RuntimeEnvSetup.CurrentModConfig.IsUsingLuaConfig)
-            {
-                var luaEnv = LuaManager.GetLuaEnv();
-                //Debug.Log("Call Lua From GRD");
-                LuaToCsBridge.LuaInitAllRole initAllRole = luaEnv.Global.GetInPath<LuaToCsBridge.LuaInitAllRole>("Jyx2CSBridge.ConfigMgr.InitAllRole");
-                initAllRole(_instance.AllRoles);
-            }
-            else
-            {
                 //创建所有角色
                 foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
                 {
                     var role = new RoleInstance(r.Id);
                     _instance.AllRoles.Add(r.Id, role);
                 }
-            }
             sw.Stop();
             Debug.Log(string.Format("total: {0} ms", sw.ElapsedMilliseconds));
         }

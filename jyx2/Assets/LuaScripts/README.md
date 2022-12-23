@@ -13,3 +13,7 @@ LuaScripts使用模块化结构，总入口是`InitLuaScripts`脚本，该脚本
 ### 模块注册表：LuaModuleList
 使用格式：`moduleName = "PathOfTheMainFile"`来注册一个模块。例如`ConfigMgr`模块主文件为`Assets/LuaScripts/Jyx2Configs/Jyx2ConfigMgr.lua`，则使用`ConfigMgr = "Jyx2Configs/Jyx2ConfigMgr"`来注册该模块。
 在Mod中重载`LuaModuleList`文件，即可自行选择哪些模块可以自动加载。注意，如果要自动加载Mod中新增的模块，如名为`MyModuleName`，主文件为`Assets/Mods/MyMod/LuaScripts/MyModule/MyModuleMainFile.lua`的模块，需使用`MyModuleName = "MyModule/MyModuleMainFile"`来注册，即去掉`LuaScripts`以及之前的目录结构。
+
+## 修改清单
+1. SkillInstance 其实暗器没有用
+2. 角色入队物品

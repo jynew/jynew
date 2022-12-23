@@ -19,7 +19,7 @@ namespace Jyx2
     /// <summary>
     /// 用来复制存储一份LevelInfo，在修改暗器伤害时与原配置表隔离
     /// </summary>
-    public class SkillLevel:LSkillLevel
+    public class CsSkillLevel:LSkillLevel
     {
         public int Attack {get;set;}
         public int SelectRange {get;set;}
@@ -27,11 +27,11 @@ namespace Jyx2
         public int AddMp {get;set;}
         public int KillMp {get;set;}
 
-        public SkillLevel()
+        public CsSkillLevel()
         {
         }
 
-        public SkillLevel(LSkillLevel sk)
+        public CsSkillLevel(LSkillLevel sk)
         {
             Attack = sk.Attack;
             SelectRange = sk.SelectRange;
@@ -65,17 +65,23 @@ namespace Jyx2
             }
         }
 
-        //存储Level各等级数据
+        //存储Level各等级数据，在运行时修改不会影响原配置表
         List<LSkillLevel> _levelInfo;
         public List<LSkillLevel> LevelInfo
         {
             get{
-                _levelInfo = GetLevelInfo();
+                if (_levelInfo == null)
+                    _levelInfo = GetLevelInfo();
                 return _levelInfo;
             }
             set{
                 _levelInfo = value;
             }
+        }
+
+        public void ResetSkill()
+        {
+            _data = null;
         }
 
         public string Name
@@ -90,7 +96,7 @@ namespace Jyx2
         {
         }
 
-        public SkillInstance(Jyx2ConfigCharacterSkill s)
+        public SkillInstance(LRoleSkill s)
         {
             Key = s.Id;
             Level = s.Level;
@@ -131,7 +137,7 @@ namespace Jyx2
             return LevelInfo[level - 1];
         }
 
-        //实际上这个函数里的操作没什么用，暗器的相关数据都在AnqiSkillCastInstance里处理了
+        //实际上这个函数里针对暗器的操作没什么用，暗器的相关数据都在AnqiSkillCastInstance里处理了
         //public Jyx2ConfigSkill GetSkill(Jyx2ConfigItem _anqi = null)
         public LSkillConfig GetSkill(Jyx2ConfigItem _anqi = null)
         {
@@ -145,9 +151,7 @@ namespace Jyx2
 
                 foreach (var sl in LevelInfo)
                 {
-                    Debug.Log(sl.Attack);
                     sl.Attack = Mathf.Abs(_anqi.AddHp);
-                    Debug.Log(sl.Attack);
                 }
             }
             return skillT;
@@ -158,32 +162,26 @@ namespace Jyx2
             var _levels = new List<LSkillLevel>();
             foreach (var lvl in Data.Levels)
             {
-                var skillLevel = new SkillLevel(lvl);
+                var skillLevel = new CsSkillLevel(lvl);
                 _levels.Add(skillLevel);
             }
             /*var _levelArr = _data.Levels.Split('|');
-            foreach (var _level in _levelArr)
-            {
-                var _levelArr2 = _level.Split(',');
-                if (_levelArr2.Length != 5) continue;
-                var skillLevel = new Jyx2ConfigSkillLevel();
-                skillLevel.Attack = int.Parse(_levelArr2[0]);
-                skillLevel.SelectRange = int.Parse(_levelArr2[1]);
-                skillLevel.AttackRange = int.Parse(_levelArr2[2]);
-                skillLevel.AddMp = int.Parse(_levelArr2[3]);
-                skillLevel.KillMp = int.Parse(_levelArr2[4]);
-                _levels.Add(skillLevel);
-            }*/
+              foreach (var _level in _levelArr)
+              {
+              var _levelArr2 = _level.Split(',');
+              if (_levelArr2.Length != 5) continue;
+              var skillLevel = new Jyx2ConfigSkillLevel();
+              skillLevel.Attack = int.Parse(_levelArr2[0]);
+              skillLevel.SelectRange = int.Parse(_levelArr2[1]);
+              skillLevel.AttackRange = int.Parse(_levelArr2[2]);
+              skillLevel.AddMp = int.Parse(_levelArr2[3]);
+              skillLevel.KillMp = int.Parse(_levelArr2[4]);
+              _levels.Add(skillLevel);
+              }*/
             return _levels;
         }
 
-        public void ResetSkill()
-        {
-            _data = null;
-        }
-
-        //List<LSkillLevel> _levelinfo;
-
+        //施放范围类型
         public SkillCoverType CoverType
         {
             get
@@ -207,6 +205,7 @@ namespace Jyx2
             }
         }
 
+        //技能施放范围
         public int CastSize
         {
             get
@@ -221,6 +220,7 @@ namespace Jyx2
             }
         }
 
+        //杀伤范围
         public int CoverSize
         {
             get
@@ -231,7 +231,7 @@ namespace Jyx2
             }
         }
 
-
+        //获取技能外观
         public Jyx2SkillDisplayAsset GetDisplay()
         {
             if(!string.IsNullOrWhiteSpace(Data.DisplayFileName))

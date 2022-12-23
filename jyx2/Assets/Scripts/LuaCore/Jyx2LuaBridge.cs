@@ -574,7 +574,8 @@ namespace Jyx2
             //只有设置了显示，并且角色在队伍的时候才显示
             if(noDisplay != 0 && runtime.IsRoleInTeam(roleId))
             {
-                var skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(magicId);
+                //var skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(magicId);
+                var skill = LuaToCsBridge.SkillTable[magicId];
                 StoryEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
             }
         }

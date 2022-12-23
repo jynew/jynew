@@ -27,7 +27,7 @@ public class Jyx2DatabaseEditor : OdinMenuEditorWindow
         tree.Selection.SupportsMultiSelect = false;
 
         CreateAssetsMenu<Jyx2ConfigCharacter>(tree, "角色", "Assets/BuildSource/Configs/Characters");
-        CreateAssetsMenu<Jyx2ConfigSkill>(tree, "技能", "Assets/BuildSource/Configs/Skills");
+        //CreateAssetsMenu<Jyx2ConfigSkill>(tree, "技能", "Assets/BuildSource/Configs/Skills");
         CreateAssetsMenu<Jyx2ConfigItem>(tree, "道具", "Assets/BuildSource/Configs/Items");
         CreateAssetsMenu<Jyx2ConfigMap>(tree, "场景", "Assets/BuildSource/Configs/Maps");
         CreateAssetsMenu<Jyx2ConfigShop>(tree, "商店", "Assets/BuildSource/Configs/Shops");
