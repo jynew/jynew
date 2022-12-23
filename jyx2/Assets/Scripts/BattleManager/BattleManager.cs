@@ -363,7 +363,8 @@ namespace Jyx2
                             //---------------------------------------------------------------------------
                             //特定位置的翻译【战斗胜利角色修炼武功升级提示】
                             //---------------------------------------------------------------------------
-                            bonusTextBuilder.AppendFormat("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(practiseItem.Skill).Name, level);
+                            //bonusTextBuilder.AppendFormat("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(practiseItem.Skill).Name, level);
+                            bonusTextBuilder.AppendFormat("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), LuaToCsBridge.SkillTable[practiseItem.Skill].Name, level);
                             //---------------------------------------------------------------------------
                             //---------------------------------------------------------------------------
                         }

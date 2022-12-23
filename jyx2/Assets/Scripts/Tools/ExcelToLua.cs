@@ -245,7 +245,7 @@ namespace Jyx2.Middleware
                         sb.AppendFormat("fieldIdx{0}.{1} = {2}\n", col.name, col.subName[j], j+1);
                     }
                     sb.AppendFormat(substr, col.name);
-                    sb.AppendFormat("\tfor _,t in pairs(v.{0}) do\n\t\tsetmetatable(t,mt{0})\n\tend\nend\n", col.name);
+                    sb.AppendFormat("\tfor _,t in pairs(v.{0}) do\n\t\tif type(t) == 'table' then\n\t\t\tsetmetatable(t,mt{0})\n\t\tend\n\tend\nend\n", col.name);
                 }
             }
 
@@ -269,7 +269,7 @@ namespace Jyx2.Middleware
                 case LuaFieldType.l_string:
                     if (string.IsNullOrWhiteSpace(valueStr))
                     {
-                        return "";
+                        return "\"\"";
                     }
                     else
                     {

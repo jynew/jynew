@@ -45,7 +45,9 @@ end
 mtShopItems.__metatable = false
 for _,v in pairs(data) do
 	for _,t in pairs(v.ShopItems) do
-		setmetatable(t,mtShopItems)
+		if type(t) == 'table' then
+			setmetatable(t,mtShopItems)
+		end
 	end
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')

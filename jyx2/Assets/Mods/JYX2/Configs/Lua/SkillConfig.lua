@@ -144,7 +144,9 @@ end
 mtLevels.__metatable = false
 for _,v in pairs(data) do
 	for _,t in pairs(v.Levels) do
-		setmetatable(t,mtLevels)
+		if type(t) == 'table' then
+			setmetatable(t,mtLevels)
+		end
 	end
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')

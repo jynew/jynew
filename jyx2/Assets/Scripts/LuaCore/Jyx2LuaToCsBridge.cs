@@ -16,6 +16,15 @@ namespace Jyx2
 {
     //用来解读Lua的Skill配置表
     [CSharpCallLua]
+    public interface LSkillLevel
+    {
+        int Attack {get;set;}
+        int SelectRange {get;set;}
+        int AttackRange {get;set;}
+        int AddMp {get;set;}
+        int KillMp {get;set;}
+    }
+    [CSharpCallLua]
     public interface LSkillConfig
     {
         int Id {get;set;}
@@ -24,7 +33,7 @@ namespace Jyx2
         int SkillCoverType {get;set;}
         int MpCost {get;set;}
         int Poison {get;set;}
-        List<List<int>> Levels {get;set;}
+        List<LSkillLevel> Levels {get;set;}
         string DisplayFileName {get;set;}
     }
     //用来解读Lua的Item配置表
@@ -75,7 +84,13 @@ namespace Jyx2
             //ConfigData = LEnv.Global.GetInPath<Dictionary<string, object>>("Jyx2.ConfigMgr");
             SkillTable = LEnv.Global.GetInPath<Dictionary<int, LSkillConfig>>("Jyx2.ConfigMgr.Skill");
             ItemTable = LEnv.Global.GetInPath<Dictionary<int, LItemConfig>>("Jyx2.ConfigMgr.Item");
-            Debug.Log(ItemTable[1].Name);
+            Debug.Log(SkillTable[97].Levels[0].Attack);
+            Debug.Log(SkillTable[97].Poison);
+            var tmpItem = Jyx2Configs.GameConfigDatabase.Instance.Get<Jyx2Configs.Jyx2ConfigItem>(101);
+            var tmpSk = new Jyx2.SkillInstance(tmpItem, 97);
+            Debug.Log(tmpSk.LevelInfo[1].Attack);
+            Debug.Log(SkillTable[97].Levels[0].Attack);
+            Debug.Log(SkillTable[97].Poison);
         }
     }
 }

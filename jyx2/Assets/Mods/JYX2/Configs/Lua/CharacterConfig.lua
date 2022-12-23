@@ -388,7 +388,9 @@ end
 mtSkills.__metatable = false
 for _,v in pairs(data) do
 	for _,t in pairs(v.Skills) do
-		setmetatable(t,mtSkills)
+		if type(t) == 'table' then
+			setmetatable(t,mtSkills)
+		end
 	end
 end
 local fieldIdxItems = {}
@@ -404,7 +406,9 @@ end
 mtItems.__metatable = false
 for _,v in pairs(data) do
 	for _,t in pairs(v.Items) do
-		setmetatable(t,mtItems)
+		if type(t) == 'table' then
+			setmetatable(t,mtItems)
+		end
 	end
 end
 local configMgr = Jyx2:GetModule('ConfigMgr')

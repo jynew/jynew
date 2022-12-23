@@ -17,6 +17,30 @@ using XLua;
 namespace Jyx2
 {
     /// <summary>
+    /// 用来复制存储一份LevelInfo，在修改暗器伤害时与原配置表隔离
+    /// </summary>
+    public class SkillLevel:LSkillLevel
+    {
+        public int Attack {get;set;}
+        public int SelectRange {get;set;}
+        public int AttackRange {get;set;}
+        public int AddMp {get;set;}
+        public int KillMp {get;set;}
+
+        public SkillLevel()
+        {
+        }
+
+        public SkillLevel(LSkillLevel sk)
+        {
+            Attack = sk.Attack;
+            SelectRange = sk.SelectRange;
+            AttackRange = sk.AttackRange;
+            AddMp = sk.AddMp;
+            KillMp = sk.KillMp;
+        }
+    }
+    /// <summary>
     /// JYX2的武功实例
     /// </summary>
     [Serializable]
@@ -40,6 +64,28 @@ namespace Jyx2
                 _data = value;
             }
         }
+
+        //存储Level各等级数据
+        List<LSkillLevel> _levelInfo;
+        public List<LSkillLevel> LevelInfo
+        {
+            get{
+                _levelInfo = GetLevelInfo();
+                return _levelInfo;
+            }
+            set{
+                _levelInfo = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return Data.Name;
+            }
+        }
+
         public SkillInstance()
         {
         }
@@ -69,29 +115,23 @@ namespace Jyx2
             return Level / 100 + 1;
         }
 
-        public Jyx2ConfigSkillLevel GetSkillLevelInfo(int level = -1)
+        //public Jyx2ConfigSkillLevel GetSkillLevelInfo(int level = -1)
+        public LSkillLevel GetSkillLevelInfo(int level = -1)
         {
             if(level < 1)
             {
                 level = GetLevel();
             }
 
-            if(level > _levels.Count)
+            if(level > LevelInfo.Count)
             {
                 Debug.LogError("skill level error");
                 return null;
             }
-            return _levels[level - 1];
+            return LevelInfo[level - 1];
         }
 
-        public string Name
-        {
-            get
-            {
-                return Data.Name;
-            }
-        }
-
+        //实际上这个函数里的操作没什么用，暗器的相关数据都在AnqiSkillCastInstance里处理了
         //public Jyx2ConfigSkill GetSkill(Jyx2ConfigItem _anqi = null)
         public LSkillConfig GetSkill(Jyx2ConfigItem _anqi = null)
         {
@@ -103,26 +143,22 @@ namespace Jyx2
             {
                 skillT.Poison = _anqi.ChangePoisonLevel;
 
-                foreach (var sl in _levels)
+                foreach (var sl in LevelInfo)
                 {
+                    Debug.Log(sl.Attack);
                     sl.Attack = Mathf.Abs(_anqi.AddHp);
+                    Debug.Log(sl.Attack);
                 }
             }
             return skillT;
         }
 
-        public List<Jyx2ConfigSkillLevel> GetLevels()
+        public List<LSkillLevel> GetLevelInfo()
         {
-            var _levels = new List<Jyx2ConfigSkillLevel>();
-            foreach (var lvl in _data.Levels)
+            var _levels = new List<LSkillLevel>();
+            foreach (var lvl in Data.Levels)
             {
-                if (lvl.Count != 5) continue;
-                var skillLevel = new Jyx2ConfigSkillLevel();
-                skillLevel.Attack = lvl[0];
-                skillLevel.SelectRange = lvl[1];
-                skillLevel.AttackRange = lvl[2];
-                skillLevel.AddMp = lvl[3];
-                skillLevel.KillMp = lvl[4];
+                var skillLevel = new SkillLevel(lvl);
                 _levels.Add(skillLevel);
             }
             /*var _levelArr = _data.Levels.Split('|');
@@ -146,25 +182,13 @@ namespace Jyx2
             _data = null;
         }
 
-        List<Jyx2ConfigSkillLevel> levels;
-
-        List<Jyx2ConfigSkillLevel> _levels
-        {
-            get
-            {
-                levels = GetLevels();
-                return levels;
-            }
-            set {
-                levels = value;
-            }
-        }
+        //List<LSkillLevel> _levelinfo;
 
         public SkillCoverType CoverType
         {
             get
             {
-                switch ((int)_data.SkillCoverType)
+                switch ((int)Data.SkillCoverType)
                 {
                     case 0:
                         return SkillCoverType.POINT;
@@ -187,10 +211,10 @@ namespace Jyx2
         {
             get
             {
-                if ((int)_data.SkillCoverType == 1) //直线
+                if ((int)Data.SkillCoverType == 1) //直线
                     return 1;
 
-                if ((int)_data.SkillCoverType == 2) //中心星型
+                if ((int)Data.SkillCoverType == 2) //中心星型
                     return 0;
 
                 return GetSkillLevelInfo().SelectRange;
@@ -201,7 +225,7 @@ namespace Jyx2
         {
             get
             {
-                if ((int)_data.SkillCoverType == 1 || (int)_data.SkillCoverType == 2)
+                if ((int)Data.SkillCoverType == 1 || (int)Data.SkillCoverType == 2)
                     return GetSkillLevelInfo().SelectRange;
                 return GetSkillLevelInfo().AttackRange;
             }
@@ -210,11 +234,10 @@ namespace Jyx2
 
         public Jyx2SkillDisplayAsset GetDisplay()
         {
-            var DisplayFileName = _data.DisplayFileName;
-            if(!string.IsNullOrWhiteSpace(DisplayFileName))
-                return Jyx2SkillDisplayAsset.Get(DisplayFileName);
+            if(!string.IsNullOrWhiteSpace(Data.DisplayFileName))
+                return Jyx2SkillDisplayAsset.Get(Data.DisplayFileName);
             else
-                return Jyx2SkillDisplayAsset.Get(Name);
+                return Jyx2SkillDisplayAsset.Get(Data.Name);
         }
 
         public int GetCoolDown()
