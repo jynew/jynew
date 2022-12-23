@@ -11,12 +11,19 @@
 
 local Jyx2ConfigMgr = {}
 
+-- 当前的配置表列表
+Jyx2ConfigMgr["ConfigList"] = {}
+
 -- 添加一个配置表
 function Jyx2ConfigMgr:AddConfigTable(cfgName, cfgData)
     local tmpCfg = self[cfgName]
     if tmpCfg == nil then
-        local _id = cfgData[1].Id
-        if _id then
+        local length = #cfgData
+        print("len: "..length)
+        if length < 1 then
+            self[cfgName] = cfgData
+
+        elseif cfgData[1].Id then
             self[cfgName] = {}
             for _,v in ipairs(cfgData) do
                 self[cfgName][v.Id] = v
@@ -24,8 +31,9 @@ function Jyx2ConfigMgr:AddConfigTable(cfgName, cfgData)
         else
             self[cfgName] = cfgData
         end
+        table.insert(self.ConfigList, cfgName)
     end
-    self[cfgName]["ItemNum"] = self:GetLength(cfgName)
+    self[cfgName]["ItemNum"] = length
 end
 
 -- 获取某表格的长度

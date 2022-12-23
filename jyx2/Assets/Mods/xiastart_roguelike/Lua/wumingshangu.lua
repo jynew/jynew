@@ -85,6 +85,7 @@ function GenerateEnemies(level, battleConfig)
         if(level < 5) then
             role.Items:Clear()
         end
+        print("Add role:"..role.Name)
     end
 end
 
@@ -144,7 +145,8 @@ function NextBattle()
     local level = scene_api.GetInt("Level")
     
     --动态构建一场战斗
-    local battleConfig = CS.Jyx2Configs.Jyx2ConfigBattle()
+    --local battleConfig = CS.Jyx2Configs.Jyx2ConfigBattle()
+    local battleConfig = CS.Jyx2.BattleConfig()
     
     battleConfig.Id = 9999 --随便拟定一个战斗ID，无所谓
     battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑选一个战斗场景

@@ -28,7 +28,8 @@ public class BattleLoader : MonoBehaviour
 {
     [LabelText("载入战斗ID")] public int m_BattleId = 0;
 
-    public Jyx2ConfigBattle CurrentBattleConfig { get; set; } = null;
+    //public Jyx2ConfigBattle CurrentBattleConfig { get; set; } = null;
+    public LBattleConfig CurrentBattleConfig { get; set; } = null;
 
     [HideInInspector] public Action<BattleResult> Callback;
 
@@ -63,7 +64,8 @@ public class BattleLoader : MonoBehaviour
 
         if (CurrentBattleConfig == null)
         {
-            CurrentBattleConfig = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(m_BattleId);
+            //CurrentBattleConfig = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(m_BattleId);
+            CurrentBattleConfig = LuaToCsBridge.BattleTable[m_BattleId];
         }
         else
         {
@@ -86,7 +88,8 @@ public class BattleLoader : MonoBehaviour
         get { return GameRuntimeData.Instance; }
     }
 
-    async UniTask LoadJyx2Battle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
+    //async UniTask LoadJyx2Battle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
+    async UniTask LoadJyx2Battle(LBattleConfig battle, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
         if (GameRuntimeData.Instance == null)
@@ -157,7 +160,8 @@ public class BattleLoader : MonoBehaviour
         }
     }
 
-    UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
+    //UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
+    UniTask LoadJyx2BattleStep2(LBattleConfig battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     {
         //玩家选择的人物
         if (selectRoles != null)
@@ -178,7 +182,7 @@ public class BattleLoader : MonoBehaviour
                 AddRole(int.Parse(v), 0);
             }
         }
-        
+
         //通过ID添加敌人
         if(!string.IsNullOrEmpty(battle.Enemies))
         {
@@ -190,7 +194,7 @@ public class BattleLoader : MonoBehaviour
                 AddRole(int.Parse(v), 1);
             }
         }
-        
+
         //动态生成队友
         if (battle.DynamicTeammate != null)
         {
@@ -199,15 +203,17 @@ public class BattleLoader : MonoBehaviour
                 AddDynamicRole(r, 0);
             }
         }
+        Debug.Log("Battle Loader 动态生成敌人");
         //动态生成敌人
         if (battle.DynamicEnemies != null)
         {
             foreach (var r in battle.DynamicEnemies)
             {
                 AddDynamicRole(r, 1);
+                Debug.Log(r.Name);
             }
         }
- 
+
         return InitBattle(callback, battle);
     }
 
@@ -265,7 +271,7 @@ public class BattleLoader : MonoBehaviour
                 roleInstance = roleInstance.Clone();
                 roleInstance.Recover();
             }
-            
+
             //如果存档中没有记录（理论上不可能？除非是存档过期了，与当前配置表不匹配）
             if (roleInstance == null)
             {
@@ -276,10 +282,11 @@ public class BattleLoader : MonoBehaviour
             return roleInstance;
         }
     }
-    
-    
+
+
     //初始化战斗
-    async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
+    //async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
+    async UniTask InitBattle(Action<BattleResult> callback, LBattleConfig battleData)
     {
         Debug.Log("-----------BattleLoader.InitBattle");
         List<RoleInstance> roles = new List<RoleInstance>();
@@ -306,8 +313,8 @@ public class BattleLoader : MonoBehaviour
         BattleStartParams startParam = new BattleStartParams()
         {
             roles = roles,
-            battleData = battleData,
-            callback = callback,
+                  battleData = battleData,
+                  callback = callback,
         };
 
         //测试LuaEvent 用于Lua侧做拓展逻辑
@@ -358,7 +365,7 @@ public class BattleLoader : MonoBehaviour
         }
 
         roleView.IsInBattle = true;
-        
+
         roleView.transform.SetParent(npcRoot.transform, false);
         roleView.transform.position = pos.position;
         role.team = team;

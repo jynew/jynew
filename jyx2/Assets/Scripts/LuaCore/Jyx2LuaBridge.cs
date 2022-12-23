@@ -228,7 +228,8 @@ namespace Jyx2
 
         public static void TryBattle(int battleId, Action<bool> callback)
         {
-            var battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(battleId);
+            //var battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(battleId);
+            var battle = LuaToCsBridge.BattleTable[battleId];
             if (battle == null)
             {
                 Debug.LogError($"战斗id={battleId}未定义");
@@ -240,7 +241,8 @@ namespace Jyx2
         }
         
 	    //开始一场战斗
-        public static void TryBattleWithConfig(Jyx2ConfigBattle battle, Action<bool> callback)
+        //public static void TryBattleWithConfig(Jyx2ConfigBattle battle, Action<bool> callback)
+        public static void TryBattleWithConfig(LBattleConfig battle, Action<bool> callback)
         {
             if(isQuickBattle)
             {

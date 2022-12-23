@@ -14,6 +14,21 @@ using UnityEngine;
 
 namespace Jyx2
 {
+    //用来解读Lua的Battle配置表
+    [CSharpCallLua]
+    public interface LBattleConfig
+    {
+        int Id {get;set;}
+        string Name {get;set;}
+        string MapScene {get;set;}
+        int Exp {get;set;}
+        int Music {get;set;}
+        string TeamMates {get;set;}
+        string AutoTeamMates {get;set;}
+        string Enemies {get;set;}
+        List<RoleInstance> DynamicTeammate {get;set;}
+        List<RoleInstance> DynamicEnemies {get;set;}
+    }
     //用来解读Lua的Character配置表
     [CSharpCallLua]
     public interface LRoleSkill
@@ -122,6 +137,7 @@ namespace Jyx2
         public static Dictionary<int, LRoleConfig> CharacterTable;
         public static Dictionary<int, LSkillConfig> SkillTable;
         public static Dictionary<int, LItemConfig> ItemTable;
+        public static Dictionary<int, LBattleConfig> BattleTable;
 
         public static Jyx2LuaFunRef.CallConfigInt GetConfigValue;
         public static Jyx2LuaFunRef.CallConfigStr GetConfigString;
@@ -142,11 +158,17 @@ namespace Jyx2
             GetConfigString = LEnv.Global.GetInPath<Jyx2LuaFunRef.CallConfigStr>("Jyx2CSBridge.ConfigMgr.GetConfigValue");
             //ConfigData = LEnv.Global.GetInPath<Dictionary<string, object>>("Jyx2.ConfigMgr");
 
-            CharacterTable = LEnv.Global.GetInPath<Dictionary<int, LRoleConfig>>("Jyx2.ConfigMgr.Character");
-            SkillTable = LEnv.Global.GetInPath<Dictionary<int, LSkillConfig>>("Jyx2.ConfigMgr.Skill");
-            ItemTable = LEnv.Global.GetInPath<Dictionary<int, LItemConfig>>("Jyx2.ConfigMgr.Item");
+            List<string> ConfigList = LEnv.Global.GetInPath<List<string>>("Jyx2.ConfigMgr.ConfigList");
+            if (ConfigList == null) return;
 
-            Debug.Log(CharacterTable[1].Name);
+                CharacterTable = LEnv.Global.GetInPath<Dictionary<int, LRoleConfig>>("Jyx2.ConfigMgr.Character");
+            if (ConfigList.Contains("Skill"))
+                SkillTable = LEnv.Global.GetInPath<Dictionary<int, LSkillConfig>>("Jyx2.ConfigMgr.Skill");
+            if (ConfigList.Contains("Item"))
+                ItemTable = LEnv.Global.GetInPath<Dictionary<int, LItemConfig>>("Jyx2.ConfigMgr.Item");
+            if (ConfigList.Contains("Battle"))
+                BattleTable = LEnv.Global.GetInPath<Dictionary<int, LBattleConfig>>("Jyx2.ConfigMgr.Battle");
+
         }
         public static void LuaConfRefDispose()
         {

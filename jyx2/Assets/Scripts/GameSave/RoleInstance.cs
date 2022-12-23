@@ -253,8 +253,8 @@ namespace Jyx2
         public async UniTask<Sprite> GetPic()
         {
             //if (_data == null) BindKey();
-            var Pic = LuaManager.GetLuaEnv().DoString($"return Jyx2.ConfigMgr.Character[{Key}].Pic");
-            var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/head/{Pic[0]}.png");
+            var Pic = Data.Pic;
+            var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/head/{Pic}.png");
             return _sprite;
         }
         //模型配置
@@ -262,8 +262,7 @@ namespace Jyx2
         {
             get
             {
-                if (_data == null) BindKey();
-                var ModelFileKey = LuaManager.GetLuaEnv().Global.GetInPath<string>($"Jyx2.ConfigMgr.Character[{Key}].ModelFileKey");
+                var ModelFileKey = Data.ModelFileKey;
                 //如果配置了，则从配置表读取，否则根据名字读取
                 if (!string.IsNullOrWhiteSpace(ModelFileKey))
                 {

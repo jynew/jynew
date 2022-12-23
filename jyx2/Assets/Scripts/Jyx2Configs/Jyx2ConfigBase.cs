@@ -3,7 +3,7 @@ using ProtoBuf;
 namespace Jyx2Configs
 {
     [ProtoContract]
-    [ProtoInclude(3, typeof(Jyx2ConfigBattle))]
+    //[ProtoInclude(3, typeof(Jyx2ConfigBattle))]
     [ProtoInclude(4, typeof(Jyx2ConfigCharacter))]
     [ProtoInclude(5, typeof(Jyx2ConfigItem))]
     [ProtoInclude(6, typeof(Jyx2ConfigMap))]
