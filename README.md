@@ -3,9 +3,9 @@
 ![主宣传图](https://user-images.githubusercontent.com/7448857/192084760-017f3789-81ff-4a67-81bf-8d8c4df1cac5.png)
 
 <p>
-<a href="https://store.steampowered.com/app/2098790/"><img src="https://user-images.githubusercontent.com/7448857/205875106-ba52fc19-f92a-47ff-b0d6-c5e451b8bdd2.png" align="center" height="96"></a>
-<a href="https://www.taptap.cn/app/246004"><img src="https://user-images.githubusercontent.com/7448857/205873000-824a0855-bb62-4cbd-a187-c2f51f343c7d.png" align="center" height="96"></a>
-<a href="https://apps.apple.com/cn/app/%E7%BE%A4%E4%BE%A0%E4%BC%A0%E5%90%AF%E5%8A%A8/id1659977116"><img src="https://user-images.githubusercontent.com/7448857/209269801-48ab9e9e-2318-40ed-8d8a-d34a49514ed5.png" align="center" height="96"></a>
+<a href="https://store.steampowered.com/app/2098790/"><img src="https://user-images.githubusercontent.com/7448857/205875106-ba52fc19-f92a-47ff-b0d6-c5e451b8bdd2.png" align="center" height="70"></a>
+<a href="https://www.taptap.cn/app/246004"><img src="https://user-images.githubusercontent.com/7448857/205873000-824a0855-bb62-4cbd-a187-c2f51f343c7d.png" align="center" height="70"></a>
+<a href="https://apps.apple.com/cn/app/%E7%BE%A4%E4%BE%A0%E4%BC%A0%E5%90%AF%E5%8A%A8/id1659977116"><img src="https://user-images.githubusercontent.com/7448857/209269801-48ab9e9e-2318-40ed-8d8a-d34a49514ed5.png" align="center" height="70"></a>
 </p>
 
 
