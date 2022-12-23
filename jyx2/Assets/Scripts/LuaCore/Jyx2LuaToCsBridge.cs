@@ -14,6 +14,57 @@ using UnityEngine;
 
 namespace Jyx2
 {
+    //用来解读Lua的Character配置表
+    [CSharpCallLua]
+    public interface LRoleSkill
+    {
+        int Id {get;set;}
+        string Level {get;set;}
+    }
+    [CSharpCallLua]
+    public interface LRoleItem
+    {
+        int Id {get;set;}
+        string Count {get;set;}
+    }
+    [CSharpCallLua]
+    public interface LRoleConfig
+    {
+        int Id {get;set;}
+        string Name {get;set;}
+        int Sexual {get;set;}
+        int Pic {get;set;}
+        int Pinde {get;set;}
+        int IQ {get;set;}
+        int MaxHp {get;set;}
+        int MaxMp {get;set;}
+        int HpInc {get;set;}
+        int Level {get;set;}
+        int Exp {get;set;}
+        int MpType {get;set;}
+        int Attack {get;set;}
+        int Qinggong {get;set;}
+        int Defence {get;set;}
+        int Heal {get;set;}
+        int UsePoison {get;set;}
+        int DePoison {get;set;}
+        int AntiPoison {get;set;}
+        int Quanzhang {get;set;}
+        int Yujian {get;set;}
+        int Shuadao {get;set;}
+        int Qimen {get;set;}
+        int Anqi {get;set;}
+        int Wuxuechangshi {get;set;}
+        int AttackPoison {get;set;}
+        int Zuoyouhubo {get;set;}
+        List<LRoleSkill> Skills {get;set;}
+        List<LRoleItem> Items {get;set;}
+        int Weapon {get;set;}
+        int Armor {get;set;}
+        string LeaveStoryId {get;set;}
+        string ModelFileKey {get;set;}
+    }
+
     //用来解读Lua的Skill配置表
     [CSharpCallLua]
     public interface LSkillLevel
@@ -51,6 +102,7 @@ namespace Jyx2
         [CSharpCallLua]
         public delegate string CallConfigStr(string configName, int Key, string FieldName);
     }
+
     public class LuaToCsBridge
     {
         static private LuaEnv _luaEnv;
@@ -62,35 +114,33 @@ namespace Jyx2
                 return _luaEnv;
             }
         }
-        [CSharpCallLua]
-        public delegate void CallRoleWithKey(RoleInstance role, int Key);
 
         [CSharpCallLua]
         public delegate void LuaInitAllRole(Dictionary<int,RoleInstance> AllRoles);
 
         // 用来读取Lua的配置文件
+        public static Dictionary<int, LRoleConfig> CharacterTable;
         public static Dictionary<int, LSkillConfig> SkillTable;
         public static Dictionary<int, LItemConfig> ItemTable;
 
         public static Jyx2LuaFunRef.CallConfigInt GetConfigValue;
         public static Jyx2LuaFunRef.CallConfigStr GetConfigString;
 
-        public static Dictionary<int, object> ConfigData;
-
         public static void LuaConfRef()
         {
             GetConfigValue = LEnv.Global.GetInPath<Jyx2LuaFunRef.CallConfigInt>("Jyx2CSBridge.ConfigMgr.GetConfigValue");
             GetConfigString = LEnv.Global.GetInPath<Jyx2LuaFunRef.CallConfigStr>("Jyx2CSBridge.ConfigMgr.GetConfigValue");
             //ConfigData = LEnv.Global.GetInPath<Dictionary<string, object>>("Jyx2.ConfigMgr");
+
+            CharacterTable = LEnv.Global.GetInPath<Dictionary<int, LRoleConfig>>("Jyx2.ConfigMgr.Character");
             SkillTable = LEnv.Global.GetInPath<Dictionary<int, LSkillConfig>>("Jyx2.ConfigMgr.Skill");
             ItemTable = LEnv.Global.GetInPath<Dictionary<int, LItemConfig>>("Jyx2.ConfigMgr.Item");
-            Debug.Log(SkillTable[97].Levels[0].Attack);
+
             Debug.Log(SkillTable[97].Poison);
             var tmpItem = Jyx2Configs.GameConfigDatabase.Instance.Get<Jyx2Configs.Jyx2ConfigItem>(101);
             var tmpSk = new Jyx2.SkillInstance(tmpItem, 97);
-            Debug.Log(tmpSk.LevelInfo[1].Attack);
-            Debug.Log(SkillTable[97].Levels[0].Attack);
             Debug.Log(SkillTable[97].Poison);
+            Debug.Log(CharacterTable[1].Name);
         }
     }
 }

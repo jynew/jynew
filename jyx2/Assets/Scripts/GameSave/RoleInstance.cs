@@ -21,7 +21,6 @@ using Cysharp.Threading.Tasks;
 using Jyx2.ResourceManagement;
 using XLua;
 
-
 namespace Jyx2
 {
     [Serializable]
@@ -84,15 +83,6 @@ namespace Jyx2
 
         public RoleInstance(int roleId)
         {
-            if (RuntimeEnvSetup.CurrentModConfig.IsUsingLuaConfig)
-            {
-                var luaEnv = LuaManager.GetLuaEnv();
-                LuaToCsBridge.CallRoleWithKey initRole = luaEnv.Global.GetInPath<LuaToCsBridge.CallRoleWithKey>("Jyx2CSBridge.ConfigMgr.InitRole");
-                initRole(this, roleId);
-                Recover();
-                return;
-            }
-
             Key = roleId;
             BindKey();
             InitData();
@@ -101,13 +91,6 @@ namespace Jyx2
 
         public void BindKey()
         {
-            if (RuntimeEnvSetup.CurrentModConfig.IsUsingLuaConfig)
-            {
-                var luaEnv = LuaManager.GetLuaEnv();
-                LuaToCsBridge.CallRoleWithKey bindKey = luaEnv.Global.GetInPath<LuaToCsBridge.CallRoleWithKey>("Jyx2CSBridge.ConfigMgr.BindKey");
-                bindKey(this, Key);
-                return;
-            }
             _data = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(Key);
 
             if (_data == null)
