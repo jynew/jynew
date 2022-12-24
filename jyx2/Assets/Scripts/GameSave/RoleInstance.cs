@@ -1173,10 +1173,15 @@ namespace Jyx2
         /// <returns></returns>
         public int GetExtraAttack(int wugongId)
         {
-            var extra = GameConfigDatabase.Instance.Get<Jyx2ConfigExtra>(Weapon);
-            if (extra != null && extra.Wugong == wugongId)
+            //var extra = GameConfigDatabase.Instance.Get<Jyx2ConfigExtra>(Weapon);
+            LExtraConfig extra;
+            //if (extra != null && extra.Wugong == wugongId)
+            if (LuaToCsBridge.ExtraTable.TryGetValue(Weapon, out extra))
             {
-                return extra.ExtraAttack;
+                if (extra.Wugong == wugongId)
+                {
+                    return extra.ExtraAttack;
+                }
             }
             return 0;
         }

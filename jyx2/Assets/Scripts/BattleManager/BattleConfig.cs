@@ -20,13 +20,13 @@ namespace Jyx2
         public int Music{get;set;}
         
         //队友
-        public string TeamMates{get;set;}
+        public List<int> TeamMates{get;set;}
 
         //自动队友
-        public string AutoTeamMates{get;set;}
+        public List<int> AutoTeamMates{get;set;}
 
         //敌人
-        public string Enemies{get;set;}
+        public List<int> Enemies{get;set;}
 
         //动态生成队友
         public List<RoleInstance> DynamicTeammate {get;set;}

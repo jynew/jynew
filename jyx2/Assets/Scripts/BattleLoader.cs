@@ -105,18 +105,21 @@ public class BattleLoader : MonoBehaviour
             return;
         }
 
-        var teamMates = battle.TeamMates.Split(',').ToList();
-        var autoTeamMates = battle.AutoTeamMates.Split(',').ToList();
+        //var teamMates = battle.TeamMates.Split(',').ToList();
+        //var autoTeamMates = battle.AutoTeamMates.Split(',').ToList();
+        var teamMates = battle.TeamMates;
+        var autoTeamMates = battle.AutoTeamMates;
 
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
         // 自动队友不等于-1则表示有自己或队友
-        if (!autoTeamMates[0].Equals("-1"))
+        if (autoTeamMates[0] != -1)
         {
             foreach (var v in autoTeamMates)
             {
-                var roleId = int.Parse(v);
+                //var roleId = int.Parse(v);
+                var roleId = v;
                 if (roleId == -1) continue;
                 AddRole(roleId, 0); //TODO IS AUTO
                 for (var i = 0; i < m_Roles.Count; i++)
@@ -136,7 +139,8 @@ public class BattleLoader : MonoBehaviour
             //必选人物
             bool MustRoleFunc(RoleInstance r)
             {
-                return teamMates.Exists(id => int.Parse(id) == r.Key);
+                //return teamMates.Exists(id => int.Parse(id) == r.Key);
+                return teamMates.Exists(id => id == r.Key);
             }
 
             SelectRoleParams selectPram = new SelectRoleParams();
@@ -171,8 +175,7 @@ public class BattleLoader : MonoBehaviour
                 AddRole(role.GetJyx2RoleId(), 0);
             }
         }
-
-        //通过ID添加队友
+        /*//通过ID添加队友
         if (!string.IsNullOrEmpty(battle.TeamMates))
         {
             var teamMates = battle.TeamMates.Split(',').ToList();
@@ -193,7 +196,24 @@ public class BattleLoader : MonoBehaviour
             {
                 AddRole(int.Parse(v), 1);
             }
-        }
+        }*/
+
+        //通过ID添加队友
+            var teamMates = battle.TeamMates;
+            //预配置队友
+            foreach (var v in teamMates)
+            {
+                AddRole(v, 0);
+            }
+
+        //通过ID添加敌人
+            var enemies = battle.Enemies;
+
+            //敌人
+            foreach (var v in enemies)
+            {
+                AddRole(v, 1);
+            }
 
         //动态生成队友
         if (battle.DynamicTeammate != null)
