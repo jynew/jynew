@@ -30,9 +30,6 @@ function Jyx2:AddModule(name, path)
         end
         self[name] = tmpMdl
     end
-    if tmpMdl ~= nil then
-        Jyx2CSBridge:AddBridge(name)
-    end
 end
 
 function Jyx2:GetModule(name)
@@ -51,19 +48,13 @@ function Jyx2:IsLoaded(name)
     return self[name] ~= nil
 end
 
--- 避免重复定义
-if Jyx2CSBridge ~= nil then
-    print("重复定义Jyx2CSBridge")
-    return 
-end
-Jyx2CSBridge = {} -- 提供CS侧使用的API
-Jyx2CSBridge.bridgeList = requireList[2]
-
-function Jyx2CSBridge:AddBridge(name)
-    local tmpCB = self[name]
-    if tmpCB == nil then
-        tmpCB = require(self.bridgeList[name])
-        self[name] = tmpCB
+-- 辅助函数
+-- prequire 用于载入模块，如果模块不存在，返回空表
+function prequire(name)
+    local rst = {}
+    if pcall(function(x) rst = require(x) end, name) then
+        return rst
+    else
+        return rst
     end
-    print("添加bridge "..name)
 end

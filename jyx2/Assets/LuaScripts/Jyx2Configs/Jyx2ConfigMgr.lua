@@ -17,20 +17,23 @@ Jyx2ConfigMgr["ConfigList"] = {}
 -- 添加一个配置表
 function Jyx2ConfigMgr:AddConfigTable(cfgName, cfgData)
     local tmpCfg = self[cfgName]
+    -- 如果存在这个配置表那就不再重复添加
     if tmpCfg == nil then
         local length = #cfgData
-        print("len: "..length)
+        -- print("len: "..length)
+        -- 长度小于1说明表是空的
         if length < 1 then
             self[cfgName] = cfgData
-
+        -- 如果元素中有Id这个字段，就改造成字典
         elseif cfgData[1].Id then
             self[cfgName] = {}
-            for _,v in ipairs(cfgData) do
+            for _,v in pairs(cfgData) do
                 self[cfgName][v.Id] = v
             end
         else
             self[cfgName] = cfgData
         end
+        -- 记录Config列表
         table.insert(self.ConfigList, cfgName)
     end
     self[cfgName]["ItemNum"] = length

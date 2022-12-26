@@ -223,17 +223,22 @@ namespace Jyx2.Middleware
 
             sb.Append("}\n");
 
+            sb.AppendFormat("local helper = prequire('Jyx2Configs/{0}Helper')\n", configType);
+            string helperstr =
+                "\tif helper[b] then\n" +
+                "\t\treturn helper[b]\n" +
+                "\tend\n";
             string substr =
                 "local mt{0} = {{}}\n" +
                 "mt{0}.__index = function(a,b)\n" +
                 "\tif fieldIdx{0}[b] then\n" +
                 "\t\treturn a[fieldIdx{0}[b]]\n" +
-                "\tend\n" +
+                "\tend\n{1}" +
                 "\treturn nil\n" +
                 "end\n" +
                 "mt{0}.__metatable = false\n" +
                 "for _,v in pairs(data) do\n";
-            sb.AppendFormat(substr,"");
+            sb.AppendFormat(substr,"", helperstr);
             sb.Append("\tsetmetatable(v,mt)\nend\n");
             foreach (var col in colDescList)
             {
@@ -244,7 +249,7 @@ namespace Jyx2.Middleware
                     {
                         sb.AppendFormat("fieldIdx{0}.{1} = {2}\n", col.name, col.subName[j], j+1);
                     }
-                    sb.AppendFormat(substr, col.name);
+                    sb.AppendFormat(substr, col.name, "");
                     sb.AppendFormat("\tfor _,t in pairs(v.{0}) do\n\t\tif type(t) == 'table' then\n\t\t\tsetmetatable(t,mt{0})\n\t\tend\n\tend\nend\n", col.name);
                 }
             }

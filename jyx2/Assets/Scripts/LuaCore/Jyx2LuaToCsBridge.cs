@@ -139,18 +139,12 @@ namespace Jyx2
             }
         }
 
-        [CSharpCallLua]
-        public delegate void LuaInitAllRole(Dictionary<int,RoleInstance> AllRoles);
-
         // 用来读取Lua的配置文件
         public static Dictionary<int, LRoleConfig> CharacterTable;
         public static Dictionary<int, LSkillConfig> SkillTable;
         public static Dictionary<int, LItemConfig> ItemTable;
         public static Dictionary<int, LBattleConfig> BattleTable;
         public static Dictionary<int, LExtraConfig> ExtraTable;
-
-        public static Jyx2LuaFunRef.CallConfigInt GetConfigValue;
-        public static Jyx2LuaFunRef.CallConfigStr GetConfigString;
 
         public static void LuaToCsBridgeInit()
         {
@@ -164,8 +158,6 @@ namespace Jyx2
 
         public static void LuaConfRef()
         {
-            GetConfigValue = LEnv.Global.GetInPath<Jyx2LuaFunRef.CallConfigInt>("Jyx2CSBridge.ConfigMgr.GetConfigValue");
-            GetConfigString = LEnv.Global.GetInPath<Jyx2LuaFunRef.CallConfigStr>("Jyx2CSBridge.ConfigMgr.GetConfigValue");
             //ConfigData = LEnv.Global.GetInPath<Dictionary<string, object>>("Jyx2.ConfigMgr");
 
             List<string> ConfigList = LEnv.Global.GetInPath<List<string>>("Jyx2.ConfigMgr.ConfigList");
@@ -180,8 +172,6 @@ namespace Jyx2
         }
         public static void LuaConfRefDispose()
         {
-            GetConfigValue = null;
-            GetConfigString = null;
         }
     }
 }
