@@ -411,7 +411,7 @@ public class BattleRole : Jyx2AnimationBattleRole
         else
         {
             //非人型等待动画完成后再隐藏，解决鳄鱼等角色死亡后血槽不消失问题 by Tomato
-            GameUtil.CallWithDelay(clip.length, () => { gameObject.SetActive(false); });
+            GameUtil.CallWithDelay(clip.length, () => { gameObject.SetActive(false); }, this);
         }
         
         m_Health = MapRoleHealth.Death;

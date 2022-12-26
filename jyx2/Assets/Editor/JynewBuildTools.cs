@@ -35,7 +35,7 @@ namespace Editor
         [MenuItem("一键打包/Windows64 Dev", false, 2000)]
         private static void BuildWindowsDev()
         {
-            new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "wuxia_launch.exe", BuildOptions.Development);
+            new JynewBuilder().Build(BuildTarget.StandaloneWindows64, "windowsbuild", "wuxia_launch.exe", BuildOptions.Development | BuildOptions.AllowDebugging);
         }
         [MenuItem("一键打包/Android")]
         private static void BuildAndroid()

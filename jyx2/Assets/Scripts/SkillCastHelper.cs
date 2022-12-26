@@ -85,14 +85,14 @@ namespace Jyx2
             if (Source != null)
             {
                 Source.CurDisplay = display;
-                GameUtil.CallWithDelay(display.animationDelay, Source.Attack);
+                GameUtil.CallWithDelay(display.animationDelay, Source.Attack, Source);
             }
 
 
             //普通特效
             if (display.partilePrefab != null)
             {
-                GameUtil.CallWithDelay(display.particleDelay, DisplayCastEft);
+                GameUtil.CallWithDelay(display.particleDelay, DisplayCastEft, Source);
             }
 
             //格子特效
@@ -104,17 +104,17 @@ namespace Jyx2
             //音效
             if(display.audio != null)
             {
-                GameUtil.CallWithDelay(display.audioDelay, () => ExecuteSoundEffect(display.audio));
+                GameUtil.CallWithDelay(display.audioDelay, () => ExecuteSoundEffect(display.audio), Source);
             }
 
             //音效2
             if (display.audio2 != null)
             {
-                GameUtil.CallWithDelay(display.audioDelay2, () => ExecuteSoundEffect(display.audio2));
+                GameUtil.CallWithDelay(display.audioDelay2, () => ExecuteSoundEffect(display.audio2), Source);
             }
             
             //播放受击动画和飘字
-            GameUtil.CallWithDelay(display.behitDelay, ExecuteBeHit);
+            GameUtil.CallWithDelay(display.behitDelay, ExecuteBeHit, Source);
 
             //残影
             if (display.isGhostShadowOn)
@@ -128,7 +128,7 @@ namespace Jyx2
                 GameUtil.CallWithDelay(display.duration, () =>
                 {
                     ghostShadow.m_bOpenGhost = false;
-                });
+                }, ghostShadow);
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(display.duration));
@@ -208,7 +208,7 @@ namespace Jyx2
                         block,
                         display.blockPartileOffset,
                         display.blockParticleScale);
-                });
+                }, block);
                 
                 
                 //补充特效
@@ -222,7 +222,7 @@ namespace Jyx2
                             block,
                             display.blockPartileOffsetAdd,
                             display.blockParticleScaleAdd);
-                    });
+                    }, block);
                 }
             }
 
@@ -236,6 +236,8 @@ namespace Jyx2
             //播放对象受击
             foreach (var target in Targets)
             {
+                if (target == null) //销毁了就别访问了
+                    continue;
                 target.BeHit();
                 //平均分配，每次hit显示掉一次血
                 target.ShowDamage();
