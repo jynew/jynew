@@ -11,6 +11,8 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using Unity.SharpZipLib.Zip;
 
 namespace Jyx2.Middleware
 {
@@ -91,6 +93,115 @@ namespace Jyx2.Middleware
             byte[] array = new byte[fileLength];
             await fileStream.ReadAsync(array, 0, fileLength);
             return array;
+        }
+
+        /// <summary>
+        /// Unity的解压缩库全是同步的，这里加个异步带进度的
+        /// </summary>
+        /// <param name="archivePath">压缩包路径</param>
+        /// <param name="password">压缩包密码</param>
+        /// <param name="outputPath">解压缩路径</param>
+        /// <returns></returns>
+        
+        public static async UniTask UnZipAsync(string archivePath, string password, string outputPath, CancellationToken cancellation, Action<long, long> OnProgress = null, int bufferSize = 4096)
+        {
+            if (!Directory.Exists(outputPath))
+            {
+                Directory.CreateDirectory(outputPath);
+            }
+            
+            using FileStream stream = File.Open(archivePath, FileMode.Open);
+            byte[] result = new byte[stream.Length];
+            await stream.ReadAsync(result, 0, (int)stream.Length);
+            using ZipFile zipFile = new ZipFile(stream);
+            if (!string.IsNullOrEmpty(password))
+            {
+                zipFile.Password = password;
+            }
+
+            long totalBytes = 0;
+            foreach (ZipEntry item in zipFile)
+            {
+                totalBytes += item.CompressedSize;
+            }
+            long unZippedBytes = 0;
+            OnProgress?.Invoke(unZippedBytes, totalBytes);
+            foreach (ZipEntry item in zipFile)
+            {
+                if (!item.IsFile)
+                {
+                    continue;
+                }
+                if (cancellation.IsCancellationRequested)
+                    break;
+
+                string name = item.Name;
+                string path = Path.Combine(outputPath, name);
+                string directoryName = Path.GetDirectoryName(path);
+                if (directoryName.Length > 0)
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+
+                byte[] buffer = new byte[bufferSize];
+                using Stream source = zipFile.GetInputStream(item);
+                using Stream destination = File.Create(path);
+                await CopyAsync(source, destination, buffer, cancellation);
+                unZippedBytes += item.CompressedSize;
+                OnProgress?.Invoke(unZippedBytes, totalBytes);
+            }
+        }
+
+        public static async UniTask CopyAsync(Stream source, Stream destination, byte[] buffer, CancellationToken cancellation)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+
+            if (buffer.Length < 128)
+            {
+                throw new ArgumentException("Buffer is too small", "buffer");
+            }
+
+            bool isCopying = true;
+            while (isCopying)
+            {
+                if (cancellation.IsCancellationRequested)
+                    break;
+                int num = await source.ReadAsync(buffer, 0, buffer.Length, cancellation);
+                if (num > 0)
+                {
+                    await destination.WriteAsync(buffer, 0, num, cancellation);
+                    continue;
+                }
+
+                isCopying = false;
+            }
+            destination.Flush();
+        }
+
+        static readonly string[] suffixes ={ "Bytes", "KB", "MB", "GB", "TB", "PB" };
+        public static string FormatSize(long bytes)
+        {
+            int counter = 0;
+            decimal number = bytes;
+            while (Math.Round(number / 1024) >= 1)
+            {
+                number = number / 1024;
+                counter++;
+            }
+            return string.Format("{0:n1}{1}", number, suffixes[counter]);
         }
     }
 }

@@ -18,6 +18,8 @@ namespace MOD.UI
         [SerializeField] private Button m_OkBtn;
         [SerializeField] private Text m_ModDirText;
         [SerializeField] private Button m_CopyBtn;
+        [SerializeField] private Button m_UrlBtn;
+        [SerializeField] private AddModPanel m_UrlAddPanel;
 
         void Start()
         {
@@ -51,15 +53,29 @@ namespace MOD.UI
                 string path = loader.ManualInstalledDir[0];
                 GUIUtility.systemCopyBuffer = path;
             });
+
+            m_UrlBtn.onClick.AddListener(OnUrlBtnClick);
             
             gameObject.SetActive(false);
         }
+
+        private void OnUrlBtnClick()
+        {
+            m_UrlAddPanel.gameObject.SetActive(true);
+            Hide();
+        }
+
 
 
         public void Show()
         {
             gameObject.SetActive(true);
             RequestUserPermission();
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
         }
 
         public void RequestUserPermission()
