@@ -205,7 +205,8 @@ public partial class GameMainMenu : Jyx2_UIBase
 		loadPara.triggerName = "0";
 		GameRuntimeData.Instance.startDate = DateTime.Now;
 		//加载地图
-		var startMap = Jyx2ConfigMap.GetGameStartMap();
+		//var startMap = Jyx2ConfigMap.GetGameStartMap();
+		var startMap = LuaToCsBridge.MapTable[0].GetGameStartMap();
 		if (startMap == null)
 		{
 			Debug.LogError("没有定义开始地图，需要在场景.xls中指定一个地图标签为START！");

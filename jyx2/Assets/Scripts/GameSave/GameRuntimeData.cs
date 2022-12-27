@@ -339,10 +339,11 @@ namespace Jyx2
                 //自动检查一下有没有新添加的人物物品等，无需在lua中单独进行
                 var arcRoleCount = runtime.AllRoles.Count;
                 //var configRoleCount = GameConfigDatabase.Instance.GetCount<Jyx2ConfigCharacter>();
-                var configRoleCount = LuaManager.GetLuaEnv().Global.GetInPath<int>("Jyx2.ConfigMgr.Character.ItemNum");
+                var configRoleCount = LuaToCsBridge.CharacterTable.Count;
                 if ( arcRoleCount < configRoleCount)
                 {
-                    foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                    //foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                    foreach (var r in LuaToCsBridge.CharacterTable.Values)
                     {
                         if (runtime.AllRoles.ContainsKey(r.Id)) continue;
 
@@ -689,7 +690,8 @@ namespace Jyx2
         /// <returns></returns>
         public int GetSceneEntranceCondition(int mapId)
         {
-            var gameMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
+            //var gameMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
+            var gameMap = LuaToCsBridge.MapTable[mapId];
             if (gameMap == null) return -1;
 
             //大地图

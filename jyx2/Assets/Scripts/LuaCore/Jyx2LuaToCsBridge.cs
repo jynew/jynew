@@ -118,6 +118,29 @@ namespace Jyx2
         int Id {get;set;}
         string Name {get;set;}
     }
+    //用来解读Lua的Map配置表
+    [CSharpCallLua]
+    public interface LMapConfig
+    {
+        int Id {get;set;}
+        string Name {get;set;}
+        string MapScene {get;set;}
+        string TransportToMap {get;set;}
+        int InMusic {get;set;}
+        int OutMusic {get;set;}
+        int EnterCondition {get;set;}
+        string Tags {get;set;}
+        string BindScript {get;set;}
+        int ForceSetLeaveMusicId {get;set;}
+
+        int GetOutMusic();
+        string GetTagValue(string str);
+        int GetTransportToMapValue(string str);
+        string GetShowName();
+        LMapConfig GetGameStartMap();
+        LMapConfig GetMapBySceneName(string str);
+        LMapConfig GetMapByName(string str);
+    }
 
     public static class Jyx2LuaFunRef
     {
@@ -125,6 +148,14 @@ namespace Jyx2
         public delegate int CallConfigInt(string configName, int Key, string FieldName);
         [CSharpCallLua]
         public delegate string CallConfigStr(string configName, int Key, string FieldName);
+        [CSharpCallLua]
+        public delegate string StrCall();
+        [CSharpCallLua]
+        public delegate string StrCallStr(string str);
+        [CSharpCallLua]
+        public delegate LMapConfig MapCall();
+        [CSharpCallLua]
+        public delegate LMapConfig MapCallStr(string str);
     }
 
     public class LuaToCsBridge
@@ -145,6 +176,7 @@ namespace Jyx2
         public static Dictionary<int, LItemConfig> ItemTable;
         public static Dictionary<int, LBattleConfig> BattleTable;
         public static Dictionary<int, LExtraConfig> ExtraTable;
+        public static Dictionary<int, LMapConfig> MapTable;
 
         public static void LuaToCsBridgeInit()
         {
@@ -168,6 +200,9 @@ namespace Jyx2
             ItemTable = LEnv.Global.GetInPath<Dictionary<int, LItemConfig>>("Jyx2.ConfigMgr.Item");
             BattleTable = LEnv.Global.GetInPath<Dictionary<int, LBattleConfig>>("Jyx2.ConfigMgr.Battle");
             ExtraTable = LEnv.Global.GetInPath<Dictionary<int, LExtraConfig>>("Jyx2.ConfigMgr.Extra");
+            MapTable = LEnv.Global.GetInPath<Dictionary<int, LMapConfig>>("Jyx2.ConfigMgr.Map");
+
+            Debug.Log(MapTable[70].GetShowName());
 
         }
         public static void LuaConfRefDispose()

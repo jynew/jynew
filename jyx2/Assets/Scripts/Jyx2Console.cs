@@ -18,7 +18,7 @@ public static class Jyx2Console
             case "scene":
             {
                 int id = int.Parse(paras[1]);
-                var map = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(id);
+                var map = LuaToCsBridge.MapTable[id];
                 if (map != null)
                 {
                     LevelLoader.LoadGameMap(map);

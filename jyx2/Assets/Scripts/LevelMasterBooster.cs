@@ -42,7 +42,8 @@ public class LevelMasterBooster : MonoBehaviour
 
         if (LevelMaster.GetCurrentGameMap() == null)
         {
-            var gameMap = Jyx2ConfigMap.GetMapBySceneName(SceneManager.GetActiveScene().name);
+            //var gameMap = Jyx2ConfigMap.GetMapBySceneName(SceneManager.GetActiveScene().name);
+            var gameMap = LuaToCsBridge.MapTable[0].GetMapBySceneName(SceneManager.GetActiveScene().name);
             LevelMaster.SetCurrentMap(gameMap);
         }
     }

@@ -24,7 +24,7 @@ function helpers.GetTagValue(cfg, str)
 end
 -- 获取跳转场景数据，以半角的冒号分割
 function helpers.GetTransportToMapValue(cfg, str)
-    return string.match(cfg.TransportToMap, str..":(%d+)") or ""
+    return tonumber(string.match(cfg.TransportToMap, str..":(%d+)"))
 end
 -- 获取地图显示名称
 function helpers.GetShowName(cfg)
@@ -34,4 +34,35 @@ function helpers.GetShowName(cfg)
     end
     return cfg.Name
 end
+-- 获取开场地图
+function helpers.GetGameStartMap(cfg)
+    local mapTable = Jyx2.ConfigMgr:GetConfig("Map")
+    for i,v in pairs(mapTable) do
+        if type(v) == "table" and string.find(v.Tags, "START") then
+            return v
+        end
+    end
+    return nil
+end
+-- 使用场景文件名称获取地图
+function helpers.GetMapBySceneName(cfg, sceneName)
+    local mapTable = Jyx2.ConfigMgr:GetConfig("Map")
+    for i,v in pairs(mapTable) do
+        if type(v) == "table" and v.MapScene == sceneName then
+            return v
+        end
+    end
+    return nil
+end
+-- 使用场景名称获取地图
+function helpers.GetMapByName(cfg, name)
+    local mapTable = Jyx2.ConfigMgr:GetConfig("Map")
+    for i,v in pairs(mapTable) do
+        if type(v) == "table" and v.Name == name then
+            return v
+        end
+    end
+    return nil
+end
+
 return helpers

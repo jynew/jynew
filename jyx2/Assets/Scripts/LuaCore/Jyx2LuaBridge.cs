@@ -253,7 +253,8 @@ namespace Jyx2
             bool isWin = false;
  
             //记录当前地图和位置
-            Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
+            //Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
+            LMapConfig currentMap = LevelMaster.GetCurrentGameMap();
             var pos = LevelMaster.Instance.GetPlayerPosition();
             var rotate = LevelMaster.Instance.GetPlayerOrientation();
 
@@ -773,7 +774,8 @@ namespace Jyx2
         //打开所有场景
         public static void OpenAllScene()
         {
-            foreach(var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
+            //foreach(var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
+            foreach(var map in LuaToCsBridge.MapTable.Values)
             {
                 runtime.SetSceneEntraceCondition(map.Id, 0);
             }
