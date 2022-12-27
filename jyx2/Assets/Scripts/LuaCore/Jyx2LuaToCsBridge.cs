@@ -169,6 +169,14 @@ namespace Jyx2
         LMapConfig GetMapBySceneName(string str);
         LMapConfig GetMapByName(string str);
     }
+    //用来解读Lua的Settings配置表
+    [CSharpCallLua]
+    public interface LSettingsConfig
+    {
+        int Id {get;set;}
+        string Name {get;set;}
+        string Value {get;set;}
+    }
 
     public static class Jyx2LuaFunRef
     {
@@ -206,6 +214,7 @@ namespace Jyx2
         public static Dictionary<int, LExtraConfig> ExtraTable;
         public static Dictionary<int, LMapConfig> MapTable;
         public static Dictionary<int, LShopConfig> ShopTable;
+        public static Dictionary<int, LSettingsConfig> SettingsTable;
 
         public static void LuaToCsBridgeInit()
         {
@@ -231,8 +240,11 @@ namespace Jyx2
             ExtraTable = LEnv.Global.GetInPath<Dictionary<int, LExtraConfig>>("Jyx2.ConfigMgr.Extra");
             MapTable = LEnv.Global.GetInPath<Dictionary<int, LMapConfig>>("Jyx2.ConfigMgr.Map");
             ShopTable = LEnv.Global.GetInPath<Dictionary<int, LShopConfig>>("Jyx2.ConfigMgr.Shop");
+            SettingsTable = LEnv.Global.GetInPath<Dictionary<int, LSettingsConfig>>("Jyx2.ConfigMgr.Settings");
 
-            Debug.Log(ShopTable[1].ShopItems[1].Id);
+            Debug.Log(SettingsTable[1].Name);
+            Debug.Log(SettingsTable[1].Value);
+            Debug.Log(GameSettings.GetInt("WORLD_MAP_ID"));
 
         }
         public static void LuaConfRefDispose()

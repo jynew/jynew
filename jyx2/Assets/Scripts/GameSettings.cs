@@ -69,7 +69,8 @@ namespace Jyx2
         {
             if (_cache.Count == 0)
             {
-                var all = _db.GetAll<Jyx2ConfigSettings>();
+                //var all = _db.GetAll<Jyx2ConfigSettings>();
+                var all = LuaToCsBridge.SettingsTable.Values;
                 foreach (var kv in all)
                 {
                     _cache.Add(kv.Name, kv.Value);
@@ -90,6 +91,6 @@ namespace Jyx2
             return _cache[key];
         }
 
-        private static GameConfigDatabase _db => GameConfigDatabase.Instance;
+        //private static GameConfigDatabase _db => GameConfigDatabase.Instance;
     }
 }
