@@ -89,6 +89,34 @@ namespace Jyx2
         string ModelFileKey {get;set;}
     }
 
+    //用来解读Lua的Shop配置表
+    [CSharpCallLua]
+    public interface LShopItem
+    {
+        int Id {get;set;}
+        int Count {get;set;}
+        int Price {get;set;}
+    }
+    public class CsShopItem :LShopItem
+    {
+        public int Id {get;set;}
+        public int Count {get;set;}
+        public int Price {get;set;}
+
+        public CsShopItem(LShopItem itm)
+        {
+            Id = itm.Id;
+            Count = itm.Count;
+            Price = itm.Price;
+        }
+    }
+    [CSharpCallLua]
+    public interface LShopConfig
+    {
+        int Id {get;set;}
+        List<LShopItem> ShopItems {get;set;}
+        int Trigger {get;set;}
+    }
     //用来解读Lua的Skill配置表
     [CSharpCallLua]
     public interface LSkillLevel
@@ -177,6 +205,7 @@ namespace Jyx2
         public static Dictionary<int, LBattleConfig> BattleTable;
         public static Dictionary<int, LExtraConfig> ExtraTable;
         public static Dictionary<int, LMapConfig> MapTable;
+        public static Dictionary<int, LShopConfig> ShopTable;
 
         public static void LuaToCsBridgeInit()
         {
@@ -201,8 +230,9 @@ namespace Jyx2
             BattleTable = LEnv.Global.GetInPath<Dictionary<int, LBattleConfig>>("Jyx2.ConfigMgr.Battle");
             ExtraTable = LEnv.Global.GetInPath<Dictionary<int, LExtraConfig>>("Jyx2.ConfigMgr.Extra");
             MapTable = LEnv.Global.GetInPath<Dictionary<int, LMapConfig>>("Jyx2.ConfigMgr.Map");
+            ShopTable = LEnv.Global.GetInPath<Dictionary<int, LShopConfig>>("Jyx2.ConfigMgr.Shop");
 
-            Debug.Log(MapTable[70].GetShowName());
+            Debug.Log(ShopTable[1].ShopItems[1].Id);
 
         }
         public static void LuaConfRefDispose()

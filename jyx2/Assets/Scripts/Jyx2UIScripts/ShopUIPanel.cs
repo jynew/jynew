@@ -23,7 +23,8 @@ using Jyx2.UINavigation;
 public partial class ShopUIPanel : Jyx2_UIBase
 {
 	int curShopId;
-	List<Jyx2ConfigShopItem> m_ShopDataItems = new List<Jyx2ConfigShopItem>();
+	//List<Jyx2ConfigShopItem> m_ShopDataItems = new List<Jyx2ConfigShopItem>();
+	List<CsShopItem> m_ShopDataItems = new List<CsShopItem>();
     
 	Action callback;
 	List<ShopUIItem> m_VisibleShopItems = new List<ShopUIItem>();
@@ -68,17 +69,21 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		m_ShopDataItems.Clear();
 		//curShopId = (int)allParams[0];
 		curShopId = LevelMaster.GetCurrentGameMap().Id;
-		var curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
-		var shopItems = curShopData.ShopItems.Split('|');
-		foreach (var shopItemStr in shopItems)
+		//var curShopData = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(curShopId);
+		var curShopData = LuaToCsBridge.ShopTable[curShopId];
+		//var shopItems = curShopData.ShopItems.Split('|');
+		var shopItems = curShopData.ShopItems;
+		//foreach (var shopItemStr in shopItems)
+		foreach (var aShopItem in shopItems)
 		{
-			var shopItemArr = shopItemStr.Split(',');
+			/*var shopItemArr = shopItemStr.Split(',');
 			if (shopItemArr.Length != 3) continue;
 			var shopItem = new Jyx2ConfigShopItem();
 			shopItem.Id = int.Parse(shopItemArr[0]);
 			shopItem.Count = int.Parse(shopItemArr[1]);
 			shopItem.Price = int.Parse(shopItemArr[2]);
-			m_ShopDataItems.Add(shopItem);
+                        */
+			m_ShopDataItems.Add(new CsShopItem(aShopItem));
 		}
 
 		LoadShopItems();
@@ -113,7 +118,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 	void LoadShopItems()
 	{
 		m_VisibleShopItems.Clear();
-		Action<int, ShopUIItem, Jyx2ConfigShopItem> OnShopItemCreate = (idx, item, data) =>
+		//Action<int, ShopUIItem, Jyx2ConfigShopItem> OnShopItemCreate = (idx, item, data) =>
+		Action<int, ShopUIItem, CsShopItem> OnShopItemCreate = (idx, item, data) =>
 		{
 			m_VisibleShopItems.Add(item);
             item.gameObject.BetterSetActive(true);
@@ -167,7 +173,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		int count = m_CurSelectItem.GetBuyCount();
 		if (count <= 0)
 			return;
-		Jyx2ConfigShopItem shopItem = m_CurSelectItem.ShopItemData;
+		//Jyx2ConfigShopItem shopItem = m_CurSelectItem.ShopItemData;
+		CsShopItem shopItem = m_CurSelectItem.ShopItemData;
 		if (shopItem == null)
 			return;
 

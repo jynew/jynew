@@ -1151,9 +1151,11 @@ namespace Jyx2
                 return;
             }
 
-            string mapId = LevelMaster.GetCurrentGameMap().Id.ToString();
-            var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
-            if (!hasData)
+            //string mapId = LevelMaster.GetCurrentGameMap().Id.ToString();
+            int mapId = LevelMaster.GetCurrentGameMap().Id;
+            //var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
+            var hasData = LuaToCsBridge.ShopTable[mapId]; // mapId和shopId对应
+            if (hasData == null)
             {
                 callback();
                 return;

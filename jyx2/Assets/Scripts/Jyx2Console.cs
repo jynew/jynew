@@ -115,7 +115,8 @@ public static class Jyx2Console
         var isTalkedToWei = false;
         if (isWeiAtCurMap != null && isWeiAtCurMap.activeSelf)
         {
-            var hotelList = GameConfigDatabase.Instance.GetAll<Jyx2ConfigShop>().ToList();
+            //var hotelList = GameConfigDatabase.Instance.GetAll<Jyx2ConfigShop>().ToList();
+            var hotelList = LuaToCsBridge.ShopTable.Values.ToList();
             LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
             var ran = new System.Random();
             var index = ran.Next(0, hotelList.Count);
@@ -142,7 +143,8 @@ public static class Jyx2Console
 
             if (isTalkedToWei)
             {
-                var curTriggerId = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(cur.Id).Trigger;
+                //var curTriggerId = GameConfigDatabase.Instance.Get<Jyx2ConfigShop>(cur.Id).Trigger;
+                var curTriggerId = LuaToCsBridge.ShopTable[cur.Id].Trigger;
                 Debug.Log("transport Wei to " + hotelList[index].Id);
                 level.ReplaceSceneObject(cur.Id.ToString(), weiPath, "0");
                 level.ReplaceSceneObject(hotelList[index].Id.ToString(), weiPath, "1");

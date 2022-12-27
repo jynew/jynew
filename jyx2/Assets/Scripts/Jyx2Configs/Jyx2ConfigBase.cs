@@ -7,7 +7,7 @@ namespace Jyx2Configs
     [ProtoInclude(4, typeof(Jyx2ConfigCharacter))]
     [ProtoInclude(5, typeof(Jyx2ConfigItem))]
     //[ProtoInclude(6, typeof(Jyx2ConfigMap))]
-    [ProtoInclude(7, typeof(Jyx2ConfigShop))]
+    //[ProtoInclude(7, typeof(Jyx2ConfigShop))]
     //[ProtoInclude(8, typeof(Jyx2ConfigSkill))]
     //[ProtoInclude(9, typeof(Jyx2ConfigExtra))]
     [ProtoInclude(10, typeof(Jyx2ConfigSettings))]
