@@ -25,10 +25,13 @@ public class HUDItem : MonoBehaviour
         rectTrans = transform as RectTransform;
     }
 
+    private bool IsRoleNotValid => currentRole == null || currentRole.View == null || currentRole.IsDead();
+
+
     public void BindRole(RoleInstance role) 
     {
         currentRole = role;
-        UpdateAll();
+        UpdateHealthValue();
     }
 
     int preHp = -1;
@@ -36,38 +39,45 @@ public class HUDItem : MonoBehaviour
     {
         if (currentRole == null)
             return;
+        CheckShouldHide();
         UpdatePosition();
+        UpdateHealthValue();
+    }
+
+    void CheckShouldHide()
+    {
+        if (IsRoleNotValid)
+            gameObject.SetActive(false);
+    }
+
+
+    void UpdateHealthValue()
+    {
+        if (IsRoleNotValid)
+            return;
         if (!currentRole.View.HPBarIsDirty || currentRole.Hp == preHp)
             return;
         currentRole.View.UnmarkHpBarIsDirty();
-        UpdateAll();
-    }
-
-    void UpdateAll()
-    {
         preHp = currentRole.Hp;
         hpBar.SetValue((float)currentRole.Hp / currentRole.MaxHp);
         UpdateHpColor();
-        if (currentRole.IsDead())
-            transform.gameObject.SetActive(false);
-    }
-
-    Vector3 hpPos;
-    void UpdatePosition() 
-    {
-        hpPos = Jyx2_UIManager.Instance.GetUICamera().WorldToScreenPoint(currentRole.View.transform.position);
-        rectTrans.position = hpPos;
     }
 
     void UpdateHpColor()
     {
-        //hpBar.fillImage.sprite = null;
-        if (currentRole.Poison > 0) 
+        if (currentRole.Poison > 0)
         {
             hpBar.fillImage.color = Color.cyan;
             return;
         }
         hpBar.fillImage.color = currentRole.team == 0 ? Color.green : Color.red;
+    }
+
+    void UpdatePosition() 
+    {
+        if (IsRoleNotValid)
+            return;
+        rectTrans.position = Jyx2_UIManager.Instance.GetUICamera().WorldToScreenPoint(currentRole.View.transform.position);
     }
 
     private void OnDisable()

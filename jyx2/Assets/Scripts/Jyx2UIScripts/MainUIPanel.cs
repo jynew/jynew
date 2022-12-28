@@ -53,20 +53,17 @@ public partial class MainUIPanel : Jyx2_UIBase
 			coordinateBuilder.Clear();
 
 			var playerPosition = player.transform.position;
-			coordinateBuilder.Append(Mathf.Floor(playerPosition.z));
-			coordinateBuilder.Append(",");
-			coordinateBuilder.Append(Mathf.Floor(playerPosition.x));
 
 			if (!player.IsOnBoat)
 			{
+				coordinateBuilder.AppendFormat("人({0},{1})", Mathf.Floor(playerPosition.z), Mathf.Floor(playerPosition.x));
 				var boatPosition = player.GetBoatPosition();
-				coordinateBuilder.Append("(");
-				coordinateBuilder.Append(Mathf.Round(boatPosition.z));
-				coordinateBuilder.Append(",");
-				coordinateBuilder.Append(Mathf.Round(boatPosition.x));
-				coordinateBuilder.Append(")");
-
+				coordinateBuilder.AppendFormat(" 船({0},{1})", Mathf.Round(boatPosition.z), Mathf.Round(boatPosition.x));
 			}
+                        else
+                        {
+				coordinateBuilder.AppendFormat("船({0},{1})", Mathf.Floor(playerPosition.z), Mathf.Floor(playerPosition.x));
+                        }
             ComassText_Text.text = coordinateBuilder.ToString();
 		}
 	}
