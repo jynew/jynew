@@ -1,7 +1,6 @@
 
 using System.Linq;
 using Jyx2;
-using Jyx2Configs;
 using UnityEngine;
 
 public static class Jyx2Console

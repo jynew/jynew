@@ -15,7 +15,6 @@ using Jyx2;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;

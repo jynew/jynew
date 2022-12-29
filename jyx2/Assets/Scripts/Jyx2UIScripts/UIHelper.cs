@@ -13,7 +13,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using i18n.TranslatorDef;
-using Jyx2Configs;
 using UnityEngine;
 
 public class UIHelper
@@ -23,7 +22,7 @@ public class UIHelper
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public static Dictionary<int, int> GetItemEffect(Jyx2ConfigItem item) 
+    public static Dictionary<int, int> GetItemEffect(LItemConfig item) 
     {
         Dictionary<int, int> result = new Dictionary<int, int>();
         if (item.AddHp != 0)//加血
@@ -77,7 +76,7 @@ public class UIHelper
     /// 获取使用物品的需求 //NeedMPType; 
     /// </summary>
     /// <param name="item"></param>
-    public static Dictionary<int, int> GetUseItemRequire(Jyx2ConfigItem item) 
+    public static Dictionary<int, int> GetUseItemRequire(LItemConfig item) 
     {
         Dictionary<int, int> result = new Dictionary<int, int>();
         if (item.ConditionMp > 0)
@@ -110,7 +109,7 @@ public class UIHelper
     }
 
     //使用人
-    static string GetItemUser(Jyx2ConfigItem item)
+    static string GetItemUser(LItemConfig item)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -124,7 +123,7 @@ public class UIHelper
     }
 
     //效果
-    static string GetEffectText(Jyx2ConfigItem item)
+    static string GetEffectText(LItemConfig item)
     {
         Dictionary<int, int> effects = UIHelper.GetItemEffect(item);
         StringBuilder sb = new StringBuilder();
@@ -140,7 +139,7 @@ public class UIHelper
     }
 
     //使用要求
-    static string GetUseRquire(Jyx2ConfigItem item)
+    static string GetUseRquire(LItemConfig item)
     {
         Dictionary<int, int> effects = UIHelper.GetUseItemRequire(item);
         StringBuilder sb = new StringBuilder();
@@ -159,27 +158,29 @@ public class UIHelper
     }
 
     //产出
-    static string GetOutPut(Jyx2ConfigItem item)
+    static string GetOutPut(LItemConfig item)
     {
         if (item.GenerateItems == "")
             return "";
         
         StringBuilder sb = new StringBuilder();
         
-        var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
+        //var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
+        var GenerateItemList = new List<CsRoleItem>();
         var GenerateItemArr = item.GenerateItems.Split('|');
         foreach (var GenerateItem in GenerateItemArr)
         {
             var GenerateItemArr2 = GenerateItem.Split(',');
             if (GenerateItemArr2.Length != 2) continue;
-            var characterItem = new Jyx2ConfigCharacterItem();
+            var characterItem = new CsRoleItem();
             characterItem.Id = int.Parse(GenerateItemArr2[0]);
             characterItem.Count = int.Parse(GenerateItemArr2[1]);
             GenerateItemList.Add(characterItem);
         }
         foreach (var tempItem in GenerateItemList)
         {
-            var cfg = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(tempItem.Id);
+            //var cfg = GameConfigDatabase.Instance.Get<LItemConfig>(tempItem.Id);
+            var cfg = LuaToCsBridge.ItemTable[tempItem.Id];
             if (cfg == null)
                 continue;
             sb.Append($"{cfg.Name}:  {tempItem.Count}\n");
@@ -189,7 +190,7 @@ public class UIHelper
     }
 
     //需要物品
-    static string GetNeedItem(Jyx2ConfigItem item)
+    static string GetNeedItem(LItemConfig item)
     {
         StringBuilder sb = new StringBuilder();
         if (item.GenerateItemNeedExp > 0)
@@ -199,13 +200,14 @@ public class UIHelper
         
         if (item.GenerateItemNeedCost != -1)
         {
-            sb.Append($"材料:  {GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.GenerateItemNeedCost).Name}\n");
+            //sb.Append($"材料:  {GameConfigDatabase.Instance.Get<LItemConfig>(item.GenerateItemNeedCost).Name}\n");
+            sb.Append($"材料:  {LuaToCsBridge.ItemTable[item.GenerateItemNeedCost].Name}\n");
         }
 
         return sb.ToString();
     }
 
-    public static string GetItemDesText(Jyx2ConfigItem item)
+    public static string GetItemDesText(LItemConfig item)
     {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.Append($"<size=35><color=#FFDB00>{item.Name}</color></size>\n");

@@ -9,7 +9,6 @@
  */
 using System;
 using System.Collections.Generic;
-using Jyx2Configs;
 using NUnit.Framework;
 using UnityEngine;
 using XLua;
@@ -109,7 +108,7 @@ namespace Jyx2
             GetSkill();
         }
 
-        public SkillInstance(Jyx2ConfigItem item, int magicId)
+        public SkillInstance(LItemConfig item, int magicId)
         {
             Key = magicId;
             Level = 0;
@@ -138,8 +137,8 @@ namespace Jyx2
         }
 
         //实际上这个函数里针对暗器的操作没什么用，暗器的相关数据都在AnqiSkillCastInstance里处理了
-        //public Jyx2ConfigSkill GetSkill(Jyx2ConfigItem _anqi = null)
-        public LSkillConfig GetSkill(Jyx2ConfigItem _anqi = null)
+        //public Jyx2ConfigSkill GetSkill(LItemConfig _anqi = null)
+        public LSkillConfig GetSkill(LItemConfig _anqi = null)
         {
             //var skillT = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(Key);
             var skillT = LuaToCsBridge.SkillTable[Key];

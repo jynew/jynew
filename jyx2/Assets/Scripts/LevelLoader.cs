@@ -11,9 +11,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 
-
 using Jyx2;
-using Jyx2Configs;
 using UnityEngine;
 
 namespace Jyx2

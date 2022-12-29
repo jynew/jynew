@@ -16,7 +16,6 @@ using i18n.TranslatorDef;
 using Jyx2;
 
 using Jyx2;
-using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;

@@ -16,7 +16,6 @@ using i18n.TranslatorDef;
 using Jyx2.Middleware;
 using UnityEngine.UI;
 
-using Jyx2Configs;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;

@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
-using Jyx2Configs;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;

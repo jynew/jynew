@@ -5,7 +5,6 @@ using System.IO;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2.MOD.ModV2;
-using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -58,7 +57,7 @@ public class MODRootConfig : ScriptableObject
         {
             File.Delete(dataPath);
         }
-        ExcelTools.GenerateConfigsFromExcel($"{ModRootDir}/Configs");
+        //ExcelTools.GenerateConfigsFromExcel($"{ModRootDir}/Configs");
         // 生成Lua配置表
         ExcelToLua.ExportAllLuaFile($"{ModRootDir}/Configs", $"{ModRootDir}/Configs/Lua");
 

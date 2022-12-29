@@ -8,16 +8,12 @@
  * 金庸老先生千古！
  */
 using Jyx2;
-
-
-using Jyx2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
-using Jyx2Configs;
 using UnityEngine;
 
 //AI计算相关
@@ -75,7 +71,7 @@ public class AIManager
         double maxscore = 0;
 
         //考虑吃药
-        List<Jyx2ConfigItem> items = GetAvailableItems(role, 3); //只使用药物
+        List<LItemConfig> items = GetAvailableItems(role, 3); //只使用药物
         foreach (var item in items)
         {
             double score = 0;
@@ -173,7 +169,7 @@ public class AIManager
             }
         }
 
-        List<Jyx2ConfigItem> anqis = GetAvailableItems(role, 4); //获取暗器
+        List<LItemConfig> anqis = GetAvailableItems(role, 4); //获取暗器
         //使用暗器
         foreach (var anqi in anqis)
         {
@@ -702,9 +698,9 @@ public class AIManager
         return null;
     }
 
-    List<Jyx2ConfigItem> GetAvailableItems(RoleInstance role, int itemType)
+    List<LItemConfig> GetAvailableItems(RoleInstance role, int itemType)
     {
-        List<Jyx2ConfigItem> items = new List<Jyx2ConfigItem>();
+        List<LItemConfig> items = new List<LItemConfig>();
         // 如果角色是玩家这方的，应该使用玩家的物品栏 by Tomato
         if (role.team == 0)
         {
@@ -713,7 +709,8 @@ public class AIManager
                 string id = kv.Key;
                 int count = kv.Value.Item1;
 
-                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
+                //var item = GameConfigDatabase.Instance.Get<LItemConfig>(id);
+                var item = LuaToCsBridge.ItemTable[int.Parse(id)];
                 if ((int)item.ItemType == itemType)
                     items.Add(item);
             }
@@ -722,7 +719,8 @@ public class AIManager
         {
             foreach (var item in role.Items)
             {
-                var tmp = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id);
+                //var tmp = GameConfigDatabase.Instance.Get<LItemConfig>(item.Id);
+                var tmp = LuaToCsBridge.ItemTable[item.Id];
                 if ((int)tmp.ItemType == itemType)
                     items.Add(tmp);
             }
@@ -821,7 +819,7 @@ public class AIManager
     /// <param name="r2"></param>
     /// <param name="anqi"></param>
     /// <returns></returns>
-    SkillCastResult hiddenWeapon(RoleInstance r1, RoleInstance r2, Jyx2ConfigItem anqi)
+    SkillCastResult hiddenWeapon(RoleInstance r1, RoleInstance r2, LItemConfig anqi)
     {
         SkillCastResult rst = new SkillCastResult();
         //增加生命 = (暗器增加生命/a-random(5)-暗器能力*2)/3;

@@ -19,7 +19,6 @@ using i18n.TranslatorDef;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Jyx2Configs;
 using Jyx2.UINavigation;
 using Jyx2.Util;
 using System.Linq;
@@ -355,7 +354,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         Action<int> onItemSelect = (itemId) =>
         {
-            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
+            var item = LuaToCsBridge.ItemTable[itemId];
 
             //选择了当前使用的装备，则卸下
             if (m_currentRole.Weapon == itemId)
@@ -373,7 +373,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             }
         };
 
-        Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.IsWeapon && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser);
+        Func<LItemConfig, bool> itemFilterFunc = item => item.IsWeapon() && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser());
 
         await SelectFromBag(onItemSelect, itemFilterFunc, m_currentRole.Weapon);
     }
@@ -382,7 +382,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         Action<int> onItemSelect = (itemId) =>
         {
-            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
+            var item = LuaToCsBridge.ItemTable[itemId];
             if (m_currentRole.Armor == itemId)
             {
                 m_currentRole.UnequipItem(m_currentRole.GetArmor());
@@ -397,7 +398,7 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             }
         };
 
-        Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.IsArmor && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser);
+        Func<LItemConfig, bool> itemFilterFunc = item => item.IsArmor() && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser());
 
         await SelectFromBag(onItemSelect, itemFilterFunc, m_currentRole.Armor);
     }
@@ -406,7 +407,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         async void onItemSelect(int itemId)
         {
-            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
+            var item = LuaToCsBridge.ItemTable[itemId];
             if (m_currentRole.Xiulianwupin == itemId)
             {
                 runtime.SetItemUser(item.Id, -1);
@@ -445,12 +447,12 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             }
         }
 
-        Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.IsBook && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser);
+        Func<LItemConfig, bool> itemFilterFunc = item => item.IsBook() && (item.IsBeingUsedBy(m_currentRole) || item.NoItemUser());
 
         await SelectFromBag(onItemSelect, itemFilterFunc, m_currentRole.Xiulianwupin);
     }
 
-    async UniTask SelectFromBag(Action<int> Callback, Func<Jyx2ConfigItem, bool> filter, int current_itemId)
+    async UniTask SelectFromBag(Action<int> Callback, Func<LItemConfig, bool> filter, int current_itemId)
     {
         this.gameObject.SetActive(false);
         await Jyx2_UIManager.Instance.ShowUIAsync(nameof(BagUIPanel), new Action<int>((itemId) =>
@@ -458,7 +460,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             this.gameObject.SetActive(true);
             if (itemId != -1 && !m_currentRole.CanUseItem(itemId))
             {
-                var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+                //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
+                var item = LuaToCsBridge.ItemTable[itemId];
                 GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
                 return;
             }

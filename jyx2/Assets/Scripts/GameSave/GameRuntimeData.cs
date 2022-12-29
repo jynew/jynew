@@ -15,7 +15,6 @@ using System.Text;
 using i18n.TranslatorDef;
 using Jyx2.Middleware;
 using Jyx2.MOD;
-using Jyx2Configs;
 using UnityEngine;
 using XLua;
 
@@ -217,7 +216,8 @@ namespace Jyx2
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
                 //创建所有角色
-                foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                //foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                foreach (var r in LuaToCsBridge.CharacterTable.Values)
                 {
                     var role = new RoleInstance(r.Id);
                     _instance.AllRoles.Add(r.Id, role);

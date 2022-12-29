@@ -46,7 +46,10 @@ namespace Jyx2
         public static void Clear()
         {
             LuaMod_DeInit();
+            //清除Lua转Cs相关接口
             LuaToCsBridge.LuaToCsBridgeDispose();
+            //LuaScript清理
+            luaEnv.DoString("Jyx2:DeInit()");
             _inited = false;
 
             //ConfigManager.Reset();

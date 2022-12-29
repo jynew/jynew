@@ -12,7 +12,6 @@ using System;
 using Jyx2;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2.UINavigation;
@@ -75,7 +74,8 @@ public class ShopUIItem : Selectable,INavigable
 	{
 		this.index = index;
 		this.shopItem = shopItem;
-		Jyx2ConfigItem item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(shopItem.Id);
+		//LItemConfig item = GameConfigDatabase.Instance.Get<LItemConfig>(shopItem.Id);
+		LItemConfig item = LuaToCsBridge.ItemTable[shopItem.Id];
 
 		//---------------------------------------------------------------------------
 		//desText.text = $"{item.Name}\n价格：{shopItem.Price}";

@@ -14,7 +14,6 @@ using IFix;
 using Jyx2.Middleware;
 using UnityEngine;
 using UniRx;
-using Jyx2Configs;
 using NUnit.Framework;
 using Random = UnityEngine.Random;
 using Cysharp.Threading.Tasks;
@@ -250,12 +249,12 @@ namespace Jyx2
         {
             return Key;
         }
-        public async UniTask<Sprite> GetPic()
+        public string GetPic()
         {
             //if (_data == null) BindKey();
-            var Pic = Data.Pic;
-            var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/head/{Pic}.png");
-            return _sprite;
+            //var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/head/{Pic}.png");
+            //return _sprite;
+            return $"BuildSource/head/{Data.Pic}.png";
         }
         //模型配置
         public ModelAsset Model
@@ -413,23 +412,26 @@ namespace Jyx2
         public int PreviousRoundHp; //上一回合的生命值
         #endregion
 
-        public Jyx2ConfigItem GetWeapon()
+        public LItemConfig GetWeapon()
         {
             if (Weapon == -1) return null;
-            return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(Weapon);
+            //return GameConfigDatabase.Instance.Get<LItemConfig>(Weapon);
+            return LuaToCsBridge.ItemTable[Weapon];
         }
 
-        public Jyx2ConfigItem GetArmor()
+        public LItemConfig GetArmor()
         {
             if (Armor == -1) return null;
-            return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(Armor);
+            //return GameConfigDatabase.Instance.Get<LItemConfig>(Armor);
+            return LuaToCsBridge.ItemTable[Armor];
         }
 
 
-        public Jyx2ConfigItem GetXiulianItem()
+        public LItemConfig GetXiulianItem()
         {
             if (Xiulianwupin == -1) return null;
-            return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(Xiulianwupin);
+            //return GameConfigDatabase.Instance.Get<LItemConfig>(Xiulianwupin);
+            return LuaToCsBridge.ItemTable[Xiulianwupin];
         }
 
 
@@ -536,7 +538,8 @@ namespace Jyx2
 
         public bool CanUseItem(int itemId)
         {
-            return CanUseItem(GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId));
+            //return CanUseItem(GameConfigDatabase.Instance.Get<LItemConfig>(itemId));
+            return CanUseItem(LuaToCsBridge.ItemTable[itemId]);
         }
 
         /// <summary>
@@ -546,7 +549,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool CanUseItem(Jyx2ConfigItem item)
+        public bool CanUseItem(LItemConfig item)
         {
             if (item == null) return false;
 
@@ -670,7 +673,7 @@ namespace Jyx2
         /// 计算公式可以参考：https://github.com/ZhanruiLiang/jinyong-legend
         /// </summary>
         /// <param name="item"></param>
-        public string LianZhiItem(Jyx2ConfigItem practiseItem)
+        public string LianZhiItem(LItemConfig practiseItem)
         {
             if (practiseItem == null)
                 return "";
@@ -680,13 +683,15 @@ namespace Jyx2
                 return "";
             if (!runtime.HaveItemBool(practiseItem.GenerateItemNeedCost))
                 return "";
-            var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
+            //var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
+            var GenerateItemList = new List<CsRoleItem>();
             var GenerateItemArr = practiseItem.GenerateItems.Split('|');
             foreach (var GenerateItem in GenerateItemArr)
             {
                 var GenerateItemArr2 = GenerateItem.Split(',');
                 if (GenerateItemArr2.Length != 2) continue;
-                var characterItem = new Jyx2ConfigCharacterItem();
+                //var characterItem = new Jyx2ConfigCharacterItem();
+                var characterItem = new CsRoleItem();
                 characterItem.Id = int.Parse(GenerateItemArr2[0]);
                 characterItem.Count = int.Parse(GenerateItemArr2[1]);
                 GenerateItemList.Add(characterItem);
@@ -711,7 +716,8 @@ namespace Jyx2
 
                 runtime.AddItem(practiseItem.GenerateItemNeedCost, -pickItem.Count);
                 ExpForMakeItem = 0;
-                return $"{Name} 制造出 {GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(pickItem.Id).Name}\n";
+                //return $"{Name} 制造出 {GameConfigDatabase.Instance.Get<LItemConfig>(pickItem.Id).Name}\n";
+                return $"{Name} 制造出 {LuaToCsBridge.ItemTable[pickItem.Id].Name}\n";
             }
 
             return "";
@@ -721,7 +727,7 @@ namespace Jyx2
         /// 使用物品
         /// </summary>
         /// <param name="item"></param>
-        public void UseItem(Jyx2ConfigItem item)
+        public void UseItem(LItemConfig item)
         {
             if (item == null)
                 return;
@@ -785,7 +791,7 @@ namespace Jyx2
         /// 卸下物品（装备）
         /// </summary>
         /// <param name="item"></param>
-        public void UnequipItem(Jyx2ConfigItem item)
+        public void UnequipItem(LItemConfig item)
         {
             if (item == null)
                 return;
@@ -840,7 +846,7 @@ namespace Jyx2
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public int GetFinishedExpForItem(Jyx2ConfigItem item)
+        public int GetFinishedExpForItem(LItemConfig item)
         {
             if (item == null || (int)item.ItemType != 2 || item.NeedExp < 0)
             {
@@ -1148,12 +1154,12 @@ namespace Jyx2
 
         public int GetWeaponProperty(string propertyName)
         {
-            return Weapon != -1 ? (int)GetWeapon().GetType().GetField(propertyName).GetValue(GetWeapon()) : 0;
+            return Weapon != -1 ? (int)Type.GetType("Jyx2.LItemConfig").GetProperty(propertyName).GetValue(GetWeapon(), null) : 0;
         }
 
         public int GetArmorProperty(string propertyName)
         {
-            return Armor != -1 ? (int)GetArmor().GetType().GetField(propertyName).GetValue(GetArmor()) : 0;
+            return Armor != -1 ? (int)Type.GetType("Jyx2.LItemConfig").GetProperty(propertyName).GetValue(GetArmor(), null) : 0;
         }
 
         /// <summary>

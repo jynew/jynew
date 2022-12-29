@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Jyx2Configs;
 using Sirenix.Utilities;
 using UnityEngine;
 

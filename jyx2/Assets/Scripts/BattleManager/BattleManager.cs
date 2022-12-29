@@ -20,7 +20,6 @@ using Jyx2;
 
 using Jyx2.Battle;
 using Jyx2.Middleware;
-using Jyx2Configs;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

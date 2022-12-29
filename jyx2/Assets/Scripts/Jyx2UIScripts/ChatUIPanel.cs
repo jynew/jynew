@@ -15,7 +15,6 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Jyx2Configs;
 using UnityEngine.EventSystems;
 using Jyx2.ResourceManagement;
 using Sirenix.Utilities;

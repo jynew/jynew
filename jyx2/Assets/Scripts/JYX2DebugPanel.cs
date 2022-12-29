@@ -14,7 +14,6 @@ using Jyx2;
 
 using System.Collections;
 using System.Collections.Generic;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2.InputCore;

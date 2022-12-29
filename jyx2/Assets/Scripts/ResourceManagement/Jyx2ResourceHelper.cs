@@ -17,7 +17,6 @@ using Jyx2.EventsGraph;
 using Jyx2.Middleware;
 using Jyx2.MOD.ModV2;
 using Jyx2.ResourceManagement;
-using Jyx2Configs;
 using ProtoBuf;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,9 +26,15 @@ namespace Jyx2
 {
     public static class ImageLoadHelper
     {
-        public static void LoadAsyncForget(this Image image, UniTask<Sprite> task)
+        async static UniTask<Sprite> GetPicTask(string path)
+        {
+            var _sprite = await ResLoader.LoadAsset<Sprite>(path);
+            return _sprite;
+        }
+        //public static void LoadAsyncForget(this Image image, UniTask<Sprite> task)
+        public static void LoadAsyncForget(this Image image, string path)
         {   
-            LoadAsync(image,task).Forget();
+            LoadAsync(image,GetPicTask(path)).Forget();
         }
         
         public static async UniTask LoadAsync(this Image image, UniTask<Sprite> task)
@@ -93,7 +98,7 @@ public static class Jyx2ResourceHelper
         var mod = RuntimeEnvSetup.GetCurrentMod();
 
         //编辑器模式下直接从excel中载入，不需要再打包
-        if (mod is GameModEditor editor)
+        /*if (mod is GameModEditor editor)
         {
             var excelDir = Path.Combine(editor.RootConfig.ModRootDir, "Configs");
             var data = ExcelTools.LoadFromExcels(excelDir);
@@ -105,6 +110,7 @@ public static class Jyx2ResourceHelper
             GameConfigDatabase.Instance.Init(config.bytes);    
 
         }
+        */
         //从Lua表读取配置
         var configs = await ResLoader.LoadAssets<TextAsset>("Assets/Configs/Lua/");
         Debug.Log("load configs num: "+configs.Count);

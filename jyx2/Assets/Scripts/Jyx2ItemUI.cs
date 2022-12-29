@@ -16,7 +16,6 @@ using Cysharp.Threading.Tasks;
 using Jyx2;
 using Jyx2.UINavigation;
 using Jyx2.Util;
-using Jyx2Configs;
 using Steamworks.Ugc;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -66,9 +65,10 @@ public class Jyx2ItemUI : Selectable,INavigable,IDataContainer<KeyValuePair<stri
     }
 #endif
 
-    public Jyx2ConfigItem GetItemConfigData()
+    public LItemConfig GetItemConfigData()
     {
-        return GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(ItemId);
+        //return GameConfigDatabase.Instance.Get<LItemConfig>(ItemId);
+        return LuaToCsBridge.ItemTable[ItemId];
     }
 
     public Selectable GetSelectable()
@@ -119,7 +119,7 @@ public class Jyx2ItemUI : Selectable,INavigable,IDataContainer<KeyValuePair<stri
     {
         var result = ColorStringDefine.Default;
         var item = GetItemConfigData();
-        if (item == null || !item.IsBook)
+        if (item == null || !item.IsBook())
             return result;
         //0-阴性内力，1-阳性内力，2-中性内力
         if (item.NeedMPType == 0)

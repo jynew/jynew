@@ -15,7 +15,6 @@ using System;
 using System.Collections;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
-using Jyx2Configs;
 using Application = UnityEngine.Application;
 using UnityEngine.UI;
 using Jyx2.InputCore;

@@ -14,6 +14,7 @@ if Jyx2 ~= nil then
     print("重复定义")
     return 
 end
+print("Jyx2 Init")
 local requireList = require "LuaModuleList"
 Jyx2 = {} -- 所有的Lua模块都作为Jyx2表的元素添加进去
 Jyx2.moduleList = requireList[1]
@@ -46,6 +47,11 @@ end
 
 function Jyx2:IsLoaded(name)
     return self[name] ~= nil
+end
+
+function Jyx2:DeInit()
+    print("Jyx2 DeInit")
+    Jyx2.ConfigMgr:ClearAllConfig()
 end
 
 -- 辅助函数

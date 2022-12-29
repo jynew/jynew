@@ -13,7 +13,6 @@ using System.Threading;
 using System;
 using System.Linq;
 using i18n.TranslatorDef;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2.Util;
@@ -147,7 +146,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 			return;
 		}
 		ItemDes_RectTransform.gameObject.SetActive(true);
-		string mainText = UIHelper.GetItemDesText(GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(m_CurSelectItem.ItemId));
+		//string mainText = UIHelper.GetItemDesText(GameConfigDatabase.Instance.Get<LItemConfig>(m_CurSelectItem.ItemId));
+		string mainText = UIHelper.GetItemDesText(LuaToCsBridge.ItemTable[m_CurSelectItem.ItemId]);
 		DesText_Text.text = mainText;
 	}
 
@@ -178,7 +178,8 @@ public partial class ShopUIPanel : Jyx2_UIBase
 		if (shopItem == null)
 			return;
 
-        Jyx2ConfigItem itemCfg = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(shopItem.Id);
+        //LItemConfig itemCfg = GameConfigDatabase.Instance.Get<LItemConfig>(shopItem.Id);
+        LItemConfig itemCfg = LuaToCsBridge.ItemTable[shopItem.Id];
 		if (itemCfg == null)
 			return;
 		int moneyCost = count * shopItem.Price;

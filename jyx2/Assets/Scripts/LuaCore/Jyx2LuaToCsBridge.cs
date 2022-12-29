@@ -139,12 +139,75 @@ namespace Jyx2
         List<LSkillLevel> Levels {get;set;}
         string DisplayFileName {get;set;}
     }
+    public enum Jyx2ItemType
+    {
+        TaskItem = 0, //道具
+        Equipment = 1, //装备
+        Book = 2, //经书
+        Costa = 3, //消耗品
+        Anqi = 4, //暗器
+    }
     //用来解读Lua的Item配置表
     [CSharpCallLua]
     public interface LItemConfig
     {
         int Id {get;set;}
         string Name {get;set;}
+        string Desc {get;set;}
+        int ItemType {get;set;}
+        int EquipmentType {get;set;}
+        int Skill {get;set;}
+        int AddHp {get;set;}
+        int AddMaxHp {get;set;}
+        int ChangePoisonLevel {get;set;}
+        int AddTili {get;set;}
+        int ChangeMPType {get;set;}
+        int AddMp {get;set;}
+        int AddMaxMp {get;set;}
+        int Attack {get;set;}
+        int Qinggong {get;set;}
+        int Defence {get;set;}
+        int Heal {get;set;}
+        int UsePoison {get;set;}
+        int DePoison {get;set;}
+        int AntiPoison {get;set;}
+        int Quanzhang {get;set;}
+        int Yujian {get;set;}
+        int Shuadao {get;set;}
+        int Qimen {get;set;}
+        int Anqi {get;set;}
+        int Wuxuechangshi {get;set;}
+        int AddPinde {get;set;}
+        int Zuoyouhubo {get;set;}
+        int AttackPoison {get;set;}
+        int OnlySuitableRole {get;set;}
+        int NeedMPType {get;set;}
+        int ConditionMp {get;set;}
+        int ConditionAttack {get;set;}
+        int ConditionQinggong {get;set;}
+        int ConditionPoison {get;set;}
+        int ConditionHeal {get;set;}
+        int ConditionDePoison {get;set;}
+        int ConditionQuanzhang {get;set;}
+        int ConditionYujian {get;set;}
+        int ConditionShuadao {get;set;}
+        int ConditionQimen {get;set;}
+        int ConditionAnqi {get;set;}
+        int ConditionIQ {get;set;}
+        int NeedExp {get;set;}
+        int NeedCastration {get;set;}
+        int GenerateItemNeedExp {get;set;}
+        int GenerateItemNeedCost {get;set;}
+        string GenerateItems {get;set;}
+
+        string GetPic();
+        bool IsWeapon();
+        bool IsArmor();
+        bool IsBook();
+        bool NoItemUser();
+        bool IsBeingUsedBy(int roleId);
+        bool IsBeingUsedBy(RoleInstance role);
+        Jyx2ItemType GetItemType();
     }
     //用来解读Lua的Map配置表
     [CSharpCallLua]
@@ -242,13 +305,20 @@ namespace Jyx2
             ShopTable = LEnv.Global.GetInPath<Dictionary<int, LShopConfig>>("Jyx2.ConfigMgr.Shop");
             SettingsTable = LEnv.Global.GetInPath<Dictionary<int, LSettingsConfig>>("Jyx2.ConfigMgr.Settings");
 
-            Debug.Log(SettingsTable[1].Name);
-            Debug.Log(SettingsTable[1].Value);
-            Debug.Log(GameSettings.GetInt("WORLD_MAP_ID"));
+            var tmp1 = GameSettings.Get("LEVEL_UP_EXP");
+            Debug.Log(tmp1);
 
         }
         public static void LuaConfRefDispose()
         {
+            CharacterTable = null;
+            SkillTable = null;
+            ItemTable = null;
+            BattleTable = null;
+            ExtraTable = null;
+            MapTable = null;
+            ShopTable = null;
+            SettingsTable = null;
         }
     }
 }

@@ -13,8 +13,6 @@ using Animancer;
 
 using UnityEngine;
 using Jyx2;
-using Jyx2Configs;
-
 
 public class Jyx2SkillEditorEnemy : Jyx2AnimationBattleRole
 {
