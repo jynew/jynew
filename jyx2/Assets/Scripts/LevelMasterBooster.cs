@@ -15,7 +15,6 @@ using Jyx2;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2.ResourceManagement;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
@@ -42,7 +41,8 @@ public class LevelMasterBooster : MonoBehaviour
 
         if (LevelMaster.GetCurrentGameMap() == null)
         {
-            var gameMap = Jyx2ConfigMap.GetMapBySceneName(SceneManager.GetActiveScene().name);
+            //var gameMap = Jyx2ConfigMap.GetMapBySceneName(SceneManager.GetActiveScene().name);
+            var gameMap = LuaToCsBridge.MapTable[0].GetMapBySceneName(SceneManager.GetActiveScene().name);
             LevelMaster.SetCurrentMap(gameMap);
         }
     }

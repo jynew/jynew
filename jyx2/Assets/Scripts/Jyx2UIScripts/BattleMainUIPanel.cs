@@ -97,7 +97,7 @@ public partial class BattleMainUIPanel:Jyx2_UIBase
         //---------------------------------------------------------------------------
         //---------------------------------------------------------------------------
 
-        PreImage_Image.LoadAsyncForget(m_currentRole.Data.GetPic());
+        PreImage_Image.LoadAsyncForget(m_currentRole.GetPic());
     }
 
     void OnAutoBattleValueChange(bool active) 

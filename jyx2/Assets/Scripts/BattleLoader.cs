@@ -16,7 +16,6 @@ using i18n.TranslatorDef;
 using Jyx2;
 
 using Jyx2;
-using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,7 +27,8 @@ public class BattleLoader : MonoBehaviour
 {
     [LabelText("载入战斗ID")] public int m_BattleId = 0;
 
-    public Jyx2ConfigBattle CurrentBattleConfig { get; set; } = null;
+    //public Jyx2ConfigBattle CurrentBattleConfig { get; set; } = null;
+    public LBattleConfig CurrentBattleConfig { get; set; } = null;
 
     [HideInInspector] public Action<BattleResult> Callback;
 
@@ -63,7 +63,8 @@ public class BattleLoader : MonoBehaviour
 
         if (CurrentBattleConfig == null)
         {
-            CurrentBattleConfig = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(m_BattleId);
+            //CurrentBattleConfig = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(m_BattleId);
+            CurrentBattleConfig = LuaToCsBridge.BattleTable[m_BattleId];
         }
         else
         {
@@ -86,7 +87,8 @@ public class BattleLoader : MonoBehaviour
         get { return GameRuntimeData.Instance; }
     }
 
-    async UniTask LoadJyx2Battle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
+    //async UniTask LoadJyx2Battle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
+    async UniTask LoadJyx2Battle(LBattleConfig battle, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
         if (GameRuntimeData.Instance == null)
@@ -102,18 +104,21 @@ public class BattleLoader : MonoBehaviour
             return;
         }
 
-        var teamMates = battle.TeamMates.Split(',').ToList();
-        var autoTeamMates = battle.AutoTeamMates.Split(',').ToList();
+        //var teamMates = battle.TeamMates.Split(',').ToList();
+        //var autoTeamMates = battle.AutoTeamMates.Split(',').ToList();
+        var teamMates = battle.TeamMates;
+        var autoTeamMates = battle.AutoTeamMates;
 
         AudioManager.PlayMusic(battle.Music);
 
         //设置了自动战斗人物
         // 自动队友不等于-1则表示有自己或队友
-        if (!autoTeamMates[0].Equals("-1"))
+        if (autoTeamMates[0] != -1)
         {
             foreach (var v in autoTeamMates)
             {
-                var roleId = int.Parse(v);
+                //var roleId = int.Parse(v);
+                var roleId = v;
                 if (roleId == -1) continue;
                 AddRole(roleId, 0); //TODO IS AUTO
                 for (var i = 0; i < m_Roles.Count; i++)
@@ -133,7 +138,8 @@ public class BattleLoader : MonoBehaviour
             //必选人物
             bool MustRoleFunc(RoleInstance r)
             {
-                return teamMates.Exists(id => int.Parse(id) == r.Key);
+                //return teamMates.Exists(id => int.Parse(id) == r.Key);
+                return teamMates.Exists(id => id == r.Key);
             }
 
             SelectRoleParams selectPram = new SelectRoleParams();
@@ -157,7 +163,8 @@ public class BattleLoader : MonoBehaviour
         }
     }
 
-    UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
+    //UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
+    UniTask LoadJyx2BattleStep2(LBattleConfig battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     {
         //玩家选择的人物
         if (selectRoles != null)
@@ -167,8 +174,7 @@ public class BattleLoader : MonoBehaviour
                 AddRole(role.GetJyx2RoleId(), 0);
             }
         }
-
-        //通过ID添加队友
+        /*//通过ID添加队友
         if (!string.IsNullOrEmpty(battle.TeamMates))
         {
             var teamMates = battle.TeamMates.Split(',').ToList();
@@ -178,7 +184,7 @@ public class BattleLoader : MonoBehaviour
                 AddRole(int.Parse(v), 0);
             }
         }
-        
+
         //通过ID添加敌人
         if(!string.IsNullOrEmpty(battle.Enemies))
         {
@@ -189,8 +195,25 @@ public class BattleLoader : MonoBehaviour
             {
                 AddRole(int.Parse(v), 1);
             }
-        }
-        
+        }*/
+
+        //通过ID添加队友
+            var teamMates = battle.TeamMates;
+            //预配置队友
+            foreach (var v in teamMates)
+            {
+                AddRole(v, 0);
+            }
+
+        //通过ID添加敌人
+            var enemies = battle.Enemies;
+
+            //敌人
+            foreach (var v in enemies)
+            {
+                AddRole(v, 1);
+            }
+
         //动态生成队友
         if (battle.DynamicTeammate != null)
         {
@@ -199,15 +222,17 @@ public class BattleLoader : MonoBehaviour
                 AddDynamicRole(r, 0);
             }
         }
+        Debug.Log("Battle Loader 动态生成敌人");
         //动态生成敌人
         if (battle.DynamicEnemies != null)
         {
             foreach (var r in battle.DynamicEnemies)
             {
                 AddDynamicRole(r, 1);
+                Debug.Log(r.Name);
             }
         }
- 
+
         return InitBattle(callback, battle);
     }
 
@@ -265,7 +290,7 @@ public class BattleLoader : MonoBehaviour
                 roleInstance = roleInstance.Clone();
                 roleInstance.Recover();
             }
-            
+
             //如果存档中没有记录（理论上不可能？除非是存档过期了，与当前配置表不匹配）
             if (roleInstance == null)
             {
@@ -276,10 +301,11 @@ public class BattleLoader : MonoBehaviour
             return roleInstance;
         }
     }
-    
-    
+
+
     //初始化战斗
-    async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
+    //async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
+    async UniTask InitBattle(Action<BattleResult> callback, LBattleConfig battleData)
     {
         Debug.Log("-----------BattleLoader.InitBattle");
         List<RoleInstance> roles = new List<RoleInstance>();
@@ -306,8 +332,8 @@ public class BattleLoader : MonoBehaviour
         BattleStartParams startParam = new BattleStartParams()
         {
             roles = roles,
-            battleData = battleData,
-            callback = callback,
+                  battleData = battleData,
+                  callback = callback,
         };
 
         //测试LuaEvent 用于Lua侧做拓展逻辑
@@ -358,7 +384,7 @@ public class BattleLoader : MonoBehaviour
         }
 
         roleView.IsInBattle = true;
-        
+
         roleView.transform.SetParent(npcRoot.transform, false);
         roleView.transform.position = pos.position;
         role.team = team;

@@ -46,6 +46,10 @@ namespace Jyx2
         public static void Clear()
         {
             LuaMod_DeInit();
+            //清除Lua转Cs相关接口
+            LuaToCsBridge.LuaToCsBridgeDispose();
+            //LuaScript清理
+            luaEnv.DoString("Jyx2:DeInit()");
             _inited = false;
 
             //ConfigManager.Reset();
@@ -79,6 +83,15 @@ namespace Jyx2
 
             luaEnv.AddLoader((ref string filename) =>
             {
+                //require时首先去当前的LuaScript中查找
+                var luaFile = ResLoader.LoadAssetSync<TextAsset>($"Assets/LuaScripts/{filename}.lua");
+                if (luaFile != null)
+                    return Encoding.UTF8.GetBytes(luaFile.text);
+                return null;
+            });
+
+            luaEnv.AddLoader((ref string filename) =>
+            {
                 //require时默认去baseasset下加载lua
                 var luaFile = ResLoader.LoadAssetSync<TextAsset>($"Assets/BuildSource/Lua/{filename}.lua");
                 if (luaFile != null)
@@ -98,12 +111,6 @@ namespace Jyx2
                 luaEnv.DoString(rootLuaFileText);    
             }
             
-            //load lua base files
-            /*foreach (var f in files)
-            {
-                luaEnv.DoString(LoadLua(LuaManager.LUA_ROOT_MENU + f.Replace(".lua", "")), f);
-            }*/
-
             _inited = true;
             //LoadLuaFiles();
         }

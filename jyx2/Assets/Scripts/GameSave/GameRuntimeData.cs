@@ -15,8 +15,8 @@ using System.Text;
 using i18n.TranslatorDef;
 using Jyx2.Middleware;
 using Jyx2.MOD;
-using Jyx2Configs;
 using UnityEngine;
+using XLua;
 
 namespace Jyx2
 {
@@ -213,12 +213,17 @@ namespace Jyx2
 
         void InitAllRole() 
         {
-            //创建所有角色
-            foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
-            {
-                var role = new RoleInstance(r.Id);
-                _instance.AllRoles.Add(r.Id, role);
-            }
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+                //创建所有角色
+                //foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                foreach (var r in LuaToCsBridge.CharacterTable.Values)
+                {
+                    var role = new RoleInstance(r.Id);
+                    _instance.AllRoles.Add(r.Id, role);
+                }
+            sw.Stop();
+            Debug.Log(string.Format("total: {0} ms", sw.ElapsedMilliseconds));
         }
 
         #endregion
@@ -243,7 +248,7 @@ namespace Jyx2
         }
 
         public static DateTime? GetSaveDate(int index)
-		{
+        {
             var summaryInfoFilePath = GameSaveSummary.GetSummaryFilePath(index);
             if (ES3.FileExists(summaryInfoFilePath))
             {
@@ -260,21 +265,21 @@ namespace Jyx2
             return null;
         }
 
-	private void SaveToFile(int fileIndex)
+        private void SaveToFile(int fileIndex)
         {
             //保存存档简介
             GameSaveSummary summary = new GameSaveSummary()
             {
                 Summary = GenerateSaveSummaryInfo(),
-                ModId = RuntimeEnvSetup.CurrentModId,
-                ModName = RuntimeEnvSetup.CurrentModId,
+                        ModId = RuntimeEnvSetup.CurrentModId,
+                        ModName = RuntimeEnvSetup.CurrentModId,
             };
             GameSaveSummary.Save(fileIndex, summary);
-            
+
             //存档
             var path = GetArchiveFile(fileIndex);
             ES3.Save("RuntimeVersion", _instance.RuntimeVersion, path);//用一个key单独存储版本号
-            //ES3.Save("ModId", RuntimeEnvSetup.CurrentModId, path);//用一个key储存Mod名称
+                                                                       //ES3.Save("ModId", RuntimeEnvSetup.CurrentModId, path);//用一个key储存Mod名称
             ES3.Save("ModArchiveVersion", RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion, path);//用一个key储存Mod存档版本号
             ES3.Save(nameof(GameRuntimeData), this, path);
         }
@@ -301,7 +306,7 @@ namespace Jyx2
             {
                 throw new Exception($"找不到存档文件 {fileIndex}");
             }
-           
+
             //Debug.Log($"Runtime Version: {archiveVersion}");
 
             var IsOutdated = (archiveRtVersion < RUNTIME_VERSION_LATEST || archiveModVersion < RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion);
@@ -310,7 +315,7 @@ namespace Jyx2
             {
                 UpdateOldArchive(runtime, archiveRtVersion, archiveModVersion);
             }
- 
+
             _instance = runtime;
             return runtime;
         }
@@ -333,10 +338,12 @@ namespace Jyx2
                 Jyx2LuaBridge.DispatchLuaEvent("OnArchiveOutdated", runtime, oldModVersion);
                 //自动检查一下有没有新添加的人物物品等，无需在lua中单独进行
                 var arcRoleCount = runtime.AllRoles.Count;
-                var configRoleCount = GameConfigDatabase.Instance.GetCount<Jyx2ConfigCharacter>();
+                //var configRoleCount = GameConfigDatabase.Instance.GetCount<Jyx2ConfigCharacter>();
+                var configRoleCount = LuaToCsBridge.CharacterTable.Count;
                 if ( arcRoleCount < configRoleCount)
                 {
-                    foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                    //foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
+                    foreach (var r in LuaToCsBridge.CharacterTable.Values)
                     {
                         if (runtime.AllRoles.ContainsKey(r.Id)) continue;
 
@@ -355,7 +362,7 @@ namespace Jyx2
         }
 
         #endregion
-        
+
         #region 游戏运行时数据
 
         //主角
@@ -392,14 +399,14 @@ namespace Jyx2
                 Debug.LogError($"错误，角色重复入队：id = {roleId}");
                 return false;
             }
-            
+
             var role = GetRole(roleId);
             if(role == null)
             {
                 Debug.LogError($"调用了不存在的role加入队伍，id = {roleId}");
                 return false;
             }
-            
+
             //获得角色身上的道具
             foreach (var item in role.Items)
             {
@@ -415,7 +422,8 @@ namespace Jyx2
                         //---------------------------------------------------------------------------
                         //特定位置的翻译【得到物品提示】
                         //---------------------------------------------------------------------------
-                        StoryEngine.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id).Name + "×" + Math.Abs(item.Count));
+                        //StoryEngine.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id).Name + "×" + Math.Abs(item.Count));
+                        StoryEngine.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + LuaToCsBridge.ItemTable[item.Id].Name + "×" + Math.Abs(item.Count));
                         //---------------------------------------------------------------------------
                         //---------------------------------------------------------------------------
                     }
@@ -429,7 +437,7 @@ namespace Jyx2
             role.Xiulianwupin = -1;
 
             role.Items.Clear();   
-            
+
             TeamId.Add(roleId);
             return true;
         }
@@ -522,7 +530,7 @@ namespace Jyx2
         {
             return GetItemCount(GameConst.MONEY_ID);
         }
-        
+
 
 
         public bool HaveItemBool(int itemId)
@@ -620,7 +628,7 @@ namespace Jyx2
                 EventCounter[key]=num;
             }
         }
-        
+
         public int GetEventCount(int scene, int eventId, int eventName)
         {
             string key=(string.Format("{0}_{1}_{2}", scene, eventId, eventName));
@@ -640,7 +648,7 @@ namespace Jyx2
                 MapPic[key]=pic;
             }
         }
-        
+
         public int GetMapPic(int scene, int eventId)
         {
             string key=(string.Format("{0}_{1}", scene, eventId));
@@ -661,7 +669,7 @@ namespace Jyx2
                 var rst = ES3.Deserialize<Dictionary<string, string>>(Encoding.UTF8.GetBytes(str));
                 return rst;
             }
-                
+
             return null;
         }
 
@@ -682,9 +690,10 @@ namespace Jyx2
         /// <returns></returns>
         public int GetSceneEntranceCondition(int mapId)
         {
-            var gameMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
+            //var gameMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
+            var gameMap = LuaToCsBridge.MapTable[mapId];
             if (gameMap == null) return -1;
-            
+
             //大地图
             if (gameMap.Tags.Contains("WORLDMAP"))
                 return 0;

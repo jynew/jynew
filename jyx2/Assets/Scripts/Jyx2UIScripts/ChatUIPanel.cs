@@ -15,7 +15,6 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Jyx2Configs;
 using UnityEngine.EventSystems;
 using Jyx2.ResourceManagement;
 using Sirenix.Utilities;
@@ -179,8 +178,9 @@ public partial class ChatUIPanel : Jyx2_UIBase
 		}
 
 		//再从人物库找
-		var role = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(headId);
-		return role.Name;
+		//var role = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(headId);
+		var roleName = LuaToCsBridge.CharacterTable[headId].Name;
+		return roleName;
 	}
 
 	//根据角色ID修改左右位置

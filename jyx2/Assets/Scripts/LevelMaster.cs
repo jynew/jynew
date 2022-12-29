@@ -15,7 +15,6 @@ using System;
 using System.Collections;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
-using Jyx2Configs;
 using Application = UnityEngine.Application;
 using UnityEngine.UI;
 using Jyx2.InputCore;
@@ -66,10 +65,13 @@ public class LevelMaster : MonoBehaviour
 
 	CameraHelper m_CameraHelper;
 
-	public static Jyx2ConfigMap LastGameMap = null; //前一个地图
-	private static Jyx2ConfigMap _currentMap;
+	//public static Jyx2ConfigMap LastGameMap = null; //前一个地图
+	//private static Jyx2ConfigMap _currentMap;
+	public static LMapConfig LastGameMap = null; //前一个地图
+	private static LMapConfig _currentMap;
 
-	public static void SetCurrentMap(Jyx2ConfigMap map)
+	//public static void SetCurrentMap(Jyx2ConfigMap map)
+	public static void SetCurrentMap(LMapConfig map)
 	{
 		_currentMap = map;
 	}
@@ -93,7 +95,8 @@ public class LevelMaster : MonoBehaviour
 	/// 获取当前所在地图
 	/// </summary>
 	/// <returns></returns>
-	public static Jyx2ConfigMap GetCurrentGameMap()
+	//public static Jyx2ConfigMap GetCurrentGameMap()
+	public static LMapConfig GetCurrentGameMap()
 	{
 		return _currentMap;
 	}
@@ -265,13 +268,15 @@ public class LevelMaster : MonoBehaviour
 		}
 	}
 
-	private void PlayMusic(Jyx2ConfigMap currentMap)
+	//private void PlayMusic(Jyx2ConfigMap currentMap)
+	private void PlayMusic(LMapConfig currentMap)
 	{
 		if (currentMap == null) return;
 		
 		//有上一张图的出门音乐就放该音乐
 		if (LastGameMap != null)
 		{
+                    /*
 			if (LastGameMap.ForceSetLeaveMusicId != -1)
 			{
 				AudioManager.PlayMusic(LastGameMap.ForceSetLeaveMusicId);
@@ -282,6 +287,14 @@ public class LevelMaster : MonoBehaviour
 				AudioManager.PlayMusic(LastGameMap.OutMusic);
 				return;
 			}
+                        */
+			var music = LastGameMap.GetOutMusic();
+                        if (music != -1)
+                        {
+                            AudioManager.PlayMusic(music);
+                            return;
+                        }
+
 		}
 		//没有就放进门的
 		AudioManager.PlayMusic(currentMap.InMusic);

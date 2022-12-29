@@ -5,7 +5,6 @@ using System.IO;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2.MOD.ModV2;
-using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -42,6 +41,8 @@ public class MODRootConfig : ScriptableObject
     [LabelText("战斗中显示招式名字")] public bool ShowSkillNameInBattle = false;
     [LabelText("是否打开控制台")] public bool IsConsoleEnable = true;
     [LabelText("战斗中是否播放使用道具动作")] public bool IsPlayUseItemAnimation = true;
+
+    [LabelText("是否使用Lua配置文件")] public bool IsUsingLuaConfig = true;
     
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
@@ -56,11 +57,14 @@ public class MODRootConfig : ScriptableObject
         {
             File.Delete(dataPath);
         }
-        ExcelTools.GenerateConfigsFromExcel($"{ModRootDir}/Configs");
+        //ExcelTools.GenerateConfigsFromExcel($"{ModRootDir}/Configs");
+        // 生成Lua配置表
+        ExcelToLua.ExportAllLuaFile($"{ModRootDir}/Configs", $"{ModRootDir}/Configs/Lua");
+
         UnityEditor.AssetDatabase.Refresh();
     }
 #endif
-    
+
     public GameModInfo CreateModInfo()
     {
         GameModInfo info = new GameModInfo();
@@ -71,7 +75,7 @@ public class MODRootConfig : ScriptableObject
         info.ClientVersion = Application.version;
         info.CreateTime = DateTime.Now.ToString("yyyyMMdd H:m:s");
         info.Desc = Desc;
-        
+
         return info;
     }
 }

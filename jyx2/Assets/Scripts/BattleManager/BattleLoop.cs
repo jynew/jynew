@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Jyx2.Middleware;
-using Jyx2Configs;
 using UnityEngine;
 
 namespace Jyx2.Battle
@@ -294,7 +293,7 @@ namespace Jyx2.Battle
         }
 
         //使用道具
-        async UniTask RoleUseItem(RoleInstance role, Jyx2ConfigItem item)
+        async UniTask RoleUseItem(RoleInstance role, LItemConfig item)
         {
             if (role == null || item == null)
             {

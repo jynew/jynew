@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
 using Jyx2;
-using Jyx2Configs;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -47,7 +46,8 @@ public class MapTeleportor : MonoBehaviour
 		int transportMapId = -1;
 		if (LevelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
 		{
-			transportMapId = Jyx2ConfigMap.GetMapByName(this.gameObject.name).Id;
+			//transportMapId = Jyx2ConfigMap.GetMapByName(this.gameObject.name).Id;
+			transportMapId = LuaToCsBridge.MapTable[0].GetMapByName(this.gameObject.name).Id;
 		}
 		//---------------------------------------------------------------------------
 		//await ShowEnterButton(LevelMaster.GetCurrentGameMap().TransportToMap, TransportTriggerName, ButtonText);
@@ -121,18 +121,21 @@ public class MapTeleportor : MonoBehaviour
 			
 		Assert.IsNotNull(curMap);
 
-		var nextMap = new Jyx2ConfigMap();
+		//var nextMap = new Jyx2ConfigMap();
+		var nextMap = LuaToCsBridge.MapTable[0];
 
 		if (curMap.Tags.Contains("WORLDMAP"))
 		{
-			nextMap = Jyx2ConfigMap.GetMapByName(this.gameObject.name);
+			//nextMap = Jyx2ConfigMap.GetMapByName(this.gameObject.name);
+			nextMap = nextMap.GetMapByName(this.gameObject.name);
 			//记录当前世界位置
 			Jyx2Player.GetPlayer().RecordWorldInfo();
 		}
 
 		else
 		{
-			nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.GetTransportToMapValue(this.gameObject.name));
+			//nextMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(curMap.GetTransportToMapValue(this.gameObject.name));
+			nextMap = LuaToCsBridge.MapTable[curMap.GetTransportToMapValue(this.gameObject.name)];
 		}
 
 		if (nextMap == null)
