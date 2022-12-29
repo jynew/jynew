@@ -12,7 +12,4 @@
 local LuaModuleList = {
     ConfigMgr = "Jyx2Configs/Jyx2ConfigMgr",
 }
-local CSBridgeList = {
-    ConfigMgr = "Jyx2Configs/Jyx2ConfigCSAPI",
-}
-return {LuaModuleList, CSBridgeList}
+return LuaModuleList

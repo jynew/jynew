@@ -17,7 +17,7 @@ end
 print("Jyx2 Init")
 local requireList = require "LuaModuleList"
 Jyx2 = {} -- 所有的Lua模块都作为Jyx2表的元素添加进去
-Jyx2.moduleList = requireList[1]
+Jyx2.moduleList = requireList
 
 function Jyx2:AddModule(name, path)
     if path == nil then

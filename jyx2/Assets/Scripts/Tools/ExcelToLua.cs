@@ -149,7 +149,7 @@ namespace Jyx2.Middleware
         {
             //获取表格名字
             string configType = sheet[0][1].ToString();
-            Debug.Log(configType);
+
             //获取表格字段信息
             List<ColDesc> colDescList = GetColDesc(sheet, colNum);
             StringBuilder sb = new StringBuilder();
@@ -359,6 +359,11 @@ namespace Jyx2.Middleware
 
             return true;
         }
+        public static void Clearfiles(string outDir)
+        {
+            DirectoryInfo dir = new DirectoryInfo(outDir);
+            dir.Delete(true);
+        }
         /// <summary>
         /// 将所有Excel转化Lua并储存
         /// </summary>
@@ -368,6 +373,8 @@ namespace Jyx2.Middleware
         public static void ExportAllLuaFile(string inDir, string outDir)
         {
             Debug.Log("xlsx to lua start.");
+            Directory.CreateDirectory(outDir);
+            Clearfiles(outDir);
             var files = Directory.GetFiles(inDir, "*.xlsx", SearchOption.AllDirectories);
             foreach (var path in files)
             {
@@ -384,7 +391,6 @@ namespace Jyx2.Middleware
             if (sheet[0][0].ToString() != "LuaConfigGen") return;
             string outPath = Path.Combine(outDir, sheet[0][1].ToString() + "Config.lua");
             string content = GenLuaFile(sheet, colNum, rowNum);
-            Directory.CreateDirectory(outDir);
             if (!string.IsNullOrEmpty(content))
             {
                 File.WriteAllText(outPath, content);

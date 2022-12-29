@@ -31,7 +31,6 @@ namespace Jyx2
             var _sprite = await ResLoader.LoadAsset<Sprite>(path);
             return _sprite;
         }
-        //public static void LoadAsyncForget(this Image image, UniTask<Sprite> task)
         public static void LoadAsyncForget(this Image image, string path)
         {   
             LoadAsync(image,GetPicTask(path)).Forget();
@@ -90,35 +89,37 @@ public static class Jyx2ResourceHelper
     {
         var initFile = await ResLoader.LoadAsset<TextAsset>("Assets/LuaScripts/InitLuaScripts.lua");
         var luaEnv = LuaManager.GetLuaEnv();
-        luaEnv.DoString(System.Text.Encoding.UTF8.GetBytes(initFile.text));
+        luaEnv.DoString(System.Text.Encoding.UTF8.GetBytes(initFile.text), "InitLuaScripts");
     }
 
     private static async Task InitConfigTables()
     {
         var mod = RuntimeEnvSetup.GetCurrentMod();
 
-        //编辑器模式下直接从excel中载入，不需要再打包
-        /*if (mod is GameModEditor editor)
+        //编辑器模式下自动生成lua配置表
+        if (mod is GameModEditor editor)
         {
-            var excelDir = Path.Combine(editor.RootConfig.ModRootDir, "Configs");
-            var data = ExcelTools.LoadFromExcels(excelDir);
-            GameConfigDatabase.Instance.Init(data);   
-        }
-        else //否则从打包载入
-        {
-            var config = await ResLoader.LoadAsset<TextAsset>($"Assets/Configs/Datas.bytes");
-            GameConfigDatabase.Instance.Init(config.bytes);    
+            Debug.Log("自动更新Lua配置表");
+            // 生成Lua配置表
+            var ModRootDir = RuntimeEnvSetup.CurrentModConfig.ModRootDir;
+            ExcelToLua.ExportAllLuaFile($"{ModRootDir}/Configs", $"{ModRootDir}/Configs/Lua");
 
+            UnityEditor.AssetDatabase.Refresh();
         }
-        */
+
         //从Lua表读取配置
         var configs = await ResLoader.LoadAssets<TextAsset>("Assets/Configs/Lua/");
+        if (configs.Count < 1)
+        {
+            throw new Exception("没有找到配置表");
+        }
+
         Debug.Log("load configs num: "+configs.Count);
         var luaEnv = LuaManager.GetLuaEnv();
         foreach (var file in configs)
         {
             try{
-                luaEnv.DoString(System.Text.Encoding.UTF8.GetBytes(file.text));
+                luaEnv.DoString(System.Text.Encoding.UTF8.GetBytes(file.text), file.name);
             }
             catch{
                 Debug.LogError($"{file.name} 运行出错");
