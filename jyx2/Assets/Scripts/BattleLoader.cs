@@ -27,7 +27,6 @@ public class BattleLoader : MonoBehaviour
 {
     [LabelText("载入战斗ID")] public int m_BattleId = 0;
 
-    //public Jyx2ConfigBattle CurrentBattleConfig { get; set; } = null;
     public LBattleConfig CurrentBattleConfig { get; set; } = null;
 
     [HideInInspector] public Action<BattleResult> Callback;
@@ -63,7 +62,6 @@ public class BattleLoader : MonoBehaviour
 
         if (CurrentBattleConfig == null)
         {
-            //CurrentBattleConfig = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(m_BattleId);
             CurrentBattleConfig = LuaToCsBridge.BattleTable[m_BattleId];
         }
         else
@@ -87,7 +85,6 @@ public class BattleLoader : MonoBehaviour
         get { return GameRuntimeData.Instance; }
     }
 
-    //async UniTask LoadJyx2Battle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
     async UniTask LoadJyx2Battle(LBattleConfig battle, Action<BattleResult> callback)
     {
         Debug.Log("-----------BattleLoader.LoadJyx2Battle");
@@ -104,8 +101,6 @@ public class BattleLoader : MonoBehaviour
             return;
         }
 
-        //var teamMates = battle.TeamMates.Split(',').ToList();
-        //var autoTeamMates = battle.AutoTeamMates.Split(',').ToList();
         var teamMates = battle.TeamMates;
         var autoTeamMates = battle.AutoTeamMates;
 
@@ -117,7 +112,6 @@ public class BattleLoader : MonoBehaviour
         {
             foreach (var v in autoTeamMates)
             {
-                //var roleId = int.Parse(v);
                 var roleId = v;
                 if (roleId == -1) continue;
                 AddRole(roleId, 0); //TODO IS AUTO
@@ -138,7 +132,6 @@ public class BattleLoader : MonoBehaviour
             //必选人物
             bool MustRoleFunc(RoleInstance r)
             {
-                //return teamMates.Exists(id => int.Parse(id) == r.Key);
                 return teamMates.Exists(id => id == r.Key);
             }
 
@@ -163,7 +156,6 @@ public class BattleLoader : MonoBehaviour
         }
     }
 
-    //UniTask LoadJyx2BattleStep2(Jyx2ConfigBattle battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     UniTask LoadJyx2BattleStep2(LBattleConfig battle, List<RoleInstance> selectRoles, Action<BattleResult> callback)
     {
         //玩家选择的人物
@@ -174,28 +166,6 @@ public class BattleLoader : MonoBehaviour
                 AddRole(role.GetJyx2RoleId(), 0);
             }
         }
-        /*//通过ID添加队友
-        if (!string.IsNullOrEmpty(battle.TeamMates))
-        {
-            var teamMates = battle.TeamMates.Split(',').ToList();
-            //预配置队友
-            foreach (var v in teamMates)
-            {
-                AddRole(int.Parse(v), 0);
-            }
-        }
-
-        //通过ID添加敌人
-        if(!string.IsNullOrEmpty(battle.Enemies))
-        {
-            var enemies = battle.Enemies.Split(',').ToList();
-
-            //敌人
-            foreach (var v in enemies)
-            {
-                AddRole(int.Parse(v), 1);
-            }
-        }*/
 
         //通过ID添加队友
             var teamMates = battle.TeamMates;
@@ -222,14 +192,13 @@ public class BattleLoader : MonoBehaviour
                 AddDynamicRole(r, 0);
             }
         }
-        Debug.Log("Battle Loader 动态生成敌人");
+        //Debug.Log("Battle Loader 动态生成敌人");
         //动态生成敌人
         if (battle.DynamicEnemies != null)
         {
             foreach (var r in battle.DynamicEnemies)
             {
                 AddDynamicRole(r, 1);
-                Debug.Log(r.Name);
             }
         }
 
@@ -304,7 +273,6 @@ public class BattleLoader : MonoBehaviour
 
 
     //初始化战斗
-    //async UniTask InitBattle(Action<BattleResult> callback, Jyx2ConfigBattle battleData)
     async UniTask InitBattle(Action<BattleResult> callback, LBattleConfig battleData)
     {
         Debug.Log("-----------BattleLoader.InitBattle");
@@ -332,8 +300,8 @@ public class BattleLoader : MonoBehaviour
         BattleStartParams startParam = new BattleStartParams()
         {
             roles = roles,
-                  battleData = battleData,
-                  callback = callback,
+            battleData = battleData,
+            callback = callback,
         };
 
         //测试LuaEvent 用于Lua侧做拓展逻辑

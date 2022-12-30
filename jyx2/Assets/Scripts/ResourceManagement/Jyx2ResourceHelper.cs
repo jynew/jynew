@@ -114,7 +114,7 @@ public static class Jyx2ResourceHelper
             throw new Exception("没有找到配置表");
         }
 
-        Debug.Log("load configs num: "+configs.Count);
+        Debug.Log("载入的配置表数量: "+ configs.Count);
         var luaEnv = LuaManager.GetLuaEnv();
         foreach (var file in configs)
         {

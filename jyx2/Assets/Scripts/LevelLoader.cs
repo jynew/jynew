@@ -39,7 +39,6 @@ namespace Jyx2
         //加载战斗
         public static void LoadBattle(int battleId, Action<BattleResult> callback)
         {
-            //var battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(battleId);
             var battle = LuaToCsBridge.BattleTable[battleId];
             if (battle == null)
             {
@@ -51,13 +50,11 @@ namespace Jyx2
         }
         
         //加载战斗
-        //public static void LoadBattle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
         public static void LoadBattle(LBattleConfig battle, Action<BattleResult> callback)
         {
             DoloadBattle(battle, callback).Forget();
         }
 
-        //private static async UniTask DoloadBattle(Jyx2ConfigBattle battle, Action<BattleResult> callback)
         private static async UniTask DoloadBattle(LBattleConfig battle, Action<BattleResult> callback)
         {
             var formalMusic = AudioManager.GetCurrentMusic(); //记住当前的音乐，战斗后还原

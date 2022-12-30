@@ -373,8 +373,8 @@ namespace Jyx2.Middleware
         public static void ExportAllLuaFile(string inDir, string outDir)
         {
             Debug.Log("xlsx to lua start.");
-            Directory.CreateDirectory(outDir);
             Clearfiles(outDir);
+            Directory.CreateDirectory(outDir);
             var files = Directory.GetFiles(inDir, "*.xlsx", SearchOption.AllDirectories);
             foreach (var path in files)
             {
