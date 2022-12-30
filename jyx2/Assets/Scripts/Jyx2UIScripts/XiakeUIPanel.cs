@@ -353,7 +353,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         Action<int> onItemSelect = (itemId) =>
         {
-            //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
             var item = LuaToCsBridge.ItemTable[itemId];
 
             //选择了当前使用的装备，则卸下
@@ -381,7 +380,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         Action<int> onItemSelect = (itemId) =>
         {
-            //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
             var item = LuaToCsBridge.ItemTable[itemId];
             if (m_currentRole.Armor == itemId)
             {
@@ -406,7 +404,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         async void onItemSelect(int itemId)
         {
-            //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
             var item = LuaToCsBridge.ItemTable[itemId];
             if (m_currentRole.Xiulianwupin == itemId)
             {
@@ -459,7 +456,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             this.gameObject.SetActive(true);
             if (itemId != -1 && !m_currentRole.CanUseItem(itemId))
             {
-                //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
                 var item = LuaToCsBridge.ItemTable[itemId];
                 GameUtil.DisplayPopinfo((int)item.ItemType == 1 ? "此人不适合配备此物品" : "此人不适合修炼此物品");
                 return;

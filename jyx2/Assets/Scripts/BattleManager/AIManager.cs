@@ -709,7 +709,6 @@ public class AIManager
                 string id = kv.Key;
                 int count = kv.Value.Item1;
 
-                //var item = GameConfigDatabase.Instance.Get<LItemConfig>(id);
                 var item = LuaToCsBridge.ItemTable[int.Parse(id)];
                 if ((int)item.ItemType == itemType)
                     items.Add(item);
@@ -719,7 +718,6 @@ public class AIManager
         {
             foreach (var item in role.Items)
             {
-                //var tmp = GameConfigDatabase.Instance.Get<LItemConfig>(item.Id);
                 var tmp = LuaToCsBridge.ItemTable[item.Id];
                 if ((int)tmp.ItemType == itemType)
                     items.Add(tmp);

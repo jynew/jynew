@@ -74,7 +74,6 @@ public class ShopUIItem : Selectable,INavigable
 	{
 		this.index = index;
 		this.shopItem = shopItem;
-		//LItemConfig item = GameConfigDatabase.Instance.Get<LItemConfig>(shopItem.Id);
 		LItemConfig item = LuaToCsBridge.ItemTable[shopItem.Id];
 
 		//---------------------------------------------------------------------------

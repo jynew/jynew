@@ -415,7 +415,6 @@ namespace Jyx2
                         //---------------------------------------------------------------------------
                         //特定位置的翻译【得到物品提示】
                         //---------------------------------------------------------------------------
-                        //StoryEngine.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(item.Id).Name + "×" + Math.Abs(item.Count));
                         StoryEngine.DisplayPopInfo("得到物品:".GetContent(nameof(GameRuntimeData)) + LuaToCsBridge.ItemTable[item.Id].Name + "×" + Math.Abs(item.Count));
                         //---------------------------------------------------------------------------
                         //---------------------------------------------------------------------------

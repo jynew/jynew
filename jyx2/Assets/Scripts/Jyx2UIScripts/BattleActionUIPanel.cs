@@ -346,7 +346,6 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			if (itemId == -1)
 				return;
 
-			//var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemId);
 			var item = LuaToCsBridge.ItemTable[itemId];
 			if (item == null)
 				return;

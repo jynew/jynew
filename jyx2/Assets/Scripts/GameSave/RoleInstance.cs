@@ -372,14 +372,12 @@ namespace Jyx2
         public LItemConfig GetWeapon()
         {
             if (Weapon == -1) return null;
-            //return GameConfigDatabase.Instance.Get<LItemConfig>(Weapon);
             return LuaToCsBridge.ItemTable[Weapon];
         }
 
         public LItemConfig GetArmor()
         {
             if (Armor == -1) return null;
-            //return GameConfigDatabase.Instance.Get<LItemConfig>(Armor);
             return LuaToCsBridge.ItemTable[Armor];
         }
 
@@ -387,7 +385,6 @@ namespace Jyx2
         public LItemConfig GetXiulianItem()
         {
             if (Xiulianwupin == -1) return null;
-            //return GameConfigDatabase.Instance.Get<LItemConfig>(Xiulianwupin);
             return LuaToCsBridge.ItemTable[Xiulianwupin];
         }
 
@@ -488,7 +485,6 @@ namespace Jyx2
 
         public bool CanUseItem(int itemId)
         {
-            //return CanUseItem(GameConfigDatabase.Instance.Get<LItemConfig>(itemId));
             return CanUseItem(LuaToCsBridge.ItemTable[itemId]);
         }
 
@@ -664,7 +660,6 @@ namespace Jyx2
 
                 runtime.AddItem(practiseItem.GenerateItemNeedCost, -pickItem.Count);
                 ExpForMakeItem = 0;
-                //return $"{Name} 制造出 {GameConfigDatabase.Instance.Get<LItemConfig>(pickItem.Id).Name}\n";
                 return $"{Name} 制造出 {LuaToCsBridge.ItemTable[pickItem.Id].Name}\n";
             }
 

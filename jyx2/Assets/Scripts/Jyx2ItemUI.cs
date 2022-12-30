@@ -67,7 +67,6 @@ public class Jyx2ItemUI : Selectable,INavigable,IDataContainer<KeyValuePair<stri
 
     public LItemConfig GetItemConfigData()
     {
-        //return GameConfigDatabase.Instance.Get<LItemConfig>(ItemId);
         return LuaToCsBridge.ItemTable[ItemId];
     }
 

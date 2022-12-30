@@ -112,7 +112,6 @@ public partial class MainUIPanel : Jyx2_UIBase
 	{
 		if (id == -1) return;
 
-		//var item = GameConfigDatabase.Instance.Get<LItemConfig>(id);
 		var item = LuaToCsBridge.ItemTable[id];
 		if (item == null)
 		{

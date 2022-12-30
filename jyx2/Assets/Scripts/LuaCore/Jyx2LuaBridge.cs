@@ -755,7 +755,6 @@ namespace Jyx2
         /// <param name="itemId"></param>
         public static void RoleUseItem(int roleId, int itemId)
         {
-            //var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
             var item = LuaToCsBridge.ItemTable[itemId];
             if (!TryFindRole(roleId, out var role))
                 return;
@@ -783,7 +782,6 @@ namespace Jyx2
         {
             if (!TryFindRole(roleId, out var role))
                 return;
-            //var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
             var item = LuaToCsBridge.ItemTable[itemId];
             //武器
             if ((int)item.EquipmentType == 0)
@@ -1277,7 +1275,6 @@ namespace Jyx2
         /// <param name="count">可为负数</param>
         public static void AddItem(int itemId, int count)
         {
-            //var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
             var item = LuaToCsBridge.ItemTable[itemId];
             if (item == null)
             {
@@ -1327,7 +1324,6 @@ namespace Jyx2
         /// <param name="count"></param>
         public static void AddItemWithoutHint(int itemId, int count)
         {
-            //var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
             var item = LuaToCsBridge.ItemTable[itemId];
             if (item == null)
             {

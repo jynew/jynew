@@ -164,7 +164,6 @@ public partial class BagUIPanel : Jyx2_UIBase
 
     private bool IsItemVisible(ItemArchiveData itemData)
     {
-        //var item = GameConfigDatabase.Instance.Get<LItemConfig>(itemData.Key);
         var item = LuaToCsBridge.ItemTable[int.Parse(itemData.Key)];
         if (item == null)
             return false;

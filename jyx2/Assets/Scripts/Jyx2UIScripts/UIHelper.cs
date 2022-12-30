@@ -165,7 +165,6 @@ public class UIHelper
         
         StringBuilder sb = new StringBuilder();
         
-        //var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
         var GenerateItemList = new List<CsRoleItem>();
         var GenerateItemArr = item.GenerateItems.Split('|');
         foreach (var GenerateItem in GenerateItemArr)
@@ -179,7 +178,6 @@ public class UIHelper
         }
         foreach (var tempItem in GenerateItemList)
         {
-            //var cfg = GameConfigDatabase.Instance.Get<LItemConfig>(tempItem.Id);
             var cfg = LuaToCsBridge.ItemTable[tempItem.Id];
             if (cfg == null)
                 continue;
@@ -200,7 +198,6 @@ public class UIHelper
         
         if (item.GenerateItemNeedCost != -1)
         {
-            //sb.Append($"材料:  {GameConfigDatabase.Instance.Get<LItemConfig>(item.GenerateItemNeedCost).Name}\n");
             sb.Append($"材料:  {LuaToCsBridge.ItemTable[item.GenerateItemNeedCost].Name}\n");
         }
 
