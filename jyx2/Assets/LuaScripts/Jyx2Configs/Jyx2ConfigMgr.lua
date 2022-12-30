@@ -84,12 +84,11 @@ function Jyx2ConfigMgr:GetItem(name,id)
 end
 
 -- 清空所有配置表
-function Jyx2ConfigMgr:ClearAllConfig()
+function Jyx2ConfigMgr:DeInit()
     for i,cfgName in pairs(self.ConfigList) do
-        print(self[cfgName].ItemNum)
         self[cfgName] = nil
-        print(self[cfgName].ItemNum)
     end
+    self.ConfigList = {}
 end
 
 return Jyx2ConfigMgr

@@ -144,7 +144,7 @@ function NextBattle()
     local level = scene_api.GetInt("Level")
     
     --动态构建一场战斗
-    local battleConfig = CS.Jyx2.BattleConfig()
+    local battleConfig = CS.Jyx2.CsBattleConfig()
     
     battleConfig.Id = 9999 --随便拟定一个战斗ID，无所谓
     battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑选一个战斗场景

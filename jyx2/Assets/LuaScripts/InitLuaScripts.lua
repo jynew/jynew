@@ -11,17 +11,18 @@
 
 -- 避免重复定义
 if Jyx2 ~= nil then
-    print("重复定义")
+    print("Jyx2 重复定义")
     return 
 end
-print("Jyx2 Init")
+
 local requireList = require "LuaModuleList"
 Jyx2 = {} -- 所有的Lua模块都作为Jyx2表的元素添加进去
-Jyx2.moduleList = requireList
+Jyx2.moduleList = {} -- 模块列表
 
 function Jyx2:AddModule(name, path)
+    -- 如果没指定模块地址，则从表中获取
     if path == nil then
-        path = self.moduleList[name]
+        path = requireList[name]
     end
     local tmpMdl = self[name]
     if tmpMdl == nil then
@@ -29,7 +30,9 @@ function Jyx2:AddModule(name, path)
         if tmpMdl == nil then
             print("Jyx2-Error: 添加模块 "..name.." 失败")
         end
+        print("Jyx2 增加模块: "..name)
         self[name] = tmpMdl
+        table.insert(self.moduleList, name)
     end
 end
 
@@ -38,7 +41,6 @@ function Jyx2:GetModule(name)
     if tmpMdl ~= nil then
         return tmpMdl
     else
-        print("增加模块")
         self:AddModule(name)
         return self[name]
     end
@@ -49,18 +51,40 @@ function Jyx2:IsLoaded(name)
     return self[name] ~= nil
 end
 
+-- 初始化
+function Jyx2:Init()
+    print("Jyx2 Init")
+    -- 根据模块列表添加模块
+    for mod,path in pairs(requireList) do
+        self:AddModule(mod,path)
+    end
+end
+
+-- 反初始化
 function Jyx2:DeInit()
     print("Jyx2 DeInit")
-    Jyx2.ConfigMgr:ClearAllConfig()
+    for i,mod in pairs(self.moduleList) do
+        if self[mod] ~= nil then
+            -- 如果模块有自己的DeInit函数就运行一下
+            if self[mod].DeInit ~= nil then
+                self[mod]:DeInit()
+            end
+            -- 注销这个模块
+            self[mod] = nil
+        end
+    end
+    self.moduleList = {}
 end
+
+Jyx2:Init()
 
 -- 辅助函数
 -- prequire 用于载入模块，如果模块不存在，返回空表
 function prequire(name)
     local rst = {}
     if pcall(function(x) rst = require(x) end, name) then
-        return rst
-    else
-        return rst
-    end
+    return rst
+else
+    return rst
+end
 end

@@ -16,30 +16,6 @@ using XLua;
 namespace Jyx2
 {
     /// <summary>
-    /// 用来复制存储一份LevelInfo，在修改暗器伤害时与原配置表隔离
-    /// </summary>
-    public class CsSkillLevel:LSkillLevel
-    {
-        public int Attack {get;set;}
-        public int SelectRange {get;set;}
-        public int AttackRange {get;set;}
-        public int AddMp {get;set;}
-        public int KillMp {get;set;}
-
-        public CsSkillLevel()
-        {
-        }
-
-        public CsSkillLevel(LSkillLevel sk)
-        {
-            Attack = sk.Attack;
-            SelectRange = sk.SelectRange;
-            AttackRange = sk.AttackRange;
-            AddMp = sk.AddMp;
-            KillMp = sk.KillMp;
-        }
-    }
-    /// <summary>
     /// JYX2的武功实例
     /// </summary>
     [Serializable]
@@ -120,7 +96,6 @@ namespace Jyx2
             return Level / 100 + 1;
         }
 
-        //public Jyx2ConfigSkillLevel GetSkillLevelInfo(int level = -1)
         public LSkillLevel GetSkillLevelInfo(int level = -1)
         {
             if(level < 1)
@@ -137,10 +112,8 @@ namespace Jyx2
         }
 
         //实际上这个函数里针对暗器的操作没什么用，暗器的相关数据都在AnqiSkillCastInstance里处理了
-        //public Jyx2ConfigSkill GetSkill(LItemConfig _anqi = null)
         public LSkillConfig GetSkill(LItemConfig _anqi = null)
         {
-            //var skillT = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(Key);
             var skillT = LuaToCsBridge.SkillTable[Key];
 
             //暗器
@@ -164,19 +137,6 @@ namespace Jyx2
                 var skillLevel = new CsSkillLevel(lvl);
                 _levels.Add(skillLevel);
             }
-            /*var _levelArr = _data.Levels.Split('|');
-              foreach (var _level in _levelArr)
-              {
-              var _levelArr2 = _level.Split(',');
-              if (_levelArr2.Length != 5) continue;
-              var skillLevel = new Jyx2ConfigSkillLevel();
-              skillLevel.Attack = int.Parse(_levelArr2[0]);
-              skillLevel.SelectRange = int.Parse(_levelArr2[1]);
-              skillLevel.AttackRange = int.Parse(_levelArr2[2]);
-              skillLevel.AddMp = int.Parse(_levelArr2[3]);
-              skillLevel.KillMp = int.Parse(_levelArr2[4]);
-              _levels.Add(skillLevel);
-              }*/
             return _levels;
         }
 

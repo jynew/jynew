@@ -126,7 +126,8 @@ public static class Jyx2ResourceHelper
                 throw;
             }
         }
-        LuaToCsBridge.LuaConfRef();
+        //初始化Lua配置表的Cs接口
+        LuaToCsBridge.LuaConfigToCsInit();
     }
 
     public static GameObject GetCachedPrefab(string path)

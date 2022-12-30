@@ -43,8 +43,6 @@ namespace Jyx2
             IsLoading = false;
             _successInited = false;
             LuaManager.Clear();
-            //GameConfigDatabase.ForceClear();
-            LuaToCsBridge.LuaConfRefDispose();
         }
 
         private static bool _successInited = false;

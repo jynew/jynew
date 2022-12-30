@@ -50,6 +50,7 @@ namespace Jyx2
             LuaToCsBridge.LuaToCsBridgeDispose();
             //LuaScript清理
             luaEnv.DoString("if Jyx2 ~= nil then Jyx2:DeInit() end");
+
             _inited = false;
 
             //ConfigManager.Reset();
