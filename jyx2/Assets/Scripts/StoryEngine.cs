@@ -84,7 +84,6 @@ public class StoryEngine : MonoBehaviour
                 loadPara.Rotate = r.SubMapData.CurrentOri;
             }
 
-            //var map = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
             var map = LuaToCsBridge.MapTable[mapId];
 
             if (map == null)

@@ -49,7 +49,7 @@ namespace Jyx2
             //清除Lua转Cs相关接口
             LuaToCsBridge.LuaToCsBridgeDispose();
             //LuaScript清理
-            luaEnv.DoString("Jyx2:DeInit()");
+            luaEnv.DoString("if Jyx2 ~= nil then Jyx2:DeInit() end");
             _inited = false;
 
             //ConfigManager.Reset();

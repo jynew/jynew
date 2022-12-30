@@ -682,7 +682,6 @@ namespace Jyx2
         /// <returns></returns>
         public int GetSceneEntranceCondition(int mapId)
         {
-            //var gameMap = GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(mapId);
             var gameMap = LuaToCsBridge.MapTable[mapId];
             if (gameMap == null) return -1;
 

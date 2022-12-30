@@ -204,7 +204,6 @@ public partial class GameMainMenu : Jyx2_UIBase
 		loadPara.triggerName = "0";
 		GameRuntimeData.Instance.startDate = DateTime.Now;
 		//加载地图
-		//var startMap = Jyx2ConfigMap.GetGameStartMap();
 		var startMap = LuaToCsBridge.MapTable[0].GetGameStartMap();
 		if (startMap == null)
 		{

@@ -19,7 +19,6 @@ namespace Jyx2
     public class LevelLoader
     {
         //加载地图
-        //public static void LoadGameMap(Jyx2ConfigMap map, LevelMaster.LevelLoadPara para = null, Action callback = null)
         public static void LoadGameMap(LMapConfig map, LevelMaster.LevelLoadPara para = null, Action callback = null)
         {
             LevelMaster.loadPara = para != null ? para : new LevelMaster.LevelLoadPara(); //默认生成一份
@@ -27,7 +26,6 @@ namespace Jyx2
             DoLoad(map, callback).Forget();
         }
 
-        //static async UniTask DoLoad(Jyx2ConfigMap map, Action callback)
         static async UniTask DoLoad(LMapConfig map, Action callback)
         {
             LevelMaster.SetCurrentMap(map);
