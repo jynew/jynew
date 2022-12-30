@@ -16,8 +16,6 @@ using UnityEngine;
 using UniRx;
 using NUnit.Framework;
 using Random = UnityEngine.Random;
-//using Cysharp.Threading.Tasks;
-//using Jyx2.ResourceManagement;
 using XLua;
 
 namespace Jyx2
@@ -1129,9 +1127,7 @@ namespace Jyx2
         /// <returns></returns>
         public int GetExtraAttack(int wugongId)
         {
-            //var extra = GameConfigDatabase.Instance.Get<Jyx2ConfigExtra>(Weapon);
             LExtraConfig extra;
-            //if (extra != null && extra.Wugong == wugongId)
             if (LuaToCsBridge.ExtraTable.TryGetValue(Weapon, out extra))
             {
                 if (extra.Wugong == wugongId)
