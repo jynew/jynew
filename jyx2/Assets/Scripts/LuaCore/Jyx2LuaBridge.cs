@@ -114,8 +114,6 @@ namespace Jyx2
                 return;
             }
 
-            //string mapId = LevelMaster.GetCurrentGameMap().Id.ToString();
-            //var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
             int mapId = LevelMaster.GetCurrentGameMap().Id;
             var hasData = LuaToCsBridge.ShopTable[mapId]; // mapId和shopId对应
             if (hasData == null)
@@ -721,7 +719,6 @@ namespace Jyx2
             //只有设置了显示，并且角色在队伍的时候才显示
             if (noDisplay != 0 && runtime.IsRoleInTeam(roleId))
             {
-                //var skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(magicId);
                 var skill = LuaToCsBridge.SkillTable[magicId];
                 StoryEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
             }

@@ -29,7 +29,6 @@ public class ShopUIItem : Selectable,INavigable
 	Text itemNum;
 	Text totalCost;
 
-	//Jyx2ConfigShopItem shopItem;
 	CsShopItem shopItem;
 	int buyCount;
 	int index;
@@ -39,7 +38,6 @@ public class ShopUIItem : Selectable,INavigable
 
 	public int ItemId => shopItem?.Id ?? -1;
 
-	//public Jyx2ConfigShopItem ShopItemData => shopItem;
 	public CsShopItem ShopItemData => shopItem;
 
 
@@ -69,7 +67,6 @@ public class ShopUIItem : Selectable,INavigable
 		OnShopItemSelect = null;
     }
 
-	//public async UniTaskVoid Refresh(Jyx2ConfigShopItem shopItem, int index, int hasBuyNum)
 	public async UniTaskVoid Refresh(CsShopItem shopItem, int index, int hasBuyNum)
 	{
 		this.index = index;
