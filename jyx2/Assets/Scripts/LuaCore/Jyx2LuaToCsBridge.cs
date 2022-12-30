@@ -14,6 +14,26 @@ using UnityEngine;
 
 namespace Jyx2
 {
+    /// <summary>
+    /// 用来储存Item信息而不影响配置表
+    /// </summary>
+    [Serializable]
+    public class CsRoleItem : LRoleItem
+    {
+        [SerializeField] public int Id {get;set;}
+        [SerializeField] public int Count {get;set;}
+
+        public CsRoleItem()
+        {
+        }
+
+        public CsRoleItem(LRoleItem itm)
+        {
+            Id = itm.Id;
+            Count = itm.Count;
+        }
+    }
+
     //用来解读Lua的Battle配置表
     [CSharpCallLua]
     public interface LBattleConfig

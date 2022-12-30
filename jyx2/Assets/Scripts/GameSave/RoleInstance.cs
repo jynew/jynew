@@ -16,32 +16,12 @@ using UnityEngine;
 using UniRx;
 using NUnit.Framework;
 using Random = UnityEngine.Random;
-using Cysharp.Threading.Tasks;
-using Jyx2.ResourceManagement;
+//using Cysharp.Threading.Tasks;
+//using Jyx2.ResourceManagement;
 using XLua;
 
 namespace Jyx2
 {
-    /// <summary>
-    /// 用来储存Item信息而不影响配置表
-    /// </summary>
-    [Serializable]
-    public class CsRoleItem : LRoleItem
-    {
-        [SerializeField] public int Id {get;set;}
-        [SerializeField] public int Count {get;set;}
-
-        public CsRoleItem()
-        {
-        }
-
-        public CsRoleItem(LRoleItem itm)
-        {
-            Id = itm.Id;
-            Count = itm.Count;
-        }
-    }
-
     [Serializable]
     public class RoleInstance : IComparable<RoleInstance>
     {
@@ -76,7 +56,6 @@ namespace Jyx2
 
         [SerializeField] public int ExpForItem; //修炼点数
         [SerializeField] public List<SkillInstance> Wugongs = new List<SkillInstance>(); //武功
-        //[SerializeField] public List<Jyx2ConfigCharacterItem> Items = new List<Jyx2ConfigCharacterItem>(); //道具
         [SerializeField] public List<CsRoleItem> Items = new List<CsRoleItem>(); //道具
 
         [SerializeField] public int Mp;
@@ -111,7 +90,6 @@ namespace Jyx2
 
         public void BindKey()
         {
-            //_data = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(Key);
             _data = LuaToCsBridge.CharacterTable[Key];
 
             if (_data == null)
@@ -120,22 +98,6 @@ namespace Jyx2
             }
 
             //初始化武功列表
-            //Wugongs.Clear();			
-            /*if (Wugongs.Count == 0)
-            {
-                var _skills = _data.Skills.Split('|');
-                foreach (var _skill in _skills)
-                {
-                    var _skillArr = _skill.Split(',');
-                    if (_skillArr.Length != 2) continue;
-                    var id = int.Parse(_skillArr[0]);
-                    var level = int.Parse(_skillArr[1]);
-                    var wugong = new Jyx2ConfigCharacterSkill();
-                    wugong.Id = id;
-                    wugong.Level = level;
-                    Wugongs.Add(new SkillInstance(wugong));
-                }
-            }*/
             if (Wugongs.Count == 0)
             {
                 foreach (var _skill in _data.Skills)
@@ -251,9 +213,6 @@ namespace Jyx2
         }
         public string GetPic()
         {
-            //if (_data == null) BindKey();
-            //var _sprite = await ResLoader.LoadAsset<Sprite>($"BuildSource/head/{Pic}.png");
-            //return _sprite;
             return $"BuildSource/head/{Data.Pic}.png";
         }
         //模型配置
@@ -490,14 +449,8 @@ namespace Jyx2
         {
             Items.Clear();
             //配置表中添加的物品
-            //var items = Data.Items.Split('|');
-            //foreach (var item in items)
             foreach (var item in Data.Items)
             {
-                //var characterItem = new Jyx2ConfigCharacterItem();
-                //characterItem.Id = int.Parse(itemArr[0]);
-                //characterItem.Count = int.Parse(itemArr[1]);
-                //Items.Add(characterItem);
                 Items.Add(new CsRoleItem(item));
             }
         }
@@ -526,7 +479,6 @@ namespace Jyx2
             }
             else
             {
-                //Items.Add(new Jyx2ConfigCharacterItem()
                 Items.Add(new CsRoleItem()
                         {
                         Id = itemId,
@@ -683,14 +635,12 @@ namespace Jyx2
                 return "";
             if (!runtime.HaveItemBool(practiseItem.GenerateItemNeedCost))
                 return "";
-            //var GenerateItemList = new List<Jyx2ConfigCharacterItem>();
             var GenerateItemList = new List<CsRoleItem>();
             var GenerateItemArr = practiseItem.GenerateItems.Split('|');
             foreach (var GenerateItem in GenerateItemArr)
             {
                 var GenerateItemArr2 = GenerateItem.Split(',');
                 if (GenerateItemArr2.Length != 2) continue;
-                //var characterItem = new Jyx2ConfigCharacterItem();
                 var characterItem = new CsRoleItem();
                 characterItem.Id = int.Parse(GenerateItemArr2[0]);
                 characterItem.Count = int.Parse(GenerateItemArr2[1]);

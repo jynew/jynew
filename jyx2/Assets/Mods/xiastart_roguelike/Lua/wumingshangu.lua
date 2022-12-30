@@ -258,7 +258,6 @@ function TalkBeichou()
         
         -- local item = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndItem)
         -- local book = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndBook)
-        -- local teamMate = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigCharacter, rndTeamMate)
         local item = Jyx2.ConfigMgr.Item[rndItem]
         local book = Jyx2.ConfigMgr.Item[rndBook]
         local teamMate = Jyx2.ConfigMgr.Character[rndTeamMate]

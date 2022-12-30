@@ -213,17 +213,12 @@ namespace Jyx2
 
         void InitAllRole() 
         {
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
                 //创建所有角色
-                //foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
                 foreach (var r in LuaToCsBridge.CharacterTable.Values)
                 {
                     var role = new RoleInstance(r.Id);
                     _instance.AllRoles.Add(r.Id, role);
                 }
-            sw.Stop();
-            Debug.Log(string.Format("total: {0} ms", sw.ElapsedMilliseconds));
         }
 
         #endregion
@@ -271,15 +266,15 @@ namespace Jyx2
             GameSaveSummary summary = new GameSaveSummary()
             {
                 Summary = GenerateSaveSummaryInfo(),
-                        ModId = RuntimeEnvSetup.CurrentModId,
-                        ModName = RuntimeEnvSetup.CurrentModId,
+                ModId = RuntimeEnvSetup.CurrentModId,
+                ModName = RuntimeEnvSetup.CurrentModId,
             };
             GameSaveSummary.Save(fileIndex, summary);
 
             //存档
             var path = GetArchiveFile(fileIndex);
             ES3.Save("RuntimeVersion", _instance.RuntimeVersion, path);//用一个key单独存储版本号
-                                                                       //ES3.Save("ModId", RuntimeEnvSetup.CurrentModId, path);//用一个key储存Mod名称
+            //ES3.Save("ModId", RuntimeEnvSetup.CurrentModId, path);//用一个key储存Mod名称
             ES3.Save("ModArchiveVersion", RuntimeEnvSetup.CurrentModConfig.ModArchiveVersion, path);//用一个key储存Mod存档版本号
             ES3.Save(nameof(GameRuntimeData), this, path);
         }
@@ -338,11 +333,9 @@ namespace Jyx2
                 Jyx2LuaBridge.DispatchLuaEvent("OnArchiveOutdated", runtime, oldModVersion);
                 //自动检查一下有没有新添加的人物物品等，无需在lua中单独进行
                 var arcRoleCount = runtime.AllRoles.Count;
-                //var configRoleCount = GameConfigDatabase.Instance.GetCount<Jyx2ConfigCharacter>();
                 var configRoleCount = LuaToCsBridge.CharacterTable.Count;
                 if ( arcRoleCount < configRoleCount)
                 {
-                    //foreach (var r in GameConfigDatabase.Instance.GetAll<Jyx2ConfigCharacter>())
                     foreach (var r in LuaToCsBridge.CharacterTable.Values)
                     {
                         if (runtime.AllRoles.ContainsKey(r.Id)) continue;

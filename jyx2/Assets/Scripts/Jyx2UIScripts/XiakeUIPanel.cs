@@ -312,7 +312,6 @@ public partial class XiakeUIPanel : Jyx2_UIBase
     {
         if (m_currentRole == null)
             return;
-        //var eventLuaPath = GameConfigDatabase.Instance.Get<Jyx2ConfigCharacter>(m_currentRole.GetJyx2RoleId())?.LeaveStoryId;
         var eventLuaPath = LuaToCsBridge.CharacterTable[m_currentRole.GetJyx2RoleId()].LeaveStoryId;
         if (!string.IsNullOrEmpty(eventLuaPath))
         {
