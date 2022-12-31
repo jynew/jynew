@@ -1073,6 +1073,11 @@ namespace Jyx2
             if (Wugongs.Count >= GameConst.MAX_SKILL_COUNT)
                 return -3; //武学已满
 
+            if (!LuaToCsBridge.SkillTable.ContainsKey(magicId))
+            {
+                Debug.LogError("试图添加不存在的武功, skillId: " + magicId);
+                return -4; //无此武学
+            }
 
             SkillInstance w = new SkillInstance(magicId);
             Wugongs.Add(w);
