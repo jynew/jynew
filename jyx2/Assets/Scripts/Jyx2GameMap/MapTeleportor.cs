@@ -48,6 +48,10 @@ public class MapTeleportor : MonoBehaviour
 		{
 			transportMapId = LuaToCsBridge.MapTable[0].GetMapByName(this.gameObject.name).Id;
 		}
+                else
+                {
+                    transportMapId = LuaToCsBridge.MapTable[LevelMaster.GetCurrentGameMap().GetTransportToMapValue(this.gameObject.name)].Id;
+                }
 		//---------------------------------------------------------------------------
 		//await ShowEnterButton(LevelMaster.GetCurrentGameMap().TransportToMap, TransportTriggerName, ButtonText);
 		//---------------------------------------------------------------------------
