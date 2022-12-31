@@ -218,15 +218,14 @@ namespace Jyx2
         {
             get
             {
-                var ModelFileKey = Data.ModelFileKey;
                 //如果配置了，则从配置表读取，否则根据名字读取
-                if (!string.IsNullOrWhiteSpace(ModelFileKey))
+                if (!string.IsNullOrWhiteSpace(Data.ModelFileKey))
                 {
-                    return ModelAsset.Get(ModelFileKey);
+                    return ModelAsset.Get(Data.ModelFileKey);
                 }
                 else
                 {
-                    return ModelAsset.Get(Name);    
+                    return ModelAsset.Get(Data.Name);    
                 }
             }
         }
