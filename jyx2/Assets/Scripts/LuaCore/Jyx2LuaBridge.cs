@@ -1913,7 +1913,6 @@ namespace Jyx2
         /// <param name="eventIndex"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("当前平台交互事件id已支持非数字的字符串填写---by pizazzwhh 2022/12/25")]
         public static bool JudgeEventNum(int eventIndex, int value)
         {
             bool result = false;
@@ -1934,7 +1933,6 @@ namespace Jyx2
         /// <param name="EventId">0->交互事件,1->使用物品事件,2->进入事件</param>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("当前平台触发器事件id已支持非数字的字符串填写---by pizazzwhh 2022/12/25")]
         public static bool JudgePointEventNum(int eventIndex, int EventId, int value)
         {
             bool result = false;
