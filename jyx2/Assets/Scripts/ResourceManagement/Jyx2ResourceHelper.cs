@@ -97,6 +97,7 @@ public static class Jyx2ResourceHelper
         var mod = RuntimeEnvSetup.GetCurrentMod();
 
         //编辑器模式下自动生成lua配置表
+#if UNITY_EDITOR
         if (mod is GameModEditor editor)
         {
             Debug.Log("自动更新Lua配置表");
@@ -106,6 +107,7 @@ public static class Jyx2ResourceHelper
 
             UnityEditor.AssetDatabase.Refresh();
         }
+#endif
 
         //从Lua表读取配置
         var configs = await ResLoader.LoadAssets<TextAsset>("Assets/Configs/Lua/");

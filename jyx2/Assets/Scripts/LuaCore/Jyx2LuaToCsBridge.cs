@@ -525,14 +525,7 @@ namespace Jyx2
     public class LuaToCsBridge
     {
         static private LuaEnv _luaEnv;
-        static private LuaEnv LEnv
-        {
-            get
-            {
-                if (_luaEnv == null) _luaEnv = LuaManager.GetLuaEnv();
-                return _luaEnv;
-            }
-        }
+        static private LuaEnv LEnv {get;set;}
 
         // 用来读取Lua的配置文件
         public static Dictionary<int, LRoleConfig> CharacterTable;
@@ -556,6 +549,7 @@ namespace Jyx2
 
         public static void LuaConfigToCsInit()
         {
+            LEnv = LuaManager.GetLuaEnv();
             List<string> ConfigList = LEnv.Global.GetInPath<List<string>>("Jyx2.ConfigMgr.ConfigList");
             if (ConfigList == null) return;
 
