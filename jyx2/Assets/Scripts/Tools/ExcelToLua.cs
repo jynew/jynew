@@ -108,11 +108,21 @@ namespace Jyx2.Middleware
                     {
                         fieldType = LuaFieldType.l_struct;
                         var tmpName = name.Split(nameSplit, StringSplitOptions.RemoveEmptyEntries);
-                        name = tmpName[0];
-                        subName = tmpName[1].Split(structSplit, StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string t in typeList)
+                        if (tmpName.Length > 1)
                         {
-                            fieldSubType.Add((LuaFieldType)Enum.Parse(typeof(LuaFieldType), t));
+                            name = tmpName[0];
+                            subName = tmpName[1].Split(structSplit, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string t in typeList)
+                            {
+                                fieldSubType.Add((LuaFieldType)Enum.Parse(typeof(LuaFieldType), t));
+                            }
+                        }
+                        else
+                        {
+                            foreach (string t in typeList)
+                            {
+                                fieldSubType.Add((LuaFieldType)Enum.Parse(typeof(LuaFieldType), t));
+                            }
                         }
                     }
                     else
@@ -242,7 +252,7 @@ namespace Jyx2.Middleware
             sb.Append("\tsetmetatable(v,mt)\nend\n");
             foreach (var col in colDescList)
             {
-                if (col.type == LuaFieldType.l_struct)
+                if (col.type == LuaFieldType.l_struct && col.subName.Length > 1)
                 {
                     sb.AppendFormat("local fieldIdx{0} = {{}}\n",col.name);
                     for (int j = 0; j < col.subName.Length; j++)
