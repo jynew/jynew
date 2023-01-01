@@ -322,15 +322,9 @@ public static class GameSettingManager
 
 	#region Volume
 
-	private static float GetVolume()
+	public static float GetVolume()
 	{
-		float result = 1;
-		var key = GameConst.PLAYER_PREF_VOLUME;
-		if (Jyx2_PlayerPrefs.HasKey(key))
-		{
-			result = Jyx2_PlayerPrefs.GetFloat(key);
-		}
-
+		float result = Jyx2_PlayerPrefs.GetFloat(GameConst.PLAYER_PREF_VOLUME, 0.65f);
 		return result;
 	}
 
