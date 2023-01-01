@@ -29,6 +29,12 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
 
     public bool CanUpdate => _isDebugPanelOn;
 
+    void OnDestroy()
+    {
+        //销毁时注销难度监听
+        GameSettingManager.OnDifficultyChange -= OnDifficultyChange;
+    }
+
     void OnDisable()
     {
         InputContextManager.Instance.RemoveInputContext(this);
@@ -133,14 +139,17 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
     }
     #endregion
 
+    private void Awake()
+    {
+        //挂载时启动难度监听
+        GameSettingManager.OnDifficultyChange += OnDifficultyChange;
+    }
+
     private void Start()
     {
         InitLocationDebugTools();
-        var modConfig = RuntimeEnvSetup.CurrentModConfig;
-        if (modConfig != null && !modConfig.IsConsoleEnable)
-        {
-            this.gameObject.SetActive(false);
-        }
+        //根据设置调整可用性
+        RefreshValidity();
     }
 
     public void OnUpdate()
@@ -150,4 +159,34 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
             DebugPanelSwitch();
         }
     }
+
+    void RefreshValidity()
+    {
+        //如果mod不允许开控制台，则直接关闭
+        var modConfig = RuntimeEnvSetup.CurrentModConfig;
+        if (modConfig != null && !modConfig.IsConsoleEnable)
+        {
+            this.gameObject.SetActive(false);
+            return;
+        }
+
+        var newDifficulty = GameSettingManager.GetDifficulty();
+        foreach (var dif in modConfig.ConsoleDisableDifficulty)
+        {
+            //判断难度是否为需要禁止控制台的难度
+            if (newDifficulty == (int) dif)
+            {
+                this.gameObject.SetActive(false);
+                Debug.Log($"难度{dif}下关闭控制台");
+                return;
+            }
+        }
+        this.gameObject.SetActive(true);
+    }
+
+    private void OnDifficultyChange(Jyx2_GameDifficulty newDifficulty)
+    {
+        RefreshValidity();
+    }
+
 }
