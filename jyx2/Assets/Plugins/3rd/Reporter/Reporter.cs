@@ -2128,7 +2128,9 @@ public class Reporter : MonoBehaviour
 #endif
 
 		if (!string.IsNullOrEmpty(www.error)) {
-			Debug.LogError(www.error);
+			Debug.LogWarning(www.error);
+			Debug.LogWarning("Reporter cannot find buildinfo file in StreamingAssets folder, buildDate will be unknown");
+			buildDate = "Unknown";
 		}
 		else {
 #if UNITY_CHANGE4
