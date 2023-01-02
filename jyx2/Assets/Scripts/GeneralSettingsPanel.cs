@@ -166,11 +166,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
 
     void InitVolumeSlider()
     {
-        var volume = gameSetting[GameSettingManager.Catalog.Volume];
-        if (volume is float value)
-        {
-            volumeSlider.value = value;
-        }
+        volumeSlider.value = GameSettingManager.GetVolume();
     }
 
     public void InitSoundEffectSlider()

@@ -85,11 +85,11 @@ public class AudioManager
     {
         if (_hasInitialized)
             return;
-
+        //音效初始化可能会在游戏设置前，这里需要先初始化下游戏设置
+        GameSettingManager.Init();
         GameSettingManager.SubscribeEnforceEvent(
             GameSettingManager.Catalog.Volume, (volume) => { bgmAudioSource.volume = (float)volume; },
             true);
-
         _hasInitialized = true;
     }
 
