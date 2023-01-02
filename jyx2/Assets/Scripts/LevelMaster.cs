@@ -565,7 +565,7 @@ public class LevelMaster : MonoBehaviour
 		{
 			var evt = obj.GetComponent<GameEvent>();
 			if (evt == null) continue;
-			string eventId = obj.name;
+			string eventId = obj.name.Trim();
 
 			try
 			{
