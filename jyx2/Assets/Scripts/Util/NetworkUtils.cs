@@ -29,6 +29,7 @@ namespace Jyx2.Util
             catch (Exception e)
             {
                 Debug.LogError(e.ToString());
+                Debug.LogError("加载远程图片资源失败, url:" + url);
                 return null;
             }
         }
