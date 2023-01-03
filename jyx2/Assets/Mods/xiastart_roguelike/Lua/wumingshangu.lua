@@ -101,6 +101,7 @@ function GenerateRole(level)
     end
 
     local role = selectRole:Clone()
+    role:ResetItems()
 
     --把角色提升到现在关卡的等级
     while(role.Level < math.min(level, CS.GameConst.MAX_ROLE_LEVEL)) do

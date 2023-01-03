@@ -701,8 +701,8 @@ public class AIManager
     List<LItemConfig> GetAvailableItems(RoleInstance role, int itemType)
     {
         List<LItemConfig> items = new List<LItemConfig>();
-        // 如果角色是玩家这方的，应该使用玩家的物品栏 by Tomato
-        if (role.team == 0)
+        // 如果角色是玩家战友且是玩家队伍里面的
+        if (role.team == 0 && GameRuntimeData.Instance.IsRoleInTeam(role.GetJyx2RoleId()))
         {
             foreach (var kv in GameRuntimeData.Instance.Items)
             {
