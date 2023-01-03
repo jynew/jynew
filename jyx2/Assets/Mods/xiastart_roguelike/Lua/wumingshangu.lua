@@ -144,14 +144,15 @@ function NextBattle()
     local level = scene_api.GetInt("Level")
     
     --动态构建一场战斗
-    local battleConfig = CS.Jyx2Configs.Jyx2ConfigBattle()
+    local battleConfig = CS.Jyx2.CsBattleConfig()
     
     battleConfig.Id = 9999 --随便拟定一个战斗ID，无所谓
     battleConfig.MapScene = "Jyx2Battle_" .. math.random(0,25) --随机挑选一个战斗场景
     battleConfig.Exp = 400 * (level+1)
     battleConfig.Music = 22
-    battleConfig.TeamMates = 0
-    battleConfig.AutoTeamMates = -1
+    battleConfig.TeamMates = {0}
+    battleConfig.Enemies = {}
+    battleConfig.AutoTeamMates = {-1}
     GenerateEnemies(level, battleConfig)
 
     if(TryBattleWithConfig(battleConfig) == false) then
@@ -255,9 +256,9 @@ function TalkBeichou()
         local rndTeamMate = scene_api.GetInt("rndTeamMate", teamMateId)
 
         
-        local item = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndItem)
-        local book = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, rndBook)
-        local teamMate = GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigCharacter, rndTeamMate)
+        local item = Jyx2.ConfigMgr.Item[rndItem]
+        local book = Jyx2.ConfigMgr.Item[rndBook]
+        local teamMate = Jyx2.ConfigMgr.Character[rndTeamMate]
 
         local level = scene_api.GetInt("Level")
 

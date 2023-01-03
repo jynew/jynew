@@ -17,7 +17,6 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Jyx2Configs;
 
 /// <summary>
 /// JYX工具类
@@ -195,7 +194,7 @@ public static class GameUtil
         });
     }
 
-    public static async UniTask ShowYesOrNoUseItem(Jyx2ConfigItem item, Action action)
+    public static async UniTask ShowYesOrNoUseItem(LItemConfig item, Action action)
     {
         if (GameRuntimeData.Instance.GetItemUser(item.Id) != -1)
         {

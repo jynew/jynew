@@ -12,7 +12,6 @@ using Jyx2;
 using System;
 using System.Collections.Generic;
 using i18n.TranslatorDef;
-using Jyx2Configs;
 using System.Linq;
 
 //代码数据结构遗留问题，不太好动道具存档数据结构，这里用别名处理下
@@ -37,7 +36,7 @@ public partial class BagUIPanel : Jyx2_UIBase
     Action<int> m_UseItemCallBack;
 
     Jyx2ItemUI m_selectItem;
-    Func<Jyx2ConfigItem, bool> m_filter;
+    Func<LItemConfig, bool> m_filter;
 
     private bool castFromSelectPanel = false;
 
@@ -89,7 +88,7 @@ public partial class BagUIPanel : Jyx2_UIBase
         if (allParams.Length > 0)
             m_UseItemCallBack = (Action<int>)allParams[0];
         if (allParams.Length > 1)
-            m_filter = (Func<Jyx2ConfigItem, bool>)allParams[1];
+            m_filter = (Func<LItemConfig, bool>)allParams[1];
         if (allParams.Length > 2)
         {
             castFromSelectPanel = true;
@@ -165,7 +164,7 @@ public partial class BagUIPanel : Jyx2_UIBase
 
     private bool IsItemVisible(ItemArchiveData itemData)
     {
-        var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemData.Key);
+        var item = LuaToCsBridge.ItemTable[int.Parse(itemData.Key)];
         if (item == null)
             return false;
         if (m_filter != null && !m_filter(item))

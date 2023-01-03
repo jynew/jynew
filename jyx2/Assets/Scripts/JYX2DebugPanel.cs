@@ -14,7 +14,6 @@ using Jyx2;
 
 using System.Collections;
 using System.Collections.Generic;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2.InputCore;
@@ -24,7 +23,7 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
     public Dropdown m_ChangeScene;
     public Dropdown m_TransportDropdown;
 
-    List<Jyx2ConfigMap> m_ChangeSceneMaps = new List<Jyx2ConfigMap>();
+    List<LMapConfig> m_ChangeSceneMaps = new List<LMapConfig>();
     bool _isDebugPanelOn = false;
 
     public bool CanUpdate => _isDebugPanelOn;
@@ -62,7 +61,7 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
         m_ChangeScene.ClearOptions();
         List<string> activeMaps = new List<string>();
         activeMaps.Add("选择场景");
-        foreach (var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
+        foreach (var map in LuaToCsBridge.MapTable.Values)
         {
             if (map.Tags.Contains("BATTLE")) continue;
             activeMaps.Add(map.GetShowName());
@@ -104,13 +103,13 @@ public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
             {
                 if (index == 0)
                 {
-                    LevelLoader.LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(id));
+                    LevelLoader.LoadGameMap(LuaToCsBridge.MapTable[id]);
                 }
             }));
         }
         else
         {
-            LevelLoader.LoadGameMap(GameConfigDatabase.Instance.Get<Jyx2ConfigMap>(id));
+            LevelLoader.LoadGameMap(LuaToCsBridge.MapTable[id]);
         }
     }
 

@@ -15,7 +15,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jyx2.Middleware;
-using Jyx2Configs;
 using Random = UnityEngine.Random;
 
 namespace Jyx2
@@ -47,7 +46,7 @@ namespace Jyx2
             set;
         }
 
-        public Jyx2ConfigItem Anqi;
+        public LItemConfig Anqi;
 
         public string Key;
 
@@ -328,7 +327,7 @@ namespace Jyx2
     {
         private const int ANQI_MAGIC_ID = 97;
 
-        public AnqiSkillCastInstance(int lv, Jyx2ConfigItem item)
+        public AnqiSkillCastInstance(int lv, LItemConfig item)
         {
             //Key = "暗器_" + item.Name;
             Key = "暗器";

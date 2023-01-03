@@ -4,14 +4,14 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using Excel;
-using Jyx2Configs;
+//using Jyx2Configs;
 using ProtoBuf;
 using UnityEngine;
 
 namespace Jyx2.Middleware
 {
-    public static class ExcelTools
-    {
+   public static class ExcelTools
+    { /*
         public static Dictionary<Type, Dictionary<int, Jyx2ConfigBase>> LoadFromExcels(string dirPath)
         {
             var files = Directory.GetFiles(dirPath, "*.xlsx", SearchOption.AllDirectories);
@@ -26,6 +26,8 @@ namespace Jyx2.Middleware
 
                 //类名
                 string classType = collection[0][0].ToString();
+                //如果是为lua设计的excel，就跳过
+                if (classType == "LuaConfigGen") continue;
                     
                 //反射找类
                 Type type = Type.GetType(classType);
@@ -166,6 +168,7 @@ namespace Jyx2.Middleware
             }
         }
         #endregion
+        */
 
 #if UNITY_EDITOR
         /// <summary>

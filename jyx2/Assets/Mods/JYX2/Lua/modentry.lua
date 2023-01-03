@@ -28,3 +28,8 @@ function LuaMod_DeInit()
     LuaEventDispatcher:removeListener("OnArchiveOutdated", UpdateArchive)
     LuaEventDispatcher:removeListener("OnBeforeBattle", OnBeforeBattle)
 end
+--[[ 测试mod端LuaScripts功能
+local configMgr = Jyx2:GetModule("ConfigMgr")
+local modTest = Jyx2:GetModule("ModTest")
+print(configMgr.Character[122].Name)
+modTest:PrintTest()]]

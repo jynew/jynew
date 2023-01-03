@@ -18,7 +18,6 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Cysharp.Threading.Tasks;
 using Jyx2.Middleware;
-using Jyx2Configs;
 
 public class BattleRole : Jyx2AnimationBattleRole
 {
@@ -27,7 +26,7 @@ public class BattleRole : Jyx2AnimationBattleRole
     {
         get
         {
-            return DataInstance.Data.Model;
+            return DataInstance.Model;
         }
     }
 

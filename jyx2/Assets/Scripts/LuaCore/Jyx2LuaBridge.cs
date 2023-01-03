@@ -20,7 +20,6 @@ using UnityEngine.Playables;
 using Sirenix.Utilities;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
-using Jyx2Configs;
 using Jyx2.Middleware;
 using UnityEngine.Rendering.PostProcessing;
 using Rewired;
@@ -115,9 +114,9 @@ namespace Jyx2
                 return;
             }
 
-            string mapId = LevelMaster.GetCurrentGameMap().Id.ToString();
-            var hasData = GameConfigDatabase.Instance.Has<Jyx2ConfigShop>(mapId); // mapId和shopId对应
-            if (!hasData)
+            int mapId = LevelMaster.GetCurrentGameMap().Id;
+            var hasData = LuaToCsBridge.ShopTable[mapId]; // mapId和shopId对应
+            if (hasData == null)
             {
                 callback();
                 return;
@@ -249,7 +248,7 @@ namespace Jyx2
         /// <param name="callback"></param>
         public static void TryBattle(int battleId, Action<bool> callback)
         {
-            var battle = GameConfigDatabase.Instance.Get<Jyx2ConfigBattle>(battleId);
+            var battle = LuaToCsBridge.BattleTable[battleId];
             if (battle == null)
             {
                 Debug.LogError($"战斗id={battleId}未定义");
@@ -720,7 +719,7 @@ namespace Jyx2
             //只有设置了显示，并且角色在队伍的时候才显示
             if (noDisplay != 0 && runtime.IsRoleInTeam(roleId))
             {
-                var skill = GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(magicId);
+                var skill = LuaToCsBridge.SkillTable[magicId];
                 StoryEngine.DisplayPopInfo(role.Name + "习得武学" + skill.Name);
             }
         }
@@ -753,7 +752,7 @@ namespace Jyx2
         /// <param name="itemId"></param>
         public static void RoleUseItem(int roleId, int itemId)
         {
-            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            var item = LuaToCsBridge.ItemTable[itemId];
             if (!TryFindRole(roleId, out var role))
                 return;
             //武器
@@ -780,7 +779,7 @@ namespace Jyx2
         {
             if (!TryFindRole(roleId, out var role))
                 return;
-            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            var item = LuaToCsBridge.ItemTable[itemId];
             //武器
             if ((int)item.EquipmentType == 0)
             {
@@ -1273,7 +1272,7 @@ namespace Jyx2
         /// <param name="count">可为负数</param>
         public static void AddItem(int itemId, int count)
         {
-            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            var item = LuaToCsBridge.ItemTable[itemId];
             if (item == null)
             {
                 Debug.LogError("调用了未定义的物品:" + itemId);
@@ -1322,7 +1321,7 @@ namespace Jyx2
         /// <param name="count"></param>
         public static void AddItemWithoutHint(int itemId, int count)
         {
-            var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+            var item = LuaToCsBridge.ItemTable[itemId];
             if (item == null)
             {
                 Debug.LogError("调用了未定义的物品:" + itemId);
@@ -2042,7 +2041,7 @@ namespace Jyx2
             await UniTask.WaitUntil(() => finished);
         }
         //开始一场战斗
-        public static void TryBattleWithConfig(Jyx2ConfigBattle battle, Action<bool> callback)
+        public static void TryBattleWithConfig(LBattleConfig battle, Action<bool> callback)
         {
             if (isQuickBattle)
             {
@@ -2053,7 +2052,7 @@ namespace Jyx2
             bool isWin = false;
 
             //记录当前地图和位置
-            Jyx2ConfigMap currentMap = LevelMaster.GetCurrentGameMap();
+            LMapConfig currentMap = LevelMaster.GetCurrentGameMap();
             var pos = LevelMaster.Instance.GetPlayerPosition();
             var rotate = LevelMaster.Instance.GetPlayerOrientation();
 
@@ -2166,7 +2165,7 @@ namespace Jyx2
         //打开所有场景
         public static void OpenAllScene()
         {
-            foreach (var map in GameConfigDatabase.Instance.GetAll<Jyx2ConfigMap>())
+            foreach(var map in LuaToCsBridge.MapTable.Values)
             {
                 runtime.SetSceneEntraceCondition(map.Id, 0);
             }

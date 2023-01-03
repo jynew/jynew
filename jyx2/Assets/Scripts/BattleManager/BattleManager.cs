@@ -20,7 +20,6 @@ using Jyx2;
 
 using Jyx2.Battle;
 using Jyx2.Middleware;
-using Jyx2Configs;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -30,7 +29,7 @@ namespace Jyx2
     {
         public Action<BattleResult> callback; //战斗结果
         public List<RoleInstance> roles; //参与战斗的角色
-        public Jyx2ConfigBattle battleData; //战斗地图数据
+        public LBattleConfig battleData; //战斗地图数据
         public bool backToBigMap = true;
         public bool playerJoin = true;
     }
@@ -280,7 +279,7 @@ namespace Jyx2
             }
         }
 
-        string CalExpGot(Jyx2ConfigBattle battleData)
+        string CalExpGot(LBattleConfig battleData)
         {
             List<RoleInstance> alive_teammate = m_BattleModel.Teammates;
             var dead_teammates = m_BattleModel.Dead.Where(r => r.team == 0);
@@ -363,7 +362,7 @@ namespace Jyx2
                             //---------------------------------------------------------------------------
                             //特定位置的翻译【战斗胜利角色修炼武功升级提示】
                             //---------------------------------------------------------------------------
-                            bonusTextBuilder.AppendFormat("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), GameConfigDatabase.Instance.Get<Jyx2ConfigSkill>(practiseItem.Skill).Name, level);
+                            bonusTextBuilder.AppendFormat("{0} 升为 {1}级\n".GetContent(nameof(BattleManager)), LuaToCsBridge.SkillTable[practiseItem.Skill].Name, level);
                             //---------------------------------------------------------------------------
                             //---------------------------------------------------------------------------
                         }

@@ -11,7 +11,6 @@
 using ProtoBuf;
 using System.Xml.Serialization;
 using Jyx2.Middleware;
-using Jyx2Configs;
 
 namespace Jyx2
 {
@@ -54,7 +53,7 @@ namespace Jyx2
 
         //使用的道具
         [XmlAttribute]
-        public Jyx2ConfigItem Item;
+        public LItemConfig Item;
         #endregion
 
 

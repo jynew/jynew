@@ -12,7 +12,6 @@ using System;
 using Jyx2;
 using Cysharp.Threading.Tasks;
 using i18n.TranslatorDef;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 using Jyx2.UINavigation;
@@ -30,7 +29,7 @@ public class ShopUIItem : Selectable,INavigable
 	Text itemNum;
 	Text totalCost;
 
-	Jyx2ConfigShopItem shopItem;
+	CsShopItem shopItem;
 	int buyCount;
 	int index;
 	int leftNum;
@@ -39,7 +38,7 @@ public class ShopUIItem : Selectable,INavigable
 
 	public int ItemId => shopItem?.Id ?? -1;
 
-	public Jyx2ConfigShopItem ShopItemData => shopItem;
+	public CsShopItem ShopItemData => shopItem;
 
 
     protected override void Awake()
@@ -68,11 +67,11 @@ public class ShopUIItem : Selectable,INavigable
 		OnShopItemSelect = null;
     }
 
-	public async UniTaskVoid Refresh(Jyx2ConfigShopItem shopItem, int index, int hasBuyNum)
+	public async UniTaskVoid Refresh(CsShopItem shopItem, int index, int hasBuyNum)
 	{
 		this.index = index;
 		this.shopItem = shopItem;
-		Jyx2ConfigItem item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(shopItem.Id);
+		LItemConfig item = LuaToCsBridge.ItemTable[shopItem.Id];
 
 		//---------------------------------------------------------------------------
 		//desText.text = $"{item.Name}\n价格：{shopItem.Price}";

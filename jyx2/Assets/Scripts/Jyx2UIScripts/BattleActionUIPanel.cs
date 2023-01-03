@@ -14,7 +14,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Jyx2.Battle;
-using Jyx2Configs;
 using UnityEngine;
 using UnityEngine.UI;
 using i18n.TranslatorDef;
@@ -339,7 +338,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 	async void OnUseItemClick()
     {
         ResetSkillOperateIndex();
-        Func<Jyx2ConfigItem, bool> itemFilterFunc = item => item.GetItemType() == Jyx2ItemType.Costa 
+        Func<LItemConfig, bool> itemFilterFunc = item => item.GetItemType() == Jyx2ItemType.Costa 
 														 || item.GetItemType() == Jyx2ItemType.Anqi;
 
 		Action<int> OnItemSelected = itemId =>
@@ -347,7 +346,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
 			if (itemId == -1)
 				return;
 
-			var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(itemId);
+			var item = LuaToCsBridge.ItemTable[itemId];
 			if (item == null)
 				return;
 			if (item.GetItemType() == Jyx2ItemType.Costa) //使用道具逻辑

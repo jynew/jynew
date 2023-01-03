@@ -87,7 +87,7 @@ public class RoleUIItem : Selectable, IPointerClickHandler, IDataContainer<RoleI
 
 		ShowProperty();
 
-		m_roleHead.LoadAsyncForget(m_role.Data.GetPic());
+		m_roleHead.LoadAsyncForget(m_role.GetPic());
 	}
 
 	void ShowProperty()

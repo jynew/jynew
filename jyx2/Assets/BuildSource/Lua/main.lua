@@ -223,16 +223,16 @@ end
 TryBattleWithConfig = util.async_to_sync(luaBridge.TryBattleWithConfig)--尝试战斗
 
 
---封装读取配置表的API
+--封装读取配置表的API 现在不用了，配置表已经转到Lua侧
 --使用示例 GetConfigTableItem(CS.Jyx2Configs.Jyx2ConfigItem, 5) 
 --获得道具配置表的第五项
-function GetConfigTableItem(type, key)
+--[[function GetConfigTableItem(type, key)
 	local funcGeneric = xlua.get_generic_method(CS.Jyx2Configs.GameConfigDatabase, "Get")
 	local funCall = funcGeneric(type)
 	local item = funCall(CS.Jyx2Configs.GameConfigDatabase.Instance, key)
 	return item
 end
-
+]]
 
 function main_getLuaFiles()
 	return {}

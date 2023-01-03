@@ -8,7 +8,6 @@ using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2.MOD.ModV2;
 using Jyx2.ResourceManagement;
-using Jyx2Configs;
 using MOD.UI;
 using UnityEditor;
 using UnityEngine;
@@ -44,7 +43,6 @@ namespace Jyx2
             IsLoading = false;
             _successInited = false;
             LuaManager.Clear();
-            GameConfigDatabase.ForceClear();
         }
 
         private static bool _successInited = false;

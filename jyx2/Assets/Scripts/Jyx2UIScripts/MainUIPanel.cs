@@ -11,7 +11,6 @@ using Jyx2;
 using UnityEngine;
 using System;
 using System.Linq;
-using Jyx2Configs;
 using System.Collections.Generic;
 using System.Text;
 
@@ -113,7 +112,7 @@ public partial class MainUIPanel : Jyx2_UIBase
 	{
 		if (id == -1) return;
 
-		var item = GameConfigDatabase.Instance.Get<Jyx2ConfigItem>(id);
+		var item = LuaToCsBridge.ItemTable[id];
 		if (item == null)
 		{
 			Debug.LogError("use item error, id=" + id);

@@ -5,7 +5,6 @@ using System.IO;
 using Jyx2.Middleware;
 using Jyx2.MOD;
 using Jyx2.MOD.ModV2;
-using Jyx2Configs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -43,7 +42,7 @@ public class MODRootConfig : ScriptableObject
     [LabelText("是否打开控制台")] public bool IsConsoleEnable = true;
     [LabelText("在哪些难度中禁止使用控制台")] public List<Jyx2_GameDifficulty> ConsoleDisableDifficulty;
     [LabelText("战斗中是否播放使用道具动作")] public bool IsPlayUseItemAnimation = true;
-    
+
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
     public List<StoryIdNameFix> StoryIdNameFixes;
@@ -52,16 +51,13 @@ public class MODRootConfig : ScriptableObject
     [Button("生成配置表")]
     public void GenerateConfigs()
     {
-        string dataPath = Path.Combine(ModRootDir, "Configs", "Datas.bytes");
-        if (File.Exists(dataPath))
-        {
-            File.Delete(dataPath);
-        }
-        ExcelTools.GenerateConfigsFromExcel($"{ModRootDir}/Configs");
+        // 生成Lua配置表
+        ExcelToLua.ExportAllLuaFile($"{ModRootDir}/Configs", $"{ModRootDir}/Configs/Lua");
+
         UnityEditor.AssetDatabase.Refresh();
     }
 #endif
-    
+
     public GameModInfo CreateModInfo()
     {
         GameModInfo info = new GameModInfo();
@@ -72,7 +68,7 @@ public class MODRootConfig : ScriptableObject
         info.ClientVersion = Application.version;
         info.CreateTime = DateTime.Now.ToString("yyyyMMdd H:m:s");
         info.Desc = Desc;
-        
+
         return info;
     }
 }

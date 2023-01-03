@@ -26,7 +26,7 @@ public class CurrentBattleRolePanel : MonoBehaviour
         m_NameText.text = role.Name;
         m_DetailText.text = string.Format("体力 {0}/100\n生命 {1}/{2}\n内力 {3}/{4}", role.Tili, role.Hp, role.MaxHp, role.Mp, role.MaxMp);
 
-        m_Head.LoadAsyncForget(role.Data.GetPic());
+        m_Head.LoadAsyncForget(role.GetPic());
     }
 
     public void Hide()
