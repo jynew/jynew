@@ -385,6 +385,7 @@ namespace Jyx2
             return TeamId.Count;
         }
 
+        //将角色加入队伍
         public bool JoinRoleToTeam(int roleId,bool showGetItem = false)
         {
             if (GetRoleInTeam(roleId) != null)
@@ -403,11 +404,11 @@ namespace Jyx2
             //获得角色身上的道具
             foreach (var item in role.Items)
             {
-                if (!ItemAdded.Contains(item.Id))
+                //if (!ItemAdded.Contains(item.Id))
                 {
                     if (item.Count == 0) item.Count = 1;
                     AddItem(item.Id, item.Count);
-                    ItemAdded.Add(item.Id);
+                    //ItemAdded.Add(item.Id);
                     if (item.Count > 0 && showGetItem)
                     {
                         //---------------------------------------------------------------------------

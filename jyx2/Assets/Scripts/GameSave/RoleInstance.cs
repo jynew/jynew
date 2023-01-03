@@ -95,7 +95,7 @@ namespace Jyx2
                 Assert.Fail("无法获取角色配置，配置不存在，Id:" + Key);
             }
 
-            //初始化武功列表
+            //初始化武功列表，只有武功数量为0时才需要初始化
             if (Wugongs.Count == 0)
             {
                 foreach (var _skill in _data.Skills)
@@ -191,7 +191,8 @@ namespace Jyx2
         public void ResetForBattle()
         {
             ResetSkillCasts();
-            ResetItems();
+            //停止在BindKey时刷新物品
+            //ResetItems();
         }
 
         public void Recover()
