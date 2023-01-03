@@ -327,13 +327,14 @@ namespace Jyx2.Battle
 
             role.UseItem(item);
 
-            if (GameRuntimeData.Instance.IsRoleInTeam(role.GetJyx2RoleId())) //如果是玩家角色，则从背包里扣。
-            {
-                GameRuntimeData.Instance.AddItem(item.Id, -1);
-            }
-            else //否则从角色身上扣
+            //如果角色是敌人，或者角色不在玩家队伍中，则扣随身物品
+            if (role.team == 1 || !GameRuntimeData.Instance.IsRoleInTeam(role.GetJyx2RoleId()))
             {
                 role.AddItem(item.Id, -1);
+            }
+            else //否则从玩家背包里扣
+            {
+                GameRuntimeData.Instance.AddItem(item.Id, -1);
             }
 
             Dictionary<int, int> effects = UIHelper.GetItemEffect(item);
