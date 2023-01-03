@@ -1128,7 +1128,7 @@ namespace Jyx2
         public int GetExtraAttack(int wugongId)
         {
             LExtraConfig extra;
-            if (LuaToCsBridge.ExtraTable.TryGetValue(Weapon, out extra))
+            if (LuaToCsBridge.ExtraTable != null && LuaToCsBridge.ExtraTable.TryGetValue(Weapon, out extra))
             {
                 if (extra.Wugong == wugongId)
                 {
