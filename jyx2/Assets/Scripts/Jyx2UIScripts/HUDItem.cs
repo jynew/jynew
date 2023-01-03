@@ -18,6 +18,19 @@ public class HUDItem : MonoBehaviour
     HPBar hpBar;
     RoleInstance currentRole;
     RectTransform rectTrans;
+
+    #region 血条预定义颜色
+
+    private static readonly Color AllyColor = Color.green;
+
+    private static readonly Color AllyPoisonColor = Color.cyan;
+
+    private static readonly Color EnemyColor = Color.red;
+
+    private static readonly Color EnemyPoisonColor = new Color(216f / 255, 0f, 189f / 255);
+
+    #endregion
+
     public void Init() 
     {
         hpBar = transform.Find("HpBar").GetComponent<HPBar>();
@@ -31,7 +44,7 @@ public class HUDItem : MonoBehaviour
     public void BindRole(RoleInstance role) 
     {
         currentRole = role;
-        UpdateHealthValue();
+        RefreshHpBar();
     }
 
     int preHp = -1;
@@ -41,7 +54,7 @@ public class HUDItem : MonoBehaviour
             return;
         CheckShouldHide();
         UpdatePosition();
-        UpdateHealthValue();
+        TryUpdateHealthValue();
     }
 
     void CheckShouldHide()
@@ -51,26 +64,38 @@ public class HUDItem : MonoBehaviour
     }
 
 
-    void UpdateHealthValue()
+    void TryUpdateHealthValue()
     {
         if (IsRoleNotValid)
             return;
-        if (!currentRole.View.HPBarIsDirty || currentRole.Hp == preHp)
+        if (!currentRole.View.HPBarIsDirty)
             return;
         currentRole.View.UnmarkHpBarIsDirty();
         preHp = currentRole.Hp;
+        RefreshHpBar();
+    }
+
+    void RefreshHpBar()
+    {
+        if (currentRole == null)
+            return;
         hpBar.SetValue((float)currentRole.Hp / currentRole.MaxHp);
         UpdateHpColor();
     }
 
+
     void UpdateHpColor()
     {
+        if (currentRole == null)
+            return;
         if (currentRole.Poison > 0)
         {
-            hpBar.fillImage.color = Color.cyan;
-            return;
+            hpBar.fillImage.color = currentRole.team == 0 ? AllyPoisonColor : EnemyPoisonColor;
         }
-        hpBar.fillImage.color = currentRole.team == 0 ? Color.green : Color.red;
+        else
+        {
+            hpBar.fillImage.color = currentRole.team == 0 ? AllyColor : EnemyColor;
+        }
     }
 
     void UpdatePosition() 
