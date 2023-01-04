@@ -227,12 +227,7 @@ namespace Jyx2.Battle
 
             if (RuntimeEnvSetup.CurrentModConfig.ShowSkillNameInBattle)
             {
-                UniTask.Run(async () =>
-                {
-                    await UniTask.SwitchToMainThread();
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-                    role.View.ShowBattleText(skill.Data.Name, Color.white);
-                });
+                ShowRoleCastedSkillName(role, skill);
             }
             await CastOnce(role, skill, skillTo); //攻击一次
             if (Zuoyouhubo(role, skill))
@@ -240,6 +235,14 @@ namespace Jyx2.Battle
                 skill.CastMP(role);
                 await CastOnce(role, skill, skillTo); //再攻击一次
             }
+        }
+
+        private void ShowRoleCastedSkillName(RoleInstance role, SkillCastInstance skill)
+        {
+            var skillName = skill.Data.Name;
+            var battleRole = role.View;
+            //与施法对象绑定生命周期，对象销毁了延时逻辑就取消掉避免NullReference访问
+            GameUtil.CallWithDelay(0.5f, () => battleRole.ShowBattleText(skillName, Color.white), battleRole);
         }
 
         //一次施展技能
