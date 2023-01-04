@@ -167,7 +167,7 @@ namespace Jyx2
             {
                 if (fadeDuration > 0)
                 {
-                    GameUtil.CallWithDelay(state.Duration + fadeDuration, callback);
+                    GameUtil.CallWithDelay(state.Duration + fadeDuration, callback, this);
                 }
                 else
                 {
