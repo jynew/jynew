@@ -1,4 +1,4 @@
-# 群侠传，启动！
+# 群侠传启动
 
 ![主宣传图](https://user-images.githubusercontent.com/7448857/192084760-017f3789-81ff-4a67-81bf-8d8c4df1cac5.png)
 
