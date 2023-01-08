@@ -33,12 +33,16 @@ public class GameOver : Jyx2_UIBase
 
     protected override void OnCreate()
     {
+        m_BackButton.onClick.AddListener(BackToMainMenu);
+    }
+
+    protected override void OnShowPanel(params object[] allParams)
+    {
         IsBlockControl = true;
         name_text.text = GameRuntimeData.Instance.Player.Name;
         DateTime nowTime = DateTime.Now;
         date_text.text = nowTime.Subtract(GameRuntimeData.Instance.startDate).Days.ToString()+"天前";
         note_text.text = nowTime.ToLongDateString().ToString()+"\n在地球某处\n当地失踪人口又增加了\n一例……";
-        m_BackButton.onClick.AddListener(BackToMainMenu);
         LoadArchiveItems();
         SelectFirstItem();
     }
@@ -54,8 +58,6 @@ public class GameOver : Jyx2_UIBase
         MonoUtil.GenerateMonoElementsWithCacheList(m_ArchiveItemPath, idxList, m_ArchiveItems, m_ItemLayout.transform, OnArchiveItemCreate);
         NavigateUtil.SetUpNavigation(m_ArchiveItems, idxList.Count, 1);
         SetUpBackButtonNavigation();
-
-
     }
     
     private void SetUpBackButtonNavigation()
