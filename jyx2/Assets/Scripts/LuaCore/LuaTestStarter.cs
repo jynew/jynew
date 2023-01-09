@@ -14,7 +14,7 @@ public class LuaTestStarter : ScriptableObject
     public void luaTest()
     {
         LuaManager.Clear();
-        LuaManager.Init("");
+        LuaManager.Init("require 'main'");
         var luaEnv = LuaManager.GetLuaEnv();
         foreach (var file in luaFiles)
         {

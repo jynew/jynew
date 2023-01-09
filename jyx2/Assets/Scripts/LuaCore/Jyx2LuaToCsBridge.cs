@@ -9,6 +9,7 @@
  */
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using XLua;
 using UnityEngine;
 
@@ -527,6 +528,7 @@ namespace Jyx2
         static private LuaEnv _luaEnv;
         static private LuaEnv LEnv {get;set;}
 
+#region Lua Configs
         // 用来读取Lua的配置文件
         public static Dictionary<int, LRoleConfig> CharacterTable;
         public static Dictionary<int, LSkillConfig> SkillTable;
@@ -536,14 +538,24 @@ namespace Jyx2
         public static Dictionary<int, LMapConfig> MapTable;
         public static Dictionary<int, LShopConfig> ShopTable;
         public static Dictionary<int, LSettingsConfig> SettingsTable;
+#endregion
 
+        public static LuaFunction cs_await;
+
+        public static bool IsLuaFunExists(string funName)
+        {
+            return true;
+        }
         //暂时决定不用这个函数来初始化，而是在需要的时候直接分别运行不同的初始化方法
         public static void LuaToCsBridgeInit()
         {
+            //用来在cs侧调用Lua async函数
+            cs_await = LuaManager.GetLuaEnv().Global.GetInPath<LuaFunction>("jy_utils.cs_await");
         }
 
         public static void LuaToCsBridgeDispose()
         {
+            cs_await = null;
             LuaConfigToCsDispose();
         }
 
@@ -562,6 +574,20 @@ namespace Jyx2
             ShopTable = LEnv.Global.GetInPath<Dictionary<int, LShopConfig>>("Jyx2.ConfigMgr.Shop");
             SettingsTable = LEnv.Global.GetInPath<Dictionary<int, LSettingsConfig>>("Jyx2.ConfigMgr.Settings");
 
+            TestMethod();
+        }
+        public static async UniTaskVoid TestMethod()
+        {
+            var rr = new RoleInstance(1);
+            Debug.Log(rr.Name);
+            try{
+            var rstt = await LuaExecutor.CallLuaScript<string, string>("jy_utils.testAsyncFun", rr.Name);
+            Debug.Log(rstt);
+            }
+            catch(Exception ex)
+            {
+                Debug.Log("error");
+            }
         }
         public static void LuaConfigToCsDispose()
         {

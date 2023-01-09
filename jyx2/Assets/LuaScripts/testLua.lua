@@ -1,3 +1,2 @@
-local tmp = Jyx2.ConfigMgr:GetConfig("Item")
-local tmp1 = tmp[1]
-print(tmp1.IsBeingUsedBy(CS.Jyx2.RoleInstance(1)))
+jy_utils.cs_await("jy_utils.testAsyncFun", function(x) print(x) return x end, "ppp")
+print("test end")

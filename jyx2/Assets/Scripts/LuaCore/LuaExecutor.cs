@@ -101,5 +101,36 @@ namespace Jyx2
             if (CurrentEventSourceStack.Count > 0)
                 CurrentEventSourceStack.Clear();
         }
+
+        //封装对lua侧模块的呼叫
+        public static UniTask<Rst> CallLuaScript<Rst,T>(string funName, T par)
+        {
+            Debug.Log("Call Lua Function: " + funName);
+            var utcs = new UniTaskCompletionSource<Rst>();
+            //用来完成UniTask的回调
+            void callback(bool success, Rst lrst, string err)
+            {
+                if (success)
+                {
+                    utcs.TrySetResult(lrst);
+                }
+                else
+                {
+                    utcs.TrySetCanceled();
+                    Debug.LogError(err);
+                }
+            }
+
+            try
+            {//调用lua侧函数
+                LuaToCsBridge.cs_await.Action<string, Action<bool, Rst, string>, T>(funName, callback, par);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex);
+                utcs.TrySetException(ex);
+            }
+            return utcs.Task;
+        }
     }
 }

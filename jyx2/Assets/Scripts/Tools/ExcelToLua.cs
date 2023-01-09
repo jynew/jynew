@@ -233,7 +233,7 @@ namespace Jyx2.Middleware
 
             sb.Append("}\n");
 
-            sb.AppendFormat("local helper = prequire('Jyx2Configs/{0}Helper')\n", configType);
+            sb.AppendFormat("local helper = jy_utils.prequire('Jyx2Configs/{0}Helper')\n", configType);
             string helperstr =
                 "\tif helper[b] then\n" +
                 "\t\treturn helper[b]\n" +
