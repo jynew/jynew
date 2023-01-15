@@ -7,10 +7,12 @@
  *
  * 金庸老先生千古！
  ]]--
--- 本脚本负责注册 Lua 模块
--- moduleName = modulePath
-local LuaModuleList = {
-    ConfigMgr = "Jyx2Configs/Jyx2ConfigMgr",
-    Battle = "Jyx2Battle/BattleInit",
-}
-return LuaModuleList
+-- 本脚本为Lua侧游戏战斗模块
+local battleMgr = {}
+
+function battleMgr.OnBattleEnd()
+    print("on battle end")
+    Jyx2.Battle.AIManager.DeInit()
+end
+
+return battleMgr

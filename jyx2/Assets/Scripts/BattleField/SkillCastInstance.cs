@@ -194,6 +194,12 @@ namespace Jyx2
             return Data.CoverType;
         }
 
+        //用来提高Lua侧获取CoverType的速度
+        public virtual int GetCoverTypeInt()
+        {
+            return (int)Data.CoverType;
+        }
+
         public virtual int GetCoverSize()
         {
             return Data.CoverSize;

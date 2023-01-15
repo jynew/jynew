@@ -29,12 +29,18 @@ namespace Jyx2.Battle
         private BattleManager _manager;
         private GameObject m_roleFocusRing;
 
+        //临时增加的计时器，测试用，合并前删除
+        private System.Diagnostics.Stopwatch sw;
+
         /// <summary>
         /// 开始战斗主循环
         /// </summary>
         /// <returns></returns>
         public async UniTask StartLoop()
         {
+            //临时增加的计时器，测试用，合并前删除
+            sw = new System.Diagnostics.Stopwatch();
+
             var model = _manager.GetModel();
 
             //生成当前角色高亮环
@@ -147,13 +153,26 @@ namespace Jyx2.Battle
         async UniTask RoleAIAction(RoleInstance role)
         {
             //获取AI计算结果
+            //Lua侧 AI Manager 测试
+            sw.Restart();
             var aiResult = await AIManager.Instance.GetAIResult(role);
+            sw.Stop();
+            Debug.Log($"CS ver use time:{sw.ElapsedMilliseconds}");
+
+            sw.Restart();
+            var laiResult = await LuaExecutor.CallLuaScript<AIResult,RoleInstance>("Jyx2.Battle.AIManager.GetAIResult", role);
+            sw.Stop();
+            Debug.Log($"Lua ver use time:{sw.ElapsedMilliseconds}");
+            //比较两种结果
+            aiResult.Equals(laiResult);
             
             //先移动
-            await RoleMove(role, new BattleBlockVector(aiResult.MoveX, aiResult.MoveY));
+            //await RoleMove(role, new BattleBlockVector(aiResult.MoveX, aiResult.MoveY));
+            await RoleMove(role, new BattleBlockVector(laiResult.MoveX, laiResult.MoveY));
 
             //再执行具体逻辑
-            await ExecuteAIResult(role, aiResult);
+            //await ExecuteAIResult(role, aiResult);
+            await ExecuteAIResult(role, laiResult);
         }
 
         //执行具体逻辑

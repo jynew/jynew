@@ -578,16 +578,7 @@ namespace Jyx2
         }
         public static async UniTaskVoid TestMethod()
         {
-            var rr = new RoleInstance(1);
-            Debug.Log(rr.Name);
-            try{
-            var rstt = await LuaExecutor.CallLuaScript<string, string>("jy_utils.testAsyncFun", rr.Name);
-            Debug.Log(rstt);
-            }
-            catch(Exception ex)
-            {
-                Debug.Log("error");
-            }
+
         }
         public static void LuaConfigToCsDispose()
         {

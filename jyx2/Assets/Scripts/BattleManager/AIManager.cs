@@ -157,6 +157,7 @@ public class AIManager
 
             if (score > maxscore)
             {
+            //Debug.Log($"CS: {score} score {item.Name}");
                 maxscore = score;
                 var tmp = GetFarestEnemyBlock(role, range);
                 result = new AIResult
@@ -185,6 +186,7 @@ public class AIManager
                 BattleBlockVector movePos = tmp[0];
                 BattleBlockVector castPos = tmp[1];
                 double score = GetSkillCastResultScore(role, anqiSkillCast, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
+                //Debug.Log($"Cs: aqName{anqiSkillCast.Anqi.Name} score{score}mpos{tmp[0].ToInt()}cpos{tmp[1].ToInt()}");
 
                 if (score > maxscore)
                 {
@@ -201,6 +203,10 @@ public class AIManager
                 }
             }
         }
+        //if (maxscore > 0)
+        //Debug.Log($"CS: itemblk: {result.MoveX},{result.MoveY}");
+        //else
+            //Debug.Log("No Item Use");
         
         //使用武学
         foreach (var skill in skills)
@@ -214,6 +220,7 @@ public class AIManager
                 BattleBlockVector movePos = tmp[0];
                 BattleBlockVector castPos = tmp[1];
                 double score = GetSkillCastResultScore(role, skill, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
+                Debug.Log($"Cs: skname:{skill.Data.Name} score{score}mpos{tmp[0].ToInt()}cpos{tmp[1].ToInt()}");
                 if (score > maxscore)
                 {
                     maxscore = score;
@@ -443,6 +450,7 @@ public class AIManager
                 if (score > maxScore)
                 {
                     maxScore = score;
+                    //Debug.Log($"{skillCast.Data.Name} score: {score}");
 
                     rst[0] = new BattleBlockVector(moveBlock.X, moveBlock.Y);
                     rst[1] = new BattleBlockVector(castBlock.X, castBlock.Y);

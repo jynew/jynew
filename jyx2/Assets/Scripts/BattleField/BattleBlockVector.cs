@@ -26,6 +26,12 @@ namespace Jyx2
             X = x;
             Y = y;
         }
+        public BattleBlockVector(int x,int y, bool inaccessible)
+        {
+            X = x;
+            Y = y;
+            Inaccessible = inaccessible;
+        }
         [ProtoMember(1)]
         public int X;
         [ProtoMember(2)]
@@ -41,11 +47,7 @@ namespace Jyx2
 
         public static int GetDistance(int x1, int y1, int x2, int y2)
         {
-            var dx = x2 - x1;
-            var dy = y2 - y1;
-            var lucky = dx > 0 ^ y1 % 2 == 0;
-            var xOffset = lucky ? (int)Math.Ceiling(Math.Abs(dy * 0.5f)) : (int)Math.Floor(Math.Abs(dy * 0.5f));
-            var step = xOffset >= Math.Abs(dx) ? Math.Abs(dy) : (Math.Abs(dy) + Math.Abs(dx) - xOffset);
+            int step = Math.Abs(x2 - x1) + Math.Abs(y2 - y1);
             //Debug.Log($"the dis from {x1}:{y1} to {x2}:{y2} is {step}");
             return step;
         }

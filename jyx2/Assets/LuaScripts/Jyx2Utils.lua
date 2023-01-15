@@ -15,6 +15,7 @@ local function prequire(name)
     if pcall(function(x) rst = require(x) end, name) then
         return rst
     else
+        print(name.."没找到")
         return rst
     end
 end
@@ -45,7 +46,16 @@ local testAsyncFun = function(callback, input)
     local rst = input.."rstttt"
     coroutine.yield(CS.UnityEngine.WaitForSeconds(3))
     print("end test fun ============")
-    callback(true, rst)
+    --callback(true, rst)
+    return rst
 end
 
-return {prequire = prequire, cs_await = cs_await, testAsyncFun = testAsyncFun}
+local baseFun = function(callback, input)
+    print("base fun start")
+    local subsrt = testAsyncFun(callback, input)
+    print(subsrt)
+    print("base fun end")
+    callback(true, subsrt)
+end
+
+return {prequire = prequire, cs_await = cs_await, testAsyncFun = testAsyncFun, baseFun = baseFun}

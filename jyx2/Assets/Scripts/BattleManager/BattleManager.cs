@@ -224,6 +224,8 @@ namespace Jyx2
         public void EndBattle()
         {
             IsInBattle = false;
+            //Lua侧清理
+            LuaManager.GetLuaEnv().DoString("Jyx2.Battle.Manager.OnBattleEnd()");
             Jyx2_UIManager.Instance.HideUI(nameof(BattleMainUIPanel));
 
             //临时，需要调整
