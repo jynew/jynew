@@ -220,7 +220,7 @@ public class AIManager
                 BattleBlockVector movePos = tmp[0];
                 BattleBlockVector castPos = tmp[1];
                 double score = GetSkillCastResultScore(role, skill, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
-                Debug.Log($"Cs: skname:{skill.Data.Name} score{score}mpos{tmp[0].ToInt()}cpos{tmp[1].ToInt()}");
+                //Debug.Log($"Cs: skname:{skill.Data.Name} score{score}mpos{tmp[0].ToInt()}cpos{tmp[1].ToInt()}");
                 if (score > maxscore)
                 {
                     maxscore = score;

@@ -59,7 +59,7 @@ function ai.DeInit()
 end
 
 ai.GetAIResult = function(callback, role)
-    print(role.Name)
+    --print(role.Name)
     ai.Init()
 
     --获得角色移动能力
@@ -240,7 +240,7 @@ ai.GetAIResult = function(callback, role)
                 local movePos = tmp[1];
                 local castPos = tmp[2];
                 local score = ai.GetSkillCastResultScore(role, skill, movePos.X, movePos.Y, castPos.X, castPos.Y, true);
-                print("skname:"..skill.Data.Name.." score"..score.."mpos"..tmp[1]:ToInt().."cpos"..tmp[2]:ToInt())
+                --print("skname:"..skill.Data.Name.." score"..score.."mpos"..tmp[1]:ToInt().."cpos"..tmp[2]:ToInt())
                 if (score > maxscore) then
                     maxscore = score;
                     result = CS.Jyx2.AIResult()
@@ -257,7 +257,7 @@ ai.GetAIResult = function(callback, role)
             end
         end
     end
-    print("max: "..maxscore)
+    --print("max: "..maxscore)
                 --print(profiler.report())
                 --profiler.stop()
 
@@ -557,6 +557,13 @@ ai.GetMoveAndCastPos = function(role, skillCast, moveRange, strategy)
         -- 普通攻击伤害与距离成反比，需要寻找最近点放
         if damageType == 0 then
             strategy = AIStrategy.SHORTDIST
+            -- 用毒的时候根据角色血量选择策略
+        elseif damageType == 2 then
+            if role.Hp > 0.5 * role.MaxHp then
+                strategy = AIStrategy.SHORTDIST
+            else
+                strategy = AIStrategy.NORMAL
+            end
         else
             strategy = AIStrategy.NORMAL
         end
