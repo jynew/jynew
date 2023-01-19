@@ -61,16 +61,27 @@ public partial class GameMainMenu : Jyx2_UIBase
         DefaultBackGround_RectTransform.gameObject.BetterSetActive(false);
         homeBtnAndTxtPanel_RectTransform.gameObject.BetterSetActive(false);
 
-        var res = await ResLoader.LoadAsset<GameObject>("MainMenuBg.prefab");
-        if (res != null)
+		//当MainMenuBg预制体的实例存在于节点下，则不再创建新的实例
+        Transform mainMenuBgTrans = transform.Find("MainMenuBg(Clone)");
+        if (mainMenuBgTrans == null)
         {
-            var newMainMenuBg = Instantiate(res, transform, false);
-            newMainMenuBg.transform.SetAsFirstSibling();
-        }
+			var res = await ResLoader.LoadAsset<GameObject>("MainMenuBg.prefab");
+			if (res != null)
+			{
+				var newMainMenuBg = Instantiate(res, transform, false);
+				newMainMenuBg.transform.SetAsFirstSibling();
+			}
+			else
+			{
+				DefaultBackGround_RectTransform.gameObject.BetterSetActive(true);
+			}
+		}
         else
         {
-            DefaultBackGround_RectTransform.gameObject.BetterSetActive(true);
+			mainMenuBgTrans.gameObject.BetterSetActive(true);
         }
+
+        
         homeBtnAndTxtPanel_RectTransform.gameObject.BetterSetActive(true);
         ReleaseNotePanel.ShowReleaseNoteIfPossible(ReleaseNoteType.Mod);
     }
