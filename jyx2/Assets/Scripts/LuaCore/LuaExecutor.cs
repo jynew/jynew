@@ -102,10 +102,55 @@ namespace Jyx2
                 CurrentEventSourceStack.Clear();
         }
 
-        //封装对lua侧模块的呼叫
-        public static UniTask<Rst> CallLuaScript<Rst,T>(string funName, T par)
+        //封装对lua侧模块的普通呼叫
+        public static void CallLua(string funName)
         {
-            Debug.Log("Call Lua Function: " + funName);
+            //Debug.Log("Call Lua Function: " + funName);
+            try
+            {
+                LuaToCsBridge.cs_calllua.Action<string>(funName);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw e;
+            }
+            return;
+        }
+        public static Rst CallLua<Rst>(string funName)
+        {
+            //Debug.Log("Call Lua Function: " + funName);
+            Rst rst;
+            try
+            {
+                rst = LuaToCsBridge.cs_calllua.Func<string, Rst>(funName);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw e;
+            }
+            return rst;
+        }
+        public static Rst CallLua<Rst, T>(string funName, T par)
+        {
+            //Debug.Log("Call Lua Function: " + funName);
+            Rst rst;
+            try
+            {
+                rst = LuaToCsBridge.cs_calllua.Func<string, T, Rst>(funName, par);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw e;
+            }
+            return rst;
+        }
+        //封装对lua侧异步模块的呼叫
+        public static UniTask<Rst> CallLuaAsync<Rst,T>(string funName, T par)
+        {
+            //Debug.Log("Call Lua Function: " + funName);
             var utcs = new UniTaskCompletionSource<Rst>();
             //用来完成UniTask的回调
             void callback(bool success, Rst lrst, string err)

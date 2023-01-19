@@ -118,6 +118,8 @@ namespace Jyx2
                 }
             }
 
+            //初始化Lua侧战斗模块
+            LuaExecutor.CallLua("Jyx2.Battle.Manager.OnBattleStart");
             //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             await UniTask.WaitForEndOfFrame();
 
@@ -225,7 +227,7 @@ namespace Jyx2
         {
             IsInBattle = false;
             //Lua侧清理
-            LuaManager.GetLuaEnv().DoString("Jyx2.Battle.Manager.OnBattleEnd()");
+            LuaExecutor.CallLua("Jyx2.Battle.Manager.OnBattleEnd");
             Jyx2_UIManager.Instance.HideUI(nameof(BattleMainUIPanel));
 
             //临时，需要调整
@@ -267,7 +269,8 @@ namespace Jyx2
             role.PreviousRoundHp = role.Hp;
             //待命
             role.View.Idle();
-            var enemy = AIManager.Instance.GetNearestEnemy(role);
+            //var enemy = AIManager.Instance.GetNearestEnemy(role);
+            var enemy = LuaExecutor.CallLua<RoleInstance,RoleInstance>("Jyx2.Battle.AIManager.GetNearestEnemy", role);
             if (enemy != null)
             {
                 //面向最近的敌人

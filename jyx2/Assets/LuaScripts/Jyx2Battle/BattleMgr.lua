@@ -10,6 +10,11 @@
 -- 本脚本为Lua侧游戏战斗模块
 local battleMgr = {}
 
+function battleMgr.OnBattleStart()
+    print("on battle start")
+    Jyx2.Battle.AIManager.Init()
+end
+
 function battleMgr.OnBattleEnd()
     print("on battle end")
     Jyx2.Battle.AIManager.DeInit()

@@ -41,10 +41,18 @@ local function cs_await(asyncFunName, callback, ...)
     local co = cs_coroutine.start(errorcatch(asyncFun), callback, ...)
 end
 
-local testAsyncFun = function(callback, input)
+local function cs_calllua(luaFunName, ...)
+    local luaFun = load("return "..luaFunName)()
+    if (luaFun == nil) then
+        error("未找到Lua函数:"..luaFunName)
+    end
+    return luaFun(...)
+end
+
+local testAsyncFun = function(input)
     print("start test fun ==========")
     local rst = input.."rstttt"
-    coroutine.yield(CS.UnityEngine.WaitForSeconds(3))
+    --coroutine.yield(CS.UnityEngine.WaitForSeconds(3))
     print("end test fun ============")
     --callback(true, rst)
     return rst
@@ -58,4 +66,4 @@ local baseFun = function(callback, input)
     callback(true, subsrt)
 end
 
-return {prequire = prequire, cs_await = cs_await, testAsyncFun = testAsyncFun, baseFun = baseFun}
+return {prequire = prequire, cs_await = cs_await, cs_calllua = cs_calllua, testAsyncFun = testAsyncFun, baseFun = baseFun}

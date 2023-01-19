@@ -34,7 +34,14 @@ local function RefreshRolePos()
     end
 end
 
+local inited = false
+
 function ai.Init()
+
+    if inited == true then
+        return
+    end
+
     SkillCoverType = Jyx2.Battle.SkillCoverType
 
     ai.rangeLogic = CS.Jyx2.BattleManager.Instance:GetRangeLogic()
@@ -44,6 +51,8 @@ function ai.Init()
 
     aliveRoles = ai.BattleModel.AliveRoles
     RefreshRolePos()
+
+    inited = true
 end
 
 function ai.DeInit()
@@ -56,11 +65,14 @@ function ai.DeInit()
 
     aliveRoles = nil
     aliveRolePos = nil
+
+    inited = false
 end
 
 ai.GetAIResult = function(callback, role)
     --print(role.Name)
-    ai.Init()
+    aliveRoles = ai.BattleModel.AliveRoles
+    RefreshRolePos()
 
     --获得角色移动能力
     local moveAbility = role:GetMoveAbility()
@@ -313,12 +325,16 @@ ai.GetAvailableItems = function(role, itemType)
     return items;
 end
 
-ai.GetNearestEnemy = function(role)
+ai.GetNearestEnemy = function(role, currentRoles)
 
     local minDistance = 10000
     local targetRole
+    -- 如果没有给被寻找的角色表，那就获取一份
+    if currentRoles == nil then
+        currentRoles = ai.BattleModel.AliveRoles
+    end
     --寻找离自己最近的敌人
-    for _,sp in pairs(aliveRoles) do
+    for _,sp in pairs(currentRoles) do
 
         if (sp.team ~= role.team) then
 
@@ -336,7 +352,7 @@ end
 
 ai.GetNearestEnemyBlock = function(sprite, moverange)
 
-    local targetRole = ai.GetNearestEnemy(sprite);
+    local targetRole = ai.GetNearestEnemy(sprite, aliveRoles);
     if (targetRole == nil) then
         return
     end
@@ -344,10 +360,12 @@ ai.GetNearestEnemyBlock = function(sprite, moverange)
     local minDis2 = 10000
     local movex = sprite.Pos.X
     local movey = sprite.Pos.Y
+    local targetx = targetRole.Pos.X
+    local targety = targetRole.Pos.Y
     --寻找离对手最近的一点
     for _,mr in pairs(moverange) do
 
-        local distance = CS.Jyx2.BattleBlockVector.GetDistance(mr.X, mr.Y, targetRole.Pos.X, targetRole.Pos.Y);
+        local distance = CS.Jyx2.BattleBlockVector.GetDistance(mr.X, mr.Y, targetx, targety);
 
         if (distance <= minDis2) then
 

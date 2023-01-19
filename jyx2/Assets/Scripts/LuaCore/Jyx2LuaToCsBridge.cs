@@ -541,6 +541,7 @@ namespace Jyx2
 #endregion
 
         public static LuaFunction cs_await;
+        public static LuaFunction cs_calllua;
 
         public static bool IsLuaFunExists(string funName)
         {
@@ -550,12 +551,15 @@ namespace Jyx2
         public static void LuaToCsBridgeInit()
         {
             //用来在cs侧调用Lua async函数
-            cs_await = LuaManager.GetLuaEnv().Global.GetInPath<LuaFunction>("jy_utils.cs_await");
+            LEnv = LuaManager.GetLuaEnv();
+            cs_await = LEnv.Global.GetInPath<LuaFunction>("jy_utils.cs_await");
+            cs_calllua = LEnv.Global.GetInPath<LuaFunction>("jy_utils.cs_calllua");
         }
 
         public static void LuaToCsBridgeDispose()
         {
             cs_await = null;
+            cs_calllua = null;
             LuaConfigToCsDispose();
         }
 
@@ -578,7 +582,6 @@ namespace Jyx2
         }
         public static async UniTaskVoid TestMethod()
         {
-
         }
         public static void LuaConfigToCsDispose()
         {
