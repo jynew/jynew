@@ -162,7 +162,10 @@ namespace Jyx2
 
         private void Update()
         {
-            IsRunning = Math.Max(m_ManualMoveSpeed, _playerNavAgent.velocity.magnitude) > 0;
+            //如果自动寻路移动速度过低，则直接停止移动
+            if (_playerNavAgent?.velocity.magnitude < 0.5f)
+                StopNavAgent();
+            IsRunning = (m_ManualMoveSpeed > 0) || (!_playerNavAgent.isStopped);
 
             //大地图待机动作计时器
             if (LevelMaster.IsInWorldMap && !_playingBigMapIdle)//只在大地图和没有在播放待机动作的时候计时
