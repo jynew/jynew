@@ -45,7 +45,7 @@ namespace Jyx2
             sc.isTrigger = true;
             sc.radius = radius;
 
-            var obstacle = obj.AddComponent<NavMeshObstacle>();
+            var obstacle = obj.GetOrAddComponent<NavMeshObstacle>();
             
             obstacle.shape = NavMeshObstacleShape.Capsule;
             obstacle.radius = 0.5f;
