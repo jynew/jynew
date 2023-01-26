@@ -159,10 +159,10 @@ namespace Jyx2.Battle
             //sw.Stop();
             //Debug.Log($"CS ver use time:{sw.ElapsedMilliseconds}");
 
-            sw.Restart();
+            //sw.Restart();
             var laiResult = await LuaExecutor.CallLuaAsync<AIResult,RoleInstance>("Jyx2.Battle.AIManager.GetAIResult", role);
-            sw.Stop();
-            Debug.Log($"Lua ver use time:{sw.ElapsedMilliseconds}");
+            //sw.Stop();
+            //Debug.Log($"Lua ver use time:{sw.ElapsedMilliseconds}");
             //比较两种结果
             //aiResult.Equals(laiResult);
             

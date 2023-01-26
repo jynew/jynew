@@ -164,6 +164,11 @@ ai.GetAIResult = function(callback, role)
             end
         end
 
+        -- 如果血量太少，吃药优先级将特别高，防止npc沉迷打怪
+        if (role_Hp < 0.1 * role_MaxHp) then
+            score = score * 1000
+        end
+
         --使用内力药
         local s = -1;
         if (role_Mp < 0.2 * role_MaxMp) then
