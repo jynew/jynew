@@ -2404,6 +2404,5 @@ namespace Jyx2
             LevelMasterBooster level = GameObject.FindObjectOfType<LevelMasterBooster>();
             level.RefreshSceneObjects().Forget();
         }
-
     }
 }

@@ -18,6 +18,7 @@ using Cysharp.Threading.Tasks;
 using Application = UnityEngine.Application;
 using UnityEngine.UI;
 using Jyx2.InputCore;
+using Jyx2.MOD.ModV2;
 using Sirenix.Utilities;
 
 public class LevelMaster : MonoBehaviour
@@ -245,14 +246,17 @@ public class LevelMaster : MonoBehaviour
 
 			var viewPortType = GameViewPortManager.Instance.GetViewportType();
 
+			var modConfig = RuntimeEnvSetup.CurrentModConfig;
+			
 			//高度
 			if (viewPortType == GameViewPortManager.ViewportType.Topdown)
 			{
-				body.m_FollowOffset = GlobalAssetConfig.Instance.defaultVcamOffset;	
+				
+				body.m_FollowOffset = modConfig.CameraOffsetFar != Vector3.zero ? modConfig.CameraOffsetFar : GlobalAssetConfig.Instance.defaultVcamOffset;	
 			}
 			else if(viewPortType == GameViewPortManager.ViewportType.TopdownClose)
 			{
-				body.m_FollowOffset = GlobalAssetConfig.Instance.vcamOffsetClose;
+				body.m_FollowOffset = modConfig.CameraOffsetNear != Vector3.zero ? modConfig.CameraOffsetNear : GlobalAssetConfig.Instance.vcamOffsetClose;
 			}
 
 

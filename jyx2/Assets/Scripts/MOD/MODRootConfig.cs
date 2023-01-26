@@ -46,6 +46,10 @@ public class MODRootConfig : ScriptableObject
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
     public List<StoryIdNameFix> StoryIdNameFixes;
+    
+    
+    [LabelText("俯视相机偏移（近，为0使用全局设置）")]public Vector3 CameraOffsetNear = Vector3.zero;
+    [LabelText("俯视相机偏移（远，为0使用全局设置）")]public Vector3 CameraOffsetFar = Vector3.zero;
 
 #if UNITY_EDITOR
     [Button("生成配置表")]
