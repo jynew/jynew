@@ -18,20 +18,142 @@ end
 function damage.DeInit()
 end
 
+--用毒
 --/ </summary>
---/ 战斗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+--/ 中毒计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+--/ 也参考War_PoisonHurt：https://github.com/ZhanruiLiang/jinyong-legend
+--/ 
 --/ </summary>
 --/ <param name="r1"></param>
 --/ <param name="r2"></param>
---/ <param name="skill"></param>
---/ <param name="blockVector"></param>
 --/ <returns></returns>
+local function usePoison(r1, r2)
+
+    --中毒程度 ＝（用毒能力－抗毒能力）/ 4
+    local poison = (r1.UsePoison - r2.AntiPoison) // 4;
+    --小于0则为0
+    if (poison < 0) then
+        poison = 0;
+    end
+    return poison;
+end
+
+--医疗
+--/ </summary>
+--/ 医疗计算公式可以参考：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
+--/ 也参考ExecDoctor：https://github.com/ZhanruiLiang/jinyong-legend
+--/ 
+--/ </summary>
+--/ <param name="r1"></param>
+--/ <param name="r2"></param>
+--/ <returns></returns>
+local function medicine(r1, r2)
+
+    local rst = CS.Jyx2.SkillCastResult();
+    if (r2.Hurt > r1.Heal + 20) then
+
+        if (not CS.Jyx2.BattleManager.Instance.IsInBattle) then
+
+            CS.GameUtil.DisplayPopinfo("受伤太重无法医疗");
+        end
+        return rst;
+    end
+    --增加生命 = 医疗能力 * a + random(5);
+    --当受伤程度 > 75, a = 1 / 2;
+    --当50 < 受伤程度 <= 75, a = 2 / 3;
+    --当25 < 受伤程度 <= 50, a = 3 / 4;
+    --当0 < 受伤程度 <= 25, a = 4 / 5;
+    --当受伤程度 = 0，a = 4 / 5;
+    local a = math.ceil(r2.Hurt / 25);
+    if (a == 0) then a = 1 end
+    local addHp = r1.Heal * (5 - a) // (6 - a) + math.random(0, 4);
+    rst.heal = addHp;
+    --减低受伤程度 = 医疗能力.
+    rst.hurt = -addHp;
+    return rst;
+end
+
+--解毒
+--/ </summary>
+--/ 解毒计算公式可以参考ExecDecPoison：https://github.com/ZhanruiLiang/jinyong-legend
+--/
+--/ 
+--/ </summary>
+--/ <param name="r1"></param>
+--/ <param name="r2"></param>
+--/ <returns></returns>
+local function detoxification(r1, r2)
+
+    if (r2.Poison > r1.DePoison + 20) then
+
+        if (not CS.Jyx2.BattleManager.Instance.IsInBattle) then
+
+            CS.GameUtil.DisplayPopinfo("中毒太重无法解毒"); 
+        end
+        return 0;
+    end
+    local add = (r1.DePoison // 3) + math.random(0, 9) - math.random(0, 9)
+    local depoison = CS.Jyx2.Middleware.Tools.Limit(add, 0, r2.Poison);
+    return depoison;
+end
+
+--暗器
+--返回值为一正数
+--/ </summary>
+--/ 暗器计算公式可以参考War_AnqiHurt：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
+--/
+--/ 
+--/ </summary>
+--/ <param name="r1"></param>
+--/ <param name="r2"></param>
+--/ <param name="anqi"></param>
+--/ <returns></returns>
+local function hiddenWeapon(r1, r2, anqi)
+
+    local rst = CS.Jyx2.SkillCastResult();
+    --增加生命 = (暗器增加生命/a-random(5)-暗器能力*2)/3;
+    --式中暗器增加生命为负值.
+    --当受伤程度 = 100，a = 1;
+    --当66 < 受伤程度 <= 99, a = 1;
+    --当33 < 受伤程度 <= 66, a = 2;
+    --当0 < 受伤程度 <= 33, a = 3;
+    --当受伤程度 = 0, a = 4;
+    local a = math.ceil(r2.Hurt / 33);
+    if (a == 4) then a = 3 end
+    local v = (anqi.AddHp // (4 - a) - math.random(0, 4) - r1.Anqi * 2) // 3;
+    rst.damage = -v;
+    --敌人受伤程度
+    rst.hurt = -v // 4; --此处v为负值
+    --当暗器带毒 > 0,
+    --增加中毒程度 = [(暗器带毒 + 暗器技巧) / 2 - 抗毒能力] / 2;
+    --当抗毒 = 100, 增加中毒程度 = 0.
+    if (anqi.ChangePoisonLevel > 0) then
+
+        local add = ((anqi.ChangePoisonLevel + r1.Anqi) // 2 - r2.AntiPoison) // 2;
+        if (r2.AntiPoison == 100) then
+            add = 0;
+        end
+        local poison = CS.Jyx2.Middleware.Tools.Limit(add, 0, CS.GameConst.MAX_USE_POISON);
+        rst.poison = poison;
+    end
+    return rst;
+end
+
+--/ </summary>
+--/ 战斗计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
+--/ 公式中的RND(n)和random(n)等都是指从0到n-1的随机整数
+--/ </summary>
+--/ <param name="r1">RoleInstance</param>
+--/ <param name="r2">RoleInstance</param>
+--/ <param name="skill">SkillCastInstance</param>
+--/ <param name="blockVector">BattleBlockVector</param>
+--/ <returns>SkillCastResult</returns>
 function damage.GetSkillResult(r1, r2, skill, blockVector)
     local ai = Jyx2.Battle.AIManager
 
     local rst = CS.Jyx2.SkillCastResult(r1, r2, skill, blockVector.X, blockVector.Y);
-    local magic = skill.Data.GetSkill();
-    local level_index = skill.Data.GetLevel()-1;--此方法返回的是显示的武功等级，1-10。用于calMaxLevelIndexByMP时需要先-1变为数组index再使用
+    local magic = skill.Data:GetSkill();
+    local level_index = skill.Data:GetLevel()-1;--此方法返回的是显示的武功等级，1-10。用于calMaxLevelIndexByMP时需要先-1变为数组index再使用
     level_index = skill:calMaxLevelIndexByMP(r1.Mp, level_index)+1;--此处计算是基于武功等级数据index，0-9.用于GetSkillLevelInfo时需要+1，因为用于GetSkillLevelInfo时需要里是基于GetLevel计算的，也就是1-10.
     --普通攻击
     if (magic.DamageType == 0) then
@@ -44,7 +166,7 @@ function damage.GetSkillResult(r1, r2, skill, blockVector)
 
         if (r1.Mp <= magic.MpCost) then --已经不够内力释放了
 
-            rst.damage = 1 + CS.UnityEngine.Random.Range(0, 10);
+            rst.damage = 1 + math.random(0, 9)
             return rst;
         end
         --总攻击力＝(人物攻击力×3 ＋ 武功当前等级攻击力)/2 ＋武器加攻击力 ＋ 防具加攻击力 ＋ 武器武功配合加攻击力 ＋我方武学常识之和
@@ -54,13 +176,13 @@ function damage.GetSkillResult(r1, r2, skill, blockVector)
         local defence = r2.Defence + totalWuxue2;
 
         --伤害 ＝ （总攻击力－总防御×3）×2 / 3 + RND(20) – RND(20)                  （公式1）
-        local v = (attack - defence * 3) * 2 // 3 + CS.UnityEngine.Random.Range(0, 20) - CS.UnityEngine.Random.Range(0, 20);
+        local v = (attack - defence * 3) * 2 // 3 + math.random(0, 19) - math.random(0, 19)
 
         --如果上面的伤害 < 0 则
         --伤害 ＝  总攻击力 / 10 + RND(4) – RND(4)                                            （公式2）
         if (v <= 0) then
 
-            v = attack // 10 + CS.UnityEngine.Random.Range(0, 4) - CS.UnityEngine.Random.Range(0, 4);
+            v = attack // 10 + math.random(0, 3) - math.random(0, 3)
         end
 
         --7、如果伤害仍然 < 0 则    伤害 ＝ 0
@@ -124,15 +246,15 @@ function damage.GetSkillResult(r1, r2, skill, blockVector)
 
         --杀伤内力逻辑
         local v = levelInfo.KillMp;
-        v = v + CS.UnityEngine.Random.Range(0, 3) - CS.UnityEngine.Random.Range(0, 3);
+        v = v + math.random(0, 2) - math.random(0, 2)
         rst.damageMp = v;
 
         --吸取内力逻辑
         local addMp = levelInfo.AddMp;
         if (addMp > 0) then
 
-            rst.addMaxMp = CS.UnityEngine.Random.Range(0, addMp // 2);
-            addMp = addMp + CS.UnityEngine.Random.Range(0, 3) - CS.UnityEngine.Random.Range(0, 3);
+            rst.addMaxMp = math.random(0, addMp // 2 - 1)-- 如果addMp=1会报错
+            addMp = addMp + math.random(0, 2) - math.random(0, 2)
             rst.addMp = addMp;    
         end
 
@@ -161,127 +283,6 @@ function damage.GetSkillResult(r1, r2, skill, blockVector)
         return rst;
     end
     return null;
-end
-
---用毒
---/ </summary>
---/ 中毒计算公式可以参考：https://tiexuedanxin.net/thread-365140-1-1.html
---/ 也参考War_PoisonHurt：https://github.com/ZhanruiLiang/jinyong-legend
---/ 
---/ </summary>
---/ <param name="r1"></param>
---/ <param name="r2"></param>
---/ <returns></returns>
-local function usePoison(r1, r2)
-
-    --中毒程度 ＝（用毒能力－抗毒能力）/ 4
-    local poison = (r1.UsePoison - r2.AntiPoison) // 4;
-    --小于0则为0
-    if (poison < 0) then
-        poison = 0;
-    end
-    return poison;
-end
-
---医疗
---/ </summary>
---/ 医疗计算公式可以参考：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
---/ 也参考ExecDoctor：https://github.com/ZhanruiLiang/jinyong-legend
---/ 
---/ </summary>
---/ <param name="r1"></param>
---/ <param name="r2"></param>
---/ <returns></returns>
-local function medicine(r1, r2)
-
-    local rst = CS.Jyx2.SkillCastResult();
-    if (r2.Hurt > r1.Heal + 20) then
-
-        if (not CS.Jyx2.BattleManager.Instance:IsInBattle) then
-
-            CS.GameUtil.DisplayPopinfo("受伤太重无法医疗");
-        end
-        return rst;
-    end
-    --增加生命 = 医疗能力 * a + random(5);
-    --当受伤程度 > 75, a = 1 / 2;
-    --当50 < 受伤程度 <= 75, a = 2 / 3;
-    --当25 < 受伤程度 <= 50, a = 3 / 4;
-    --当0 < 受伤程度 <= 25, a = 4 / 5;
-    --当受伤程度 = 0，a = 4 / 5;
-    local a = math.ceil(r2.Hurt / 25);
-    if (a == 0) then a = 1 end
-    local addHp = r1.Heal * (5 - a) // (6 - a) + CS.UnityEngine.Random.Range(0, 5);
-    rst.heal = addHp;
-    --减低受伤程度 = 医疗能力.
-    rst.hurt = -addHp;
-    return rst;
-end
-
---解毒
---/ </summary>
---/ 解毒计算公式可以参考ExecDecPoison：https://github.com/ZhanruiLiang/jinyong-legend
---/
---/ 
---/ </summary>
---/ <param name="r1"></param>
---/ <param name="r2"></param>
---/ <returns></returns>
-local function detoxification(r1, r2)
-
-    if (r2.Poison > r1.DePoison + 20) then
-
-        if (not CS.Jyx2.BattleManager.Instance:IsInBattle) then
-
-            CS.GameUtil.DisplayPopinfo("中毒太重无法解毒"); 
-        end
-        return 0;
-    end
-    local add = (r1.DePoison // 3) + CS.UnityEngine.Random.Range(0, 10) - CS.UnityEngine.Random.Range(0, 10);
-    local depoison = CS.Jyx2.Middleware.Tools.Limit(add, 0, r2.Poison);
-    return depoison;
-end
-
---暗器
---返回值为一正数
---/ </summary>
---/ 暗器计算公式可以参考War_AnqiHurt：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
---/
---/ 
---/ </summary>
---/ <param name="r1"></param>
---/ <param name="r2"></param>
---/ <param name="anqi"></param>
---/ <returns></returns>
-local function hiddenWeapon(r1, r2, anqi)
-
-    local rst = CS.Jyx2.SkillCastResult();
-    --增加生命 = (暗器增加生命/a-random(5)-暗器能力*2)/3;
-    --式中暗器增加生命为负值.
-    --当受伤程度 = 100，a = 1;
-    --当66 < 受伤程度 <= 99, a = 1;
-    --当33 < 受伤程度 <= 66, a = 2;
-    --当0 < 受伤程度 <= 33, a = 3;
-    --当受伤程度 = 0, a = 4;
-    local a = math.ceil(r2.Hurt / 33);
-    if (a == 4) then a = 3 end
-    local v = (anqi.AddHp / (4 - a) - CS.UnityEngine.Random.Range(0, 5) - r1.Anqi * 2) / 3;
-    rst.damage = -v;
-    --敌人受伤程度
-    rst.hurt = -v / 4; --此处v为负值
-    --当暗器带毒 > 0,
-    --增加中毒程度 = [(暗器带毒 + 暗器技巧) / 2 - 抗毒能力] / 2;
-    --当抗毒 = 100, 增加中毒程度 = 0.
-    if (anqi.ChangePoisonLevel > 0) then
-
-        local add = ((anqi.ChangePoisonLevel + r1.Anqi) / 2 - r2.AntiPoison) / 2;
-        if (r2.AntiPoison == 100) then
-            add = 0;
-        end
-        local poison = CS.Jyx2.Middleware.Tools.Limit(add, 0, CS.GameConst.MAX_USE_POISON);
-        rst.poison = poison;
-    end
-    return rst;
 end
 
 return damage

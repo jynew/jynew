@@ -15,7 +15,7 @@ local function prequire(name)
     if pcall(function(x) rst = require(x) end, name) then
         return rst
     else
-        print(name.."没找到")
+        print(name.."载入失败")
         return rst
     end
 end

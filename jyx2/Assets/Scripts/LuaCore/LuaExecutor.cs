@@ -147,6 +147,21 @@ namespace Jyx2
             }
             return rst;
         }
+        public static Rst CallLua<Rst, T1, T2, T3, T4>(string funName, T1 par1, T2 par2, T3 par3, T4 par4)
+        {
+            //Debug.Log("Call Lua Function: " + funName);
+            Rst rst;
+            try
+            {
+                rst = LuaToCsBridge.cs_calllua.Func<string, T1, T2, T3, T4, Rst>(funName, par1, par2, par3, par4);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw e;
+            }
+            return rst;
+        }
         //封装对lua侧异步模块的呼叫
         public static UniTask<Rst> CallLuaAsync<Rst,T>(string funName, T par)
         {

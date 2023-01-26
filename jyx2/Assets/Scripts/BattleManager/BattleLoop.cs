@@ -154,17 +154,17 @@ namespace Jyx2.Battle
         {
             //获取AI计算结果
             //Lua侧 AI Manager 测试
-            sw.Restart();
-            var aiResult = await AIManager.Instance.GetAIResult(role);
-            sw.Stop();
-            Debug.Log($"CS ver use time:{sw.ElapsedMilliseconds}");
+            //sw.Restart();
+            //var aiResult = await AIManager.Instance.GetAIResult(role);
+            //sw.Stop();
+            //Debug.Log($"CS ver use time:{sw.ElapsedMilliseconds}");
 
             sw.Restart();
             var laiResult = await LuaExecutor.CallLuaAsync<AIResult,RoleInstance>("Jyx2.Battle.AIManager.GetAIResult", role);
             sw.Stop();
             Debug.Log($"Lua ver use time:{sw.ElapsedMilliseconds}");
             //比较两种结果
-            aiResult.Equals(laiResult);
+            //aiResult.Equals(laiResult);
             
             //先移动
             //await RoleMove(role, new BattleBlockVector(aiResult.MoveX, aiResult.MoveY));
@@ -282,7 +282,8 @@ namespace Jyx2.Battle
                 //“打”自己人的招式
                 if (!skill.IsCastToEnemy() && rolei.team != role.team) continue;
 
-                var result = AIManager.Instance.GetSkillResult(role, rolei, skill, blockVector);
+                //var result = AIManager.Instance.GetSkillResult(role, rolei, skill, blockVector);
+                var result = LuaExecutor.CallLua<SkillCastResult, RoleInstance, RoleInstance, SkillCastInstance, BattleBlockVector>("Jyx2.Battle.DamageCaculator.GetSkillResult", role, rolei, skill, blockVector);
 
                 result.Run();
 

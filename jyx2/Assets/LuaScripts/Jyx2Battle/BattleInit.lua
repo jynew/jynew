@@ -19,6 +19,7 @@ battle.SkillCoverType = {
     INVALID = -1
 }
 
+battle.DamageCaculator = jy_utils.prequire("Jyx2Battle/DamageCaculator")
 battle.RangeLogic = jy_utils.prequire("Jyx2Battle/RangeLogic")
 battle.AIManager = jy_utils.prequire("Jyx2Battle/AIManager")
 battle.Manager = jy_utils.prequire("Jyx2Battle/BattleMgr")

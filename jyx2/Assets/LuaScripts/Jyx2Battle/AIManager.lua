@@ -12,6 +12,7 @@ local ai = {}
 local profiler = require 'perf.profiler'
 
 local SkillCoverType 
+local dc 
 
 local AIStrategy = {
     NORMAL = 0,
@@ -41,8 +42,10 @@ function ai.Init()
     if inited == true then
         return
     end
+    math.randomseed(os.time())
 
     SkillCoverType = Jyx2.Battle.SkillCoverType
+    dc = Jyx2.Battle.DamageCaculator
 
     ai.rangeLogic = CS.Jyx2.BattleManager.Instance:GetRangeLogic()
     Jyx2.Battle.RangeLogic.Init()
@@ -57,6 +60,7 @@ end
 
 function ai.DeInit()
     SkillCoverType = nil
+    dc = nil
 
     ai.rangeLogic = nil
     Jyx2.Battle.RangeLogic.DeInit()
@@ -762,7 +766,8 @@ ai.GetSkillCastResultScore = function(caster, skill,
         if (targetRole ~= nil and not targetRole:IsDead()) then
             if checkTeam(skill:IsCastToEnemy(), caster.team, targetRole.team) then
 
-                local result = CS.AIManager.Instance:GetSkillResult(caster, targetRole, skill, blockVector);
+                --local result = CS.AIManager.Instance:GetSkillResult(caster, targetRole, skill, blockVector);
+                local result = dc.GetSkillResult(caster, targetRole, skill, blockVector);
                 score = score + result:GetTotalScore();
 
                 --解毒算分
@@ -770,7 +775,7 @@ ai.GetSkillCastResultScore = function(caster, skill,
 
                     if (targetRole.Poison > 50) then
 
-                        score = result.poison;
+                        score = result.depoison / 5 -- 适当降低解毒优先级
                     end
                 end
 
