@@ -19,9 +19,9 @@ if CS.UnityEngine.Application.isPlaying then
     CS.UnityEngine.Object.DontDestroyOnLoad(gameobject)
 end
 
-local cs_coroutine_runner = gameobject:GetComponent(typeof(CS.XLuaTest.Coroutine_Runner))
+local cs_coroutine_runner = gameobject:GetComponent(typeof(CS.Jyx2.Coroutine_Runner))
 if cs_coroutine_runner == nil then
-    cs_coroutine_runner = gameobject:AddComponent(typeof(CS.XLuaTest.Coroutine_Runner))
+    cs_coroutine_runner = gameobject:AddComponent(typeof(CS.Jyx2.Coroutine_Runner))
 end
 
 return {

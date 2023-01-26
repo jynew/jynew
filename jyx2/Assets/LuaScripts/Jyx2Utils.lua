@@ -49,21 +49,4 @@ local function cs_calllua(luaFunName, ...)
     return luaFun(...)
 end
 
-local testAsyncFun = function(input)
-    print("start test fun ==========")
-    local rst = input.."rstttt"
-    --coroutine.yield(CS.UnityEngine.WaitForSeconds(3))
-    print("end test fun ============")
-    --callback(true, rst)
-    return rst
-end
-
-local baseFun = function(callback, input)
-    print("base fun start")
-    local subsrt = testAsyncFun(callback, input)
-    print(subsrt)
-    print("base fun end")
-    callback(true, subsrt)
-end
-
-return {prequire = prequire, cs_await = cs_await, cs_calllua = cs_calllua, testAsyncFun = testAsyncFun, baseFun = baseFun}
+return {prequire = prequire, cs_await = cs_await, cs_calllua = cs_calllua}
