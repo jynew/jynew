@@ -12,6 +12,7 @@ local ai = {}
 local profiler = require 'perf.profiler'
 
 local SkillCoverType 
+local dc 
 
 local AIStrategy = {
     NORMAL = 0,
@@ -34,8 +35,17 @@ local function RefreshRolePos()
     end
 end
 
+local inited = false
+
 function ai.Init()
+
+    if inited == true then
+        return
+    end
+    math.randomseed(os.time())
+
     SkillCoverType = Jyx2.Battle.SkillCoverType
+    dc = Jyx2.Battle.DamageCaculator
 
     ai.rangeLogic = CS.Jyx2.BattleManager.Instance:GetRangeLogic()
     Jyx2.Battle.RangeLogic.Init()
@@ -44,10 +54,13 @@ function ai.Init()
 
     aliveRoles = ai.BattleModel.AliveRoles
     RefreshRolePos()
+
+    inited = true
 end
 
 function ai.DeInit()
     SkillCoverType = nil
+    dc = nil
 
     ai.rangeLogic = nil
     Jyx2.Battle.RangeLogic.DeInit()
@@ -56,11 +69,14 @@ function ai.DeInit()
 
     aliveRoles = nil
     aliveRolePos = nil
+
+    inited = false
 end
 
 ai.GetAIResult = function(callback, role)
     --print(role.Name)
-    ai.Init()
+    aliveRoles = ai.BattleModel.AliveRoles
+    RefreshRolePos()
 
     --获得角色移动能力
     local moveAbility = role:GetMoveAbility()
@@ -146,6 +162,11 @@ ai.GetAIResult = function(callback, role)
 
                 score = score + math.min(item.AddHp, role_MaxHp - role_Hp) - item.AddHp / 100;
             end
+        end
+
+        -- 如果血量太少，吃药优先级将特别高，防止npc沉迷打怪
+        if (role_Hp < 0.1 * role_MaxHp) then
+            score = score * 1000
         end
 
         --使用内力药
@@ -313,12 +334,16 @@ ai.GetAvailableItems = function(role, itemType)
     return items;
 end
 
-ai.GetNearestEnemy = function(role)
+ai.GetNearestEnemy = function(role, currentRoles)
 
     local minDistance = 10000
     local targetRole
+    -- 如果没有给被寻找的角色表，那就获取一份
+    if currentRoles == nil then
+        currentRoles = ai.BattleModel.AliveRoles
+    end
     --寻找离自己最近的敌人
-    for _,sp in pairs(aliveRoles) do
+    for _,sp in pairs(currentRoles) do
 
         if (sp.team ~= role.team) then
 
@@ -336,7 +361,7 @@ end
 
 ai.GetNearestEnemyBlock = function(sprite, moverange)
 
-    local targetRole = ai.GetNearestEnemy(sprite);
+    local targetRole = ai.GetNearestEnemy(sprite, aliveRoles);
     if (targetRole == nil) then
         return
     end
@@ -344,10 +369,12 @@ ai.GetNearestEnemyBlock = function(sprite, moverange)
     local minDis2 = 10000
     local movex = sprite.Pos.X
     local movey = sprite.Pos.Y
+    local targetx = targetRole.Pos.X
+    local targety = targetRole.Pos.Y
     --寻找离对手最近的一点
     for _,mr in pairs(moverange) do
 
-        local distance = CS.Jyx2.BattleBlockVector.GetDistance(mr.X, mr.Y, targetRole.Pos.X, targetRole.Pos.Y);
+        local distance = CS.Jyx2.BattleBlockVector.GetDistance(mr.X, mr.Y, targetx, targety);
 
         if (distance <= minDis2) then
 
@@ -744,7 +771,8 @@ ai.GetSkillCastResultScore = function(caster, skill,
         if (targetRole ~= nil and not targetRole:IsDead()) then
             if checkTeam(skill:IsCastToEnemy(), caster.team, targetRole.team) then
 
-                local result = CS.AIManager.Instance:GetSkillResult(caster, targetRole, skill, blockVector);
+                --local result = CS.AIManager.Instance:GetSkillResult(caster, targetRole, skill, blockVector);
+                local result = dc.GetSkillResult(caster, targetRole, skill, blockVector);
                 score = score + result:GetTotalScore();
 
                 --解毒算分
@@ -752,7 +780,7 @@ ai.GetSkillCastResultScore = function(caster, skill,
 
                     if (targetRole.Poison > 50) then
 
-                        score = result.poison;
+                        score = result.depoison / 5 -- 适当降低解毒优先级
                     end
                 end
 

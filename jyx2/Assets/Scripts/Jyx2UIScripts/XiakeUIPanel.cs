@@ -493,7 +493,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             var selectRole = cbParam.selectList[0]; //默认只会选择一个
             var skillCast = new HealSkillCastInstance(m_currentRole.Heal);
             var result =
-                AIManager.Instance.GetSkillResult(m_currentRole, selectRole, skillCast, new BattleBlockVector(0, 0));
+                //AIManager.Instance.GetSkillResult(m_currentRole, selectRole, skillCast, new BattleBlockVector(0, 0));
+                LuaExecutor.CallLua<SkillCastResult, RoleInstance, RoleInstance, SkillCastInstance, BattleBlockVector>("Jyx2.Battle.DamageCaculator.GetSkillResult", m_currentRole, selectRole, skillCast, new BattleBlockVector(0, 0));
             result.Run();
             if (result.heal > 0)
             {
@@ -528,7 +529,8 @@ public partial class XiakeUIPanel : Jyx2_UIBase
             var selectRole = cbParam.selectList[0]; //默认只会选择一个
             var skillCast = new DePoisonSkillCastInstance(m_currentRole.DePoison);
             var result =
-                AIManager.Instance.GetSkillResult(m_currentRole, selectRole, skillCast, new BattleBlockVector(0, 0));
+                //AIManager.Instance.GetSkillResult(m_currentRole, selectRole, skillCast, new BattleBlockVector(0, 0));
+                LuaExecutor.CallLua<SkillCastResult, RoleInstance, RoleInstance, SkillCastInstance, BattleBlockVector>("Jyx2.Battle.DamageCaculator.GetSkillResult", m_currentRole, selectRole, skillCast, new BattleBlockVector(0, 0));
             result.Run();
             if (result.depoison < 0)
             {
