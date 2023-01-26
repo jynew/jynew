@@ -40,7 +40,9 @@ AskBattle = util.async_to_sync(luaBridge.AskBattle)--询问是否战斗
 AskJoin = util.async_to_sync(luaBridge.AskJoin)--询问角色是否加入
 AskRest = util.async_to_sync(luaBridge.AskRest)--询问是否进行休息
 LightScence = util.async_to_sync(luaBridge.LightScence)--场景变亮
+LightScene = LightScence --修复拼写错误
 DarkScence = util.async_to_sync(luaBridge.DarkScence)--场景变暗
+DarkScene = DarkScence --修复拼写错误
 ShowEthics = util.async_to_sync(luaBridge.ShowEthics)--显示道德
 ShowRepute = util.async_to_sync(luaBridge.ShowRepute)--显示声望
 ShowMessage = util.async_to_sync(luaBridge.ShowMessage)--显示信息确认框
@@ -218,6 +220,12 @@ scene_api.CallOnceWithFlag = function (func, flag)
 	end
 	return false
 end
+
+--普通信息显示
+function Info(msg)
+	Talk(0, msg, "", 2)
+end
+
 
 --高级扩展API
 TryBattleWithConfig = util.async_to_sync(luaBridge.TryBattleWithConfig)--尝试战斗

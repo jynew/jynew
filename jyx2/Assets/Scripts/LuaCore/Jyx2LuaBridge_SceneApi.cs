@@ -29,22 +29,23 @@ namespace Jyx2
 
             return true;
         }
-        
+
         /// <summary>
         /// 快速绑定交互触发到场景中的物体
         /// </summary>
         /// <param name="gameObjectPathInLevel">在Level节点下的相对位置</param>
         /// <param name="functionName">绑定触发函数名，支持 {文件名}.{函数}的写法</param>
+        /// <param name="radius">触发半径</param>
         /// <returns>是否绑定成功</returns>
-        public static bool FastBindEventToObj(string gameObjectPathInLevel, string functionName)
+        public static bool FastBindEventToObj(string gameObjectPathInLevel, string functionName, float radius = 1f)
         {
             if (!GetObjectInLevel(gameObjectPathInLevel, out var obj)) return false;
             
             var sc = obj.AddComponent<SphereCollider>();
             sc.isTrigger = true;
-            sc.radius = 1;
+            sc.radius = radius;
 
-            var obstacle = obj.AddComponent<NavMeshObstacle>();
+            var obstacle = obj.GetOrAddComponent<NavMeshObstacle>();
             
             obstacle.shape = NavMeshObstacleShape.Capsule;
             obstacle.radius = 0.5f;
