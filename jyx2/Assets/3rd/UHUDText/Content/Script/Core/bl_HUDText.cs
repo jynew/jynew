@@ -342,7 +342,7 @@ public class bl_HUDText : MonoBehaviour {
     {
         for (int i = 0; i < texts.Count; i++)
         {
-            if (texts[i].m_Transform == trans)
+            if (texts[i] != null && texts[i].m_Transform == trans)
             {
                 if (texts[i].isUtil && texts[i].Uses <= MaxUses)
                 {
