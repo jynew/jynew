@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Jyx2;
 using DG.Tweening;
+using Jyx2.MOD;
 
 namespace MOD.UI
 {
@@ -21,6 +22,27 @@ namespace MOD.UI
     {
         public bool isSuccess { get; set; }
         public string ModDownloadPath { get; set; }
+    }
+
+    struct ModModifiedInfo
+    {
+        public bool isSuccess { get; set; }
+        public string ModifiedTime { get; set; }
+
+        public string ETag { get; set; }
+
+        public long ModFileSize { get; set; }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Trt to get Remote server ModInfo....");
+            sb.AppendFormat("IsSuccess:{0}\n", isSuccess);
+            sb.AppendFormat("ModifiedTime:{0}\n", ModifiedTime);
+            sb.AppendFormat("ETag:{0}\n", ETag);
+            sb.AppendFormat("ModFileSize:{0}\n", ModFileSize);
+            return sb.ToString();
+        }
     }
 
 
@@ -39,7 +61,8 @@ namespace MOD.UI
         private UnityWebRequest m_CurrentRequest;
 
         private CancellationTokenSource m_DisableCancellation;
-        
+
+        private bool IsRequesting => m_CurrentRequest != null && !m_CurrentRequest.isDone;
 
         private bool _isAddingMod = false;
 
@@ -69,7 +92,7 @@ namespace MOD.UI
             TryCancelToken();
         }
 
-        
+
         private void AllocateNewCancellation()
         {
             if (m_DisableCancellation != null)
@@ -88,13 +111,20 @@ namespace MOD.UI
 
         private void StopModImport()
         {
-            if (m_CurrentRequest != null)
-            {
-                m_CurrentRequest.Abort();
-            }
+            StopRequest();
             TryCancelToken();
         }
-        
+
+        private void StopRequest()
+        {
+            if (m_CurrentRequest != null)
+            {
+                if(!m_CurrentRequest.isDone)
+                    m_CurrentRequest.Abort();
+            }
+        }
+
+
         private void SetIsAddingMod(bool isAdding)
         {
             _isAddingMod = isAdding;
@@ -103,7 +133,7 @@ namespace MOD.UI
             m_ClipboardButton.gameObject.SetActive(!isAdding);
             m_FilePickerButton.gameObject.SetActive(!isAdding);
         }
-        
+
 
         private async void OnOkButtonClick()
         {
@@ -132,7 +162,7 @@ namespace MOD.UI
                         //有错误缓存就删了
                         File.Delete(downloadResult.ModDownloadPath);
                     }
-                    AppendErrorMsg("下载失败");
+                    AppendErrorMsg("下载已终止");
                 }
             }
             else
@@ -229,46 +259,132 @@ namespace MOD.UI
             return sizeText + "/s";
         }
 
+        private async UniTask<ModModifiedInfo> GetModModifiedInfo(Uri uri)
+        {
+            ModModifiedInfo modifiedInfo = new ModModifiedInfo();
+            using var request = UnityWebRequest.Head(uri);
+            try
+            {
+                await request.SendWebRequest();
+                modifiedInfo.isSuccess = true;
+                modifiedInfo.ModifiedTime = request.GetResponseHeader("Last-Modified");
+                modifiedInfo.ETag = request.GetResponseHeader("ETag");
+                string content_length_str = request.GetResponseHeader("Content-Length");
+                long.TryParse(content_length_str, out long contentLength);
+                modifiedInfo.ModFileSize = contentLength;
+                Debug.Log(modifiedInfo);
+            }
+            catch(Exception ex)
+            {
+                modifiedInfo.isSuccess = false;
+                Debug.LogError(ex.ToString());
+                AppendErrorMsg(request.error);
+            }
+            return modifiedInfo;
+        }
+
+        private void DeleteDownloadCacheIfExpired(string savePath, ModModifiedInfo modifiedInfo)
+        {
+            if (!File.Exists(savePath))
+                return;
+            try
+            {
+                //比较日期不太稳定直接用ETag
+                //bool isRemoteModifiedTimeValid = DateTime.TryParse(modifiedInfo.ModifiedTime, out DateTime remoteLastModifiedTime);
+                //var cacheLastWriteTime = File.GetLastWriteTimeUtc(savePath);
+                //if (remoteLastModifiedTime > cacheLastWriteTime)
+                //{
+                //    Debug.Log("缓存过期，删除掉重新下载");
+                //    File.Delete(savePath);
+                //}
+                string remoteVersion = modifiedInfo.ETag;
+                string localVersion = Jyx2_PlayerPrefs.GetString(savePath);
+                if(remoteVersion != localVersion)
+                {
+                    Debug.Log("缓存过期，删除掉重新下载");
+                    File.Delete(savePath);
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError(ex);
+                Debug.LogError("尝试删除过期的下载缓存失败");
+            }
+        }
+
 
         private async UniTask<ModDownloadResult> DownloadModPackageAsync(Uri uri)
         {
             string fileName = Path.GetFileName(uri.LocalPath);
             ModDownloadResult result = new ModDownloadResult();
+
+            var modifiedInfo = await GetModModifiedInfo(uri);
+            if (!modifiedInfo.isSuccess)
+            {
+                result.isSuccess = false;
+                AppendLogMessage("获取Mod下载信息失败");
+                return result;
+            }
             try
             {
-                m_CurrentRequest = new UnityWebRequest(uri.AbsoluteUri, UnityWebRequest.kHttpVerbGET);
+
+                m_CurrentRequest = new UnityWebRequest(uri, UnityWebRequest.kHttpVerbGET);
                 string savePath = Path.Combine(GetModExtractPath(), fileName);
+                string tempCachePath = savePath + ".tmp";
+                DeleteDownloadCacheIfExpired(tempCachePath, modifiedInfo);
+
+                long totalFileLength = modifiedInfo.ModFileSize;
+                long cacheFileLength = FileTools.GetFileLength(tempCachePath);
                 result.ModDownloadPath = savePath;
-                m_CurrentRequest.downloadHandler = new DownloadHandlerFile(savePath);
+                m_CurrentRequest.disposeDownloadHandlerOnDispose = true;
+                m_CurrentRequest.SetRequestHeader("range", $"bytes={cacheFileLength}-");
+                m_CurrentRequest.downloadHandler = new DownloadHandlerFile(tempCachePath, true);
                 m_CurrentRequest.SendWebRequest();
                 ulong lastDownloadBytes = 0;
-                while (!m_CurrentRequest.isDone)
+                //开始下载后再保存文件识别码
+                Jyx2_PlayerPrefs.SetString(tempCachePath, modifiedInfo.ETag);
+                while (IsRequesting)
                 {
-                    await UniTask.Delay(330);
                     var downloadSpeedTxt = GetDownloadSpeedText(lastDownloadBytes, m_CurrentRequest.downloadedBytes, 0.33f);
                     lastDownloadBytes = m_CurrentRequest.downloadedBytes;
-                    ClearLog();
-                    AppendLogMessage(string.Format("下载中...进度{0:F2}% \n下载速度:{1}", 
-                        100 * m_CurrentRequest.downloadProgress, downloadSpeedTxt));
+                    float progress = Mathf.Clamp01(((long)lastDownloadBytes + cacheFileLength) * 1.0f / totalFileLength);
+                    if (m_CurrentRequest.result == UnityWebRequest.Result.InProgress)
+                    {
+                        ClearLog();
+                        AppendLogMessage(string.Format("下载中...进度{0:F2}% \n下载速度:{1}",
+                                        100 * progress, downloadSpeedTxt));
+                    }
+                    await UniTask.Delay(330);
                 }
                 if (m_CurrentRequest.result != UnityWebRequest.Result.Success)
                 {
                     result.isSuccess = false;
-                    AppendErrorMsg(m_CurrentRequest.error);
+                    AppendLogMessage(m_CurrentRequest.error);
                     return result;
                 }
                 else
                 {
+                    if (File.Exists(savePath))
+                    {
+                        File.Delete(savePath);
+                    }
+                    File.Move(tempCachePath, savePath);
+                    AppendLogMessage("下载完成...进度100 %");
                     AppendLogMessage("Mod压缩包下载成功，保存路径:" + savePath);
                     result.isSuccess = true;
                     return result;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppendErrorMsg(ex.ToString());
                 result.isSuccess = false;
                 return result;
+            }
+            finally
+            {
+                Debug.Log("释放Webrequest资源");
+                m_CurrentRequest?.Dispose();
             }
         }
 

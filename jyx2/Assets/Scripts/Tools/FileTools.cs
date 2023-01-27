@@ -152,6 +152,14 @@ namespace Jyx2.Middleware
             }
         }
 
+        public static long GetFileLength(string filePath)
+        {
+            if (!File.Exists(filePath))
+                return 0;
+            var fileInfo = new FileInfo(filePath);
+            return fileInfo.Length;
+        }
+
         public static async UniTask CopyAsync(Stream source, Stream destination, byte[] buffer, CancellationToken cancellation)
         {
             if (source == null)

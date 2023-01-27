@@ -102,7 +102,7 @@ public class GeneralSettingsPanel : Jyx2_UIBase,ISettingChildPanel
         mobileMoveModeDropdown.gameObject.SetActive(Application.isMobilePlatform);
 
         JoyStickTestButton.onClick.AddListener(OnJoyStickTestBtnClick);
-        JoyStickTestButton.gameObject.SetActive(!Application.isMobilePlatform);
+        //JoyStickTestButton.gameObject.SetActive(!Application.isMobilePlatform);
         Debug.Log("GeneralSettingsPanel Start() END");
     }
 
