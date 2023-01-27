@@ -102,7 +102,8 @@ namespace Jyx2
                 CurrentEventSourceStack.Clear();
         }
 
-        //封装对lua侧模块的普通呼叫
+#region c# api to call Lua functions
+        //封装对lua侧模块的普通呼叫，为不同参数个数分别封装泛型
         public static void CallLua(string funName)
         {
             //Debug.Log("Call Lua Function: " + funName);
@@ -192,5 +193,6 @@ namespace Jyx2
             }
             return utcs.Task;
         }
+#endregion
     }
 }

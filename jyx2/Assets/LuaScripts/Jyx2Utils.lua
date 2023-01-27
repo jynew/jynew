@@ -22,6 +22,7 @@ end
 
 local cs_coroutine = require('Jyx2Coroutine')
 
+-- 用于捕捉错误信息
 local function errorcatch(func)
     return function(callback, ...)
         local rst, err = pcall(func, callback, ...)
@@ -30,7 +31,8 @@ local function errorcatch(func)
         end
     end
 end
--- 
+
+-- c#侧接口：等待Lua侧的异步函数
 local function cs_await(asyncFunName, callback, ...)
     -- 根据函数名称获取该函数
     local asyncFun = load("return "..asyncFunName)()
@@ -41,6 +43,7 @@ local function cs_await(asyncFunName, callback, ...)
     local co = cs_coroutine.start(errorcatch(asyncFun), callback, ...)
 end
 
+-- c#侧接口：调用Lua侧同步函数
 local function cs_calllua(luaFunName, ...)
     local luaFun = load("return "..luaFunName)()
     if (luaFun == nil) then

@@ -7,9 +7,10 @@
  *
  * 金庸老先生千古！
  ]]--
--- 本脚本为Lua侧游戏战斗模块
+-- 本脚本为Lua侧战斗格子范围计算模块（还没完成，与c#侧共存中）
 local range = {}
 
+-- 局部变量
 local MAX_COMPUTE_BLOCKS_SIZE = 10
 
 local dx = {1,0,-1,0}
@@ -58,6 +59,7 @@ local function IsValidBlock(x, y)
     end
 end
 
+-- 初始化
 function range.Init()
     if (range.inited == true) then
         return
@@ -181,6 +183,5 @@ function range.GetSkillCastBlocks(x, y, coverType, castSize, source)
     end
     return rst;
 end
-
 
 return range

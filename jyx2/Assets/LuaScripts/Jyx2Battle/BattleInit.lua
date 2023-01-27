@@ -7,7 +7,7 @@
  *
  * 金庸老先生千古！
  ]]--
--- 本脚本为Lua侧游戏战斗模块
+-- 本脚本为Lua侧游戏战斗模块初始化
 local battle = {}
 
 battle.SkillCoverType = {

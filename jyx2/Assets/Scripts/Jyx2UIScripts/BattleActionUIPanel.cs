@@ -274,7 +274,7 @@ public partial class BattleActionUIPanel : Jyx2_UIBase
     void RefreshSkill()
 	{
 		m_CurSkillItems.Clear();
-		var skillCastList = m_currentRole.GetSkills(true).ToList();
+		var skillCastList = m_currentRole.GetSkillsList(true);
 		Action<int, SkillUIItem, SkillCastInstance> OnSkillItemCreate = (idx, item, data) =>
 		{
 			m_CurSkillItems.Add(item);

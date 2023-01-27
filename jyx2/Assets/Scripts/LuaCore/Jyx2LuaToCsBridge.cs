@@ -540,6 +540,7 @@ namespace Jyx2
         public static Dictionary<int, LSettingsConfig> SettingsTable;
 #endregion
 
+        // 下面两个Lua函数用来在c#侧调用Lua侧的函数
         public static LuaFunction cs_await;
         public static LuaFunction cs_calllua;
 
@@ -550,7 +551,7 @@ namespace Jyx2
         //暂时决定不用这个函数来初始化，而是在需要的时候直接分别运行不同的初始化方法
         public static void LuaToCsBridgeInit()
         {
-            //用来在cs侧调用Lua async函数
+            //用来在cs侧调用Lua函数
             LEnv = LuaManager.GetLuaEnv();
             cs_await = LEnv.Global.GetInPath<LuaFunction>("jy_utils.cs_await");
             cs_calllua = LEnv.Global.GetInPath<LuaFunction>("jy_utils.cs_calllua");

@@ -7,7 +7,7 @@
  *
  * 金庸老先生千古！
  ]]--
--- 本脚本为Lua侧游戏战斗模块
+-- 本脚本为Lua侧游戏战斗伤害结算模块(缺少每回合中毒和Hurt被动扣血部分)
 local damage = {}
 
 local BattleModel
@@ -76,7 +76,6 @@ end
 --解毒
 --/ </summary>
 --/ 解毒计算公式可以参考ExecDecPoison：https://github.com/ZhanruiLiang/jinyong-legend
---/
 --/ 
 --/ </summary>
 --/ <param name="r1"></param>
@@ -101,7 +100,6 @@ end
 --返回值为一正数
 --/ </summary>
 --/ 暗器计算公式可以参考War_AnqiHurt：https://tiexuedanxin.net/forum.php?mod=viewthread&tid=394465
---/
 --/ 
 --/ </summary>
 --/ <param name="r1"></param>
@@ -259,7 +257,7 @@ function damage.GetSkillResult(r1, r2, skill, blockVector)
         end
 
         return rst;
-    elseif (magic.DamageType == 2) then --用毒 -GameUtil::usePoison
+    elseif (magic.DamageType == 2) then --用毒
 
         rst.poison = usePoison(r1, r2);
         return rst;

@@ -269,7 +269,6 @@ namespace Jyx2
             role.PreviousRoundHp = role.Hp;
             //待命
             role.View.Idle();
-            //var enemy = AIManager.Instance.GetNearestEnemy(role);
             var enemy = LuaExecutor.CallLua<RoleInstance,RoleInstance>("Jyx2.Battle.AIManager.GetNearestEnemy", role);
             if (enemy != null)
             {

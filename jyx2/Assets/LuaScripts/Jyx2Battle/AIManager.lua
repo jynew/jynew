@@ -7,7 +7,7 @@
  *
  * 金庸老先生千古！
  ]]--
--- 本脚本为Lua侧游戏战斗模块
+-- 本脚本为Lua侧游戏战斗AI模块
 local ai = {}
 local profiler = require 'perf.profiler'
 
@@ -30,8 +30,6 @@ local function RefreshRolePos()
     for _,r in pairs(aliveRoles) do
         local posint = r.Pos.X * 10000 + r.Pos.Y
         aliveRolesPos[posint] = {Key = r.Key, team = r.team}
-        --print(r.Name..posint)
-        --print(r.team)
     end
 end
 
@@ -118,7 +116,6 @@ ai.GetAIResult = function(callback, role)
         role_Poison = role.Poison
 
         local tmpblk = ai.GetFarestEnemyBlock(role, range);
-        --print("init itemblk: "..tmpblk.X..","..tmpblk.Y)
         result = CS.Jyx2.AIResult()
 
         result.MoveX = tmpblk.X
@@ -205,7 +202,6 @@ ai.GetAIResult = function(callback, role)
         end
 
         if (score > maxscore) then
-            --print(score.." score "..item.Name)
             maxscore = score;
             result.Item = item
         end
@@ -243,16 +239,13 @@ ai.GetAIResult = function(callback, role)
     end
     if maxscore > 0 then
         if result.Item ~= nil then
-            --print("itemblk: "..result.MoveX..","..result.MoveY..result.Item.Name)
         elseif result.SkillCast ~= nil then
-            --print("itemblk: "..result.MoveX..","..result.MoveY..result.SkillCast.Key)
         end
     else
         --print("No Item Use")
     end
 
     --使用武学
-    --print("skillnum:"..skills.Count)
     for _,skill in pairs(skills) do
 
         if (skill:GetStatus() == CS.Jyx2.SkillCastInstance.SkillCastStatus.OK) then
@@ -278,14 +271,10 @@ ai.GetAIResult = function(callback, role)
             end
         end
     end
-    --print("max: "..maxscore)
-                --print(profiler.report())
-                --profiler.stop()
 
     -- 如果前面可以得出结果，就反馈
     if (result ~= nil and (result.Item ~= nil or result.SkillCast ~= nil)) then
 
-        --print("result:"..result.MoveX..","..result.MoveY)
         callback(true, result)
     end
 
@@ -293,7 +282,6 @@ ai.GetAIResult = function(callback, role)
     result = ai.MoveToNearestEnemy(role, range);
     if (result ~= nil) then
 
-        --print("result:"..result.MoveX..","..result.MoveY)
         callback(true, result)
     end
 
@@ -624,7 +612,6 @@ ai.GetMoveAndCastPos = function(role, skillCast, moveRange, strategy)
     -- 如果是点攻击，使用简化方案
     -- 尽量离非目标敌人远
     if coverType == SkillCoverType.POINT then
-        --print("in quick method")
         for _,moveBlock in pairs(moveRange) do
 
             local sx = moveBlock.X;
@@ -714,11 +701,9 @@ ai.GetMoveAndCastPos = function(role, skillCast, moveRange, strategy)
             local csdist = math.abs(tx - sx) + math.abs(ty - sy)
             if (score > maxScore or (score == maxScore and aimdist + csdist < minDist)) then
 
-                --print(skillCast.Data.Name.." score: "..score)
                 maxScore = score
                 -- 最短距离乘以策略，只有策略不是0时，才考虑最短距离问题
                 minDist = (aimdist + csdist) * strategy
-                --print(skillCast.Data.Name.." dist: "..aimdist)
 
                 rst[1] = CS.Jyx2.BattleBlockVector(moveBlock.X, moveBlock.Y);
                 rst[2] = CS.Jyx2.BattleBlockVector(castBlock.X, castBlock.Y);
