@@ -1,3 +1,6 @@
-local tmp = Jyx2.ConfigMgr:GetConfig("Item")
-local tmp1 = tmp[1]
-print(tmp1.IsBeingUsedBy(CS.Jyx2.RoleInstance(1)))
+local mm = -4
+local uu = -mm
+local pp = 0 - mm
+print(uu)
+print(math.random(0, 1//2 - 1))
+print("test end")

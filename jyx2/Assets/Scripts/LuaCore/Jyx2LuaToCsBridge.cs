@@ -9,6 +9,7 @@
  */
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using XLua;
 using UnityEngine;
 
@@ -527,6 +528,7 @@ namespace Jyx2
         static private LuaEnv _luaEnv;
         static private LuaEnv LEnv {get;set;}
 
+#region Lua Configs
         // 用来读取Lua的配置文件
         public static Dictionary<int, LRoleConfig> CharacterTable;
         public static Dictionary<int, LSkillConfig> SkillTable;
@@ -536,14 +538,29 @@ namespace Jyx2
         public static Dictionary<int, LMapConfig> MapTable;
         public static Dictionary<int, LShopConfig> ShopTable;
         public static Dictionary<int, LSettingsConfig> SettingsTable;
+#endregion
 
+        // 下面两个Lua函数用来在c#侧调用Lua侧的函数
+        public static LuaFunction cs_await;
+        public static LuaFunction cs_calllua;
+
+        public static bool IsLuaFunExists(string funName)
+        {
+            return true;
+        }
         //暂时决定不用这个函数来初始化，而是在需要的时候直接分别运行不同的初始化方法
         public static void LuaToCsBridgeInit()
         {
+            //用来在cs侧调用Lua函数
+            LEnv = LuaManager.GetLuaEnv();
+            cs_await = LEnv.Global.GetInPath<LuaFunction>("jy_utils.cs_await");
+            cs_calllua = LEnv.Global.GetInPath<LuaFunction>("jy_utils.cs_calllua");
         }
 
         public static void LuaToCsBridgeDispose()
         {
+            cs_await = null;
+            cs_calllua = null;
             LuaConfigToCsDispose();
         }
 
@@ -562,6 +579,10 @@ namespace Jyx2
             ShopTable = LEnv.Global.GetInPath<Dictionary<int, LShopConfig>>("Jyx2.ConfigMgr.Shop");
             SettingsTable = LEnv.Global.GetInPath<Dictionary<int, LSettingsConfig>>("Jyx2.ConfigMgr.Settings");
 
+            TestMethod();
+        }
+        public static async UniTaskVoid TestMethod()
+        {
         }
         public static void LuaConfigToCsDispose()
         {

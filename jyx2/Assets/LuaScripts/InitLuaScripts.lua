@@ -76,15 +76,7 @@ function Jyx2:DeInit()
     self.moduleList = {}
 end
 
-Jyx2:Init()
-
 -- 辅助函数
--- prequire 用于载入模块，如果模块不存在，返回空表
-function prequire(name)
-    local rst = {}
-    if pcall(function(x) rst = require(x) end, name) then
-    return rst
-else
-    return rst
-end
-end
+jy_utils = require("Jyx2Utils")
+
+Jyx2:Init()

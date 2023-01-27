@@ -399,25 +399,28 @@ namespace Jyx2
         /// 获取该角色所有的招式，（如果有医疗、用毒、解毒，也封装成招式）
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<SkillCastInstance> GetSkills(bool forceAttackSkill)
+        public List<SkillCastInstance> GetSkillsList(bool forceAttackSkill)
         {
+            List<SkillCastInstance> skills = new List<SkillCastInstance>();
             //金庸DOS版逻辑，体力大于等于10且有武功最低等级所需内力值才可以使用技能
             if (this.Tili >= 10)
             {
                 foreach (var skill in Skills)
                 {
                     if (this.Mp >= skill.Data.GetSkill().MpCost)
-                        yield return skill;
+                        skills.Add(skill);
                 }
             }
 
             if (forceAttackSkill)
-                yield break;
+                return skills;
 
             //金庸DOS版逻辑，用毒、解毒、医疗
-            if (this.UsePoison >= 20 && this.Tili >= 10) yield return new PoisonSkillCastInstance(this.UsePoison);
-            if (this.DePoison >= 20 && this.Tili >= 10) yield return new DePoisonSkillCastInstance(this.DePoison);
-            if (this.Heal >= 20 && this.Tili >= 50) yield return new HealSkillCastInstance(this.Heal);
+            if (this.UsePoison >= 20 && this.Tili >= 10) skills.Add( new PoisonSkillCastInstance(this.UsePoison));
+            if (this.DePoison >= 20 && this.Tili >= 10) skills.Add(new DePoisonSkillCastInstance(this.DePoison));
+            if (this.Heal >= 20 && this.Tili >= 50) skills.Add(new HealSkillCastInstance(this.Heal));
+
+            return skills;
         }
 
         public void ResetSkillCasts()

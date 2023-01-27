@@ -195,6 +195,21 @@ namespace Jyx2
                         int count = int.Parse(item.Split(',')[1]);
                         GameRuntimeData.Instance.AddItem(itemId, count);
                     }
+                }else if (line.StartsWith("allItem")) //按分类添加所有物品
+                {
+                    var tmpItemType = line.Replace("allItem:", "").Split(',');
+                    var tmpTypeList = new List<int>();
+                    foreach (var it in tmpItemType)
+                    {
+                        tmpTypeList.Add(int.Parse(it));
+                    }
+                    foreach (var item in LuaToCsBridge.ItemTable)
+                    {
+                        if (tmpTypeList.Contains(item.Value.ItemType))
+                        {
+                            GameRuntimeData.Instance.AddItem(item.Key, 99);
+                        }
+                    }
                 }else if (line.StartsWith("props")) //初始属性
                 {
                     var tmp = line.Replace("props=", "").Split('|');

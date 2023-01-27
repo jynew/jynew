@@ -147,13 +147,13 @@ namespace Jyx2.Battle
         async UniTask RoleAIAction(RoleInstance role)
         {
             //获取AI计算结果
-            var aiResult = await AIManager.Instance.GetAIResult(role);
+            var laiResult = await LuaExecutor.CallLuaAsync<AIResult,RoleInstance>("Jyx2.Battle.AIManager.GetAIResult", role);
             
             //先移动
-            await RoleMove(role, new BattleBlockVector(aiResult.MoveX, aiResult.MoveY));
+            await RoleMove(role, new BattleBlockVector(laiResult.MoveX, laiResult.MoveY));
 
             //再执行具体逻辑
-            await ExecuteAIResult(role, aiResult);
+            await ExecuteAIResult(role, laiResult);
         }
 
         //执行具体逻辑
@@ -201,7 +201,7 @@ namespace Jyx2.Battle
 
             //设置逻辑位置
             role.Pos = moveTo;
-            var enemy = AIManager.Instance.GetNearestEnemy(role);
+            var enemy = LuaExecutor.CallLua<RoleInstance,RoleInstance>("Jyx2.Battle.AIManager.GetNearestEnemy", role);
             if (enemy != null)
             {
                 //面向最近的敌人
@@ -262,7 +262,7 @@ namespace Jyx2.Battle
                 //“打”自己人的招式
                 if (!skill.IsCastToEnemy() && rolei.team != role.team) continue;
 
-                var result = AIManager.Instance.GetSkillResult(role, rolei, skill, blockVector);
+                var result = LuaExecutor.CallLua<SkillCastResult, RoleInstance, RoleInstance, SkillCastInstance, BattleBlockVector>("Jyx2.Battle.DamageCaculator.GetSkillResult", role, rolei, skill, blockVector);
 
                 result.Run();
 

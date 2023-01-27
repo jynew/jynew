@@ -90,6 +90,8 @@ public static class Jyx2ResourceHelper
         var initFile = await ResLoader.LoadAsset<TextAsset>("Assets/LuaScripts/InitLuaScripts.lua");
         var luaEnv = LuaManager.GetLuaEnv();
         luaEnv.DoString(System.Text.Encoding.UTF8.GetBytes(initFile.text), "InitLuaScripts");
+        //初始化LuaToCsBridge
+        LuaToCsBridge.LuaToCsBridgeInit();
     }
 
     private static async Task InitConfigTables()
