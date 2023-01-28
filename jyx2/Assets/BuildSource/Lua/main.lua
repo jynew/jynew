@@ -135,6 +135,7 @@ GetFlagInt = luaBridge.jyx2_GetFlagInt
 
 RestFight = luaBridge.RestFight--野外休息
 JudgeIQ = luaBridge.JudgeIQ--判断IQ
+AddAttr = luaBridge.AddAttr--增加角色属性通用函数
 AddHeal = luaBridge.AddHeal--增加医疗
 AddDefence = luaBridge.AddDefence--增加防御
 AddQuanzhang = luaBridge.AddQuanzhang--增加拳掌
