@@ -301,7 +301,7 @@ namespace Jyx2
             Shuadao = checkUp(Shuadao, 20, 3);
             Anqi = checkUp(Anqi, 20, 3);
 
-            this.Limit(1, 1, 1);
+            this.LimitAllAttrs();
 
             Debug.Log($"{this.Name}升到{this.Level}级！");
         }
@@ -312,7 +312,7 @@ namespace Jyx2
         /// Attack、Defence、Qinggong为最终状态：原始属性 + 此刻使用的装备属性的总值
         /// 
         /// </summary>
-        void Limit(int attackTime, int defenceTime, int qinggongTime)
+        void LimitAllAttrs()
         {
             Exp = Tools.Limit(Exp, 0, GameConst.MAX_EXP);
             ExpForItem = Tools.Limit(ExpForItem, 0, GameConst.MAX_EXP);
@@ -324,12 +324,14 @@ namespace Jyx2
             Mp = Tools.Limit(Mp, 0, MaxMp);
             Tili = Tools.Limit(Tili, 0, GameConst.MAX_ROLE_TILI);
 
+            // 获取装备增加的属性，这些属性不受最大值限制
             var equipAttack = GetWeaponProperty("Attack") + GetArmorProperty("Attack");
             var equipDefence = GetWeaponProperty("Defence") + GetArmorProperty("Defence");
             var equipQinggong = GetWeaponProperty("Qinggong") + GetArmorProperty("Qinggong");
-            Attack = Tools.Limit(Attack, 0, GameConst.MAX_ROLE_ATTACK + equipAttack * attackTime);
-            Defence = Tools.Limit(Defence, 0, GameConst.MAX_ROLE_DEFENCE + equipDefence * defenceTime);
-            Qinggong = Tools.Limit(Qinggong, 0, GameConst.MAX_ROLE_QINGGONG + equipQinggong * qinggongTime);
+            // 限制属性
+            Attack = LimitAttr(Attack, 0, GameConst.MAX_ROLE_ATTACK, equipAttack);
+            Defence = LimitAttr(Defence, 0, GameConst.MAX_ROLE_DEFENCE, equipDefence);
+            Qinggong = LimitAttr(Qinggong, 0, GameConst.MAX_ROLE_QINGGONG, equipQinggong);
 
             UsePoison = Tools.Limit(UsePoison, 0, GameConst.MAX_USE_POISON);
             DePoison = Tools.Limit(DePoison, 0, GameConst.MAX_DEPOISON);
@@ -353,6 +355,30 @@ namespace Jyx2
                 wugong.Level = Tools.Limit(wugong.Level, 0, GameConst.MAX_SKILL_LEVEL);
             }
         }
+        /// <summary>
+        /// 角色专用的属性范围限制
+        /// </summary>
+        int LimitAttr(int attr, int minValue, int maxValue, int extraValue)
+        {
+            int attrNeat = attr - extraValue;
+            //净值大于最大值，限制净值为最大值
+            if (attrNeat > maxValue)
+            {
+                return maxValue + extraValue;
+            }
+            //净值小于最小值而且附加值为正,限制净值为最小值
+            if (attrNeat < minValue && extraValue > 0)
+            {
+                return minValue + extraValue;
+            }
+            //净值小于最小值且附加值为负,限制总值为最小值
+            if (attrNeat < minValue && extraValue < 0)
+            {
+                return minValue;
+            }
+            //以上都没有，则认为属性符合要求
+            return attr;
+        }
 
         int checkUp(int value, int limit, int max_inc)
         {
@@ -364,6 +390,26 @@ namespace Jyx2
             return value;
         }
 
+        private static Type _thisType = Type.GetType("Jyx2.RoleInstance");
+        /// <summary>
+        /// 增加角色属性的API
+        /// </summary>
+        /// <param name="attrName">属性名</param>
+        /// <param name="delta">属性增量</param>
+        /// <returns>属性实际增量</returns>
+        public int AddAttr(string attrName, int delta)
+        {
+            var attr = _thisType.GetField(attrName);
+            if (attr == null)
+            {
+                Debug.LogError($"人物属性 {attrName} 不存在");
+                return 0;
+            }
+            int oldValue = (int)attr.GetValue(this);
+            attr.SetValue(this, oldValue + delta);
+            LimitAllAttrs();
+            return (int)attr.GetValue(this) - oldValue;
+        }
 
         public int ExpGot; //战斗中获得的经验
         public int PreviousRoundHp; //上一回合的生命值
@@ -730,7 +776,7 @@ namespace Jyx2
                 this.ExpForItem = 0;
             }
 
-            this.Limit(1, 1, 1);
+            this.LimitAllAttrs();
         }
 
         /// <summary>
@@ -741,6 +787,20 @@ namespace Jyx2
         {
             if (item == null)
                 return;
+
+            //在卸载装备流程中清理角色的装备属性值
+            if (Weapon == item.Id)
+            {
+                Weapon = -1;
+            }
+            else if (Armor == item.Id)
+            {
+                Armor = -1;
+            }
+            else
+            {
+                return;
+            }
 
             runtime.SetItemUser(item.Id, -1);
             this.Tili -= item.AddTili;
@@ -766,10 +826,7 @@ namespace Jyx2
             this.Pinde -= item.AddPinde;
             this.AttackPoison -= item.AttackPoison;
 
-            int defenceTime = item.Defence < 0 ? 0 : 1;
-            int qinggongTime = item.Qinggong < 0 ? 0 : 1;
-            // 装备攻击永远为正，防御、轻功可能为负
-            this.Limit(1, defenceTime, qinggongTime);
+            this.LimitAllAttrs();
         }
 
         public bool CanFinishedItem()

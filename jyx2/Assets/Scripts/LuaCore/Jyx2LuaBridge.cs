@@ -982,6 +982,25 @@ namespace Jyx2
         }
 
         //---属性增加
+
+        /// <summary>
+        /// 增加角色属性的通用方法
+        /// </summary>
+        /// <param name="roleId">需要改变属性角色的Id</param>
+        /// <param name="attrName">需要改变的属性</param>
+        /// <param name="v">属性增加值（可以是负数）</param>
+        /// <param name="dispName">弹窗显示时属性名称（留空则不弹窗）</param>
+        public static void AddAttr(int roleId, string attrName, int v, string dispName)
+        {
+            if (!TryFindRole(roleId, out var role))
+                return;
+            int delta = role.AddAttr(attrName, v);
+            if (dispName != null && dispName != "")
+            {
+            StoryEngine.DisplayPopInfo(role.Name + dispName + (delta > 0 ? "增加" : "减少") + Math.Abs(delta));
+            }
+        }
+
         /// <summary>
         /// 增加角色的资质属性
         /// </summary>
@@ -989,10 +1008,7 @@ namespace Jyx2
         /// <param name="v">变化量</param>
         public static void AddAptitude(int roleId, int v)
         {
-            if (!TryFindRole(roleId, out var role))
-                return;
-            role.IQ = Tools.Limit(role.IQ + v, 0, GameConst.MAX_ROLE_ZIZHI);
-            StoryEngine.DisplayPopInfo(role.Name + "资质" + (v > 0 ? "增加" : "减少") + Math.Abs(v));
+            AddAttr(roleId, "IQ", v, "资质");
         }
         /// <summary>
         /// 增加医疗
@@ -1001,11 +1017,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddHeal(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Heal;
-            r.Heal = Tools.Limit(v0 + value, 0, GameConst.MAX_HEAL);
-            StoryEngine.DisplayPopInfo(r.Name + "医疗增加" + (r.Heal - v0));
+            AddAttr(roleId, "Heal", value, "医疗");
         }
         /// <summary>
         /// 增加防御
@@ -1014,11 +1026,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddDefence(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Defence;
-            r.Defence = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_DEFENCE);
-            StoryEngine.DisplayPopInfo(r.Name + "防御增加" + (r.Defence - v0));
+            AddAttr(roleId, "Defence", value, "防御");
         }
         /// <summary>
         /// 增加拳掌
@@ -1027,11 +1035,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddQuanzhang(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Quanzhang;
-            r.Quanzhang = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "拳掌增加" + (r.Quanzhang - v0));
+            AddAttr(roleId, "Quanzhang", value, "拳掌");
         }
         /// <summary>
         /// 增加耍刀
@@ -1040,11 +1044,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddShuadao(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Shuadao;
-            r.Shuadao = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "耍刀增加" + (r.Shuadao - v0));
+            AddAttr(roleId, "Shuadao", value, "耍刀");
         }
         /// <summary>
         /// 增加御剑
@@ -1053,11 +1053,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddYujian(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Yujian;
-            r.Yujian = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "御剑增加" + (r.Yujian - v0));
+            AddAttr(roleId, "Yujian", value, "御剑");
         }
         /// <summary>
         /// 增加暗器
@@ -1066,11 +1062,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddAnqi(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Anqi;
-            r.Anqi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "暗器增加" + (r.Anqi - v0));
+            AddAttr(roleId, "Anqi", value, "暗器");
         }
         /// <summary>
         /// 增加奇门
@@ -1079,11 +1071,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddQimen(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Qimen;
-            r.Qimen = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "奇门增加" + (r.Qimen - v0));
+            AddAttr(roleId, "Qimen", value, "奇门");
         }
         /// <summary>
         /// 增加武学常识
@@ -1092,11 +1080,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddWuchang(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Wuxuechangshi;
-            r.Wuxuechangshi = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "武学常识增加" + (r.Wuxuechangshi - v0));
+            AddAttr(roleId, "Wuxuechangshi", value, "武学常识");
         }
         /// <summary>
         /// 增加功夫带毒
@@ -1105,11 +1089,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddAttackPoison(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.AttackPoison;
-            r.AttackPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "功夫带毒增加" + (r.AttackPoison - v0));
+            AddAttr(roleId, "AttackPoison", value, "功夫带毒");
         }
         /// <summary>
         /// 增加抗毒
@@ -1118,11 +1098,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddAntiPoison(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.AntiPoison;
-            r.AntiPoison = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "抗毒增加" + (r.AttackPoison - v0));
+            AddAttr(roleId, "AntiPoison", value, "抗毒");
         }
         /// <summary>
         /// 增加经验
@@ -1131,11 +1107,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddExp(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var role))
-                return;
-            var v0 = role.Exp;
-            role.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
-            StoryEngine.DisplayPopInfo(role.Name + "经验增加" + (role.Exp - v0));
+            AddAttr(roleId, "Exp", value, "经验");
         }
         /// <summary>
         /// 增加经验，不提示
@@ -1147,10 +1119,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddExpWithoutHint(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Exp;
-            r.Exp = Tools.Limit(v0 + value, 0, GameConst.MAX_EXP);
+            AddAttr(roleId, "Exp", value, null);
         }
         /// <summary>
         /// 加等级并返回实际增加的值
@@ -1178,11 +1147,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddSpeed(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Qinggong;
-            r.Qinggong = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "轻功增加" + (r.Qinggong - v0));
+            AddAttr(roleId, "Qinggong", value, "轻功");
         }
         /// <summary>
         /// 增加内力
@@ -1222,11 +1187,7 @@ namespace Jyx2
         /// <param name="value"></param>
         public static void AddAttack(int roleId, int value)
         {
-            if (!TryFindRole(roleId, out var r))
-                return;
-            var v0 = r.Attack;
-            r.Attack = Tools.Limit(v0 + value, 0, GameConst.MAX_ROLE_ATTRIBUTE);
-            StoryEngine.DisplayPopInfo(r.Name + "武力增加" + (r.Attack - v0));
+            AddAttr(roleId, "Attack", value, "武力");
         }
         /// <summary>
         /// 增加最大生命
