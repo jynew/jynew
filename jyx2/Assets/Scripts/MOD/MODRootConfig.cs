@@ -42,7 +42,7 @@ public class MODRootConfig : ScriptableObject
     [LabelText("是否打开控制台")] public bool IsConsoleEnable = true;
     [LabelText("在哪些难度中禁止使用控制台")] public List<Jyx2_GameDifficulty> ConsoleDisableDifficulty;
     [LabelText("战斗中是否播放使用道具动作")] public bool IsPlayUseItemAnimation = true;
-
+    [LabelText("开启地图光影变化")] public bool AutoChangeLightingOn = false;
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
     public List<StoryIdNameFix> StoryIdNameFixes;

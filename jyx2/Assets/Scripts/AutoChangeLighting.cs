@@ -14,8 +14,13 @@ namespace Jyx2
         public string GamedaycountString="Gamedaycount";//自定义保存日期数据的关键字
         public int _GameDayCount;//读取日期数据
         //public float Rotatex;//旋转角度的值x
+
         private void Start()
         {
+            if (RuntimeEnvSetup.CurrentModConfig.AutoChangeLightingOn == true)
+            {
+                isCount = true;
+            }
             if (isCount) 
             {
                 timetoangle = 360 / TimeChangerate;//时间和角度换算关系
