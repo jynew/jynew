@@ -13,7 +13,6 @@ namespace Jyx2
         private float timetoangle;
         public string GamedaycountString="Gamedaycount";//自定义保存日期数据的关键字
         public int _GameDayCount;//读取日期数据
-        //public float Rotatex;//旋转角度的值x
 
         private void Start()
         {
@@ -45,9 +44,19 @@ namespace Jyx2
                     }
                 }
             }
-            float sdeg = ( Time.deltaTime * timetoangle) % 360;//不大于360°
-            MainLight.transform.Rotate(Vector3.right * sdeg);
-           //Rotatex = MainLight.transform.eulerAngles.x;
+#if UNITY_EDITOR
+            if (MainLight != null) //编辑器状态只要绑定了Light就可以
+            {
+                float sdeg = ( Time.deltaTime * timetoangle) % 360;//不大于360°
+                MainLight.transform.Rotate(Vector3.right * sdeg);
+            }
+#else
+            if (LevelMaster.IsInWorldMap && MainLight != null) //实机仅限大地图
+            {
+                float sdeg = (Time.deltaTime * timetoangle) % 360;//不大于360°
+                MainLight.transform.Rotate(Vector3.right * sdeg);
+            }
+#endif
         }
     }
 }
