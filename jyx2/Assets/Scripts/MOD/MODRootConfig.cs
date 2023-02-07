@@ -43,6 +43,9 @@ public class MODRootConfig : ScriptableObject
     [LabelText("在哪些难度中禁止使用控制台")] public List<Jyx2_GameDifficulty> ConsoleDisableDifficulty;
     [LabelText("战斗中是否播放使用道具动作")] public bool IsPlayUseItemAnimation = true;
     [LabelText("开启地图光影变化")] public bool AutoChangeLightingOn = false;
+    [LabelText("游戏时间转换率")] public float TimeChangerate = 300f; //默认游戏时间5分钟等于游戏内1天
+    [LabelText("保存游戏时间间隔")] public float SaveTimefrequency = 60f; //默认每分钟保存一次
+    [LabelText("保存游戏时间关键字")] public string RealTimeCountString = "RealtimeCount";
     [InfoBox("某些角色名与人物ID不严格对应，在此修正。用于对话中正确显示名字")] [BoxGroup("对话人物ID修正")] [TableList] 
     [HideLabel]
     public List<StoryIdNameFix> StoryIdNameFixes;
