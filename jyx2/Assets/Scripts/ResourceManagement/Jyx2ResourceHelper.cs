@@ -155,15 +155,7 @@ public static class Jyx2ResourceHelper
     {
         Object.Destroy(obj);
     }
-
-    [Obsolete("待修改为tilemap")]
-    public static async UniTask<SceneCoordDataSet> GetSceneCoordDataSet(string sceneName)
-    {
-        string path = $"{ConStr.BattleBlockDatasetPath}{sceneName}_coord_dataset.bytes";
-        var result = await ResLoader.LoadAsset<TextAsset>(path);
-        using var memory = new MemoryStream(result.bytes);
-        return Serializer.Deserialize<SceneCoordDataSet>(memory);
-    }
+    
 
     public static async UniTask<Jyx2NodeGraph> LoadEventGraph(string id)
     {
