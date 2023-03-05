@@ -8,7 +8,6 @@
  * 金庸老先生千古！
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ch.sycoforge.Decal;
@@ -98,15 +97,13 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		ClearAllBlocks();
 		foreach (var box in _boxList)
 		{
-			if (box.ColliderContain(pos))
-			{
-				Debug.Log($"找到了战斗盒子，玩家坐标：{pos.x}：{pos.y}：{pos.z}");
-				_currentBattlebox = box;
-				_currentBattlebox.Init();
-				_currentBattlebox.DrawAreaBlocks(pos, m_MoveZoneDrawRange);
+			if (!box.ColliderContain(pos)) continue;
+			Debug.Log($"找到了战斗盒子，玩家坐标：{pos.x}：{pos.y}：{pos.z}");
+			_currentBattlebox = box;
+			_currentBattlebox.Init();
+			_currentBattlebox.DrawAreaBlocks(pos, m_MoveZoneDrawRange);
 
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
@@ -134,7 +131,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 
 	//清除当前
 	//脱离战斗的时候必须调用
-	public void ClearAllBlocks()
+	private void ClearAllBlocks()
 	{
 		if (_isInit && _currentBattlebox != null)
 			_currentBattlebox.ClearAllBlocks();
@@ -420,7 +417,7 @@ public class BattleboxHelper : MonoBehaviour,IJyx2_InputContext
 		_currentBattlebox.ShowAllValidBlocks();
 	}
 
-	public void ShowMoveZone(Vector3 center, int range = -1)
+	void ShowMoveZone(Vector3 center, int range = -1)
 	{
 		if (!GeneralPreJudge()) return;
 		_currentBattlebox.HideAllBlocks();

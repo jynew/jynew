@@ -1,5 +1,4 @@
-﻿using System;
-using Jyx2.Middleware;
+﻿using Jyx2.Middleware;
 using UnityEngine;
 using UnityEngine.UI;
 
