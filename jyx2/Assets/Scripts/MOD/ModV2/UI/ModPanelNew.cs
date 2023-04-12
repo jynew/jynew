@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
 using Jyx2;
-using Jyx2.Middleware;
 using Jyx2.MOD.ModV2;
 using UIWidgets;
 using UnityEngine;
@@ -25,6 +24,7 @@ namespace MOD.UI
         [SerializeField] private Button m_LaunchButton;
         [SerializeField] private Button m_SteamWorkshopButton;
         
+        [SerializeField] private Button m_DonateButton;
 
         [SerializeField] private Image m_ModPic;
         [SerializeField] private Text m_ModTitle;
@@ -60,6 +60,7 @@ namespace MOD.UI
             m_RemoveButton.onClick.AddListener(OnRemove);
             m_AddButton.onClick.AddListener(OnAdd);
             m_CloseButton.onClick.AddListener(OnQuit);
+            m_DonateButton.onClick.AddListener(OnDonate);
             
 #if UNITY_STANDALONE
             m_SteamWorkshopButton.gameObject.SetActive(true);
@@ -238,6 +239,23 @@ namespace MOD.UI
             Jyx2_UIManager.Clear();
             RuntimeEnvSetup.ForceClear();
             SceneManager.LoadScene("0_MODLoaderScene");
+        }
+
+
+        void OnDonate()
+        {
+#if UNITY_STANDALONE
+            if (Steamworks.SteamUtils.IsOverlayEnabled)
+            {
+                Steamworks.SteamFriends.OpenStoreOverlay(2298200); //捐款DLC
+            }
+            else
+            {
+                Jyx2.Middleware.Tools.openURL("https://store.steampowered.com/app/2298200/_/?curator_clanid=42936139");    
+            }
+#else
+            Jyx2.Middleware.Tools.openURL("https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE");           
+#endif
         }
     }
 }
