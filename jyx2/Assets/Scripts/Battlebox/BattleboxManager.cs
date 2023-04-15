@@ -51,6 +51,7 @@ public class BattleboxManager : MonoBehaviour
     private List<BattleBlockData> _rangeLayerBlocks = new List<BattleBlockData>();
     
     private GameObject _parent;
+    private GameObject _blockPrefab;
 
 
     // Use this for initialization
@@ -61,6 +62,11 @@ public class BattleboxManager : MonoBehaviour
 
     public void Init()
     {
+        if (_blockPrefab == null)
+        {
+            _blockPrefab = Resources.Load<GameObject>("BattleboxBlock");
+        }
+        
         InitCollider();
 
         if (m_Dataset == null)
@@ -366,9 +372,7 @@ public class BattleboxManager : MonoBehaviour
     {
         var parent = FindOrCreateBlocksParent();
         
-        var block = Resources.Load<GameObject>("BattleboxBlock");
-        
-        var obj = EasyDecal.Project(block, pos, Quaternion.identity);
+        var obj = EasyDecal.Project(_blockPrefab, pos, Quaternion.identity);
         obj.Quality = 2;
         obj.Distance = 0.05f;
         if (initRangeBlocks)
@@ -380,12 +384,14 @@ public class BattleboxManager : MonoBehaviour
         obj.transform.localScale = m_blockTexMultiplier * _blockScale;
 
         var bPos = new BattleBlockVector(x, y);
-        var bbd = new BattleBlockData();
-        bbd.BattlePos = bPos;
-        bbd.WorldPos = pos;
-        bbd.gameObject = obj.gameObject;
-        bbd.BoxBlock = boxBlock;
-        
+        var bbd = new BattleBlockData
+        {
+            BattlePos = bPos,
+            WorldPos = pos,
+            gameObject = obj.gameObject,
+            BoxBlock = boxBlock
+        };
+
         if (initRangeBlocks)
         {
             _rangeLayerBlocks.Add(bbd);

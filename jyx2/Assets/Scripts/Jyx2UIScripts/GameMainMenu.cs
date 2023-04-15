@@ -10,20 +10,12 @@
 using UnityEngine;
 using Jyx2;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using i18n.TranslatorDef;
 using Jyx2.Middleware;
-using UnityEngine.UI;
-
-using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using Jyx2.ResourceManagement;
-using MOD;
 using MOD.UI;
-using UnityEngine.SceneManagement;
 
 public partial class GameMainMenu : Jyx2_UIBase
 {
