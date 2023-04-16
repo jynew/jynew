@@ -72,6 +72,15 @@ namespace MOD.UI
             {
                 gameModLoader.Init();
             }
+            //增加一个对XLua生成代码的简单检测，提醒作者生成代码
+#if UNITY_EDITOR
+            string xluaGenDir = Path.Combine(Application.dataPath,"XLua/Gen");
+            if (Directory.GetFiles(xluaGenDir).Length == 0)
+            {
+                Debug.LogError("没有手动生成XLua代码，可能导致载入Mod出错。请查看项目手册！");
+            }
+
+#endif
         }
 
         private void DoubleClickedListViewItem(int index, ListViewItem arg1, PointerEventData arg2)
