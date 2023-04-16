@@ -254,8 +254,8 @@ namespace Jyx2
 				return GetNearBlocks(x, y);
 			}
 
-			if (maxdistance > MAX_COMPUTE_BLOCKS_SIZE)
-				maxdistance = MAX_COMPUTE_BLOCKS_SIZE;
+			if (maxdistance >= MAX_COMPUTE_BLOCKS_SIZE)
+				maxdistance = MAX_COMPUTE_BLOCKS_SIZE - 1;
 
 			List<BattleBlockVector> blocks = null;
 			int deltaX = 0;
