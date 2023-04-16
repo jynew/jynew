@@ -104,7 +104,12 @@ namespace Jyx2.MOD.ModV2
             {
                 //文件不存在会导致404错误码，相关http错误WebRequest直接抛的异常
                 Debug.LogWarning(ex);
+                //在EDITOR中不需要报这个错误
+#if UNITY_EDITOR
+                Debug.LogWarning("GameModNative相关文件丢失, Mod加载可能会有问题, 文件路径:" + uri);
+#else
                 Debug.LogError("GameModNative相关文件丢失, Mod加载可能会有问题, 文件路径:" + uri);
+#endif
                 return null;
             }
         }
