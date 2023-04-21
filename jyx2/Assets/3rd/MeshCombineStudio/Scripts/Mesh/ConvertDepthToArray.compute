@@ -1,0 +1,13 @@
+﻿int resolution;
+Texture2D<float> rtDepth;
+RWStructuredBuffer<float> heightBuffer;
+float distance;
+float captureHeight;
+int direction;
+
+[numthreads(8,8,1)] 
+#pragma kernel CSMain
+void CSMain (uint2 id : SV_DispatchThreadID)
+{
+	heightBuffer[id.x + (id.y * resolution)] = captureHeight + (((1 - rtDepth[id]) * distance) * direction); 
+}
