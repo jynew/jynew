@@ -48,6 +48,13 @@ util.hotfix_ex(CS.Jyx2.Jyx2LuaBridge, "Talk", function(a,b,c)
 end)
 
 --修改UI的例子
+util.hotfix_ex(CS.GameMainMenu, "OnCreate", function(self)
+    print("lua hot fix 生效：CS.GameMainMenu.OnCreate called!")
+    self:OnCreate()
+end)
+
+
+--通过热更新把版本号修改的例子
 --[[
 util.hotfix_ex(CS.GameInfoPanel, "OnShowPanel", function(self, paras)
     print("lua hot fix 生效：CS.GameInfoPanel.OnShowPanel")
