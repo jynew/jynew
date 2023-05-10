@@ -1,4 +1,4 @@
-﻿-- 这里是热修复C#逻辑代码的地方
+-- 这里是热修复C#逻辑代码的地方
 local util = require 'xlua.util'
 
 --这里是展示给大家如何通过lua的热更新进行函数逻辑重写
@@ -37,6 +37,16 @@ util.hotfix_ex(CS.Jyx2.RoleInstance, "InitData", function(self)
     end
 
 end)
+
+
+--修改MessageBox
+--[[
+util.hotfix_ex(CS.Jyx2.Jyx2LuaBridge, "Talk", function(a,b,c)
+    print("lua hot fix CS.Jyx2.Jyx2LuaBridge.Talk called!") --打印调试信息
+    CS.Jyx2.Jyx2LuaBridge.Talk(a,b,c)  --先执行原函数
+end)
+]]
+
 
 --[[TODO：
 例子
