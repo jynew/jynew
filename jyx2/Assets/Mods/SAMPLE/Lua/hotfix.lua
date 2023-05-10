@@ -2,6 +2,7 @@
 local util = require 'xlua.util'
 
 --这里是展示给大家如何通过lua的热更新进行函数逻辑重写
+--[[
 util.hotfix_ex(CS.Jyx2.RoleInstance, "InitData", function(self)
     print("lua hot fix called!") --打印调试信息
     self:InitData()  --先执行原函数++++
@@ -37,13 +38,21 @@ util.hotfix_ex(CS.Jyx2.RoleInstance, "InitData", function(self)
     end
 
 end)
+]]
 
 
---修改MessageBox
---[[
+--修改Talk
 util.hotfix_ex(CS.Jyx2.Jyx2LuaBridge, "Talk", function(a,b,c)
-    print("lua hot fix CS.Jyx2.Jyx2LuaBridge.Talk called!") --打印调试信息
+    print("lua hot fix 生效：CS.Jyx2.Jyx2LuaBridge.Talk called!") --打印调试信息
     CS.Jyx2.Jyx2LuaBridge.Talk(a,b,c)  --先执行原函数
+end)
+
+--修改UI的例子
+--[[
+util.hotfix_ex(CS.GameInfoPanel, "OnShowPanel", function(self, paras)
+    print("lua hot fix 生效：CS.GameInfoPanel.OnShowPanel")
+    --self:OnShowPanel(paras)
+    self.VersionText_Text.text = "hotfix test"
 end)
 ]]
 

@@ -26,7 +26,7 @@ public static class HotfixConfigs
         get
         {
             return (from type in Assembly.Load("Assembly-CSharp").GetTypes()
-                where type.Namespace == "Jyx2"
+                where !type.IsGenericTypeDefinition && !type.IsNested
                 select type).ToList();
         }
     }
