@@ -47,10 +47,12 @@ public static class HotfixConfigs
             if (type.Namespace.StartsWith("UnityEditor")) return true;
             if (type.Namespace.StartsWith("FastWater")) return true;
             if (type.Namespace.StartsWith("StylizedWater")) return true;
+            if (type.Namespace.StartsWith("Microsoft")) return true;
         }
         
         if (type.Name.StartsWith("FastWater")) return true;
         if (type.Name.StartsWith("StylizedWater")) return true;
+        
 
         return false;
     }
