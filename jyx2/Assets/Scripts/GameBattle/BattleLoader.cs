@@ -57,7 +57,7 @@ public class BattleLoader : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        
+
         await RuntimeEnvSetup.Setup();
 
         if (CurrentBattleConfig == null)
@@ -68,7 +68,7 @@ public class BattleLoader : MonoBehaviour
         {
             m_BattleId = CurrentBattleConfig.Id;
         }
-        
+
         if (IsTestCase)
         {
             await LoadJyx2Battle(CurrentBattleConfig, (ret) => { CycleLoadBattle(); });
@@ -120,7 +120,7 @@ public class BattleLoader : MonoBehaviour
                     if (m_Roles[i].roleKey == roleId)
                     {
                         RoleInstance roleInstance = runtime.GetRoleInTeam(roleId);
-                        if (roleInstance!=null && roleInstance.Hp <= 0) roleInstance.Hp = 1;
+                        if (roleInstance != null && roleInstance.Hp <= 0) roleInstance.Hp = 1;
                     }
                 }
             }
@@ -168,21 +168,21 @@ public class BattleLoader : MonoBehaviour
         }
 
         //通过ID添加队友
-            var teamMates = battle.TeamMates;
-            //预配置队友
-            foreach (var v in teamMates)
-            {
-                AddRole(v, 0);
-            }
+        var teamMates = battle.TeamMates;
+        //预配置队友
+        foreach (var v in teamMates)
+        {
+            AddRole(v, 0);
+        }
 
         //通过ID添加敌人
-            var enemies = battle.Enemies;
+        var enemies = battle.Enemies;
 
-            //敌人
-            foreach (var v in enemies)
-            {
-                AddRole(v, 1);
-            }
+        //敌人
+        foreach (var v in enemies)
+        {
+            AddRole(v, 1);
+        }
 
         //动态生成队友
         if (battle.DynamicTeammate != null)
@@ -192,6 +192,7 @@ public class BattleLoader : MonoBehaviour
                 AddDynamicRole(r, 0);
             }
         }
+
         //Debug.Log("Battle Loader 动态生成敌人");
         //动态生成敌人
         if (battle.DynamicEnemies != null)
@@ -264,7 +265,7 @@ public class BattleLoader : MonoBehaviour
             if (roleInstance == null)
             {
                 Debug.LogError($"载入角色出错，存档中没有该角色，强行从配置表生成。key={r.roleKey}");
-                roleInstance = new RoleInstance(r.roleKey); 
+                roleInstance = new RoleInstance(r.roleKey);
             }
 
             return roleInstance;

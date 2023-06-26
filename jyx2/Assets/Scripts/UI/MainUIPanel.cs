@@ -41,9 +41,10 @@ public partial class MainUIPanel : Jyx2_UIBase
 
 		ShowCompass(Jyx2LuaBridge.jyx2_GetFlagInt("获得罗盘") == 1);
 	}
+
 	public void ShowCompass(bool flag)
 	{
-        ComassText_Text.gameObject.SetActive(LevelMaster.IsInWorldMap && flag);
+		ComassText_Text.gameObject.SetActive(LevelMaster.IsInWorldMap && flag);
 		if (ComassText_Text.gameObject.activeSelf)
 		{
 			var player = LevelMaster.Instance.GetPlayer();
@@ -55,15 +56,18 @@ public partial class MainUIPanel : Jyx2_UIBase
 
 			if (!player.IsOnBoat)
 			{
-				coordinateBuilder.AppendFormat("人({0},{1})", Mathf.Floor(playerPosition.z), Mathf.Floor(playerPosition.x));
+				coordinateBuilder.AppendFormat("人({0},{1})", Mathf.Floor(playerPosition.z),
+					Mathf.Floor(playerPosition.x));
 				var boatPosition = player.GetBoatPosition();
 				coordinateBuilder.AppendFormat(" 船({0},{1})", Mathf.Round(boatPosition.z), Mathf.Round(boatPosition.x));
 			}
-                        else
-                        {
-				coordinateBuilder.AppendFormat("船({0},{1})", Mathf.Floor(playerPosition.z), Mathf.Floor(playerPosition.x));
-                        }
-            ComassText_Text.text = coordinateBuilder.ToString();
+			else
+			{
+				coordinateBuilder.AppendFormat("船({0},{1})", Mathf.Floor(playerPosition.z),
+					Mathf.Floor(playerPosition.x));
+			}
+
+			ComassText_Text.text = coordinateBuilder.ToString();
 		}
 	}
 

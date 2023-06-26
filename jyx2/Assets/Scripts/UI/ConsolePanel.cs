@@ -17,7 +17,7 @@ using UnityEngine.UI;
 using AClockworkBerry;
 using System.Reflection;
 
-public class JYX2ConsolePanel : MonoBehaviour
+public class ConsolePanel : MonoBehaviour
 {
     private static ScreenLogger screenLogger;
     public InputField inputField;

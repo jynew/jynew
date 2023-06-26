@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using Jyx2;
 using UnityEngine;
 
 public class BootMainMenu : MonoBehaviour

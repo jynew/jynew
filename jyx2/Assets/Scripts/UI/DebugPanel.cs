@@ -18,7 +18,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Jyx2.InputCore;
 
-public class JYX2DebugPanel : MonoBehaviour,IJyx2_InputContext
+public class DebugPanel : MonoBehaviour,IJyx2_InputContext
 {
     public Dropdown m_ChangeScene;
     public Dropdown m_TransportDropdown;

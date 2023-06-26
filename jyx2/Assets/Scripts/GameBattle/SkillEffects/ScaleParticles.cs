@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
- 
+
 public class ScaleParticles : MonoBehaviour
 {
 // @zpj default scale size;
     public float ScaleSize = 1.0f;
-    private List< float > initialSizes = new List< float >();
- 
+    private List<float> initialSizes = new List<float>();
+
     void Awake()
     {
 // Save off all the initial scale values at start.
@@ -23,7 +23,7 @@ public class ScaleParticles : MonoBehaviour
             }
         }
     }
- 
+
     void Start()
     {
         gameObject.transform.localScale = new Vector3(ScaleSize, ScaleSize, ScaleSize);
@@ -43,5 +43,5 @@ public class ScaleParticles : MonoBehaviour
             }
         }
     }
- 
+
 }
