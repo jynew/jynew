@@ -67,8 +67,6 @@ public class BattleboxManager : MonoBehaviour
             _blockPrefab = Resources.Load<GameObject>("BattleboxBlock");
         }
         
-        InitCollider();
-
         if (m_Dataset == null)
         {
             if (!InitFromData())
@@ -76,9 +74,11 @@ public class BattleboxManager : MonoBehaviour
                 Debug.LogError("战场初始化失败！载入格子数据错误"); 
             }
         }
-            
+
         if (m_Dataset == null || !CheckSize())
+        {
             CreateDataset();
+        }
     }
 
     private void InitCollider()
@@ -218,8 +218,7 @@ public class BattleboxManager : MonoBehaviour
                 var topProj = new Vector3(tempPos.X, maxHeight, tempPos.Y);
 
                 Vector3 pos, normal;
-                var bFlag = JudgeCoord(topProj, height, out pos, out normal);
-                if (bFlag)
+                if (JudgeCoord(topProj, height, out pos, out normal))
                 {
                     //该格子有效，存入dataset
                     var block = new BattleboxBlock

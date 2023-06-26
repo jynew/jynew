@@ -19,9 +19,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class LoadingPanel : MonoBehaviour
 {
+    public static void Show(UniTask task)
+    {
+        if (_curLoadingPanel != null)
+        {
+            Debug.LogError("错误：前一个LoadingPanel还未关闭");
+            return;
+        }
+        _curLoadingPanel = Jyx2ResourceHelper.CreatePrefabInstance("LoadingPanelCanvas").GetComponent<LoadingPanel>();
+        DontDestroyOnLoad(_curLoadingPanel);
+    }
 
+    public static void Hide()
+    {
+        if (_curLoadingPanel != null)
+            Destroy(_curLoadingPanel.gameObject);
+    }
+
+    private static LoadingPanel _curLoadingPanel = null; 
+    
     /// <summary>
     /// 载入场景
     /// </summary>
@@ -32,11 +51,12 @@ public class LoadingPanel : MonoBehaviour
         var loadingPanel = Jyx2ResourceHelper.CreatePrefabInstance("LoadingPanelCanvas").GetComponent<LoadingPanel>();
         GameObject.DontDestroyOnLoad(loadingPanel);
         await loadingPanel.LoadLevel(scenePath);
+        Destroy(loadingPanel.gameObject);
     }
 
     public Text m_LoadingText;
 
-    private async UniTask LoadLevel(string scenePath)
+    public async UniTask LoadLevel(string scenePath)
     {
         Jyx2_UIManager.Instance.HideAllUI();
         gameObject.SetActive(true);
@@ -49,14 +69,7 @@ public class LoadingPanel : MonoBehaviour
             var handle = SceneManager.LoadSceneAsync(GameConst.DefaultMainMenuScene);
             while (!handle.isDone)
             {
-                //---------------------------------------------------------------------------
-                //m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
-                //---------------------------------------------------------------------------
-                //特定位置的翻译【载入中文本显示】
-                //---------------------------------------------------------------------------
                 m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) + (int)(handle.progress * 100) + "%";
-                //---------------------------------------------------------------------------
-                //---------------------------------------------------------------------------
                 await UniTask.WaitForEndOfFrame();
             }
         }
@@ -65,45 +78,6 @@ public class LoadingPanel : MonoBehaviour
         {
             m_LoadingText.text = "载入中... ";
             await ResLoader.LoadScene(scenePath);
-
-
-            /*if (MODLoader.Remap.ContainsKey(scenePath))
-            {
-                var assetBundleItem = MODLoader.Remap[scenePath];
-                var handle = SceneManager.LoadSceneAsync(assetBundleItem.Name);
-                while (!handle.isDone)
-                {
-                    //---------------------------------------------------------------------------
-                    //m_LoadingText.text = "载入中... " + (int)(handle.progress * 100) + "%";
-                    //---------------------------------------------------------------------------
-                    //特定位置的翻译【载入中文本显示】
-                    //---------------------------------------------------------------------------
-                    m_LoadingText.text =
-                        "载入中…… ".GetContent(nameof(LoadingPanel)) + (int) (handle.progress * 100) + "%";
-                    //---------------------------------------------------------------------------
-                    //---------------------------------------------------------------------------
-                    await UniTask.WaitForEndOfFrame();
-                }
-            }
-            else
-            {
-                var async = Addressables.LoadSceneAsync(scenePath);
-                while (!async.IsDone)
-                {
-                    //---------------------------------------------------------------------------
-                    //m_LoadingText.text = "载入中... " + (int)(async.PercentComplete * 100) + "%";
-                    //---------------------------------------------------------------------------
-                    //特定位置的翻译【载入中文本显示】
-                    //---------------------------------------------------------------------------
-                    m_LoadingText.text = "载入中…… ".GetContent(nameof(LoadingPanel)) +
-                                         (int) (async.PercentComplete * 100) + "%";
-                    //---------------------------------------------------------------------------
-                    //---------------------------------------------------------------------------
-                    await UniTask.WaitForEndOfFrame();
-                }
-            }*/
         }
-
-        Destroy(gameObject);
     }
 }
