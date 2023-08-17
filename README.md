@@ -1,6 +1,6 @@
 # 群侠传，启动！（已正式完结）
 
-![主宣传图](https://user-images.githubusercontent.com/7448857/192084760-017f3789-81ff-4a67-81bf-8d8c4df1cac5.png)
+![主宣传图](https://github.com/jynew/jynew/assets/7448857/b229deda-9687-499c-b4c5-32778eba9eda)
 
 <p>
 <a href="https://store.steampowered.com/app/2098790/"><img src="https://user-images.githubusercontent.com/7448857/205875106-ba52fc19-f92a-47ff-b0d6-c5e451b8bdd2.png" align="center" height="70"></a>
@@ -25,7 +25,7 @@
 
 
 《群侠传，启动！》 是一个开放源代码的武侠RPG游戏框架，旨在致敬经典游戏《金庸群侠传》，并为此类游戏爱好者提供一个二次创作与交流的平台。
-你可以体验样例工程《渡城残魂转》，扮演灵魂穿越附身于小乞丐的莫桥山庄掌门人“莫穿林”，解开自己死亡之谜。
+你可以体验样例工程《渡城残魂传》，扮演灵魂穿越附身于小乞丐的莫桥山庄掌门人“莫穿林”，解开自己死亡之谜。
 
 你亦可使用本框架制作游戏MOD，并上传到创意工坊。
 
