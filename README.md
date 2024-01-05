@@ -133,11 +133,12 @@
 * 每个地图为一个场景，地图间可以串接
 * 游戏存档使用EasySave3插件
 * UI方案使用Unity原生的UGUI
-* 使用默认渲染管线，卡通渲染风格（考虑升级到URP管线，尚未完成）
+* 使用默认渲染管线，卡通渲染风格
 * 动作管理部分大量使用Animancer插件，亦使用unity原生AnimatorController方案
 * 资源打包和加载使用AssetBundle
 * 游戏中大量使用基于UniTask的异步编程方案来进行逻辑串接，以及防止大量回调嵌套
 * 技能特效使用了不少assetstore上的第三方库，如想使用，还请自行购买
+* 关于MOD框架实现的技术细节请移步[MOD开发者手册](https://xiastart.feishu.cn/wiki/wikcn2iOszRsrux9WlxEye0OVMc)
 
 
 ## 项目文档导航
