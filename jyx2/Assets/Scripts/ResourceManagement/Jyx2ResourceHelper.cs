@@ -80,9 +80,6 @@ public static class Jyx2ResourceHelper
         
         //如果有热更新文件，执行热更新
         LuaManager.PreloadLua();
-        
-        //IFix热更新文件
-        await IFixManager.LoadPatch();
     }
 
     private static async Task InitLuaScripts()
