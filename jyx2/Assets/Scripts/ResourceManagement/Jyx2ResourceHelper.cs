@@ -13,7 +13,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Jyx2.EventsGraph;
 using Jyx2.Middleware;
 using Jyx2.MOD.ModV2;
 using Jyx2.ResourceManagement;
@@ -153,11 +152,4 @@ public static class Jyx2ResourceHelper
         Object.Destroy(obj);
     }
     
-
-    public static async UniTask<Jyx2NodeGraph> LoadEventGraph(string id)
-    {
-        string url = $"Assets/BuildSource/EventsGraph/{id}.asset";
-
-        return await ResLoader.LoadAsset<Jyx2NodeGraph>(url);
-    }
 }

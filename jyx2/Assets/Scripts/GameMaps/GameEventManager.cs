@@ -171,19 +171,9 @@ public class GameEventManager : MonoBehaviour
 
         async UniTask ExecuteCurEvent()
         {
-            //先判断是否有蓝图类
-            //如果有则执行蓝图，否则执行lua
-            var graph = await Jyx2ResourceHelper.LoadEventGraph(eventName);
-            if (graph != null)
-            {
-                graph.Run(OnFinishEvent);
-            }
-            else
-            {
-                var eventLuaPath = string.Format(RuntimeEnvSetup.CurrentModConfig.LuaFilePatten, eventName);
-                await Jyx2.LuaExecutor.Execute(eventLuaPath);
-                OnFinishEvent();
-            }
+            var eventLuaPath = string.Format(RuntimeEnvSetup.CurrentModConfig.LuaFilePatten, eventName);
+            await Jyx2.LuaExecutor.Execute(eventLuaPath);
+            OnFinishEvent();
         }
 
         ExecuteCurEvent().Forget();
