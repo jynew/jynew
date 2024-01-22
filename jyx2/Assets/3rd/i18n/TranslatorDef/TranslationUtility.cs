@@ -35,11 +35,11 @@ namespace i18n.TranslatorDef
         public static string GetContent(this string content,string fromToken="")
         {
             //没有默认全局配置或者语言文件则直接返回
-            if (!GlobalAssetConfig.Instance || !GlobalAssetConfig.Instance.defaultTranslator) return content;
+            /*if (!GlobalAssetConfig.Instance || !GlobalAssetConfig.Instance.defaultTranslator) return content;
             
             //调用默认全局配置
             var translator = GlobalAssetConfig.Instance.defaultTranslator;
-            content = translator.GetOrRegTranslation(fromToken , content);
+            content = translator.GetOrRegTranslation(fromToken , content);*/
             return content;
         }
 
