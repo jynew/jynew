@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using IFix;
 using Jyx2.Middleware;
 using UnityEngine;
 using UniRx;
