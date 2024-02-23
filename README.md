@@ -8,6 +8,7 @@
 <a href="https://apps.apple.com/cn/app/%E7%BE%A4%E4%BE%A0%E4%BC%A0%E5%90%AF%E5%8A%A8/id1659977116"><img src="https://user-images.githubusercontent.com/7448857/209269801-48ab9e9e-2318-40ed-8d8a-d34a49514ed5.png" align="center" height="70"></a>
 </p>
 
+<b>注：由于版号相关政策限制，不在中国大陆地区提供iOS渠道(AppStore)下载，有需要的可以切换区域进行下载。</b>
 
 
 [![license](https://img.shields.io/badge/license-%E9%87%91%E7%BE%A43D%E9%87%8D%E5%88%B6%E7%89%88%E7%A4%BE%E5%8C%BA%E5%8D%8F%E8%AE%AE-blue)](https://github.com/jynew/jynew/blob/main/LICENSE)
