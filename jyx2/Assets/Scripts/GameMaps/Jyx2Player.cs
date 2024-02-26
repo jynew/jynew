@@ -7,6 +7,10 @@
  *
  * 金庸老先生千古！
  */
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Jyx2;
 using Animancer;
 using Cysharp.Threading.Tasks;
@@ -24,7 +28,7 @@ public class Jyx2Player : MonoBehaviour
     /// <summary>
     /// 交互的视野范围
     /// </summary>
-    const float PLAYER_INTERACTIVE_RANGE = 1f;
+    const float PLAYER_INTERACTIVE_RANGE = 2f;
 
     /// <summary>
     /// 交互的视野角度
@@ -249,6 +253,8 @@ public class Jyx2Player : MonoBehaviour
     private Collider[] targets = new Collider[10];
 
     private int _gameEventLayerMask = -1;
+
+    private readonly List<GameEvent> _activeTargets = new List<GameEvent>();
     
     /// <summary>
     /// 在交互视野范围内寻找第一个可被交互物体
@@ -257,6 +263,10 @@ public class Jyx2Player : MonoBehaviour
     GameEvent DetectInteractiveGameEvent()
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, PLAYER_INTERACTIVE_RANGE, targets, _gameEventLayerMask);
+
+        if(_activeTargets.Count > 0)
+            _activeTargets.Clear();
+        
         //添加
         for (int i = 0; i < count; i++)
         {
@@ -265,57 +275,57 @@ public class Jyx2Player : MonoBehaviour
             if (CanSee(target) && TryGetInteractiveGameEvent(target, out GameEvent evt))
             {
                 //找到第一个可交互的物体，则结束
-                return evt;
+                //return evt;
+                _activeTargets.Add(evt);
             }
         }
-
-        return null;
+        
+        if(_activeTargets.Count == 0)
+            return null;
+        
+        //返回_activeTargets中离主角最近的物体
+        return _activeTargets.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).First();
     }
 
     bool CanSee(Collider target)
     {
         //判断是否在视野角度内
         var isInViewField = Vector3.Angle(transform.forward, target.transform.position - transform.position) <= PLAYER_INTERACTIVE_ANGLE / 2;
-        if(isInViewField) {
+        if (!isInViewField) return false;
+        
+        var targetDirection = (target.transform.position - transform.position).normalized;
 
-            var targetDirection = (target.transform.position - transform.position).normalized;
-
-            //判断主角的NavMesh Agent是否在目标trigger范围內
-            var isInTrigger = target.bounds.Contains(transform.position + targetDirection * _navMeshAgent.radius);
-            if(isInTrigger) 
-            {
+        //判断主角的NavMesh Agent是否在目标trigger范围內
+        var isInTrigger = target.bounds.Contains(transform.position + targetDirection * _navMeshAgent.radius);
+        if(isInTrigger) 
+        {
 #if UNITY_EDITOR
-                Debug.DrawLine(transform.position, target.transform.position, Color.green);
-                //Debug.Log("Inside trigger: " + target.transform.name);
+            Debug.DrawLine(transform.position, target.transform.position, Color.green);
 #endif
-                return true;
-            }
-            else
+            return true;
+        }
+        else
+        {
+            //判断主角与目标之间有无其他collider遮挡。忽略trigger。
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore)) 
             {
-                //判断主角与目标之间有无其他collider遮挡。忽略trigger。
-                RaycastHit hit;
-                if(Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity, Physics.AllLayers, QueryTriggerInteraction.Ignore)) 
+                if(hit.transform.GetInstanceID() != target.transform.GetInstanceID())
                 {
-                    //Debug.Log("Hit. hit: " + hit.transform.name + " target:" + target.transform.name);
-                    if(hit.transform.GetInstanceID() != target.transform.GetInstanceID())
-                    {
 #if UNITY_EDITOR
-                        Debug.DrawLine(transform.position, hit.point, Color.red);
+                    Debug.DrawLine(transform.position, hit.point, Color.red);
 #endif
-                        return false;
-                    }
+                    return false;
                 }
-#if UNITY_EDITOR
-                //Debug.Log("Outside trigger: " + target.transform.name);
-                Debug.DrawLine(transform.position, target.transform.position, Color.green);
-#endif
-                return true;
-
             }
+#if UNITY_EDITOR
+            Debug.DrawLine(transform.position, target.transform.position, Color.green);
+#endif
+            return true;
+
         }
 
 
-        return false;
     }
 
     bool TryGetInteractiveGameEvent(Collider collider, out GameEvent evt)

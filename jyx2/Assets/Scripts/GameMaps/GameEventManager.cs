@@ -31,7 +31,7 @@ public class GameEventManager : MonoBehaviour
             return false;
 
         //新来的事件优先级更高才触发
-        if (curEvent != null && curEvent.PriorityOrder >= newEvent.PriorityOrder)
+        if (curEvent != null && curEvent.PriorityOrder > newEvent.PriorityOrder)
             return false;
 
         //关闭之前的事件

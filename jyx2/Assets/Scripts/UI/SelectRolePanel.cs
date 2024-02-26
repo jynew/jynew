@@ -37,7 +37,7 @@ public class SelectRoleParams
 
     //默认选择角色和必须上场的角色
     public bool isCancelClick = false;//是否点击取消
-    public void SetDefaltRole()
+    public void SetDefaultRole()
     {
         if (selectList.Count > 0 || roleList.Count <= 0)
             return;
@@ -111,7 +111,7 @@ public partial class SelectRolePanel : Jyx2_UIBase
 
         if (m_params.isDefaultSelect)
         {
-            m_params.SetDefaltRole();//如果没有选择 默认选择一个
+            m_params.SetDefaultRole();//如果没有选择 默认选择一个
         }
         TitleText_Text.text = m_params.title;
         ShowBtns();
