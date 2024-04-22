@@ -163,7 +163,7 @@
 
 ## 相关项目
 [群侠传启动-Steam创意工坊上传工具](https://github.com/0kk470/modtool_qt/)<br>
-[玩家群发码机器人](https://github.com/jynew/send-key-bot)<br>
+[发码机器人](https://github.com/jynew/send-key-bot)<br>
 
 ## 引用项目
 
