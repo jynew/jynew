@@ -2,20 +2,25 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WMG_tree_2
   m_Shader: {fileID: 4800000, guid: 82e96482862eb17419415ffc7dd0660d, type: 3}
-  m_ShaderKeywords: 
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _DISSOLVE_OFF
+  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -32,6 +37,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -67,10 +76,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DISSOLVE: 0
     - _DetailNormalMapScale: 1
+    - _DissolveRatio: 0
     - _DstBlend: 0
     - _FlashIntensity: 0.6
     - _FlashScale: 0.5
@@ -93,6 +105,7 @@ Material:
     - _UVSec: 0
     - _Visibility: 1
     - _WindMain: 2
+    - _WorkDistance: 5
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
@@ -101,3 +114,4 @@ Material:
     - _MainColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0}
     - _OffsetScale: {r: 0, g: 0, b: 0, a: 0}
     - _TheFlashColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

@@ -2,20 +2,29 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WMG_tree
   m_Shader: {fileID: 4800000, guid: 63cfec4886679d44099dc4fa6ca9dfbc, type: 3}
-  m_ShaderKeywords: _EMISSION _FRESNELONLIGHT_ON _FRESNELONSHADOW_ON _SHOWAOONAMBIENTLIGHT_ON
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _DISSOLVE_OFF
+  m_InvalidKeywords:
+  - _EMISSION
+  - _FRESNELONLIGHT_ON
+  - _FRESNELONSHADOW_ON
+  - _SHOWAOONAMBIENTLIGHT_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -57,6 +66,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Diffuse:
         m_Texture: {fileID: 2800000, guid: 9bdda5b12199a5547836453da8c6798b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -159,6 +172,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - ADDITIONAL_FOAM_DISTORTION_AMOUNT: 1
     - DOWNSAMPLING_SAMPLE_SIZE: 0.33
@@ -232,9 +246,11 @@ Material:
     - _C_BLUR_R: 0.05
     - _C_BLUR_S: 0.05
     - _Cutoff: 0.5
+    - _DISSOLVE: 0
     - _DetailNormalMapScale: 1
     - _DetileAmount: 0.15
     - _DetileFriq: 5
+    - _DissolveRatio: 0
     - _DstBlend: 0
     - _FReflectionIntensity: 0
     - _Factor: 0.5
@@ -291,6 +307,7 @@ Material:
     - _FresnelOnShadow: 1
     - _FresnelPow: 1.58
     - _FresnelVisibleOnDarkAmbientLight: 0
+    - _Gloss: 0
     - _GlossIntensity: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -437,6 +454,7 @@ Material:
     - _ShowAOonLight: 0
     - _SmoothnessTextureChannel: 0
     - _SoftGloss: 0
+    - _Specular: 0
     - _SpecularAmount: 2
     - _SpecularGlowAmount: 0.2
     - _SpecularHighlights: 1
@@ -513,6 +531,7 @@ Material:
     - _WaveGradMidOffset: 0.5
     - _WaveGradTopOffset: 1
     - _WavesDirAngle: 0
+    - _WorkDistance: 5
     - _ZDistanceCalcOffset: 0.25
     - _ZWrite: 1
     - _Z_BLACK_OFFSET_V: 0
@@ -613,3 +632,4 @@ Material:
     - _ZDepthBakeLayers: {r: 255, g: 255, b: 255, a: 255}
     - lerped_post_color1: {r: 1, g: 1, b: 1, a: 1}
     - lerped_post_color2: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

@@ -6,7 +6,7 @@ Open up the Getting Started guide from "Tools > Odin Inspector > Getting Started
 ------------------------------------- Helpful Links -------------------------------------
 
 Tutorials:          https://odininspector.com/tutorials
-API Documentaion:   https://odininspector.com/documentation
+API Documentation:  https://odininspector.com/documentation
 Roadmap:            https://odininspector.com/roadmap
 Release Notes:      https://odininspector.com/patch-notes
 Issue Tracker:      https://bitbucket.org/sirenix/odin-inspector
@@ -22,7 +22,7 @@ Community Addons:   https://odininspector.com/community-tools
 Discord:            https://discord.gg/AgDmStu
 
 
----------------------------------------Thanks you!---------------------------------------
+-------------------------------------- Thank you! ---------------------------------------
 
 We really hope you like using Odin. Be sure to leave a review on the Asset Store,
 that helps us out a lot!

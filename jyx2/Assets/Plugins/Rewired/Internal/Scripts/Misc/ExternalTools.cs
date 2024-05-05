@@ -812,7 +812,7 @@ namespace Rewired.Utils {
 #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || (UNITY_EDITOR_WIN)
 
         public void WindowsStandalone_ForwardRawInput(System.IntPtr rawInputHeaderIndices, System.IntPtr rawInputDataIndices, uint indicesCount, System.IntPtr rawInputData, uint rawInputDataSize) {
-#if UNITY_2021_2_OR_NEWER
+#if UNITY_2021_2_OR_NEWER && !UNITY_2023_1_OR_NEWER
             Rewired.Internal.Windows.Functions.ForwardRawInput(rawInputHeaderIndices, rawInputDataIndices, indicesCount, rawInputData, rawInputDataSize);
 #else
             throw new System.NotImplementedException();

@@ -2,20 +2,28 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Tree_18
   m_Shader: {fileID: 4800000, guid: 82e96482862eb17419415ffc7dd0660d, type: 3}
-  m_ShaderKeywords: _ALPHABASECUTOUT_ON _ALPHATEST_ON _SHOWAOONAMBIENTLIGHT_ON
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _DISSOLVE_OFF
+  m_InvalidKeywords:
+  - _ALPHABASECUTOUT_ON
+  - _ALPHATEST_ON
+  - _SHOWAOONAMBIENTLIGHT_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -123,6 +131,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AOIntensity: 0
     - _ASEOutlineWidth: 0
@@ -205,3 +214,4 @@ Material:
     - _TheFlashColor: {r: 0, g: 0, b: 0, a: 0}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

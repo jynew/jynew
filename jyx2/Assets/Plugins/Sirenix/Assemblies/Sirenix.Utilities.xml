@@ -54,6 +54,14 @@
             </summary>
             <param name="color">The color.</param>
         </member>
+        <member name="M:Sirenix.Utilities.ColorExtensions.PerceivedLuminosity(UnityEngine.Color,System.Boolean)">
+            <summary>
+            Gets the perceived luminosity of a given <see cref="T:UnityEngine.Color"/>.
+            </summary>
+            <param name="color">The current <see cref="T:UnityEngine.Color"/>.</param>
+            <param name="includeAlpha">Determines if the <see cref="F:UnityEngine.Color.a">Color.a</see> value should impact the result.</param>
+            <returns>The <see cref="T:System.Single">float</see> value representing the luminosity.</returns>
+        </member>
         <member name="T:Sirenix.Utilities.DelegateExtensions">
             <summary>
             Delegate method extensions.
@@ -270,16 +278,6 @@
             <param name="source">The collection.</param>
             <param name="converter">Func to convert the items.</param>
         </member>
-        <member name="M:Sirenix.Utilities.LinqExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            Convert a colletion to a HashSet.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.LinqExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
-            <summary>
-            Convert a colletion to a HashSet.
-            </summary>
-        </member>
         <member name="M:Sirenix.Utilities.LinqExtensions.ToImmutableList``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Convert a collection to an immutable list.
@@ -488,6 +486,41 @@
             <summary>
             Sorts an IList
             </summary>
+        </member>
+        <member name="T:Sirenix.Utilities.ListExtensions">
+            <summary>
+            Various list extension methods.
+            </summary>
+        </member>
+        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0}@,System.Int32)">
+            <summary>
+            Increases or decrease the number of items in the list to the specified count.
+            </summary>
+            <param name="list">The list.</param>
+            <param name="length">The new length.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0}@,System.Int32,System.Func{``0})">
+            <summary>
+            Increases or decrease the number of items in the list to the specified count.
+            </summary>
+            <param name="list">The list.</param>
+            <param name="length">The new length.</param>
+            <param name="newElement">Value of new elements.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0},System.Int32)">
+            <summary>
+            Increases or decrease the number of items in the list to the specified count.
+            </summary>
+            <param name="list">The list.</param>
+            <param name="length">The new length.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0},System.Int32,System.Func{``0})">
+            <summary>
+            Increases or decrease the number of items in the list to the specified count.
+            </summary>
+            <param name="list">The list.</param>
+            <param name="length">The new length.</param>
+            <param name="newElement">Value of new elements.</param>
         </member>
         <member name="T:Sirenix.Utilities.MemberInfoExtensions">
             <summary>
@@ -808,7 +841,7 @@
         <member name="T:Sirenix.Utilities.RectExtensions">
             <summary>
             Defines a collection of handy Rect transformation methods, that can chained together for complex behaviour.
-            Note that no method defined here changes the original Rect, but instead returns a new transformed Rect.
+            Note that only the TakeX method defined here actually change the original Rect; the rest instead return a new transformed Rect.
             </summary>
         </member>
         <member name="M:Sirenix.Utilities.RectExtensions.SetWidth(UnityEngine.Rect,System.Single)">
@@ -832,6 +865,13 @@
             <param name="rect">The original Rect.</param>
             <param name="width">The desired width of the new Rect.</param>
             <param name="height">The desired height of the new Rect.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.RectExtensions.SetSize(UnityEngine.Rect,System.Single)">
+            <summary>
+            Returns a Rect with the specified size.
+            </summary>
+            <param name="rect">The original Rect.</param>
+            <param name="widthAndHeight">The desired width and height of the new Rect.</param>
         </member>
         <member name="M:Sirenix.Utilities.RectExtensions.SetSize(UnityEngine.Rect,UnityEngine.Vector2)">
             <summary>
@@ -1323,6 +1363,11 @@
             <param name="str">The string to check.</param>
             <returns><c>true</c> if this string is null, empty, or contains only whitespace; otherwise, <c>false</c>.</returns>
         </member>
+        <member name="M:Sirenix.Utilities.StringExtensions.CalculateLevenshteinDistance(System.String,System.String)">
+            <summary>
+            O(n*m) - Use with care.
+            </summary>
+        </member>
         <member name="T:Sirenix.Utilities.TypeExtensions">
             <summary>
             Type method extensions.
@@ -1331,7 +1376,6 @@
         <member name="F:Sirenix.Utilities.TypeExtensions.TypeNameAlternatives">
             <summary>
             Type name alias lookup.
-            TypeNameAlternatives["Single"] will give you "float", "UInt16" will give you "ushort", "Boolean[]" will give you "bool[]" etc..
             </summary>
         </member>
         <member name="M:Sirenix.Utilities.TypeExtensions.IsValidIdentifier(System.String)">
@@ -1491,11 +1535,6 @@
         <member name="M:Sirenix.Utilities.TypeExtensions.GetBaseClasses(System.Type,System.Boolean)">
             <summary>
             Returns a lazy enumerable of all the base classes of this type
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.TypeExtensions.TypeNameGauntlet(System.Type)">
-            <summary>
-            Used to filter out unwanted type names. Ex "int" instead of "Int32"
             </summary>
         </member>
         <member name="M:Sirenix.Utilities.TypeExtensions.GetNiceName(System.Type)">
@@ -1694,6 +1733,39 @@
             <param name="identifier">The identifier to check.</param>
             <returns><c>true</c> if the string is a C# keyword. Otherwise <c>false</c>.</returns>
         </member>
+        <member name="M:Sirenix.Utilities.TypeExtensions.HasDefaultConstructor(System.Type)">
+            <summary>
+            Determines if a given <see cref="T:System.Type"/> has a default constructor.
+            </summary>
+            <param name="self">The <see cref="T:System.Type"/> to investigate.</param>
+            <returns><c>true</c> if a default constructor has been found; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Sirenix.Utilities.TypeExtensions.InstantiateDefault(System.Type,System.Boolean)">
+            <summary>
+            Attempts to instantiate an object of a given <see cref="T:System.Type"/> with it's default constructor. If no default constructor is found then it attempts to find the most suitable alternative constructor and instantiate the <see cref="T:System.Type"/> with default parameters.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> to instantiate.</param>
+            <param name="preferUninitializedOverNonDefault">Determines if the use of <see cref="M:System.Runtime.Serialization.FormatterServices.GetUninitializedObject(System.Type)"/> is preferred over a non-default constructor call.</param>
+            <returns>The instantiated object or <c>null</c> if no suitable alternative constructor is found.</returns>
+        </member>
+        <member name="M:Sirenix.Utilities.TypeExtensions.FindIdealConstructor(System.Type,System.Reflection.BindingFlags)">
+            <summary>
+            Weighs multiple constructors for a given type, and attempts to find the most ideal constructor. This will ignore any unmanaged constructors.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> to weigh the constructors of.</param>
+            <param name="flags">The <see cref="T:System.Reflection.BindingFlags"/> to search for the constructors; <see cref="F:System.Reflection.BindingFlags.Default"/> means only find the public ones.</param>
+            <returns>The most ideal <see cref="T:System.Reflection.ConstructorInfo"/> based on the scoring system.</returns>
+            <remarks>The scoring system prefers value types over reference types (adjusted for default values),
+            it provides bonuses for empty constructors or constructors solely consisting of default values.
+            Lastly it considers the amount of parameters present in the constructor in the overall score. </remarks>
+        </member>
+        <member name="M:Sirenix.Utilities.TypeExtensions.IsUnmanagedCtor(System.Reflection.ConstructorInfo)">
+            <summary>
+            Checks if a given <see cref="T:System.Reflection.ConstructorInfo"/> is unmanaged, by checking if it contains any <see cref="P:System.Type.IsPointer"/>, <see cref="P:System.Type.IsByRef"/> or <see cref="P:System.Type.IsMarshalByRef"/> parameters.
+            </summary>
+            <param name="ctor">The <see cref="T:System.Reflection.ConstructorInfo"/> to validate.</param>
+            <returns><c>true</c> if the <see cref="T:System.Reflection.ConstructorInfo"/> is unmanaged; otherwise <c>false</c>.</returns>
+        </member>
         <member name="T:Sirenix.Utilities.UnityExtensions">
             <summary>
             Extends various Unity classes.
@@ -1756,72 +1828,6 @@
         <member name="M:Sirenix.Utilities.Editor.AssetScriptGuidUtility.TryUpdateAssetScriptGuid(System.String,System.Type)">
             <summary>
             Tries to update the Guid of a specified asset with the Guid from a specified script type.
-            </summary>
-        </member>
-        <member name="T:Sirenix.Utilities.Cache`1">
-            <summary>
-            Provides an easy way of claiming and freeing cached values of any non-abstract reference type with a public parameterless constructor.
-            <para />
-            Cached types which implement the <see cref="T:Sirenix.Utilities.ICacheNotificationReceiver"/> interface will receive notifications when they are claimed and freed.
-            <para />
-            Only one thread should be holding a given cache instance at a time if <see cref="T:Sirenix.Utilities.ICacheNotificationReceiver"/> is implemented, since the invocation of 
-            <see cref="M:Sirenix.Utilities.ICacheNotificationReceiver.OnFreed"/> is not thread safe, IE, weird stuff might happen if multiple different threads are trying to free
-            the same cache instance at the same time. This will practically never happen unless you're doing really strange stuff, but the case is documented here.
-            </summary>
-            <typeparam name="T">The type which is cached.</typeparam>
-            <seealso cref="T:System.IDisposable" />
-        </member>
-        <member name="P:Sirenix.Utilities.Cache`1.MaxCacheSize">
-            <summary>
-            Gets or sets the maximum size of the cache. This value can never go beneath 1.
-            </summary>
-            <value>
-            The maximum size of the cache.
-            </value>
-        </member>
-        <member name="F:Sirenix.Utilities.Cache`1.Value">
-            <summary>
-            The cached value.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Cache`1.IsFree">
-            <summary>
-            Gets a value indicating whether this cached value is free.
-            </summary>
-            <value>
-              <c>true</c> if this cached value is free; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="M:Sirenix.Utilities.Cache`1.Claim">
-            <summary>
-            Claims a cached value of type <see cref="!:T"/>.
-            </summary>
-            <returns>A cached value of type <see cref="!:T"/>.</returns>
-        </member>
-        <member name="M:Sirenix.Utilities.Cache`1.Release(Sirenix.Utilities.Cache{`0})">
-            <summary>
-            Releases a cached value.
-            </summary>
-            <param name="cache">The cached value to release.</param>
-            <exception cref="T:System.ArgumentNullException">The cached value to release is null.</exception>
-        </member>
-        <member name="M:Sirenix.Utilities.Cache`1.op_Implicit(Sirenix.Utilities.Cache{`0})~`0">
-            <summary>
-            Performs an implicit conversion from <see cref="T:Sirenix.Utilities.Cache`1"/> to <see cref="!:T"/>.
-            </summary>
-            <param name="cache">The cache to convert.</param>
-            <returns>
-            The result of the conversion.
-            </returns>
-        </member>
-        <member name="M:Sirenix.Utilities.Cache`1.Release">
-            <summary>
-            Releases this cached value.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Cache`1.System#IDisposable#Dispose">
-            <summary>
-            Releases this cached value.
             </summary>
         </member>
         <member name="T:Sirenix.Utilities.DeepReflection">
@@ -2311,6 +2317,16 @@
             Opens the config in a editor window. This is currently only used internally by the Sirenix.OdinInspector.Editor assembly.
             </summary>
         </member>
+        <member name="P:Sirenix.Utilities.GlobalConfigUtility`1.HasInstanceLoaded">
+            <summary>
+            Gets a value indicating whether this instance has instance loaded.
+            </summary>
+        </member>
+        <member name="M:Sirenix.Utilities.GlobalConfigUtility`1.GetInstance(System.String,System.String)">
+            <summary>
+            Gets the singleton instance.
+            </summary>
+        </member>
         <member name="T:Sirenix.Utilities.GlobalConfigAttribute">
             <summary>
             <para>This attribute is used by classes deriving from GlobalConfig and specifies the asset path for the generated config file.</para>
@@ -2478,21 +2494,6 @@
         <member name="M:Sirenix.Utilities.GUILayoutOptions.ExpandWidth(System.Boolean)">
             <summary>
             Option passed to a control to allow or disallow horizontal expansion.
-            </summary>
-        </member>
-        <member name="T:Sirenix.Utilities.ICacheNotificationReceiver">
-            <summary>
-            Provides notification callbacks for values that are cached using the <see cref="T:Sirenix.Utilities.Cache`1"/> class.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.ICacheNotificationReceiver.OnFreed">
-            <summary>
-            Called when the cached value is freed.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.ICacheNotificationReceiver.OnClaimed">
-            <summary>
-            Called when the cached value is claimed.
             </summary>
         </member>
         <member name="T:Sirenix.Utilities.ImmutableHashSet`1">
@@ -2728,41 +2729,6 @@
             <summary>
             Gets the index of an item.
             </summary>
-        </member>
-        <member name="T:Sirenix.Utilities.ListExtensions">
-            <summary>
-            Various list extension methods.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0}@,System.Int32)">
-            <summary>
-            Increases or decrease the number of items in the list to the specified count.
-            </summary>
-            <param name="list">The list.</param>
-            <param name="length">The new length.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0}@,System.Int32,System.Func{``0})">
-            <summary>
-            Increases or decrease the number of items in the list to the specified count.
-            </summary>
-            <param name="list">The list.</param>
-            <param name="length">The new length.</param>
-            <param name="newElement">Value of new elements.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0},System.Int32)">
-            <summary>
-            Increases or decrease the number of items in the list to the specified count.
-            </summary>
-            <param name="list">The list.</param>
-            <param name="length">The new length.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.ListExtensions.SetLength``1(System.Collections.Generic.IList{``0},System.Int32,System.Func{``0})">
-            <summary>
-            Increases or decrease the number of items in the list to the specified count.
-            </summary>
-            <param name="list">The list.</param>
-            <param name="length">The new length.</param>
-            <param name="newElement">Value of new elements.</param>
         </member>
         <member name="T:Sirenix.Utilities.MathUtilities">
             <summary>
@@ -3032,98 +2998,6 @@
         <member name="M:Sirenix.Utilities.MathUtilities.ClampWrapAngle(System.Single,System.Single,System.Single)">
             <summary>
             Clamps and wraps an angle between two values.
-            </summary>
-        </member>
-        <member name="T:Sirenix.Utilities.MultiDimArrayUtilities">
-            <summary>
-            Contains utilities for operating on arrays multi-dimentional arrays.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneColumnLeft``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Inserts one column left of the specified column index.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="columnIndex">Index of the column.</param>
-            <param name="array">The array.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneColumnRight``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Inserts one column right of the specified column index.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="columnIndex">Index of the column.</param>
-            <param name="arr">The arr.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneRowAbove``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Inserts one row above the specified row index.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="array">The array.</param>
-            <param name="rowIndex">The row index.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneRowBelow``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Inserts one row below the specified row index.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="array">The array.</param>
-            <param name="rowIndex">Index of the row.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DuplicateColumn``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Duplicates the column.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="columnIndex">Index of the column.</param>
-            <param name="array">The array.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DuplicateRow``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Duplicates the row.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="array">The array.</param>
-            <param name="rowIndex">Index of the row.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.MoveColumn``1(``0[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Moves a column.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="array">The array.</param>
-            <param name="fromColumn">From column.</param>
-            <param name="toColumn">To column.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.MoveRow``1(``0[0:,0:],System.Int32,System.Int32)">
-            <summary>
-            Moves a row.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="array">The array.</param>
-            <param name="fromRow">From row.</param>
-            <param name="toRow">To row.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DeleteColumn``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Deletes a column.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="array">The array.</param>
-            <param name="columnIndex">Index of the column.</param>
-        </member>
-        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DeleteRow``1(``0[0:,0:],System.Int32)">
-            <summary>
-            Deletes the row.
-            </summary>
-            <typeparam name="TElement">The type of the element.</typeparam>
-            <param name="array">The array.</param>
-            <param name="rowIndex">Index of the row.</param>
-        </member>
-        <member name="T:Sirenix.Utilities.PersistentAssemblyAttribute">
-            <summary>
-            Indicates a persistent assembly.
             </summary>
         </member>
         <member name="T:Sirenix.Utilities.MemberAliasFieldInfo">
@@ -3563,6 +3437,118 @@
             <param name="index">The indices to use.</param>
             <param name="culture">The culture to use.</param>
         </member>
+        <member name="T:Sirenix.Utilities.MultiDimArrayUtilities">
+            <summary>
+            Contains utilities for operating on arrays multi-dimentional arrays.
+            </summary>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneColumnLeft``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Inserts one column left of the specified column index.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="columnIndex">Index of the column.</param>
+            <param name="array">The array.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneColumnRight``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Inserts one column right of the specified column index.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="columnIndex">Index of the column.</param>
+            <param name="arr">The arr.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneRowAbove``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Inserts one row above the specified row index.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="array">The array.</param>
+            <param name="rowIndex">The row index.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.InsertOneRowBelow``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Inserts one row below the specified row index.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="array">The array.</param>
+            <param name="rowIndex">Index of the row.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DuplicateColumn``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Duplicates the column.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="columnIndex">Index of the column.</param>
+            <param name="array">The array.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DuplicateRow``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Duplicates the row.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="array">The array.</param>
+            <param name="rowIndex">Index of the row.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.MoveColumn``1(``0[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Moves a column.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="array">The array.</param>
+            <param name="fromColumn">From column.</param>
+            <param name="toColumn">To column.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.MoveRow``1(``0[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Moves a row.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="array">The array.</param>
+            <param name="fromRow">From row.</param>
+            <param name="toRow">To row.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DeleteColumn``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Deletes a column.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="array">The array.</param>
+            <param name="columnIndex">Index of the column.</param>
+        </member>
+        <member name="M:Sirenix.Utilities.MultiDimArrayUtilities.DeleteRow``1(``0[0:,0:],System.Int32)">
+            <summary>
+            Deletes the row.
+            </summary>
+            <typeparam name="TElement">The type of the element.</typeparam>
+            <param name="array">The array.</param>
+            <param name="rowIndex">Index of the row.</param>
+        </member>
+        <member name="T:Sirenix.Utilities.PersistentAssemblyAttribute">
+            <summary>
+            Indicates a persistent assembly.
+            </summary>
+        </member>
+        <member name="T:Sirenix.Utilities.ReferenceEqualityComparer`1">
+            <summary>
+            Compares objects by reference only, ignoring equality operators completely. This is used by the property tree reference dictionaries to keep track of references.
+            </summary>
+        </member>
+        <member name="F:Sirenix.Utilities.ReferenceEqualityComparer`1.Default">
+            <summary>
+            A default, cached instance of this generic variant of the reference equality comparer.
+            </summary>
+        </member>
+        <member name="M:Sirenix.Utilities.ReferenceEqualityComparer`1.Equals(`0,`0)">
+            <summary>
+            Returns true if the object references are equal.
+            </summary>
+        </member>
+        <member name="M:Sirenix.Utilities.ReferenceEqualityComparer`1.GetHashCode(`0)">
+            <summary>
+            Returns the result of the object's own GetHashCode method.
+            </summary>
+        </member>
         <member name="T:Sirenix.Utilities.SirenixAssetPaths">
             <summary>
             Paths to Sirenix assets.
@@ -3647,6 +3633,11 @@
             <param name="decimals">Not yet documented.</param>
             <returns>Not yet documented.</returns>
         </member>
+        <member name="M:Sirenix.Utilities.StringUtilities.NumberAwareStringCompare(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Compares two strings in a number-aware manner, IE, "[2] Foo" is considered to come before "[10] Bar".
+            </summary>
+        </member>
         <member name="T:Sirenix.Utilities.UnityVersion">
             <summary>
             Utility class indicating current Unity version.
@@ -3708,26 +3699,6 @@
         <member name="M:Sirenix.Utilities.Unsafe.UnsafeUtilities.MemoryCopy(System.Object,System.Object,System.Int32,System.Int32,System.Int32)">
             <summary>
             Not yet documented.
-            </summary>
-        </member>
-        <member name="T:Sirenix.Utilities.ReferenceEqualityComparer`1">
-            <summary>
-            Compares objects by reference only, ignoring equality operators completely. This is used by the property tree reference dictionaries to keep track of references.
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.ReferenceEqualityComparer`1.Default">
-            <summary>
-            A default, cached instance of this generic variant of the reference equality comparer.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.ReferenceEqualityComparer`1.Equals(`0,`0)">
-            <summary>
-            Returns true if the object references are equal.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.ReferenceEqualityComparer`1.GetHashCode(`0)">
-            <summary>
-            Returns the result of the object's own GetHashCode method.
             </summary>
         </member>
     </members>

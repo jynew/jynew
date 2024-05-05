@@ -1595,7 +1595,7 @@ namespace XLua
         public int callbackOrder { get { return 0; } }
         public void OnPostBuildPlayerScriptDLLs(BuildReport report)
         {
-            var dir = Path.GetDirectoryName(report.files.Single(file => file.path.EndsWith("Assembly-CSharp.dll")).path);
+            var dir = Path.GetDirectoryName(report.GetFiles().Single(file => file.path.EndsWith("Assembly-CSharp.dll")).path);
             Hotfix.HotfixInject(dir);
         }
     }
