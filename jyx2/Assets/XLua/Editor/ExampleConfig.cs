@@ -303,5 +303,36 @@ public static class ExampleConfig
         }
         return false;
     };
+
+    public static List<Type> BlackGenericTypeList = new List<Type>()
+    {
+        typeof(Span<>),
+        typeof(ReadOnlySpan<>),
+    };
+
+    private static bool IsBlacklistedGenericType(Type type)
+    {
+        if (!type.IsGenericType) return false;
+        return BlackGenericTypeList.Contains(type.GetGenericTypeDefinition());
+    }
+
+    [BlackList] 
+    public static Func<MemberInfo, bool> GenericTypeFilter = (memberInfo) =>
+    {
+        switch (memberInfo)
+        {
+            case PropertyInfo propertyInfo:
+                return IsBlacklistedGenericType(propertyInfo.PropertyType);
+
+            case ConstructorInfo constructorInfo:
+                return constructorInfo.GetParameters().Any(p => IsBlacklistedGenericType(p.ParameterType));
+
+            case MethodInfo methodInfo:
+                return methodInfo.GetParameters().Any(p => IsBlacklistedGenericType(p.ParameterType));
+
+            default:
+                return false;
+        }
+    };
 #endif
 }
