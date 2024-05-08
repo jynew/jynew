@@ -18,6 +18,7 @@ using UnityEngine;
 using Jyx2;
 using Jyx2.Middleware;
 using Jyx2.MOD;
+using Jyx2.MOD.ModV2;
 using MOD.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -116,7 +117,19 @@ public class GameStart : MonoBehaviour
 
 		Application.logMessageReceived += OnErrorMsg;
 
-		ModPanelNew.SwitchSceneTo();
+		//ModPanelNew.SwitchSceneTo();
+	#if UNITY_EDITOR
+		var _modLoaders=new GameModEditorLoader();
+	#else
+		var _modLoaders=new GameModNativeLoader();
+	#endif
+		_modLoaders.Init();
+		foreach (var mod in await _modLoaders.LoadMods()){
+			RuntimeEnvSetup.ForceClear();
+			RuntimeEnvSetup.SetCurrentMod(mod);
+			SceneManager.LoadScene("0_MainMenu");
+			break;
+		}
 	}
 
 	private void OnErrorMsg(string condition, string stackTrace, LogType logType)
