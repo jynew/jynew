@@ -109,15 +109,7 @@ public class GameStart : MonoBehaviour
 
 		introPanel.alpha = 0;
 		await introPanel.DOFade(1, 1f).SetEase(Ease.Linear);
-		await UniTask.Delay(TimeSpan.FromSeconds(1f));
-		await introPanel.DOFade(0, 1f).SetEase(Ease.Linear).OnComplete(() =>
-		{
-			Destroy(introPanel.gameObject);
-		});
-
-		Application.logMessageReceived += OnErrorMsg;
-
-		//ModPanelNew.SwitchSceneTo();
+		//await UniTask.Delay(TimeSpan.FromSeconds(1f));
 	#if UNITY_EDITOR
 		var _modLoaders=new GameModEditorLoader();
 	#else
@@ -127,9 +119,19 @@ public class GameStart : MonoBehaviour
 		foreach (var mod in await _modLoaders.LoadMods()){
 			RuntimeEnvSetup.ForceClear();
 			RuntimeEnvSetup.SetCurrentMod(mod);
-			SceneManager.LoadScene("0_MainMenu");
+			await Jyx2_UIManager.Instance.GameStart();
+			//SceneManager.LoadScene("0_MainMenu");
 			break;
 		}
+		
+		//await introPanel.DOFade(0, 1f).SetEase(Ease.Linear).OnComplete(() =>
+		//{
+			Destroy(introPanel.gameObject);
+		//});
+
+		Application.logMessageReceived += OnErrorMsg;
+
+		//ModPanelNew.SwitchSceneTo();
 	}
 
 	private void OnErrorMsg(string condition, string stackTrace, LogType logType)
