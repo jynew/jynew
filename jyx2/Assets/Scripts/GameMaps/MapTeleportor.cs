@@ -136,6 +136,7 @@ public class MapTeleportor : MonoBehaviour
 		else
 		{
 			nextMap = LuaToCsBridge.MapTable[curMap.GetTransportToMapValue(this.gameObject.name)];
+			GameRuntimeData.Instance.SetVisited(curMap.Id);
 		}
 
 		if (nextMap == null)

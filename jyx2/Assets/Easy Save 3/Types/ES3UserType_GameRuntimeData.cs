@@ -18,6 +18,7 @@ namespace ES3Types
 			
 			writer.WriteProperty("AllRoles", instance.AllRoles, ES3Internal.ES3TypeMgr.GetES3Type(typeof(System.Collections.Generic.Dictionary<System.Int32, Jyx2.RoleInstance>)));
 			writer.WritePrivateField("TeamId", instance);
+			writer.WritePrivateField("VisitedList", instance);
 			writer.WriteProperty("SubMapData", instance.SubMapData, ES3UserType_SubMapSaveData.Instance);
 			writer.WriteProperty("WorldData", instance.WorldData, ES3UserType_WorldMapSaveData.Instance);
 			writer.WriteProperty("KeyValues", instance.KeyValues, ES3Internal.ES3TypeMgr.GetES3Type(typeof(System.Collections.Generic.Dictionary<System.String, System.String>)));
@@ -42,8 +43,11 @@ namespace ES3Types
 						instance.AllRoles = reader.Read<System.Collections.Generic.Dictionary<System.Int32, Jyx2.RoleInstance>>();
 						break;
 					case "TeamId":
-					reader.SetPrivateField("TeamId", reader.Read<System.Collections.Generic.List<System.Int32>>(), instance);
-					break;
+						reader.SetPrivateField("TeamId", reader.Read<System.Collections.Generic.List<System.Int32>>(), instance);
+						break;
+					case "VisitedList":
+						reader.SetPrivateField("VisitedList", reader.Read<System.Collections.Generic.List<System.Int32>>(), instance);
+						break;
 					case "SubMapData":
 						instance.SubMapData = reader.Read<SubMapSaveData>(ES3UserType_SubMapSaveData.Instance);
 						break;
@@ -69,11 +73,11 @@ namespace ES3Types
 						instance.MapPic = reader.Read<System.Collections.Generic.Dictionary<System.String, System.Int32>>();
 						break;
 					case "ItemAdded":
-					reader.SetPrivateField("ItemAdded", reader.Read<System.Collections.Generic.List<System.Int32>>(), instance);
-					break;
+						reader.SetPrivateField("ItemAdded", reader.Read<System.Collections.Generic.List<System.Int32>>(), instance);
+						break;
 					case "_startDate":
-					reader.SetPrivateField("_startDate", reader.Read<System.DateTime>(), instance);
-					break;
+						reader.SetPrivateField("_startDate", reader.Read<System.DateTime>(), instance);
+						break;
 					default:
 						reader.Skip();
 						break;

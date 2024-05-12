@@ -115,6 +115,10 @@ public class BigMapLocationNameDrawer : MonoBehaviour
             return true;
         }
 
+        if(!GameRuntimeData.Instance.IsVisited(LuaToCsBridge.MapTable[0].GetMapByName(loc.name).Id)){
+            return true;
+        }
+
         return false;
     }
 }

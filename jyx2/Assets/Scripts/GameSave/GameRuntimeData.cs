@@ -127,6 +127,7 @@ namespace Jyx2
         
         //当前玩家队伍
         [SerializeField] private List<int> TeamId = new List<int>();
+        [SerializeField] private List<int> VisitedList = new List<int>();
         [SerializeField] public SubMapSaveData SubMapData; //当前所处子地图存储数据
         [SerializeField] public WorldMapSaveData WorldData; //世界地图信息
         
@@ -714,6 +715,26 @@ namespace Jyx2
 
             //否则取配置表初始值
             return gameMap.EnterCondition;
+        }
+        
+        /// <summary>
+        /// 访问场景
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <returns></returns>
+        public void SetVisited(int mapId){
+            if(!VisitedList.Contains(mapId)){
+                VisitedList.Add(mapId);
+            }
+        }
+
+        /// <summary>
+        /// 查询是否访问过场景
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <returns></returns>
+        public bool IsVisited(int mapId){
+            return VisitedList.Contains(mapId);
         }
 
         /// <summary>
