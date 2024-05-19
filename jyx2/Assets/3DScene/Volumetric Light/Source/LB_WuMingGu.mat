@@ -2,20 +2,25 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LB_WuMingGu
   m_Shader: {fileID: 4800000, guid: 79106dab3a35a0a419b04f934b8806a2, type: 3}
-  m_ShaderKeywords: 
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _MODE_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -27,6 +32,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailTex:
         m_Texture: {fileID: 2800000, guid: 6c196bbd8ff74c243a08b8fc829d2e7d, type: 3}
         m_Scale: {x: 3, y: 0}
@@ -34,6 +51,10 @@ Material:
     - _DustTex:
         m_Texture: {fileID: 2800000, guid: e06b85a502453e14bb6f5309a19b97bb, type: 3}
         m_Scale: {x: 2, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MM_Texture:
         m_Texture: {fileID: 0}
@@ -47,7 +68,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: 8ff2a79fd69e5ff46acd2a6c44740cf9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _RefractionTex_temp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -59,6 +96,11 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _WiggleTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - ADDITIONAL_FOAM_DISTORTION_AMOUNT: 1
     - DOWNSAMPLING_SAMPLE_SIZE: 0.33
@@ -113,6 +155,7 @@ Material:
     - _BlendAnimSpeed: 1
     - _BumpAmount: 1
     - _BumpMixAmount: 0.5
+    - _BumpScale: 1
     - _BumpZFade: 0
     - _BumpZOffset: 1
     - _CAUSTIC_FOG_Amount: 1
@@ -128,10 +171,15 @@ Material:
     - _CN_TEXEL: 0.01
     - _C_BLUR_R: 0.05
     - _C_BLUR_S: 0.05
+    - _Clip: 0.5
+    - _ColorMask: 15
     - _ColorMultiplier: 1
+    - _Cutoff: 0.5
     - _DetailContrast: 1
+    - _DetailNormalMapScale: 1
     - _DetileAmount: 0.15
     - _DetileFriq: 5
+    - _DstBlend: 0
     - _DustContrast: 1
     - _FadeDistance: 2
     - _FadingFactor: 0.5
@@ -178,6 +226,10 @@ Material:
     - _FresnelAmount: 4
     - _FresnelFade: 0.7
     - _FresnelPow: 1.58
+    - _GlobalWind: 0.5
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
     - _LOW_DISTOR_Amount: 1
     - _LOW_DISTOR_MAINTEX_Speed: 8
     - _LOW_DISTOR_MAINTEX_Tile: 20
@@ -198,6 +250,8 @@ Material:
     - _MOR_Tile: 82
     - _MTDistortion: 0
     - _MainTexAngle: 0
+    - _Metallic: 0
+    - _Mode: 0
     - _MultyOctaveNormals: 5
     - _MultyOctavesSpeedOffset: 0.89
     - _MyFarClipPlane: 1000
@@ -215,6 +269,7 @@ Material:
     - _NHQ_GlareSpeedXY: 1
     - _NHQ_GlareSpeedZ: 1
     - _ObjecAngle: 0
+    - _OcclusionStrength: 1
     - _OutGradBlend: 1
     - _OutGradZ: 1
     - _OutShadowsAmount: 20
@@ -223,6 +278,8 @@ Material:
     - _PRCHQ_speedWaves: 1
     - _PRCHQ_tileTex: 1
     - _PRCHQ_tileWaves: 1
+    - _Parallax: 0.02
+    - _PulseFrequency: 3
     - _REFR_MASK_Amount: 3
     - _REFR_MASK_Tile: 0.1
     - _REFR_MASK_max: 1
@@ -272,10 +329,20 @@ Material:
     - _ShoreDistortionTexture: 1
     - _ShoreWavesQual: 2
     - _ShoreWavesRadius: 0.1
+    - _SmoothnessTextureChannel: 0
     - _SoftEdge: 1
     - _SpecularAmount: 2
     - _SpecularGlowAmount: 0.2
+    - _SpecularHighlights: 1
     - _SpecularShininess: 48
+    - _SpeedTurbulence: 1
+    - _SrcBlend: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _Steps: 3
     - _SurfaceFoamAmount: 10
     - _SurfaceFoamContrast: 200
     - _TILINGMASK_Amount: 3
@@ -284,9 +351,11 @@ Material:
     - _TILINGMASK_max: 1
     - _TILINGMASK_min: 0.66
     - _TexRefrDistortFix: 0
+    - _ToonEffect: 0.5
     - _TransparencyLuminosity: 1
     - _TransparencyPow: 1
     - _TransparencySimple: 1
+    - _Turbulence: 1
     - _Tweak: 7.85
     - _UFSHORE_ADDITIONAL_Length_1: 1
     - _UFSHORE_ADDITIONAL_Length_2: 1
@@ -321,6 +390,8 @@ Material:
     - _UF_NMASK_Brightnes: 0
     - _UF_NMASK_Contrast: 1
     - _UF_NMASK_Tile: 0.1
+    - _UVSec: 0
+    - _UseUIAlphaClip: 0
     - _VERTEX_ANIM_DETILEAMOUNT: 1
     - _VERTEX_ANIM_DETILEFRIQ: 5
     - _VERTEX_ANIM_DETILESPEED: 0
@@ -342,7 +413,10 @@ Material:
     - _WaveGradTopOffset: 1
     - _WavesDirAngle: 0
     - _Width: 7.46
+    - _WiggleStrength: 0.01
+    - _WindMain: 2
     - _ZDistanceCalcOffset: 0.25
+    - _ZWrite: 1
     - _Z_BLACK_OFFSET_V: 0
     - _sinAmount: 0.1
     - _sinFriq: 7.28
@@ -362,8 +436,10 @@ Material:
     - _CAUSTIC_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _CN_TILING: {r: 5, g: 5, b: 1, a: 1}
     - _Color: {r: 0.9811321, g: 0.94996405, b: 0.72659314, a: 0.75686276}
+    - _Color1: {r: 0.74119204, g: 0.98039216, b: 0.7254902, a: 0}
     - _DetailAnim: {r: 0, g: 1.5, b: 0, a: 0}
     - _DustAnim: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _FoamColor_SW: {r: 1, g: 1, b: 1, a: 1}
     - _FracMAIN_TEX_TileTime_mMAIN_TEX_Move: {r: 0, g: 0, b: 0, a: 0}
@@ -388,11 +464,13 @@ Material:
     - _MM_Color: {r: 1, g: 1, b: 1, a: 1}
     - _MM_Tile: {r: 1, g: 1, b: 1, a: 1}
     - _MM_offset: {r: 0, g: 0, b: 0, a: 0}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainTexTile: {r: 1, g: 1, b: 0, a: 0}
     - _MultyOctavesTileOffset: {r: 1.63, g: 1.63, b: 1, a: 1}
     - _NE1_WavesDirection: {r: 0.5, g: 0, b: 0.25, a: 1}
     - _ObjectScale: {r: 1, g: 1, b: 1, a: 1}
+    - _OffsetScale: {r: 0.1, g: 0, b: 0, a: 0}
     - _REFR_MASK_offset: {r: 0, g: 0, b: 0, a: 0}
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 1}
     - _ReflectionBakeLayers: {r: 255, g: 255, b: 255, a: 255}
@@ -408,6 +486,7 @@ Material:
     - _SFW_Speed: {r: 1, g: 1, b: 1, a: 1}
     - _SFW_Tile: {r: 1, g: 1, b: 1, a: 1}
     - _SUrfaceFoamVector: {r: 0.120653294, g: 0.98533523, b: 0.120653294, a: 0}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TILINGMASK_offset: {r: 0, g: 0, b: 0, a: 0}
     - _UFSHORE_ADD_Color_1: {r: 1, g: 1, b: 1, a: 1}
     - _UFSHORE_ADD_Color_2: {r: 1, g: 1, b: 1, a: 1}
@@ -427,3 +506,4 @@ Material:
     - _ZDepthBakeLayers: {r: 255, g: 255, b: 255, a: 255}
     - lerped_post_color1: {r: 1, g: 1, b: 1, a: 1}
     - lerped_post_color2: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

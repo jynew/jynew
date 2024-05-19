@@ -31,27 +31,50 @@ public class MapTeleportor : MonoBehaviour
 	[LabelText("高亮的物体")]
 	public GameObject[] m_EventTargets;
 
+	private GameObject loading;
+	private GameObject exitLight;
+
+	private bool triggerEnabled = false;
+	private bool isLeaveEnabled = false;
+
 	private async void Start()
 	{
 		await RuntimeEnvSetup.Setup();
 		triggerEnabled = true;
+		this.exitLight=GameObject.Find("ExitLight");
+		if(this.exitLight){
+			this.loading=(Instantiate(Resources.Load("ExitLight-loading")) as GameObject);
+			this.loading.transform.position=this.exitLight.transform.position;
+			this.loading.transform.rotation=this.exitLight.transform.rotation;
+			this.loading.transform.localScale=new Vector3(exitLight.transform.localScale.x,0,0);
+		}
 	}
 
-	private bool triggerEnabled = false;
+	void Update()
+	{
+		if(this.isLeaveEnabled&&this.loading.transform.localScale.y>0){
+			this.loading.transform.localScale+=new Vector3(0,0,exitLight.transform.localScale.z*Time.deltaTime);
+			if(this.loading.transform.localScale.z>exitLight.transform.localScale.z){
+				this.DoTransport();
+			}
+		}
+	}
 
 	async void OnTriggerEnter(Collider other)
 	{
 		if (!triggerEnabled) return;
-		
+		if (isLeaveEnabled) {
+			this.loading.transform.localScale=new Vector3(exitLight.transform.localScale.x,exitLight.transform.localScale.y,0);
+		}
 		int transportMapId = -1;
 		if (LevelMaster.GetCurrentGameMap().Tags.Contains("WORLDMAP"))
 		{
 			transportMapId = LuaToCsBridge.MapTable[0].GetMapByName(this.gameObject.name).Id;
 		}
-                else
-                {
-                    transportMapId = LuaToCsBridge.MapTable[LevelMaster.GetCurrentGameMap().GetTransportToMapValue(this.gameObject.name)].Id;
-                }
+		else
+		{
+			transportMapId = LuaToCsBridge.MapTable[LevelMaster.GetCurrentGameMap().GetTransportToMapValue(this.gameObject.name)].Id;
+		}
 		//---------------------------------------------------------------------------
 		//await ShowEnterButton(LevelMaster.GetCurrentGameMap().TransportToMap, TransportTriggerName, ButtonText);
 		//---------------------------------------------------------------------------
@@ -66,6 +89,10 @@ public class MapTeleportor : MonoBehaviour
 	void OnTriggerExit(Collider other)
 	{
 		if (!triggerEnabled) return;
+		if(this.exitLight){
+			if (!isLeaveEnabled) isLeaveEnabled=true;
+			this.loading.transform.localScale=new Vector3(exitLight.transform.localScale.x,0,0);
+		}
 		//HideEnterButton();
 		Jyx2_UIManager.Instance.HideUI(nameof(InteractUIPanel));
 		UnityTools.DisHighLightObjects(m_EventTargets);
