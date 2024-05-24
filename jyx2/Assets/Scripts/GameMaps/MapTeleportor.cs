@@ -55,6 +55,7 @@ public class MapTeleportor : MonoBehaviour
 		if(this.isLeaveEnabled&&this.loading.transform.localScale.y>0){
 			this.loading.transform.localScale+=new Vector3(0,0,exitLight.transform.localScale.z*Time.deltaTime);
 			if(this.loading.transform.localScale.z>exitLight.transform.localScale.z){
+				this.isLeaveEnabled=false;
 				this.DoTransport();
 			}
 		}
