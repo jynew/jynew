@@ -1,5 +1,5 @@
 ScenceFromTo(28, 24, 28, 17);
-jyx2_CameraFollow("Level/NPC/baiwanjian");
+jyx2_CameraFollow("Level/NPC/白万剑");
 Talk(41, "侠客岛赏善罚恶使者，前来拜见雪山派掌门！", "talkname41", 0);
 Talk(43, "尊驾二位便是侠客岛的赏善罚恶使者吗？", "talkname43", 0);
 Talk(42, "正是。不知哪位是雪山派掌门人？我们奉侠客岛岛主之命，手持铜牌前来，邀请贵派掌门赴敝岛相叙，喝碗腊八粥。", "talkname42", 0);
@@ -21,8 +21,8 @@ if TryBattle(59) == true then goto label0 end;
     Talk(43, "哼！白某无话可说，也无脸去喝这腊八粥。", "talkname43", 0);
     Talk(41, "好！这位兄弟，十二月初八，请到侠客岛喝碗腊八粥。", "talkname41", 0);
     DarkScence();
-    jyx2_ReplaceSceneObject("", "NPC/shizhe1", "");--使者离开
-    jyx2_ReplaceSceneObject("", "NPC/shizhe2", "");--使者离开
+    jyx2_ReplaceSceneObject("", "NPC/使者1", "");--使者离开
+    jyx2_ReplaceSceneObject("", "NPC/使者2", "");--使者离开
     ModifyEvent(-2, 12, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 13, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

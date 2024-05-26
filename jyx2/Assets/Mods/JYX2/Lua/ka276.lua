@@ -22,7 +22,7 @@ AddItemWithoutHint(178, -1);
 AddItemWithoutHint(179, -1);
 AddItemWithoutHint(180, -1);
 ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-jyx2_ReplaceSceneObject("", "NPC/renwoxing", "");--任我行逃走
+jyx2_ReplaceSceneObject("", "NPC/任我行", "");--任我行逃走
 jyx2_PlayTimeline("[Timeline]ka37_药王山庄_苏醒", 0, false, "");
 LightScence();
 jyx2_Wait(2);
@@ -37,8 +37,8 @@ ModifyEvent(55, 22, 1, 1, -1, -1, -1, 6062, 6062, 6062, -2, -2, -2);
 ModifyEvent(55, 23, 1, 1, -1, -1, -1, 6074, 6074, 6074, -2, -2, -2);
 ModifyEvent(55, 24, 0, 0, -1, -1, 275, -1, -1, -1, -2, -2, -2);
 jyx2_FixMapObject("任我行逃出地牢",1);
---jyx2_SwitchRoleAnimation("NPC/tubiweng", "Assets/BuildSource/AnimationControllers/自然站立Controller.controller");不能修改非当前场景模型，移动到275中执行
---jyx2_SwitchRoleAnimation("NPC/huangzhonggong", "Assets/BuildSource/AnimationControllers/自然站立Controller.controller");
+--jyx2_SwitchRoleAnimation("NPC/秃笔翁", "Assets/BuildSource/AnimationControllers/自然站立Controller.controller");不能修改非当前场景模型，移动到275中执行
+--jyx2_SwitchRoleAnimation("NPC/黄钟公", "Assets/BuildSource/AnimationControllers/自然站立Controller.controller");
 ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

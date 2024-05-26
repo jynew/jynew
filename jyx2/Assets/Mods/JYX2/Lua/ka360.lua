@@ -3,7 +3,7 @@ if InTeam(38) == true then goto label0 end;
     do return end;
 ::label0::
 -- DarkScence();
--- jyx2_ReplaceSceneObject("", "NPC/shipotian3", "1");--石破天出现
+-- jyx2_ReplaceSceneObject("", "石破天3", "1");--石破天出现
 -- LightScence();
     Talk(38, "大哥，我的“巨骨穴”好热……", "talkname38", 1);
     Add3EventNum(-2, 4, 0, 0, 1);
@@ -11,6 +11,6 @@ if InTeam(38) == true then goto label0 end;
     Add3EventNum(-2, 6, 0, 0, 1);
     ModifyEvent(-2, -2, -2, -2, 385, -1, -1, -2, -2, -2, -2, -2, -2);
     -- DarkScence();
-    -- jyx2_ReplaceSceneObject("", "NPC/shipotian3", "");--石破天出现
+    -- jyx2_ReplaceSceneObject("", "石破天3", "");--石破天出现
     -- LightScence();
 do return end;

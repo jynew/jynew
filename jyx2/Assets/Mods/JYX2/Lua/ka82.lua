@@ -110,13 +110,13 @@ if TryBattle(12) == true then goto label0 end;
 
     DarkScence();
     ModifyEvent(-2, 7, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|贴图消失。场景11-以下都是
-	jyx2_ReplaceSceneObject("", "NPC/hetaichong", "");
+	jyx2_ReplaceSceneObject("", "NPC/何太冲", "");
     ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-	jyx2_ReplaceSceneObject("", "NPC/tangwenliang", "");
+	jyx2_ReplaceSceneObject("", "NPC/唐文亮", "");
     ModifyEvent(-2, 9, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-	jyx2_ReplaceSceneObject("", "NPC/xuanci", "");
+	jyx2_ReplaceSceneObject("", "NPC/玄慈", "");
     ModifyEvent(-2, 10, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-	jyx2_ReplaceSceneObject("", "NPC/miejue", "");
+	jyx2_ReplaceSceneObject("", "NPC/灭绝", "");
 	--昆仑
     ModifyEvent(-2, 11, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 12, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

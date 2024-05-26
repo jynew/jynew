@@ -23,7 +23,7 @@ ModifyEvent(-2, 53, 1, 1, -1, -1, -1, 5704, 5704, 5704, -2, -2, -2);
 ModifyEvent(-2, 54, 1, 1, 208, -1, -1, 5706, 5706, 5706, -2, -2, -2);
 jyx2_ReplaceSceneObject("","NPC/嵩山弟子51","1");
 jyx2_ReplaceSceneObject("","NPC/嵩山弟子52","1");
-jyx2_ReplaceSceneObject("","NPC/zuolengchan","1");
+jyx2_ReplaceSceneObject("","NPC/左冷禅","1");
 ModifyEvent(-2, 58, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 59, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(31, 0, -2, -2, 173, -1, -1, -2, -2, -2, -2, -2, -2);

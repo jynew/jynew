@@ -1,5 +1,5 @@
 ScenceFromTo(41, 31, 34, 31);
-jyx2_CameraFollow("Level/NPC/miaorenfeng");
+jyx2_CameraFollow("Level/NPC/苗人凤");
 Talk(3, "你们是田归农请来的吧！神龙教何时跟田归农搭在一起了。", "talkname3", 0);
 Talk(97, "还多亏了田兄，我们才知道《飞狐外传》一书在你这。识相的话就快将书交出来。", "talkname97", 0);
 Talk(3, "田归农呢？他怎么不敢出来见我。", "talkname3", 0);

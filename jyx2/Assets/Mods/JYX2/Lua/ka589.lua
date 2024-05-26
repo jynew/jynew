@@ -1,5 +1,5 @@
 ScenceFromTo(44, 26, 36, 26);
-jyx2_CameraFollow("Level/NPC/azi");
+jyx2_CameraFollow("Level/NPC/阿紫");
 Talk(92, "师父有令，要我传你回去，小师妹，你要违抗师命吗？", "talkname92", 0);
 Talk(47, "二师哥，你明知道师父正大发雷霆，还要逼我回去，这不是有意要我吃苦头吗？", "talkname47", 0);
 Talk(92, "你既然执意不肯回去，那就把那件东西给我。我带回去还给师父，也好有个交代。", "talkname92", 0);

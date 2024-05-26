@@ -18,12 +18,12 @@ Talk(64, "她在哪里？", "talkname64", 0);
 Talk(0, "他现正居住在黑龙潭，在铁掌山的南边。", "talkname0", 1);
 DarkScence();
 ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|移除编号4。场景20-编号04
-jyx2_ReplaceSceneObject("", "NPC/zhoubotong", "");--周伯通去黑龙谭找瑛姑
+jyx2_ReplaceSceneObject("", "NPC/周伯通", "");--周伯通去黑龙谭找瑛姑
 LightScence();
 Talk(0, "咦，老顽童呢？怎么一溜烟的就不见了，希望是去找瑛姑了。", "talkname0", 1);
 ModifyEvent(21, 2, 1, 1, 424, -1, -1, 6154, 6154, 6154, -2, -2, -2);--by fanyu|改变贴图，启动424脚本。场景21-编号02
 ModifyEvent(21, 1, 1, 1, 423, -1, -1, 6158, 6158, 6158, -2, -2, -2);--by fanyu|改变贴图，启动423脚本。场景21-编号01
-jyx2_ReplaceSceneObject("21", "NPC/zhoubotong", "1");--周伯通去黑龙谭找瑛姑
+jyx2_ReplaceSceneObject("21", "NPC/周伯通", "1");--周伯通去黑龙谭找瑛姑
 SetScenceMap(21, 1, 22, 26, 0);
 AddEthics(3);
 do return end;

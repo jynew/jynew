@@ -16,7 +16,7 @@ if UseItem(183) == true then goto label0 end;
     Talk(50, "你要我怎么做！", "talkname50", 0);
     Talk(0, "辞去丐帮帮主之位，交出《天龙八部》一书。", "talkname0", 1);
     Talk(50, "好！我今天就辞去这丐帮帮主之位，《天龙八部》一书你拿去吧。", "talkname50", 0);
-    jyx2_ReplaceSceneObject("", "NPC/qiaofeng", "");--战斗结束，乔峰离开
+    jyx2_ReplaceSceneObject("", "NPC/乔峰", "");--战斗结束，乔峰离开
     DarkScence();
     ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 战斗结束，乔峰离开 场景51-14
     LightScence();

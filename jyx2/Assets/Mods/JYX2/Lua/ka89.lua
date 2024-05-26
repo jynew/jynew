@@ -2,10 +2,10 @@ ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|改变�
 ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|改变贴图为空。场景11-4
 ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|改变贴图为空。场景11-5
 ModifyEvent(-2, 6, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|改变贴图为空。场景11-6
-jyx2_ReplaceSceneObject("", "NPC/yangxiao", "");
-jyx2_ReplaceSceneObject("", "NPC/fanyao", ""); 
-jyx2_ReplaceSceneObject("", "NPC/yintianzheng", ""); 
-jyx2_ReplaceSceneObject("", "NPC/weiyixiao", ""); 
+jyx2_ReplaceSceneObject("", "NPC/杨逍", "");
+jyx2_ReplaceSceneObject("", "NPC/范瑶", ""); 
+jyx2_ReplaceSceneObject("", "NPC/殷天正", ""); 
+jyx2_ReplaceSceneObject("", "NPC/韦一笑", ""); 
 ModifyEvent(-2, 77, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|改变贴图为空。场景11-77
 ModifyEvent(-2, 78, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|改变贴图为空。场景11-78
 jyx2_ReplaceSceneObject("", "NPC/明教弟子77", "");

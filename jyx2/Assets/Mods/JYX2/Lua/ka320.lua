@@ -20,7 +20,7 @@ Talk(33, "教主文成武德，仁义英明，望教主再给我们四兄弟一�
 Talk(26, "什么文成武德，仁义英明，东方不败，你肉不肉麻啊！", "talkname26", 0);
 DarkScence();
 ModifyEvent(-2, 55, 1, 1, -1, -1, -1, 6078, 6078, 6078, -2, -2, -2);--by fanyu 任我行出场 场景26-编号55
-jyx2_ReplaceSceneObject("", "NPC/renwoxing", "1");--任我行出场
+jyx2_ReplaceSceneObject("", "NPC/任我行", "1");--任我行出场
 LightScence();
 Talk(0, "老头子，是你。那天你怎么不敢跟我比划，还暗算我。", "talkname0", 1);
 Talk(26, "小兄弟，多亏你了。要不是你误打误撞，我任我行此刻还在地牢内呢。", "talkname26", 0);
@@ -57,10 +57,10 @@ if TeamIsFull() == false then goto label0 end;
                         ModifyEvent(-2, 0, 1, 1, 321, -1, -1, 5910, 5910, 5910, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号0
                         ModifyEvent(-2, 1, 1, 1, 321, -1, -1, 5908, 5908, 5908, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号1
                         jyx2_FixMapObject("任我行战斗后","1");
-						jyx2_SwitchRoleAnimation("NPC/renwoxing","Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
+						jyx2_SwitchRoleAnimation("NPC/任我行","Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
 						ModifyEvent(-2, 86, 1, 1, -1, -1, -1, 7966, 7966, 7966, -2, -2, -2);--by fanyu 启动脚本321，改变人物贴图 场景26-编号86
 						jyx2_FixMapObject("东方不败战斗后","1");
-						jyx2_SwitchRoleAnimation("NPC/dongfangbubai","Assets/BuildSource/AnimationControllers/Dead-FaceUp.controller");--需要改为脸朝天躺地上controller
+						jyx2_SwitchRoleAnimation("NPC/东方不败","Assets/BuildSource/AnimationControllers/Dead-FaceUp.controller");--需要改为脸朝天躺地上controller
                         LightScence();
                         if InTeam(26) == false then goto label6 end;
                             Leave(26);
@@ -75,7 +75,7 @@ if TeamIsFull() == false then goto label0 end;
                             Talk(27, "你好狠毒！", "talkname27", 0);
                             DarkScence();
                             ModifyEvent(-2, 86, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu 人物离场 场景26-编号86
-                            jyx2_ReplaceSceneObject("", "NPC/dongfangbubai", "");--东方不败离场
+                            jyx2_ReplaceSceneObject("", "NPC/东方不败", "");--东方不败离场
                             LightScence();
                             Talk(33, "恭喜教主，今日诛却大逆。从此我教在教主庇荫之下，扬威四海。教主千秋万载，一统江湖。", "talkname33", 0);
                             Talk(26, "胡说八道！什么千秋万载？哈！哈！哈！小兄弟，这一役诛奸复位，你实占首功。这本《笑傲江湖》你就拿去吧。江湖上的人以为它是个高深的武功秘笈，其实只不过是本故事书罢了。", "talkname26", 0);

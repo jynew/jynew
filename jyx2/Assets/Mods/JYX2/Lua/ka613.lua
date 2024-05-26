@@ -15,7 +15,7 @@ if TryBattle(97) == true then goto label0 end;
     SetScenceMap(-2, 1, 22, 25, 2276);
     SetScenceMap(-2, 1, 22, 27, 2272);
     jyx2_FixMapObject("五毒教开门",1);
-    jyx2_ReplaceSceneObject("", "NPC/lanfenghuang", "1");--蓝凤凰
+    jyx2_ReplaceSceneObject("", "NPC/蓝凤凰", "1");--蓝凤凰
     ModifyEvent(-2, 5, 1, 1, 616, -1, -1, 6804, 6804, 6804, -2, -2, -2);
     LightScence();
     AddRepute(1);

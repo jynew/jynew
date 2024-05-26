@@ -13,7 +13,7 @@ if AskJoin () == true then goto label0 end;
 ::label2::
             Talk(47, "我看你这人也不是什么呆头鹅，跟你一起走走也挺好玩的。", "talkname47", 0);
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/azi", "");--阿紫加入
+            jyx2_ReplaceSceneObject("", "NPC/阿紫", "");--阿紫加入
             ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             LightScence();
             Join(47);
@@ -28,7 +28,7 @@ if AskJoin () == true then goto label0 end;
                     do return end;
 ::label4::
                     DarkScence();
-                    jyx2_ReplaceSceneObject("", "NPC/youtanzhi", "");--游坦之加入
+                    jyx2_ReplaceSceneObject("", "NPC/游坦之", "");--游坦之加入
                     ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
                     LightScence();
                     Join(48);

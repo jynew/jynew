@@ -15,13 +15,13 @@ Talk(0, "好，我看就这样了。苏前辈，我们会去找那星宿老怪�
 Talk(52, "老朽谢谢这位少侠的帮忙。掌门师弟，此去路上一切要小心，丁春秋那老贼行事卑鄙……对了，我有一个徒弟医术高明，人称“阎王敌”的薛神医，你可以去找他帮忙。见到他时只要出示掌门信物的“七宝指环”即可。", "talkname52", 0);
 DarkScence();
 ModifyEvent(-2, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-jyx2_ReplaceSceneObject("", "NPC/xiaoyaozi", "");--逍遥子1
+jyx2_ReplaceSceneObject("", "NPC/逍遥子", "");--逍遥子1
 ModifyEvent(-2, 2, 1, 1, 581, -1, -1, 6522, 6522, 6522, -2, -2, -2);
 ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 ModifyEvent(-2, 0, 1, 1, 537, -1, -1, 6340, 6340, 6340, -2, -2, -2);
 ModifyEvent(35, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
 jyx2_FixMapObject("逍遥子传功完毕",0);
-jyx2_SwitchRoleAnimation("NPC/suxinghe", "Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
+jyx2_SwitchRoleAnimation("NPC/苏星河", "Assets/BuildSource/AnimationControllers/sit_on_chair.controller");
 jyx2_ReplaceSceneObject("35","NPC/星宿弟子3","");
 NPCAddItem(49, 128, 1);
 NPCAddItem(49, 56, 1);
@@ -33,7 +33,7 @@ if TeamIsFull() == false then goto label0 end;
     do return end;
 ::label0::
     DarkScence();
-    jyx2_ReplaceSceneObject("", "NPC/xuzhu", "");--虚竹加入
+    jyx2_ReplaceSceneObject("", "NPC/虚竹", "");--虚竹加入
     ModifyEvent(-2, 2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     LightScence();
     AddMp(49, 300);

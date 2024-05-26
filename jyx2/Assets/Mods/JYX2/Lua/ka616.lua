@@ -49,7 +49,7 @@ if TryBattle(98) == true then goto label0 end;
 ::label2::
             Talk(0, "能有美人相伴天涯，实乃我之荣幸。", "talkname0", 1);
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/lanfenghuang", "");--蓝凤凰加入
+            jyx2_ReplaceSceneObject("", "NPC/蓝凤凰", "");--蓝凤凰加入
             ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             LightScence();
             Join(25);

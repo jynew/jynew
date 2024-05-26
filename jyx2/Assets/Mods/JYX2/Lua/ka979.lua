@@ -11,7 +11,7 @@ if AskJoin () == true then goto label0 end;
         Talk(47, "你不怕我的话就走吧。", "talkname47", 0);
         DarkScence();
         ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
-		jyx2_ReplaceSceneObject("","NPC/azi","");
+		jyx2_ReplaceSceneObject("","NPC/阿紫","");
         LightScence();
         Join(47);
 do return end;

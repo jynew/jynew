@@ -1,6 +1,6 @@
 jyx2_ReplaceSceneObject("", "Dynamic/Leave2", "");--by citydream 屏蔽地道入口（强制推进剧情）
-jyx2_SwitchRoleAnimation("NPC/tubiweng", "Assets/BuildSource/AnimationControllers/StandController.controller");
-jyx2_SwitchRoleAnimation("NPC/huangzhonggong", "Assets/BuildSource/AnimationControllers/StandController.controller");
+jyx2_SwitchRoleAnimation("NPC/秃笔翁", "Assets/BuildSource/AnimationControllers/StandController.controller");
+jyx2_SwitchRoleAnimation("NPC/黄钟公", "Assets/BuildSource/AnimationControllers/StandController.controller");
 Talk(0, "四位那么好的闲情逸致聚在这儿，是不是准备打麻将，插花收不收啊？", "talkname0", 1);
 Talk(33, "你这臭小子，看你做了什么好事？还敢在这说风凉话。", "talkname33", 0);
 Talk(34, "我早该知道天底下哪有这么好的事情，原来这一切都是你设计出来的诡计。", "talkname34", 0);
@@ -29,10 +29,10 @@ if TryBattle(47) == true then goto label0 end;
     ModifyEvent(-2, 21, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 22, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 23, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/danqingsheng", "");--丹青生
-    jyx2_ReplaceSceneObject("", "NPC/tubiweng", "");--秃笔翁
-    jyx2_ReplaceSceneObject("", "NPC/heibaizi", "");--黑白子
-    jyx2_ReplaceSceneObject("", "NPC/huangzhonggong", "");--黄钟公
+    jyx2_ReplaceSceneObject("", "NPC/丹青生", "");--丹青生
+    jyx2_ReplaceSceneObject("", "NPC/秃笔翁", "");--秃笔翁
+    jyx2_ReplaceSceneObject("", "NPC/黑白子", "");--黑白子
+    jyx2_ReplaceSceneObject("", "NPC/黄钟公", "");--黄钟公
     ModifyEvent(-2, 24, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 3, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
     ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);

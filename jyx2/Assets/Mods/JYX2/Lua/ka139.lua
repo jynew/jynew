@@ -12,7 +12,7 @@ if AskBattle() == true then goto label0 end;
         LightScence();
         Talk(7, "…………", "talkname7", 0);
         ModifyEvent(-2, 8, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-        jyx2_ReplaceSceneObject("", "NPC/yisheng", "");--医生逃跑
+        jyx2_ReplaceSceneObject("", "NPC/医生", "");--医生逃跑
         ModifyEvent(-2, -2, -2, -2, 165, -1, -1, -2, -2, -2, -2, -2, -2);
         AddEthics(2);
         AddRepute(3);

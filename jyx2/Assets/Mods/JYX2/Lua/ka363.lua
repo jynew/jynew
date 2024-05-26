@@ -2,7 +2,7 @@ if InTeam(38) == true then goto label0 end;
     do return end;
 ::label0::
 -- DarkScence()
--- jyx2_ReplaceSceneObject("", "NPC/shipotian4", "1");--石破天出现
+-- jyx2_ReplaceSceneObject("", "石破天4", "1");--石破天出现
 -- LightScence()
     Talk(38, "大哥，这没有什么好看的，我们走了好不好……", "talkname38", 1);
     Talk(0, "贤弟，小声一点，别吵到两位岛主练功……", "talkname0", 1);

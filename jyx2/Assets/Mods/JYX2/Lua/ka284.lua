@@ -38,7 +38,7 @@ if InTeam(35) == true then goto label0 end;
     Talk(30, "冲儿，我暮年得见你这样一个佳子弟传我剑法，实是大畅老怀。哈哈！哈哈！", "talkname30", 0);
     DarkScence();
     ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
-    jyx2_ReplaceSceneObject("", "NPC/fengqingyang", "");--风清扬 
+    jyx2_ReplaceSceneObject("", "NPC/风清扬", "");--风清扬 
     LightScence();
     Talk(0, "恭喜令狐兄学会这精妙的剑法。我们这就走吧。", "talkname0", 1);
     AddItem(79, 1);

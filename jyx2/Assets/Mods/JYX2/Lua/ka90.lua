@@ -14,12 +14,12 @@ ModifyEvent(11, 0, 0, 0, -1, -1, 81, -1, -1, -1, -2, -2, -2);--by fanyu|启动81
 
 ModifyEvent(11, 1, 1, 1, -1, -1, -1, 5316, 5316, 5316, -2, -2, -2);--by fanyu|改变贴图，出现人物。场景11-以下都是
 ModifyEvent(11, 2, 1, 1, -1, -1, -1, 5330, 5330, 5330, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/weiyixiao_1", "1");--韦一笑出现    
-jyx2_ReplaceSceneObject("11", "NPC/yintianzheng_1", "1"); --殷天正出现
+jyx2_ReplaceSceneObject("11", "NPC/韦一笑1", "1");--韦一笑出现    
+jyx2_ReplaceSceneObject("11", "NPC/殷天正1", "1"); --殷天正出现
 ModifyEvent(11, 3, 1, 1, -2, -2, -2, 5452, 5452, 5452, -2, -2, -2);
 ModifyEvent(11, 6, 1, 1, -2, -2, -2, 5334, 5334, 5334, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/yangxiao", "1");
-jyx2_ReplaceSceneObject("11", "NPC/fanyao", "1"); 
+jyx2_ReplaceSceneObject("11", "NPC/杨逍", "1");
+jyx2_ReplaceSceneObject("11", "NPC/范瑶", "1"); 
 
 ModifyEvent(11, 65, 1, 1, -1, -1, -1, 5430, 5430, 5430, -2, -2, -2);--崆峒死人
 jyx2_ReplaceSceneObject("11", "NPC/崆峒弟子65-死", "1");
@@ -33,7 +33,7 @@ jyx2_ReplaceSceneObject("11", "NPC/少林弟子69-死", "1");
 ModifyEvent(11, 70, 1, 1, -1, -1, -1, 5432, 5432, 5432, -2, -2, -2);--昆仑死人
 
 ModifyEvent(11, 7, 1, 1, -2, -2, -2, 5348, 5348, 5348, -2, -2, -2);
-jyx2_ReplaceSceneObject("11", "NPC/hetaichong", "1");--何太冲
+jyx2_ReplaceSceneObject("11", "NPC/何太冲", "1");--何太冲
 ModifyEvent(11, 11, 1, 1, -2, -2, -2, 5412, 5412, 5412, -2, -2, -2);--昆仑派
 ModifyEvent(11, 12, 1, 1, -2, -2, -2, 5412, 5412, 5412, -2, -2, -2);
 ModifyEvent(11, 13, 1, 1, -2, -2, -2, 5412, 5412, 5412, -2, -2, -2);
@@ -54,7 +54,7 @@ jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子18", "1");
 jyx2_ReplaceSceneObject("11", "NPC/昆仑弟子19-死", "1");
 
 ModifyEvent(11, 8, 1, 1, -2, -2, -2, 5364, 5364, 5364, -2, -2, -2);--崆峒派
-jyx2_ReplaceSceneObject("11", "NPC/tangwenliang", "1");--唐文亮
+jyx2_ReplaceSceneObject("11", "NPC/唐文亮", "1");--唐文亮
 ModifyEvent(11, 20, 1, 1, -2, -2, -2, 5404, 5404, 5404, -2, -2, -2);
 ModifyEvent(11, 21, 1, 1, -2, -2, -2, 5404, 5404, 5404, -2, -2, -2);
 ModifyEvent(11, 22, 1, 1, -2, -2, -2, 5404, 5404, 5404, -2, -2, -2);
@@ -90,7 +90,7 @@ jyx2_ReplaceSceneObject("11", "NPC/华山弟子34", "1");
 jyx2_ReplaceSceneObject("11", "NPC/华山弟子35", "1");
 
 ModifyEvent(11, 9, 1, 1, -2, -2, -2, 5378, 5378, 5378, -2, -2, -2);--少林派
-jyx2_ReplaceSceneObject("11", "NPC/xuanci", "1");--玄慈
+jyx2_ReplaceSceneObject("11", "NPC/玄慈", "1");--玄慈
 ModifyEvent(11, 36, 1, 1, -2, -2, -2, 5426, 5426, 5426, -2, -2, -2);
 ModifyEvent(11, 37, 1, 1, -2, -2, -2, 5426, 5426, 5426, -2, -2, -2);
 ModifyEvent(11, 38, 1, 1, -2, -2, -2, 5426, 5426, 5426, -2, -2, -2);
@@ -117,7 +117,7 @@ jyx2_ReplaceSceneObject("11", "NPC/少林弟子46", "1");
 jyx2_ReplaceSceneObject("11", "NPC/少林弟子47-死", "1");
 
 ModifyEvent(11, 10, 1, 1, -2, -2, -2, 5362, 5362, 5362, -2, -2, -2);--峨眉派
-jyx2_ReplaceSceneObject("11", "NPC/miejue", "1");--峨嵋派
+jyx2_ReplaceSceneObject("11", "NPC/灭绝", "1");--峨嵋派
 ModifyEvent(11, 48, 1, 1, -2, -2, -2, 5402, 5402, 5402, -2, -2, -2);
 ModifyEvent(11, 49, 1, 1, -2, -2, -2, 5402, 5402, 5402, -2, -2, -2);
 ModifyEvent(11, 50, 1, 1, -2, -2, -2, 5402, 5402, 5402, -2, -2, -2);

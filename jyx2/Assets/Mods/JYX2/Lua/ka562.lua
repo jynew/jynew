@@ -12,7 +12,7 @@ if InTeam(47) == true then goto label0 end;
             do return end;
 ::label2::
             DarkScence();
-            jyx2_ReplaceSceneObject("", "NPC/youtanzhi", "");--游坦之加入
+            jyx2_ReplaceSceneObject("", "NPC/游坦之", "");--游坦之加入
             ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
             LightScence();
             Join(48);

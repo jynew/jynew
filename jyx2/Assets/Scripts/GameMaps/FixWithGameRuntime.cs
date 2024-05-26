@@ -20,6 +20,8 @@ public class FixWithGameRuntime : MonoBehaviour
     public enum FixTypeEnum
     {
         Move,
+        Hide,
+        Show
     }
 
     public FixTypeEnum FixType = FixTypeEnum.Move;
@@ -46,14 +48,28 @@ public class FixWithGameRuntime : MonoBehaviour
                 }
                 else
                 {
-                    transform.position = MoveTo.position;
-                    transform.rotation = MoveTo.rotation;
+                    if (FixType==FixTypeEnum.Move){
+                        transform.position = MoveTo.position;
+                        transform.rotation = MoveTo.rotation;
+                    }else if (FixType==FixTypeEnum.Hide){
+                        MoveTo.gameObject.SetActive(false);
+                    }else if (FixType==FixTypeEnum.Show){
+                        MoveTo.gameObject.SetActive(true);
+                    }
                 }
             }
 			else
 			{
-				transform.position = storeP;
-                transform.rotation = storeR;
+                if (FixType==FixTypeEnum.Move){
+                    transform.position = storeP;
+                    transform.rotation = storeR;
+                }else if(MoveTo != null){
+                    if (FixType==FixTypeEnum.Hide){
+                        MoveTo.gameObject.SetActive(true);
+                    }else if (FixType==FixTypeEnum.Show){
+                        MoveTo.gameObject.SetActive(false);
+                    }
+                }
 			}
         }
     }

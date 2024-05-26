@@ -6,7 +6,7 @@ jyx2_StopTimeline("[Timeline]ka20_阎基居_中悲酥清风");
 ZeroAllMP();
 ModifyEvent(-2, -2, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2);
 ModifyEvent(-2, 1, 1, -2, 21, -1, -1, 5168, 5168, 5168, 0, -2, -2);
-jyx2_ReplaceSceneObject("","NPC/yanji","1"); --刷出阎基
+jyx2_ReplaceSceneObject("","NPC/阎基","1"); --刷出阎基
 
 jyx2_PlayTimeline("[Timeline]ka20_阎基居_苏醒", 0, true, "");
 LightScence();

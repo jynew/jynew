@@ -1,5 +1,5 @@
 ScenceFromTo(44, 24, 36, 24);
-jyx2_CameraFollow("Level/NPC/azi");
+jyx2_CameraFollow("Level/NPC/阿紫");
 Talk(92, "师父有令，要我传你回去，小师妹，你要违抗师命吗？", "talkname92", 0);
 Talk(47, "二师哥，你明知道师父正大发雷霆，还要逼我回去，这不是有意要我吃苦头吗？", "talkname47", 0);
 Talk(92, "你既然执意不肯回去，那就把那件东西给我。我带回去还给师父，也好有个交代。", "talkname92", 0);
@@ -26,7 +26,7 @@ if TryBattle(87) == true then goto label0 end;
     jyx2_ReplaceSceneObject("", "NPC/星宿弟子8", "");
     jyx2_ReplaceSceneObject("", "NPC/星宿弟子9", "");
     ModifyEvent(-2, 4, -2, -2, -2, -1, -1, 6378, 6378, 6378, -2, 35, 24);
-    jyx2_SwitchRoleAnimation("NPC/youtanzhi", "Assets/BuildSource/AnimationControllers/StandController.controller");
+    jyx2_SwitchRoleAnimation("NPC/游坦之", "Assets/BuildSource/AnimationControllers/StandController.controller");
     jyx2_FixMapObject("移到阿紫身边", 1);
     SetScencePosition2(37, 25);
 	jyx2_MovePlayer("战斗后","Level/Dynamic");

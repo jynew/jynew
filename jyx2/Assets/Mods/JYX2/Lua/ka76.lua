@@ -19,7 +19,7 @@ if TryBattle(9) == true then goto label0 end;
     ModifyEvent(-2, 8, -2, -2, -1, -1, -1, 5312, 5308, 5312, -2, -2, -2);--by fanyu|战斗后人物贴图替换。场景12-编号8
     ModifyEvent(-2, 9, -2, -2, -1, -1, -1, 5310, 5310, 5310, -2, -2, -2);--by fanyu|战斗后人物贴图替换。场景12-编号9
     ModifyEvent(-2, 10, 1, 1, -1, -1, -1, 5298, 5298, 5298, -2, -2, -2);--by fanyu|战斗后成昆出现。场景12-编号10
-    jyx2_ReplaceSceneObject("", "NPC/chengkun", "1");--成昆出现
+    jyx2_ReplaceSceneObject("", "NPC/成昆", "1");--成昆出现
     LightScence();
     Talk(0, "杨左使，我就说了嘛，跟我打很耗力气的。", "talkname0", 1);
     Talk(11, "你……", "talkname11", 0);
@@ -45,7 +45,7 @@ if TryBattle(9) == true then goto label0 end;
         do return end;
 ::label1::
         DarkScence();
-        jyx2_ReplaceSceneObject("", "NPC/yangxiao", "");--杨逍离开去光明
+        jyx2_ReplaceSceneObject("", "NPC/杨逍", "");--杨逍离开去光明
         ModifyEvent(-2, 4, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号4
         ModifyEvent(-2, 5, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号5
         ModifyEvent(-2, 6, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);--by fanyu|人物消失。场景12-编号6
@@ -60,9 +60,9 @@ if TryBattle(9) == true then goto label0 end;
          jyx2_ReplaceSceneObject("", "NPC/NPC7", "");--明教教徒离开去光明顶
          jyx2_ReplaceSceneObject("", "NPC/NPC8", "");--明教教徒离开去光明顶
          jyx2_ReplaceSceneObject("", "NPC/NPC9", "");--明教教徒离开去光明顶
-        jyx2_ReplaceSceneObject("", "NPC/chengkun", "");--成昆从地道逃跑      
+        jyx2_ReplaceSceneObject("", "NPC/成昆", "");--成昆从地道逃跑      
         ModifyEvent(-2, 11, 1, 1, 80, -1, -1, 5310, 5310, 5310, -2, -2, -2);--by fanyu|生成人物，启动80号脚本。场景12-编号11
-        jyx2_ReplaceSceneObject("", "NPC/chuzi", "1");--厨子出来
+        jyx2_ReplaceSceneObject("", "NPC/厨子", "1");--厨子出来
         SetScenceMap(-2, 1, 28, 24, 0);--by fanyu|明教地道的门打开。场景12-坐标28,24
 		jyx2_FixMapObject("明教分舵开门",1);    
         LightScence();

@@ -10,7 +10,7 @@ if AskJoin () == true then goto label0 end;
         Talk(0, "你的医术很高明，就加入我的队伍，日后也能帮我们治病疗伤。", "talkname0", 1);
         Talk(45, "是。", "talkname45", 0);
         DarkScence();
-        jyx2_ReplaceSceneObject("", "NPC/xuemuhua", "");--薛慕华
+        jyx2_ReplaceSceneObject("", "NPC/薛慕华", "");--薛慕华
         ModifyEvent(-2, -2, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -2);
         LightScence();
         Join(45);
