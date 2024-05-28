@@ -25,7 +25,7 @@ if TryBattle(63) == true then goto label0 end;
 	jyx2_ReplaceSceneObject("","NPC/蜘蛛22","");
 	jyx2_ReplaceSceneObject("","NPC/蜘蛛23","");
 	jyx2_ReplaceSceneObject("","NPC/蜘蛛24","");
-	jyx2_ReplaceSceneObject("","NPC/蜘蛛26","");
+	jyx2_ReplaceSceneObject("","NPC/蜘蛛25","");
     LightScence();
     AddRepute(1);
 do return end;
