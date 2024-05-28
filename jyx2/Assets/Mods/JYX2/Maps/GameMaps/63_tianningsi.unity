@@ -10175,67 +10175,72 @@ PrefabInstance:
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.83172
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.83172
+      value: 0.49903202
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.24
+      value: -17.038
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.16
+      value: 6.787
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.96
+      value: 1.816
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.08642281
+      value: 0.0042869723
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.94166213
+      value: 0.8213497
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.16062967
+      value: -0.12388524
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.28284588
+      value: 0.5567934
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -4.123
+      value: 8.337
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 145.812
+      value: 112.581
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 200.629
+      value: 191.587
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710332363371260244, guid: 9dc9ad0ba50691a488c3837493fe484f,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5710332363371623796, guid: 9dc9ad0ba50691a488c3837493fe484f,
         type: 3}
@@ -50166,8 +50171,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaderNames:
+  - Desktop
   - Mobile
-  shaderIndex: 0
+  shaderIndex: 1
   shader: {fileID: 4800000, guid: 644d4419f6d30214892dd65158332ba7, type: 3}
   renderQueue: 3000
   enableVertexColors: 0
@@ -50203,9 +50209,9 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  waterShallowColor: {r: 0.39697275, g: 0.7173754, b: 0.8679245, a: 0}
+  waterShallowColor: {r: 0.39697212, g: 0.7173754, b: 0.8679245, a: 0}
   depth: 15
-  waterColor: {r: 0.41147816, g: 0.6739922, b: 0.6981132, a: 0}
+  waterColor: {r: 0.41147754, g: 0.6739922, b: 0.6981132, a: 0}
   fresnelColor: {r: 1, g: 1, b: 1, a: 0.484}
   fresnel: 4
   rimColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.35686275}
@@ -50332,7 +50338,7 @@ MonoBehaviour:
   shadowCaster: {fileID: 0}
   material: {fileID: 2100000, guid: 31cc54898a6ea2449a4c17acf45079b8, type: 2}
   isMobileAdvanced: 1
-  isMobilePlatform: 1
+  isMobilePlatform: 0
   isMobileBasic: 0
   shaderName: StylizedWater/Mobile
   isWaterLayer: 0
