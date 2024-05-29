@@ -96,7 +96,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 6d02ecf11b15e074b84c94004a21abec,
     type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 8fd7c08ed95f95b449a0703b47b12f0e,
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 79142a0d30334f445a5b25ccd73b2249,
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -294,11 +294,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Light_5 (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9066062813808516749, guid: fb7b744868db9c34ea7fe9266149ca6a,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4412,6 +4407,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2108499777}
     m_Modifications:
+    - target: {fileID: 5768473084031650445, guid: fb7b744868db9c34ea7fe9266149ca6a,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9066062813808083629, guid: fb7b744868db9c34ea7fe9266149ca6a,
         type: 3}
       propertyPath: m_RootOrder
@@ -6317,7 +6317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &967998165
 Transform:
   m_ObjectHideFlags: 0
@@ -6345,7 +6345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 96ebdc1b309225e4ca6f03d86b03e8aa, type: 2}
+  sharedProfile: {fileID: 11400000, guid: d1adac7c76335c44787785b058b65a9c, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -8966,7 +8966,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.89674497, b: 0.6556604, a: 1}
-  m_Intensity: 0.6
+  m_Intensity: 0.3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -11276,6 +11276,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2108499777}
     m_Modifications:
+    - target: {fileID: 5768473084031650445, guid: fb7b744868db9c34ea7fe9266149ca6a,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9066062813808083629, guid: fb7b744868db9c34ea7fe9266149ca6a,
         type: 3}
       propertyPath: m_RootOrder
