@@ -232,8 +232,11 @@ namespace Jyx2
                 //创建所有角色
                 foreach (var r in LuaToCsBridge.CharacterTable.Values)
                 {
-                    var role = new RoleInstance(r.Id);
-                    _instance.AllRoles.Add(r.Id, role);
+                    // skip instance not battle npc
+                    if(LuaToCsBridge.CharacterTable[r.Id].HpInc>0){
+                        var role = new RoleInstance(r.Id);
+                        _instance.AllRoles.Add(r.Id, role);
+                    }
                 }
         }
 

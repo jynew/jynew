@@ -168,18 +168,23 @@ public partial class ChatUIPanel : Jyx2_UIBase
 		}
 
 		//先找替换修正的
-		if (RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes != null)
-		{
-			var find = RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes.SingleOrDefault(p => p.Id == headId);
-			if (find != null)
-			{
-				return find.Name;
-			}
-		}
+		//if (RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes != null)
+		//{
+		//	var find = RuntimeEnvSetup.CurrentModConfig.StoryIdNameFixes.SingleOrDefault(p => p.Id == headId);
+		//	if (find != null)
+		//	{
+		//		return find.Name;
+		//	}
+		//}
 
 		//再从人物库找
-		var roleName = LuaToCsBridge.CharacterTable[headId].Name;
-		return roleName;
+		foreach (var r in LuaToCsBridge.CharacterTable.Values)
+		{
+			if(LuaToCsBridge.CharacterTable[r.Id].Pic==headId){
+				return LuaToCsBridge.CharacterTable[r.Id].Name;
+			}
+		}
+		return "";
 	}
 
 	//根据角色ID修改左右位置
