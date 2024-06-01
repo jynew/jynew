@@ -564,7 +564,7 @@ namespace Jyx2
             }
             else
             {
-                Items[id] = (Items[id].Item1 + count, Tools.GetSecondsSince1970());
+                Items[id] = (Items[id].Item1 + count, Items[id].Item2);
                 if(Items[id].Item1 == 0)
                 {
                     Items.Remove(id);
