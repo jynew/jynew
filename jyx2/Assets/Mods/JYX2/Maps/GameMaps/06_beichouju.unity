@@ -7966,6 +7966,12 @@ Transform:
   m_Father: {fileID: 226652514}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1115497993 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3279224452319450221, guid: 58ce879438aab63459807f6a0c9e9954,
+    type: 3}
+  m_PrefabInstance: {fileID: 898089334}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1119861449
 GameObject:
   m_ObjectHideFlags: 0
@@ -11725,6 +11731,7 @@ GameObject:
   - component: {fileID: 1700595591}
   - component: {fileID: 1701763977}
   - component: {fileID: 1701763976}
+  - component: {fileID: 1701763978}
   m_Layer: 0
   m_Name: Pengzi_02
   m_TagString: Untagged
@@ -11744,7 +11751,7 @@ Cloth:
   m_BendingStiffness: 0
   m_UseTethers: 1
   m_UseGravity: 1
-  m_Damping: 0.4
+  m_Damping: 0.2
   m_ExternalAcceleration: {x: 0, y: 0, z: 0}
   m_RandomAcceleration: {x: 0, y: 0, z: 0}
   m_WorldVelocityScale: 0.5
@@ -11773,7 +11780,7 @@ Cloth:
   - maxDistance: 3.4028235e+38
     collisionSphereDistance: 3.4028235e+38
   m_CapsuleColliders:
-  - {fileID: 0}
+  - {fileID: 1115497993}
   m_SphereColliders: []
   m_SelfCollisionDistance: 0
   m_SelfCollisionStiffness: 0.2
@@ -11836,6 +11843,28 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00000166893, y: -0.50275826, z: 0.05004245}
     m_Extent: {x: 1.1793978, y: 1.1976582, z: 0.43230638}
   m_DirtyAABB: 0
+--- !u!64 &1701763978
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701763975}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: dd814cb6b7e74864e847491f4fbe1d3b, type: 3}
 --- !u!1001 &1702994272
 PrefabInstance:
   m_ObjectHideFlags: 0
