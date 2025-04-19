@@ -19,10 +19,9 @@
 ![Contributors](https://img.shields.io/github/contributors-anon/jynew/jynew) 
 ![fork](https://img.shields.io/github/forks/jynew/jynew?style=social)
 ![star](https://img.shields.io/github/stars/jynew/jynew?style=social)
-[![bilibili](https://img.shields.io/badge/videos-bilibili-pink)](https://space.bilibili.com/1232630839) 
  
 [开发者手册](https://xiastart.feishu.cn/wiki/wikcn2iOszRsrux9WlxEye0OVMc) | 
-[包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [B站主页](https://space.bilibili.com/1232630839) | [联系我们](mailto://jy_remastered@163.com) | [项目Wiki](https://github.com/jynew/jynew/wiki) | [捐助项目](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [授权列表](https://github.com/jynew/jynew/wiki/%E9%A1%B9%E7%9B%AE%E7%B4%A0%E6%9D%90%E6%8E%88%E6%9D%83%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C) 
+[包体下载](https://github.com/jynew/jynew/wiki/%E6%B8%B8%E6%88%8F%E4%B8%8B%E8%BD%BD) | [联系我们](mailto://jy_remastered@163.com) | [捐助项目](https://github.com/jynew/jynew/wiki/%E6%8D%90%E5%8A%A9%E9%A1%B9%E7%9B%AE) | [授权列表](https://github.com/jynew/jynew/wiki/%E9%A1%B9%E7%9B%AE%E7%B4%A0%E6%9D%90%E6%8E%88%E6%9D%83%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8) | [耻辱榜](https://github.com/jynew/jynew/wiki/%E8%80%BB%E8%BE%B1%E6%A6%9C) 
 
 
 《群侠传，启动！》 是一个开放源代码的武侠RPG游戏框架，旨在致敬经典游戏《金庸群侠传》，并为此类游戏爱好者提供一个二次创作与交流的平台。
@@ -144,8 +143,7 @@
 
 ## 项目文档导航
 
-* 查看[开发环境和搭建](https://github.com/jynew/jynew/wiki/1.1%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B)来将你本地的游戏环境运行起来！
-* 你可以查阅[金庸群侠传3d重制版开发文档](https://github.com/jynew/jynew/wiki)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。
+* 你可以查阅[开发者手册](https://xiastart.feishu.cn/wiki/wikcn2iOszRsrux9WlxEye0OVMc)来学习本项目的开发细节，其中包括详细的如何配置启动游戏、脚本修改、系统编程等一系列项目细节。
 * 可通过查看[金庸群侠传3d重制版视频操作教程](https://github.com/jynew/jynew/wiki/%E9%87%91%E5%BA%B8%E7%BE%A4%E4%BE%A0%E4%BC%A03d%E9%87%8D%E5%88%B6%E7%89%88%E8%A7%86%E9%A2%91%E6%93%8D%E4%BD%9C%E6%95%99%E7%A8%8B)来学习如何搭建游戏场景、添加和配置技能动作等。
 * 本项目非常欢迎社区进行贡献，请阅读[社区贡献指南](https://github.com/jynew/jynew/blob/main/CONTRIBUTING.md)查看具体规则和流程。
 * 本项目美术原始文件位于[jynew/jynew_art](https://github.com/jynew/jynew_art)，你可以下载3DMAX等原始文件查看。但请注意：此项目内容同样遵守社区协议。
@@ -189,7 +187,4 @@
    4群 389536186（已满）<br>
 * 玩家讨论论坛：https://tiexuedanxin.net/forum-38290-1.html<br>
 
-## 感谢支持
-
-[JetBrains Rider](https://www.jetbrains.com/community/opensource/#support)
 
